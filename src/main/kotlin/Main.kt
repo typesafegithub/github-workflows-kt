@@ -1,6 +1,7 @@
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
+import it.krzeminski.githubactions.yaml.toYaml
 
 fun main() {
     val workflow = workflow(
@@ -26,5 +27,7 @@ fun main() {
                 run = "echo 'hello here as well!'")
         }
     }
-    println(workflow)
+
+    val yaml = workflow.toYaml()
+    println(yaml)
 }
