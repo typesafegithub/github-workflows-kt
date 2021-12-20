@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class YamlJob(
     @SerialName("runs-on")
     val runsOn: String,
-    val steps: List<YamlStep>,
+    val steps: List<YamlRunStep>,
 )

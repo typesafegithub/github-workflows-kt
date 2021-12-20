@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class YamlTriggers(
-    val workflow_dispatch: String?,
+    val workflow_dispatch: Map<String, String>?,
 )
