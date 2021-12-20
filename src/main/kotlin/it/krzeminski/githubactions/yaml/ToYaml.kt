@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions.yaml
 
-import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
@@ -17,14 +16,17 @@ fun Workflow.toYaml(): String {
         on = on.toYaml(),
         jobs = jobs.toYaml(),
     )
-    Yaml.default.configuration
-        .copy(encodeDefaults = false, polymorphismStyle = PolymorphismStyle.Tag)
-    return Yaml.default.encodeToString(yamlWorkflow)
+    val yaml = Yaml(configuration = Yaml.default.configuration
+        .copy(
+            encodeDefaults = false,
+        ))
+    return yaml.encodeToString(yamlWorkflow)
 }
 
 fun List<Trigger>.toYaml() =
     YamlTriggers(
         workflow_dispatch = if (Trigger.WorkflowDispatch in this) mapOf() else null,
+        push = if (Trigger.Push in this) mapOf() else null,
     )
 
 fun List<Job>.toYaml() =
