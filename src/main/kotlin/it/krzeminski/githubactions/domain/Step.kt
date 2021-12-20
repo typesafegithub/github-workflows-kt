@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.domain
 
-interface Step
+sealed interface Step
 
 data class CommandStep(
     val name: String,

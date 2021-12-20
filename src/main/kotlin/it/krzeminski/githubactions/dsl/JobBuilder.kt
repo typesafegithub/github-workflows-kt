@@ -12,7 +12,6 @@ class JobBuilder(
     private var job = Job(
         name = name,
         runsOn = runsOn,
-        needs = needs,
         steps = emptyList(),
     )
 
