@@ -9,3 +9,8 @@ sealed class YamlStep
 data class YamlRunStep(
     val run: String,
 ) : YamlStep()
+
+@Serializable
+data class YamlExternalAction(
+    val uses: String,
+) : YamlStep()

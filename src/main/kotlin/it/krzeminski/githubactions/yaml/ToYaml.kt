@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.yaml
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import it.krzeminski.githubactions.domain.CommandStep
+import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -44,6 +45,10 @@ fun List<Step>.toYaml() =
             is CommandStep ->
                 YamlRunStep(
                     run = it.command,
+                )
+            is ExternalActionStep ->
+                YamlExternalAction(
+                    uses = it.action,
                 )
         }
     }

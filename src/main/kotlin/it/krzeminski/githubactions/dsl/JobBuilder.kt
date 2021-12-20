@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.dsl
 
 import it.krzeminski.githubactions.domain.CommandStep
+import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 
@@ -22,6 +23,17 @@ class JobBuilder(
         val newStep = CommandStep(
             name = name,
             command = run,
+        )
+        job = job.copy(steps = job.steps + newStep)
+        return newStep
+    }
+
+    fun uses(
+        action: String,
+    ): ExternalActionStep {
+        val newStep = ExternalActionStep(
+            name = name,
+            action = action,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep

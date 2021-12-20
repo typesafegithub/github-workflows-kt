@@ -12,6 +12,8 @@ fun main() {
             name = "test_job",
             runsOn = UbuntuLatest,
         ) {
+            uses(action = "actions/checkout@v2")
+
             run(
                 name = "Hello world!",
                 run = "echo 'hello!'")
