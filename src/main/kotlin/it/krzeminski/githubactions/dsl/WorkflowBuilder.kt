@@ -19,12 +19,14 @@ class WorkflowBuilder(
         name: String,
         runsOn: RunnerType,
         needs: List<Job> = emptyList(),
+        strategyMatrix: Map<String, List<String>>? = null,
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
             name = name,
             runsOn = runsOn,
             needs = needs,
+            strategyMatrix = strategyMatrix,
         )
         jobBuilder.block()
         val newJob = jobBuilder.build()

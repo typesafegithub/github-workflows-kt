@@ -10,12 +10,14 @@ class JobBuilder(
     val name: String,
     val runsOn: RunnerType,
     val needs: List<Job>,
+    val strategyMatrix: Map<String, List<String>>?,
 ) {
     private var job = Job(
         name = name,
         runsOn = runsOn,
         needs = needs,
         steps = emptyList(),
+        strategyMatrix = strategyMatrix,
     )
 
     fun run(

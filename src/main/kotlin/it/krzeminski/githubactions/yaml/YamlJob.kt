@@ -9,4 +9,10 @@ data class YamlJob(
     val runsOn: String,
     val steps: List<YamlStep>,
     val needs: List<String>,
+    val strategy: YamlStrategy?,
+)
+
+@Serializable
+data class YamlStrategy(
+    val matrix: Map<String, List<String>>? = null,
 )

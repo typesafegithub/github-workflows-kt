@@ -10,11 +10,15 @@ fun main() {
         name = "Test workflow",
         on = listOf(Push),
     ) {
-        val testJob = job(name = "test_job", runsOn = UbuntuLatest) {
+        val testJob = job(
+            name = "test_job",
+            runsOn = UbuntuLatest,
+            strategyMatrix = mapOf("testTask" to listOf("pythonTest", "microPythonTest")),
+        ) {
             uses(Checkout(fetchDepth = Infinite))
 
-            run(name = "Install Kotlin for scripting",
-                command = "sudo snap install --classic kotlin")
+            run(name = "Echo to the world",
+                command = "echo 'hello \${{ matrix.testTask }}'")
         }
 
         job(name = "test_job2", runsOn = UbuntuLatest, needs = listOf(testJob)) {

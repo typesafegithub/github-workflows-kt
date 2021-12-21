@@ -44,7 +44,13 @@ fun List<Job>.toYaml() =
         runsOn = it.runsOn.toYaml(),
         steps = it.steps.toYaml(),
         needs = it.needs.map { it.name },
+        strategy = it.strategyMatrix?.toYaml() ?: YamlStrategy(),
     ) }
+
+fun Map<String, List<String>>.toYaml() =
+    YamlStrategy(
+        matrix = this,
+    )
 
 fun List<Step>.toYaml() =
     map {
