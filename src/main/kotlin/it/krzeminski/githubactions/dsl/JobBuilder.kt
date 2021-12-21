@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.dsl
 
+import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
@@ -18,18 +19,18 @@ class JobBuilder(
 
     fun run(
         name: String,
-        run: String,
+        command: String,
     ): CommandStep {
         val newStep = CommandStep(
             name = name,
-            command = run,
+            command = command,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep
     }
 
     fun uses(
-        action: String,
+        action: Action,
     ): ExternalActionStep {
         val newStep = ExternalActionStep(
             name = name,

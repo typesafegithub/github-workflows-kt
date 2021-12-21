@@ -1,3 +1,5 @@
+import it.krzeminski.githubactions.actions.Checkout
+import it.krzeminski.githubactions.actions.FetchDepth.Infinite
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.Push
 import it.krzeminski.githubactions.dsl.workflow
@@ -8,15 +10,11 @@ fun main() {
         name = "Test workflow",
         on = listOf(Push),
     ) {
-        job(
-            name = "test_job",
-            runsOn = UbuntuLatest,
-        ) {
-            uses(action = "actions/checkout@v2")
+        job(name = "test_job", runsOn = UbuntuLatest) {
+            uses(Checkout(fetchDepth = Infinite))
 
-            run(
-                name = "Hello world!",
-                run = "echo 'hello!'")
+            run(name = "Install Kotlin for scripting",
+                command = "sudo snap install --classic kotlin")
         }
     }
 

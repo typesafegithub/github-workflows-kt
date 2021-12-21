@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
+import it.krzeminski.githubactions.actions.toYamlArguments
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
@@ -22,10 +23,15 @@ fun Workflow.toYaml(): String {
         .copy(
             encodeDefaults = false,
             polymorphismStyle = PolymorphismStyle.Property,
-            polymorphismPropertyName = "name",
+            polymorphismPropertyName = "polymorphic_type",
         ))
-    return yaml.encodeToString(yamlWorkflow)
+    val yamlOutput = yaml.encodeToString(yamlWorkflow)
+    return yamlOutput.postprocess()
 }
+
+private fun String.postprocess() =
+    // Ideally, kaml should be able to output no info about polymorphic type.
+    replace(Regex("polymorphic_type.*"), "")
 
 fun List<Trigger>.toYaml() =
     YamlTriggers(
@@ -44,11 +50,13 @@ fun List<Step>.toYaml() =
         when (it) {
             is CommandStep ->
                 YamlRunStep(
+                    name = it.name,
                     run = it.command,
                 )
             is ExternalActionStep ->
                 YamlExternalAction(
-                    uses = it.action,
+                    uses = it.action.name,
+                    with = it.action.toYamlArguments(),
                 )
         }
     }
