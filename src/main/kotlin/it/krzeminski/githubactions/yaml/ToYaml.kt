@@ -2,7 +2,14 @@ package it.krzeminski.githubactions.yaml
 
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
-import it.krzeminski.githubactions.actions.toYamlArguments
+import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.Checkout
+import it.krzeminski.githubactions.actions.DownloadArtifact
+import it.krzeminski.githubactions.actions.FetchDepth
+import it.krzeminski.githubactions.actions.UploadArtifact
+import it.krzeminski.githubactions.actions.YamlCheckoutArguments
+import it.krzeminski.githubactions.actions.YamlDownloadArtifactArguments
+import it.krzeminski.githubactions.actions.YamlUploadArtifactArguments
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
@@ -24,6 +31,7 @@ fun Workflow.toYaml(): String {
             encodeDefaults = false,
             polymorphismStyle = PolymorphismStyle.Property,
             polymorphismPropertyName = "polymorphic_type",
+            breakScalarsAt = 99999,
         ))
     val yamlOutput = yaml.encodeToString(yamlWorkflow)
     return yamlOutput.postprocess()
@@ -59,11 +67,13 @@ fun List<Step>.toYaml() =
                 YamlRunStep(
                     name = it.name,
                     run = it.command,
+                    `if` = it.condition,
                 )
             is ExternalActionStep ->
                 YamlExternalAction(
                     uses = it.action.name,
                     with = it.action.toYamlArguments(),
+                    `if` = it.condition,
                 )
         }
     }
@@ -71,4 +81,23 @@ fun List<Step>.toYaml() =
 fun RunnerType.toYaml() =
     when (this) {
         UbuntuLatest -> "ubuntu-latest"
+    }
+
+fun Action.toYamlArguments() =
+    when (this) {
+        is Checkout -> YamlCheckoutArguments(
+            fetchDepth = when (fetchDepth) {
+                FetchDepth.Infinite -> 0
+                is FetchDepth.Quantity -> fetchDepth.value
+                null -> 1
+            },
+        )
+        is UploadArtifact -> YamlUploadArtifactArguments(
+            name = artifactName,
+            path = path.joinToString(separator = "\n"),
+        )
+        is DownloadArtifact -> YamlDownloadArtifactArguments(
+            name = artifactName,
+            path = path,
+        )
     }

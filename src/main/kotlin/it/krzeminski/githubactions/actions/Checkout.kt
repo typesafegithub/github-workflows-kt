@@ -4,19 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 data class Checkout(
-    val fetchDepth: FetchDepth,
+    val fetchDepth: FetchDepth? = null,
 ) : Action(name = "actions/checkout@v2")
-
-fun Action.toYamlArguments() =
-    when (this) {
-        is Checkout -> YamlCheckoutArguments(
-            fetchDepth = when (fetchDepth) {
-                FetchDepth.Infinite -> 0
-                is FetchDepth.Quantity -> fetchDepth.value
-            },
-        )
-        else -> TODO()
-    }
 
 sealed interface FetchDepth {
     object Infinite : FetchDepth

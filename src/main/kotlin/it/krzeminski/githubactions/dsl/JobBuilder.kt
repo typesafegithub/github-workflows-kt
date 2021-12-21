@@ -23,21 +23,26 @@ class JobBuilder(
     fun run(
         name: String,
         command: String,
+        condition: String? = null,
     ): CommandStep {
         val newStep = CommandStep(
             name = name,
             command = command,
+            condition = condition,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep
     }
 
     fun uses(
+        name: String,
         action: Action,
+        condition: String? = null,
     ): ExternalActionStep {
         val newStep = ExternalActionStep(
             name = name,
             action = action,
+            condition = condition,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep

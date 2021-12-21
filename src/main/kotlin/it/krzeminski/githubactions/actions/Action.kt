@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.actions
 
 import kotlinx.serialization.Serializable
 
-abstract class Action(
+sealed class Action(
     val name: String,
 )
 

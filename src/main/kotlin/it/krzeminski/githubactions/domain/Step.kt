@@ -2,14 +2,16 @@ package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.actions.Action
 
-sealed interface Step
+sealed class Step(open val condition: String? = null)
 
 data class CommandStep(
     val name: String,
     val command: String,
-) : Step
+    override val condition: String?,
+) : Step(condition = condition)
 
 data class ExternalActionStep(
     val name: String,
     val action: Action,
-) : Step
+    override val condition: String?,
+) : Step(condition = condition)
