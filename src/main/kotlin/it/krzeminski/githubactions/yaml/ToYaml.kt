@@ -43,6 +43,7 @@ fun List<Job>.toYaml() =
     associate { it.name to YamlJob(
         runsOn = it.runsOn.toYaml(),
         steps = it.steps.toYaml(),
+        needs = it.needs.map { it.name },
     ) }
 
 fun List<Step>.toYaml() =

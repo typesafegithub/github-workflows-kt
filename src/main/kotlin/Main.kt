@@ -10,11 +10,16 @@ fun main() {
         name = "Test workflow",
         on = listOf(Push),
     ) {
-        job(name = "test_job", runsOn = UbuntuLatest) {
+        val testJob = job(name = "test_job", runsOn = UbuntuLatest) {
             uses(Checkout(fetchDepth = Infinite))
 
             run(name = "Install Kotlin for scripting",
                 command = "sudo snap install --classic kotlin")
+        }
+
+        job(name = "test_job2", runsOn = UbuntuLatest, needs = listOf(testJob)) {
+            run(name = "Some random echo",
+                command = "echo 'hello!'")
         }
     }
 

@@ -8,4 +8,5 @@ data class YamlJob(
     @SerialName("runs-on")
     val runsOn: String,
     val steps: List<YamlStep>,
+    val needs: List<String>,
 )
