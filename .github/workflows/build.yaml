@@ -16,6 +16,3 @@ jobs:
       - uses: eskatos/gradle-command-action@v2.1.0
         with:
           arguments: build
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
