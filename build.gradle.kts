@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.38.0")
+    implementation("com.charleskorn.kaml:kaml:0.39.1")
 }
 
 tasks.withType<KotlinCompile> {
