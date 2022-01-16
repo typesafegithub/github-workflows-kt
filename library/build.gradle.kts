@@ -27,7 +27,10 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions {
+        jvmTarget = "11"
+        allWarningsAsErrors = true
+    }
 }
 
 tasks.withType<Test> {
