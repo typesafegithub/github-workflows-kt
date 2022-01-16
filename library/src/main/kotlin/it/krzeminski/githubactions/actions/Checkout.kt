@@ -5,7 +5,15 @@ import kotlinx.serialization.Serializable
 
 data class Checkout(
     val fetchDepth: FetchDepth? = null,
-) : Action(name = "actions/checkout@v2")
+) : Action(name = "actions/checkout@v2") {
+    override fun toYamlArguments() = YamlCheckoutArguments(
+        fetchDepth = when (fetchDepth) {
+            FetchDepth.Infinite -> 0
+            is FetchDepth.Quantity -> fetchDepth.value
+            null -> 1
+        },
+    )
+}
 
 sealed interface FetchDepth {
     object Infinite : FetchDepth

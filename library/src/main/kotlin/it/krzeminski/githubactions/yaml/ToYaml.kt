@@ -2,14 +2,6 @@ package it.krzeminski.githubactions.yaml
 
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
-import it.krzeminski.githubactions.actions.Action
-import it.krzeminski.githubactions.actions.Checkout
-import it.krzeminski.githubactions.actions.DownloadArtifact
-import it.krzeminski.githubactions.actions.FetchDepth
-import it.krzeminski.githubactions.actions.UploadArtifact
-import it.krzeminski.githubactions.actions.YamlCheckoutArguments
-import it.krzeminski.githubactions.actions.YamlDownloadArtifactArguments
-import it.krzeminski.githubactions.actions.YamlUploadArtifactArguments
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
@@ -81,23 +73,4 @@ fun List<Step>.toYaml() =
 fun RunnerType.toYaml() =
     when (this) {
         UbuntuLatest -> "ubuntu-latest"
-    }
-
-fun Action.toYamlArguments() =
-    when (this) {
-        is Checkout -> YamlCheckoutArguments(
-            fetchDepth = when (fetchDepth) {
-                FetchDepth.Infinite -> 0
-                is FetchDepth.Quantity -> fetchDepth.value
-                null -> 1
-            },
-        )
-        is UploadArtifact -> YamlUploadArtifactArguments(
-            name = artifactName,
-            path = path.joinToString(separator = "\n"),
-        )
-        is DownloadArtifact -> YamlDownloadArtifactArguments(
-            name = artifactName,
-            path = path,
-        )
     }
