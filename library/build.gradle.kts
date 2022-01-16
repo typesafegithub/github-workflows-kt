@@ -99,3 +99,16 @@ tasks {
         sign(publishing.publications["mavenJava"])
     }
 }
+
+val validateVersionInReadme by tasks.creating<Task> {
+    doLast {
+        require(
+            project.rootDir.resolve("README.md").readText().let {
+                it.contains("implementation(\"it.krzeminski:github-actions-kotlin-dsl:$version\")") &&
+                    it.contains("@file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
+            }
+        ) { "Library versions stated in build.gradle.kts and in README.md should be equal!" }
+    }
+}
+
+tasks.getByName("check").dependsOn(validateVersionInReadme)
