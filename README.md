@@ -13,11 +13,15 @@ workflow(
         name = "test_job",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = "actions/checkout@v2")
+        uses(
+            name = "Check out",
+            action = Checkout(),
+        )
 
         run(
             name = "Hello world!",
-            run = "echo 'hello!'")
+            command = "echo 'hello!'",
+        )
     }
 }
 ```
