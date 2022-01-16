@@ -4,6 +4,9 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.10"
 
+    // Code quality.
+    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+
     // Publishing.
     `maven-publish`
     signing
