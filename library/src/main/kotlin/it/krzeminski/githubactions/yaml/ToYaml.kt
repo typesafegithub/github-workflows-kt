@@ -18,13 +18,15 @@ fun Workflow.toYaml(): String {
         on = on.toYaml(),
         jobs = jobs.toYaml(),
     )
-    val yaml = Yaml(configuration = Yaml.default.configuration
-        .copy(
-            encodeDefaults = false,
-            polymorphismStyle = PolymorphismStyle.Property,
-            polymorphismPropertyName = "polymorphic_type",
-            breakScalarsAt = 99999,
-        ))
+    val yaml = Yaml(
+        configuration = Yaml.default.configuration
+            .copy(
+                encodeDefaults = false,
+                polymorphismStyle = PolymorphismStyle.Property,
+                polymorphismPropertyName = "polymorphic_type",
+                breakScalarsAt = 99999,
+            )
+    )
     val yamlOutput = yaml.encodeToString(yamlWorkflow)
     return yamlOutput.postprocess()
 }
@@ -40,12 +42,14 @@ fun List<Trigger>.toYaml() =
     )
 
 fun List<Job>.toYaml() =
-    associate { it.name to YamlJob(
-        runsOn = it.runsOn.toYaml(),
-        steps = it.steps.toYaml(),
-        needs = it.needs.map { it.name },
-        strategy = it.strategyMatrix?.toYaml() ?: YamlStrategy(),
-    ) }
+    associate {
+        it.name to YamlJob(
+            runsOn = it.runsOn.toYaml(),
+            steps = it.steps.toYaml(),
+            needs = it.needs.map { it.name },
+            strategy = it.strategyMatrix?.toYaml() ?: YamlStrategy(),
+        )
+    }
 
 fun Map<String, List<String>>.toYaml() =
     YamlStrategy(

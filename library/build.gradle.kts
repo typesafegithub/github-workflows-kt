@@ -6,6 +6,7 @@ plugins {
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 
     // Publishing.
     `maven-publish`
