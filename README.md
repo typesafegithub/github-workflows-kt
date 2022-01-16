@@ -26,6 +26,8 @@ workflow(
 }
 ```
 
+More examples [here](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/examples/src/main/kotlin).
+
 # Installation
 
 In a Kotlin script:
