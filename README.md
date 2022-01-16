@@ -21,3 +21,25 @@ workflow(
     }
 }
 ```
+
+# Installation
+
+In a Kotlin script:
+
+```kotlin
+#!/usr/bin/env kotlin
+
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.1.0")
+```
+
+with Gradle:
+
+```
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+    implementation("it.krzeminski:github-actions-kotlin-dsl:0.1.0")
+}
+```
