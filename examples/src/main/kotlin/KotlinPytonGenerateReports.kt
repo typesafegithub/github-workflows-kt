@@ -6,6 +6,7 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
+import java.nio.file.Paths
 
 fun main() {
     val workflow = workflow(
@@ -109,6 +110,6 @@ fun main() {
         }
     }
 
-    val yaml = workflow.toYaml()
+    val yaml = workflow.toYaml(sourceFile = Paths.get("script.main.kts"))
     println(yaml)
 }

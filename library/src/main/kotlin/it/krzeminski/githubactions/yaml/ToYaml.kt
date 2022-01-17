@@ -11,29 +11,39 @@ import it.krzeminski.githubactions.domain.Step
 import it.krzeminski.githubactions.domain.Trigger
 import it.krzeminski.githubactions.domain.Workflow
 import kotlinx.serialization.encodeToString
+import java.nio.file.Path
 
-fun Workflow.toYaml(): String {
+fun Workflow.toYaml(sourceFile: Path): String {
     val yamlWorkflow = YamlWorkflow(
         name = name,
         on = on.toYaml(),
         jobs = jobs.toYaml(),
     )
-    val yaml = Yaml(
-        configuration = Yaml.default.configuration
-            .copy(
-                encodeDefaults = false,
-                polymorphismStyle = PolymorphismStyle.Property,
-                polymorphismPropertyName = "polymorphic_type",
-                breakScalarsAt = 99999,
-            )
-    )
     val yamlOutput = yaml.encodeToString(yamlWorkflow)
-    return yamlOutput.postprocess()
+    return yamlOutput.postprocess(sourceFile)
 }
 
-private fun String.postprocess() =
-    // Ideally, kaml should be able to output no info about polymorphic type.
-    replace(Regex("polymorphic_type.*"), "")
+private val yaml = Yaml(
+    configuration = Yaml.default.configuration
+        .copy(
+            encodeDefaults = false,
+            polymorphismStyle = PolymorphismStyle.Property,
+            polymorphismPropertyName = "polymorphic_type",
+            breakScalarsAt = 99999,
+        )
+)
+
+private fun String.postprocess(sourceFile: Path) =
+    (
+        """
+        # This file was generated using Kotlin DSL ($sourceFile).
+        # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+        
+        
+        """.trimIndent() + this
+        )
+        // Ideally, kaml should be able to output no info about polymorphic type.
+        .replace(Regex("polymorphic_type.*"), "")
 
 fun List<Trigger>.toYaml() =
     YamlTriggers(
