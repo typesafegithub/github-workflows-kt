@@ -110,6 +110,9 @@ fun main() {
         }
     }
 
-    val yaml = workflow.toYaml(sourceFile = Paths.get("script.main.kts"))
+    val yaml = workflow.toYaml(
+        sourceFile = Paths.get("script.main.kts"),
+        targetFile = Paths.get("some_workflow.yaml"),
+    )
     println(yaml)
 }

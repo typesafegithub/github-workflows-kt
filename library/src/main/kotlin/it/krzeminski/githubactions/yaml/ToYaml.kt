@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
+import it.krzeminski.githubactions.actions.Checkout
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
@@ -10,14 +11,27 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Step
 import it.krzeminski.githubactions.domain.Trigger
 import it.krzeminski.githubactions.domain.Workflow
+import it.krzeminski.githubactions.dsl.toBuilder
 import kotlinx.serialization.encodeToString
 import java.nio.file.Path
 
-fun Workflow.toYaml(sourceFile: Path): String {
+fun Workflow.toYaml(sourceFile: Path, targetFile: Path): String {
+    val consistencyCheckJob = this.toBuilder().job(
+        name = "check_yaml_consistency",
+        runsOn = UbuntuLatest,
+    ) {
+        uses("Check out", Checkout())
+        run("Install Kotlin", "sudo snap install --classic kotlin")
+        run("Consistency check", "diff -u '$targetFile' <('$sourceFile')")
+    }
+    val jobsWithConsistencyCheck =
+        listOf(consistencyCheckJob) + jobs.map {
+            it.copy(needs = listOf(consistencyCheckJob))
+        }
     val yamlWorkflow = YamlWorkflow(
         name = name,
         on = on.toYaml(),
-        jobs = jobs.toYaml(),
+        jobs = jobsWithConsistencyCheck.toYaml(),
     )
     val yamlOutput = yaml.encodeToString(yamlWorkflow)
     return yamlOutput.postprocess(sourceFile)

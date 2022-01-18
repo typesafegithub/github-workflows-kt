@@ -25,5 +25,8 @@ fun main() {
             )
         }
     }
-    println(workflow.toYaml(sourceFile = Paths.get("script.main.kts")))
+    println(workflow.toYaml(
+        sourceFile = Paths.get("script.main.kts"),
+        targetFile = Paths.get("some_workflow.yaml"),
+    ))
 }

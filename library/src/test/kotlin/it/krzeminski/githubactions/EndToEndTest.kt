@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.Checkout
 import it.krzeminski.githubactions.domain.RunnerType
@@ -31,19 +32,41 @@ class EndToEndTest : FunSpec({
                 )
             }
         }
+        val sourceFile = tempfile().also {
+            it.writeText("Some dummy text that the checksum will be calculated from")
+        }
 
         // when
-        val actualYaml = workflow.toYaml(Paths.get("path/to/Workflow.main.kts"))
+        val actualYaml = workflow.toYaml(
+            sourceFile = sourceFile.toPath(),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        )
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (path/to/Workflow.main.kts).
+            # This file was generated using Kotlin DSL (${sourceFile.path}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             
             name: "Test workflow"
             on:
               push: {}
             jobs:
+              "check_yaml_consistency":
+                runs-on: "ubuntu-latest"
+                steps:
+                - 
+                  uses: "actions/checkout@v2"
+                  with:
+                    
+                    fetch-depth: 1
+                - 
+                  name: "Install Kotlin"
+                  run: "sudo snap install --classic kotlin"
+                - 
+                  name: "Consistency check"
+                  run: "diff -u '.github/workflows/some_workflow.yaml' <('$sourceFile')"
+                needs: []
+                strategy: {}
               "test_job":
                 runs-on: "ubuntu-latest"
                 steps:
@@ -55,7 +78,8 @@ class EndToEndTest : FunSpec({
                 - 
                   name: "Hello world!"
                   run: "echo 'hello!'"
-                needs: []
+                needs:
+                - "check_yaml_consistency"
                 strategy: {}
         """.trimIndent()
     }

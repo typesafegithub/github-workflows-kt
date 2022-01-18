@@ -8,11 +8,12 @@ import it.krzeminski.githubactions.domain.Workflow
 class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
+    jobs: List<Job> = emptyList(),
 ) {
     private var workflow = Workflow(
         name = name,
         on = on,
-        jobs = emptyList(),
+        jobs = jobs,
     )
 
     fun job(
@@ -36,6 +37,13 @@ class WorkflowBuilder(
 
     fun build() = workflow
 }
+
+fun Workflow.toBuilder() =
+    WorkflowBuilder(
+        name = name,
+        on = on,
+        jobs = jobs,
+    )
 
 fun workflow(
     name: String,
