@@ -35,7 +35,7 @@ In a Kotlin script:
 ```kotlin
 #!/usr/bin/env kotlin
 
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.1.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.2.0")
 ```
 
 with Gradle:
@@ -46,6 +46,6 @@ repositories {
 }
 
 dependencies {
-    implementation("it.krzeminski:github-actions-kotlin-dsl:0.1.0")
+    implementation("it.krzeminski:github-actions-kotlin-dsl:0.2.0")
 }
 ```
