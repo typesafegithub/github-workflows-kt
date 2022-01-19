@@ -103,10 +103,8 @@ tasks {
 val validateVersionInReadme by tasks.creating<Task> {
     doLast {
         require(
-            project.rootDir.resolve("README.md").readText().let {
-                it.contains("implementation(\"it.krzeminski:github-actions-kotlin-dsl:$version\")") &&
-                    it.contains("@file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
-            }
+            project.rootDir.resolve("README.md").readText()
+                .contains("   @file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
         ) { "Library versions stated in build.gradle.kts and in README.md should be equal!" }
     }
 }
