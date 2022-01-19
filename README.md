@@ -2,7 +2,7 @@
 
 ---
 
-## 🧪 Work in progress!
+## 🧪 Work in progress - "moving fast" phase
 
 Please expect breaking API changes (they're documented in release notes) and missing features.
 
