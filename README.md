@@ -34,7 +34,7 @@ names with your own.
    ```
    sudo snap install kotlin --classic
    ```
-2. Create a new executable in your repository:
+2. Create a new executable file in your repository:
    ```
    touch    .github/workflows/hello_world_workflow.main.kts
    chmod +x .github/workflows/hello_world_workflow.main.kts
