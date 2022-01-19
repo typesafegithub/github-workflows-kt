@@ -4,7 +4,7 @@
 
 ## 🧪 Work in progress!
 
-Please expect API changes (they're documented in release notes) and missing features.
+Please expect breaking API changes (they're documented in release notes) and missing features.
 
 ---
 
