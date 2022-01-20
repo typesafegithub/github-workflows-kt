@@ -40,6 +40,14 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     return yamlOutput.postprocess(sourceFile)
 }
 
+fun Workflow.writeToFile() {
+    val yaml = this.toYaml(
+        // Because the current consistency check logic relies on writing to standard output.
+        addConsistencyCheck = false,
+    )
+    this.targetFile.toFile().writeText(yaml)
+}
+
 private val yaml = Yaml(
     configuration = Yaml.default.configuration
         .copy(

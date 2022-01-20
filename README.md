@@ -74,6 +74,10 @@ names with your own.
    You'll see it in a moment in the generated file.What's written to the `workflow` variable is an object of type
    `it.krzeminski.githubactions.domain.Workflow`, it's not a YAML yet. However, a call to `toYaml()` extension function
    does the final piece of job.
+
+   Alternatively, apart from `toYaml()` which returns a string, there's also `writeToFile()` which puts the string
+   straight into the file specified in workflow's `targetFile`. It may come in handy when operating on multiple
+   workflows and having automation that regenerates them. Note that this function doesn't provide consistency check.
 4. Generate the YAML by calling the above script and redirecting its output to the desired YAML file path:
    ```
    .github/workflows/hello_world_workflow.main.kts > .github/workflows/hello_world_workflow.yml
