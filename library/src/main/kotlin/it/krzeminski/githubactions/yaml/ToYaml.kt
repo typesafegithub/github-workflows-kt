@@ -15,19 +15,22 @@ import it.krzeminski.githubactions.dsl.toBuilder
 import kotlinx.serialization.encodeToString
 import java.nio.file.Path
 
-fun Workflow.toYaml(): String {
-    val consistencyCheckJob = this.toBuilder().job(
-        name = "check_yaml_consistency",
-        runsOn = UbuntuLatest,
-    ) {
-        uses("Check out", Checkout())
-        run("Install Kotlin", "sudo snap install --classic kotlin")
-        run("Consistency check", "diff -u '$targetFile' <('$sourceFile')")
-    }
-    val jobsWithConsistencyCheck =
+fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
+    val jobsWithConsistencyCheck = if (addConsistencyCheck) {
+        val consistencyCheckJob = this.toBuilder().job(
+            name = "check_yaml_consistency",
+            runsOn = UbuntuLatest,
+        ) {
+            uses("Check out", Checkout())
+            run("Install Kotlin", "sudo snap install --classic kotlin")
+            run("Consistency check", "diff -u '$targetFile' <('$sourceFile')")
+        }
         listOf(consistencyCheckJob) + jobs.map {
             it.copy(needs = listOf(consistencyCheckJob))
         }
+    } else {
+        jobs
+    }
     val yamlWorkflow = YamlWorkflow(
         name = name,
         on = on.toYaml(),
