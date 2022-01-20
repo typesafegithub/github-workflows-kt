@@ -9,6 +9,8 @@ fun main() {
     val workflow = workflow(
         name = "Test workflow",
         on = listOf(Push),
+        sourceFile = Paths.get("script.main.kts"),
+        targetFile = Paths.get("some_workflow.yaml"),
     ) {
         job(
             name = "test_job",
@@ -25,8 +27,5 @@ fun main() {
             )
         }
     }
-    println(workflow.toYaml(
-        sourceFile = Paths.get("script.main.kts"),
-        targetFile = Paths.get("some_workflow.yaml"),
-    ))
+    println(workflow.toYaml())
 }

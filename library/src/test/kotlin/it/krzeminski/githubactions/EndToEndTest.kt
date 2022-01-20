@@ -13,9 +13,14 @@ import java.nio.file.Paths
 class EndToEndTest : FunSpec({
     test("'hello world' workflow") {
         // Given
+        val sourceFile = tempfile().also {
+            it.writeText("Some dummy text that the checksum will be calculated from")
+        }
         val workflow = workflow(
             name = "Test workflow",
             on = listOf(Trigger.Push),
+            sourceFile = sourceFile.toPath(),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
                 name = "test_job",
@@ -32,15 +37,9 @@ class EndToEndTest : FunSpec({
                 )
             }
         }
-        val sourceFile = tempfile().also {
-            it.writeText("Some dummy text that the checksum will be calculated from")
-        }
 
         // when
-        val actualYaml = workflow.toYaml(
-            sourceFile = sourceFile.toPath(),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
-        )
+        val actualYaml = workflow.toYaml()
 
         // then
         actualYaml shouldBe """
