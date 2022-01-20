@@ -12,6 +12,8 @@ fun main() {
     val workflow = workflow(
         name = "Generate reports",
         on = listOf(WorkflowDispatch),
+        sourceFile = Paths.get("script.main.kts"),
+        targetFile = Paths.get("some_workflow.yaml"),
     ) {
         val generateReports = job(
             name = "generate_reports",
@@ -110,9 +112,6 @@ fun main() {
         }
     }
 
-    val yaml = workflow.toYaml(
-        sourceFile = Paths.get("script.main.kts"),
-        targetFile = Paths.get("some_workflow.yaml"),
-    )
+    val yaml = workflow.toYaml()
     println(yaml)
 }

@@ -15,7 +15,7 @@ import it.krzeminski.githubactions.dsl.toBuilder
 import kotlinx.serialization.encodeToString
 import java.nio.file.Path
 
-fun Workflow.toYaml(sourceFile: Path, targetFile: Path): String {
+fun Workflow.toYaml(): String {
     val consistencyCheckJob = this.toBuilder().job(
         name = "check_yaml_consistency",
         runsOn = UbuntuLatest,

@@ -57,6 +57,8 @@ names with your own.
    val workflow = workflow(
        name = "Test workflow",
        on = listOf(Push),
+       sourceFile = Paths.get(".github/workflows/hello_world_workflow.main.kts"),
+       targetFile = Paths.get(".github/workflows/hello_world_workflow.yml")
    ) {
        job(name = "test_job", runsOn = UbuntuLatest) {
            uses(name = "Check out", action = Checkout())
@@ -64,17 +66,14 @@ names with your own.
        }
    }
 
-   println(workflow.toYaml(
-       sourceFile = Paths.get(".github/workflows/hello_world_workflow.main.kts"),
-       targetFile = Paths.get(".github/workflows/hello_world_workflow.yml")
-   ))
+   println(workflow.toYaml())
    ```
 
-   Explanation: first, we create a workflow with the DSL provided by this library. What's written to the `workflow`
-   variable is an object of type `it.krzeminski.githubactions.domain.Workflow`, it's not a YAML yet. However, a call to
-   `toYaml(...)` extension function does the final piece of job. The reason it needs source and target file paths is to
-   be able to generate consistency checks, to ensure that both source and target files are in sync. You'll see it in a
-   moment in the generated file.
+   Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source and target
+   file paths is to be able to generate consistency checks, to ensure that both source and target files are in sync.
+   You'll see it in a moment in the generated file.What's written to the `workflow` variable is an object of type
+   `it.krzeminski.githubactions.domain.Workflow`, it's not a YAML yet. However, a call to `toYaml()` extension function
+   does the final piece of job.
 4. Generate the YAML by calling the above script and redirecting its output to the desired YAML file path:
    ```
    .github/workflows/hello_world_workflow.main.kts > .github/workflows/hello_world_workflow.yml

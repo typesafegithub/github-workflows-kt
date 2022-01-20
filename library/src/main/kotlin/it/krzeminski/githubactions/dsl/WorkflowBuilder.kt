@@ -4,15 +4,20 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Trigger
 import it.krzeminski.githubactions.domain.Workflow
+import java.nio.file.Path
 
 class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
+    sourceFile: Path,
+    targetFile: Path,
     jobs: List<Job> = emptyList(),
 ) {
     private var workflow = Workflow(
         name = name,
         on = on,
+        sourceFile = sourceFile,
+        targetFile = targetFile,
         jobs = jobs,
     )
 
@@ -42,17 +47,23 @@ fun Workflow.toBuilder() =
     WorkflowBuilder(
         name = name,
         on = on,
+        sourceFile = sourceFile,
+        targetFile = targetFile,
         jobs = jobs,
     )
 
 fun workflow(
     name: String,
     on: List<Trigger>,
+    sourceFile: Path,
+    targetFile: Path,
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
     val workflowBuilder = WorkflowBuilder(
         name = name,
         on = on,
+        sourceFile = sourceFile,
+        targetFile = targetFile,
     )
     workflowBuilder.block()
     return workflowBuilder.build()
