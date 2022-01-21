@@ -164,4 +164,57 @@ class EndToEndTest : FunSpec({
                 strategy: {}
         """.trimIndent()
     }
+
+    test("Using a windows-2022 runner") {
+        // given
+        val targetTempFile = tempfile()
+        val workflowWithTempTargetFile = workflow(
+            name = "Test workflow",
+            on = listOf(Trigger.Push),
+            sourceFile = sourceFile.toPath(),
+            targetFile = targetTempFile.toPath(),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.Windows2022,
+            ) {
+                uses(
+                    name = "Check out",
+                    action = Checkout(),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
+            }
+        }
+
+        // when
+        workflowWithTempTargetFile.writeToFile()
+
+        // then
+        targetTempFile.readText() shouldBe """
+            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            
+            name: "Test workflow"
+            on:
+              push: {}
+            jobs:
+              "test_job":
+                runs-on: "windows-2022"
+                steps:
+                - 
+                  uses: "actions/checkout@v2"
+                  with:
+                    
+                    fetch-depth: 1
+                - 
+                  name: "Hello world!"
+                  run: "echo 'hello!'"
+                needs: []
+                strategy: {}
+        """.trimIndent()
+    }
 })
