@@ -7,11 +7,11 @@ sealed class Step(open val condition: String? = null)
 data class CommandStep(
     val name: String,
     val command: String,
-    override val condition: String?,
+    override val condition: String? = null,
 ) : Step(condition = condition)
 
 data class ExternalActionStep(
     val name: String,
     val action: Action,
-    override val condition: String?,
+    override val condition: String? = null,
 ) : Step(condition = condition)

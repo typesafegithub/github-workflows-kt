@@ -1,12 +1,7 @@
 package it.krzeminski.githubactions.actions
 
-import kotlinx.serialization.Serializable
-
-sealed class Action(
+abstract class Action(
     val name: String,
 ) {
-    abstract fun toYamlArguments(): YamlActionArguments
+    abstract fun toYamlArguments(): LinkedHashMap<String, String>
 }
-
-@Serializable
-sealed class YamlActionArguments
