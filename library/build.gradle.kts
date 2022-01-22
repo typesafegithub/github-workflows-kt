@@ -54,7 +54,7 @@ publishing {
 
             pom {
                 name.set(libraryName)
-                description.set("Authoring GitHub Actions in Kotlin.")
+                description.set("Authoring GitHub Actions workflows in Kotlin.")
                 url.set("https://github.com/$githubUser/$libraryName")
 
                 licenses {
