@@ -19,24 +19,24 @@ private fun Step.toYaml() =
 private fun ExternalActionStep.toYaml() = buildString {
     appendLine("- name: $name")
     appendLine("  uses: ${action.name}")
-    this@toYaml.condition?.let {
-        appendLine(it.conditionToYaml())
-    }
     this@toYaml.action.argumentsToYaml().let { arguments ->
         if (arguments.isNotEmpty()) {
             appendLine("  with:")
             appendLine(arguments.prependIndent("    "))
         }
     }
+    this@toYaml.condition?.let {
+        appendLine(it.conditionToYaml())
+    }
 }.removeSuffix("\n")
 
 private fun CommandStep.toYaml() = buildString {
     appendLine("- name: $name")
+    appendLine("  run: $command")
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
     }
-    append("  run: $command")
-}
+}.removeSuffix("\n")
 
 private fun Action.argumentsToYaml() =
     toYamlArguments().map { (key, value) ->

@@ -64,8 +64,8 @@ class StepsToYamlTest : DescribeSpec({
 
             // then
             yaml shouldBe """|- name: Some command
-                             |  if: ${'$'}{{ matrix.foo == 'bar' }}
-                             |  run: echo 'test!'""".trimMargin()
+                             |  run: echo 'test!'
+                             |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
     }
 
@@ -122,6 +122,27 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- name: Some external action
                              |  uses: actions/checkout@v2
+                             |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
+        }
+
+        it("renders with some parameters and condition") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    name = "Some external action",
+                    action = CheckoutV2(fetchDepth = FetchDepth.Infinite),
+                    condition = "\${{ matrix.foo == 'bar' }}"
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Some external action
+                             |  uses: actions/checkout@v2
+                             |  with:
+                             |    fetch-depth: 0
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
     }
