@@ -12,9 +12,7 @@ class CheckoutTest : DescribeSpec({
         val yaml = action.toYamlArguments()
 
         // then
-        yaml shouldBe linkedMapOf(
-            "fetch-depth" to "1",
-        )
+        yaml shouldBe linkedMapOf()
     }
 
     describe("fetch-depth parameter") {

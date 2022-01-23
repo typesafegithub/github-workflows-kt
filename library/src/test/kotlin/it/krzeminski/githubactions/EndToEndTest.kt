@@ -57,8 +57,6 @@ class EndToEndTest : FunSpec({
                 steps:
                   - name: Check out
                     uses: actions/checkout@v2
-                    with:
-                      fetch-depth: 1
                   - name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - name: Consistency check
@@ -70,8 +68,6 @@ class EndToEndTest : FunSpec({
                 steps:
                   - name: Check out
                     uses: actions/checkout@v2
-                    with:
-                      fetch-depth: 1
                   - name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
@@ -97,8 +93,6 @@ class EndToEndTest : FunSpec({
                 steps:
                   - name: Check out
                     uses: actions/checkout@v2
-                    with:
-                      fetch-depth: 1
                   - name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
@@ -148,8 +142,6 @@ class EndToEndTest : FunSpec({
                 steps:
                   - name: Check out
                     uses: actions/checkout@v2
-                    with:
-                      fetch-depth: 1
                   - name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()

@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.Checkout
+import it.krzeminski.githubactions.actions.FetchDepth
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 
@@ -27,9 +28,7 @@ class StepsToYamlTest : DescribeSpec({
         yaml shouldBe """|- name: Some command
                          |  run: echo 'test!'
                          |- name: Some external action
-                         |  uses: actions/checkout@v2
-                         |  with:
-                         |    fetch-depth: 1""".trimMargin()
+                         |  uses: actions/checkout@v2""".trimMargin()
     }
 
     describe("command step") {
@@ -71,7 +70,7 @@ class StepsToYamlTest : DescribeSpec({
     }
 
     describe("external action step") {
-        it("renders with required parameters") {
+        it("renders with no parameters") {
             // given
             val steps = listOf(
                 ExternalActionStep(
@@ -85,9 +84,26 @@ class StepsToYamlTest : DescribeSpec({
 
             // then
             yaml shouldBe """|- name: Some external action
+                             |  uses: actions/checkout@v2""".trimMargin()
+        }
+
+        it("renders with some parameters") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    name = "Some external action",
+                    action = Checkout(fetchDepth = FetchDepth.Infinite),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Some external action
                              |  uses: actions/checkout@v2
                              |  with:
-                             |    fetch-depth: 1""".trimMargin()
+                             |    fetch-depth: 0""".trimMargin()
         }
 
         it("renders with condition") {
@@ -106,9 +122,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- name: Some external action
                              |  uses: actions/checkout@v2
-                             |  if: ${'$'}{{ matrix.foo == 'bar' }}
-                             |  with:
-                             |    fetch-depth: 1""".trimMargin()
+                             |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
     }
 })
