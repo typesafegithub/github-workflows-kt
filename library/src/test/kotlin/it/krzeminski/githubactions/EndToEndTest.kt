@@ -45,6 +45,7 @@ class EndToEndTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (${sourceFile.path}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
             name: Test workflow
 
@@ -81,6 +82,7 @@ class EndToEndTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (${sourceFile.path}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
             name: Test workflow
 
@@ -130,6 +132,7 @@ class EndToEndTest : FunSpec({
         targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (${sourceFile.path}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
             name: Test workflow
 
