@@ -6,6 +6,7 @@ import it.krzeminski.githubactions.domain.Trigger
 import it.krzeminski.githubactions.domain.Workflow
 import java.nio.file.Path
 
+@GithubActionsDsl
 class WorkflowBuilder(
     name: String,
     on: List<Trigger>,

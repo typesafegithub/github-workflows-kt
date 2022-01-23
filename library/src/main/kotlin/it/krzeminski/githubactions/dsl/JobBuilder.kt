@@ -6,6 +6,7 @@ import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 
+@GithubActionsDsl
 class JobBuilder(
     val name: String,
     val runsOn: RunnerType,
