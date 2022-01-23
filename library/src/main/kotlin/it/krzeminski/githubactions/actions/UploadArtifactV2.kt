@@ -1,11 +1,11 @@
 package it.krzeminski.githubactions.actions
 
-data class DownloadArtifact(
+data class UploadArtifactV2(
     val artifactName: String,
-    val path: String,
-) : Action(name = "actions/download-artifact@v2") {
+    val path: List<String>,
+) : Action(name = "actions/upload-artifact@v2") {
     override fun toYamlArguments() = linkedMapOf(
         "name" to artifactName,
-        "path" to path,
+        "path" to path.joinToString(separator = "\n"),
     )
 }

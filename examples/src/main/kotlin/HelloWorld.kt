@@ -1,4 +1,4 @@
-import it.krzeminski.githubactions.actions.Checkout
+import it.krzeminski.githubactions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.Push
 import it.krzeminski.githubactions.dsl.workflow
@@ -18,7 +18,7 @@ fun main() {
         ) {
             uses(
                 name = "Check out",
-                action = Checkout(),
+                action = CheckoutV2(),
             )
 
             run(

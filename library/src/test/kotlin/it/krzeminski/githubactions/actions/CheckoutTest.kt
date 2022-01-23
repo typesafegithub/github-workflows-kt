@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class CheckoutTest : DescribeSpec({
     it("renders with defaults") {
         // given
-        val action = Checkout()
+        val action = CheckoutV2()
 
         // when
         val yaml = action.toYamlArguments()
@@ -18,7 +18,7 @@ class CheckoutTest : DescribeSpec({
     describe("fetch-depth parameter") {
         it("renders with specified concrete fetch depth") {
             // given
-            val action = Checkout(
+            val action = CheckoutV2(
                 fetchDepth = FetchDepth.Quantity(3),
             )
 
@@ -33,7 +33,7 @@ class CheckoutTest : DescribeSpec({
 
         it("renders with specified infinite fetch depth") {
             // given
-            val action = Checkout(
+            val action = CheckoutV2(
                 fetchDepth = FetchDepth.Infinite,
             )
 

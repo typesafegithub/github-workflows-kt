@@ -1,7 +1,7 @@
-import it.krzeminski.githubactions.actions.Checkout
-import it.krzeminski.githubactions.actions.DownloadArtifact
+import it.krzeminski.githubactions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.DownloadArtifactV2
 import it.krzeminski.githubactions.actions.FetchDepth.Infinite
-import it.krzeminski.githubactions.actions.UploadArtifact
+import it.krzeminski.githubactions.actions.UploadArtifactV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
@@ -22,7 +22,7 @@ fun main() {
         ) {
             uses(
                 name = "Fetch the whole git history (to be able to calculate some stats based on it)",
-                action = Checkout(fetchDepth = Infinite),
+                action = CheckoutV2(fetchDepth = Infinite),
             )
             run(name = "Install Kotlin for scripting",
                 command = "sudo snap install --classic kotlin")
@@ -60,7 +60,7 @@ fun main() {
             uses(
                 name = "Upload common artifact",
                 condition = "\${{ matrix.testTask == 'pythonTest' }}",
-                action = UploadArtifact(
+                action = UploadArtifactV2(
                     artifactName = "common-artifact",
                     path = listOf(
                         "python/box.tests/reports/git-history-plot.svg",
@@ -69,7 +69,7 @@ fun main() {
             )
             uses(
                 name = "Upload \${{ matrix.testTask }} artifact",
-                action = UploadArtifact(
+                action = UploadArtifactV2(
                     artifactName = "\${{ matrix.testTask }}-artifact",
                     path = listOf("python/box.tests/reports/\${{ matrix.testTask }}"),
                 ),
@@ -79,25 +79,25 @@ fun main() {
         job(name = "update_reports", runsOn = UbuntuLatest, needs = listOf(generateReports)) {
             uses(
                 name = "Check out",
-                action = Checkout(),
+                action = CheckoutV2(),
             )
             uses(
                 name = "Download common artifact",
-                action = DownloadArtifact(
+                action = DownloadArtifactV2(
                     artifactName = "common-artifact",
                     path = "python",
                 ),
             )
             uses(
                 name = "Download pythonTest artifact",
-                action = DownloadArtifact(
+                action = DownloadArtifactV2(
                     artifactName = "pythonTest-artifact",
                     path = "python/box.tests/reports/pythonTest",
                 ),
             )
             uses(
                 name = "Download microPythonTest artifact",
-                action = DownloadArtifact(
+                action = DownloadArtifactV2(
                     artifactName = "microPythonTest-artifact",
                     path = "python/box.tests/reports/microPythonTest",
                 ),

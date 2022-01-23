@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class DownloadArtifactTest : DescribeSpec({
     it("renders with defaults") {
         // given
-        val action = DownloadArtifact(
+        val action = DownloadArtifactV2(
             artifactName = "CoolArtifact",
             path = "/some/path",
         )

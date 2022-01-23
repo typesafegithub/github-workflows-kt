@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.Checkout
+import it.krzeminski.githubactions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.FetchDepth
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
@@ -17,7 +17,7 @@ class StepsToYamlTest : DescribeSpec({
             ),
             ExternalActionStep(
                 name = "Some external action",
-                action = Checkout(),
+                action = CheckoutV2(),
             ),
         )
 
@@ -75,7 +75,7 @@ class StepsToYamlTest : DescribeSpec({
             val steps = listOf(
                 ExternalActionStep(
                     name = "Some external action",
-                    action = Checkout(),
+                    action = CheckoutV2(),
                 ),
             )
 
@@ -92,7 +92,7 @@ class StepsToYamlTest : DescribeSpec({
             val steps = listOf(
                 ExternalActionStep(
                     name = "Some external action",
-                    action = Checkout(fetchDepth = FetchDepth.Infinite),
+                    action = CheckoutV2(fetchDepth = FetchDepth.Infinite),
                 ),
             )
 
@@ -111,7 +111,7 @@ class StepsToYamlTest : DescribeSpec({
             val steps = listOf(
                 ExternalActionStep(
                     name = "Some external action",
-                    action = Checkout(),
+                    action = CheckoutV2(),
                     condition = "\${{ matrix.foo == 'bar' }}"
                 ),
             )

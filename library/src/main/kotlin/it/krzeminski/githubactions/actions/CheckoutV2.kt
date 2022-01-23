@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.actions
 
-data class Checkout(
+data class CheckoutV2(
     val fetchDepth: FetchDepth? = null,
 ) : Action(name = "actions/checkout@v2") {
     @Suppress("SpreadOperator")
