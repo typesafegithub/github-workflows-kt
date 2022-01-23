@@ -1,7 +1,7 @@
-import it.krzeminski.githubactions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.DownloadArtifactV2
-import it.krzeminski.githubactions.actions.FetchDepth.Infinite
-import it.krzeminski.githubactions.actions.UploadArtifactV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.DownloadArtifactV2
+import it.krzeminski.githubactions.actions.actions.FetchDepth.Infinite
+import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow

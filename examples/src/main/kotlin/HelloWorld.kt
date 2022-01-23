@@ -1,4 +1,4 @@
-import it.krzeminski.githubactions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Trigger.Push
 import it.krzeminski.githubactions.dsl.workflow

@@ -3,7 +3,7 @@ package it.krzeminski.githubactions
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Trigger
 import it.krzeminski.githubactions.dsl.workflow

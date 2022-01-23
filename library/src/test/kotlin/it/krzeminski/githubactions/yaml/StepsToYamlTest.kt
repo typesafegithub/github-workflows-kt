@@ -2,8 +2,8 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.FetchDepth
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.FetchDepth
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 

@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.actions
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.actions.actions.DownloadArtifactV2
 
 class DownloadArtifactTest : DescribeSpec({
     it("renders with defaults") {

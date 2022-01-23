@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.yaml
 
-import it.krzeminski.githubactions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder

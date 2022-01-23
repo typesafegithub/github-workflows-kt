@@ -1,4 +1,6 @@
-package it.krzeminski.githubactions.actions
+package it.krzeminski.githubactions.actions.actions
+
+import it.krzeminski.githubactions.actions.Action
 
 data class UploadArtifactV2(
     val artifactName: String,
