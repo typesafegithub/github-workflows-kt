@@ -91,3 +91,29 @@ names with your own.
 5. Commit both files, push the changes to GitHub and make sure the workflow is green when ran on GitHub Actions.
 
 More examples can be found [here](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/examples/src/main/kotlin).
+
+## ❓ Frequently Asked Questions
+
+### What if I need an action that doesn't have a wrapper in this library?
+
+Wrapping an action is as easy as inheriting after `it.krzeminski.githubactions.actions.Action`, which should contain a
+piece of logic how to map an object of your class to YAML arguments:
+
+```kotlin
+class MyCoolAction(
+    private val someArgument: String,
+) : Action("acmecorp/cool-action@v3") {
+    override fun toYamlArguments() = linkedMapOf(
+        "some-argument" to someArgument,
+    )
+}
+```
+
+Then just use it in your workflow:
+```kotlin
+uses(name = "FooBar",
+     action = MyCoolAction(someArgument = "foobar"))
+```
+
+After you have a working wrapper class, even partially, **please contribute it to the library** so that others can use
+it!
