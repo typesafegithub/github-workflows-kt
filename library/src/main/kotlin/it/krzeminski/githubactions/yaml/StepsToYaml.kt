@@ -22,9 +22,13 @@ private fun ExternalActionStep.toYaml() = buildString {
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
     }
-    appendLine("  with:")
-    append(action.argumentsToYaml().prependIndent("    "))
-}
+    this@toYaml.action.argumentsToYaml().let { arguments ->
+        if (arguments.isNotEmpty()) {
+            appendLine("  with:")
+            appendLine(arguments.prependIndent("    "))
+        }
+    }
+}.removeSuffix("\n")
 
 private fun CommandStep.toYaml() = buildString {
     appendLine("- name: $name")
