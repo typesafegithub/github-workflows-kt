@@ -1,18 +1,14 @@
-package it.krzeminski.githubactions.actions
+package it.krzeminski.githubactions.actions.actions
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
 
-class UploadArtifactTest : DescribeSpec({
+class DownloadArtifactTest : DescribeSpec({
     it("renders with defaults") {
         // given
-        val action = UploadArtifactV2(
+        val action = DownloadArtifactV2(
             artifactName = "CoolArtifact",
-            path = listOf(
-                "/some/path",
-                "/another/path",
-            )
+            path = "/some/path",
         )
 
         // when
@@ -21,7 +17,7 @@ class UploadArtifactTest : DescribeSpec({
         // then
         yaml shouldBe linkedMapOf(
             "name" to "CoolArtifact",
-            "path" to "/some/path\n/another/path",
+            "path" to "/some/path",
         )
     }
 })
