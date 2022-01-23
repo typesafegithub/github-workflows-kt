@@ -96,6 +96,8 @@ More examples can be found [here](https://github.com/krzema12/github-actions-kot
 
 ### What if I need an action that doesn't have a wrapper in this library?
 
+Please first ensure that your action isn't present [here](library/src/main/kotlin/it/krzeminski/githubactions/actions).
+
 Wrapping an action is as easy as inheriting after `it.krzeminski.githubactions.actions.Action`, which should contain a
 piece of logic how to map an object of your class to YAML arguments:
 
