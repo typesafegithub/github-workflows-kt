@@ -50,7 +50,7 @@ names with your own.
 
    @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.3.0")
 
-   import it.krzeminski.githubactions.actions.Checkout
+   import it.krzeminski.githubactions.actions.CheckoutV2
    import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
    import it.krzeminski.githubactions.domain.Trigger.Push
    import it.krzeminski.githubactions.dsl.workflow
@@ -64,7 +64,7 @@ names with your own.
        targetFile = Paths.get(".github/workflows/hello_world_workflow.yml")
    ) {
        job(name = "test_job", runsOn = UbuntuLatest) {
-           uses(name = "Check out", action = Checkout())
+           uses(name = "Check out", action = CheckoutV2())
            run(name = "Print greeting", command = "echo 'Hello world!'")
        }
    }
