@@ -67,6 +67,32 @@ class StepsToYamlTest : DescribeSpec({
                              |  run: echo 'test!'
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
+
+        it("renders multiline command") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    name = "Some command",
+                    command = """
+                        echo 'first line'
+                        echo 'second line'
+
+                        echo 'third line'
+                    """.trimIndent(),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Some command
+                             |  run: |
+                             |    echo 'first line'
+                             |    echo 'second line'
+                             |    
+                             |    echo 'third line'""".trimMargin()
+        }
     }
 
     describe("external action step") {

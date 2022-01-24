@@ -32,7 +32,16 @@ private fun ExternalActionStep.toYaml() = buildString {
 
 private fun CommandStep.toYaml() = buildString {
     appendLine("- name: $name")
-    appendLine("  run: $command")
+
+    if (command.lines().size == 1) {
+        appendLine("  run: $command")
+    } else {
+        appendLine("  run: |")
+        command.lines().forEach {
+            appendLine(it.prependIndent("    "))
+        }
+    }
+
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
     }
