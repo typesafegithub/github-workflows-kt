@@ -103,7 +103,7 @@ Wrapping an action is as easy as inheriting after `it.krzeminski.githubactions.a
 piece of logic how to map an object of your class to YAML arguments:
 
 ```kotlin
-class MyCoolAction(
+class MyCoolActionV3(
     private val someArgument: String,
 ) : Action("acmecorp/cool-action@v3") {
     override fun toYamlArguments() = linkedMapOf(
@@ -115,7 +115,7 @@ class MyCoolAction(
 Then just use it in your workflow:
 ```kotlin
 uses(name = "FooBar",
-     action = MyCoolAction(someArgument = "foobar"))
+     action = MyCoolActionV3(someArgument = "foobar"))
 ```
 
 After you have a working wrapper class, even partially, **please contribute it to the library** so that others can use
