@@ -11,4 +11,5 @@ private fun Trigger.toYamlString() =
     when (this) {
         Trigger.WorkflowDispatch -> "workflow_dispatch"
         Trigger.Push -> "push"
+        Trigger.PullRequest -> "pull_request"
     }

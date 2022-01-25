@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.domain.Trigger.PullRequest
 import it.krzeminski.githubactions.domain.Trigger.Push
 import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
 
@@ -49,6 +50,21 @@ class TriggersToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """
                 |push:
+            """.trimMargin()
+        }
+    }
+
+    describe("pull request") {
+        it("renders without parameters") {
+            // given
+            val triggers = listOf(PullRequest)
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |pull_request:
             """.trimMargin()
         }
     }
