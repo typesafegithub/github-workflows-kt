@@ -16,9 +16,9 @@ data class CheckoutV2(
             }
         ).toTypedArray()
     )
-}
 
-sealed interface FetchDepth {
-    object Infinite : FetchDepth
-    data class Quantity(val value: Int) : FetchDepth
+    sealed interface FetchDepth {
+        object Infinite : FetchDepth
+        data class Quantity(val value: Int) : FetchDepth
+    }
 }

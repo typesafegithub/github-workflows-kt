@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.actions.actions
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.actions.actions.CheckoutV2.FetchDepth
 
 class CheckoutV2Test : DescribeSpec({
     it("renders with defaults") {
