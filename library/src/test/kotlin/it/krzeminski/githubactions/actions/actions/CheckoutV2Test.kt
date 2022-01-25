@@ -3,7 +3,7 @@ package it.krzeminski.githubactions.actions.actions
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class CheckoutTest : DescribeSpec({
+class CheckoutV2Test : DescribeSpec({
     it("renders with defaults") {
         // given
         val action = CheckoutV2()
