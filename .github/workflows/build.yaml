@@ -14,6 +14,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - uses: eskatos/gradle-command-action@v2.1.0
+      - uses: eskatos/gradle-command-action@v2.1.1
         with:
           arguments: build
