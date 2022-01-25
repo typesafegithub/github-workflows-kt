@@ -100,6 +100,57 @@ class EndToEndTest : FunSpec({
         """.trimIndent()
     }
 
+    test("toYaml() - multiline command with pipes") {
+        // given
+        val workflowWithMultilineCommand = workflow(
+            name = "Test workflow",
+            on = listOf(Trigger.Push),
+            sourceFile = sourceFile.toPath(),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                run(
+                    name = "Hello world!",
+                    command = """
+                        less test.txt \
+                        | grep -P "foobar" \
+                        | sort \
+                        > result.txt
+                    """.trimIndent(),
+                )
+            }
+        }
+
+        // when
+        val actualYaml = workflowWithMultilineCommand.toYaml(addConsistencyCheck = false)
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+
+            on:
+              push:
+
+            jobs:
+              "test_job":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - name: Hello world!
+                    run: |
+                      less test.txt \
+                      | grep -P "foobar" \
+                      | sort \
+                      > result.txt
+        """.trimIndent()
+    }
+
     test("writeToFile() - 'hello world' workflow") {
         // given
         val targetTempFile = tempfile()

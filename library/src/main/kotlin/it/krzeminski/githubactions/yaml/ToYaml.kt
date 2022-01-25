@@ -22,17 +22,19 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         jobs
     }
 
-    return """|# This file was generated using Kotlin DSL ($sourceFile).
-              |# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-              |# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-              |
-              |name: $name
-              |
-              |on:
-              |${this.on.triggersToYaml().prependIndent("  ")}
-              |
-              |jobs:
-              |${jobsWithConsistencyCheck.jobsToYaml().prependIndent("  ")}""".trimMargin()
+    return """
+# This file was generated using Kotlin DSL ($sourceFile).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+name: $name
+
+on:
+${this.on.triggersToYaml().prependIndent("  ")}
+
+jobs:
+${jobsWithConsistencyCheck.jobsToYaml().prependIndent("  ")}
+    """.trimIndent()
 }
 
 fun Workflow.writeToFile() {
