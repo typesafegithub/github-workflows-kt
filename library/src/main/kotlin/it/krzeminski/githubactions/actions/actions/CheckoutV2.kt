@@ -4,7 +4,7 @@ import it.krzeminski.githubactions.actions.Action
 
 data class CheckoutV2(
     val fetchDepth: FetchDepth? = null,
-) : Action(name = "actions/checkout@v2") {
+) : Action("actions", "checkout", "v2") {
     @Suppress("SpreadOperator")
     override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

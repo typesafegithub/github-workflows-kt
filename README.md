@@ -105,7 +105,7 @@ piece of logic how to map an object of your class to YAML arguments:
 ```kotlin
 class MyCoolActionV3(
     private val someArgument: String,
-) : Action("acmecorp/cool-action@v3") {
+) : Action("acmecorp", "cool-action", "v3") {
     override fun toYamlArguments() = linkedMapOf(
         "some-argument" to someArgument,
     )

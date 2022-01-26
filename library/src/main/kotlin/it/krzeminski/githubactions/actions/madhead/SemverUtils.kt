@@ -7,7 +7,7 @@ data class SemverUtils(
     val compareTo: String? = null,
     val satisfies: String? = null,
     val identifier: String? = null,
-) : Action(name = "madhead/semver-utils@latest") {
+) : Action("madhead", "semver-utils", "latest") {
     override fun toYamlArguments(): LinkedHashMap<String, String> {
         val result = LinkedHashMap<String, String>()
 
