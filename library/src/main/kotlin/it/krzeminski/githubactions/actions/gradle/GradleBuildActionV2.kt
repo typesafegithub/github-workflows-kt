@@ -11,7 +11,7 @@ data class GradleBuildActionV2(
     val arguments: String? = null,
     val buildRootDirectory: String? = null,
     val gradleExecutable: String? = null,
-) : Action("gradle/gradle-build-action@v2") {
+) : Action("gradle", "gradle-build-action", "v2") {
     @Suppress("SpreadOperator")
     override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

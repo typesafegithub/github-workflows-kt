@@ -7,7 +7,7 @@ data class ReadJavaProperties(
     val property: String? = null,
     val all: Boolean? = null,
     val default: String? = null,
-) : Action(name = "madhead/read-java-properties@latest") {
+) : Action("madhead", "read-java-properties", "latest") {
     override fun toYamlArguments(): LinkedHashMap<String, String> {
         val result = LinkedHashMap<String, String>()
 

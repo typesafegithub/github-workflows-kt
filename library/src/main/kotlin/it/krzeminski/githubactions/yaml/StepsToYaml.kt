@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.fullName
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Step
@@ -18,7 +19,7 @@ private fun Step.toYaml() =
 
 private fun ExternalActionStep.toYaml() = buildString {
     appendLine("- name: $name")
-    appendLine("  uses: ${action.name}")
+    appendLine("  uses: ${action.fullName}")
     this@toYaml.action.argumentsToYaml().let { arguments ->
         if (arguments.isNotEmpty()) {
             appendLine("  with:")
