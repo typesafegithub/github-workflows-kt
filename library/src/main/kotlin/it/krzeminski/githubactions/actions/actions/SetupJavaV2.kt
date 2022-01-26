@@ -5,7 +5,7 @@ import it.krzeminski.githubactions.actions.Action
 data class SetupJavaV2(
     val distribution: Distribution,
     val javaVersion: String,
-) : Action("actions/setup-java") {
+) : Action("actions/setup-java@v2") {
     override fun toYamlArguments() = linkedMapOf(
         "distribution" to distribution.toYamlString(),
         "java-version" to javaVersion,
