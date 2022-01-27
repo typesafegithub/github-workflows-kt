@@ -7,7 +7,7 @@ class UploadArtifactV2Test : DescribeSpec({
     it("renders with defaults") {
         // given
         val action = UploadArtifactV2(
-            artifactName = "CoolArtifact",
+            name = "CoolArtifact",
             path = listOf(
                 "/some/path",
                 "/another/path",

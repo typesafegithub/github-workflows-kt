@@ -61,7 +61,7 @@ fun main() {
                 name = "Upload common artifact",
                 condition = "\${{ matrix.testTask == 'pythonTest' }}",
                 action = UploadArtifactV2(
-                    artifactName = "common-artifact",
+                    name = "common-artifact",
                     path = listOf(
                         "python/box.tests/reports/git-history-plot.svg",
                         "python/experiments/generated")
@@ -70,7 +70,7 @@ fun main() {
             uses(
                 name = "Upload \${{ matrix.testTask }} artifact",
                 action = UploadArtifactV2(
-                    artifactName = "\${{ matrix.testTask }}-artifact",
+                    name = "\${{ matrix.testTask }}-artifact",
                     path = listOf("python/box.tests/reports/\${{ matrix.testTask }}"),
                 ),
             )
