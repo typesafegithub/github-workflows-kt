@@ -74,6 +74,78 @@ class EndToEndTest : FunSpec({
         """.trimIndent()
     }
 
+    test("toYaml() - workflow with one job depending on another") {
+        // given
+        val workflowWithDependency = workflow(
+            name = "Test workflow",
+            on = listOf(Trigger.Push),
+            sourceFile = sourceFile.toPath(),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        ) {
+            val testJob1 = job(
+                name = "test_job_1",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
+            }
+
+            job(
+                name = "test_job_2",
+                runsOn = RunnerType.UbuntuLatest,
+                needs = listOf(testJob1),
+            ) {
+                run(
+                    name = "Hello world, again!",
+                    command = "echo 'hello again!'",
+                )
+            }
+        }
+
+        // when
+        val actualYaml = workflowWithDependency.toYaml()
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            
+            name: Test workflow
+
+            on:
+              push:
+
+            jobs:
+              "check_yaml_consistency":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - name: Check out
+                    uses: actions/checkout@v2
+                  - name: Install Kotlin
+                    run: sudo snap install --classic kotlin
+                  - name: Consistency check
+                    run: diff -u '.github/workflows/some_workflow.yaml' <('$sourceFile')
+              "test_job_1":
+                runs-on: "ubuntu-latest"
+                needs:
+                  - "check_yaml_consistency"
+                steps:
+                  - name: Hello world!
+                    run: echo 'hello!'
+              "test_job_2":
+                runs-on: "ubuntu-latest"
+                needs:
+                  - "test_job_1"
+                  - "check_yaml_consistency"
+                steps:
+                  - name: Hello world, again!
+                    run: echo 'hello again!'
+        """.trimIndent()
+    }
+
     test("toYaml() - 'hello world' workflow without consistency check") {
         // when
         val actualYaml = workflow.toYaml(addConsistencyCheck = false)

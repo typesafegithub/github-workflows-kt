@@ -16,7 +16,7 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
             run("Consistency check", "diff -u '$targetFile' <('$sourceFile')")
         }
         listOf(consistencyCheckJob) + jobs.map {
-            it.copy(needs = listOf(consistencyCheckJob))
+            it.copy(needs = it.needs + consistencyCheckJob)
         }
     } else {
         jobs
