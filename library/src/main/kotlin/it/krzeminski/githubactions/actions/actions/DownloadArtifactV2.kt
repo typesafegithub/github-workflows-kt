@@ -3,11 +3,11 @@ package it.krzeminski.githubactions.actions.actions
 import it.krzeminski.githubactions.actions.Action
 
 data class DownloadArtifactV2(
-    val artifactName: String,
+    val name: String,
     val path: String,
 ) : Action("actions", "download-artifact", "v2") {
     override fun toYamlArguments() = linkedMapOf(
-        "name" to artifactName,
+        "name" to name,
         "path" to path,
     )
 }

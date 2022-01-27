@@ -84,21 +84,21 @@ fun main() {
             uses(
                 name = "Download common artifact",
                 action = DownloadArtifactV2(
-                    artifactName = "common-artifact",
+                    name = "common-artifact",
                     path = "python",
                 ),
             )
             uses(
                 name = "Download pythonTest artifact",
                 action = DownloadArtifactV2(
-                    artifactName = "pythonTest-artifact",
+                    name = "pythonTest-artifact",
                     path = "python/box.tests/reports/pythonTest",
                 ),
             )
             uses(
                 name = "Download microPythonTest artifact",
                 action = DownloadArtifactV2(
-                    artifactName = "microPythonTest-artifact",
+                    name = "microPythonTest-artifact",
                     path = "python/box.tests/reports/microPythonTest",
                 ),
             )

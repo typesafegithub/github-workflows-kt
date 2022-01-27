@@ -7,7 +7,7 @@ class DownloadArtifactV2Test : DescribeSpec({
     it("renders with defaults") {
         // given
         val action = DownloadArtifactV2(
-            artifactName = "CoolArtifact",
+            name = "CoolArtifact",
             path = "/some/path",
         )
 
