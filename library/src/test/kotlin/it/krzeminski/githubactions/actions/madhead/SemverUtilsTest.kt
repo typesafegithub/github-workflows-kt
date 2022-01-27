@@ -31,7 +31,7 @@ class SemverUtilsTest : DescribeSpec({
             // then
             yaml shouldBe linkedMapOf(
                 "version" to "1.2.3",
-                "compareTo" to "1.2.4",
+                "compare-to" to "1.2.4",
             )
         }
     }

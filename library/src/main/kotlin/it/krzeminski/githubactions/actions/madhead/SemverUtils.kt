@@ -12,7 +12,7 @@ data class SemverUtils(
         val result = LinkedHashMap<String, String>()
 
         result["version"] = version
-        compareTo?.let { result["compareTo"] = it }
+        compareTo?.let { result["compare-to"] = it }
         satisfies?.let { result["satisfies"] = it }
         identifier?.let { result["identifier"] = it }
 
