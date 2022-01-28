@@ -50,7 +50,16 @@ private fun CommandStep.toYaml() = buildString {
 
 private fun Action.argumentsToYaml() =
     toYamlArguments().map { (key, value) ->
-        "$key: $value"
+        if (value.lines().size == 1) {
+            "$key: $value"
+        } else {
+            buildString {
+                appendLine("$key: |")
+                value.lines().forEach {
+                    appendLine(it.prependIndent("  "))
+                }
+            }.removeSuffix("\n")
+        }
     }.joinToString(separator = "\n")
 
 private fun String.conditionToYaml() =

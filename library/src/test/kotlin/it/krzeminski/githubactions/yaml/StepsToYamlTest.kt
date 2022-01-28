@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.CheckoutV2.FetchDepth
+import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 
@@ -170,6 +171,31 @@ class StepsToYamlTest : DescribeSpec({
                              |  with:
                              |    fetch-depth: 0
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
+        }
+
+        it("renders with action parameter that renders to more than one line") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    name = "Action with multiline parameter",
+                    action = UploadArtifactV2(
+                        name = "artifact",
+                        path = listOf("path1", "path2"),
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Action with multiline parameter
+                             |  uses: actions/upload-artifact@v2
+                             |  with:
+                             |    name: artifact
+                             |    path: |
+                             |      path1
+                             |      path2""".trimMargin()
         }
     }
 })
