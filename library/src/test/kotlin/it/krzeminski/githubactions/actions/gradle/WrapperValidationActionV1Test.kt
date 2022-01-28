@@ -14,4 +14,23 @@ class WrapperValidationActionV1Test : DescribeSpec({
         // then
         yaml shouldBe linkedMapOf()
     }
+
+    it("renders with all parameters") {
+        // given
+        val action = WrapperValidationActionV1(
+            minWrapperCount = 3,
+            allowSnapshots = true,
+            allowChecksums = listOf("checksum1", "checksum2"),
+        )
+
+        // when
+        val yaml = action.toYamlArguments()
+
+        // then
+        yaml shouldBe linkedMapOf(
+            "min-wrapper-count" to "3",
+            "allow-snapshots" to "true",
+            "allow-checksums" to "checksum1,checksum2",
+        )
+    }
 })
