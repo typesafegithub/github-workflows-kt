@@ -49,7 +49,7 @@ names with your own.
    ```kotlin
    #!/usr/bin/env kotlin
 
-   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.4.1")
+   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.5.0")
 
    import it.krzeminski.githubactions.actions.actions.CheckoutV2
    import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
