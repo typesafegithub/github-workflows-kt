@@ -16,35 +16,55 @@ class CheckoutV2Test : DescribeSpec({
         yaml shouldBe linkedMapOf()
     }
 
-    describe("fetch-depth parameter") {
-        it("renders with specified concrete fetch depth") {
-            // given
-            val action = CheckoutV2(
-                fetchDepth = FetchDepth.Quantity(3),
-            )
+    it("renders with all parameters") {
+        // given
+        val action = CheckoutV2(
+            repository = "repository1",
+            ref = "ref1",
+            token = "token1",
+            sshKey = "ssh-key1",
+            sshKnownHosts = "ssh-known-hosts1",
+            sshStrict = true,
+            persistCredentials = false,
+            path = "path1",
+            clean = true,
+            fetchDepth = FetchDepth.Quantity(1),
+            lfs = false,
+            submodules = true,
+        )
 
-            // when
-            val yaml = action.toYamlArguments()
+        // when
+        val yaml = action.toYamlArguments()
 
-            // then
-            yaml shouldBe linkedMapOf(
-                "fetch-depth" to "3",
-            )
-        }
+        // then
+        yaml shouldBe linkedMapOf(
+            "repository" to "repository1",
+            "ref" to "ref1",
+            "token" to "token1",
+            "ssh-key" to "ssh-key1",
+            "ssh-known-hosts" to "ssh-known-hosts1",
+            "ssh-strict" to "true",
+            "persist-credentials" to "false",
+            "path" to "path1",
+            "clean" to "true",
+            "fetch-depth" to "1",
+            "lfs" to "false",
+            "submodules" to "true",
+        )
+    }
 
-        it("renders with specified infinite fetch depth") {
-            // given
-            val action = CheckoutV2(
-                fetchDepth = FetchDepth.Infinite,
-            )
+    it("renders fetch depth with specified infinite fetch depth") {
+        // given
+        val action = CheckoutV2(
+            fetchDepth = FetchDepth.Infinite,
+        )
 
-            // when
-            val yaml = action.toYamlArguments()
+        // when
+        val yaml = action.toYamlArguments()
 
-            // then
-            yaml shouldBe linkedMapOf(
-                "fetch-depth" to "0",
-            )
-        }
+        // then
+        yaml shouldBe linkedMapOf(
+            "fetch-depth" to "0",
+        )
     }
 })
