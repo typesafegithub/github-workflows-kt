@@ -20,6 +20,7 @@ fun Cron(
     month: String = "*",
     dayWeek: String = "*",
 ): Cron {
+    @Suppress("MagicNumber")
     val errors = listOf(
         checkCronSyntax(minute, "minute", 0..59),
         checkCronSyntax(hour, "hour", 0..23),
