@@ -1,16 +1,30 @@
+# This file was generated using Kotlin DSL (.github/workflows/update-gradle-gradle-wrapper.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
 name: Update Gradle Wrapper
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Daily, at midnight.
+   - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
-  update-gradle-wrapper:
-    runs-on: ubuntu-latest
-
+  "check_yaml_consistency":
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2
-
+      - name: Check out
+        uses: actions/checkout@v2
+      - name: Install Kotlin
+        run: sudo snap install --classic kotlin
+      - name: Consistency check
+        run: diff -u '.github/workflows/update-gradle-wrapper.yml' <('.github/workflows/update-gradle-gradle-wrapper.main.kts')
+  "update-gradle-wrapper":
+    runs-on: "ubuntu-latest"
+    needs:
+      - "check_yaml_consistency"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Update Gradle Wrapper
         uses: gradle-update/update-gradle-wrapper-action@v1
