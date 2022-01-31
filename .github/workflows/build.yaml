@@ -1,3 +1,7 @@
+# This file was generated using Kotlin DSL (.github/workflows/build.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
 name: Build
 
 on:
@@ -5,15 +9,28 @@ on:
   pull_request:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  "check_yaml_consistency":
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out
+        uses: actions/checkout@v2
+      - name: Install Kotlin
+        run: sudo snap install --classic kotlin
+      - name: Consistency check
+        run: diff -u '.github/workflows/build.yaml' <('.github/workflows/build.main.kts')
+  "build":
+    runs-on: "ubuntu-latest"
+    needs:
+      - "check_yaml_consistency"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'adopt'
-      - uses: gradle/gradle-build-action@v2
+          distribution: adopt
+          java-version: 11
+      - name: Build
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: build
