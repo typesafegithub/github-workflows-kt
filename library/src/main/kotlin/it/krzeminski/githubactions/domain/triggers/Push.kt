@@ -1,3 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
-object Push : Trigger()
+data class Push(
+    val branches: List<String>? = null,
+    val tags: List<String>? = null,
+    val branchesIgnore: List<String>? = null,
+    val tagsIgnore: List<String>? = null,
+) : Trigger()

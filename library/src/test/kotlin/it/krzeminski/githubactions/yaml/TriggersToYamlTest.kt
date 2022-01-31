@@ -13,7 +13,7 @@ class TriggersToYamlTest : DescribeSpec({
         // given
         val triggers = listOf(
             WorkflowDispatch,
-            Push,
+            Push(),
         )
 
         // when
@@ -44,7 +44,7 @@ class TriggersToYamlTest : DescribeSpec({
     describe("push") {
         it("renders without parameters") {
             // given
-            val triggers = listOf(Push)
+            val triggers = listOf(Push())
 
             // when
             val yaml = triggers.triggersToYaml()
@@ -52,6 +52,38 @@ class TriggersToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """
                 |push:
+            """.trimMargin()
+        }
+
+        it("renders with all parameters") {
+            // given
+            val triggers = listOf(
+                Push(
+                    branches = listOf("branch1", "branch2"),
+                    tags = listOf("tag1", "tag2"),
+                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
+                    tagsIgnore = listOf("tagIgnore1", "tagIgnore2"),
+                ),
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |push:
+                |  branches:
+                |    - 'branch1'
+                |    - 'branch2'
+                |  tags:
+                |    - 'tag1'
+                |    - 'tag2'
+                |  branches-ignore:
+                |    - 'branchIgnore1'
+                |    - 'branchIgnore2'
+                |  tags-ignore:
+                |    - 'tagIgnore1'
+                |    - 'tagIgnore2'
             """.trimMargin()
         }
     }

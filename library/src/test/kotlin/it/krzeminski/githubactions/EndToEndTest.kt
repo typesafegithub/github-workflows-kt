@@ -17,7 +17,7 @@ class EndToEndTest : FunSpec({
     }
     val workflow = workflow(
         name = "Test workflow",
-        on = listOf(Push),
+        on = listOf(Push()),
         sourceFile = sourceFile.toPath(),
         targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
     ) {
@@ -78,7 +78,7 @@ class EndToEndTest : FunSpec({
         // given
         val workflowWithDependency = workflow(
             name = "Test workflow",
-            on = listOf(Push),
+            on = listOf(Push()),
             sourceFile = sourceFile.toPath(),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
@@ -176,7 +176,7 @@ class EndToEndTest : FunSpec({
         // given
         val workflowWithMultilineCommand = workflow(
             name = "Test workflow",
-            on = listOf(Push),
+            on = listOf(Push()),
             sourceFile = sourceFile.toPath(),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
@@ -228,7 +228,7 @@ class EndToEndTest : FunSpec({
         val targetTempFile = tempfile()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
-            on = listOf(Push),
+            on = listOf(Push()),
             sourceFile = sourceFile.toPath(),
             targetFile = targetTempFile.toPath(),
         ) {

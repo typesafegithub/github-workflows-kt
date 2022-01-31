@@ -8,7 +8,7 @@ import java.nio.file.Paths
 fun main() {
     val workflow = workflow(
         name = "Test workflow",
-        on = listOf(Push),
+        on = listOf(Push()),
         sourceFile = Paths.get("script.main.kts"),
         targetFile = Paths.get("some_workflow.yaml"),
     ) {

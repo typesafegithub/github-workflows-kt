@@ -14,7 +14,7 @@ fun List<Trigger>.triggersToYaml(): String =
 private fun Trigger.toYamlString() =
     when (this) {
         WorkflowDispatch -> "workflow_dispatch:"
-        Push -> "push:"
+        is Push -> toYaml()
         PullRequest -> "pull_request:"
         is Schedule -> toYaml()
     }
@@ -25,3 +25,20 @@ private fun Schedule.toYaml() = buildString {
         appendLine(" - cron: '${it.expression}'")
     }
 }.removeSuffix("\n")
+
+private fun Push.toYaml() = buildString {
+    appendLine("push:")
+    printIfHasElements(this@toYaml.branches, "branches")
+    printIfHasElements(this@toYaml.tags, "tags")
+    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
+    printIfHasElements(this@toYaml.tagsIgnore, "tags-ignore")
+}.removeSuffix("\n")
+
+private fun StringBuilder.printIfHasElements(items: List<String>?, name: String) {
+    if (!items.isNullOrEmpty()) {
+        appendLine("  $name:")
+        items.forEach {
+            appendLine("    - '$it'")
+        }
+    }
+}
