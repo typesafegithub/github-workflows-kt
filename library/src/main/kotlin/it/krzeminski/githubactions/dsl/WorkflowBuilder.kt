@@ -2,8 +2,8 @@ package it.krzeminski.githubactions.dsl
 
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.Trigger
 import it.krzeminski.githubactions.domain.Workflow
+import it.krzeminski.githubactions.domain.triggers.Trigger
 import java.nio.file.Path
 
 @GithubActionsDsl

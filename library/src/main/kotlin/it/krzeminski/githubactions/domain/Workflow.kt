@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.domain
 
+import it.krzeminski.githubactions.domain.triggers.Trigger
 import java.nio.file.Path
 
 data class Workflow(

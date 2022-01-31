@@ -2,11 +2,11 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.domain.Cron
-import it.krzeminski.githubactions.domain.Trigger
-import it.krzeminski.githubactions.domain.Trigger.PullRequest
-import it.krzeminski.githubactions.domain.Trigger.Push
-import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
+import it.krzeminski.githubactions.domain.triggers.Cron
+import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 
 class TriggersToYamlTest : DescribeSpec({
     it("renders multiple triggers") {
@@ -75,7 +75,7 @@ class TriggersToYamlTest : DescribeSpec({
         it("renders with single cron trigger") {
             // given
             val triggers = listOf(
-                Trigger.Schedule(
+                Schedule(
                     triggers = listOf(
                         Cron("30 5,17 * * *"),
                     ),
@@ -95,7 +95,7 @@ class TriggersToYamlTest : DescribeSpec({
         it("renders with multiple cron triggers") {
             // given
             val triggers = listOf(
-                Trigger.Schedule(
+                Schedule(
                     triggers = listOf(
                         Cron("30 5,17 * * *"),
                         Cron("0 0 * * *"),

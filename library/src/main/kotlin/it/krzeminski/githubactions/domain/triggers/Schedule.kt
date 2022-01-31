@@ -1,13 +1,8 @@
-package it.krzeminski.githubactions.domain
+package it.krzeminski.githubactions.domain.triggers
 
-sealed class Trigger {
-    object Push : Trigger()
-    object WorkflowDispatch : Trigger()
-    object PullRequest : Trigger()
-    data class Schedule(
-        val triggers: List<Cron>,
-    ) : Trigger()
-}
+data class Schedule(
+    val triggers: List<Cron>,
+) : Trigger()
 
 /** See https://crontab.guru **/
 data class Cron(val expression: String)

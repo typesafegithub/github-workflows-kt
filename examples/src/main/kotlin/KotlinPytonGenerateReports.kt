@@ -3,7 +3,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2.FetchDepth.Infinit
 import it.krzeminski.githubactions.actions.actions.DownloadArtifactV2
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-import it.krzeminski.githubactions.domain.Trigger.WorkflowDispatch
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.file.Paths
