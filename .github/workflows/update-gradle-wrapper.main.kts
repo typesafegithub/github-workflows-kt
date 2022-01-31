@@ -18,7 +18,7 @@ val updateGradleWrapperWorkflow = workflow(
         Schedule(listOf(Cron("0 0 * * *"))), // Daily, at midnight.
         WorkflowDispatch,
     ),
-    sourceFile = Paths.get(".github/workflows/update-gradle-gradle-wrapper.main.kts"),
+    sourceFile = Paths.get(".github/workflows/update-gradle-wrapper.main.kts"),
     targetFile = Paths.get(".github/workflows/update-gradle-wrapper.yml"),
 ) {
     job(
