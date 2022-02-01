@@ -22,10 +22,12 @@ class WorkflowBuilder(
         jobs = jobs,
     )
 
+    @Suppress("LongParameterList")
     fun job(
         name: String,
         runsOn: RunnerType,
         needs: List<Job> = emptyList(),
+        condition: String? = null,
         strategyMatrix: Map<String, List<String>>? = null,
         block: JobBuilder.() -> Unit,
     ): Job {
@@ -33,6 +35,7 @@ class WorkflowBuilder(
             name = name,
             runsOn = runsOn,
             needs = needs,
+            condition = condition,
             strategyMatrix = strategyMatrix,
         )
         jobBuilder.block()

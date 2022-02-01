@@ -29,6 +29,10 @@ private fun Job.toYaml() = buildString {
         }
     }
 
+    this@toYaml.condition?.let {
+        appendLine("  if: $it")
+    }
+
     this@toYaml.strategyMatrix?.let {
         appendLine("  strategy:")
         appendLine("    matrix:")
