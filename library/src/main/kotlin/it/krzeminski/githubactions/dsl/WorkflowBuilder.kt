@@ -10,6 +10,7 @@ import java.nio.file.Path
 class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
+    env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
     jobs: List<Job> = emptyList(),
@@ -17,6 +18,7 @@ class WorkflowBuilder(
     private var workflow = Workflow(
         name = name,
         on = on,
+        env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
         jobs = jobs,
@@ -28,6 +30,7 @@ class WorkflowBuilder(
         runsOn: RunnerType,
         needs: List<Job> = emptyList(),
         condition: String? = null,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
         block: JobBuilder.() -> Unit,
     ): Job {
@@ -36,6 +39,7 @@ class WorkflowBuilder(
             runsOn = runsOn,
             needs = needs,
             condition = condition,
+            env = env,
             strategyMatrix = strategyMatrix,
         )
         jobBuilder.block()
@@ -56,9 +60,11 @@ fun Workflow.toBuilder() =
         jobs = jobs,
     )
 
+@Suppress("LongParameterList")
 fun workflow(
     name: String,
     on: List<Trigger>,
+    env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
     block: WorkflowBuilder.() -> Unit,
@@ -66,6 +72,7 @@ fun workflow(
     val workflowBuilder = WorkflowBuilder(
         name = name,
         on = on,
+        env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
     )

@@ -50,6 +50,35 @@ class StepsToYamlTest : DescribeSpec({
                              |  run: echo 'test!'""".trimMargin()
         }
 
+        it("renders with environment variables") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    name = "Some command",
+                    command = "echo 'test!'",
+                    env = linkedMapOf(
+                        "FOO" to "bar",
+                        "BAZ" to """
+                            goo,
+                            zoo
+                        """.trimIndent()
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Some command
+                             |  env:
+                             |    FOO: bar
+                             |    BAZ: |
+                             |      goo,
+                             |      zoo
+                             |  run: echo 'test!'""".trimMargin()
+        }
+
         it("renders with condition") {
             // given
             val steps = listOf(
@@ -131,6 +160,35 @@ class StepsToYamlTest : DescribeSpec({
                              |  uses: actions/checkout@v2
                              |  with:
                              |    fetch-depth: 0""".trimMargin()
+        }
+
+        it("renders with environment variables") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    name = "Some external action",
+                    action = CheckoutV2(),
+                    env = linkedMapOf(
+                        "FOO" to "bar",
+                        "BAZ" to """
+                            goo,
+                            zoo
+                        """.trimIndent()
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Some external action
+                             |  uses: actions/checkout@v2
+                             |  env:
+                             |    FOO: bar
+                             |    BAZ: |
+                             |      goo,
+                             |      zoo""".trimMargin()
         }
 
         it("renders with condition") {
