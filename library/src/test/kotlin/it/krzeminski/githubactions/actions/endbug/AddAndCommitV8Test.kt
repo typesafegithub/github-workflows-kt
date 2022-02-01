@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.actions.actions
+package it.krzeminski.githubactions.actions.endbug
 
 import io.kotest.core.spec.style.DescribeSpec
 import it.krzeminski.githubactions.shouldHaveYamlArguments
@@ -16,25 +16,25 @@ class AddAndCommitV8Test : DescribeSpec({
 
     it("renders with author_name") {
         AddAndCommitV8(
-            author_name = "Author Name"
+            authorName = "Author Name"
         ) shouldHaveYamlArguments linkedMapOf("author_name" to "Author Name")
     }
 
     it("renders with author_email") {
         AddAndCommitV8(
-            author_email = "mail@example.com"
+            authorEmail = "mail@example.com"
         ) shouldHaveYamlArguments linkedMapOf("author_email" to "mail@example.com")
     }
 
     it("renders with committer_name") {
         AddAndCommitV8(
-            committer_name = "Comitter Name"
+            committerName = "Comitter Name"
         ) shouldHaveYamlArguments linkedMapOf("committer_name" to "Comitter Name")
     }
 
     it("renders with committer_email") {
         AddAndCommitV8(
-            committer_email = "mail@example.com"
+            committerEmail = "mail@example.com"
         ) shouldHaveYamlArguments linkedMapOf("committer_email" to "mail@example.com")
     }
 
@@ -46,7 +46,7 @@ class AddAndCommitV8Test : DescribeSpec({
 
     it("renders with default_author") {
         AddAndCommitV8(
-            default_author = "github_actor"
+            defaultAuthor = "github_actor"
         ) shouldHaveYamlArguments linkedMapOf("default_author" to "github_actor")
     }
 
@@ -58,13 +58,13 @@ class AddAndCommitV8Test : DescribeSpec({
 
     it("renders with new_branch") {
         AddAndCommitV8(
-            new_branch = "custom-new-branch"
+            newBranch = "custom-new-branch"
         ) shouldHaveYamlArguments linkedMapOf("new_branch" to "custom-new-branch")
     }
 
     it("renders with pathspec_error_handling") {
         AddAndCommitV8(
-            pathspec_error_handling = "ignore"
+            pathspecErrorHandling = "ignore"
         ) shouldHaveYamlArguments linkedMapOf("pathspec_error_handling" to "ignore")
     }
 
