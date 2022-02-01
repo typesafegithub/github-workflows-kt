@@ -5,18 +5,16 @@ import it.krzeminski.githubactions.shouldHaveYamlArguments
 
 class CreateBranchV210Test : DescribeSpec({
     it("renders with defaults") {
-        CreateBranchV210() shouldHaveYamlArguments linkedMapOf()
+        CreateBranchV210() shouldHaveYamlArguments emptyMap()
     }
 
-    it("renders with branch") {
+    it("renders with all parameters") {
         CreateBranchV210(
-            branch = "main"
-        ) shouldHaveYamlArguments linkedMapOf("branch" to "main")
-    }
-
-    it("renders with sha") {
-        CreateBranchV210(
-            sha = "ec955710c66016d511585121e092b27066a99c28"
-        ) shouldHaveYamlArguments linkedMapOf("sha" to "ec955710c66016d511585121e092b27066a99c28")
+            branch = "main",
+            sha = "ec955710c66016d511585121e092b27066a99c28",
+        ) shouldHaveYamlArguments mapOf(
+            "branch" to "main",
+            "sha" to "ec955710c66016d511585121e092b27066a99c28",
+        )
     }
 })
