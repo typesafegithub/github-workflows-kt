@@ -15,7 +15,7 @@ private fun Trigger.toYamlString() =
     when (this) {
         WorkflowDispatch -> "workflow_dispatch:"
         is Push -> toYaml()
-        PullRequest -> "pull_request:"
+        is PullRequest -> toYaml()
         is Schedule -> toYaml()
     }
 
@@ -32,6 +32,12 @@ private fun Push.toYaml() = buildString {
     printIfHasElements(this@toYaml.tags, "tags")
     printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
     printIfHasElements(this@toYaml.tagsIgnore, "tags-ignore")
+}.removeSuffix("\n")
+
+private fun PullRequest.toYaml() = buildString {
+    appendLine("pull_request:")
+    printIfHasElements(this@toYaml.branches, "branches")
+    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
 }.removeSuffix("\n")
 
 private fun StringBuilder.printIfHasElements(items: List<String>?, name: String) {
