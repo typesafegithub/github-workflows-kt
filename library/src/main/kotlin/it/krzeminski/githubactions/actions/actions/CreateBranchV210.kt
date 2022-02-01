@@ -12,7 +12,7 @@ data class CreateBranchV210(
     val branch: String? = null,
     /** The SHA1 value for the branch reference. **/
     val sha: String? = null,
-) : Action("peterjgrainger", "action-create-branch", "v2.0.1") {
+) : Action("peterjgrainger", "action-create-branch", "v2") {
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments() = linkedMapOf(
