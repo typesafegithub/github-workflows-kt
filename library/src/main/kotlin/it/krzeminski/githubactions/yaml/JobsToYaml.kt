@@ -29,6 +29,11 @@ private fun Job.toYaml() = buildString {
         }
     }
 
+    if (this@toYaml.env.isNotEmpty()) {
+        appendLine("  env:")
+        appendLine(this@toYaml.env.toYaml().prependIndent("    "))
+    }
+
     this@toYaml.condition?.let {
         appendLine("  if: $it")
     }

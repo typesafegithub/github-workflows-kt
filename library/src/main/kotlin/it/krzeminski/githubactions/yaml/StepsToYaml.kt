@@ -26,6 +26,10 @@ private fun ExternalActionStep.toYaml() = buildString {
             appendLine(arguments.prependIndent("    "))
         }
     }
+    if (this@toYaml.env.isNotEmpty()) {
+        appendLine("  env:")
+        appendLine(this@toYaml.env.toYaml().prependIndent("    "))
+    }
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
     }
@@ -33,6 +37,11 @@ private fun ExternalActionStep.toYaml() = buildString {
 
 private fun CommandStep.toYaml() = buildString {
     appendLine("- name: $name")
+
+    if (this@toYaml.env.isNotEmpty()) {
+        appendLine("  env:")
+        appendLine(this@toYaml.env.toYaml().prependIndent("    "))
+    }
 
     if (command.lines().size == 1) {
         appendLine("  run: $command")
@@ -49,18 +58,7 @@ private fun CommandStep.toYaml() = buildString {
 }.removeSuffix("\n")
 
 private fun Action.argumentsToYaml() =
-    toYamlArguments().map { (key, value) ->
-        if (value.lines().size == 1) {
-            "$key: $value"
-        } else {
-            buildString {
-                appendLine("$key: |")
-                value.lines().forEach {
-                    appendLine(it.prependIndent("  "))
-                }
-            }.removeSuffix("\n")
-        }
-    }.joinToString(separator = "\n")
+    toYamlArguments().toYaml()
 
 private fun String.conditionToYaml() =
     "  if: $this"

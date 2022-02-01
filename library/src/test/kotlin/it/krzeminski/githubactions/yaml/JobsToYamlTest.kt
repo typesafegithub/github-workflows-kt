@@ -141,6 +141,46 @@ class JobsToYamlTest : DescribeSpec({
                          |      run: echo 'test!'""".trimMargin()
     }
 
+    it("renders with environment variables") {
+        // given
+        val jobs = listOf(
+            Job(
+                name = "Job 1",
+                runsOn = UbuntuLatest,
+                env = linkedMapOf(
+                    "FOO" to "bar",
+                    "BAZ" to """
+                        goo,
+                        zoo
+                    """.trimIndent()
+                ),
+                condition = "\${{ always() }}",
+                steps = listOf(
+                    CommandStep(
+                        name = "Some command 1",
+                        command = "echo 'test 1!'",
+                    ),
+                ),
+            ),
+        )
+
+        // when
+        val yaml = jobs.jobsToYaml()
+
+        // then
+        yaml shouldBe """|"Job 1":
+                         |  runs-on: "ubuntu-latest"
+                         |  env:
+                         |    FOO: bar
+                         |    BAZ: |
+                         |      goo,
+                         |      zoo
+                         |  if: ${'$'}{{ always() }}
+                         |  steps:
+                         |    - name: Some command 1
+                         |      run: echo 'test 1!'""".trimMargin()
+    }
+
     it("renders with condition") {
         // given
         val jobs = listOf(

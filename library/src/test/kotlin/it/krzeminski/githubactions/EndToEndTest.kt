@@ -313,4 +313,109 @@ class EndToEndTest : FunSpec({
                     uses: actions/checkout@v2
         """.trimIndent()
     }
+
+    test("toYaml() - environment variables") {
+        // when
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            env = linkedMapOf(
+                "SIMPLE_VAR" to "simple-value-workflow",
+                "MULTILINE_VAR" to """
+                    hey,
+                    hi,
+                    hello! workflow
+                """.trimIndent()
+            ),
+            sourceFile = sourceFile.toPath(),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                condition = "\${{ always() }}",
+                env = linkedMapOf(
+                    "SIMPLE_VAR" to "simple-value-job",
+                    "MULTILINE_VAR" to """
+                        hey,
+                        hi,
+                        hello! job
+                    """.trimIndent()
+                ),
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV2(),
+                    env = linkedMapOf(
+                        "SIMPLE_VAR" to "simple-value-uses",
+                        "MULTILINE_VAR" to """
+                            hey,
+                            hi,
+                            hello! uses
+                        """.trimIndent()
+                    ),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                    env = linkedMapOf(
+                        "SIMPLE_VAR" to "simple-value-run",
+                        "MULTILINE_VAR" to """
+                            hey,
+                            hi,
+                            hello! run
+                        """.trimIndent()
+                    ),
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            
+            name: Test workflow
+
+            on:
+              push:
+
+            env:
+              SIMPLE_VAR: simple-value-workflow
+              MULTILINE_VAR: |
+                hey,
+                hi,
+                hello! workflow
+
+            jobs:
+              "test_job":
+                runs-on: "ubuntu-latest"
+                env:
+                  SIMPLE_VAR: simple-value-job
+                  MULTILINE_VAR: |
+                    hey,
+                    hi,
+                    hello! job
+                if: ${'$'}{{ always() }}
+                steps:
+                  - name: Check out
+                    uses: actions/checkout@v2
+                    env:
+                      SIMPLE_VAR: simple-value-uses
+                      MULTILINE_VAR: |
+                        hey,
+                        hi,
+                        hello! uses
+                  - name: Hello world!
+                    env:
+                      SIMPLE_VAR: simple-value-run
+                      MULTILINE_VAR: |
+                        hey,
+                        hi,
+                        hello! run
+                    run: echo 'hello!'
+        """.trimIndent()
+    }
 })

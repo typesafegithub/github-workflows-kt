@@ -22,19 +22,30 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         jobs
     }
 
-    return """
-# This file was generated using Kotlin DSL ($sourceFile).
-# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+    return buildString {
+        appendLine(
+            """
+            # This file was generated using Kotlin DSL ($sourceFile).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            """.trimIndent()
+        )
+        appendLine()
+        appendLine("name: $name")
+        appendLine()
+        appendLine("on:")
+        appendLine(this@toYaml.on.triggersToYaml().prependIndent("  "))
+        appendLine()
 
-name: $name
+        if (this@toYaml.env.isNotEmpty()) {
+            appendLine("env:")
+            appendLine(this@toYaml.env.toYaml().prependIndent("  "))
+            appendLine()
+        }
 
-on:
-${this.on.triggersToYaml().prependIndent("  ")}
-
-jobs:
-${jobsWithConsistencyCheck.jobsToYaml().prependIndent("  ")}
-    """.trimIndent()
+        appendLine("jobs:")
+        append(jobsWithConsistencyCheck.jobsToYaml().prependIndent("  "))
+    }
 }
 
 fun Workflow.writeToFile() {
