@@ -60,7 +60,7 @@ names with your own.
 
    val workflow = workflow(
        name = "Test workflow",
-       on = listOf(Push),
+       on = listOf(Push()),
        sourceFile = Paths.get(".github/workflows/hello_world_workflow.main.kts"),
        targetFile = Paths.get(".github/workflows/hello_world_workflow.yml")
    ) {
