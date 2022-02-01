@@ -12,7 +12,7 @@ class TriggersToYamlTest : DescribeSpec({
     it("renders multiple triggers") {
         // given
         val triggers = listOf(
-            WorkflowDispatch,
+            WorkflowDispatch(),
             Push(),
         )
 
@@ -29,7 +29,7 @@ class TriggersToYamlTest : DescribeSpec({
     describe("workflow dispatch") {
         it("renders without parameters") {
             // given
-            val triggers = listOf(WorkflowDispatch)
+            val triggers = listOf(WorkflowDispatch())
 
             // when
             val yaml = triggers.triggersToYaml()

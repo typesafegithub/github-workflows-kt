@@ -11,7 +11,7 @@ import java.nio.file.Paths
 fun main() {
     val workflow = workflow(
         name = "Generate reports",
-        on = listOf(WorkflowDispatch),
+        on = listOf(WorkflowDispatch()),
         sourceFile = Paths.get("script.main.kts"),
         targetFile = Paths.get("some_workflow.yaml"),
     ) {

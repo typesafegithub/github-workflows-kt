@@ -13,7 +13,7 @@ fun List<Trigger>.triggersToYaml(): String =
 
 private fun Trigger.toYamlString() =
     when (this) {
-        WorkflowDispatch -> "workflow_dispatch:"
+        is WorkflowDispatch -> "workflow_dispatch:"
         is Push -> toYaml()
         is PullRequest -> toYaml()
         is Schedule -> toYaml()

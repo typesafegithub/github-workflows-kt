@@ -1,3 +1,3 @@
 package it.krzeminski.githubactions.domain.triggers
 
-object WorkflowDispatch : Trigger()
+class WorkflowDispatch : Trigger()
