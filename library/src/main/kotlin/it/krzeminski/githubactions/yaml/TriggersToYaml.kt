@@ -19,13 +19,6 @@ private fun Trigger.toYamlString() =
         is Schedule -> toYaml()
     }
 
-private fun Schedule.toYaml() = buildString {
-    appendLine("schedule:")
-    this@toYaml.triggers.forEach {
-        appendLine(" - cron: '${it.expression}'")
-    }
-}.removeSuffix("\n")
-
 private fun Push.toYaml() = buildString {
     appendLine("push:")
     printIfHasElements(this@toYaml.branches, "branches")
@@ -38,6 +31,13 @@ private fun PullRequest.toYaml() = buildString {
     appendLine("pull_request:")
     printIfHasElements(this@toYaml.branches, "branches")
     printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
+}.removeSuffix("\n")
+
+private fun Schedule.toYaml() = buildString {
+    appendLine("schedule:")
+    this@toYaml.triggers.forEach {
+        appendLine(" - cron: '${it.expression}'")
+    }
 }.removeSuffix("\n")
 
 private fun StringBuilder.printIfHasElements(items: List<String>?, name: String) {
