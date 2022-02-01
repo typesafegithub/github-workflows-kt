@@ -1,3 +1,6 @@
 package it.krzeminski.githubactions.domain.triggers
 
-object PullRequest : Trigger()
+data class PullRequest(
+    val branches: List<String>? = null,
+    val branchesIgnore: List<String>? = null,
+) : Trigger()

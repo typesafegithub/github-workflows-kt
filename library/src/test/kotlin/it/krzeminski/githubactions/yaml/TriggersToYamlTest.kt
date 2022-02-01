@@ -91,7 +91,7 @@ class TriggersToYamlTest : DescribeSpec({
     describe("pull request") {
         it("renders without parameters") {
             // given
-            val triggers = listOf(PullRequest)
+            val triggers = listOf(PullRequest())
 
             // when
             val yaml = triggers.triggersToYaml()
@@ -99,6 +99,30 @@ class TriggersToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """
                 |pull_request:
+            """.trimMargin()
+        }
+
+        it("renders with all parameters") {
+            // given
+            val triggers = listOf(
+                PullRequest(
+                    branches = listOf("branch1", "branch2"),
+                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2")
+                ),
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |pull_request:
+                |  branches:
+                |    - 'branch1'
+                |    - 'branch2'
+                |  branches-ignore:
+                |    - 'branchIgnore1'
+                |    - 'branchIgnore2'
             """.trimMargin()
         }
     }
