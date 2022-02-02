@@ -1,7 +1,6 @@
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.actions.Action
-import it.krzeminski.githubactions.yaml.TypesSafeYaml
 
 /***
  * You can use this GitHub Action to commit changes made in your workflow run directly to your repo:
@@ -27,13 +26,13 @@ data class AddAndCommitV8(
      * You should use actions/checkout first to set it up. */
     val cwd: String? = null,
     /** Determines the way the action fills missing author name and email. **/
-    val defaultAuthor: IDefaultActor? = null,
+    val defaultAuthor: DefaultActor? = null,
     /** The message for the commit. */
     val message: String? = null,
     /** If this input is set, the action will push the commit to a new branch with this name. */
     val newBranch: String? = null,
     /** The way the action should handle pathspec errors from the add and remove commands.*/
-    val pathspecErrorHandling: IPathSpecErrorHandling? = null,
+    val pathspecErrorHandling: PathSpecErrorHandling? = null,
     /** Arguments for the git pull command. By default, the action does not pull. */
     val pull: String? = null,
     /** Whether to push the commit and, if any, its tags to the repo.
@@ -67,30 +66,30 @@ data class AddAndCommitV8(
             tag?.let { "tag" to it },
         ).toTypedArray()
     )
-}
 
-sealed interface IDefaultActor : TypesSafeYaml
+    sealed class DefaultActor(val yaml: String) {
+        /** UserName <UserName@users.noreply.github.com> */
+        object GithubActor : DefaultActor("github_actor")
 
-enum class DefaultActor(override val yaml: String) : IDefaultActor {
-    /* UserName <UserName@users.noreply.github.com> */
-    GithubActor("github_actor"),
-    /** Your Display Name <your-actual@email.com> */
-    UserInfo("user_info"),
-    /** github-actions <email associated with the github logo> */
-    GitHubActions("github_actions");
+        /** Your Display Name <your-actual@email.com> */
+        object UserInfo : DefaultActor("user_info")
 
-    data class Custom(override val yaml: String) : IDefaultActor
-}
+        /** github-actions <email associated with the github logo> */
+        object GitHubActions : DefaultActor("github_actions")
 
-sealed interface IPathSpecErrorHandling : TypesSafeYaml
+        class Custom(yaml: String) : DefaultActor(yaml)
+    }
 
-enum class PathSpecErrorHandling(override val yaml: String) : IPathSpecErrorHandling {
-    /* errors will be logged but the step won't fail */
-    Ignore("ignore"),
-    /** the action will stop right away, and the step will fail */
-    ExitImmediatly("exitImmediately"),
-    /** the action will go on, every pathspec error will be logged at the end, the step will fail. */
-    ExitAtEnd("exitAtEnd");
+    sealed class PathSpecErrorHandling(val yaml: String) {
+        /* errors will be logged but the step won't fail */
+        object Ignore : PathSpecErrorHandling("ignore")
 
-    data class Custom(override val yaml: String) : IDefaultActor
+        /** the action will stop right away, and the step will fail */
+        object ExitImmediatly : PathSpecErrorHandling("exitImmediately")
+
+        /** the action will go on, every pathspec error will be logged at the end, the step will fail. */
+        object ExitAtEnd : PathSpecErrorHandling("exitAtEnd")
+
+        class Custom(yaml: String) : PathSpecErrorHandling(yaml)
+    }
 }
