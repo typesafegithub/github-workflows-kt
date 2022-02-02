@@ -4,15 +4,14 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
-import java.nio.file.Path
 
 @GithubActionsDsl
 class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
-    sourceFile: Path,
-    targetFile: Path,
+    sourceFile: String,
+    targetFile: String,
     jobs: List<Job> = emptyList(),
 ) {
     private var workflow = Workflow(
@@ -65,8 +64,8 @@ fun workflow(
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
-    sourceFile: Path,
-    targetFile: Path,
+    sourceFile: String,
+    targetFile: String,
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
     val workflowBuilder = WorkflowBuilder(

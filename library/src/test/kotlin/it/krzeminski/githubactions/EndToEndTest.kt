@@ -9,7 +9,6 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
-import java.nio.file.Paths
 
 class EndToEndTest : FunSpec({
     val sourceFile = tempfile().also {
@@ -18,8 +17,8 @@ class EndToEndTest : FunSpec({
     val workflow = workflow(
         name = "Test workflow",
         on = listOf(Push()),
-        sourceFile = sourceFile.toPath(),
-        targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        sourceFile = sourceFile.path,
+        targetFile = ".github/workflows/some_workflow.yaml",
     ) {
         job(
             name = "test_job",
@@ -79,8 +78,8 @@ class EndToEndTest : FunSpec({
         val workflowWithDependency = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = sourceFile.path,
+            targetFile = ".github/workflows/some_workflow.yaml",
         ) {
             val testJob1 = job(
                 name = "test_job_1",
@@ -177,8 +176,8 @@ class EndToEndTest : FunSpec({
         val workflowWithMultilineCommand = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = sourceFile.path,
+            targetFile = ".github/workflows/some_workflow.yaml",
         ) {
             job(
                 name = "test_job",
@@ -229,8 +228,8 @@ class EndToEndTest : FunSpec({
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
-            targetFile = targetTempFile.toPath(),
+            sourceFile = sourceFile.path,
+            targetFile = targetTempFile.path,
         ) {
             job(
                 name = "test_job",
@@ -278,8 +277,8 @@ class EndToEndTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = sourceFile.path,
+            targetFile = ".github/workflows/some_workflow.yaml",
         ) {
             job(
                 name = "test_job",
@@ -327,8 +326,8 @@ class EndToEndTest : FunSpec({
                     hello! workflow
                 """.trimIndent()
             ),
-            sourceFile = sourceFile.toPath(),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = sourceFile.path,
+            targetFile = ".github/workflows/some_workflow.yaml",
         ) {
             job(
                 name = "test_job",

@@ -4,6 +4,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
+import java.nio.file.Paths
 
 fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
@@ -53,5 +54,5 @@ fun Workflow.writeToFile() {
         // Because the current consistency check logic relies on writing to standard output.
         addConsistencyCheck = false,
     )
-    this.targetFile.toFile().writeText(yaml)
+    Paths.get(this.targetFile).toFile().writeText(yaml)
 }
