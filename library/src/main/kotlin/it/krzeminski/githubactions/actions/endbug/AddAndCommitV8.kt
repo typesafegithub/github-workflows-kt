@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.yaml.TypesSafeYaml
 
 /***
  * You can use this GitHub Action to commit changes made in your workflow run directly to your repo:
@@ -14,6 +15,8 @@ data class AddAndCommitV8(
     val authorName: String? = null,
     /** The email of the user that will be displayed as the author of the commit. */
     val authorEmail: String? = null,
+    /** Additional arguments for the git commit command */
+    val commit: String? = null,
     /** The name of the custom committer you want to use,
      * if different from the author of the commit. */
     val committerName: String? = null,
@@ -23,23 +26,14 @@ data class AddAndCommitV8(
     /** The local path to the directory where your repository is located.
      * You should use actions/checkout first to set it up. */
     val cwd: String? = null,
-    /** Determines the way the action fills missing author name and email.
-     * Three options are available:
-     - github_actor -> UserName <UserName@users.noreply.github.com>
-     - user_info -> Your Display Name <your-actual@email.com>
-     - github_actions -> github-actions <email associated with the github logo */
-    val defaultAuthor: String? = null,
+    /** Determines the way the action fills missing author name and email. **/
+    val defaultAuthor: IDefaultActor? = null,
     /** The message for the commit. */
     val message: String? = null,
     /** If this input is set, the action will push the commit to a new branch with this name. */
     val newBranch: String? = null,
-    /** The way the action should handle pathspec errors from the add and remove commands.
-     * Three options are available:
-     - ignore -> errors will be logged but the step won't fail
-     - exitImmediately -> the action will stop right away, and the step will fail
-     - exitAtEnd -> the action will go on, every pathspec error will be logged at the end, the step will fail.
-     */
-    val pathspecErrorHandling: String? = null,
+    /** The way the action should handle pathspec errors from the add and remove commands.*/
+    val pathspecErrorHandling: IPathSpecErrorHandling? = null,
     /** Arguments for the git pull command. By default, the action does not pull. */
     val pull: String? = null,
     /** Whether to push the commit and, if any, its tags to the repo.
@@ -59,17 +53,44 @@ data class AddAndCommitV8(
             add?.let { "add" to it },
             authorName?.let { "author_name" to it },
             authorEmail?.let { "author_email" to it },
+            commit?.let { "commit" to it },
             committerName?.let { "committer_name" to it },
             committerEmail?.let { "committer_email" to it },
             cwd?.let { "cwd" to it },
-            defaultAuthor?.let { "default_author" to it },
+            defaultAuthor?.let { "default_author" to it.yaml },
             message?.let { "message" to it },
             newBranch?.let { "new_branch" to it },
-            pathspecErrorHandling?.let { "pathspec_error_handling" to it },
+            pathspecErrorHandling?.let { "pathspec_error_handling" to it.yaml },
             pull?.let { "pull" to it },
             push?.let { "push" to "$it" },
             remove?.let { "remove" to it },
             tag?.let { "tag" to it },
         ).toTypedArray()
     )
+}
+
+sealed interface IDefaultActor : TypesSafeYaml
+
+enum class DefaultActor(override val yaml: String) : IDefaultActor {
+    /* UserName <UserName@users.noreply.github.com> */
+    GithubActor("github_actor"),
+    /** Your Display Name <your-actual@email.com> */
+    UserInfo("user_info"),
+    /** github-actions <email associated with the github logo> */
+    GitHubActions("github_actions");
+
+    data class Custom(override val yaml: String) : IDefaultActor
+}
+
+sealed interface IPathSpecErrorHandling : TypesSafeYaml
+
+enum class PathSpecErrorHandling(override val yaml: String) : IPathSpecErrorHandling {
+    /* errors will be logged but the step won't fail */
+    Ignore("ignore"),
+    /** the action will stop right away, and the step will fail */
+    ExitImmediatly("exitImmediately"),
+    /** the action will go on, every pathspec error will be logged at the end, the step will fail. */
+    ExitAtEnd("exitAtEnd");
+
+    data class Custom(override val yaml: String) : IDefaultActor
 }

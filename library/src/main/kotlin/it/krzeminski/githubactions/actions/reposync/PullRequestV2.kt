@@ -28,17 +28,17 @@ data class PullRequestV2(
      */
     val prTemplate: String? = null,
     /**
-     * Pull request reviewers, comma-separated list (no spaces)
+     * Pull request reviewers
      */
-    val prReviewer: String? = null,
+    val prReviewer: List<String>? = null,
     /**
-     * Pull request assignees, comma-separated list (no spaces)
+     * Pull request assignees
      */
-    val prAssignee: String? = null,
+    val prAssignee: List<String>? = null,
     /**
-     * Pull request labels, comma-separated list (no spaces)
+     * Pull request labels
      */
-    val prLabel: String? = null,
+    val prLabel: List<String>? = null,
     /**
      * Pull request milestone
      */
@@ -65,9 +65,9 @@ data class PullRequestV2(
             prTitle?.let { "pr_title" to it },
             prBody?.let { "pr_body" to it },
             prTemplate?.let { "pr_template" to it },
-            prReviewer?.let { "pr_reviewer" to it },
-            prAssignee?.let { "pr_assignee" to it },
-            prLabel?.let { "pr_label" to it },
+            prReviewer?.let { "pr_reviewer" to it.joinToString(",") },
+            prAssignee?.let { "pr_assignee" to it.joinToString(",") },
+            prLabel?.let { "pr_label" to it.joinToString(",") },
             prMilestone?.let { "pr_milestone" to it },
             prDraft?.let { "pr_draft" to "$it" },
             prAllowEmpty?.let { "pr_allow_empty" to "$it" },

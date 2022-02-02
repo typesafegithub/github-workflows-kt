@@ -1,15 +1,15 @@
-package it.krzeminski.githubactions.actions.actions
+package it.krzeminski.githubactions.actions.peterjgrainger
 
 import io.kotest.core.spec.style.DescribeSpec
 import it.krzeminski.githubactions.shouldHaveYamlArguments
 
-class CreateBranchV210Test : DescribeSpec({
+class CreateBranchV2Test : DescribeSpec({
     it("renders with defaults") {
-        CreateBranchV210() shouldHaveYamlArguments emptyMap()
+        CreateBranchV2() shouldHaveYamlArguments emptyMap()
     }
 
     it("renders with all parameters") {
-        CreateBranchV210(
+        CreateBranchV2(
             branch = "main",
             sha = "ec955710c66016d511585121e092b27066a99c28",
         ) shouldHaveYamlArguments mapOf(
