@@ -91,7 +91,12 @@ names with your own.
    it's equal to the YAML committed to the repository.
 5. Commit both files, push the changes to GitHub and make sure the workflow is green when ran on GitHub Actions.
 
-More examples can be found [here](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/examples/src/main/kotlin).
+## 👍 Projects using this library
+
+It's also a great source of examples how to use the library.
+
+* [kotlin-python](https://github.com/krzema12/kotlin-python/tree/python-backend/.github/workflows)
+* feel free to add your project here!
 
 ## ❓ Frequently Asked Questions
 
