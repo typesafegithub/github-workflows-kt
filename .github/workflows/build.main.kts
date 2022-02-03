@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2.Distribution.Adopt
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.Trigger.PullRequest
 import it.krzeminski.githubactions.domain.Trigger.Push
 import it.krzeminski.githubactions.dsl.workflow
@@ -19,27 +20,29 @@ val buildWorkflow = workflow(
     sourceFile = Paths.get(".github/workflows/build.main.kts"),
     targetFile = Paths.get(".github/workflows/build.yaml"),
 ) {
-    job(
-        name = "build",
-        runsOn = UbuntuLatest,
-    ) {
-        uses(
-            name = "Checkout",
-            action = CheckoutV2(),
-        )
-        uses(
-            name = "Set up JDK",
-            action = SetupJavaV2(
-                javaVersion = "11",
-                distribution = Adopt,
+    listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
+        job(
+            name = "build_for_$runnerType",
+            runsOn = runnerType,
+        ) {
+            uses(
+                name = "Checkout",
+                action = CheckoutV2(),
             )
-        )
-        uses(
-            name = "Build",
-            action = GradleBuildActionV2(
-                arguments = "build",
+            uses(
+                name = "Set up JDK",
+                action = SetupJavaV2(
+                    javaVersion = "11",
+                    distribution = Adopt,
+                )
             )
-        )
+            uses(
+                name = "Build",
+                action = GradleBuildActionV2(
+                    arguments = "build",
+                )
+            )
+        }
     }
 }
 
