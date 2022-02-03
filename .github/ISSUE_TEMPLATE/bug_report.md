@@ -19,6 +19,10 @@ _What you would expect?_
 
 _What happens instead?_
 
+# Workaround, if exists
+
+_Manual adjustment of output YAML is not a workaround. Adjusting Kotlin code in a certain way is._
+
 # Library version
 
 v...
