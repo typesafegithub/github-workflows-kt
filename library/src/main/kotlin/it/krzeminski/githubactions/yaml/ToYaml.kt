@@ -4,6 +4,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
+import kotlin.io.path.pathString
 
 fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
@@ -13,7 +14,11 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         ) {
             uses("Check out", CheckoutV2())
             run("Install Kotlin", "sudo snap install --classic kotlin")
-            run("Consistency check", "diff -u '$targetFile' <('$sourceFile')")
+            run(
+                "Consistency check",
+                "diff -u '${targetFile.pathString.replace('\\', '/')}' " +
+                    "<('${sourceFile.pathString.replace('\\', '/')}')"
+            )
         }
         listOf(consistencyCheckJob) + jobs.map {
             it.copy(needs = it.needs + consistencyCheckJob)
@@ -25,7 +30,7 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     return buildString {
         appendLine(
             """
-            # This file was generated using Kotlin DSL ($sourceFile).
+            # This file was generated using Kotlin DSL (${sourceFile.pathString.replace('\\', '/')}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             """.trimIndent()
