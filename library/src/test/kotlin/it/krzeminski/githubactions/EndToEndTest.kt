@@ -12,13 +12,10 @@ import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Paths
 
 class EndToEndTest : FunSpec({
-    val sourceFile = tempfile().also {
-        it.writeText("Some dummy text that the checksum will be calculated from")
-    }
     val workflow = workflow(
         name = "Test workflow",
         on = listOf(Push()),
-        sourceFile = sourceFile.toPath(),
+        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
         targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
     ) {
         job(
@@ -43,7 +40,7 @@ class EndToEndTest : FunSpec({
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -61,7 +58,7 @@ class EndToEndTest : FunSpec({
                   - name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('$sourceFile')
+                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -79,7 +76,7 @@ class EndToEndTest : FunSpec({
         val workflowWithDependency = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             val testJob1 = job(
@@ -109,7 +106,7 @@ class EndToEndTest : FunSpec({
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -127,7 +124,7 @@ class EndToEndTest : FunSpec({
                   - name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('$sourceFile')
+                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -152,7 +149,7 @@ class EndToEndTest : FunSpec({
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -177,7 +174,7 @@ class EndToEndTest : FunSpec({
         val workflowWithMultilineCommand = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
@@ -201,7 +198,7 @@ class EndToEndTest : FunSpec({
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
@@ -229,7 +226,7 @@ class EndToEndTest : FunSpec({
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
             targetFile = targetTempFile.toPath(),
         ) {
             job(
@@ -253,7 +250,7 @@ class EndToEndTest : FunSpec({
 
         // then
         targetTempFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -278,7 +275,7 @@ class EndToEndTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceFile.toPath(),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
@@ -295,7 +292,7 @@ class EndToEndTest : FunSpec({
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -327,7 +324,7 @@ class EndToEndTest : FunSpec({
                     hello! workflow
                 """.trimIndent()
             ),
-            sourceFile = sourceFile.toPath(),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
@@ -373,7 +370,7 @@ class EndToEndTest : FunSpec({
 
         // then
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (${sourceFile.path}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
