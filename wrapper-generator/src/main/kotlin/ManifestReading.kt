@@ -7,19 +7,21 @@ import java.net.URI
 data class Manifest(
     val name: String,
     val description: String,
+    val author: String,
     val inputs: Map<String, Input>,
 )
 
 @Serializable
 data class Input(
     val description: String,
+    val required: Boolean? = null,
     val default: String? = null,
 )
 
 fun ActionCoords.fetchManifest(fetchUri: (URI) -> String = ::fetchUri): Manifest {
     val manifestUri = URI("https://raw.githubusercontent.com/$owner/$name/$version/action.yml") // TODO what if .yAml?
     val manifestYaml = fetchUri(manifestUri)
-    return myYaml.decodeFromString(manifestYaml)
+    return myYaml.decodeFromString<Manifest>(manifestYaml)
 }
 
 private fun fetchUri(uri: URI) = uri.toURL().readText()
