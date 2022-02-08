@@ -1,4 +1,4 @@
 fun main() {
-    val wrapper = ActionCoords("actions", "checkout", "v2").generateWrapper { fetchManifest() }
-    println(wrapper)
+    val action = ActionCoords("actions", "setup-node", "v2")
+    action.generateKotlinPoet()
 }
