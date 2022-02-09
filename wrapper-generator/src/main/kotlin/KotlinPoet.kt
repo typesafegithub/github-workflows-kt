@@ -60,8 +60,18 @@ fun Manifest.toYamlFunction(): FunSpec {
     return FunSpec.builder("toYamlArguments")
         .returns(LinkedHashMap::class.parameterizedBy(String::class, String::class))
         .addModifiers(KModifier.OVERRIDE)
-        .addCode("return TODO(%S)", "You need to implement toYamlArguments()")
+        .addCode(toYamlFunctionParameters())
         .build()
+}
+
+fun Manifest.toYamlFunctionParameters(): CodeBlock {
+    val builder = CodeBlock.Builder()
+        .add("return yamlOf(\n")
+        .indent()
+    inputs.forEach {
+        builder.add("%S to %L,\n", it.key, camelCase(it.key))
+    }
+    return builder.unindent().add(")").build()
 }
 
 fun TypeSpec.Builder.inheritsFromAction(manifest: Manifest): TypeSpec.Builder = this
@@ -85,7 +95,7 @@ fun Manifest.primaryConstructor(): FunSpec {
 fun Input.guessPropertyType(): TypeName {
     val tryConvertInt = (default ?: "").toIntOrNull()
 
-    return when(default) {
+    return when (default) {
         null -> typeNullableString
         "false", "true" -> typeNullableBoolean
         else -> if (tryConvertInt == null) typeNullableString else typeNullableInteger

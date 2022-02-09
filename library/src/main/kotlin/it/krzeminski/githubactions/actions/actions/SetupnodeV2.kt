@@ -69,8 +69,19 @@ public data class SetupnodeV2(
    */
   public val version: String? = null
 ) : Action("actions", "setup-node", "v2") {
-  public override fun toYamlArguments(): LinkedHashMap<String, String> =
-      TODO("You need to implement toYamlArguments()")
+  public override fun toYamlArguments(): LinkedHashMap<String, String> = yamlOf(
+    "always-auth" to alwaysauth,
+    "node-version" to nodeversion,
+    "node-version-file" to nodeversionfile,
+    "architecture" to architecture,
+    "check-latest" to checklatest,
+    "registry-url" to registryurl,
+    "scope" to scope,
+    "token" to token,
+    "cache" to cache,
+    "cache-dependency-path" to cachedependencypath,
+    "version" to version,
+  )
 
   internal companion object {
     public val example_full_action: SetupnodeV2 = SetupnodeV2(
