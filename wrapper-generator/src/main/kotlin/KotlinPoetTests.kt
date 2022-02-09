@@ -22,20 +22,19 @@ fun Manifest.generateTests() : CodeBlock {
     val className = coords.className()
 
     return CodeBlock.builder()
-        .add("{\n")
-        .indent()
-        .add("it(%S) {\n", "renders with defaults")
-        .indent()
+        .beginControlFlow("")
+
+        // renders with defaults
+        .beginControlFlow("it(%S) {", "renders with defaults")
         .add("%L() %M linkedMapOf()\n", className, shouldHaveYamlArguments)
-        .unindent()
-        .add("}\n\n")
-        .add("it(%S) {\n", "renders with all parameters")
-        .indent()
+        .endControlFlow()
+
+        // renders with all parameters
+        .beginControlFlow("it(%S) {", "renders with all parameters")
         .add("%L.example_full_action %M %L.example_full_map\n", className, shouldHaveYamlArguments, className)
-        .unindent()
-        .add("}\n")
-        .unindent()
-        .add("}")
+        .endControlFlow()
+
+        .endControlFlow()
         .build()
 }
 

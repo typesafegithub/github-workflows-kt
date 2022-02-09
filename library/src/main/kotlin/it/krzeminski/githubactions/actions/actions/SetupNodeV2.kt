@@ -85,31 +85,31 @@ public data class SetupNodeV2(
 
     internal companion object {
         public val example_full_action: SetupNodeV2 = SetupNodeV2(
-                    alwaysAuth = false,
-                    nodeVersion = "node-version",
-                    nodeVersionFile = "node-version-file",
-                    architecture = "architecture",
-                    checkLatest = false,
-                    registryUrl = "registry-url",
-                    scope = "scope",
-                    token = "github.token",
-                    cache = "cache",
-                    cacheDependencyPath = "cache-dependency-path",
-                    version = "version",
-                )
+            alwaysAuth = false,
+            nodeVersion = "node-version",
+            nodeVersionFile = "node-version-file",
+            architecture = "architecture",
+            checkLatest = false,
+            registryUrl = "registry-url",
+            scope = "scope",
+            token = "github.token",
+            cache = "cache",
+            cacheDependencyPath = "cache-dependency-path",
+            version = "version",
+        )
 
         public val example_full_map: Map<String, String> = mapOf(
-                    "always-auth" to "false",
-                    "node-version" to "node-version",
-                    "node-version-file" to "node-version-file",
-                    "architecture" to "architecture",
-                    "check-latest" to "false",
-                    "registry-url" to "registry-url",
-                    "scope" to "scope",
-                    "token" to "github.token",
-                    "cache" to "cache",
-                    "cache-dependency-path" to "cache-dependency-path",
-                    "version" to "version",
-                )
+            "always-auth" to "false",
+            "node-version" to "node-version",
+            "node-version-file" to "node-version-file",
+            "architecture" to "architecture",
+            "check-latest" to "false",
+            "registry-url" to "registry-url",
+            "scope" to "scope",
+            "token" to "github.token",
+            "cache" to "cache",
+            "cache-dependency-path" to "cache-dependency-path",
+            "version" to "version",
+        )
     }
 }

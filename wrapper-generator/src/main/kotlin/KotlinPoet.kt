@@ -10,6 +10,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
+import com.squareup.kotlinpoet.withIndent
 import java.io.File
 
 /**
@@ -32,6 +33,9 @@ fun ActionCoords.generateKotlinPoet() {
         |Manifest:     name='${manifest.name}' author='${manifest.author}' description='${manifest.description}'
         |Action Class: ${manifest.coords.className()}     written to library/src/main/kotlin
         |Test   Class: ${manifest.coords.className()}Test written to library/src/test/kotlin
+        |
+        |To avoid the CI failing, you should run the task:
+        |    ./gradlew ktlintFormat detekt
         """.trimMargin())
 }
 
@@ -138,13 +142,19 @@ fun Manifest.properties(): List<PropertySpec> {
 
 fun Manifest.exampleFullMap(): PropertySpec {
     val mapType = Map::class.parameterizedBy(String::class, String::class)
-    val builder = CodeBlock.builder().add("mapOf(\n").indent()
-    inputs.forEach {
-        builder.add("%S to %S,\n", it.key, escapeDefaultValue(it.value.default ?: it.key))
-    }
-    builder.unindent().add(")")
+
+    val example_full_map = CodeBlock.builder()
+        .add("mapOf(\n")
+        .withIndent {
+            inputs.forEach {
+                add("%S to %S,\n", it.key, escapeDefaultValue(it.value.default ?: it.key))
+            }
+        }
+        .add(")")
+        .build()
+
     return PropertySpec.Companion.builder("example_full_map", mapType)
-        .initializer(builder.build())
+        .initializer(example_full_map)
         .build()
 }
 
@@ -154,20 +164,23 @@ private fun escapeDefaultValue(s: String): String {
 
 fun Manifest.exampleFullAction(): PropertySpec {
     val classname = ClassName(coords.ownerPackage(), coords.className())
-    val builder = CodeBlock.builder()
-        .add("%T(\n", classname).indent()
-    inputs.forEach { (key, input) ->
-        val litteralOrString = if (input.guessPropertyType() == typeNullableString) "%S" else "%L"
-        builder.add(
-            "%L = $litteralOrString,\n",
-            camelCase(key),
-            escapeDefaultValue(input.default ?: key)
-        )
-    }
-    builder.unindent().add(")")
+    val example_full_action = CodeBlock.builder()
+        .add("%T(\n", classname)
+        .withIndent {
+            inputs.forEach { (key, input) ->
+                val litteralOrString = if (input.guessPropertyType() == typeNullableString) "%S" else "%L"
+                add(
+                    "%L = $litteralOrString,\n",
+                    camelCase(key),
+                    escapeDefaultValue(input.default ?: key)
+                )
+            }
+
+        }.add(")")
+        .build()
 
     return PropertySpec.builder("example_full_action", classname)
-        .initializer(builder.build())
+        .initializer(example_full_action)
         .build()
 }
 
