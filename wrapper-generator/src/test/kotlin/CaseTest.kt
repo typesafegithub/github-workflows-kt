@@ -6,8 +6,7 @@ import io.kotest.data.table
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-// TODO: make the unit tests pass
-class PoetTest : FunSpec({
+class CaseTest : FunSpec({
 
     test("Owner package should be correct") {
         val testCases = listOf(

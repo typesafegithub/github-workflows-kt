@@ -21,15 +21,15 @@ public data class SetupNodeV2(
     /**
      * Set always-auth in npmrc
      */
-    public val alwaysauth: Boolean? = null,
+    public val alwaysAuth: Boolean? = null,
     /**
      * Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
      */
-    public val nodeversion: String? = null,
+    public val nodeVersion: String? = null,
     /**
      * File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version
      */
-    public val nodeversionfile: String? = null,
+    public val nodeVersionFile: String? = null,
     /**
      * Target architecture for Node to use. Examples: x86, x64. Will use system architecture by
      * default.
@@ -39,12 +39,12 @@ public data class SetupNodeV2(
      * Set this option if you want the action to check for the latest available version that
      * satisfies the version spec
      */
-    public val checklatest: Boolean? = null,
+    public val checkLatest: Boolean? = null,
     /**
      * Optional registry to set up for auth. Will set the registry in a project level .npmrc and
      * .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
      */
-    public val registryurl: String? = null,
+    public val registryUrl: String? = null,
     /**
      * Optional scope for authenticating against scoped registries
      */
@@ -63,38 +63,38 @@ public data class SetupNodeV2(
      * Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports
      * wildcards or a list of file names for caching multiple dependencies.
      */
-    public val cachedependencypath: String? = null,
+    public val cacheDependencyPath: String? = null,
     /**
      * Deprecated. Use node-version instead. Will not be supported after October 1, 2019
      */
     public val version: String? = null
 ) : Action("actions", "setup-node", "v2") {
     public override fun toYamlArguments(): LinkedHashMap<String, String> = yamlOf(
-        "always-auth" to alwaysauth,
-        "node-version" to nodeversion,
-        "node-version-file" to nodeversionfile,
+        "always-auth" to alwaysAuth,
+        "node-version" to nodeVersion,
+        "node-version-file" to nodeVersionFile,
         "architecture" to architecture,
-        "check-latest" to checklatest,
-        "registry-url" to registryurl,
+        "check-latest" to checkLatest,
+        "registry-url" to registryUrl,
         "scope" to scope,
         "token" to token,
         "cache" to cache,
-        "cache-dependency-path" to cachedependencypath,
+        "cache-dependency-path" to cacheDependencyPath,
         "version" to version,
     )
 
     internal companion object {
         public val example_full_action: SetupNodeV2 = SetupNodeV2(
-                    alwaysauth = false,
-                    nodeversion = "node-version",
-                    nodeversionfile = "node-version-file",
+                    alwaysAuth = false,
+                    nodeVersion = "node-version",
+                    nodeVersionFile = "node-version-file",
                     architecture = "architecture",
-                    checklatest = false,
-                    registryurl = "registry-url",
+                    checkLatest = false,
+                    registryUrl = "registry-url",
                     scope = "scope",
                     token = "github.token",
                     cache = "cache",
-                    cachedependencypath = "cache-dependency-path",
+                    cacheDependencyPath = "cache-dependency-path",
                     version = "version",
                 )
 

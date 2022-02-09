@@ -171,6 +171,8 @@ fun Manifest.exampleFullAction(): PropertySpec {
         .build()
 }
 
-// TODO: make unit tests pass
-fun camelCase(property: String) =
-    property.replace("-", "").replace("_", "")
+fun camelCase(property: String): String {
+    return property.split("-", "_", ".")
+        .mapIndexed { index, s -> if (index == 0) s.lowercase() else s.capitalize() }
+        .joinToString(separator = "")
+}
