@@ -21,8 +21,6 @@ data class Input(
 )
 
 fun ActionCoords.fetchManifest(fetchUri: (URI) -> String = ::fetchUri): Manifest {
-    val manifestUri = URI("https://raw.githubusercontent.com/$owner/$name/$version/action.yml") // TODO what if .yAml?
-    println("Fetching $manifestUri")
     val manifestYaml = fetchUri(manifestUri)
     return myYaml.decodeFromString<Manifest>(manifestYaml)
         .also { it.coords = this }

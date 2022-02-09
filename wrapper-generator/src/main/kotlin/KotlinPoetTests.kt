@@ -5,7 +5,7 @@ import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeSpec
 
 fun Manifest.generateTestFileSpec() =
-    FileSpec.builder(coords.ownerPackage(), coords.className())
+    FileSpec.builder(coords.ownerPackage(), coords.className() + "Test")
         .indent(DEFAULT_INDENT)
         .allowPublicMethods()
         .addType(generateTestClass())

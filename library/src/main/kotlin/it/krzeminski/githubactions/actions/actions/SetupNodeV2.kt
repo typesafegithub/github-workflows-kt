@@ -17,7 +17,7 @@ import kotlin.collections.Map
  *
  * http://github.com/actions/setup-node
  */
-public data class SetupnodeV2(
+public data class SetupNodeV2(
     /**
      * Set always-auth in npmrc
      */
@@ -84,8 +84,7 @@ public data class SetupnodeV2(
     )
 
     internal companion object {
-        public val example_full_action: SetupnodeV2 = 
-                SetupnodeV2(
+        public val example_full_action: SetupNodeV2 = SetupNodeV2(
                     alwaysauth = false,
                     nodeversion = "node-version",
                     nodeversionfile = "node-version-file",

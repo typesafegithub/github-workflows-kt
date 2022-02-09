@@ -19,13 +19,20 @@ import java.io.File
 
 fun ActionCoords.generateKotlinPoet() {
     val manifest = fetchManifest()
-    println(manifest)
     val fileSpec = manifest.generateFileSpec()
-    //println(fileSpec)
     fileSpec.writeTo(File("library/src/main/kotlin"))
     val testSpec = manifest.generateTestFileSpec()
     testSpec.writeTo(File("library/src/test/kotlin"))
-    println(testSpec)
+
+    val allInputs = manifest.inputs.toList().joinToString("") { "\n    ${it.first} => ${it.second}" }
+    println("""
+        |Inputs:$allInputs
+        |URL:          ${manifest.coords.manifestUri}
+        |Coords:       ${manifest.coords}
+        |Manifest:     name='${manifest.name}' author='${manifest.author}' description='${manifest.description}'
+        |Action Class: ${manifest.coords.className()}     written to library/src/main/kotlin
+        |Test   Class: ${manifest.coords.className()}Test written to library/src/test/kotlin
+        """.trimMargin())
 }
 
 fun Manifest.generateFileSpec() =
