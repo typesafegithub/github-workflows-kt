@@ -1,3 +1,5 @@
+package it.krzeminski.githubactions.wrappergenerator.domain
+
 data class ActionCoords(
     val owner: String,
     val name: String,

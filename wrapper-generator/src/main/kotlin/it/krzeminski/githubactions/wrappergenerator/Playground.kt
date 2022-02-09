@@ -1,3 +1,8 @@
+package it.krzeminski.githubactions.wrappergenerator
+
+import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
+
 fun main() {
     listOf(
         ActionCoords("actions", "checkout", "v2"),

@@ -1,4 +1,7 @@
+package it.krzeminski.githubactions.wrappergenerator.metadata
+
 import com.charleskorn.kaml.Yaml
+import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.net.URI
