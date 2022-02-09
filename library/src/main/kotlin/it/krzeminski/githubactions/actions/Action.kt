@@ -10,7 +10,6 @@ abstract class Action(
      */
     abstract fun toYamlArguments(): LinkedHashMap<String, String>
 
-
     protected fun yamlOf(vararg pairs: Pair<String, Any?>): LinkedHashMap<String, String> {
         val errors = mutableMapOf<String, Any>()
 
@@ -33,12 +32,11 @@ abstract class Action(
 
         return LinkedHashMap(validPairs.toMap())
     }
-
 }
 
 val Action.fullName: String
     get() = "$actionOwner/$actionName@$actionVersion"
 
-interface HasYaml  {
+interface HasYaml {
     val yaml: String
 }

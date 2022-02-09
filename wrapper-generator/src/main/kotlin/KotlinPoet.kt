@@ -21,32 +21,45 @@ fun ActionCoords.generateKotlinPoet() {
     val manifest = fetchManifest()
     println(manifest)
     val fileSpec = manifest.generateFileSpec()
-    println(fileSpec)
+    //println(fileSpec)
     fileSpec.writeTo(File("library/src/main/kotlin"))
+    val testSpec = manifest.generateTestFileSpec()
+    testSpec.writeTo(File("library/src/test/kotlin"))
+    println(testSpec)
 }
 
 fun Manifest.generateFileSpec() =
     FileSpec.builder(coords.ownerPackage(), coords.className())
-        .addType(
-            TypeSpec.classBuilder(coords.className())
-                .addKdoc(actionKdoc())
-                .addModifiers(KModifier.DATA)
-                .inheritsFromAction(this)
-                .addProperties(properties())
-                .primaryConstructor(primaryConstructor())
-                .addFunction(toYamlFunction())
-                .addType( // companion object
-                    TypeSpec.companionObjectBuilder()
-                        .addModifiers(KModifier.INTERNAL)
-                        .addProperty(exampleFullAction())
-                        .addProperty(exampleFullMap())
-                        .build()
-                )
-                .build()
-        )
-        // @file:Suppress("RedundantVisibilityModifier")
-        .addAnnotation(AnnotationSpec.builder(Suppress::class).addMember("%S", "RedundantVisibilityModifier").build())
+        .allowPublicMethods()
+        .indent(DEFAULT_INDENT)
+        .addType(generateActionClass())
         .build()
+
+const val DEFAULT_INDENT = "    "
+
+/**
+ * @file:Suppress("RedundantVisibilityModifier")
+ */
+fun FileSpec.Builder.allowPublicMethods() =
+    addAnnotation(AnnotationSpec.builder(Suppress::class).addMember("%S", "RedundantVisibilityModifier").build())
+
+
+fun Manifest.generateActionClass(): TypeSpec = TypeSpec.classBuilder(coords.className())
+    .addKdoc(actionKdoc())
+    .addModifiers(KModifier.DATA)
+    .inheritsFromAction(this)
+    .addProperties(properties())
+    .primaryConstructor(primaryConstructor())
+    .addFunction(toYamlFunction())
+    .addType( // companion object
+        TypeSpec.companionObjectBuilder()
+            .addModifiers(KModifier.INTERNAL)
+            .addProperty(exampleFullAction())
+            .addProperty(exampleFullMap())
+            .build()
+    )
+    .build()
+
 
 fun Manifest.actionKdoc() = """
                     Action $name
@@ -134,7 +147,8 @@ private fun escapeDefaultValue(s: String): String {
 
 fun Manifest.exampleFullAction(): PropertySpec {
     val classname = ClassName(coords.ownerPackage(), coords.className())
-    val builder = CodeBlock.builder().add("%T(\n", classname).indent()
+    val builder = CodeBlock.builder()
+        .add("%T(\n", classname).indent()
     inputs.forEach { (key, input) ->
         val litteralOrString = if (input.guessPropertyType() == typeNullableString) "%S" else "%L"
         builder.add(
