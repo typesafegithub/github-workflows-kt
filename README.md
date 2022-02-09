@@ -108,7 +108,7 @@ We have a generator for creating the wrapper actions.
 
 You need to 
 - go to the GitHub repository
-- copy the URL of the latest release, for example gradle :wrapper-generator:run --args https://github.com/peterjgrainger/action-create-branch/releases/tag/v2.1.0
+- copy the URL of the latest release, for example `https://github.com/peterjgrainger/action-create-branch/releases/tag/v2.1.0`
 
 Then simply run the command:
 
