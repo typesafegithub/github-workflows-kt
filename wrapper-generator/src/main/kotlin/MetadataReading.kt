@@ -3,8 +3,12 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.net.URI
 
+/**
+ * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
+ */
+
 @Serializable
-data class Manifest(
+data class Metadata(
     val name: String,
     val description: String,
     val inputs: Map<String, Input>,
@@ -16,10 +20,10 @@ data class Input(
     val default: String? = null,
 )
 
-fun ActionCoords.fetchManifest(fetchUri: (URI) -> String = ::fetchUri): Manifest {
-    val manifestUri = URI("https://raw.githubusercontent.com/$owner/$name/$version/action.yml") // TODO what if .yAml?
-    val manifestYaml = fetchUri(manifestUri)
-    return myYaml.decodeFromString(manifestYaml)
+fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
+    val metadataUri = URI("https://raw.githubusercontent.com/$owner/$name/$version/action.yml") // TODO what if .yAml?
+    val metadataYaml = fetchUri(metadataUri)
+    return myYaml.decodeFromString(metadataYaml)
 }
 
 private fun fetchUri(uri: URI) = uri.toURL().readText()

@@ -20,6 +20,6 @@ fun main() {
 
         ActionCoords("repo-sync", "pull-request", "v2")
     ).forEach {
-        println(it.fetchManifest())
+        println(it.fetchMetadata())
     }
 }
