@@ -1,9 +1,13 @@
 package it.krzeminski.githubactions.actions.endbug
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.string.shouldInclude
+import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.shouldHaveYamlArguments
 
 class AddAndCommitV8Test : DescribeSpec({
+
     it("renders with default") {
         AddAndCommitV8() shouldHaveYamlArguments emptyMap()
     }
@@ -42,5 +46,19 @@ class AddAndCommitV8Test : DescribeSpec({
             "pull" to "--rebase --autostash ...",
             "tag" to "v1.0.0 --force",
         )
+    }
+
+    it("yamlOf() should check errors") {
+        val testObject = object { }
+        val action = object : Action("owner", "name", "V2") {
+            override fun toYamlArguments() = yamlOf(
+                "long" to 42L,
+                "object" to testObject,
+            )
+        }
+
+        shouldThrowAny {
+            action.toYamlArguments()
+        }.message shouldInclude "Invalid YAML properties: {long=42, object=$testObject}"
     }
 })

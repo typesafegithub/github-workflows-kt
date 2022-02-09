@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.HasYaml
 
 /***
  * You can use this GitHub Action to commit changes made in your workflow run directly to your repo:
@@ -46,28 +47,27 @@ data class AddAndCommitV8(
 ) : Action(
     "EndBug", "add-and-commit", "v8"
 ) {
+
     @Suppress("ComplexMethod", "SpreadOperator")
-    override fun toYamlArguments() = linkedMapOf(
-        *listOfNotNull(
-            add?.let { "add" to it },
-            authorName?.let { "author_name" to it },
-            authorEmail?.let { "author_email" to it },
-            commit?.let { "commit" to it },
-            committerName?.let { "committer_name" to it },
-            committerEmail?.let { "committer_email" to it },
-            cwd?.let { "cwd" to it },
-            defaultAuthor?.let { "default_author" to it.yaml },
-            message?.let { "message" to it },
-            newBranch?.let { "new_branch" to it },
-            pathspecErrorHandling?.let { "pathspec_error_handling" to it.yaml },
-            pull?.let { "pull" to it },
-            push?.let { "push" to "$it" },
-            remove?.let { "remove" to it },
-            tag?.let { "tag" to it },
-        ).toTypedArray()
+    override fun toYamlArguments() = yamlOf(
+        "add" to add,
+        "author_name" to authorName,
+        "author_email" to authorEmail,
+        "commit" to commit,
+        "committer_name" to committerName,
+        "committer_email" to committerEmail,
+        "cwd" to cwd,
+        "default_author" to defaultAuthor?.yaml,
+        "message" to message,
+        "new_branch" to newBranch,
+        "pathspec_error_handling" to pathspecErrorHandling?.yaml,
+        "pull" to pull,
+        "push" to push,
+        "remove" to remove,
+        "tag" to tag,
     )
 
-    sealed class DefaultActor(val yaml: String) {
+    sealed class DefaultActor(override val yaml: String) : HasYaml {
         /** UserName <UserName@users.noreply.github.com> */
         object GithubActor : DefaultActor("github_actor")
 
@@ -80,7 +80,7 @@ data class AddAndCommitV8(
         class Custom(yaml: String) : DefaultActor(yaml)
     }
 
-    sealed class PathSpecErrorHandling(val yaml: String) {
+    sealed class PathSpecErrorHandling(override val yaml: String) : HasYaml {
         /* errors will be logged but the step won't fail */
         object Ignore : PathSpecErrorHandling("ignore")
 
