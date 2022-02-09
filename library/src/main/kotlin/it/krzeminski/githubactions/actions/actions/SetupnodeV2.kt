@@ -4,6 +4,7 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -20,7 +21,7 @@ public data class SetupnodeV2(
   /**
    * Set always-auth in npmrc
    */
-  public val alwaysauth: String? = null,
+  public val alwaysauth: Boolean? = null,
   /**
    * Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
    */
@@ -38,7 +39,7 @@ public data class SetupnodeV2(
    * Set this option if you want the action to check for the latest available version that satisfies
    * the version spec
    */
-  public val checklatest: String? = null,
+  public val checklatest: Boolean? = null,
   /**
    * Optional registry to set up for auth. Will set the registry in a project level .npmrc and
    * .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
@@ -73,11 +74,11 @@ public data class SetupnodeV2(
 
   internal companion object {
     public val example_full_action: SetupnodeV2 = SetupnodeV2(
-          alwaysauth = "false",
+          alwaysauth = false,
           nodeversion = "node-version",
           nodeversionfile = "node-version-file",
           architecture = "architecture",
-          checklatest = "false",
+          checklatest = false,
           registryurl = "registry-url",
           scope = "scope",
           token = "github.token",

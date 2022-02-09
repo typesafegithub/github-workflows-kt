@@ -49,4 +49,20 @@ class PoetTest : FunSpec({
             camelCase(it.first) shouldBe it.second
         }
     }
+
+    test("Property type should be guessed correctly") {
+        val noDefaultInput = Input("This has no default parameter", default = null)
+        val stringInput = Input("this has a string parameter", default = "some default")
+        val integerInput = Input("this has an integer parameter", default = "42")
+        val booleanInput = Input("this has a boolean parameter", default = "false")
+
+        listOf(
+            noDefaultInput to typeNullableString,
+            stringInput to typeNullableString,
+            integerInput to typeNullableInteger,
+            booleanInput to typeNullableBoolean,
+        ).forAll { (input, expected) ->
+            input.guessPropertyType() shouldBe expected
+        }
+    }
 })

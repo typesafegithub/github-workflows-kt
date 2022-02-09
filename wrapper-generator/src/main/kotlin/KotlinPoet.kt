@@ -7,6 +7,7 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
 import java.io.File
@@ -70,20 +71,36 @@ fun TypeSpec.Builder.inheritsFromAction(manifest: Manifest): TypeSpec.Builder = 
     .addSuperclassConstructorParameter("%S", manifest.coords.version)
 
 fun Manifest.primaryConstructor(): FunSpec {
-    val parameters = inputs.map {
-        ParameterSpec.Companion.builder(camelCase(it.key), typeNullableString)
+    val parameters = inputs.map { (key, input) ->
+        ParameterSpec.Companion.builder(camelCase(key), input.guessPropertyType())
             .defaultValue(CodeBlock.of("null"))
-            .addKdoc(it.value.description).build()
+            .addKdoc(input.description).build()
     }
     return FunSpec.constructorBuilder()
         .addParameters(parameters)
         .build()
 }
 
+// TODO: fix unit tests
+fun Input.guessPropertyType(): TypeName {
+    val tryConvertInt = (default ?: "").toIntOrNull()
+
+    return when(default) {
+        null -> typeNullableString
+        "false", "true" -> typeNullableBoolean
+        else -> if (tryConvertInt == null) typeNullableString else typeNullableInteger
+    }
+}
+
+val typeNullableString = String::class.asTypeName().copy(nullable = true)
+val typeNullableInteger = Integer::class.asTypeName().copy(nullable = true)
+val typeNullableBoolean = Boolean::class.asTypeName().copy(nullable = true)
+
+
 fun Manifest.properties(): List<PropertySpec> {
-    val parameters = inputs.map {
-        PropertySpec.Companion.builder(camelCase(it.key), typeNullableString)
-            .initializer(camelCase(it.key))
+    val parameters = inputs.map { (key, input) ->
+        PropertySpec.Companion.builder(camelCase(key), input.guessPropertyType())
+            .initializer(camelCase(key))
             .build()
     }
     return parameters
@@ -101,17 +118,19 @@ fun Manifest.exampleFullMap(): PropertySpec {
         .build()
 }
 
-private fun escapeDefaultValue(s: String) =
-    s.trim().removePrefix("\${{").removeSuffix("}}").trim()
+private fun escapeDefaultValue(s: String): String {
+    return s.trim().removePrefix("\${{").removeSuffix("}}").trim()
+}
 
 fun Manifest.exampleFullAction(): PropertySpec {
     val classname = ClassName(coords.ownerPackage(), coords.className())
     val builder = CodeBlock.builder().add("%T(\n", classname).indent()
-    inputs.forEach {
+    inputs.forEach { (key, input) ->
+        val litteralOrString = if (input.guessPropertyType() == typeNullableString) "%S" else "%L"
         builder.add(
-            "%L = %S,\n",
-            camelCase(it.key),
-            escapeDefaultValue(it.value.default ?: it.key)
+            "%L = $litteralOrString,\n",
+            camelCase(key),
+            escapeDefaultValue(input.default ?: key)
         )
     }
     builder.unindent().add(")")
@@ -120,8 +139,6 @@ fun Manifest.exampleFullAction(): PropertySpec {
         .initializer(builder.build())
         .build()
 }
-
-val typeNullableString = String::class.asTypeName().copy(nullable = true)
 
 // TODO: make unit tests pass
 fun camelCase(property: String) =
