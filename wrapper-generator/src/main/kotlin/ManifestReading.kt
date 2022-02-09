@@ -1,5 +1,6 @@
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.decodeFromString
 import java.net.URI
 
@@ -9,6 +10,7 @@ data class Manifest(
     val description: String,
     val author: String? = null,
     val inputs: Map<String, Input>,
+    @Transient var coords: ActionCoords = ActionCoords("", "", "")
 )
 
 @Serializable
@@ -23,6 +25,7 @@ fun ActionCoords.fetchManifest(fetchUri: (URI) -> String = ::fetchUri): Manifest
     println("Fetching $manifestUri")
     val manifestYaml = fetchUri(manifestUri)
     return myYaml.decodeFromString<Manifest>(manifestYaml)
+        .also { it.coords = this }
 }
 
 private fun fetchUri(uri: URI) = uri.toURL().readText()

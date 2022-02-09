@@ -19,31 +19,25 @@ import java.io.File
 fun ActionCoords.generateKotlinPoet() {
     val manifest = fetchManifest()
     println(manifest)
-    val fileSpec = manifest.generateFileSpec(this)
+    val fileSpec = manifest.generateFileSpec()
     println(fileSpec)
     fileSpec.writeTo(File("library/src/main/kotlin"))
 }
 
-fun Manifest.generateFileSpec(coords: ActionCoords) =
+fun Manifest.generateFileSpec() =
     FileSpec.builder(coords.ownerPackage(), coords.className())
         .addType(
             TypeSpec.classBuilder(coords.className())
-                .addKdoc("""
-                    Action $name
-                    
-                    $description
-                    
-                    http://github.com/${coords.owner}/${coords.name}
-                """.trimIndent())
+                .addKdoc(actionKdoc())
                 .addModifiers(KModifier.DATA)
-                .inheritsFromAction(coords)
+                .inheritsFromAction(this)
                 .addProperties(properties())
                 .primaryConstructor(primaryConstructor())
                 .addFunction(toYamlFunction())
                 .addType( // companion object
                     TypeSpec.companionObjectBuilder()
                         .addModifiers(KModifier.INTERNAL)
-                        .addProperty(exampleFullAction(coords))
+                        .addProperty(exampleFullAction())
                         .addProperty(exampleFullMap())
                         .build()
                 )
@@ -53,6 +47,14 @@ fun Manifest.generateFileSpec(coords: ActionCoords) =
         .addAnnotation(AnnotationSpec.builder(Suppress::class).addMember("%S", "RedundantVisibilityModifier").build())
         .build()
 
+fun Manifest.actionKdoc() = """
+                    Action $name
+                    
+                    $description
+                    
+                    http://github.com/${coords.owner}/${coords.name}
+                """.trimIndent()
+
 fun Manifest.toYamlFunction(): FunSpec {
     return FunSpec.builder("toYamlArguments")
         .returns(LinkedHashMap::class.parameterizedBy(String::class, String::class))
@@ -61,11 +63,11 @@ fun Manifest.toYamlFunction(): FunSpec {
         .build()
 }
 
-fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords): TypeSpec.Builder = this
+fun TypeSpec.Builder.inheritsFromAction(manifest: Manifest): TypeSpec.Builder = this
     .superclass(ClassName("it.krzeminski.githubactions.actions", "Action"))
-    .addSuperclassConstructorParameter("%S", coords.owner)
-    .addSuperclassConstructorParameter("%S", coords.name)
-    .addSuperclassConstructorParameter("%S", coords.version)
+    .addSuperclassConstructorParameter("%S", manifest.coords.owner)
+    .addSuperclassConstructorParameter("%S", manifest.coords.name)
+    .addSuperclassConstructorParameter("%S", manifest.coords.version)
 
 fun Manifest.primaryConstructor(): FunSpec {
     val parameters = inputs.map {
@@ -102,7 +104,7 @@ fun Manifest.exampleFullMap(): PropertySpec {
 private fun escapeDefaultValue(s: String) =
     s.trim().removePrefix("\${{").removeSuffix("}}").trim()
 
-fun Manifest.exampleFullAction(coords: ActionCoords): PropertySpec {
+fun Manifest.exampleFullAction(): PropertySpec {
     val classname = ClassName(coords.ownerPackage(), coords.className())
     val builder = CodeBlock.builder().add("%T(\n", classname).indent()
     inputs.forEach {
@@ -121,6 +123,6 @@ fun Manifest.exampleFullAction(coords: ActionCoords): PropertySpec {
 
 val typeNullableString = String::class.asTypeName().copy(nullable = true)
 
-// TODO: actually implement a camelCase function
+// TODO: make unit tests pass
 fun camelCase(property: String) =
     property.replace("-", "").replace("_", "")

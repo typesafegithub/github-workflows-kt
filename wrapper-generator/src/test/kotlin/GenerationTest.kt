@@ -1,51 +1,52 @@
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.data.forAll
+import io.kotest.data.headers
+import io.kotest.data.row
+import io.kotest.data.table
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
 
-class GenerationTest : FunSpec({
-    test("action with required inputs as strings, no outputs") {
-        // given
-        val actionManifest = Manifest(
-            name = "Do something cool",
-            description = "This is a test description that should be put in the KDoc comment for a class",
-            author = "John Smith",
-            inputs = mapOf(
-                "foo-bar" to Input(
-                    description = "Short description",
-                    required = true,
-                ),
-                "baz-goo" to Input(
-                    description = "Just another input",
-                    required = true,
-                ),
-            )
+// TODO: make the unit tests pass
+class PoetTest : FunSpec({
+
+    test("Owner package should be correct") {
+        val testCases = listOf(
+            "actions" to "actions",
+            "ORGA" to "orga",
+            "My-Orga" to "myorga",
+            "my_orga" to "myorga",
         )
-        val coords = ActionCoords("john-smith", "do-sth-cool", "v3")
-        val fetchManifestMock = mockk<ActionCoords.() -> Manifest>()
-        every { fetchManifestMock(any()) } returns actionManifest
+        testCases.forAll { (owner, expected) ->
+            val actual = ActionCoords(owner, "name", "v1").ownerPackage()
+            actual shouldBe "it.krzeminski.githubactions.actions.$expected"
+        }
 
-        // when
-        val wrapper = coords.generateWrapper(fetchManifestMock)
+    }
 
-        // then
-        wrapper shouldBe Wrapper(
-            kotlinCode = """
-                package it.krzeminski.githubactions.actions.actions
-
-                import it.krzeminski.githubactions.actions.Action
-
-                class DoSthCoolV3(
-                    val fooBar: String,
-                    val bazGoo: String,
-                ) : Action("john-smith", "do-sth-cool", "v3") {
-                    override fun toYamlArguments() = linkedMapOf(
-                        "foo-bar" to fooBar,
-                        "baz-goo" to bazGoo,
-                    )
-                }
-            """.trimIndent(),
-            filePath = "library/src/main/kotlin/it/krzeminski/githubactions/actions/johnsmith/DoSthCoolV3.kt",
+    test("Classnames should be correct") {
+        val testCases = table(
+            headers("classname", "version", "expected"),
+            row("setup-node", "v12","SetupNodeV12"),
+            row("setup-node", "V12","SetupNodeV12"),
+            row("gradleWrapper", "2.0.0","GradleWrapperV2"),
+            row("setup_node", "v2.0.0","SetupNodeV2"),
+            row("my_action", "v42.0.1","MyActionV42"),
         )
+        testCases.forAll { classname, version, expected ->
+            val actual = ActionCoords("owner", classname, version).className()
+            actual shouldBe expected
+        }
+    }
+
+    test("Properties should be in camel case") {
+        val testCases = listOf(
+            "param" to "param",
+            "my-param" to "myParam",
+            "my_param" to "myParam",
+            "Param" to "param",
+        )
+        testCases.forAll {
+            camelCase(it.first) shouldBe it.second
+        }
     }
 })
