@@ -104,23 +104,22 @@ It's also a great source of examples how to use the library.
 
 Please first ensure that your action isn't present [here](library/src/main/kotlin/it/krzeminski/githubactions/actions).
 
-Wrapping an action is as easy as inheriting after `it.krzeminski.githubactions.actions.Action`, which should contain a
-piece of logic how to map an object of your class to YAML arguments:
+We have a generator for creating the wrapper actions.
 
-```kotlin
-class MyCoolActionV3(
-    private val someArgument: String,
-) : Action("acmecorp", "cool-action", "v3") {
-    override fun toYamlArguments() = linkedMapOf(
-        "some-argument" to someArgument,
-    )
-}
-```
+You need to 
+- go to the GitHub repository
+- copy the URL of the latest release, for example gradle :wrapper-generator:run --args https://github.com/peterjgrainger/action-create-branch/releases/tag/v2.1.0
+
+Then simply run the command:
+
+`./gradlew :wrapper-generator:run --args https://github.com/peterjgrainger/action-create-branch/releases/tag/v2.1.0`
+
+This will generate a class `ActionCreateBranchV2` which extends `it.krzeminski.githubactions.actions.Action`
 
 Then just use it in your workflow:
 ```kotlin
 uses(name = "FooBar",
-     action = MyCoolActionV3(someArgument = "foobar"))
+     action = ActionCreateBranchV2(someArgument = "foobar"))
 ```
 
 After you have a working wrapper class, even partially, **please contribute it to the library** so that others can use

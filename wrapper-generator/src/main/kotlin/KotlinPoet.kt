@@ -19,11 +19,17 @@ import java.io.File
 
 
 fun ActionCoords.generateKotlinPoet() {
+    val baseDir = when(File(".").canonicalFile.name) {
+        "github-actions-kotlin-dsl" -> "library"
+        "wrapper-generator" -> "../library"
+        else -> error("Unexpected current directory ${File(".").canonicalFile.name}")
+    }
+
     val manifest = fetchManifest()
     val fileSpec = manifest.generateFileSpec()
-    fileSpec.writeTo(File("library/src/main/kotlin"))
+    fileSpec.writeTo(File("$baseDir/src/main/kotlin"))
     val testSpec = manifest.generateTestFileSpec()
-    testSpec.writeTo(File("library/src/test/kotlin"))
+    testSpec.writeTo(File("$baseDir/src/test/kotlin"))
 
     val allInputs = manifest.inputs.toList().joinToString("") { "\n    ${it.first} => ${it.second}" }
     println("""
@@ -31,11 +37,11 @@ fun ActionCoords.generateKotlinPoet() {
         |URL:          ${manifest.coords.manifestUri}
         |Coords:       ${manifest.coords}
         |Manifest:     name='${manifest.name}' author='${manifest.author}' description='${manifest.description}'
-        |Action Class: ${manifest.coords.className()}     written to library/src/main/kotlin
-        |Test   Class: ${manifest.coords.className()}Test written to library/src/test/kotlin
+        |Action Class: ${manifest.coords.className()}     written to $baseDir/src/main/kotlin
+        |Test   Class: ${manifest.coords.className()}Test written to $baseDir/src/test/kotlin
         |
         |To avoid the CI failing, you should run the task:
-        |    ./gradlew ktlintFormat detekt
+        |    ./gradlew ktlintFormat detekt :library:test
         """.trimMargin())
 }
 
