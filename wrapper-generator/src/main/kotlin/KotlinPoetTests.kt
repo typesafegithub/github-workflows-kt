@@ -33,7 +33,7 @@ fun Manifest.generateTests() : CodeBlock {
         .indent()
         .add("%L.example_full_action %M %L.example_full_map\n", className, shouldHaveYamlArguments, className)
         .unindent()
-        .add("}\n\n")
+        .add("}\n")
         .unindent()
         .add("}")
         .build()

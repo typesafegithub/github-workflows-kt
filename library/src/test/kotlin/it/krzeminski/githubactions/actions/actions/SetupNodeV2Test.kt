@@ -14,5 +14,4 @@ public class SetupNodeV2Test : DescribeSpec({
     it("renders with all parameters") {
         SetupNodeV2.example_full_action shouldHaveYamlArguments SetupNodeV2.example_full_map
     }
-
 })
