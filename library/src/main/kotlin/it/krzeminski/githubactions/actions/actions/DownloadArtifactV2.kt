@@ -12,7 +12,7 @@ import kotlin.String
  * Download a build artifact that was previously uploaded in the workflow by the upload-artifact
  * action
  *
- * http://github.com/actions/download-artifact
+ * https://github.com/actions/download-artifact
  */
 public class DownloadArtifactV2(
     /**
