@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 import kotlin.String
+import kotlin.Suppress
 
 /**
  * Action: Download a Build Artifact
