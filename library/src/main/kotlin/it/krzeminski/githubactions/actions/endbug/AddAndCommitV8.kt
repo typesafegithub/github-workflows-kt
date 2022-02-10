@@ -7,7 +7,8 @@ import it.krzeminski.githubactions.actions.Action
  * for example, you use it to lint your code, update documentation, commit updated builds, etc...
  * https://github.com/EndBug/add-and-commit
  */
-data class AddAndCommitV8(
+@Suppress("LongParameterList")
+class AddAndCommitV8(
     /** The arguments for the `git add` command */
     val add: String? = null,
     /** The name of the user that will be displayed as the author of the commit. */

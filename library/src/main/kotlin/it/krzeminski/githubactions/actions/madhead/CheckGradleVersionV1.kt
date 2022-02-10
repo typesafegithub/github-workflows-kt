@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.Action
 
-data class CheckGradleVersionV1(
+class CheckGradleVersionV1(
     val gradlew: String? = null,
 ) : Action("madhead", "check-gradle-version", "v1") {
     override fun toYamlArguments(): LinkedHashMap<String, String> {

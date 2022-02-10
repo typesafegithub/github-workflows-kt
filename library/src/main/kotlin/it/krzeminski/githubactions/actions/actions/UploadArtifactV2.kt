@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 
-data class UploadArtifactV2(
+class UploadArtifactV2(
     val name: String,
     val path: List<String>,
 ) : Action("actions", "upload-artifact", "v2") {

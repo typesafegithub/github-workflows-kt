@@ -2,7 +2,8 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 
-data class SetupJavaV2(
+@Suppress("LongParameterList")
+class SetupJavaV2(
     val distribution: Distribution,
     val javaVersion: String,
     val javaPackage: JavaPackage? = null,

@@ -2,7 +2,8 @@ package it.krzeminski.githubactions.actions.gradle
 
 import it.krzeminski.githubactions.actions.Action
 
-data class GradleBuildActionV2(
+@Suppress("LongParameterList")
+class GradleBuildActionV2(
     val gradleVersion: String? = null,
     val cacheDisabled: Boolean? = null,
     val cacheReadOnly: Boolean? = null,

@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.Action
 
-data class SemverUtils(
+class SemverUtils(
     val version: String,
     val compareTo: String? = null,
     val satisfies: String? = null,

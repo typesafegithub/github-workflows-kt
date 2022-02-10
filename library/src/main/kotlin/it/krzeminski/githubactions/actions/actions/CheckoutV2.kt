@@ -2,7 +2,8 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 
-data class CheckoutV2(
+@Suppress("LongParameterList")
+class CheckoutV2(
     val repository: String? = null,
     val ref: String? = null,
     val token: String? = null,

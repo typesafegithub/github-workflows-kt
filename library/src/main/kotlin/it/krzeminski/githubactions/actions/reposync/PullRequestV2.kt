@@ -6,7 +6,8 @@ import it.krzeminski.githubactions.actions.Action
  * A GitHub Action for creating pull requests.
  * https://github.com/repo-sync/pull-request
  */
-data class PullRequestV2(
+@Suppress("LongParameterList")
+class PullRequestV2(
     /**
      * Branch name to pull from, default is triggered branch
      */

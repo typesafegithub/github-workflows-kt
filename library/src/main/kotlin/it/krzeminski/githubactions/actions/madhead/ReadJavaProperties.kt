@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.Action
 
-data class ReadJavaProperties(
+class ReadJavaProperties(
     val file: String,
     val property: String? = null,
     val all: Boolean? = null,
