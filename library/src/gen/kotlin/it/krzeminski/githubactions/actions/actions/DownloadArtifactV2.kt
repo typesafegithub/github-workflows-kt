@@ -19,17 +19,17 @@ public class DownloadArtifactV2(
     /**
      * Artifact name
      */
-    public val name: String,
+    public val name: String? = null,
     /**
      * Destination path
      */
-    public val path: String
+    public val path: String? = null
 ) : Action("actions", "download-artifact", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
-            "name" to name,
-            "path" to path,
+            name?.let { "name" to it },
+            path?.let { "path" to it },
         ).toTypedArray()
     )
 }
