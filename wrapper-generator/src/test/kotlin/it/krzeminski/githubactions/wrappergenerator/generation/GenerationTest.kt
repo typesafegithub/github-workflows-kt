@@ -48,7 +48,7 @@ class GenerationTest : FunSpec({
                  *
                  * This is a test description that should be put in the KDoc comment for a class
                  *
-                 * http://github.com/john-smith/do-sth-cool
+                 * https://github.com/john-smith/do-sth-cool
                  */
                 public class DoSthCoolV3(
                     /**

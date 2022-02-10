@@ -107,5 +107,5 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
 
         ${metadata.description}
 
-        http://github.com/${coords.owner}/${coords.name}
+        https://github.com/${coords.owner}/${coords.name}
     """.trimIndent()
