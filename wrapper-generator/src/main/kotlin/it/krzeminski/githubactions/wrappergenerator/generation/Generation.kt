@@ -28,7 +28,7 @@ fun ActionCoords.generateWrapper(
     val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
-        filePath = "library/src/main/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
+        filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
 }
 

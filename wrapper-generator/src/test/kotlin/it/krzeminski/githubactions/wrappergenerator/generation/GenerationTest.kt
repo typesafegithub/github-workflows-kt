@@ -72,7 +72,7 @@ class GenerationTest : FunSpec({
                 }
 
             """.trimIndent(),
-            filePath = "library/src/main/kotlin/it/krzeminski/githubactions/actions/johnsmith/SimpleActionWithRequiredStringInputsV3.kt",
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/SimpleActionWithRequiredStringInputsV3.kt",
         )
     }
 
@@ -139,7 +139,7 @@ class GenerationTest : FunSpec({
                 }
 
             """.trimIndent(),
-            filePath = "library/src/main/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithSomeOptionalInputsV3.kt",
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithSomeOptionalInputsV3.kt",
         )
     }
 })

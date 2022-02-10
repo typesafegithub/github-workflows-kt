@@ -24,6 +24,14 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
 }
 
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("src/gen/kotlin"))
+        }
+    }
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "11"
