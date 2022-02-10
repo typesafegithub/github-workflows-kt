@@ -76,19 +76,32 @@ class GenerationTest : FunSpec({
         )
     }
 
-    test("action with some optional inputs") {
+    test("action with various combinations of input parameters describing being required or optional") {
         // given
         val actionManifest = Metadata(
             name = "Do something cool",
             description = "This is a test description that should be put in the KDoc comment for a class",
             inputs = mapOf(
                 "foo-bar" to Input(
-                    description = "Short description",
+                    description = "Required is default, default is set",
                     default = "barfoo",
                 ),
                 "baz-goo" to Input(
-                    description = "Just another input",
+                    description = "Required is default, default is null",
                     default = null,
+                ),
+                "zoo-dar" to Input(
+                    description = "Required is false, default is set",
+                    required = false,
+                    default = "googoo",
+                ),
+                "coo-poo" to Input(
+                    description = "Required is false, default is default",
+                    required = false,
+                ),
+                "bon-ton" to Input(
+                    description = "Required is true, default is default",
+                    required = true,
                 ),
             )
         )
@@ -121,19 +134,34 @@ class GenerationTest : FunSpec({
                  */
                 public class ActionWithSomeOptionalInputsV3(
                     /**
-                     * Short description
+                     * Required is default, default is set
                      */
                     public val fooBar: String? = null,
                     /**
-                     * Just another input
+                     * Required is default, default is null
                      */
-                    public val bazGoo: String
+                    public val bazGoo: String,
+                    /**
+                     * Required is false, default is set
+                     */
+                    public val zooDar: String? = null,
+                    /**
+                     * Required is false, default is default
+                     */
+                    public val cooPoo: String? = null,
+                    /**
+                     * Required is true, default is default
+                     */
+                    public val bonTon: String
                 ) : Action("john-smith", "action-with-some-optional-inputs", "v3") {
                     @Suppress("SpreadOperator")
                     public override fun toYamlArguments() = linkedMapOf(
                         *listOfNotNull(
                             fooBar?.let { "foo-bar" to it },
                             "baz-goo" to bazGoo,
+                            zooDar?.let { "zoo-dar" to it },
+                            cooPoo?.let { "coo-poo" to it },
+                            "bon-ton" to bonTon,
                         ).toTypedArray()
                     )
                 }

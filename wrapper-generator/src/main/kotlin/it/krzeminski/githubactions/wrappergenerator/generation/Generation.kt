@@ -60,7 +60,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords): TypeS
 fun TypeSpec.Builder.properties(metadata: Metadata): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         addProperty(
-            PropertySpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = input.default != null))
+            PropertySpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = !input.shouldBeNonNullInWrapper()))
                 .initializer(key.toCamelCase())
                 .build()
         )
@@ -83,7 +83,7 @@ private fun Metadata.buildToYamlArgumentsFunction() =
                 add("*listOfNotNull(\n")
                 indent()
                 inputs.forEach { (key, value) ->
-                    if (value.default != null) {
+                    if (!value.shouldBeNonNullInWrapper()) {
                         add("%L?.let { %S to it },\n", key.toCamelCase(), key)
                     } else {
                         add("%S to %L,\n", key, key.toCamelCase())
@@ -107,7 +107,7 @@ private fun Metadata.primaryConstructor(): FunSpec {
     return FunSpec.constructorBuilder()
         .addParameters(
             inputs.map { (key, input) ->
-                ParameterSpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = input.default != null))
+                ParameterSpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = !input.shouldBeNonNullInWrapper()))
                     .defaultValueIfNullable(input)
                     .addKdoc(input.description)
                     .build()
@@ -117,11 +117,14 @@ private fun Metadata.primaryConstructor(): FunSpec {
 }
 
 private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): ParameterSpec.Builder {
-    if (input.default != null) {
+    if (!input.shouldBeNonNullInWrapper()) {
         defaultValue("null")
     }
     return this
 }
+
+private fun Input.shouldBeNonNullInWrapper() =
+    (required == true || required == null) && default == null
 
 private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
     """

@@ -9,6 +9,7 @@ class ActionWithSomeOptionalInputsV3Test : DescribeSpec({
         // given
         val action = ActionWithSomeOptionalInputsV3(
             bazGoo = "def456",
+            bonTon = "qwe789"
         )
 
         // when
@@ -17,6 +18,7 @@ class ActionWithSomeOptionalInputsV3Test : DescribeSpec({
         // then
         yaml shouldBe linkedMapOf(
             "baz-goo" to "def456",
+            "bon-ton" to "qwe789",
         )
     }
 })

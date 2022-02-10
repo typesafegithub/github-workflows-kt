@@ -16,19 +16,34 @@ import kotlin.Suppress
  */
 public class ActionWithSomeOptionalInputsV3(
     /**
-     * Short description
+     * Required is default, default is set
      */
     public val fooBar: String? = null,
     /**
-     * Just another input
+     * Required is default, default is null
      */
-    public val bazGoo: String
+    public val bazGoo: String,
+    /**
+     * Required is false, default is set
+     */
+    public val zooDar: String? = null,
+    /**
+     * Required is false, default is default
+     */
+    public val cooPoo: String? = null,
+    /**
+     * Required is true, default is default
+     */
+    public val bonTon: String
 ) : Action("john-smith", "action-with-some-optional-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             fooBar?.let { "foo-bar" to it },
             "baz-goo" to bazGoo,
+            zooDar?.let { "zoo-dar" to it },
+            cooPoo?.let { "coo-poo" to it },
+            "bon-ton" to bonTon,
         ).toTypedArray()
     )
 }
