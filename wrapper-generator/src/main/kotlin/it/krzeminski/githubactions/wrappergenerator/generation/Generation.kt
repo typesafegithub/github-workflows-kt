@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator.generation
 
+import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
@@ -8,7 +9,9 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
 import java.util.Locale
@@ -56,9 +59,9 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords): TypeS
         .build()
 
 fun TypeSpec.Builder.properties(metadata: Metadata): TypeSpec.Builder {
-    metadata.inputs.forEach { (key, _) ->
+    metadata.inputs.forEach { (key, input) ->
         addProperty(
-            PropertySpec.builder(key.toCamelCase(), String::class)
+            PropertySpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = input.default != null))
                 .initializer(key.toCamelCase())
                 .build()
         )
@@ -69,11 +72,26 @@ fun TypeSpec.Builder.properties(metadata: Metadata): TypeSpec.Builder {
 private fun Metadata.buildToYamlArgumentsFunction() =
     FunSpec.builder("toYamlArguments")
         .addModifiers(KModifier.OVERRIDE)
+        .addAnnotation(
+            AnnotationSpec.builder(Suppress::class)
+                .addMember("\"SpreadOperator\"")
+                .build()
+        )
         .addCode(
             CodeBlock.Builder().apply {
                 add("return linkedMapOf(\n")
                 indent()
-                inputs.forEach { add("%S to %L,\n", it.key, it.key.toCamelCase()) }
+                add("*listOfNotNull(\n")
+                indent()
+                inputs.forEach { (key, value) ->
+                    if (value.default != null) {
+                        add("%L?.let { %S to it },\n", key.toCamelCase(), key)
+                    } else {
+                        add("%S to %L,\n", key, key.toCamelCase())
+                    }
+                }
+                unindent()
+                add(").toTypedArray()\n")
                 unindent()
                 add(")")
             }.build()
@@ -93,12 +111,20 @@ private fun Metadata.primaryConstructor(): FunSpec {
     return FunSpec.constructorBuilder()
         .addParameters(
             inputs.map { (key, input) ->
-                ParameterSpec.builder(key.toCamelCase(), String::class)
+                ParameterSpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = input.default != null))
+                    .defaultValueIfNullable(input)
                     .addKdoc(input.description)
                     .build()
             }
         )
         .build()
+}
+
+private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): ParameterSpec.Builder {
+    if (input.default != null) {
+        defaultValue("null")
+    }
+    return this
 }
 
 private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =

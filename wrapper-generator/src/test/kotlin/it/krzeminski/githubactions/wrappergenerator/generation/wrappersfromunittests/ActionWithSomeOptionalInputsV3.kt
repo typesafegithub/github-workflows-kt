@@ -12,22 +12,22 @@ import kotlin.Suppress
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * https://github.com/john-smith/simple-action-with-required-string-inputs
+ * https://github.com/john-smith/action-with-some-optional-inputs
  */
-public class SimpleActionWithRequiredStringInputsV3(
+public class ActionWithSomeOptionalInputsV3(
     /**
      * Short description
      */
-    public val fooBar: String,
+    public val fooBar: String? = null,
     /**
      * Just another input
      */
     public val bazGoo: String
-) : Action("john-smith", "simple-action-with-required-string-inputs", "v3") {
+) : Action("john-smith", "action-with-some-optional-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
-            "foo-bar" to fooBar,
+            fooBar?.let { "foo-bar" to it },
             "baz-goo" to bazGoo,
         ).toTypedArray()
     )
