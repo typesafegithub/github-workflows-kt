@@ -6,8 +6,8 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
-import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
@@ -51,8 +51,20 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords): TypeS
         .addKdoc(actionKdoc(metadata, coords))
         .inheritsFromAction(coords)
         .primaryConstructor(metadata.primaryConstructor())
+        .properties(metadata)
         .addFunction(metadata.buildToYamlArgumentsFunction())
         .build()
+
+fun TypeSpec.Builder.properties(metadata: Metadata): TypeSpec.Builder {
+    metadata.inputs.forEach { (key, _) ->
+        addProperty(
+            PropertySpec.builder(key.toCamelCase(), String::class)
+                .initializer(key.toCamelCase())
+                .build()
+        )
+    }
+    return this
+}
 
 private fun Metadata.buildToYamlArgumentsFunction() =
     FunSpec.builder("toYamlArguments")
@@ -81,7 +93,7 @@ private fun Metadata.primaryConstructor(): FunSpec {
     return FunSpec.constructorBuilder()
         .addParameters(
             inputs.map { (key, input) ->
-                ParameterSpec.builder(key.toCamelCase(), String::class.asTypeName())
+                ParameterSpec.builder(key.toCamelCase(), String::class)
                     .addKdoc(input.description)
                     .build()
             }

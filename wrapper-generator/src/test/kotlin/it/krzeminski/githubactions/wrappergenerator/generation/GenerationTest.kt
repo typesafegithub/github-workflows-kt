@@ -54,11 +54,11 @@ class GenerationTest : FunSpec({
                     /**
                      * Short description
                      */
-                    fooBar: String,
+                    public val fooBar: String,
                     /**
                      * Just another input
                      */
-                    bazGoo: String
+                    public val bazGoo: String
                 ) : Action("john-smith", "do-sth-cool", "v3") {
                     public override fun toYamlArguments() = linkedMapOf(
                         "foo-bar" to fooBar,
