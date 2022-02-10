@@ -31,6 +31,7 @@ class GenerationTest : FunSpec({
 
         // when
         val wrapper = coords.generateWrapper(fetchMetadataMock)
+        writeToUnitTests(wrapper)
 
         // then
         wrapper shouldBe Wrapper(
