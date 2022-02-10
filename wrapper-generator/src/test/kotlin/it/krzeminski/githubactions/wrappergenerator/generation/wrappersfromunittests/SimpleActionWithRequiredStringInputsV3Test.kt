@@ -2,12 +2,12 @@ package it.krzeminski.githubactions.wrappergenerator.generation.wrappersfromunit
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.johnsmith.DoSthCoolV3
+import it.krzeminski.githubactions.actions.johnsmith.SimpleActionWithRequiredStringInputsV3
 
-class DoSthCoolV3Test : DescribeSpec({
+class SimpleActionWithRequiredStringInputsV3Test : DescribeSpec({
     it("renders with defaults") {
         // given
-        val action = DoSthCoolV3(
+        val action = SimpleActionWithRequiredStringInputsV3(
             fooBar = "abc123",
             bazGoo = "def456",
         )

@@ -11,9 +11,9 @@ import kotlin.String
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * https://github.com/john-smith/do-sth-cool
+ * https://github.com/john-smith/simple-action-with-required-string-inputs
  */
-public class DoSthCoolV3(
+public class SimpleActionWithRequiredStringInputsV3(
     /**
      * Short description
      */
@@ -22,7 +22,7 @@ public class DoSthCoolV3(
      * Just another input
      */
     public val bazGoo: String
-) : Action("john-smith", "do-sth-cool", "v3") {
+) : Action("john-smith", "simple-action-with-required-string-inputs", "v3") {
     public override fun toYamlArguments() = linkedMapOf(
         "foo-bar" to fooBar,
         "baz-goo" to bazGoo,
