@@ -31,6 +31,13 @@ fun ActionCoords.generateWrapper(
 
 private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords): String {
     val fileSpec = FileSpec.builder("it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
+        .addComment(
+            """
+            This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+            be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+            generator itself.
+            """.trimIndent()
+        )
         .addType(generateActionClass(metadata, coords))
         .indent("    ")
         .build()
