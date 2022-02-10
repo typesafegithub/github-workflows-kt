@@ -14,7 +14,6 @@ import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
-import java.util.Locale
 
 data class Wrapper(
     val kotlinCode: String,
@@ -103,9 +102,6 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords): TypeSpec.
     .addSuperclassConstructorParameter("%S", coords.owner)
     .addSuperclassConstructorParameter("%S", coords.name)
     .addSuperclassConstructorParameter("%S", coords.version)
-
-private fun ActionCoords.buildActionClassName() =
-    "${name.toPascalCase()}${version.replaceFirstChar { it.titlecase(Locale.getDefault()) }}"
 
 private fun Metadata.primaryConstructor(): FunSpec {
     return FunSpec.constructorBuilder()
