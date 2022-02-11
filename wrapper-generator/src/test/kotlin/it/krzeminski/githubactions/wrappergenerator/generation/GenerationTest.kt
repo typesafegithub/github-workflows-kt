@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 
@@ -170,6 +171,92 @@ class GenerationTest : FunSpec({
 
             """.trimIndent(),
             filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithSomeOptionalInputsV3.kt",
+        )
+    }
+
+    test("action with non-string inputs") {
+        // given
+        val actionManifest = Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs = mapOf(
+                "foo-bar" to Input(
+                    description = "Short description",
+                    required = true,
+                    default = null,
+                ),
+                "baz-goo" to Input(
+                    description = "First boolean input!",
+                    required = true,
+                    default = null,
+                ),
+                "bin-kin" to Input(
+                    description = "Boolean and nullable",
+                    required = false,
+                    default = "test",
+                ),
+            )
+        )
+        val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
+        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
+        every { fetchMetadataMock(any()) } returns actionManifest
+
+        // when
+        val wrapper = coords.generateWrapper(
+            fetchMetadataImpl = fetchMetadataMock,
+            inputTypings = mapOf(
+                "baz-goo" to BooleanTyping,
+                "bin-kin" to BooleanTyping,
+            ),
+        )
+        writeToUnitTests(wrapper)
+
+        // then
+        wrapper shouldBe Wrapper(
+            kotlinCode = """
+                // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+                // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+                // generator itself.
+                package it.krzeminski.githubactions.actions.johnsmith
+
+                import it.krzeminski.githubactions.actions.Action
+                import kotlin.Boolean
+                import kotlin.String
+                import kotlin.Suppress
+
+                /**
+                 * Action: Do something cool
+                 *
+                 * This is a test description that should be put in the KDoc comment for a class
+                 *
+                 * https://github.com/john-smith/action-with-non-string-inputs
+                 */
+                public class ActionWithNonStringInputsV3(
+                    /**
+                     * Short description
+                     */
+                    public val fooBar: String,
+                    /**
+                     * First boolean input!
+                     */
+                    public val bazGoo: Boolean,
+                    /**
+                     * Boolean and nullable
+                     */
+                    public val binKin: Boolean? = null
+                ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
+                    @Suppress("SpreadOperator")
+                    public override fun toYamlArguments() = linkedMapOf(
+                        *listOfNotNull(
+                            "foo-bar" to fooBar,
+                            "baz-goo" to bazGoo.toString(),
+                            binKin?.let { "bin-kin" to it.toString() },
+                        ).toTypedArray()
+                    )
+                }
+
+            """.trimIndent(),
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithNonStringInputsV3.kt",
         )
     }
 })

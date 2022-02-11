@@ -4,4 +4,5 @@ import com.squareup.kotlinpoet.ClassName
 
 interface Typing {
     val className: ClassName
+    fun asString(): String = ""
 }

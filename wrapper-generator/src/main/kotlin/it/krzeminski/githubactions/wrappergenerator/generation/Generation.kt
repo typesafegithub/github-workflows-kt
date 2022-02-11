@@ -56,7 +56,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
         .inheritsFromAction(coords)
         .primaryConstructor(metadata.primaryConstructor(inputTypings))
         .properties(metadata, inputTypings)
-        .addFunction(metadata.buildToYamlArgumentsFunction())
+        .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
         .build()
 
 private fun TypeSpec.Builder.properties(metadata: Metadata, inputTypings: Map<String, Typing>): TypeSpec.Builder {
@@ -70,7 +70,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, inputTypings: Map<St
     return this
 }
 
-private fun Metadata.buildToYamlArgumentsFunction() =
+private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typing>) =
     FunSpec.builder("toYamlArguments")
         .addModifiers(KModifier.OVERRIDE)
         .addAnnotation(
@@ -85,10 +85,11 @@ private fun Metadata.buildToYamlArgumentsFunction() =
                 add("*listOfNotNull(\n")
                 indent()
                 inputs.forEach { (key, value) ->
+                    val asStringCode = inputTypings.getInputTyping(key).asString()
                     if (!value.shouldBeNonNullInWrapper()) {
-                        add("%L?.let { %S to it },\n", key.toCamelCase(), key)
+                        add("%L?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
                     } else {
-                        add("%S to %L,\n", key, key.toCamelCase())
+                        add("%S to %L$asStringCode,\n", key, key.toCamelCase())
                     }
                 }
                 unindent()
@@ -134,6 +135,9 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
         https://github.com/${coords.owner}/${coords.name}
     """.trimIndent()
 
+private fun Map<String, Typing>.getInputTyping(key: String) =
+    this[key] ?: StringTyping
+
 private fun Map<String, Typing>.getInputType(key: String, input: Input) =
-    (this[key] ?: StringTyping).className
+    getInputTyping(key).className
         .copy(nullable = !input.shouldBeNonNullInWrapper())
