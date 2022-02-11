@@ -1,8 +1,8 @@
 package it.krzeminski.githubactions.wrappergenerator.domain.typings
 
-import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.TypeName
 
 interface Typing {
-    val className: ClassName
+    val className: TypeName
     fun asString(): String = ""
 }

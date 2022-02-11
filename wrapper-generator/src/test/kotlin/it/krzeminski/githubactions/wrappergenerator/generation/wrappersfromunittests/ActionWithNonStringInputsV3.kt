@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.List
 
 /**
  * Action: Do something cool
@@ -27,7 +28,11 @@ public class ActionWithNonStringInputsV3(
     /**
      * Boolean and nullable
      */
-    public val binKin: Boolean? = null
+    public val binKin: Boolean? = null,
+    /**
+     * List of strings
+     */
+    public val booZoo: List<String>
 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -35,6 +40,7 @@ public class ActionWithNonStringInputsV3(
             "foo-bar" to fooBar,
             "baz-goo" to bazGoo.toString(),
             binKin?.let { "bin-kin" to it.toString() },
+            "boo-zoo" to booZoo.joinToString(","),
         ).toTypedArray()
     )
 }

@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 
@@ -195,6 +196,11 @@ class GenerationTest : FunSpec({
                     required = false,
                     default = "test",
                 ),
+                "boo-zoo" to Input(
+                    description = "List of strings",
+                    required = true,
+                    default = null,
+                ),
             )
         )
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
@@ -207,6 +213,7 @@ class GenerationTest : FunSpec({
             inputTypings = mapOf(
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
+                "boo-zoo" to ListOfStringsTyping(","),
             ),
         )
         writeToUnitTests(wrapper)
@@ -223,6 +230,7 @@ class GenerationTest : FunSpec({
                 import kotlin.Boolean
                 import kotlin.String
                 import kotlin.Suppress
+                import kotlin.collections.List
 
                 /**
                  * Action: Do something cool
@@ -243,7 +251,11 @@ class GenerationTest : FunSpec({
                     /**
                      * Boolean and nullable
                      */
-                    public val binKin: Boolean? = null
+                    public val binKin: Boolean? = null,
+                    /**
+                     * List of strings
+                     */
+                    public val booZoo: List<String>
                 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
                     @Suppress("SpreadOperator")
                     public override fun toYamlArguments() = linkedMapOf(
@@ -251,6 +263,7 @@ class GenerationTest : FunSpec({
                             "foo-bar" to fooBar,
                             "baz-goo" to bazGoo.toString(),
                             binKin?.let { "bin-kin" to it.toString() },
+                            "boo-zoo" to booZoo.joinToString(","),
                         ).toTypedArray()
                     )
                 }

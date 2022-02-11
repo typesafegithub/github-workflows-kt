@@ -3,7 +3,6 @@ package it.krzeminski.githubactions.wrappergenerator.generation.wrappersfromunit
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.johnsmith.ActionWithNonStringInputsV3
-import it.krzeminski.githubactions.actions.madhead.ReadJavaProperties
 
 class ActionWithNonStringInputsV3Test : DescribeSpec({
     it("correctly translates boolean inputs ") {
@@ -12,6 +11,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             fooBar = "test",
             bazGoo = true,
             binKin = false,
+            booZoo = listOf("foo", "bar"),
         )
 
         // when
@@ -22,6 +22,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             "foo-bar" to "test",
             "baz-goo" to "true",
             "bin-kin" to "false",
+            "boo-zoo" to "foo,bar",
         )
     }
 })
