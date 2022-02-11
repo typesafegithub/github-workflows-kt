@@ -6,7 +6,7 @@ fun String.toKotlinPackageName() =
     replace("-", "")
 
 fun String.toPascalCase() =
-    split("-")
+    split("-", "_")
         .joinToString("") {
             it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         }

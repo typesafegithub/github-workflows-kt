@@ -27,6 +27,7 @@ class TextTransformationTest : FunSpec({
     context("toCamelCase") {
         listOf(
             "some-name" to "someName",
+            "some_name" to "someName",
         ).forEach { (input, output) ->
             test("should convert '$input' to '$output'") {
                 input.toCamelCase() shouldBe output
