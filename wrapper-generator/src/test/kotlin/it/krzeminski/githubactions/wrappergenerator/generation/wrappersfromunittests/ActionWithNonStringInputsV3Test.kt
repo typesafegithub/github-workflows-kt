@@ -11,6 +11,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             fooBar = "test",
             bazGoo = true,
             binKin = false,
+            intPint = 43,
             booZoo = listOf("foo", "bar"),
         )
 
@@ -22,6 +23,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             "foo-bar" to "test",
             "baz-goo" to "true",
             "bin-kin" to "false",
+            "int-pint" to "43",
             "boo-zoo" to "foo,bar",
         )
     }

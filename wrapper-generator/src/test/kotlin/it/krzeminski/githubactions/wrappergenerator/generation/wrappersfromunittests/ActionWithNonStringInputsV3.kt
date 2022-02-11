@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -30,6 +31,10 @@ public class ActionWithNonStringInputsV3(
      */
     public val binKin: Boolean? = null,
     /**
+     * Integer
+     */
+    public val intPint: Int,
+    /**
      * List of strings
      */
     public val booZoo: List<String>
@@ -40,6 +45,7 @@ public class ActionWithNonStringInputsV3(
             "foo-bar" to fooBar,
             "baz-goo" to bazGoo.toString(),
             binKin?.let { "bin-kin" to it.toString() },
+            "int-pint" to intPint.toString(),
             "boo-zoo" to booZoo.joinToString(","),
         ).toTypedArray()
     )

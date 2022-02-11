@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
@@ -196,6 +197,11 @@ class GenerationTest : FunSpec({
                     required = false,
                     default = "test",
                 ),
+                "int-pint" to Input(
+                    description = "Integer",
+                    required = true,
+                    default = null,
+                ),
                 "boo-zoo" to Input(
                     description = "List of strings",
                     required = true,
@@ -213,6 +219,7 @@ class GenerationTest : FunSpec({
             inputTypings = mapOf(
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
+                "int-pint" to IntegerTyping,
                 "boo-zoo" to ListOfStringsTyping(","),
             ),
         )
@@ -228,6 +235,7 @@ class GenerationTest : FunSpec({
 
                 import it.krzeminski.githubactions.actions.Action
                 import kotlin.Boolean
+                import kotlin.Int
                 import kotlin.String
                 import kotlin.Suppress
                 import kotlin.collections.List
@@ -253,6 +261,10 @@ class GenerationTest : FunSpec({
                      */
                     public val binKin: Boolean? = null,
                     /**
+                     * Integer
+                     */
+                    public val intPint: Int,
+                    /**
                      * List of strings
                      */
                     public val booZoo: List<String>
@@ -263,6 +275,7 @@ class GenerationTest : FunSpec({
                             "foo-bar" to fooBar,
                             "baz-goo" to bazGoo.toString(),
                             binKin?.let { "bin-kin" to it.toString() },
+                            "int-pint" to intPint.toString(),
                             "boo-zoo" to booZoo.joinToString(","),
                         ).toTypedArray()
                     )
