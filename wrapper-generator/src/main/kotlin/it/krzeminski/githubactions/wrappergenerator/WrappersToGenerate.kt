@@ -44,4 +44,15 @@ val wrappersToGenerate = listOf(
     ),
 
     WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")),
+
+    WrapperRequest(
+        ActionCoords("repo-sync", "pull-request", "v2"),
+        mapOf(
+            "pr_reviewer" to ListOfStringsTyping(","),
+            "pr_assignee" to ListOfStringsTyping(","),
+            "pr_label" to ListOfStringsTyping(","),
+            "pr_draft" to BooleanTyping,
+            "pr_allow_empty" to BooleanTyping,
+        ),
+    )
 )
