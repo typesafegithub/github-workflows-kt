@@ -53,7 +53,7 @@ names with your own.
 
    import it.krzeminski.githubactions.actions.actions.CheckoutV2
    import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-   import it.krzeminski.githubactions.domain.Trigger.Push
+   import it.krzeminski.githubactions.domain.triggers.Push
    import it.krzeminski.githubactions.dsl.workflow
    import it.krzeminski.githubactions.yaml.toYaml
    import java.nio.file.Paths
