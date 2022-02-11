@@ -9,8 +9,8 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
-import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
@@ -26,14 +26,14 @@ fun ActionCoords.generateWrapper(
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): Wrapper {
     val metadata = fetchMetadataImpl()
-    val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this)
+    val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
         filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
 }
 
-private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords): String {
+private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
     val fileSpec = FileSpec.builder("it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
         .addComment(
             """
@@ -42,7 +42,7 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
             generator itself.
             """.trimIndent()
         )
-        .addType(generateActionClass(metadata, coords))
+        .addType(generateActionClass(metadata, coords, inputTypings))
         .indent("    ")
         .build()
     return buildString {
@@ -50,19 +50,19 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
     }
 }
 
-private fun generateActionClass(metadata: Metadata, coords: ActionCoords): TypeSpec =
+private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec =
     TypeSpec.classBuilder(coords.buildActionClassName())
         .addKdoc(actionKdoc(metadata, coords))
         .inheritsFromAction(coords)
-        .primaryConstructor(metadata.primaryConstructor())
-        .properties(metadata)
+        .primaryConstructor(metadata.primaryConstructor(inputTypings))
+        .properties(metadata, inputTypings)
         .addFunction(metadata.buildToYamlArgumentsFunction())
         .build()
 
-fun TypeSpec.Builder.properties(metadata: Metadata): TypeSpec.Builder {
+private fun TypeSpec.Builder.properties(metadata: Metadata, inputTypings: Map<String, Typing>): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         addProperty(
-            PropertySpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = !input.shouldBeNonNullInWrapper()))
+            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input))
                 .initializer(key.toCamelCase())
                 .build()
         )
@@ -105,11 +105,11 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords): TypeSpec.
     .addSuperclassConstructorParameter("%S", coords.name)
     .addSuperclassConstructorParameter("%S", coords.version)
 
-private fun Metadata.primaryConstructor(): FunSpec {
+private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>): FunSpec {
     return FunSpec.constructorBuilder()
         .addParameters(
             inputs.map { (key, input) ->
-                ParameterSpec.builder(key.toCamelCase(), String::class.asTypeName().copy(nullable = !input.shouldBeNonNullInWrapper()))
+                ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input))
                     .defaultValueIfNullable(input)
                     .addKdoc(input.description)
                     .build()
@@ -133,3 +133,7 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
 
         https://github.com/${coords.owner}/${coords.name}
     """.trimIndent()
+
+private fun Map<String, Typing>.getInputType(key: String, input: Input) =
+    (this[key] ?: StringTyping).className
+        .copy(nullable = !input.shouldBeNonNullInWrapper())

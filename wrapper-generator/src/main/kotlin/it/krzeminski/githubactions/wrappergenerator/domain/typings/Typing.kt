@@ -1,3 +1,7 @@
 package it.krzeminski.githubactions.wrappergenerator.domain.typings
 
-interface Typing
+import com.squareup.kotlinpoet.ClassName
+
+interface Typing {
+    val className: ClassName
+}
