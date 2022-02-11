@@ -13,6 +13,8 @@ fun main() {
 
         ActionCoords("madhead", "check-gradle-version", "v1"),
         ActionCoords("madhead", "semver-utils", "latest"),
+
+        ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0"),
     ).forEach { actionCoords ->
         println("Generating ${actionCoords.owner}/${actionCoords.name}@${actionCoords.version}...")
         val (code, path) = actionCoords.generateWrapper()
