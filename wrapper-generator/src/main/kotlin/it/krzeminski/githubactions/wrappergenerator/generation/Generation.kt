@@ -11,6 +11,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
@@ -21,6 +22,7 @@ data class Wrapper(
 )
 
 fun ActionCoords.generateWrapper(
+    inputTypings: Map<String, Typing> = emptyMap(),
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): Wrapper {
     val metadata = fetchMetadataImpl()

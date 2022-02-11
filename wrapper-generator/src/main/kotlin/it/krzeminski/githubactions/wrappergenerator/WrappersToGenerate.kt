@@ -1,12 +1,13 @@
 package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 
 val wrappersToGenerate = listOf(
-    ActionCoords("actions", "download-artifact", "v2"),
+    WrapperRequest(ActionCoords("actions", "download-artifact", "v2")),
 
-    ActionCoords("madhead", "check-gradle-version", "v1"),
-    ActionCoords("madhead", "semver-utils", "latest"),
+    WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
+    WrapperRequest(ActionCoords("madhead", "semver-utils", "latest")),
 
-    ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0"),
+    WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")),
 )

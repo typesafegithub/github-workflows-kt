@@ -32,7 +32,7 @@ class GenerationTest : FunSpec({
         every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataMock)
+        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
         writeToUnitTests(wrapper)
 
         // then
@@ -112,7 +112,7 @@ class GenerationTest : FunSpec({
         every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataMock)
+        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
         writeToUnitTests(wrapper)
 
         // then
