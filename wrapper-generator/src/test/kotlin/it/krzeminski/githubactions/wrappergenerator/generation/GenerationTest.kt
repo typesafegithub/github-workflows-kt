@@ -17,10 +17,12 @@ class GenerationTest : FunSpec({
             inputs = mapOf(
                 "foo-bar" to Input(
                     description = "Short description",
+                    required = true,
                     default = null,
                 ),
                 "baz-goo" to Input(
                     description = "Just another input",
+                    required = true,
                     default = null,
                 ),
             )
@@ -140,7 +142,7 @@ class GenerationTest : FunSpec({
                     /**
                      * Required is default, default is null
                      */
-                    public val bazGoo: String,
+                    public val bazGoo: String? = null,
                     /**
                      * Required is false, default is set
                      */
@@ -158,7 +160,7 @@ class GenerationTest : FunSpec({
                     public override fun toYamlArguments() = linkedMapOf(
                         *listOfNotNull(
                             fooBar?.let { "foo-bar" to it },
-                            "baz-goo" to bazGoo,
+                            bazGoo?.let { "baz-goo" to it },
                             zooDar?.let { "zoo-dar" to it },
                             cooPoo?.let { "coo-poo" to it },
                             "bon-ton" to bonTon,

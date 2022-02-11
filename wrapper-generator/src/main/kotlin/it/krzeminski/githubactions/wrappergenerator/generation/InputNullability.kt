@@ -7,4 +7,4 @@ import it.krzeminski.githubactions.wrappergenerator.metadata.Input
  * it. It's thus a challenge to infer nullability of inputs in the Kotlin wrappers. This function tackles this task.
  */
 fun Input.shouldBeNonNullInWrapper() =
-    (required == true || required == null) && default == null
+    default == null && required == true

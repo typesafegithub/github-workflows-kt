@@ -22,7 +22,7 @@ public class ActionWithSomeOptionalInputsV3(
     /**
      * Required is default, default is null
      */
-    public val bazGoo: String,
+    public val bazGoo: String? = null,
     /**
      * Required is false, default is set
      */
@@ -40,7 +40,7 @@ public class ActionWithSomeOptionalInputsV3(
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             fooBar?.let { "foo-bar" to it },
-            "baz-goo" to bazGoo,
+            bazGoo?.let { "baz-goo" to it },
             zooDar?.let { "zoo-dar" to it },
             cooPoo?.let { "coo-poo" to it },
             "bon-ton" to bonTon,
