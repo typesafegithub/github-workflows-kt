@@ -10,7 +10,9 @@ fun main() {
 
     listOf(
         ActionCoords("actions", "download-artifact", "v2"),
+
         ActionCoords("madhead", "check-gradle-version", "v1"),
+        ActionCoords("madhead", "semver-utils", "latest"),
     ).forEach { actionCoords ->
         println("Generating ${actionCoords.owner}/${actionCoords.name}@${actionCoords.version}...")
         val (code, path) = actionCoords.generateWrapper()
