@@ -31,5 +31,17 @@ val wrappersToGenerate = listOf(
         ),
     ),
 
+    WrapperRequest(
+        ActionCoords("gradle-update", "update-gradle-wrapper-action", "v1"),
+        mapOf(
+            "reviewers" to ListOfStringsTyping(","),
+            "team-reviewers" to ListOfStringsTyping(","),
+            "labels" to ListOfStringsTyping(","),
+            "set-distribution-checksum" to BooleanTyping,
+            "paths" to ListOfStringsTyping(","),
+            "paths-ignore" to ListOfStringsTyping(","),
+        ),
+    ),
+
     WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")),
 )
