@@ -7,7 +7,7 @@ import it.krzeminski.githubactions.actions.Action
  * as the branch it is being ran on, or your chosen reference when specified.
  * https://github.com/peterjgrainger/action-create-branch
  */
-class CreateBranchV2(
+class ActionCreateBranchV2(
     /** The name of the branch to create. Default "release-candidate". **/
     val branch: String? = null,
     /** The SHA1 value for the branch reference. **/
