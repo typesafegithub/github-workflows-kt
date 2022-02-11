@@ -123,9 +123,6 @@ private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): Paramete
     return this
 }
 
-private fun Input.shouldBeNonNullInWrapper() =
-    (required == true || required == null) && default == null
-
 private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
     """
         Action: ${metadata.name}
