@@ -4,6 +4,7 @@ import java.util.Locale
 
 fun String.toKotlinPackageName() =
     replace("-", "")
+        .lowercase()
 
 fun String.toPascalCase() =
     split("-", "_")
