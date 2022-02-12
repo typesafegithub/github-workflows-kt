@@ -13,6 +13,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             binKin = false,
             intPint = 43,
             booZoo = listOf("foo", "bar"),
+            finBin = ActionWithNonStringInputsV3.Bin.BooBar,
         )
 
         // when
@@ -25,6 +26,32 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             "bin-kin" to "false",
             "int-pint" to "43",
             "boo-zoo" to "foo,bar",
+            "fin-bin" to "boo-bar",
+        )
+    }
+
+    it("works for enum custom value") {
+        // given
+        val action = ActionWithNonStringInputsV3(
+            fooBar = "test",
+            bazGoo = true,
+            binKin = false,
+            intPint = 43,
+            booZoo = listOf("foo", "bar"),
+            finBin = ActionWithNonStringInputsV3.Bin.Custom("this-is-custom!"),
+        )
+
+        // when
+        val yaml = action.toYamlArguments()
+
+        // then
+        yaml shouldBe linkedMapOf(
+            "foo-bar" to "test",
+            "baz-goo" to "true",
+            "bin-kin" to "false",
+            "int-pint" to "43",
+            "boo-zoo" to "foo,bar",
+            "fin-bin" to "this-is-custom!",
         )
     }
 })

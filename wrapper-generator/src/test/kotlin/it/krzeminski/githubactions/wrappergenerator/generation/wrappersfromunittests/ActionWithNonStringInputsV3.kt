@@ -37,7 +37,11 @@ public class ActionWithNonStringInputsV3(
     /**
      * List of strings
      */
-    public val booZoo: List<String>
+    public val booZoo: List<String>,
+    /**
+     * Enumeration
+     */
+    public val finBin: ActionWithNonStringInputsV3.Bin
 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -47,6 +51,21 @@ public class ActionWithNonStringInputsV3(
             binKin?.let { "bin-kin" to it.toString() },
             "int-pint" to intPint.toString(),
             "boo-zoo" to booZoo.joinToString(","),
+            "fin-bin" to finBin.stringValue,
         ).toTypedArray()
     )
+
+    public sealed class Bin(
+        public val stringValue: String
+    ) {
+        public object Foo : ActionWithNonStringInputsV3.Bin("foo")
+
+        public object BooBar : ActionWithNonStringInputsV3.Bin("boo-bar")
+
+        public object Baz123 : ActionWithNonStringInputsV3.Bin("baz123")
+
+        public class Custom(
+            customStringValue: String
+        ) : ActionWithNonStringInputsV3.Bin(customStringValue)
+    }
 }

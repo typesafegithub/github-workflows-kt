@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
@@ -207,6 +208,11 @@ class GenerationTest : FunSpec({
                     required = true,
                     default = null,
                 ),
+                "fin-bin" to Input(
+                    description = "Enumeration",
+                    required = true,
+                    default = null,
+                )
             )
         )
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
@@ -221,6 +227,7 @@ class GenerationTest : FunSpec({
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
                 "boo-zoo" to ListOfStringsTyping(","),
+                "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
             ),
         )
         writeToUnitTests(wrapper)
@@ -267,7 +274,11 @@ class GenerationTest : FunSpec({
                     /**
                      * List of strings
                      */
-                    public val booZoo: List<String>
+                    public val booZoo: List<String>,
+                    /**
+                     * Enumeration
+                     */
+                    public val finBin: ActionWithNonStringInputsV3.Bin
                 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
                     @Suppress("SpreadOperator")
                     public override fun toYamlArguments() = linkedMapOf(
@@ -277,8 +288,23 @@ class GenerationTest : FunSpec({
                             binKin?.let { "bin-kin" to it.toString() },
                             "int-pint" to intPint.toString(),
                             "boo-zoo" to booZoo.joinToString(","),
+                            "fin-bin" to finBin.stringValue,
                         ).toTypedArray()
                     )
+    
+                    public sealed class Bin(
+                        public val stringValue: String
+                    ) {
+                        public object Foo : ActionWithNonStringInputsV3.Bin("foo")
+
+                        public object BooBar : ActionWithNonStringInputsV3.Bin("boo-bar")
+
+                        public object Baz123 : ActionWithNonStringInputsV3.Bin("baz123")
+
+                        public class Custom(
+                            customStringValue: String
+                        ) : ActionWithNonStringInputsV3.Bin(customStringValue)
+                    }
                 }
 
             """.trimIndent(),
