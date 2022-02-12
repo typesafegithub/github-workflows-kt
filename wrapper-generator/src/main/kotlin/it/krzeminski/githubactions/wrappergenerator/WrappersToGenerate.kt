@@ -3,11 +3,21 @@ package it.krzeminski.githubactions.wrappergenerator
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 
 val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("actions", "download-artifact", "v2")),
+
+    WrapperRequest(
+        ActionCoords("EndBug", "add-and-commit", "v8"),
+        mapOf(
+            "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
+            "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
+            "push" to BooleanTyping,
+        )
+    ),
 
     WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
     WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), mapOf("all" to BooleanTyping)),
