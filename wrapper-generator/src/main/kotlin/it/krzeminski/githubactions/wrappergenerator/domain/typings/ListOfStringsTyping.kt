@@ -6,8 +6,8 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asClassName
 
 class ListOfStringsTyping(private val delimiter: String) : Typing {
-    override val className: TypeName
-        get() = List::class.asClassName().parameterizedBy(ClassName("kotlin", "String"))
+    override fun getClassName(actionPackageName: String, actionClassName: String): TypeName =
+        List::class.asClassName().parameterizedBy(ClassName("kotlin", "String"))
 
     override fun asString() = ".joinToString(\"$delimiter\")"
 }

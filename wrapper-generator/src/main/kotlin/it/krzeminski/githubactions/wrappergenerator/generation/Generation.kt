@@ -54,15 +54,15 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
     TypeSpec.classBuilder(coords.buildActionClassName())
         .addKdoc(actionKdoc(metadata, coords))
         .inheritsFromAction(coords)
-        .primaryConstructor(metadata.primaryConstructor(inputTypings))
-        .properties(metadata, inputTypings)
+        .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
+        .properties(metadata, coords, inputTypings)
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
         .build()
 
-private fun TypeSpec.Builder.properties(metadata: Metadata, inputTypings: Map<String, Typing>): TypeSpec.Builder {
+private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         addProperty(
-            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input))
+            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                 .initializer(key.toCamelCase())
                 .build()
         )
@@ -106,11 +106,11 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords): TypeSpec.
     .addSuperclassConstructorParameter("%S", coords.name)
     .addSuperclassConstructorParameter("%S", coords.version)
 
-private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>): FunSpec {
+private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
     return FunSpec.constructorBuilder()
         .addParameters(
             inputs.map { (key, input) ->
-                ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input))
+                ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                     .defaultValueIfNullable(input)
                     .addKdoc(input.description)
                     .build()
@@ -138,6 +138,6 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
 private fun Map<String, Typing>.getInputTyping(key: String) =
     this[key] ?: StringTyping
 
-private fun Map<String, Typing>.getInputType(key: String, input: Input) =
-    getInputTyping(key).className
+private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords) =
+    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName())
         .copy(nullable = !input.shouldBeNonNullInWrapper())

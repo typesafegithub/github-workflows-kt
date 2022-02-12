@@ -4,8 +4,8 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 
 object IntegerTyping : Typing {
-    override val className: TypeName
-        get() = Integer::class.asTypeName()
+    override fun getClassName(actionPackageName: String, actionClassName: String): TypeName =
+        Integer::class.asTypeName()
 
     override fun asString() = ".toString()"
 }
