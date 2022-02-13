@@ -14,7 +14,7 @@ import kotlin.collections.List
  *
  * Keeps Gradle Wrapper script in your projects up-to-date
  *
- * https://github.com/gradle-update/update-gradle-wrapper-action
+ * [Action on GitHub](https://github.com/gradle-update/update-gradle-wrapper-action)
  */
 public class UpdateGradleWrapperActionV1(
     /**

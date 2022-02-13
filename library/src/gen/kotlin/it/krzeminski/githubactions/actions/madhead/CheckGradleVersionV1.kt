@@ -12,7 +12,7 @@ import kotlin.Suppress
  *
  * GitHub Action for Gradle version verification
  *
- * https://github.com/madhead/check-gradle-version
+ * [Action on GitHub](https://github.com/madhead/check-gradle-version)
  */
 public class CheckGradleVersionV1(
     /**

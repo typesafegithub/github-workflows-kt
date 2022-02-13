@@ -14,7 +14,7 @@ import kotlin.collections.List
  *
  * Configures Gradle for use in GitHub actions, caching useful state in the GitHub actions cache
  *
- * https://github.com/gradle/gradle-build-action
+ * [Action on GitHub](https://github.com/gradle/gradle-build-action)
  */
 public class GradleBuildActionV2(
     /**

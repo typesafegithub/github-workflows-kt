@@ -12,7 +12,7 @@ import kotlin.Suppress
  *
  * Creates a branch
  *
- * https://github.com/peterjgrainger/action-create-branch
+ * [Action on GitHub](https://github.com/peterjgrainger/action-create-branch)
  */
 public class ActionCreateBranchV2(
     /**

@@ -15,7 +15,7 @@ import kotlin.collections.List
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * https://github.com/john-smith/action-with-non-string-inputs
+ * [Action on GitHub](https://github.com/john-smith/action-with-non-string-inputs)
  */
 public class ActionWithNonStringInputsV3(
     /**

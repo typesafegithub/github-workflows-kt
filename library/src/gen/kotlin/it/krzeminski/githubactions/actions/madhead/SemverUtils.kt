@@ -12,7 +12,7 @@ import kotlin.Suppress
  *
  * One-stop shop for working with semantic versions in your workflows
  *
- * https://github.com/madhead/semver-utils
+ * [Action on GitHub](https://github.com/madhead/semver-utils)
  */
 public class SemverUtils(
     /**

@@ -177,7 +177,7 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
 
         ${metadata.description}
 
-        https://github.com/${coords.owner}/${coords.name}
+        [Action on GitHub](https://github.com/${coords.owner}/${coords.name})
     """.trimIndent()
 
 private fun Map<String, Typing>.getInputTyping(key: String) =

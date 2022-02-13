@@ -14,7 +14,7 @@ import kotlin.collections.List
  *
  * ⤵️ Create pull request
  *
- * https://github.com/repo-sync/pull-request
+ * [Action on GitHub](https://github.com/repo-sync/pull-request)
  */
 public class PullRequestV2(
     /**

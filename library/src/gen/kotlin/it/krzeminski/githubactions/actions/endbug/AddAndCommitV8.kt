@@ -13,7 +13,7 @@ import kotlin.Suppress
  *
  * Automatically commit changes made in your workflow run directly to your repo
  *
- * https://github.com/EndBug/add-and-commit
+ * [Action on GitHub](https://github.com/EndBug/add-and-commit)
  */
 public class AddAndCommitV8(
     /**

@@ -13,7 +13,7 @@ import kotlin.Suppress
  * Download a build artifact that was previously uploaded in the workflow by the upload-artifact
  * action
  *
- * https://github.com/actions/download-artifact
+ * [Action on GitHub](https://github.com/actions/download-artifact)
  */
 public class DownloadArtifactV2(
     /**

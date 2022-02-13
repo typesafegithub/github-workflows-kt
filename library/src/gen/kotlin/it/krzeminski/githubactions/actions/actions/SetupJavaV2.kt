@@ -13,7 +13,7 @@ import kotlin.Suppress
  *
  * Set up a specific version of the Java JDK and add the command-line tools to the PATH
  *
- * https://github.com/actions/setup-java
+ * [Action on GitHub](https://github.com/actions/setup-java)
  */
 public class SetupJavaV2(
     /**

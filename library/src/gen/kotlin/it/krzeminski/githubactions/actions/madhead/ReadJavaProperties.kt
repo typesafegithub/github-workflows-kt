@@ -13,7 +13,7 @@ import kotlin.Suppress
  *
  * GitHub Action to read values from Java's .properties files
  *
- * https://github.com/madhead/read-java-properties
+ * [Action on GitHub](https://github.com/madhead/read-java-properties)
  */
 public class ReadJavaProperties(
     /**

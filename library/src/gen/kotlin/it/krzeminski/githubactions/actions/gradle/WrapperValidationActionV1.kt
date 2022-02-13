@@ -15,7 +15,7 @@ import kotlin.collections.List
  *
  * Validates Gradle Wrapper JAR Files
  *
- * https://github.com/gradle/wrapper-validation-action
+ * [Action on GitHub](https://github.com/gradle/wrapper-validation-action)
  */
 public class WrapperValidationActionV1(
     /**
