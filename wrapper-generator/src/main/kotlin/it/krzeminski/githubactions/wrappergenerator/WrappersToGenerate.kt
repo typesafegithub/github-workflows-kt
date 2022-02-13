@@ -46,6 +46,15 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("actions", "setup-node", "v2"),
+        mapOf(
+            "always-auth" to BooleanTyping,
+            "check-latest" to BooleanTyping,
+            "cache" to EnumTyping("PackageManager", listOf("npm", "yarn", "pnpm")),
+            "cache-dependency-path" to ListOfStringsTyping("\\n"),
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("actions", "upload-artifact", "v2"),
         mapOf(
             "path" to ListOfStringsTyping("\\n"),
