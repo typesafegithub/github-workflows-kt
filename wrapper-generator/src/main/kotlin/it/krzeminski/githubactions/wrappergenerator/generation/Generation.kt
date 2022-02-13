@@ -10,7 +10,6 @@ import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
@@ -65,43 +64,9 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
 
 private fun TypeSpec.Builder.addCustomTypes(typings: Set<Typing>, coords: ActionCoords): TypeSpec.Builder {
     typings
-        .filterIsInstance<EnumTyping>()
-        .forEach { addType(it.buildSealedClass(coords)) }
+        .mapNotNull { it.buildCustomType(coords) }
+        .forEach { addType(it) }
     return this
-}
-
-private fun EnumTyping.buildSealedClass(coords: ActionCoords): TypeSpec {
-    val actionPackageName = coords.owner.toKotlinPackageName()
-    val actionClassName = coords.buildActionClassName()
-    val sealedClassName = this.getClassName(actionPackageName, actionClassName)
-    return TypeSpec.classBuilder(this.typeName)
-        .addModifiers(KModifier.SEALED)
-        .primaryConstructor(
-            FunSpec.constructorBuilder()
-                .addParameter(ParameterSpec.builder("stringValue", String::class).build())
-                .build()
-        )
-        .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
-        .addTypes(
-            this.items.map {
-                TypeSpec.objectBuilder(it.toPascalCase())
-                    .superclass(sealedClassName)
-                    .addSuperclassConstructorParameter("%S", it)
-                    .build()
-            }
-        )
-        .addType(
-            TypeSpec.classBuilder("Custom")
-                .primaryConstructor(
-                    FunSpec.constructorBuilder()
-                        .addParameter(ParameterSpec.builder("customStringValue", String::class).build())
-                        .build()
-                )
-                .superclass(sealedClassName)
-                .addSuperclassConstructorParameter("customStringValue")
-                .build()
-        )
-        .build()
 }
 
 private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec.Builder {
