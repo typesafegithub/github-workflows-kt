@@ -9,6 +9,17 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSp
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 
 val wrappersToGenerate = listOf(
+    WrapperRequest(
+        ActionCoords("actions", "checkout", "v2"),
+        mapOf(
+            "ssh-strict" to BooleanTyping,
+            "persist-credentials" to BooleanTyping,
+            "clean" to BooleanTyping,
+            "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
+            "lfs" to BooleanTyping,
+            "submodules" to BooleanTyping,
+        ),
+    ),
     WrapperRequest(ActionCoords("actions", "download-artifact", "v2")),
     WrapperRequest(
         ActionCoords("actions", "setup-java", "v2"),

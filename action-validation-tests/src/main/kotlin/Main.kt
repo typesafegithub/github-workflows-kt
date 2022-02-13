@@ -17,7 +17,7 @@ data class ActionInput(
 
 fun main() {
     val actionUnderTest = CheckoutV2(
-        fetchDepth = FetchDepth.Quantity(3),
+        fetchDepth = FetchDepth.Value(3),
     )
 
     val actionManifestYamlUrl = URL(
