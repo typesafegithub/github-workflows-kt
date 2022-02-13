@@ -14,6 +14,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             intPint = 43,
             booZoo = listOf("foo", "bar"),
             finBin = ActionWithNonStringInputsV3.Bin.BooBar,
+            gooZen = ActionWithNonStringInputsV3.Zen.Special1,
         )
 
         // when
@@ -27,10 +28,11 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             "int-pint" to "43",
             "boo-zoo" to "foo,bar",
             "fin-bin" to "boo-bar",
+            "goo-zen" to "3",
         )
     }
 
-    it("works for enum custom value") {
+    it("works for custom values") {
         // given
         val action = ActionWithNonStringInputsV3(
             fooBar = "test",
@@ -39,6 +41,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             intPint = 43,
             booZoo = listOf("foo", "bar"),
             finBin = ActionWithNonStringInputsV3.Bin.Custom("this-is-custom!"),
+            gooZen = ActionWithNonStringInputsV3.Zen.Value(123),
         )
 
         // when
@@ -52,6 +55,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             "int-pint" to "43",
             "boo-zoo" to "foo,bar",
             "fin-bin" to "this-is-custom!",
+            "goo-zen" to "123",
         )
     }
 })

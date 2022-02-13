@@ -8,6 +8,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
@@ -212,6 +213,11 @@ class GenerationTest : FunSpec({
                     description = "Enumeration",
                     required = true,
                     default = null,
+                ),
+                "goo-zen" to Input(
+                    description = "Integer with special value",
+                    required = true,
+                    default = null,
                 )
             )
         )
@@ -228,6 +234,7 @@ class GenerationTest : FunSpec({
                 "int-pint" to IntegerTyping,
                 "boo-zoo" to ListOfStringsTyping(","),
                 "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
+                "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
             ),
         )
         writeToUnitTests(wrapper)
@@ -278,7 +285,11 @@ class GenerationTest : FunSpec({
                     /**
                      * Enumeration
                      */
-                    public val finBin: ActionWithNonStringInputsV3.Bin
+                    public val finBin: ActionWithNonStringInputsV3.Bin,
+                    /**
+                     * Integer with special value
+                     */
+                    public val gooZen: ActionWithNonStringInputsV3.Zen
                 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
                     @Suppress("SpreadOperator")
                     public override fun toYamlArguments() = linkedMapOf(
@@ -289,6 +300,7 @@ class GenerationTest : FunSpec({
                             "int-pint" to intPint.toString(),
                             "boo-zoo" to booZoo.joinToString(","),
                             "fin-bin" to finBin.stringValue,
+                            "goo-zen" to gooZen.integerValue.toString(),
                         ).toTypedArray()
                     )
     
@@ -304,6 +316,18 @@ class GenerationTest : FunSpec({
                         public class Custom(
                             customStringValue: String
                         ) : ActionWithNonStringInputsV3.Bin(customStringValue)
+                    }
+
+                    public sealed class Zen(
+                        public val integerValue: Int
+                    ) {
+                        public class Value(
+                            requestedValue: Int
+                        ) : ActionWithNonStringInputsV3.Zen(requestedValue)
+
+                        public object Special1 : ActionWithNonStringInputsV3.Zen(3)
+
+                        public object Special2 : ActionWithNonStringInputsV3.Zen(-1)
                     }
                 }
 
