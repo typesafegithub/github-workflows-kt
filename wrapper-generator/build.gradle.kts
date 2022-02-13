@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.6.10"
+    application
 }
 
 repositories {
@@ -19,4 +20,9 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+application {
+    mainClass.set("it.krzeminski.githubactions.wrappergenerator.GenerationEntryPointKt")
+    tasks.run.get().workingDir = rootProject.projectDir
 }
