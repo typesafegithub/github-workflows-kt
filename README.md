@@ -104,7 +104,7 @@ It's also a great source of examples how to use the library.
 
 Please first ensure that your action isn't present [here](library/src/gen/kotlin/it/krzeminski/githubactions/actions).
 
-If it's absent, it's easy to add a new wrapper - the code almost writes itself. It's a matter to add an appropriate
+If it's absent, it's easy to add a new wrapper - the code almost writes itself. It's a matter of adding an appropriate
 `WrapperRequest` in [this file](wrapper-generator/src/main/kotlin/it/krzeminski/githubactions/wrappergenerator/WrappersToGenerate.kt)
 that lists wrapper to be generated. If the action you want to use contains some inputs that are in fact integers, enums
 or other data types that can be typed (not left as strings), the generator also allows some kind of customizations -
