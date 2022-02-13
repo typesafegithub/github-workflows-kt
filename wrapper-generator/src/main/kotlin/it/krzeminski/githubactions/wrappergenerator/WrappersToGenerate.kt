@@ -9,6 +9,30 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStrings
 
 val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("actions", "download-artifact", "v2")),
+    WrapperRequest(
+        ActionCoords("actions", "setup-java", "v2"),
+        mapOf(
+            "distribution" to EnumTyping(
+                "Distribution",
+                listOf(
+                    "adopt",
+                    "adopt-hotspot",
+                    "adopt-openj9",
+                    "liberica",
+                    "microsoft",
+                    "temurin",
+                    "zulu",
+                ),
+            ),
+            "java-package" to EnumTyping(
+                "JavaPackage",
+                listOf("jdk", "jre", "jdk+fx", "jre+fx"),
+            ),
+            "check-latest" to BooleanTyping,
+            "overwrite-settings" to BooleanTyping,
+            "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle")),
+        ),
+    ),
 
     WrapperRequest(
         ActionCoords("EndBug", "add-and-commit", "v8"),
