@@ -102,10 +102,17 @@ It's also a great source of examples how to use the library.
 
 ### What if I need an action that doesn't have a wrapper in this library?
 
-Please first ensure that your action isn't present [here](library/src/main/kotlin/it/krzeminski/githubactions/actions).
+Please first ensure that your action isn't present [here](library/src/gen/kotlin/it/krzeminski/githubactions/actions).
 
-Wrapping an action is as easy as inheriting after `it.krzeminski.githubactions.actions.Action`, which should contain a
-piece of logic how to map an object of your class to YAML arguments:
+If it's absent, it's easy to add a new wrapper - the code almost writes itself. It's a matter to add an appropriate
+`WrapperRequest` in [this file](wrapper-generator/src/main/kotlin/it/krzeminski/githubactions/wrappergenerator/WrappersToGenerate.kt)
+that lists wrapper to be generated. If the action you want to use contains some inputs that are in fact integers, enums
+or other data types that can be typed (not left as strings), the generator also allows some kind of customizations -
+please see already present wrappers.
+
+If you prefer having just a local wrapper for now, it's as easy as inheriting after
+`it.krzeminski.githubactions.actions.Action`, which should contain a piece of logic how to map an object of your class
+to YAML arguments:
 
 ```kotlin
 class MyCoolActionV3(
