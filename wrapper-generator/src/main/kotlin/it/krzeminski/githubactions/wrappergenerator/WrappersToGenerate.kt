@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 
 val wrappersToGenerate = listOf(
@@ -31,6 +32,20 @@ val wrappersToGenerate = listOf(
             "check-latest" to BooleanTyping,
             "overwrite-settings" to BooleanTyping,
             "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle")),
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "upload-artifact", "v2"),
+        mapOf(
+            "path" to ListOfStringsTyping("\\n"),
+            "if-no-files-found" to EnumTyping(
+                "BehaviorIfNoFilesFound",
+                listOf("warn", "error", "ignore"),
+            ),
+            "retention-days" to IntegerWithSpecialValueTyping(
+                "RetentionPeriod",
+                mapOf("Default" to 0),
+            )
         ),
     ),
 
