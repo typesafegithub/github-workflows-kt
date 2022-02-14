@@ -84,7 +84,7 @@ public class HerokuDeployV3(
      * When set to true this will attempt to rollback to the previous release if the healthcheck
      * fails
      */
-    public val rollbackonhealthcheckfailed: Int? = null,
+    public val rollbackonhealthcheckfailed: Boolean? = null,
     /**
      * Path to an localized env file
      */
