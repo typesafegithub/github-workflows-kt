@@ -74,7 +74,6 @@ val wrappersToGenerate = listOf(
         mapOf(
             "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
             "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
-            "push" to BooleanTyping,
         )
     ),
 
