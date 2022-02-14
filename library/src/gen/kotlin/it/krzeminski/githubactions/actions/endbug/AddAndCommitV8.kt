@@ -4,7 +4,6 @@
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.actions.Action
-import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 
@@ -69,7 +68,7 @@ public class AddAndCommitV8(
      * Whether to push the commit and, if any, its tags to the repo. It can also be used to set the
      * git push arguments (more info in the README)
      */
-    public val push: Boolean? = null,
+    public val push: String? = null,
     /**
      * Arguments for the git rm command
      */
@@ -100,7 +99,7 @@ public class AddAndCommitV8(
             newBranch?.let { "new_branch" to it },
             pathspecErrorHandling?.let { "pathspec_error_handling" to it.stringValue },
             pull?.let { "pull" to it },
-            push?.let { "push" to it.toString() },
+            push?.let { "push" to it },
             remove?.let { "remove" to it },
             tag?.let { "tag" to it },
             githubToken?.let { "github_token" to it },
