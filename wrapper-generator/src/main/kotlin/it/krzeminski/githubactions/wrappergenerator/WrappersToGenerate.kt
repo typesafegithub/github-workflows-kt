@@ -133,7 +133,7 @@ val wrappersToGenerate = listOf(
             "dontautocreate" to BooleanTyping,
             "usedocker" to BooleanTyping,
             "delay"  to IntegerTyping,
-            "rollbackonhealthcheckfailed" to IntegerTyping,
+            "rollbackonhealthcheckfailed" to BooleanTyping,
             "justlogin" to BooleanTyping,
         )
     ),
