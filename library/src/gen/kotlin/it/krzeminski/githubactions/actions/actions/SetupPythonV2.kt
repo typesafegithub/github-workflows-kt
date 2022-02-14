@@ -48,7 +48,7 @@ public class SetupPythonV2(
             cache?.let { "cache" to it.stringValue },
             architecture?.let { "architecture" to it.stringValue },
             token?.let { "token" to it },
-            cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString(" ") },
+            cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
         ).toTypedArray()
     )
 
