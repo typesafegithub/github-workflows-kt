@@ -14,7 +14,7 @@ import kotlin.Suppress
  *
  * Deploy an app to Heroku
  *
- * [Action on GitHub](https://github.com/akhileshns/heroku-deploy)
+ * [Action on GitHub](https://github.com/AkhileshNS/heroku-deploy)
  */
 public class HerokuDeployV3(
     /**
@@ -54,7 +54,7 @@ public class HerokuDeployV3(
      * Type of heroku process (web, worker, etc). This option only makes sense when usedocker
      * enabled
      */
-    public val dockerHerokuProcessType: String? = null,
+    public val dockerHerokuProcessType: HerokuDeployV3.HerokuProcessType? = null,
     /**
      * A list of args to pass into the Docker build. This option only makes sense when usedocker
      * enabled
@@ -105,7 +105,7 @@ public class HerokuDeployV3(
      * If deploying to an organization, then specify the name of the team or organization here
      */
     public val team: String? = null
-) : Action("akhileshns", "heroku-deploy", "v3.12.12") {
+) : Action("AkhileshNS", "heroku-deploy", "v3.12.12") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -117,7 +117,7 @@ public class HerokuDeployV3(
             dontuseforce?.let { "dontuseforce" to it.toString() },
             dontautocreate?.let { "dontautocreate" to it.toString() },
             usedocker?.let { "usedocker" to it.toString() },
-            dockerHerokuProcessType?.let { "docker_heroku_process_type" to it },
+            dockerHerokuProcessType?.let { "docker_heroku_process_type" to it.stringValue },
             dockerBuildArgs?.let { "docker_build_args" to it },
             appdir?.let { "appdir" to it },
             healthcheck?.let { "healthcheck" to it },
@@ -132,4 +132,16 @@ public class HerokuDeployV3(
             team?.let { "team" to it },
         ).toTypedArray()
     )
+
+    public sealed class HerokuProcessType(
+        public val stringValue: String
+    ) {
+        public object Web : HerokuDeployV3.HerokuProcessType("web")
+
+        public object Worker : HerokuDeployV3.HerokuProcessType("worker")
+
+        public class Custom(
+            customStringValue: String
+        ) : HerokuDeployV3.HerokuProcessType(customStringValue)
+    }
 }
