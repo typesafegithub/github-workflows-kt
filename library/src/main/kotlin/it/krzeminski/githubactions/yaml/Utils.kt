@@ -3,7 +3,12 @@ package it.krzeminski.githubactions.yaml
 fun LinkedHashMap<String, String>.toYaml() =
     map { (key, value) ->
         if (value.lines().size == 1) {
-            "$key: $value"
+            val valueMaybeQuoted = if (value.first() in specialYamlCharactersWhenStartingValues) {
+                "'$value'"
+            } else {
+                value
+            }
+            "$key: $valueMaybeQuoted"
         } else {
             buildString {
                 appendLine("$key: |")
@@ -13,3 +18,5 @@ fun LinkedHashMap<String, String>.toYaml() =
             }.removeSuffix("\n")
         }
     }.joinToString(separator = "\n")
+
+private val specialYamlCharactersWhenStartingValues = setOf('*', '[', '!')

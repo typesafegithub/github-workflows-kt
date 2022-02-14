@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.CheckoutV2.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
@@ -254,6 +255,37 @@ class StepsToYamlTest : DescribeSpec({
                              |    path: |
                              |      path1
                              |      path2""".trimMargin()
+        }
+
+        it("renders correctly with values starting with special YAML characters") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    name = "Action with values starting with special YAML characters",
+                    action = object : Action("foo", "bar", "v2") {
+                        override fun toYamlArguments() = linkedMapOf(
+                            "param1" to "foo-bar",
+                            "param2" to "*/some/dir",
+                            "param3" to "**/another/dir",
+                            "param4" to "[test]",
+                            "param5" to "!another-reserved-character",
+                        )
+                    }
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- name: Action with values starting with special YAML characters
+                             |  uses: foo/bar@v2
+                             |  with:
+                             |    param1: foo-bar
+                             |    param2: '*/some/dir'
+                             |    param3: '**/another/dir'
+                             |    param4: '[test]'
+                             |    param5: '!another-reserved-character'""".trimMargin()
         }
     }
 })
