@@ -254,7 +254,7 @@ class JobsToYamlTest : DescribeSpec({
             "jo#b€$1" to "jo-b-1",
             "JOB job 1" to "JOB-job-1",
             "job_1 42" to "job_1-42",
-            "-job"  to "job",
+            "-job" to "job",
         ).forAll { (input, expected) ->
             Job(input, UbuntuLatest, emptyList()).escapedName shouldBe expected
         }
