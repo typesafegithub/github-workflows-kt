@@ -125,16 +125,16 @@ val wrappersToGenerate = listOf(
         ),
     ),
 
-    // https://raw.githubusercontent.com/AkhileshNS/heroku-deploy/v3.12.12/action.yml
     WrapperRequest(
-        ActionCoords("akhileshns", "heroku-deploy", "v3.12.12"),
+        ActionCoords("AkhileshNS", "heroku-deploy", "v3.12.12"),
         mapOf(
             "dontuseforce" to BooleanTyping,
             "dontautocreate" to BooleanTyping,
             "usedocker" to BooleanTyping,
             "delay"  to IntegerTyping,
-            "rollbackonhealthcheckfailed" to IntegerTyping,
+            "rollbackonhealthcheckfailed" to BooleanTyping,
             "justlogin" to BooleanTyping,
+            "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
         )
     ),
 )
