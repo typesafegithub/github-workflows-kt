@@ -19,7 +19,7 @@ fun List<Job>.jobsToYaml(): String =
     }
 
 private fun Job.toYaml() = buildString {
-    appendLine("\"$name\":")
+    appendLine("\"$escapedName\":")
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
 
     if (this@toYaml.needs.isNotEmpty()) {

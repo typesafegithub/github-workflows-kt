@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
@@ -37,12 +38,12 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
                          |    - name: Some command 1
                          |      run: echo 'test 1!'
-                         |"Job 2":
+                         |"Job-2":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
                          |    - name: Some command 2
@@ -68,7 +69,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
                          |    - name: Some command
@@ -94,7 +95,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "windows-2022"
                          |  steps:
                          |    - name: Some command
@@ -131,7 +132,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  needs:
                          |    - "Another job 1"
@@ -168,7 +169,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  env:
                          |    FOO: bar
@@ -201,7 +202,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  if: ${'$'}{{ always() }}
                          |  steps:
@@ -232,7 +233,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  strategy:
                          |    matrix:
@@ -245,5 +246,17 @@ class JobsToYamlTest : DescribeSpec({
                          |  steps:
                          |    - name: Some command
                          |      run: echo 'test!'""".trimMargin()
+    }
+
+    it("should escape the job name") {
+        mapOf(
+            "  job   1  " to "job-1",
+            "jo#b€$1" to "jo-b-1",
+            "JOB job 1" to "JOB-job-1",
+            "job_1 42" to "job_1-42",
+            "-job"  to "job",
+        ).forAll { (input, expected) ->
+            Job(input, UbuntuLatest, emptyList()).escapedName shouldBe expected
+        }
     }
 })
