@@ -9,6 +9,8 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSp
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 
 val wrappersToGenerate = listOf(
+    // Please keep the wrapper requests sorted ("actions/checkout" before "gradle/build-action")
+    // in order to minimize merge conflicts
     WrapperRequest(
         ActionCoords("actions", "checkout", "v2"),
         mapOf(
@@ -45,6 +47,7 @@ val wrappersToGenerate = listOf(
             "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle")),
         ),
     ),
+
     WrapperRequest(
         ActionCoords("actions", "setup-node", "v2"),
         mapOf(
@@ -53,6 +56,14 @@ val wrappersToGenerate = listOf(
             "cache" to EnumTyping("PackageManager", listOf("npm", "yarn", "pnpm")),
             "cache-dependency-path" to ListOfStringsTyping("\\n"),
         ),
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-python", "v2"),
+        mapOf(
+            "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
+            "cache-dependency-path" to ListOfStringsTyping(" "),
+        )
     ),
     WrapperRequest(
         ActionCoords("actions", "upload-artifact", "v2"),
@@ -68,7 +79,18 @@ val wrappersToGenerate = listOf(
             )
         ),
     ),
-
+    WrapperRequest(
+        ActionCoords("AkhileshNS", "heroku-deploy", "v3.12.12"),
+        mapOf(
+            "dontuseforce" to BooleanTyping,
+            "dontautocreate" to BooleanTyping,
+            "usedocker" to BooleanTyping,
+            "delay"  to IntegerTyping,
+            "rollbackonhealthcheckfailed" to BooleanTyping,
+            "justlogin" to BooleanTyping,
+            "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
+        )
+    ),
     WrapperRequest(
         ActionCoords("EndBug", "add-and-commit", "v8"),
         mapOf(
@@ -76,11 +98,17 @@ val wrappersToGenerate = listOf(
             "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
         )
     ),
-
-    WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
-    WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), mapOf("all" to BooleanTyping)),
-    WrapperRequest(ActionCoords("madhead", "semver-utils", "latest")),
-
+    WrapperRequest(
+        ActionCoords("gradle-update", "update-gradle-wrapper-action", "v1"),
+        mapOf(
+            "reviewers" to ListOfStringsTyping(","),
+            "team-reviewers" to ListOfStringsTyping(","),
+            "labels" to ListOfStringsTyping(","),
+            "set-distribution-checksum" to BooleanTyping,
+            "paths" to ListOfStringsTyping(","),
+            "paths-ignore" to ListOfStringsTyping(","),
+        ),
+    ),
     WrapperRequest(
         ActionCoords("gradle", "gradle-build-action", "v2"),
         mapOf(
@@ -98,19 +126,9 @@ val wrappersToGenerate = listOf(
             "allow-checksums" to ListOfStringsTyping(","),
         ),
     ),
-
-    WrapperRequest(
-        ActionCoords("gradle-update", "update-gradle-wrapper-action", "v1"),
-        mapOf(
-            "reviewers" to ListOfStringsTyping(","),
-            "team-reviewers" to ListOfStringsTyping(","),
-            "labels" to ListOfStringsTyping(","),
-            "set-distribution-checksum" to BooleanTyping,
-            "paths" to ListOfStringsTyping(","),
-            "paths-ignore" to ListOfStringsTyping(","),
-        ),
-    ),
-
+    WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
+    WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), mapOf("all" to BooleanTyping)),
+    WrapperRequest(ActionCoords("madhead", "semver-utils", "latest")),
     WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")),
 
     WrapperRequest(
@@ -123,26 +141,6 @@ val wrappersToGenerate = listOf(
             "pr_allow_empty" to BooleanTyping,
         ),
     ),
-
-    WrapperRequest(
-        ActionCoords("AkhileshNS", "heroku-deploy", "v3.12.12"),
-        mapOf(
-            "dontuseforce" to BooleanTyping,
-            "dontautocreate" to BooleanTyping,
-            "usedocker" to BooleanTyping,
-            "delay"  to IntegerTyping,
-            "rollbackonhealthcheckfailed" to BooleanTyping,
-            "justlogin" to BooleanTyping,
-            "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
-        )
-    ),
-
-    WrapperRequest(
-        ActionCoords("actions", "setup-python", "v2"),
-        mapOf(
-            "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv")),
-            "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
-            "cache-dependency-path" to ListOfStringsTyping(" "),
-        )
-    ),
+    // Please keep the wrapper requests sorted ("actions/checkout" before "gradle/build-action")
+    // in order to minimize merge conflicts
 )
