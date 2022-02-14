@@ -136,4 +136,13 @@ val wrappersToGenerate = listOf(
             "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
         )
     ),
+
+    WrapperRequest(
+        ActionCoords("actions", "setup-python", "v2"),
+        mapOf(
+            "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
+            "cache-dependency-path" to ListOfStringsTyping(" "),
+        )
+    ),
 )
