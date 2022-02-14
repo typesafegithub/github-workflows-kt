@@ -123,5 +123,18 @@ val wrappersToGenerate = listOf(
             "pr_draft" to BooleanTyping,
             "pr_allow_empty" to BooleanTyping,
         ),
-    )
+    ),
+
+    // https://raw.githubusercontent.com/AkhileshNS/heroku-deploy/v3.12.12/action.yml
+    WrapperRequest(
+        ActionCoords("akhileshns", "heroku-deploy", "v3.12.12"),
+        mapOf(
+            "dontuseforce" to BooleanTyping,
+            "dontautocreate" to BooleanTyping,
+            "usedocker" to BooleanTyping,
+            "delay"  to IntegerTyping,
+            "rollbackonhealthcheckfailed" to IntegerTyping,
+            "justlogin" to BooleanTyping,
+        )
+    ),
 )
