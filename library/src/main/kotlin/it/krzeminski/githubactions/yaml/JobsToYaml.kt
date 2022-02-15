@@ -19,26 +19,33 @@ fun List<Job>.jobsToYaml(): String =
     }
 
 private fun Job.toYaml() = buildString {
-    appendLine("\"$escapedName\":")
+    val job = this@toYaml
+    requireMatchesRegex(
+        field = "Job.name",
+        value = job.name,
+        regex = Regex("[a-zA-Z_][a-zA-Z0-9_-]*"),
+        url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job"
+    )
+    appendLine("\"${job.name}\":")
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
 
-    if (this@toYaml.needs.isNotEmpty()) {
+    if (job.needs.isNotEmpty()) {
         appendLine("  needs:")
-        this@toYaml.needs.forEach {
+        job.needs.forEach {
             appendLine("    - \"${it.name}\"")
         }
     }
 
-    if (this@toYaml.env.isNotEmpty()) {
+    if (job.env.isNotEmpty()) {
         appendLine("  env:")
-        appendLine(this@toYaml.env.toYaml().prependIndent("    "))
+        appendLine(job.env.toYaml().prependIndent("    "))
     }
 
-    this@toYaml.condition?.let {
+    job.condition?.let {
         appendLine("  if: $it")
     }
 
-    this@toYaml.strategyMatrix?.let {
+    job.strategyMatrix?.let {
         appendLine("  strategy:")
         appendLine("    matrix:")
         it.forEach { (strategyParam, values) ->
@@ -51,6 +58,13 @@ private fun Job.toYaml() = buildString {
 
     appendLine("  steps:")
     append(steps.stepsToYaml().prependIndent("    "))
+}
+
+fun requireMatchesRegex(field: String, value: String, regex: Regex, url: String?) {
+    require(regex.matchEntire(value) != null) {
+        val seeUrl = if (url.isNullOrBlank()) "" else "\nSee: $url"
+        """Invalid field ${field.replace('.', '(')}="$value") does not match regex: $regex$seeUrl"""
+    }
 }
 
 fun RunnerType.toYaml() =

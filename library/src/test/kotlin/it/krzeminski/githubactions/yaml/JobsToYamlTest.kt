@@ -3,17 +3,19 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
+import org.junit.jupiter.api.assertThrows
 
 class JobsToYamlTest : DescribeSpec({
     it("renders multiple jobs") {
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -23,7 +25,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
             ),
             Job(
-                name = "Job 2",
+                name = "Job-2",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -54,7 +56,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -80,7 +82,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = Windows2022,
                 steps = listOf(
                     CommandStep(
@@ -116,7 +118,7 @@ class JobsToYamlTest : DescribeSpec({
         )
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 needs = listOf(anotherJob1, anotherJob2),
                 steps = listOf(
@@ -146,7 +148,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 env = linkedMapOf(
                     "FOO" to "bar",
@@ -186,7 +188,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 condition = "\${{ always() }}",
                 steps = listOf(
@@ -214,7 +216,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 strategyMatrix = mapOf(
                     "strategyParam1" to listOf("foo", "bar"),
@@ -248,15 +250,25 @@ class JobsToYamlTest : DescribeSpec({
                          |      run: echo 'test!'""".trimMargin()
     }
 
-    it("should escape the job name") {
-        mapOf(
-            "  job   1  " to "job-1",
-            "jo#b€$1" to "jo-b-1",
-            "JOB job 1" to "JOB-job-1",
-            "job_1 42" to "job_1-42",
-            "-job" to "job",
-        ).forAll { (input, expected) ->
-            Job(input, UbuntuLatest, emptyList()).escapedName shouldBe expected
+    it("should reject invalid job names") {
+        listOf(
+            "job   1",
+            "job1  ",
+            "  job1",
+            "",
+            "-job",
+            "4job",
+            "job()"
+        ).forAll { jobName ->
+            assertThrows<IllegalArgumentException> {
+                val job = Job(jobName, UbuntuLatest, emptyList())
+                listOf(job).jobsToYaml()
+            }.shouldHaveMessage(
+                """
+                Invalid field Job(name="$jobName") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
+                See: https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job
+                """.trimIndent()
+            )
         }
     }
 })
