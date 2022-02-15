@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
@@ -16,6 +17,7 @@ private fun Trigger.toYamlString() =
         is WorkflowDispatch -> "workflow_dispatch:"
         is Push -> toYaml()
         is PullRequest -> toYaml()
+        is PullRequestTarget -> toYaml()
         is Schedule -> toYaml()
     }
 
@@ -25,12 +27,25 @@ private fun Push.toYaml() = buildString {
     printIfHasElements(this@toYaml.tags, "tags")
     printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
     printIfHasElements(this@toYaml.tagsIgnore, "tags-ignore")
+    printIfHasElements(this@toYaml.paths, "paths")
+    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
 }.removeSuffix("\n")
 
 private fun PullRequest.toYaml() = buildString {
     appendLine("pull_request:")
     printIfHasElements(this@toYaml.branches, "branches")
     printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
+    printIfHasElements(this@toYaml.paths, "paths")
+    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
+}.removeSuffix("\n")
+
+private fun PullRequestTarget.toYaml() = buildString {
+    appendLine("pull_request_target:")
+    printIfHasElements(this@toYaml.types.map(PullRequestTarget.Type::name), "types")
+    printIfHasElements(this@toYaml.branches, "branches")
+    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
+    printIfHasElements(this@toYaml.paths, "paths")
+    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
 }.removeSuffix("\n")
 
 private fun Schedule.toYaml() = buildString {
