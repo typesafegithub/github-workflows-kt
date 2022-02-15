@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.yaml
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -8,7 +9,6 @@ import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
-import org.junit.jupiter.api.assertThrows
 
 class JobsToYamlTest : DescribeSpec({
     it("renders multiple jobs") {
@@ -260,7 +260,7 @@ class JobsToYamlTest : DescribeSpec({
             "4job",
             "job()"
         ).forAll { jobName ->
-            assertThrows<IllegalArgumentException> {
+            shouldThrowAny {
                 val job = Job(jobName, UbuntuLatest, emptyList())
                 listOf(job).jobsToYaml()
             }.shouldHaveMessage(
