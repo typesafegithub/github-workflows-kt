@@ -271,4 +271,18 @@ class JobsToYamlTest : DescribeSpec({
             )
         }
     }
+
+    it("should not reject valid job names") {
+        listOf(
+            "job-42",
+            "_42",
+            "_job",
+            "a",
+            "JOB_JOB",
+            "_--4",
+        ).forAll { jobName ->
+            val job = Job(jobName, UbuntuLatest, emptyList())
+            listOf(job).jobsToYaml()
+        }
+    }
 })
