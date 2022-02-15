@@ -39,6 +39,60 @@ class TriggersToYamlTest : DescribeSpec({
                 |workflow_dispatch:
             """.trimMargin()
         }
+
+        it("renders with all parameters") {
+
+            // given
+            val triggers = listOf(
+                WorkflowDispatch(
+                    inputs = mapOf(
+                        "logLevel" to WorkflowDispatch.Input(
+                            description = "Log level",
+                            type = WorkflowDispatch.Type.choice,
+                            required = true,
+                            default = "warning",
+                            options = "info warning debug".split(" "),
+                        ),
+                        "tags" to WorkflowDispatch.Input(
+                            description = "Test scenario tags",
+                            type = WorkflowDispatch.Type.boolean,
+                            required = false,
+                        ),
+                        "environment" to WorkflowDispatch.Input(
+                            description = "Environment to run tests against",
+                            type = WorkflowDispatch.Type.environment,
+                            required = true,
+                        ),
+                    )
+                )
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+              |workflow_dispatch:
+              |  inputs:
+              |    logLevel:
+              |      description: 'Log level'
+              |      type: choice
+              |      required: true
+              |      default: 'warning'
+              |      options:
+              |        - 'info'
+              |        - 'warning'
+              |        - 'debug'
+              |    tags:
+              |      description: 'Test scenario tags'
+              |      type: boolean
+              |      required: false
+              |    environment:
+              |      description: 'Environment to run tests against'
+              |      type: environment
+              |      required: true
+            """.trimMargin()
+        }
     }
 
     describe("push") {

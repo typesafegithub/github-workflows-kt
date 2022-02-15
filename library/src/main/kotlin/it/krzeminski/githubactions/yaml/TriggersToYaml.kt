@@ -13,7 +13,7 @@ fun List<Trigger>.triggersToYaml(): String =
 
 private fun Trigger.toYamlString() =
     when (this) {
-        is WorkflowDispatch -> "workflow_dispatch:"
+        is WorkflowDispatch -> toYaml()
         is Push -> toYaml()
         is PullRequest -> toYaml()
         is Schedule -> toYaml()
@@ -40,11 +40,35 @@ private fun Schedule.toYaml() = buildString {
     }
 }.removeSuffix("\n")
 
-private fun StringBuilder.printIfHasElements(items: List<String>?, name: String) {
+private fun WorkflowDispatch.toYaml() = buildString {
+    appendLine("workflow_dispatch:")
+    if (inputs.isNotEmpty()) {
+        appendLine("  inputs:")
+        for ((key, input) in inputs) {
+            appendLine("    $key:")
+            appendLine(input.toYaml())
+        }
+    }
+}.removeSuffix("\n")
+
+private fun WorkflowDispatch.Input.toYaml() = buildString {
+    val space = "      "
+    appendLine("${space}description: '$description'")
+    appendLine("${space}type: ${type.name}")
+    appendLine("${space}required: $required")
+    if (default != null) appendLine("${space}default: '$default'")
+    printIfHasElements(options, "options", space = "      ")
+}.removeSuffix("\n")
+
+private fun StringBuilder.printIfHasElements(
+    items: List<String>?,
+    name: String,
+    space: String = "  ",
+) {
     if (!items.isNullOrEmpty()) {
-        appendLine("  $name:")
+        appendLine("$space$name:")
         items.forEach {
-            appendLine("    - '$it'")
+            appendLine("$space  - '$it'")
         }
     }
 }
