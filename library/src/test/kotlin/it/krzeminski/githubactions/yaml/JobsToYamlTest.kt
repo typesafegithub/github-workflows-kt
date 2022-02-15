@@ -1,7 +1,10 @@
 package it.krzeminski.githubactions.yaml
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -12,7 +15,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -22,7 +25,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
             ),
             Job(
-                name = "Job 2",
+                name = "Job-2",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -37,12 +40,12 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
                          |    - name: Some command 1
                          |      run: echo 'test 1!'
-                         |"Job 2":
+                         |"Job-2":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
                          |    - name: Some command 2
@@ -53,7 +56,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -68,7 +71,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
                          |    - name: Some command
@@ -79,7 +82,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = Windows2022,
                 steps = listOf(
                     CommandStep(
@@ -94,7 +97,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "windows-2022"
                          |  steps:
                          |    - name: Some command
@@ -115,7 +118,7 @@ class JobsToYamlTest : DescribeSpec({
         )
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 needs = listOf(anotherJob1, anotherJob2),
                 steps = listOf(
@@ -131,7 +134,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  needs:
                          |    - "Another job 1"
@@ -145,7 +148,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 env = linkedMapOf(
                     "FOO" to "bar",
@@ -168,7 +171,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  env:
                          |    FOO: bar
@@ -185,7 +188,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 condition = "\${{ always() }}",
                 steps = listOf(
@@ -201,7 +204,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  if: ${'$'}{{ always() }}
                          |  steps:
@@ -213,7 +216,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job 1",
+                name = "Job-1",
                 runsOn = UbuntuLatest,
                 strategyMatrix = mapOf(
                     "strategyParam1" to listOf("foo", "bar"),
@@ -232,7 +235,7 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job 1":
+        yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  strategy:
                          |    matrix:
@@ -245,5 +248,41 @@ class JobsToYamlTest : DescribeSpec({
                          |  steps:
                          |    - name: Some command
                          |      run: echo 'test!'""".trimMargin()
+    }
+
+    it("should reject invalid job names") {
+        listOf(
+            "job   1",
+            "job1  ",
+            "  job1",
+            "",
+            "-job",
+            "4job",
+            "job()"
+        ).forAll { jobName ->
+            shouldThrowAny {
+                val job = Job(jobName, UbuntuLatest, emptyList())
+                listOf(job).jobsToYaml()
+            }.shouldHaveMessage(
+                """
+                Invalid field Job(name="$jobName") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
+                See: https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job
+                """.trimIndent()
+            )
+        }
+    }
+
+    it("should not reject valid job names") {
+        listOf(
+            "job-42",
+            "_42",
+            "_job",
+            "a",
+            "JOB_JOB",
+            "_--4",
+        ).forAll { jobName ->
+            val job = Job(jobName, UbuntuLatest, emptyList())
+            listOf(job).jobsToYaml()
+        }
     }
 })
