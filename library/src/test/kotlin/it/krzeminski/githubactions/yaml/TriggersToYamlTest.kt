@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
@@ -63,6 +64,8 @@ class TriggersToYamlTest : DescribeSpec({
                     tags = listOf("tag1", "tag2"),
                     branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
                     tagsIgnore = listOf("tagIgnore1", "tagIgnore2"),
+                    paths = listOf("path1", "path2"),
+                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
                 ),
             )
 
@@ -84,6 +87,12 @@ class TriggersToYamlTest : DescribeSpec({
                 |  tags-ignore:
                 |    - 'tagIgnore1'
                 |    - 'tagIgnore2'
+                |  paths:
+                |    - 'path1'
+                |    - 'path2'
+                |  paths-ignore:
+                |    - 'pathIgnore1'
+                |    - 'pathIgnore2'
             """.trimMargin()
         }
     }
@@ -107,8 +116,10 @@ class TriggersToYamlTest : DescribeSpec({
             val triggers = listOf(
                 PullRequest(
                     branches = listOf("branch1", "branch2"),
-                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2")
-                ),
+                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
+                    paths = listOf("path1", "path2"),
+                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
+                )
             )
 
             // when
@@ -123,6 +134,63 @@ class TriggersToYamlTest : DescribeSpec({
                 |  branches-ignore:
                 |    - 'branchIgnore1'
                 |    - 'branchIgnore2'
+                |  paths:
+                |    - 'path1'
+                |    - 'path2'
+                |  paths-ignore:
+                |    - 'pathIgnore1'
+                |    - 'pathIgnore2'
+            """.trimMargin()
+        }
+    }
+
+    describe("pull request target") {
+        it("renders without parameters") {
+            // given
+            val triggers = listOf(PullRequestTarget())
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |pull_request_target:
+            """.trimMargin()
+        }
+
+        it("renders with all parameters") {
+            // given
+            val triggers = listOf(
+                PullRequestTarget(
+                    types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
+                    branches = listOf("branch1", "branch2"),
+                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
+                    paths = listOf("path1", "path2"),
+                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
+                )
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |pull_request_target:
+                |  types:
+                |    - 'assigned'
+                |    - 'closed'
+                |  branches:
+                |    - 'branch1'
+                |    - 'branch2'
+                |  branches-ignore:
+                |    - 'branchIgnore1'
+                |    - 'branchIgnore2'
+                |  paths:
+                |    - 'path1'
+                |    - 'path2'
+                |  paths-ignore:
+                |    - 'pathIgnore1'
+                |    - 'pathIgnore2'
             """.trimMargin()
         }
     }

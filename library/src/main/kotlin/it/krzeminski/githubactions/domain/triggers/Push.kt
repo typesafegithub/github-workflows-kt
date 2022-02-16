@@ -5,4 +5,6 @@ data class Push(
     val tags: List<String>? = null,
     val branchesIgnore: List<String>? = null,
     val tagsIgnore: List<String>? = null,
+    val paths: List<String>? = null,
+    val pathsIgnore: List<String>? = null,
 ) : Trigger()
