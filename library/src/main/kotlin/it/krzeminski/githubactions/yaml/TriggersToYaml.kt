@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type as WDT
 
 fun List<Trigger>.triggersToYaml(): String =
     this
@@ -40,7 +41,7 @@ private fun Schedule.toYaml() = buildString {
     }
 }.removeSuffix("\n")
 
-private fun WorkflowDispatch.toYaml() = buildString {
+private fun WorkflowDispatch.toYaml(): String = buildString {
     appendLine("workflow_dispatch:")
     if (inputs.isNotEmpty()) {
         appendLine("  inputs:")
@@ -51,14 +52,22 @@ private fun WorkflowDispatch.toYaml() = buildString {
     }
 }.removeSuffix("\n")
 
-private fun WorkflowDispatch.Input.toYaml() = buildString {
+private fun WorkflowDispatch.Input.toYaml(): String = buildString {
     val space = "      "
     appendLine("${space}description: '$description'")
-    appendLine("${space}type: ${type.name}")
+    appendLine("${space}type: ${type.toYaml()}")
     appendLine("${space}required: $required")
     if (default != null) appendLine("${space}default: '$default'")
     printIfHasElements(options, "options", space = "      ")
 }.removeSuffix("\n")
+
+// WDT = WorkflowDispatch.Type
+private fun WDT.toYaml(): String = when (this) {
+    WDT.Choice -> "choice"
+    WDT.Environment -> "environment"
+    WDT.Boolean -> "boolean"
+    WDT.String -> "string"
+}
 
 private fun StringBuilder.printIfHasElements(
     items: List<String>?,

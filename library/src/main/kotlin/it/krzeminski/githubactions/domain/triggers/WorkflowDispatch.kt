@@ -5,12 +5,11 @@ class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
 ) : Trigger() {
 
-    @Suppress("EnumNaming", "EnumEntryName")
     enum class Type {
-        choice,
-        environment,
-        boolean,
-        string,
+        Choice,
+        Environment,
+        Boolean,
+        String,
     }
 
     class Input(

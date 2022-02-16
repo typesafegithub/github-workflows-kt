@@ -48,19 +48,19 @@ class TriggersToYamlTest : DescribeSpec({
                     inputs = mapOf(
                         "logLevel" to WorkflowDispatch.Input(
                             description = "Log level",
-                            type = WorkflowDispatch.Type.choice,
+                            type = WorkflowDispatch.Type.Choice,
                             required = true,
                             default = "warning",
                             options = "info warning debug".split(" "),
                         ),
                         "tags" to WorkflowDispatch.Input(
                             description = "Test scenario tags",
-                            type = WorkflowDispatch.Type.boolean,
+                            type = WorkflowDispatch.Type.Boolean,
                             required = false,
                         ),
                         "environment" to WorkflowDispatch.Input(
                             description = "Environment to run tests against",
-                            type = WorkflowDispatch.Type.environment,
+                            type = WorkflowDispatch.Type.Environment,
                             required = true,
                         ),
                     )
