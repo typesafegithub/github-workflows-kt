@@ -26,11 +26,22 @@ fun ActionCoords.generateWrapper(
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): Wrapper {
     val metadata = fetchMetadataImpl()
+    checkPropertiesAreValid(metadata, inputTypings)
     val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
         filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
+}
+fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {
+    val invalidProperties = inputTypings.keys - metadata.inputs.keys
+    require(invalidProperties.isEmpty()) {
+        """
+            Request contains invalid properties:
+            Available: ${metadata.inputs.keys}
+            Invalid:   $invalidProperties
+            """.trimIndent()
+    }
 }
 
 private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {

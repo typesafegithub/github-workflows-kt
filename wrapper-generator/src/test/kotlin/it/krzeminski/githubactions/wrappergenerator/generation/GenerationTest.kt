@@ -1,10 +1,13 @@
 package it.krzeminski.githubactions.wrappergenerator.generation
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 import io.mockk.every
 import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
@@ -334,5 +337,38 @@ class GenerationTest : FunSpec({
             """.trimIndent(),
             filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithNonStringInputsV3.kt",
         )
+    }
+
+
+    test("Detect wrapper request with invalid properties") {
+        // given
+        val input = Input("input", "default", required = true)
+        val actionManifest = Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs = mapOf(
+                "foo-bar" to input,
+                "baz-goo" to input
+            )
+        )
+        val request = WrapperRequest(
+            ActionCoords("actions", "setup-node", "v2"),
+            inputTypings = mapOf(
+                "check-latest" to BooleanTyping,
+                "foo-bar" to BooleanTyping,
+                "bazGoo" to BooleanTyping,
+            )
+        )
+
+        shouldThrowAny {
+            // when
+            checkPropertiesAreValid(actionManifest, request.inputTypings)
+        }.shouldHaveMessage(
+            // then
+            """
+            Request contains invalid properties:
+            Available: [foo-bar, baz-goo]
+            Invalid:   [check-latest, bazGoo]
+        """.trimIndent())
     }
 })
