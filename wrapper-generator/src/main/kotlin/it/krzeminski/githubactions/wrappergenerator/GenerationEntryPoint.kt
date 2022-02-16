@@ -7,9 +7,10 @@ fun main() {
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
 
-    wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
+    wrappersToGenerate.forEach { request ->
+        val actionCoords = request.coords
         println("Generating ${actionCoords.owner}/${actionCoords.name}@${actionCoords.version}...")
-        val (code, path) = actionCoords.generateWrapper(inputTypings)
+        val (code, path) = request.generateWrapper()
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
             writeText(code)

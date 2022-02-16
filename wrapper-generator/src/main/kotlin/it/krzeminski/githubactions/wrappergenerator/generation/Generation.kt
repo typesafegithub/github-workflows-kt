@@ -9,7 +9,9 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
@@ -21,19 +23,30 @@ data class Wrapper(
     val filePath: String,
 )
 
-fun ActionCoords.generateWrapper(
-    inputTypings: Map<String, Typing> = emptyMap(),
+fun WrapperRequest.generateWrapper(
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): Wrapper {
-    val metadata = fetchMetadataImpl()
-    val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
+    val metadata = fetchMetadataImpl(coords)
+    checkPropertiesAreValid(metadata)
+    val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
-        filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
+        filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${coords.owner.toKotlinPackageName()}/${coords.buildActionClassName()}.kt",
     )
 }
 
-private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
+fun WrapperRequest.checkPropertiesAreValid(metadata: Metadata) {
+    val invalidProperties = inputTypings.keys + deprecated - metadata.inputs.keys
+    require(invalidProperties.isEmpty()) {
+        """
+            Request contains invalid properties:
+            Available: ${metadata.inputs.keys}
+            Invalid:   $invalidProperties
+            """.trimIndent()
+    }
+}
+
+private fun WrapperRequest.generateActionWrapperSourceCode(metadata: Metadata): String {
     val fileSpec = FileSpec.builder("it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
         .addComment(
             """
@@ -42,7 +55,14 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
             generator itself.
             """.trimIndent()
         )
-        .addType(generateActionClass(metadata, coords, inputTypings))
+        .apply {
+            if (deprecated.isNotEmpty()) {
+                addAnnotation(AnnotationSpec.builder(Suppress::class.asClassName())
+                    .addMember(CodeBlock.of("%S", "DEPRECATION"))
+                    .build())
+            }
+        }
+        .addType(generateActionClass(metadata))
         .indent("    ")
         .build()
     return buildString {
@@ -50,13 +70,13 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
     }
 }
 
-private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec {
+private fun WrapperRequest.generateActionClass(metadata: Metadata): TypeSpec {
     val actionClassName = coords.buildActionClassName()
     return TypeSpec.classBuilder(actionClassName)
         .addKdoc(actionKdoc(metadata, coords))
         .inheritsFromAction(coords)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
-        .properties(metadata, coords, inputTypings)
+        .properties(metadata, coords, inputTypings, deprecated)
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
         .addCustomTypes(inputTypings.values.toSet(), coords)
         .build()
@@ -69,11 +89,23 @@ private fun TypeSpec.Builder.addCustomTypes(typings: Set<Typing>, coords: Action
     return this
 }
 
-private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec.Builder {
+private fun TypeSpec.Builder.properties(
+    metadata: Metadata,
+    coords: ActionCoords,
+    inputTypings: Map<String, Typing>,
+    deprecated: Set<String>
+): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         addProperty(
             PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                 .initializer(key.toCamelCase())
+                .apply {
+                    if (key in deprecated) { addAnnotation(
+                        AnnotationSpec.builder(Deprecated::class.asClassName())
+                            .addMember(CodeBlock.of("%S", input.description))
+                            .build())
+                    }
+                }
                 .build()
         )
     }

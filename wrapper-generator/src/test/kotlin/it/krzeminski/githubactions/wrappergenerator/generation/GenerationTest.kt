@@ -1,10 +1,13 @@
 package it.krzeminski.githubactions.wrappergenerator.generation
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 import io.mockk.every
 import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
@@ -26,7 +29,7 @@ class GenerationTest : FunSpec({
                     default = null,
                 ),
                 "baz-goo" to Input(
-                    description = "Just another input",
+                    description = "Deprecated: Just another input",
                     required = true,
                     default = null,
                 ),
@@ -35,9 +38,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
         val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
         every { fetchMetadataMock(any()) } returns actionManifest
+        val request = WrapperRequest(coords, deprecated = setOf("baz-goo"))
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
+        val wrapper = request.generateWrapper(fetchMetadataMock)
         writeToUnitTests(wrapper)
 
         // then
@@ -46,9 +50,12 @@ class GenerationTest : FunSpec({
                 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
                 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
                 // generator itself.
+                @file:Suppress("DEPRECATION")
+
                 package it.krzeminski.githubactions.actions.johnsmith
 
                 import it.krzeminski.githubactions.actions.Action
+                import kotlin.Deprecated
                 import kotlin.String
                 import kotlin.Suppress
 
@@ -65,8 +72,9 @@ class GenerationTest : FunSpec({
                      */
                     public val fooBar: String,
                     /**
-                     * Just another input
+                     * Deprecated: Just another input
                      */
+                    @Deprecated("Deprecated: Just another input")
                     public val bazGoo: String
                 ) : Action("john-smith", "simple-action-with-required-string-inputs", "v3") {
                     @Suppress("SpreadOperator")
@@ -115,9 +123,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
         val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
         every { fetchMetadataMock(any()) } returns actionManifest
+        val request = WrapperRequest(coords)
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
+        val wrapper = request.generateWrapper(fetchMetadataMock)
         writeToUnitTests(wrapper)
 
         // then
@@ -224,19 +233,20 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
         val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
         every { fetchMetadataMock(any()) } returns actionManifest
-
-        // when
-        val wrapper = coords.generateWrapper(
-            fetchMetadataImpl = fetchMetadataMock,
-            inputTypings = mapOf(
+        val request = WrapperRequest(
+            coords,
+            mapOf(
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
                 "boo-zoo" to ListOfStringsTyping(","),
                 "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
                 "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
-            ),
+            )
         )
+
+        // when
+        val wrapper = request.generateWrapper(fetchMetadataMock)
         writeToUnitTests(wrapper)
 
         // then
@@ -334,5 +344,37 @@ class GenerationTest : FunSpec({
             """.trimIndent(),
             filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithNonStringInputsV3.kt",
         )
+    }
+
+    test("Detect wrapper request with invalid properties") {
+        // given
+        val input = Input("input", "default", required = true)
+        val actionManifest = Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs = mapOf(
+                "foo-bar" to input,
+                "baz-goo" to input
+            )
+        )
+        val request = WrapperRequest(
+            ActionCoords("actions", "setup-node", "v2"),
+            inputTypings = mapOf(
+                "foo-bar" to BooleanTyping,
+                "check-latest" to BooleanTyping,
+            ),
+            deprecated = setOf("baz-goo", "version")
+        )
+
+        shouldThrowAny {
+            // when
+            request.checkPropertiesAreValid(actionManifest)
+        }.shouldHaveMessage(
+            // then
+            """
+            Request contains invalid properties:
+            Available: [foo-bar, baz-goo]
+            Invalid:   [check-latest, version]
+        """.trimIndent())
     }
 })

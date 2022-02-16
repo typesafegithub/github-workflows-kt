@@ -47,12 +47,13 @@ val wrappersToGenerate = listOf(
     ),
     WrapperRequest(
         ActionCoords("actions", "setup-node", "v2"),
-        mapOf(
+        inputTypings = mapOf(
             "always-auth" to BooleanTyping,
             "check-latest" to BooleanTyping,
             "cache" to EnumTyping("PackageManager", listOf("npm", "yarn", "pnpm")),
             "cache-dependency-path" to ListOfStringsTyping("\\n"),
         ),
+        deprecated = setOf("version"),
     ),
     WrapperRequest(
         ActionCoords("actions", "setup-python", "v2"),
