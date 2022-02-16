@@ -40,6 +40,69 @@ class TriggersToYamlTest : DescribeSpec({
                 |workflow_dispatch:
             """.trimMargin()
         }
+
+        it("renders with all parameters") {
+
+            // given
+            val triggers = listOf(
+                WorkflowDispatch(
+                    inputs = mapOf(
+                        "logLevel" to WorkflowDispatch.Input(
+                            description = "Log level",
+                            type = WorkflowDispatch.Type.Choice,
+                            required = true,
+                            default = "warning",
+                            options = listOf("info", "warning", "debug"),
+                        ),
+                        "tags" to WorkflowDispatch.Input(
+                            description = "Test scenario tags",
+                            type = WorkflowDispatch.Type.Boolean,
+                            required = false,
+                        ),
+                        "environment" to WorkflowDispatch.Input(
+                            description = "Environment to run tests against",
+                            type = WorkflowDispatch.Type.Environment,
+                            required = true,
+                        ),
+                        "greeting" to WorkflowDispatch.Input(
+                            description = "Hello {greeting}",
+                            type = WorkflowDispatch.Type.String,
+                            required = true,
+                        ),
+                    )
+                )
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+              |workflow_dispatch:
+              |  inputs:
+              |    logLevel:
+              |      description: 'Log level'
+              |      type: choice
+              |      required: true
+              |      default: 'warning'
+              |      options:
+              |        - 'info'
+              |        - 'warning'
+              |        - 'debug'
+              |    tags:
+              |      description: 'Test scenario tags'
+              |      type: boolean
+              |      required: false
+              |    environment:
+              |      description: 'Environment to run tests against'
+              |      type: environment
+              |      required: true
+              |    greeting:
+              |      description: 'Hello {greeting}'
+              |      type: string
+              |      required: true
+            """.trimMargin()
+        }
     }
 
     describe("push") {

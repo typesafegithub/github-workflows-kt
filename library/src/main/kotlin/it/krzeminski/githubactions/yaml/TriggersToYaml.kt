@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -23,6 +25,7 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
 
 fun List<Trigger>.triggersToYaml(): String =
     this
@@ -31,7 +34,7 @@ fun List<Trigger>.triggersToYaml(): String =
 
 private fun Trigger.toYamlString() =
     when (this) {
-        is WorkflowDispatch -> "workflow_dispatch:"
+        is WorkflowDispatch -> toYaml()
         is Push -> toYaml()
         is PullRequest -> toYaml()
         is PullRequestTarget -> toYaml()
@@ -93,11 +96,42 @@ private fun Schedule.toYaml() = buildString {
     }
 }.removeSuffix("\n")
 
-private fun StringBuilder.printIfHasElements(items: List<String>?, name: String) {
+private fun WorkflowDispatch.toYaml(): String = buildString {
+    appendLine("workflow_dispatch:")
+    if (inputs.isNotEmpty()) {
+        appendLine("  inputs:")
+        for ((key, input) in inputs) {
+            appendLine("    $key:")
+            appendLine(input.toYaml())
+        }
+    }
+}.removeSuffix("\n")
+
+private fun WorkflowDispatch.Input.toYaml(): String = buildString {
+    val space = "      "
+    appendLine("${space}description: '$description'")
+    appendLine("${space}type: ${type.toYaml()}")
+    appendLine("${space}required: $required")
+    if (default != null) appendLine("${space}default: '$default'")
+    printIfHasElements(options, "options", space = "      ")
+}.removeSuffix("\n")
+
+private fun Type.toYaml(): String = when (this) {
+    Type.Choice -> "choice"
+    Type.Environment -> "environment"
+    Type.Boolean -> "boolean"
+    Type.String -> "string"
+}
+
+private fun StringBuilder.printIfHasElements(
+    items: List<String>?,
+    name: String,
+    space: String = "  ",
+) {
     if (!items.isNullOrEmpty()) {
-        appendLine("  $name:")
+        appendLine("$name:".prependIndent(space))
         items.forEach {
-            appendLine("    - '$it'")
+            appendLine("  - '$it'".prependIndent(space))
         }
     }
 }
