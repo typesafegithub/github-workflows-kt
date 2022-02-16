@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -5,7 +7,7 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type as WDT
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
 
 fun List<Trigger>.triggersToYaml(): String =
     this
@@ -61,12 +63,11 @@ private fun WorkflowDispatch.Input.toYaml(): String = buildString {
     printIfHasElements(options, "options", space = "      ")
 }.removeSuffix("\n")
 
-// WDT = WorkflowDispatch.Type
-private fun WDT.toYaml(): String = when (this) {
-    WDT.Choice -> "choice"
-    WDT.Environment -> "environment"
-    WDT.Boolean -> "boolean"
-    WDT.String -> "string"
+private fun Type.toYaml(): String = when (this) {
+    Type.Choice -> "choice"
+    Type.Environment -> "environment"
+    Type.Boolean -> "boolean"
+    Type.String -> "string"
 }
 
 private fun StringBuilder.printIfHasElements(
