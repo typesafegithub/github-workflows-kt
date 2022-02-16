@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.7.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.8.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
