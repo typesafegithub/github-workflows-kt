@@ -162,7 +162,7 @@ class TriggersToYamlTest : DescribeSpec({
             // given
             val triggers = listOf(
                 PullRequestTarget(
-                    types = listOf(PullRequestTarget.Type.assigned, PullRequestTarget.Type.closed),
+                    types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
                     branches = listOf("branch1", "branch2"),
                     branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
                     paths = listOf("path1", "path2"),
