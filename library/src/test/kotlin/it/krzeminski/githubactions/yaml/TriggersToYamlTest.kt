@@ -51,7 +51,7 @@ class TriggersToYamlTest : DescribeSpec({
                             type = WorkflowDispatch.Type.Choice,
                             required = true,
                             default = "warning",
-                            options = "info warning debug".split(" "),
+                            options = listOf("info", "warning", "debug"),
                         ),
                         "tags" to WorkflowDispatch.Input(
                             description = "Test scenario tags",
@@ -61,6 +61,11 @@ class TriggersToYamlTest : DescribeSpec({
                         "environment" to WorkflowDispatch.Input(
                             description = "Environment to run tests against",
                             type = WorkflowDispatch.Type.Environment,
+                            required = true,
+                        ),
+                        "greeting" to WorkflowDispatch.Input(
+                            description = "Hello {greeting}",
+                            type = WorkflowDispatch.Type.String,
                             required = true,
                         ),
                     )
@@ -90,6 +95,10 @@ class TriggersToYamlTest : DescribeSpec({
               |    environment:
               |      description: 'Environment to run tests against'
               |      type: environment
+              |      required: true
+              |    greeting:
+              |      description: 'Hello {greeting}'
+              |      type: string
               |      required: true
             """.trimMargin()
         }

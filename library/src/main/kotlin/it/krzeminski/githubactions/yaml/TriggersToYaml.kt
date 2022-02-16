@@ -75,9 +75,9 @@ private fun StringBuilder.printIfHasElements(
     space: String = "  ",
 ) {
     if (!items.isNullOrEmpty()) {
-        appendLine("$space$name:")
+        appendLine("$name:".prependIndent(space))
         items.forEach {
-            appendLine("$space  - '$it'")
+            appendLine("  - '$it'".prependIndent(space))
         }
     }
 }
