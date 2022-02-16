@@ -27,6 +27,7 @@ class GenerationTest : FunSpec({
                 ),
                 "baz-goo" to Input(
                     description = "Just another input",
+                    deprecationMessage = "this is deprecated",
                     required = true,
                     default = null,
                 ),
@@ -46,9 +47,12 @@ class GenerationTest : FunSpec({
                 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
                 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
                 // generator itself.
+                @file:Suppress("DEPRECATION")
+                
                 package it.krzeminski.githubactions.actions.johnsmith
 
                 import it.krzeminski.githubactions.actions.Action
+                import kotlin.Deprecated
                 import kotlin.String
                 import kotlin.Suppress
 
@@ -67,6 +71,7 @@ class GenerationTest : FunSpec({
                     /**
                      * Just another input
                      */
+                    @Deprecated("this is deprecated")
                     public val bazGoo: String
                 ) : Action("john-smith", "simple-action-with-required-string-inputs", "v3") {
                     @Suppress("SpreadOperator")
