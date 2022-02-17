@@ -1,9 +1,9 @@
 package it.krzeminski.githubactions.wrappergenerator.generation
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
+import io.kotest.matchers.throwable.shouldHaveMessage
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
@@ -34,11 +34,9 @@ class GenerationTest : FunSpec({
             )
         )
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
-        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
-        every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
+        val wrapper = coords.generateWrapper { actionManifest }
         writeToUnitTests(wrapper)
 
         // then
@@ -118,11 +116,9 @@ class GenerationTest : FunSpec({
             )
         )
         val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
-        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
-        every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
+        val wrapper = coords.generateWrapper(fetchMetadataImpl = { actionManifest })
         writeToUnitTests(wrapper)
 
         // then
@@ -227,12 +223,10 @@ class GenerationTest : FunSpec({
             )
         )
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
-        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
-        every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
         val wrapper = coords.generateWrapper(
-            fetchMetadataImpl = fetchMetadataMock,
+            fetchMetadataImpl = { actionManifest },
             inputTypings = mapOf(
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
@@ -339,5 +333,37 @@ class GenerationTest : FunSpec({
             """.trimIndent(),
             filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithNonStringInputsV3.kt",
         )
+    }
+
+
+    test("Detect wrapper request with invalid properties") {
+        // given
+        val input = Input("input", "default", required = true)
+        val actionManifest = Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs = mapOf(
+                "foo-bar" to input,
+                "baz-goo" to input
+            )
+        )
+        val  inputTypings = mapOf(
+            "check-latest" to BooleanTyping,
+            "foo-bar" to BooleanTyping,
+            "bazGoo" to BooleanTyping,
+        )
+        val coords = ActionCoords("actions", "setup-node", "v2")
+
+        shouldThrowAny {
+            // when
+            coords.generateWrapper(inputTypings) { actionManifest }
+
+        }.shouldHaveMessage(
+            // then
+            """
+            Request contains invalid properties:
+            Available: [foo-bar, baz-goo]
+            Invalid:   [check-latest, bazGoo]
+        """.trimIndent())
     }
 })
