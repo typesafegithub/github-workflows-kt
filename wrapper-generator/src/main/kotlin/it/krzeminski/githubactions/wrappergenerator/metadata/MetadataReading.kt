@@ -22,6 +22,7 @@ data class Input(
     val description: String,
     val default: String? = null,
     val required: Boolean? = null,
+    val deprecationMessage: String? = null,
 )
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {

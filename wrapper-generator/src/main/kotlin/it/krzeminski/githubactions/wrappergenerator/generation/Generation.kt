@@ -9,6 +9,7 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
@@ -43,10 +44,21 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
             """.trimIndent()
         )
         .addType(generateActionClass(metadata, coords, inputTypings))
+        .annotateSuppressDeprecation(metadata)
         .indent("    ")
         .build()
     return buildString {
         fileSpec.writeTo(this)
+    }
+}
+
+private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata) = apply {
+    val deprecatedIsUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
+    if (deprecatedIsUsed) {
+        addAnnotation(AnnotationSpec.builder(Suppress::class.asClassName())
+            .addMember(CodeBlock.of("%S", "DEPRECATION"))
+            .build()
+        )
     }
 }
 
@@ -74,10 +86,21 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
         addProperty(
             PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                 .initializer(key.toCamelCase())
+                .annotateDeprecated(input)
                 .build()
         )
     }
     return this
+}
+
+private fun PropertySpec.Builder.annotateDeprecated(input: Input) = apply {
+    if (input.deprecationMessage != null) {
+        addAnnotation(
+            AnnotationSpec.builder(Deprecated::class.asClassName())
+                .addMember(CodeBlock.of("%S", input.deprecationMessage))
+                .build()
+        )
+    }
 }
 
 private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typing>) =

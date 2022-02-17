@@ -1,10 +1,13 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -67,6 +70,7 @@ public class SetupNodeV2(
     /**
      * Deprecated. Use node-version instead. Will not be supported after October 1, 2019
      */
+    @Deprecated("The version property will not be supported after October 1, 2019. Use node-version instead")
     public val version: String? = null
 ) : Action("actions", "setup-node", "v2") {
     @Suppress("SpreadOperator")
