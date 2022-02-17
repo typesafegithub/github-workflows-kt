@@ -33,7 +33,7 @@ fun ActionCoords.generateWrapper(
         filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
 }
-fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {
+private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {
     val invalidProperties = inputTypings.keys - metadata.inputs.keys
     require(invalidProperties.isEmpty()) {
         """

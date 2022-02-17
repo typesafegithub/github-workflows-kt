@@ -4,10 +4,7 @@ import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import io.mockk.every
-import io.mockk.mockk
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
@@ -36,11 +33,9 @@ class GenerationTest : FunSpec({
             )
         )
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
-        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
-        every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
+        val wrapper = coords.generateWrapper { actionManifest }
         writeToUnitTests(wrapper)
 
         // then
@@ -116,11 +111,9 @@ class GenerationTest : FunSpec({
             )
         )
         val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
-        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
-        every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = fetchMetadataMock)
+        val wrapper = coords.generateWrapper(fetchMetadataImpl = { actionManifest })
         writeToUnitTests(wrapper)
 
         // then
@@ -225,12 +218,10 @@ class GenerationTest : FunSpec({
             )
         )
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
-        val fetchMetadataMock = mockk<ActionCoords.() -> Metadata>()
-        every { fetchMetadataMock(any()) } returns actionManifest
 
         // when
         val wrapper = coords.generateWrapper(
-            fetchMetadataImpl = fetchMetadataMock,
+            fetchMetadataImpl = { actionManifest },
             inputTypings = mapOf(
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
@@ -351,18 +342,17 @@ class GenerationTest : FunSpec({
                 "baz-goo" to input
             )
         )
-        val request = WrapperRequest(
-            ActionCoords("actions", "setup-node", "v2"),
-            inputTypings = mapOf(
-                "check-latest" to BooleanTyping,
-                "foo-bar" to BooleanTyping,
-                "bazGoo" to BooleanTyping,
-            )
+        val  inputTypings = mapOf(
+            "check-latest" to BooleanTyping,
+            "foo-bar" to BooleanTyping,
+            "bazGoo" to BooleanTyping,
         )
+        val coords = ActionCoords("actions", "setup-node", "v2")
 
         shouldThrowAny {
             // when
-            checkPropertiesAreValid(actionManifest, request.inputTypings)
+            coords.generateWrapper(inputTypings) { actionManifest }
+
         }.shouldHaveMessage(
             // then
             """
