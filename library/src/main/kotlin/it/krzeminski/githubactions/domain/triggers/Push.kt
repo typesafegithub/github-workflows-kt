@@ -7,4 +7,16 @@ data class Push(
     val tagsIgnore: List<String>? = null,
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
-) : Trigger()
+) : Trigger() {
+    init {
+        require(!(branches != null && branchesIgnore != null)) {
+            "Cannot define both 'branches' and 'branchesIgnore'!"
+        }
+        require(!(tags != null && tagsIgnore != null)) {
+            "Cannot define both 'tags' and 'tagsIgnore'!"
+        }
+        require(!(paths != null && pathsIgnore != null)) {
+            "Cannot define both 'paths' and 'pathsIgnore'!"
+        }
+    }
+}

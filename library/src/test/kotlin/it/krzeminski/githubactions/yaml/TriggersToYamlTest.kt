@@ -119,16 +119,13 @@ class TriggersToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
-        it("renders with all parameters") {
+        it("renders with all parameters valid to put together - first part") {
             // given
             val triggers = listOf(
                 Push(
-                    branches = listOf("branch1", "branch2"),
                     tags = listOf("tag1", "tag2"),
-                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
-                    tagsIgnore = listOf("tagIgnore1", "tagIgnore2"),
+                    branches = listOf("branch1", "branch2"),
                     paths = listOf("path1", "path2"),
-                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
                 ),
             )
 
@@ -144,15 +141,34 @@ class TriggersToYamlTest : DescribeSpec({
                 |  tags:
                 |    - 'tag1'
                 |    - 'tag2'
+                |  paths:
+                |    - 'path1'
+                |    - 'path2'
+            """.trimMargin()
+        }
+
+        it("renders with all parameters valid to put together - second part") {
+            // given
+            val triggers = listOf(
+                Push(
+                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
+                    tagsIgnore = listOf("tagIgnore1", "tagIgnore2"),
+                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
+                ),
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |push:
                 |  branches-ignore:
                 |    - 'branchIgnore1'
                 |    - 'branchIgnore2'
                 |  tags-ignore:
                 |    - 'tagIgnore1'
                 |    - 'tagIgnore2'
-                |  paths:
-                |    - 'path1'
-                |    - 'path2'
                 |  paths-ignore:
                 |    - 'pathIgnore1'
                 |    - 'pathIgnore2'
