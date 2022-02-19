@@ -63,5 +63,67 @@ class WorkflowBuilderTest : FunSpec({
             }
             exception.message shouldBe "There are no triggers defined!"
         }
+
+        test("duplicated job names") {
+            val exception = shouldThrow<IllegalArgumentException> {
+                workflow(
+                    name = "Some workflow",
+                    on = listOf(Push()),
+                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+                ) {
+                    job(
+                        name = "Some job 1",
+                        runsOn = UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Some command",
+                            command = "echo 'hello!'",
+                        )
+                    }
+
+                    job(
+                        name = "Some job 1",
+                        runsOn = UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Some command",
+                            command = "echo 'hello!'",
+                        )
+                    }
+
+                    job(
+                        name = "Some job 2",
+                        runsOn = UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Some command",
+                            command = "echo 'hello!'",
+                        )
+                    }
+
+                    job(
+                        name = "Some job 3",
+                        runsOn = UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Some command",
+                            command = "echo 'hello!'",
+                        )
+                    }
+
+                    job(
+                        name = "Some job 3",
+                        runsOn = UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Some command",
+                            command = "echo 'hello!'",
+                        )
+                    }
+                }
+            }
+            exception.message shouldBe "Duplicated job names: [Some job 1, Some job 3]"
+        }
     }
 })

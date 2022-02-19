@@ -90,6 +90,21 @@ fun workflow(
     require(workflowBuilder.workflow.jobs.isNotEmpty()) {
         "There are no jobs defined!"
     }
+    workflowBuilder.workflow.jobs.requireUniqueJobNames()
 
     return workflowBuilder.build()
+}
+
+private fun List<Job>.requireUniqueJobNames() {
+    val countPerJobName = this
+        .map { it.name }
+        .groupBy { it }
+        .mapValues { it.value.count() }
+
+    require(countPerJobName.none { it.value > 1 }) {
+        val duplicatedJobNames = countPerJobName
+            .filter { it.value > 1 }
+            .map { it.key }
+        "Duplicated job names: $duplicatedJobNames"
+    }
 }
