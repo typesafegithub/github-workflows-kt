@@ -15,7 +15,7 @@ class WorkflowBuilder(
     targetFile: Path,
     jobs: List<Job> = emptyList(),
 ) {
-    private var workflow = Workflow(
+    internal var workflow = Workflow(
         name = name,
         on = on,
         env = env,
@@ -77,5 +77,10 @@ fun workflow(
         targetFile = targetFile,
     )
     workflowBuilder.block()
+
+    require(workflowBuilder.workflow.jobs.isNotEmpty()) {
+        "There are no jobs defined!"
+    }
+
     return workflowBuilder.build()
 }
