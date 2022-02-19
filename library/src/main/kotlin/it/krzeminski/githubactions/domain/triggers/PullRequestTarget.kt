@@ -9,6 +9,15 @@ data class PullRequestTarget(
     val pathsIgnore: List<String>? = null,
 ) : Trigger() {
 
+    init {
+        require(!(branches != null && branchesIgnore != null)) {
+            "Cannot define both 'branches' and 'branchesIgnore'!"
+        }
+        require(!(paths != null && pathsIgnore != null)) {
+            "Cannot define both 'paths' and 'pathsIgnore'!"
+        }
+    }
+
     enum class Type {
         Assigned,
         Unassigned,

@@ -237,15 +237,13 @@ class TriggersToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
-        it("renders with all parameters") {
+        it("renders with all parameters valid to put together - first part") {
             // given
             val triggers = listOf(
                 PullRequestTarget(
                     types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
                     branches = listOf("branch1", "branch2"),
-                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
                     paths = listOf("path1", "path2"),
-                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
                 )
             )
 
@@ -261,12 +259,34 @@ class TriggersToYamlTest : DescribeSpec({
                 |  branches:
                 |    - 'branch1'
                 |    - 'branch2'
-                |  branches-ignore:
-                |    - 'branchIgnore1'
-                |    - 'branchIgnore2'
                 |  paths:
                 |    - 'path1'
                 |    - 'path2'
+            """.trimMargin()
+        }
+
+        it("renders with all parameters valid to put together - second part") {
+            // given
+            val triggers = listOf(
+                PullRequestTarget(
+                    types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
+                    branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
+                    pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
+                )
+            )
+
+            // when
+            val yaml = triggers.triggersToYaml()
+
+            // then
+            yaml shouldBe """
+                |pull_request_target:
+                |  types:
+                |    - 'assigned'
+                |    - 'closed'
+                |  branches-ignore:
+                |    - 'branchIgnore1'
+                |    - 'branchIgnore2'
                 |  paths-ignore:
                 |    - 'pathIgnore1'
                 |    - 'pathIgnore2'
