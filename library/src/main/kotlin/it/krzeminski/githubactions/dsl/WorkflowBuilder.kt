@@ -44,6 +44,11 @@ class WorkflowBuilder(
         )
         jobBuilder.block()
         val newJob = jobBuilder.build()
+
+        require(newJob.steps.isNotEmpty()) {
+            "There are no steps defined!"
+        }
+
         workflow = workflow.copy(jobs = workflow.jobs + newJob)
         return newJob
     }

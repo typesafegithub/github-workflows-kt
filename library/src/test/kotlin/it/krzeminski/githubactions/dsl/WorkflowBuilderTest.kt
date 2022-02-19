@@ -23,6 +23,25 @@ class WorkflowBuilderTest : FunSpec({
             exception.message shouldBe "There are no jobs defined!"
         }
 
+        test("no steps defined") {
+            val exception = shouldThrow<IllegalArgumentException> {
+                workflow(
+                    name = "Some workflow",
+                    on = listOf(Push()),
+                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+                ) {
+                    job(
+                        name = "Some job",
+                        runsOn = UbuntuLatest,
+                    ) {
+                        // No steps.
+                    }
+                }
+            }
+            exception.message shouldBe "There are no steps defined!"
+        }
+
         test("no triggers defined") {
             val exception = shouldThrow<IllegalArgumentException> {
                 workflow(
