@@ -69,6 +69,10 @@ fun workflow(
     targetFile: Path,
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
+    require(on.isNotEmpty()) {
+        "There are no triggers defined!"
+    }
+
     val workflowBuilder = WorkflowBuilder(
         name = name,
         on = on,
