@@ -18,7 +18,8 @@ private fun Step.toYaml() =
     }
 
 private fun ExternalActionStep.toYaml() = buildString {
-    appendLine("- name: $name")
+    appendLine("- id: $id")
+    appendLine("  name: $name")
     appendLine("  uses: ${action.fullName}")
     this@toYaml.action.argumentsToYaml().let { arguments ->
         if (arguments.isNotEmpty()) {
@@ -36,7 +37,8 @@ private fun ExternalActionStep.toYaml() = buildString {
 }.removeSuffix("\n")
 
 private fun CommandStep.toYaml() = buildString {
-    appendLine("- name: $name")
+    appendLine("- id: $id")
+    appendLine("  name: $name")
 
     if (this@toYaml.env.isNotEmpty()) {
         appendLine("  env:")

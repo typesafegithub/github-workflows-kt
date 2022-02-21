@@ -19,6 +19,7 @@ class JobsToYamlTest : DescribeSpec({
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command 1",
                         command = "echo 'test 1!'",
                     ),
@@ -29,6 +30,7 @@ class JobsToYamlTest : DescribeSpec({
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command 2",
                         command = "echo 'test 2!'",
                     ),
@@ -43,12 +45,14 @@ class JobsToYamlTest : DescribeSpec({
         yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
-                         |    - name: Some command 1
+                         |    - id: someId
+                         |      name: Some command 1
                          |      run: echo 'test 1!'
                          |"Job-2":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
-                         |    - name: Some command 2
+                         |    - id: someId
+                         |      name: Some command 2
                          |      run: echo 'test 2!'""".trimMargin()
     }
 
@@ -60,6 +64,7 @@ class JobsToYamlTest : DescribeSpec({
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command",
                         command = "echo 'test!'",
                     ),
@@ -74,7 +79,8 @@ class JobsToYamlTest : DescribeSpec({
         yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  steps:
-                         |    - name: Some command
+                         |    - id: someId
+                         |      name: Some command
                          |      run: echo 'test!'""".trimMargin()
     }
 
@@ -86,6 +92,7 @@ class JobsToYamlTest : DescribeSpec({
                 runsOn = Windows2022,
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command",
                         command = "echo 'test!'",
                     ),
@@ -100,7 +107,8 @@ class JobsToYamlTest : DescribeSpec({
         yaml shouldBe """|"Job-1":
                          |  runs-on: "windows-2022"
                          |  steps:
-                         |    - name: Some command
+                         |    - id: someId
+                         |      name: Some command
                          |      run: echo 'test!'""".trimMargin()
     }
 
@@ -123,6 +131,7 @@ class JobsToYamlTest : DescribeSpec({
                 needs = listOf(anotherJob1, anotherJob2),
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command",
                         command = "echo 'test!'",
                     ),
@@ -140,7 +149,8 @@ class JobsToYamlTest : DescribeSpec({
                          |    - "Another job 1"
                          |    - "Another job 2"
                          |  steps:
-                         |    - name: Some command
+                         |    - id: someId
+                         |      name: Some command
                          |      run: echo 'test!'""".trimMargin()
     }
 
@@ -160,6 +170,7 @@ class JobsToYamlTest : DescribeSpec({
                 condition = "\${{ always() }}",
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command 1",
                         command = "echo 'test 1!'",
                     ),
@@ -180,7 +191,8 @@ class JobsToYamlTest : DescribeSpec({
                          |      zoo
                          |  if: ${'$'}{{ always() }}
                          |  steps:
-                         |    - name: Some command 1
+                         |    - id: someId
+                         |      name: Some command 1
                          |      run: echo 'test 1!'""".trimMargin()
     }
 
@@ -193,6 +205,7 @@ class JobsToYamlTest : DescribeSpec({
                 condition = "\${{ always() }}",
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command 1",
                         command = "echo 'test 1!'",
                     ),
@@ -208,7 +221,8 @@ class JobsToYamlTest : DescribeSpec({
                          |  runs-on: "ubuntu-latest"
                          |  if: ${'$'}{{ always() }}
                          |  steps:
-                         |    - name: Some command 1
+                         |    - id: someId
+                         |      name: Some command 1
                          |      run: echo 'test 1!'""".trimMargin()
     }
 
@@ -224,6 +238,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
                 steps = listOf(
                     CommandStep(
+                        id = "someId",
                         name = "Some command",
                         command = "echo 'test!'",
                     ),
@@ -246,7 +261,8 @@ class JobsToYamlTest : DescribeSpec({
                          |        - baz
                          |        - goo
                          |  steps:
-                         |    - name: Some command
+                         |    - id: someId
+                         |      name: Some command
                          |      run: echo 'test!'""".trimMargin()
     }
 

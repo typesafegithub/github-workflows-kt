@@ -53,20 +53,25 @@ class EndToEndTest : FunSpec({
               "check_yaml_consistency":
                 runs-on: "ubuntu-latest"
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
-                  - name: Install Kotlin
+                  - id: step-1
+                    name: Install Kotlin
                     run: sudo snap install --classic kotlin
-                  - name: Consistency check
+                  - id: step-2
+                    name: Consistency check
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
                   - "check_yaml_consistency"
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
-                  - name: Hello world!
+                  - id: step-1
+                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -119,18 +124,22 @@ class EndToEndTest : FunSpec({
               "check_yaml_consistency":
                 runs-on: "ubuntu-latest"
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
-                  - name: Install Kotlin
+                  - id: step-1
+                    name: Install Kotlin
                     run: sudo snap install --classic kotlin
-                  - name: Consistency check
+                  - id: step-2
+                    name: Consistency check
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
                   - "check_yaml_consistency"
                 steps:
-                  - name: Hello world!
+                  - id: step-0
+                    name: Hello world!
                     run: echo 'hello!'
               "test_job_2":
                 runs-on: "ubuntu-latest"
@@ -138,7 +147,8 @@ class EndToEndTest : FunSpec({
                   - "test_job_1"
                   - "check_yaml_consistency"
                 steps:
-                  - name: Hello world, again!
+                  - id: step-0
+                    name: Hello world, again!
                     run: echo 'hello again!'
         """.trimIndent()
     }
@@ -162,9 +172,11 @@ class EndToEndTest : FunSpec({
               "test_job":
                 runs-on: "ubuntu-latest"
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
-                  - name: Hello world!
+                  - id: step-1
+                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -211,7 +223,8 @@ class EndToEndTest : FunSpec({
               "test_job":
                 runs-on: "ubuntu-latest"
                 steps:
-                  - name: Hello world!
+                  - id: step-0
+                    name: Hello world!
                     run: |
                       less test.txt \
                       | grep -P "foobar" \
@@ -263,9 +276,11 @@ class EndToEndTest : FunSpec({
               "test_job":
                 runs-on: "ubuntu-latest"
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
-                  - name: Hello world!
+                  - id: step-1
+                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -306,7 +321,8 @@ class EndToEndTest : FunSpec({
                 runs-on: "ubuntu-latest"
                 if: ${'$'}{{ always() }}
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
         """.trimIndent()
     }
@@ -397,7 +413,8 @@ class EndToEndTest : FunSpec({
                     hello! job
                 if: ${'$'}{{ always() }}
                 steps:
-                  - name: Check out
+                  - id: step-0
+                    name: Check out
                     uses: actions/checkout@v2
                     env:
                       SIMPLE_VAR: simple-value-uses
@@ -405,7 +422,8 @@ class EndToEndTest : FunSpec({
                         hey,
                         hi,
                         hello! uses
-                  - name: Hello world!
+                  - id: step-1
+                    name: Hello world!
                     env:
                       SIMPLE_VAR: simple-value-run
                       MULTILINE_VAR: |

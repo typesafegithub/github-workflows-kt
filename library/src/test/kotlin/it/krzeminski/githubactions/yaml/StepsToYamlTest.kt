@@ -14,10 +14,12 @@ class StepsToYamlTest : DescribeSpec({
         // given
         val steps = listOf(
             CommandStep(
+                id = "someId",
                 name = "Some command",
                 command = "echo 'test!'",
             ),
             ExternalActionStep(
+                id = "someId",
                 name = "Some external action",
                 action = CheckoutV2(),
             ),
@@ -27,9 +29,11 @@ class StepsToYamlTest : DescribeSpec({
         val yaml = steps.stepsToYaml()
 
         // then
-        yaml shouldBe """|- name: Some command
+        yaml shouldBe """|- id: someId
+                         |  name: Some command
                          |  run: echo 'test!'
-                         |- name: Some external action
+                         |- id: someId
+                         |  name: Some external action
                          |  uses: actions/checkout@v2""".trimMargin()
     }
 
@@ -38,6 +42,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 CommandStep(
+                    id = "someId",
                     name = "Some command",
                     command = "echo 'test!'",
                 ),
@@ -47,7 +52,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some command
+            yaml shouldBe """|- id: someId
+                             |  name: Some command
                              |  run: echo 'test!'""".trimMargin()
         }
 
@@ -55,6 +61,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 CommandStep(
+                    id = "someId",
                     name = "Some command",
                     command = "echo 'test!'",
                     env = linkedMapOf(
@@ -71,7 +78,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some command
+            yaml shouldBe """|- id: someId
+                             |  name: Some command
                              |  env:
                              |    FOO: bar
                              |    BAZ: |
@@ -84,6 +92,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 CommandStep(
+                    id = "someId",
                     name = "Some command",
                     command = "echo 'test!'",
                     condition = "\${{ matrix.foo == 'bar' }}"
@@ -94,7 +103,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some command
+            yaml shouldBe """|- id: someId
+                             |  name: Some command
                              |  run: echo 'test!'
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
@@ -103,6 +113,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 CommandStep(
+                    id = "someId",
                     name = "Some command",
                     command = """
                         echo 'first line'
@@ -117,7 +128,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some command
+            yaml shouldBe """|- id: someId
+                             |  name: Some command
                              |  run: |
                              |    echo 'first line'
                              |    echo 'second line'
@@ -131,6 +143,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Some external action",
                     action = CheckoutV2(),
                 ),
@@ -140,7 +153,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some external action
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
                              |  uses: actions/checkout@v2""".trimMargin()
         }
 
@@ -148,6 +162,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Some external action",
                     action = CheckoutV2(fetchDepth = FetchDepth.Infinite),
                 ),
@@ -157,7 +172,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some external action
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
                              |  uses: actions/checkout@v2
                              |  with:
                              |    fetch-depth: 0""".trimMargin()
@@ -167,6 +183,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Some external action",
                     action = CheckoutV2(),
                     env = linkedMapOf(
@@ -183,7 +200,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some external action
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
                              |  uses: actions/checkout@v2
                              |  env:
                              |    FOO: bar
@@ -196,6 +214,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Some external action",
                     action = CheckoutV2(),
                     condition = "\${{ matrix.foo == 'bar' }}"
@@ -206,7 +225,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some external action
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
                              |  uses: actions/checkout@v2
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
@@ -215,6 +235,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Some external action",
                     action = CheckoutV2(fetchDepth = FetchDepth.Infinite),
                     condition = "\${{ matrix.foo == 'bar' }}"
@@ -225,7 +246,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Some external action
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
                              |  uses: actions/checkout@v2
                              |  with:
                              |    fetch-depth: 0
@@ -236,6 +258,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Action with multiline parameter",
                     action = UploadArtifactV2(
                         name = "artifact",
@@ -248,7 +271,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Action with multiline parameter
+            yaml shouldBe """|- id: someId
+                             |  name: Action with multiline parameter
                              |  uses: actions/upload-artifact@v2
                              |  with:
                              |    name: artifact
@@ -261,6 +285,7 @@ class StepsToYamlTest : DescribeSpec({
             // given
             val steps = listOf(
                 ExternalActionStep(
+                    id = "someId",
                     name = "Action with values starting with special YAML characters",
                     action = object : Action("foo", "bar", "v2") {
                         override fun toYamlArguments() = linkedMapOf(
@@ -278,7 +303,8 @@ class StepsToYamlTest : DescribeSpec({
             val yaml = steps.stepsToYaml()
 
             // then
-            yaml shouldBe """|- name: Action with values starting with special YAML characters
+            yaml shouldBe """|- id: someId
+                             |  name: Action with values starting with special YAML characters
                              |  uses: foo/bar@v2
                              |  with:
                              |    param1: foo-bar

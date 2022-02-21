@@ -32,6 +32,7 @@ class JobBuilder(
         condition: String? = null,
     ): CommandStep {
         val newStep = CommandStep(
+            id = "step-${job.steps.size}",
             name = name,
             command = command,
             env = env,
@@ -48,6 +49,7 @@ class JobBuilder(
         condition: String? = null,
     ): ExternalActionStep {
         val newStep = ExternalActionStep(
+            id = "step-${job.steps.size}",
             name = name,
             action = action,
             env = env,
