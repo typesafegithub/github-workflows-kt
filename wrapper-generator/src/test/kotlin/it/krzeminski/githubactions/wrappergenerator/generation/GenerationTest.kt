@@ -12,6 +12,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSp
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
+import it.krzeminski.githubactions.wrappergenerator.metadata.Output
 
 class GenerationTest : FunSpec({
     test("action with required inputs as strings, no outputs") {
@@ -335,6 +336,82 @@ class GenerationTest : FunSpec({
         )
     }
 
+    test("action with outputs") {
+        // given
+        val actionManifest = Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs = mapOf(
+                "foo-bar" to Input(
+                    description = "Short description",
+                    required = true,
+                    default = null,
+                ),
+            ),
+            outputs = mapOf(
+                "baz-goo" to Output(description = "Cool output!"),
+                "loo-woz" to Output(description = "Another output..."),
+            )
+        )
+        val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
+
+        // when
+        val wrapper = coords.generateWrapper { actionManifest }
+        writeToUnitTests(wrapper)
+
+        // then
+        wrapper shouldBe Wrapper(
+            kotlinCode = """
+                // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+                // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+                // generator itself.
+                package it.krzeminski.githubactions.actions.johnsmith
+
+                import it.krzeminski.githubactions.actions.Action
+                import kotlin.String
+                import kotlin.Suppress
+
+                /**
+                 * Action: Do something cool
+                 *
+                 * This is a test description that should be put in the KDoc comment for a class
+                 *
+                 * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
+                 */
+                public class ActionWithOutputsV3(
+                    /**
+                     * Short description
+                     */
+                    public val fooBar: String
+                ) : Action("john-smith", "action-with-outputs", "v3") {
+                    @Suppress("SpreadOperator")
+                    public override fun toYamlArguments() = linkedMapOf(
+                        *listOfNotNull(
+                            "foo-bar" to fooBar,
+                        ).toTypedArray()
+                    )
+
+                    public class Outputs(
+                        private val stepId: String
+                    ) {
+                        /**
+                         * Cool output!
+                         */
+                        public val bazGoo: String = "steps.${'$'}stepId.outputs.baz-goo"
+
+                        /**
+                         * Another output...
+                         */
+                        public val looWoz: String = "steps.${'$'}stepId.outputs.loo-woz"
+
+                        public operator fun `get`(outputName: String) = "steps.${'$'}stepId.outputs.${'$'}outputName"
+                    }
+                }
+
+            """.trimIndent(),
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithOutputsV3.kt",
+        )
+    }
 
     test("Detect wrapper request with invalid properties") {
         // given

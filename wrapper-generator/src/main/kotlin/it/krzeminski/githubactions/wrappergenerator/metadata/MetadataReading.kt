@@ -15,6 +15,7 @@ data class Metadata(
     val name: String,
     val description: String,
     val inputs: Map<String, Input>,
+    val outputs: Map<String, Output> = emptyMap(),
 )
 
 @Serializable
@@ -23,6 +24,11 @@ data class Input(
     val default: String? = null,
     val required: Boolean? = null,
     val deprecationMessage: String? = null,
+)
+
+@Serializable
+data class Output(
+    val description: String,
 )
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {

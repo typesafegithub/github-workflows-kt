@@ -82,6 +82,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
         .properties(metadata, coords, inputTypings)
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
         .addCustomTypes(inputTypings.values.toSet(), coords)
+        .addOutputClassIfNecessary(metadata)
         .build()
 }
 
@@ -101,6 +102,45 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
                 .build()
         )
     }
+    return this
+}
+
+private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): TypeSpec.Builder {
+    if (metadata.outputs.isEmpty()) {
+        return this
+    }
+
+    val stepIdConstructorParameter = ParameterSpec.builder("stepId", String::class)
+        .addModifiers(KModifier.PRIVATE)
+        .build()
+    val stepIdProperty = PropertySpec.builder("stepId", String::class)
+        .initializer("stepId")
+        .addModifiers(KModifier.PRIVATE)
+        .build()
+    val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
+        PropertySpec.builder(key.toCamelCase(), String::class)
+            .initializer("\"steps.\$stepId.outputs.$key\"")
+            .addKdoc(value.description)
+            .build()
+    }
+    addType(
+        TypeSpec.classBuilder("Outputs")
+            .primaryConstructor(
+                FunSpec.constructorBuilder()
+                    .addParameter(stepIdConstructorParameter)
+                    .build()
+            )
+            .addProperties(listOf(stepIdProperty) + propertiesFromOutputs)
+            .addFunction(FunSpec.builder("get")
+                .addModifiers(KModifier.OPERATOR)
+                .addParameter("outputName", String::class)
+                .addCode(CodeBlock.Builder().apply {
+                    add("return \"steps.\$stepId.outputs.\$outputName\"")
+                }.build())
+                .build())
+            .build()
+    )
+
     return this
 }
 
