@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
@@ -455,9 +456,9 @@ class EndToEndTest : FunSpec({
                 uses(
                     name = "Some step consuming other step's output",
                     action = CheckoutV2(
-                        repository = "\${{ ${addAndCommit.id} }}",
-                        ref = "\${{ ${addAndCommit.outputs.commitSha} }}",
-                        token = "\${{ ${addAndCommit.outputs["my-unsafe-output"]} }}",
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
                     )
                 )
             }
