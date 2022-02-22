@@ -196,6 +196,7 @@ class TriggersToYamlTest : DescribeSpec({
                 PullRequest(
                     branches = listOf("branch1", "branch2"),
                     paths = listOf("path1", "path2"),
+                    types = listOf(PullRequest.Type.AutoMergeDisabled, PullRequest.Type.Opened),
                 )
             )
 
@@ -205,6 +206,9 @@ class TriggersToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """
                 |pull_request:
+                |  types:
+                |    - 'auto_merge_disabled'
+                |    - 'opened'
                 |  branches:
                 |    - 'branch1'
                 |    - 'branch2'
