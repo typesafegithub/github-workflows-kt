@@ -144,4 +144,15 @@ public class HerokuDeployV3(
             customStringValue: String
         ) : HerokuDeployV3.HerokuProcessType(customStringValue)
     }
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * The Success/Failure of the action
+         */
+        public val status: String = "steps.$stepId.outputs.status"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

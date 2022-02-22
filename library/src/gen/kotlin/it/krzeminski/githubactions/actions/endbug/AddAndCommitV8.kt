@@ -133,4 +133,35 @@ public class AddAndCommitV8(
             customStringValue: String
         ) : AddAndCommitV8.PathSpecErrorHandling(customStringValue)
     }
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * Whether the action has created a commit.
+         */
+        public val committed: String = "steps.$stepId.outputs.committed"
+
+        /**
+         * The complete SHA of the commit that has been created.
+         */
+        public val commitLongSha: String = "steps.$stepId.outputs.commit_long_sha"
+
+        /**
+         * The short SHA of the commit that has been created.
+         */
+        public val commitSha: String = "steps.$stepId.outputs.commit_sha"
+
+        /**
+         * Whether the action has pushed to the remote.
+         */
+        public val pushed: String = "steps.$stepId.outputs.pushed"
+
+        /**
+         * Whether the action has created a tag.
+         */
+        public val tagged: String = "steps.$stepId.outputs.tagged"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

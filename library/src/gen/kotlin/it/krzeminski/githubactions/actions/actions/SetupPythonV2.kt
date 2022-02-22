@@ -75,4 +75,15 @@ public class SetupPythonV2(
             customStringValue: String
         ) : SetupPythonV2.Architecture(customStringValue)
     }
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * The installed python version. Useful when given a version range as input.
+         */
+        public val pythonVersion: String = "steps.$stepId.outputs.python-version"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

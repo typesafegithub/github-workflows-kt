@@ -152,4 +152,25 @@ public class SetupJavaV2(
             customStringValue: String
         ) : SetupJavaV2.BuildPlatform(customStringValue)
     }
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * Distribution of Java that has been installed
+         */
+        public val distribution: String = "steps.$stepId.outputs.distribution"
+
+        /**
+         * Actual version of the java environment that has been installed
+         */
+        public val version: String = "steps.$stepId.outputs.version"
+
+        /**
+         * Path to where the java environment has been installed (same as $JAVA_HOME)
+         */
+        public val path: String = "steps.$stepId.outputs.path"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

@@ -103,4 +103,15 @@ public class SetupNodeV2(
             customStringValue: String
         ) : SetupNodeV2.PackageManager(customStringValue)
     }
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * A boolean value to indicate if a cache was hit
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

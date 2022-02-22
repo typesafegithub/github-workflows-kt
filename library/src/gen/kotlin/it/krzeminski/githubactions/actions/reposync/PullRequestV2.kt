@@ -83,4 +83,25 @@ public class PullRequestV2(
             "github_token" to githubToken,
         ).toTypedArray()
     )
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * Pull request URL
+         */
+        public val prUrl: String = "steps.$stepId.outputs.pr_url"
+
+        /**
+         * Pull request number
+         */
+        public val prNumber: String = "steps.$stepId.outputs.pr_number"
+
+        /**
+         * Boolean string indicating whether any file has been changed
+         */
+        public val hasChangedFiles: String = "steps.$stepId.outputs.has_changed_files"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

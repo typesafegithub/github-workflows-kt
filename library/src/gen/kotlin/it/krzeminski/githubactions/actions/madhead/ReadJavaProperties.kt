@@ -42,4 +42,15 @@ public class ReadJavaProperties(
             default?.let { "default" to it },
         ).toTypedArray()
     )
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * Property's value
+         */
+        public val `value`: String = "steps.$stepId.outputs.value"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

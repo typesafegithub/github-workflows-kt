@@ -26,4 +26,20 @@ public class CheckGradleVersionV1(
             gradlew?.let { "gradlew" to it },
         ).toTypedArray()
     )
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * Project Gradle version
+         */
+        public val version: String = "steps.$stepId.outputs.version"
+
+        /**
+         * Current Gradle version
+         */
+        public val current: String = "steps.$stepId.outputs.current"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }

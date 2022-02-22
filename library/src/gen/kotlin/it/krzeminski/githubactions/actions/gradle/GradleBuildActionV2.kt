@@ -81,4 +81,15 @@ public class GradleBuildActionV2(
             workflowJobContext?.let { "workflow-job-context" to it },
         ).toTypedArray()
     )
+
+    public class Outputs(
+        private val stepId: String
+    ) {
+        /**
+         * Link to the build scan if any
+         */
+        public val buildScanUrl: String = "steps.$stepId.outputs.build-scan-url"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }
