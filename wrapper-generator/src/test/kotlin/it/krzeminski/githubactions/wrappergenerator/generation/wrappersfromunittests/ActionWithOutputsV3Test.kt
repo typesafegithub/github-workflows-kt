@@ -7,7 +7,7 @@ import it.krzeminski.githubactions.actions.johnsmith.ActionWithOutputsV3
 class ActionWithOutputsV3Test : DescribeSpec({
     it("fields have correct output placeholders") {
         // given
-        val outputs = ActionWithOutputsV3.Outputs(stepId = "someStepId")
+        val outputs = ActionWithOutputsV3("1").buildOutputObject("someStepId")
 
         // when & then
         outputs.bazGoo shouldBe "steps.someStepId.outputs.baz-goo"

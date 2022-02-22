@@ -7,6 +7,7 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
@@ -77,12 +78,13 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
     val actionClassName = coords.buildActionClassName()
     return TypeSpec.classBuilder(actionClassName)
         .addKdoc(actionKdoc(metadata, coords))
-        .inheritsFromAction(coords)
+        .inheritsFromAction(coords, metadata)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
         .properties(metadata, coords, inputTypings)
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
         .addCustomTypes(inputTypings.values.toSet(), coords)
         .addOutputClassIfNecessary(metadata)
+        .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
 }
 
@@ -144,6 +146,20 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
     return this
 }
 
+private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: Metadata): TypeSpec.Builder {
+    if (metadata.outputs.isEmpty()) {
+        return this
+    }
+
+    addFunction(FunSpec.builder("buildOutputObject")
+        .addModifiers(KModifier.OVERRIDE)
+        .addParameter("stepId", String::class)
+        .addCode(CodeBlock.of("return Outputs(stepId)"))
+        .build())
+
+    return this
+}
+
 private fun PropertySpec.Builder.annotateDeprecated(input: Input) = apply {
     if (input.deprecationMessage != null) {
         addAnnotation(
@@ -184,11 +200,22 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
         )
         .build()
 
-private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords): TypeSpec.Builder = this
-    .superclass(ClassName("it.krzeminski.githubactions.actions", "Action"))
-    .addSuperclassConstructorParameter("%S", coords.owner)
-    .addSuperclassConstructorParameter("%S", coords.name)
-    .addSuperclassConstructorParameter("%S", coords.version)
+private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
+    val superclass = if (metadata.outputs.isEmpty()) {
+        ClassName("it.krzeminski.githubactions.actions","Action")
+    } else {
+        ClassName("it.krzeminski.githubactions.actions","ActionWithOutputs")
+            .plusParameter(ClassName(
+                "it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}",
+                "${coords.buildActionClassName()}.Outputs"
+            ))
+    }
+    return this
+        .superclass(superclass)
+        .addSuperclassConstructorParameter("%S", coords.owner)
+        .addSuperclassConstructorParameter("%S", coords.name)
+        .addSuperclassConstructorParameter("%S", coords.version)
+}
 
 private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
     return FunSpec.constructorBuilder()

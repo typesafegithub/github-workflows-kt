@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.johnsmith
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 
@@ -19,13 +19,15 @@ public class ActionWithOutputsV3(
      * Short description
      */
     public val fooBar: String
-) : Action("john-smith", "action-with-outputs", "v3") {
+) : ActionWithOutputs<ActionWithOutputsV3.Outputs>("john-smith", "action-with-outputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String
