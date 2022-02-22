@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -81,7 +81,7 @@ public class SetupJavaV2(
      * setting
      */
     public val jobStatus: String? = null
-) : Action("actions", "setup-java", "v2") {
+) : ActionWithOutputs<SetupJavaV2.Outputs>("actions", "setup-java", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -102,6 +102,8 @@ public class SetupJavaV2(
             jobStatus?.let { "job-status" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class Distribution(
         public val stringValue: String

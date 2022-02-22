@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.madhead
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 
@@ -19,13 +19,15 @@ public class CheckGradleVersionV1(
      * Relative path to gradlew executable
      */
     public val gradlew: String? = null
-) : Action("madhead", "check-gradle-version", "v1") {
+) : ActionWithOutputs<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             gradlew?.let { "gradlew" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String

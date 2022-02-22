@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.endbug
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 
@@ -83,7 +83,7 @@ public class AddAndCommitV8(
      * not be changed.
      */
     public val githubToken: String? = null
-) : Action("EndBug", "add-and-commit", "v8") {
+) : ActionWithOutputs<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", "v8") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -105,6 +105,8 @@ public class AddAndCommitV8(
             githubToken?.let { "github_token" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class DefaultActor(
         public val stringValue: String

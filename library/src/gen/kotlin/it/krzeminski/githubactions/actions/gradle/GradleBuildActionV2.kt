@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.gradle
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -64,7 +64,7 @@ public class GradleBuildActionV2(
      * job; this should not be overridden by users (INTERNAL).
      */
     public val workflowJobContext: String? = null
-) : Action("gradle", "gradle-build-action", "v2") {
+) : ActionWithOutputs<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -81,6 +81,8 @@ public class GradleBuildActionV2(
             workflowJobContext?.let { "workflow-job-context" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String

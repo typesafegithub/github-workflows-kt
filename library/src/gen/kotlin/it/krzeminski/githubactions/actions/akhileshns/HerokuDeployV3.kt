@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.akhileshns
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -105,7 +105,7 @@ public class HerokuDeployV3(
      * If deploying to an organization, then specify the name of the team or organization here
      */
     public val team: String? = null
-) : Action("AkhileshNS", "heroku-deploy", "v3.12.12") {
+) : ActionWithOutputs<HerokuDeployV3.Outputs>("AkhileshNS", "heroku-deploy", "v3.12.12") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -132,6 +132,8 @@ public class HerokuDeployV3(
             team?.let { "team" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class HerokuProcessType(
         public val stringValue: String

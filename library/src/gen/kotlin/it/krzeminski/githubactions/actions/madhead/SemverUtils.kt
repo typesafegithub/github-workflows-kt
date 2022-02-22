@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.madhead
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 
@@ -31,7 +31,7 @@ public class SemverUtils(
      * An identifier to pass to the semver's inc function
      */
     public val identifier: String? = null
-) : Action("madhead", "semver-utils", "latest") {
+) : ActionWithOutputs<SemverUtils.Outputs>("madhead", "semver-utils", "latest") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -41,6 +41,8 @@ public class SemverUtils(
             identifier?.let { "identifier" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String

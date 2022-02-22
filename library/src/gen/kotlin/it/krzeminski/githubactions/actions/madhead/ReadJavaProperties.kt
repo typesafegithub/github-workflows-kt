@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.madhead
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -32,7 +32,7 @@ public class ReadJavaProperties(
      * A value to return in case of any errors
      */
     public val default: String? = null
-) : Action("madhead", "read-java-properties", "latest") {
+) : ActionWithOutputs<ReadJavaProperties.Outputs>("madhead", "read-java-properties", "latest") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -42,6 +42,8 @@ public class ReadJavaProperties(
             default?.let { "default" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String

@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -40,7 +40,7 @@ public class SetupPythonV2(
      * caching multiple dependencies.
      */
     public val cacheDependencyPath: List<String>? = null
-) : Action("actions", "setup-python", "v2") {
+) : ActionWithOutputs<SetupPythonV2.Outputs>("actions", "setup-python", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -51,6 +51,8 @@ public class SetupPythonV2(
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class PackageManager(
         public val stringValue: String

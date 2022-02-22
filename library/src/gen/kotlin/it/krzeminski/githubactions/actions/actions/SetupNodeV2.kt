@@ -5,7 +5,7 @@
 
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
@@ -72,7 +72,7 @@ public class SetupNodeV2(
      */
     @Deprecated("The version property will not be supported after October 1, 2019. Use node-version instead")
     public val version: String? = null
-) : Action("actions", "setup-node", "v2") {
+) : ActionWithOutputs<SetupNodeV2.Outputs>("actions", "setup-node", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -89,6 +89,8 @@ public class SetupNodeV2(
             version?.let { "version" to it },
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class PackageManager(
         public val stringValue: String

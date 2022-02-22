@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.reposync
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -65,7 +65,7 @@ public class PullRequestV2(
      * GitHub token secret
      */
     public val githubToken: String
-) : Action("repo-sync", "pull-request", "v2") {
+) : ActionWithOutputs<PullRequestV2.Outputs>("repo-sync", "pull-request", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -83,6 +83,8 @@ public class PullRequestV2(
             "github_token" to githubToken,
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String
