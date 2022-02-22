@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.workflow
@@ -431,6 +432,62 @@ class EndToEndTest : FunSpec({
                         hi,
                         hello! run
                     run: echo 'hello!'
+        """.trimIndent()
+    }
+
+    test("toYaml() - step with outputs") {
+        // when
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                val addAndCommit = uses(
+                    name = "Some step with output",
+                    action = AddAndCommitV8(),
+                )
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV2(
+                        repository = "\${{ ${addAndCommit.id} }}",
+                        ref = "\${{ ${addAndCommit.outputs.commitSha} }}",
+                        token = "\${{ ${addAndCommit.outputs["my-unsafe-output"]} }}",
+                    )
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+
+            on:
+              push:
+
+            jobs:
+              "test_job":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - id: step-0
+                    name: Some step with output
+                    uses: EndBug/add-and-commit@v8
+                  - id: step-1
+                    name: Some step consuming other step's output
+                    uses: actions/checkout@v2
+                    with:
+                      repository: ${'$'}{{ step-0 }}
+                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
         """.trimIndent()
     }
 })
