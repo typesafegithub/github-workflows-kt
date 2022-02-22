@@ -1,9 +1,9 @@
 package it.krzeminski.githubactions.actions
 
 abstract class Action(
-    val actionOwner: String,
-    val actionName: String,
-    val actionVersion: String,
+    open val actionOwner: String,
+    open val actionName: String,
+    open val actionVersion: String,
 ) {
     abstract fun toYamlArguments(): LinkedHashMap<String, String>
 }
