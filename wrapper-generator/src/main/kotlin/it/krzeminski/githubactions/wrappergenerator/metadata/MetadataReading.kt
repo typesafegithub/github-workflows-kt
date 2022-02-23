@@ -4,6 +4,7 @@ import com.charleskorn.kaml.Yaml
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import java.io.IOException
 import java.net.URI
 
 /**
@@ -33,11 +34,26 @@ data class Output(
 
 val ActionCoords.actionYmlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action.yml"
 
+val ActionCoords.actionYamlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action.yaml"
+
+val ActionCoords.actionYmlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
+
+val ActionCoords.actionYamlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
+
+val ActionCoords.releasesUrl: String get() = "https://github.com/$owner/$name/releases"
+
 val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
-    val metadataUri = URI("https://raw.githubusercontent.com/$owner/$name/$version/action.yml") // TODO what if .yAml?
-    val metadataYaml = fetchUri(metadataUri)
+    val list = listOf(actionYmlUrl, actionYamlUrl, actionYmlNoVUrl, actionYamlNoVUrl)
+    val metadataYaml = list.firstNotNullOfOrNull { url ->
+        try {
+            fetchUri(URI(url))
+        } catch (e: IOException) {
+            null
+        }
+    } ?: error("$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\nCheck release page $releasesUrl")
+
     return myYaml.decodeFromString(metadataYaml)
 }
 
