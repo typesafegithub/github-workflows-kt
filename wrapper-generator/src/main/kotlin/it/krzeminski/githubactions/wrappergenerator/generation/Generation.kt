@@ -17,6 +17,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
+import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 
 data class Wrapper(
     val kotlinCode: String,
@@ -217,27 +218,37 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
                 .addMember("\"SpreadOperator\"")
                 .build()
         )
-        .addCode(
-            CodeBlock.Builder().apply {
-                add("return linkedMapOf(\n")
-                indent()
-                add("*listOfNotNull(\n")
-                indent()
-                inputs.forEach { (key, value) ->
-                    val asStringCode = inputTypings.getInputTyping(key).asString()
-                    if (!value.shouldBeNonNullInWrapper()) {
-                        add("%L?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
-                    } else {
-                        add("%S to %L$asStringCode,\n", key, key.toCamelCase())
-                    }
-                }
-                unindent()
-                add(").toTypedArray()\n")
-                unindent()
-                add(")")
-            }.build()
-        )
+        .addCode(linkedMapOfInputs(inputTypings))
         .build()
+
+
+
+fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
+    if (inputs.isEmpty()) {
+        return CodeBlock.Builder()
+            .add(CodeBlock.of("return %T<String, String>()", LinkedHashMap::class))
+            .build()
+    } else {
+        return CodeBlock.Builder().apply {
+            add("return linkedMapOf(\n")
+            indent()
+            add("*listOfNotNull(\n")
+            indent()
+            inputs.forEach { (key, value) ->
+                val asStringCode = inputTypings.getInputTyping(key).asString()
+                if (!value.shouldBeNonNullInWrapper()) {
+                    add("%S?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
+                } else {
+                    add("%S to %L$asStringCode,\n", key, key.toCamelCase())
+                }
+            }
+            unindent()
+            add(").toTypedArray()\n")
+            unindent()
+            add(")")
+        }.build()
+    }
+}
 
 private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
     val superclass = if (metadata.outputs.isEmpty()) {
