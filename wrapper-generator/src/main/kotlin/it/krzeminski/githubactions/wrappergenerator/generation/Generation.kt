@@ -189,7 +189,7 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
 
 
 
-fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
+private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
     if (inputs.isEmpty()) {
         return CodeBlock.Builder()
             .add(CodeBlock.of("return %T<String, String>()", LinkedHashMap::class))
