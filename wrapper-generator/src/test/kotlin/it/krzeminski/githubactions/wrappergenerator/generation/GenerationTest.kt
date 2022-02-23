@@ -451,10 +451,42 @@ class GenerationTest : FunSpec({
         val actionManifestHasNoInputs = emptyMap<String, Input>()
         val actionManifest = Metadata(
             inputs = actionManifestHasNoInputs,
-            name = "Do something cool",
-            description = "This is a test description that should be put in the KDoc comment for a class",
+            name = "Action With No Inputs",
+            description = "Description",
         )
+
+        val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
+
         // when
-        actionManifest.linkedMapOfInputs(emptyMap()).toString() shouldBe "return java.util.LinkedHashMap<String, String>()"
+        val wrapper = coords.generateWrapper { actionManifest }
+        writeToUnitTests(wrapper)
+
+        // then
+        wrapper shouldBe Wrapper(
+            kotlinCode = """
+                // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+                // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+                // generator itself.
+                package it.krzeminski.githubactions.actions.johnsmith
+
+                import it.krzeminski.githubactions.actions.Action
+                import java.util.LinkedHashMap
+                import kotlin.Suppress
+
+                /**
+                 * Action: Action With No Inputs
+                 *
+                 * Description
+                 *
+                 * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs)
+                 */
+                public class ActionWithNoInputsV3() : Action("john-smith", "action-with-no-inputs", "v3") {
+                    @Suppress("SpreadOperator")
+                    public override fun toYamlArguments() = LinkedHashMap<String, String>()
+                }
+                
+            """.trimIndent(),
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithNoInputsV3.kt",
+        )
     }
 })
