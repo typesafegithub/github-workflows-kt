@@ -15,4 +15,7 @@ fun main() {
             writeText(code)
         }
     }
+    println("""Now reformat the code with the command:
+        |./gradlew ktlintFormat
+    """.trimMargin())
 }
