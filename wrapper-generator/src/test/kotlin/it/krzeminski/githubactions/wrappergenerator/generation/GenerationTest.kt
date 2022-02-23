@@ -445,4 +445,16 @@ class GenerationTest : FunSpec({
             Invalid:   [check-latest, bazGoo]
         """.trimIndent())
     }
+
+    test("action with no inputs") {
+        // given
+        val actionManifestHasNoInputs = emptyMap<String, Input>()
+        val actionManifest = Metadata(
+            inputs = actionManifestHasNoInputs,
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+        )
+        // when
+        actionManifest.linkedMapOfInputs(emptyMap()).toString() shouldBe "return java.util.LinkedHashMap<String, String>()"
+    }
 })
