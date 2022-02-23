@@ -36,8 +36,8 @@ public class ReadJavaProperties(
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
-            "file" to file,
-            property?.let { "property" to it },
+            "file" to `file`,
+            `property`?.let { "property" to it },
             all?.let { "all" to it.toString() },
             default?.let { "default" to it },
         ).toTypedArray()

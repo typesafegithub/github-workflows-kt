@@ -34,7 +34,7 @@ public class ActionWithSomeOptionalInputsV3(
     /**
      * Required is true, default is default
      */
-    public val bonTon: String
+    public val `package`: String
 ) : Action("john-smith", "action-with-some-optional-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -43,7 +43,7 @@ public class ActionWithSomeOptionalInputsV3(
             bazGoo?.let { "baz-goo" to it },
             zooDar?.let { "zoo-dar" to it },
             cooPoo?.let { "coo-poo" to it },
-            "bon-ton" to bonTon,
+            "package" to `package`,
         ).toTypedArray()
     )
 }
