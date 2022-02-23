@@ -237,9 +237,9 @@ fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
             inputs.forEach { (key, value) ->
                 val asStringCode = inputTypings.getInputTyping(key).asString()
                 if (!value.shouldBeNonNullInWrapper()) {
-                    add("%S?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
+                    add("%N?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
                 } else {
-                    add("%S to %L$asStringCode,\n", key, key.toCamelCase())
+                    add("%S to %N$asStringCode,\n", key, key.toCamelCase())
                 }
             }
             unindent()
