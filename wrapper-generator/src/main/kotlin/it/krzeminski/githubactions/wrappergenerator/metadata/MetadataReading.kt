@@ -38,13 +38,15 @@ val ActionCoords.actionYamlUrl: String get() = "https://raw.githubusercontent.co
 
 val ActionCoords.actionYmlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
 
+val ActionCoords.actionYamlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
+
 val ActionCoords.releasesUrl: String get() = "https://github.com/$owner/$name/releases"
 
 val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
 
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
-    val list = listOf(actionYmlUrl, actionYamlUrl, actionYmlNoVUrl)
+    val list = listOf(actionYmlUrl, actionYamlUrl, actionYmlNoVUrl, actionYamlNoVUrl)
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {
             fetchUri(URI(url))
