@@ -4,6 +4,13 @@ import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import java.nio.file.Paths
 
+/***
+ * Either run this main() function and then manually call
+ *    ./gradlew ktlintFormat
+ *
+ * Or do both using this command
+ *    ./gradlew :wrapper-generator:run
+ */
 fun main() {
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()

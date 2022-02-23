@@ -110,6 +110,10 @@ that lists wrapper to be generated. If the action you want to use contains some 
 or other data types that can be typed (not left as strings), the generator also allows some kind of customizations -
 please see already present wrappers.
 
+To generate your wrapper, run
+
+`./gradlew :wrapper-generator:run`
+
 If you prefer having just a local wrapper for now, it's as easy as inheriting after
 `it.krzeminski.githubactions.actions.Action`, which should contain a piece of logic how to map an object of your class
 to YAML arguments:

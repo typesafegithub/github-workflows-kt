@@ -25,3 +25,7 @@ application {
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.GenerationEntryPointKt")
     tasks.run.get().workingDir = rootProject.projectDir
 }
+
+tasks.getByName("run") {
+    finalizedBy(":library:ktlintFormat")
+}
