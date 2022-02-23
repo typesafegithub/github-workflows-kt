@@ -30,6 +30,7 @@ class TextTransformationTest : FunSpec({
             "some-name" to "someName",
             "some_name" to "someName",
             "some+name" to "somePlusName",
+            "SOME_NAME" to "someName",
         ).forEach { (input, output) ->
             test("should convert '$input' to '$output'") {
                 input.toCamelCase() shouldBe output

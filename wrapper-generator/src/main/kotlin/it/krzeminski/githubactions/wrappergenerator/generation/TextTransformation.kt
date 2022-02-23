@@ -13,5 +13,8 @@ fun String.toPascalCase() =
             it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         }
 
-fun String.toCamelCase() =
-    toPascalCase().replaceFirstChar { it.lowercase() }
+fun String.toCamelCase(): String {
+    val hasOnlyUppercases = none { it in 'a'..'z' }
+    val normalizedString = if (hasOnlyUppercases) lowercase() else this
+    return normalizedString.toPascalCase().replaceFirstChar { it.lowercase() }
+}
