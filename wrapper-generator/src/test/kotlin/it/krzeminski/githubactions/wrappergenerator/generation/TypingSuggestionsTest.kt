@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
-
+import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 
 class TypingSuggestionsTest : FunSpec({
 
@@ -37,6 +37,26 @@ class TypingSuggestionsTest : FunSpec({
         ).forAll { input ->
             input.suggestTyping() shouldBe """ListOfStringsTyping(TODO("please check"))"""
         }
+    }
+
+    test("Suggestions") {
+        val inputs = mapOf(
+            "bool" to Input("description 1", default = "true"),
+            "int" to Input("description 2", default = "42"),
+            "list" to Input(description = "labels to set on the Pull Request comma separated"),
+        )
+
+        val actionYaml = Metadata("action", "description", inputs)
+
+        actionYaml.suggestAdditionalTypings(setOf("bool", "int", "list")) shouldBe null
+
+        actionYaml.suggestAdditionalTypings(emptySet()) shouldBe """
+            |    mapOf(
+            |            "bool" to BooleanTyping,
+            |            "int" to IntegerTyping,
+            |            "list" to ListOfStringsTyping(TODO("please check")),
+            |    )
+        """.trimMargin()
     }
 
 })
