@@ -33,6 +33,8 @@ data class Output(
 
 val ActionCoords.actionYmlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action.yml"
 
+val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
+
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
     val metadataUri = URI("https://raw.githubusercontent.com/$owner/$name/$version/action.yml") // TODO what if .yAml?
     val metadataYaml = fetchUri(metadataUri)

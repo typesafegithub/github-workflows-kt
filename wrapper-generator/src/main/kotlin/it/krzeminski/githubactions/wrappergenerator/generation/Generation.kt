@@ -17,6 +17,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
+import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 
 data class Wrapper(
     val kotlinCode: String,
@@ -29,12 +30,51 @@ fun ActionCoords.generateWrapper(
 ): Wrapper {
     val metadata = fetchMetadataImpl()
     checkPropertiesAreValid(metadata, inputTypings)
+    suggestAdditionalTypings(this, metadata, inputTypings.keys)
     val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
         filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
 }
+
+fun suggestAdditionalTypings(actionCoords: ActionCoords, metadata: Metadata, existingTypings: Set<String>) {
+    val keys = (metadata.inputs.keys - existingTypings).associate {
+        it to metadata.inputs.get(it)!!
+    }
+
+    val suggestions = keys.mapNotNull { (key, input) ->
+        val typing = input.suggestTyping() ?: return@mapNotNull null
+        key to typing
+    }
+    val formatSuggestions = suggestions
+        .joinToString(separator = "\n", prefix = "    mapOf(\n", postfix = "\n    )") {
+            """            "${it.first}" to ${it.second},"""
+        }
+
+    if (suggestions.isNotEmpty()) {
+        println("${actionCoords.prettyPrint} I suggest the following typings:\n$formatSuggestions")
+    }
+}
+
+fun Input.suggestTyping(): String? {
+    val listKeywords = setOf(
+        "list of",
+        "paths",
+        "comma separated",
+        "newline separated",
+    )
+    val normalizedDescription = this.description.lowercase()
+        .map { if (it in 'a'..'z') it else ' ' }.joinToString("")
+
+    return when {
+        default in listOf("true", "false") -> "BooleanTyping"
+        default?.toIntOrNull() != null -> "IntegerTyping"
+        listKeywords.any { normalizedDescription.contains(it) } -> """ListOfStringsTyping(TODO("please check"))"""
+        else -> null
+    }
+}
+
 private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {
     val invalidProperties = inputTypings.keys - metadata.inputs.keys
     require(invalidProperties.isEmpty()) {
