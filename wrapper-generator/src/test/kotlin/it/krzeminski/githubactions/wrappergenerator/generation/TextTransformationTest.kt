@@ -18,6 +18,9 @@ class TextTransformationTest : FunSpec({
     context("toPascalCase") {
         listOf(
             "some-name" to "SomeName",
+            "some_name" to "SomeName",
+            "SOME_PROPERTY" to "SomeProperty",
+            "some+name" to "SomePlusName",
         ).forEach { (input, output) ->
             test("should convert '$input' to '$output'") {
                 input.toPascalCase() shouldBe output
