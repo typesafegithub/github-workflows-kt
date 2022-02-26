@@ -148,5 +148,5 @@ val wrappersToGenerate = listOf(
             "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
             "docker_build_args" to StringTyping,
         )
-    )
+    ),
 )
