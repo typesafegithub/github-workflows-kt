@@ -11,6 +11,14 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 
 val wrappersToGenerate = listOf(
     WrapperRequest(
+        ActionCoords("actions", "cache", "v2"),
+        mapOf(
+            "path" to ListOfStringsTyping("\\n"),
+            "restore-keys" to ListOfStringsTyping("\\n"),
+            "upload-chunk-size" to IntegerTyping,
+        )
+    ),
+    WrapperRequest(
         ActionCoords("actions", "checkout", "v2"),
         mapOf(
             "ssh-strict" to BooleanTyping,
@@ -79,6 +87,43 @@ val wrappersToGenerate = listOf(
     ),
 
     WrapperRequest(
+        ActionCoords("docker", "login-action", "v1"),
+        mapOf(
+            "ecr" to BooleanTyping,
+            "logout" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "setup-buildx-action", "v1"),
+        mapOf(
+            "driver-opts" to ListOfStringsTyping("\\n"),
+            "install" to BooleanTyping,
+            "use" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "build-push-action", "v2"),
+        mapOf(
+            "add-hosts" to ListOfStringsTyping("\\n"),
+            "allow" to ListOfStringsTyping("\\n"),
+            "build-args" to ListOfStringsTyping("\\n"),
+            "cache-from" to ListOfStringsTyping("\\n"),
+            "cache-to" to ListOfStringsTyping("\\n"),
+            "labels" to ListOfStringsTyping(","),
+            "load" to BooleanTyping,
+            "no-cache" to BooleanTyping,
+            "outputs" to ListOfStringsTyping(","),
+            "platforms" to ListOfStringsTyping(","),
+            "pull" to BooleanTyping,
+            "push" to BooleanTyping,
+            "secrets" to ListOfStringsTyping("\\n"),
+            "secret-files" to ListOfStringsTyping("\\n"),
+            "ssh" to ListOfStringsTyping("\\n"),
+            "tags" to ListOfStringsTyping("\\n"),
+        )
+    ),
+
+    WrapperRequest(
         ActionCoords("EndBug", "add-and-commit", "v8"),
         mapOf(
             "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
@@ -90,6 +135,13 @@ val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
     WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), mapOf("all" to BooleanTyping)),
     WrapperRequest(ActionCoords("madhead", "semver-utils", "latest")),
+
+    WrapperRequest(
+        ActionCoords("nobrayner", "discord-webhook", "v1"),
+        mapOf(
+            "include-details" to BooleanTyping,
+        )
+    ),
 
     WrapperRequest(
         ActionCoords("gradle", "gradle-build-action", "v2"),
