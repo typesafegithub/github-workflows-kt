@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfStringsTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 
 val wrappersToGenerate = listOf(
     WrapperRequest(
@@ -82,6 +83,7 @@ val wrappersToGenerate = listOf(
         mapOf(
             "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
             "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
+            "push" to StringTyping,
         )
     ),
 
@@ -96,6 +98,8 @@ val wrappersToGenerate = listOf(
             "cache-read-only" to BooleanTyping,
             "gradle-home-cache-includes" to ListOfStringsTyping("\\n"),
             "gradle-home-cache-excludes" to ListOfStringsTyping("\\n"),
+            "cache-write-only" to StringTyping,
+            "gradle-home-cache-strict-match" to StringTyping,
         ),
     ),
     WrapperRequest(
@@ -138,10 +142,11 @@ val wrappersToGenerate = listOf(
             "dontuseforce" to BooleanTyping,
             "dontautocreate" to BooleanTyping,
             "usedocker" to BooleanTyping,
-            "delay"  to IntegerTyping,
+            "delay" to IntegerTyping,
             "rollbackonhealthcheckfailed" to BooleanTyping,
             "justlogin" to BooleanTyping,
             "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
+            "docker_build_args" to StringTyping,
         )
     ),
 )
