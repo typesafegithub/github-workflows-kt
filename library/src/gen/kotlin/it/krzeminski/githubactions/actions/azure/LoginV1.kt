@@ -40,7 +40,7 @@ public class LoginV1(
      * Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment,
      * azurechinacloud, azuregermancloud. Default being azurecloud
      */
-    public val environment: String? = null,
+    public val environment: LoginV1.Environment? = null,
     /**
      * Set this value to true to enable support for accessing tenants without subscriptions
      */
@@ -58,9 +58,27 @@ public class LoginV1(
             tenantId?.let { "tenant-id" to it },
             subscriptionId?.let { "subscription-id" to it },
             enableAzPSSession?.let { "enable-AzPSSession" to it.toString() },
-            environment?.let { "environment" to it },
+            environment?.let { "environment" to it.stringValue },
             allowNoSubscriptions?.let { "allow-no-subscriptions" to it.toString() },
             audience?.let { "audience" to it },
         ).toTypedArray()
     )
+
+    public sealed class Environment(
+        public val stringValue: String
+    ) {
+        public object Azurecloud : LoginV1.Environment("azurecloud")
+
+        public object Azurestack : LoginV1.Environment("azurestack")
+
+        public object Azureusgovernment : LoginV1.Environment("azureusgovernment")
+
+        public object Azurechinacloud : LoginV1.Environment("azurechinacloud")
+
+        public object Azuregermancloud : LoginV1.Environment("azuregermancloud")
+
+        public class Custom(
+            customStringValue: String
+        ) : LoginV1.Environment(customStringValue)
+    }
 }

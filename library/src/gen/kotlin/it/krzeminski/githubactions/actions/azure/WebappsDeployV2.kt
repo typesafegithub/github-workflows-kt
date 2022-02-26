@@ -6,6 +6,7 @@ package it.krzeminski.githubactions.actions.azure
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.List
 
 /**
  * Action: Azure WebApp
@@ -38,7 +39,7 @@ public class WebappsDeployV2(
      * example, 'myregistry.azurecr.io/nginx:latest' or 'python:3.7.2-alpine/'. For multi-container
      * scenario multiple container image names can be provided (multi-line separated)
      */
-    public val images: String,
+    public val images: List<String>,
     /**
      * Applies to Web App Containers only: Path of the Docker-Compose file. Should be a fully
      * qualified path or relative to the default working directory. Required for multi-container
@@ -57,7 +58,7 @@ public class WebappsDeployV2(
             publishProfile?.let { "publish-profile" to it },
             slotName?.let { "slot-name" to it },
             `package`?.let { "package" to it },
-            "images" to images,
+            "images" to images.joinToString("\n"),
             configurationFile?.let { "configuration-file" to it },
             startupCommand?.let { "startup-command" to it },
         ).toTypedArray()

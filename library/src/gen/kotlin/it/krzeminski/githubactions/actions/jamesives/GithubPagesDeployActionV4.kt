@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.List
 
 /**
  * Action: Deploy to GitHub Pages
@@ -65,11 +66,11 @@ public class GithubPagesDeployActionV4(
      * If you need to use clean but you would like to preserve certain files or folders you can use
      * this option. This should contain each pattern as a single line in a multiline string.
      */
-    public val cleanExclude: String? = null,
+    public val cleanExclude: List<String>? = null,
     /**
      * Do not actually push back, but use `--dry-run` on `git push` invocations insead.
      */
-    public val dryRun: String? = null,
+    public val dryRun: Boolean? = null,
     /**
      * Allows you to customize the name that is attached to the GitHub config which is used when
      * pushing the deployment commits. If this is not included it will use the name in the GitHub
@@ -97,7 +98,7 @@ public class GithubPagesDeployActionV4(
      * This option can be used if you'd prefer to have a single commit on the deployment branch
      * instead of maintaining the full history.
      */
-    public val singleCommit: String? = null,
+    public val singleCommit: Boolean? = null,
     /**
      * Silences the action output preventing it from displaying git messages.
      */
@@ -116,13 +117,13 @@ public class GithubPagesDeployActionV4(
             targetFolder?.let { "target-folder" to it },
             commitMessage?.let { "commit-message" to it },
             clean?.let { "clean" to it.toString() },
-            cleanExclude?.let { "clean-exclude" to it },
-            dryRun?.let { "dry-run" to it },
+            cleanExclude?.let { "clean-exclude" to it.joinToString("\n") },
+            dryRun?.let { "dry-run" to it.toString() },
             gitConfigName?.let { "git-config-name" to it },
             gitConfigEmail?.let { "git-config-email" to it },
             repositoryName?.let { "repository-name" to it },
             workspace?.let { "workspace" to it },
-            singleCommit?.let { "single-commit" to it },
+            singleCommit?.let { "single-commit" to it.toString() },
             silent?.let { "silent" to it },
         ).toTypedArray()
     )

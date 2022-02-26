@@ -4,8 +4,11 @@
 package it.krzeminski.githubactions.actions.samkirkland
 
 import it.krzeminski.githubactions.actions.Action
+import kotlin.Boolean
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.List
 
 /**
  * Action: FTP Deploy
@@ -30,11 +33,11 @@ public class FTPDeployActionV4(
     /**
      * Server port to connect to (read your web hosts docs)
      */
-    public val port: String? = null,
+    public val port: Int? = null,
     /**
      * protocol to deploy with - ftp, ftps, or ftps-legacy
      */
-    public val protocol: String? = null,
+    public val protocol: FTPDeployActionV4.Protocol? = null,
     /**
      * Folder to upload from, must end with trailing slash /
      */
@@ -51,19 +54,19 @@ public class FTPDeployActionV4(
      * Prints which modifications will be made with current config options, but doesnt actually make
      * any changes
      */
-    public val dryRun: String? = null,
+    public val dryRun: Boolean? = null,
     /**
      * Deletes ALL contents of server-dir, even items in excluded with exclude argument
      */
-    public val dangerousCleanSlate: String? = null,
+    public val dangerousCleanSlate: Boolean? = null,
     /**
      * An array of glob patterns, these files will not be included in the publish/delete process
      */
-    public val exclude: String? = null,
+    public val exclude: List<String>? = null,
     /**
      * How verbose should the information be - minimal, standard, or verbose
      */
-    public val logLevel: String? = null,
+    public val logLevel: FTPDeployActionV4.LogLevel? = null,
     /**
      * strict or loose
      */
@@ -75,16 +78,44 @@ public class FTPDeployActionV4(
             "server" to server,
             "username" to username,
             "password" to password,
-            port?.let { "port" to it },
-            protocol?.let { "protocol" to it },
+            port?.let { "port" to it.toString() },
+            protocol?.let { "protocol" to it.stringValue },
             localDir?.let { "local-dir" to it },
             serverDir?.let { "server-dir" to it },
             stateName?.let { "state-name" to it },
-            dryRun?.let { "dry-run" to it },
-            dangerousCleanSlate?.let { "dangerous-clean-slate" to it },
-            exclude?.let { "exclude" to it },
-            logLevel?.let { "log-level" to it },
+            dryRun?.let { "dry-run" to it.toString() },
+            dangerousCleanSlate?.let { "dangerous-clean-slate" to it.toString() },
+            exclude?.let { "exclude" to it.joinToString("\n") },
+            logLevel?.let { "log-level" to it.stringValue },
             security?.let { "security" to it },
         ).toTypedArray()
     )
+
+    public sealed class Protocol(
+        public val stringValue: String
+    ) {
+        public object Ftp : FTPDeployActionV4.Protocol("ftp")
+
+        public object Ftps : FTPDeployActionV4.Protocol("ftps")
+
+        public object FtpsLegacy : FTPDeployActionV4.Protocol("ftps-legacy")
+
+        public class Custom(
+            customStringValue: String
+        ) : FTPDeployActionV4.Protocol(customStringValue)
+    }
+
+    public sealed class LogLevel(
+        public val stringValue: String
+    ) {
+        public object Minimal : FTPDeployActionV4.LogLevel("minimal")
+
+        public object Standard : FTPDeployActionV4.LogLevel("standard")
+
+        public object Verbose : FTPDeployActionV4.LogLevel("verbose")
+
+        public class Custom(
+            customStringValue: String
+        ) : FTPDeployActionV4.LogLevel(customStringValue)
+    }
 }
