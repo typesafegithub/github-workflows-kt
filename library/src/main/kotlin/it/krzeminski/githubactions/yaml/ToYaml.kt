@@ -4,6 +4,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
+import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.io.path.pathString
 
 fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
@@ -16,8 +17,8 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
             run("Install Kotlin", "sudo snap install --classic kotlin")
             run(
                 "Consistency check",
-                "diff -u '${targetFile.pathString.replace('\\', '/')}' " +
-                    "<('${sourceFile.pathString.replace('\\', '/')}')"
+                "diff -u '${targetFile.invariantSeparatorsPathString}' \\\n" +
+                    "<('${sourceFile.invariantSeparatorsPathString}' '${this@toYaml.name}')"
             )
         }
         listOf(consistencyCheckJob) + jobs.map {

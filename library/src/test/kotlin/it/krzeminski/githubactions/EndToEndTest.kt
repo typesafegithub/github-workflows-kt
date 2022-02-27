@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
@@ -11,7 +12,9 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
+import it.krzeminski.githubactions.yaml.writeWorkflows
 import java.nio.file.Paths
+import kotlin.io.path.readText
 
 class EndToEndTest : FunSpec({
     val workflow = workflow(
@@ -63,7 +66,9 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+                    run: |
+                      diff -u '.github/workflows/some_workflow.yaml' \
+                      <('.github/workflows/some_workflow.main.kts' 'Test workflow')
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -134,7 +139,9 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+                    run: |
+                      diff -u '.github/workflows/some_workflow.yaml' \
+                      <('.github/workflows/some_workflow.main.kts' 'Test workflow')
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -490,5 +497,101 @@ class EndToEndTest : FunSpec({
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
         """.trimIndent()
+    }
+
+    test("writeWorkFlows() - write multiple workflows") {
+        val workflow1 = workflow(
+            name = "Test workflow 1",
+            on = listOf(Push()),
+            sourceFile = Paths.get("build/some_workflow.main.kts"),
+            targetFile = Paths.get("build/workflows/some_workflow_1.yaml"),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                condition = "\${{ always() }}"
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV2(),
+                )
+            }
+        }
+        val workflow2 = workflow(
+            name = "Test workflow 2",
+            on = listOf(Push()),
+            sourceFile = Paths.get("build/workflows/some_workflow.main.kts"),
+            targetFile = Paths.get("build/workflows/some_workflow_2.yaml"),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                condition = "\${{ always() }}"
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV2(),
+                )
+            }
+        }
+
+        withCapturedOutput {
+            writeWorkflows(
+                addConsistencyCheck = true,
+                workflows = listOf(
+                    workflow1,
+                    workflow2
+                ),
+                "Test workflow 1",
+            )
+        }.also { (_, stdout, _) ->
+            stdout shouldBe workflow1.toYaml(addConsistencyCheck = true) + "\n"
+        }
+
+        withCapturedOutput {
+            writeWorkflows(
+                addConsistencyCheck = true,
+                workflows = listOf(
+                    workflow1,
+                    workflow2
+                ),
+                "Test workflow 2",
+            )
+        }.also { (_, stdout, _) ->
+            stdout shouldBe workflow2.toYaml(addConsistencyCheck = true) + "\n"
+        }
+
+
+        withCapturedOutput {
+            workflow1.targetFile.parent.toFile().mkdirs()
+            workflow2.targetFile.parent.toFile().mkdirs()
+            writeWorkflows(
+                addConsistencyCheck = true,
+                workflows = listOf(
+                    workflow1,
+                    workflow2
+                ),
+            )
+        }.also { (_, stdout, _) ->
+            stdout shouldBe """
+                writing Test workflow 1
+                writing Test workflow 2
+                
+            """.trimIndent()
+
+            workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(addConsistencyCheck = true) + "\n"
+            workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(addConsistencyCheck = true) + "\n"
+        }
+
+        shouldThrow<java.lang.IllegalArgumentException> {
+            writeWorkflows(
+                addConsistencyCheck = true,
+                workflows = listOf(
+                    workflow1,
+                    workflow2
+                ),
+                "This workflow does not exist"
+            )
+        }
     }
 })
