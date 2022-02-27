@@ -7,6 +7,22 @@ import it.krzeminski.githubactions.dsl.toBuilder
 import kotlin.io.path.invariantSeparatorsPathString
 
 fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
+    return generateYaml(
+        addConsistencyCheck = addConsistencyCheck,
+        useGitDiff = false,
+    )
+}
+
+fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
+    val yaml = generateYaml(
+        addConsistencyCheck = addConsistencyCheck,
+        useGitDiff = true,
+    )
+    this.targetFile.toFile().writeText(yaml)
+}
+
+private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
+    val workflow = this
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
         val consistencyCheckJob = this.toBuilder().job(
             name = "check_yaml_consistency",
@@ -14,11 +30,23 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         ) {
             uses("Check out", CheckoutV2())
             run("Install Kotlin", "sudo snap install --classic kotlin")
-            run(
-                "Consistency check",
-                "diff -u '${targetFile.invariantSeparatorsPathString}' " +
-                    "<('${sourceFile.invariantSeparatorsPathString}')"
-            )
+            if (useGitDiff) {
+                run(
+                    "Execute script",
+                    "rm '${targetFile.invariantSeparatorsPathString}' " +
+                        "&& '${sourceFile.invariantSeparatorsPathString}'"
+                )
+                run(
+                    "Consistency check",
+                    "git diff --exit-code '${targetFile.invariantSeparatorsPathString}'"
+                )
+            } else {
+                run(
+                    "Consistency check",
+                    "diff -u '${targetFile.invariantSeparatorsPathString}' " +
+                        "<('${sourceFile.invariantSeparatorsPathString}')"
+                )
+            }
         }
         listOf(consistencyCheckJob) + jobs.map {
             it.copy(needs = it.needs + consistencyCheckJob)
@@ -39,24 +67,16 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         appendLine("name: $name")
         appendLine()
         appendLine("on:")
-        appendLine(this@toYaml.on.triggersToYaml().prependIndent("  "))
+        appendLine(workflow.on.triggersToYaml().prependIndent("  "))
         appendLine()
 
-        if (this@toYaml.env.isNotEmpty()) {
+        if (workflow.env.isNotEmpty()) {
             appendLine("env:")
-            appendLine(this@toYaml.env.toYaml().prependIndent("  "))
+            appendLine(workflow.env.toYaml().prependIndent("  "))
             appendLine()
         }
 
         appendLine("jobs:")
         append(jobsWithConsistencyCheck.jobsToYaml().prependIndent("  "))
     }
-}
-
-fun Workflow.writeToFile() {
-    val yaml = this.toYaml(
-        // Because the current consistency check logic relies on writing to standard output.
-        addConsistencyCheck = false,
-    )
-    this.targetFile.toFile().writeText(yaml)
 }

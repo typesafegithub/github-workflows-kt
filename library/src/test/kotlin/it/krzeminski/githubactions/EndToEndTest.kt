@@ -12,7 +12,9 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Paths
+import kotlin.io.path.invariantSeparatorsPathString
 
+@Suppress("LargeClass")
 class EndToEndTest : FunSpec({
     val workflow = workflow(
         name = "Test workflow",
@@ -261,9 +263,62 @@ class EndToEndTest : FunSpec({
         }
 
         // when
-        workflowWithTempTargetFile.writeToFile()
+        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
 
         // then
+        targetTempFile.readText() shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+
+            on:
+              push:
+
+            jobs:
+              "test_job":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+                  - id: step-1
+                    name: Hello world!
+                    run: echo 'hello!'
+        """.trimIndent()
+    }
+
+    test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
+        // given
+        val targetTempFile = tempfile()
+        val workflowWithTempTargetFile = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            targetFile = targetTempFile.toPath(),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV2(),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
+            }
+        }
+
+        // when
+        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
+
+        // then
+        val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
         targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -275,8 +330,25 @@ class EndToEndTest : FunSpec({
               push:
 
             jobs:
+              "check_yaml_consistency":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+                  - id: step-1
+                    name: Install Kotlin
+                    run: sudo snap install --classic kotlin
+                  - id: step-2
+                    name: Execute script
+                    run: rm '$targetPath' && '.github/workflows/some_workflow.main.kts'
+                  - id: step-3
+                    name: Consistency check
+                    run: git diff --exit-code '$targetPath'
               "test_job":
                 runs-on: "ubuntu-latest"
+                needs:
+                  - "check_yaml_consistency"
                 steps:
                   - id: step-0
                     name: Check out
