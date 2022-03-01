@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.40.0")
+    implementation("com.charleskorn.kaml:kaml:0.41.0")
     implementation("com.squareup:kotlinpoet:1.10.2")
 
     testImplementation("io.kotest:kotest-assertions-core:5.1.0")
