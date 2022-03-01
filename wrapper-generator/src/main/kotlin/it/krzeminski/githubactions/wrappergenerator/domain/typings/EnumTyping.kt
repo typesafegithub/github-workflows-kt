@@ -12,7 +12,20 @@ import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassN
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 
-data class EnumTyping(val typeName: String, val items: List<String>) : Typing {
+data class EnumTyping(
+    val typeName: String,
+    val items: List<String>,
+    val itemsNames : List<String> = items.map { it.toPascalCase() }
+) : Typing {
+
+    init {
+        require(items.size == itemsNames.size) { "EnumTyping($typeName): items has ${items.size} elements while itemsNames has ${itemsNames.size} elements"}
+        val notPascalCase = itemsNames.filter { it.toPascalCase() != it }
+        require(notPascalCase.isEmpty()) {
+            "EnumTyping($typeName): itemsNames should be in PascalCase, but got: $notPascalCase"
+        }
+    }
+
     override fun getClassName(actionPackageName: String, actionClassName: String): TypeName =
         ClassName("it.krzeminski.githubactions.actions.$actionPackageName", "$actionClassName.$typeName")
 
@@ -22,6 +35,8 @@ data class EnumTyping(val typeName: String, val items: List<String>) : Typing {
         val actionPackageName = coords.owner.toKotlinPackageName()
         val actionClassName = coords.buildActionClassName()
         val sealedClassName = this.getClassName(actionPackageName, actionClassName)
+        val itemsNameMap = items.zip(itemsNames).toMap()
+
         return TypeSpec.classBuilder(this.typeName)
             .addModifiers(KModifier.SEALED)
             .primaryConstructor(
@@ -32,7 +47,7 @@ data class EnumTyping(val typeName: String, val items: List<String>) : Typing {
             .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
             .addTypes(
                 this.items.map {
-                    TypeSpec.objectBuilder(it.toPascalCase())
+                    TypeSpec.objectBuilder(itemsNameMap[it]!!)
                         .superclass(sealedClassName)
                         .addSuperclassConstructorParameter("%S", it)
                         .build()

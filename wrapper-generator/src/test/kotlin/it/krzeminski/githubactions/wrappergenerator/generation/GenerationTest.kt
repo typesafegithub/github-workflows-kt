@@ -233,7 +233,10 @@ class GenerationTest : FunSpec({
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
                 "boo-zoo" to ListOfStringsTyping(","),
-                "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
+                "fin-bin" to EnumTyping(typeName = "Bin",
+                    items = listOf("foo", "boo-bar", "baz123"),
+                    itemsNames = listOf("Foo", "BooBar", "Baz"),
+                ),
                 "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
             ),
         )
@@ -311,7 +314,7 @@ class GenerationTest : FunSpec({
 
                         public object BooBar : ActionWithNonStringInputsV3.Bin("boo-bar")
 
-                        public object Baz123 : ActionWithNonStringInputsV3.Bin("baz123")
+                        public object Baz : ActionWithNonStringInputsV3.Bin("baz123")
 
                         public class Custom(
                             customStringValue: String

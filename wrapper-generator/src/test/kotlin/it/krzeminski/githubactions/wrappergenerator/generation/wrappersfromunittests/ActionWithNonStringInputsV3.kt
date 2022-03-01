@@ -67,7 +67,7 @@ public class ActionWithNonStringInputsV3(
 
         public object BooBar : ActionWithNonStringInputsV3.Bin("boo-bar")
 
-        public object Baz123 : ActionWithNonStringInputsV3.Bin("baz123")
+        public object Baz : ActionWithNonStringInputsV3.Bin("baz123")
 
         public class Custom(
             customStringValue: String
