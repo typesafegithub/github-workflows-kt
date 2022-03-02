@@ -40,7 +40,9 @@ val wrappersToGenerate = listOf(
             "submodules" to BooleanTyping,
         ),
     ),
-    WrapperRequest(ActionCoords("actions", "download-artifact", "v2")),
+    WrapperRequest(
+        ActionCoords("actions", "download-artifact", "v2")
+    ),
     WrapperRequest(
         ActionCoords("actions", "setup-java", "v2"),
         mapOf(
@@ -96,7 +98,6 @@ val wrappersToGenerate = listOf(
             )
         ),
     ),
-
     WrapperRequest(
         ActionCoords("docker", "login-action", "v1"),
         mapOf(
@@ -133,7 +134,6 @@ val wrappersToGenerate = listOf(
             "tags" to ListOfTypings("\\n"),
         )
     ),
-
     WrapperRequest(
         ActionCoords("EndBug", "add-and-commit", "v8"),
         mapOf(
@@ -142,10 +142,16 @@ val wrappersToGenerate = listOf(
             "push" to StringTyping,
         )
     ),
-
-    WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
-    WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), mapOf("all" to BooleanTyping)),
-    WrapperRequest(ActionCoords("madhead", "semver-utils", "latest")),
+    WrapperRequest(
+        ActionCoords("madhead", "check-gradle-version", "v1")
+    ),
+    WrapperRequest(
+        ActionCoords("madhead", "read-java-properties", "latest"),
+        mapOf("all" to BooleanTyping)
+    ),
+    WrapperRequest(
+        ActionCoords("madhead", "semver-utils", "latest")
+    ),
 
     WrapperRequest(
         ActionCoords("nobrayner", "discord-webhook", "v1"),
@@ -153,7 +159,6 @@ val wrappersToGenerate = listOf(
             "include-details" to BooleanTyping,
         )
     ),
-
     WrapperRequest(
         ActionCoords("gradle", "gradle-build-action", "v2"),
         mapOf(
@@ -186,7 +191,9 @@ val wrappersToGenerate = listOf(
         ),
     ),
 
-    WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")),
+    WrapperRequest(
+        ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")
+    ),
 
     WrapperRequest(
         ActionCoords("repo-sync", "pull-request", "v2"),
@@ -212,4 +219,89 @@ val wrappersToGenerate = listOf(
             "docker_build_args" to StringTyping,
         )
     ),
+    WrapperRequest(
+        ActionCoords("10up", "action-wordpress-plugin-deploy", "v2.0.0"),
+        mapOf(
+            "generate-zip" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("8398a7", "action-slack", "v3"),
+        mapOf(
+            "status" to EnumTyping("Status",
+                listOf("success", "failure", "cancelled", "custom"),
+                listOf("Success", "Failure", "Cancelled", "CustomEnum"),
+            ),
+            "fields" to ListOfTypings(","),
+            "if_mention" to ListOfTypings(
+                delimiter = ",",
+                typing = EnumTyping("MentionStatus",
+                    listOf("success", "failure", "cancelled", "custom", "always"),
+                    listOf("Success", "Failure", "Cancelled", "CustomEnum", "Always"),
+                ),
+            ),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("Azure", "docker-login", "v1"),
+    ),
+    WrapperRequest(
+        ActionCoords("Azure", "login", "v1"),
+        mapOf(
+            "enable-AzPSSession" to BooleanTyping,
+            "allow-no-subscriptions" to BooleanTyping,
+            "environment" to EnumTyping("Environment",
+                listOf("azurecloud", "azurestack", "azureusgovernment", "azurechinacloud", "azuregermancloud"),
+                listOf("AzureCloud", "AzureStack", "AzureUsGovernment", "AzureChinaCloud", "AzureGermanCloud"),
+            ),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("Azure", "webapps-deploy", "v2"),
+        mapOf(
+            "images" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("Borales", "actions-yarn", "v2.3.0"),
+    ),
+    WrapperRequest(
+        ActionCoords("GoogleCloudPlatform", "github-actions", "v0"),
+        mapOf(
+            "export_default_credentials" to BooleanTyping,
+            "cleanup_credentials" to BooleanTyping,
+            "install_components" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("JamesIves", "github-pages-deploy-action", "v4"),
+        mapOf(
+            "clean" to BooleanTyping,
+            "folder" to StringTyping,
+            "clean-exclude" to ListOfTypings("\\n"),
+            "dry-run" to BooleanTyping,
+            "single-commit" to BooleanTyping,
+            "silent" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("JasonEtco", "create-an-issue", "v2"),
+        mapOf(
+            "assignees" to ListOfTypings(","),
+            "search_existing" to ListOfTypings(","),
+            "update_existing" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("SamKirkland", "FTP-Deploy-Action", "v4.3.0"),
+        mapOf(
+            "port" to IntegerTyping,
+            "protocol" to EnumTyping("Protocol", listOf("ftp", "ftps", "ftps-legacy")),
+            "dry-run" to BooleanTyping,
+            "dangerous-clean-slate" to BooleanTyping,
+            "exclude" to ListOfTypings("\\n"),
+            "log-level" to EnumTyping("LogLevel", listOf("minimal", "standard", "verbose")),
+            "security" to EnumTyping("Security", listOf("strict", "loose")),
+        ),
+    )
 )
