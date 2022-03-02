@@ -29,6 +29,17 @@ val wrappersToGenerate = listOf(
             "submodules" to BooleanTyping,
         ),
     ),
+    WrapperRequest(
+        ActionCoords("actions", "checkout", "v3"),
+        mapOf(
+            "ssh-strict" to BooleanTyping,
+            "persist-credentials" to BooleanTyping,
+            "clean" to BooleanTyping,
+            "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
+            "lfs" to BooleanTyping,
+            "submodules" to BooleanTyping,
+        ),
+    ),
     WrapperRequest(ActionCoords("actions", "download-artifact", "v2")),
     WrapperRequest(
         ActionCoords("actions", "setup-java", "v2"),
