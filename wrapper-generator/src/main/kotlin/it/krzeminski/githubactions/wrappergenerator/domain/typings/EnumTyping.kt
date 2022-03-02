@@ -15,11 +15,11 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 data class EnumTyping(
     val typeName: String,
     val items: List<String>,
-    val itemsNames : List<String> = items.map { it.toPascalCase() }
+    val itemsNames: List<String> = items.map { it.toPascalCase() }
 ) : Typing {
 
     init {
-        require(items.size == itemsNames.size) { "EnumTyping($typeName): items has ${items.size} elements while itemsNames has ${itemsNames.size} elements"}
+        require(items.size == itemsNames.size) { "EnumTyping($typeName): items has ${items.size} elements while itemsNames has ${itemsNames.size} elements" }
         val notPascalCase = itemsNames.filter { it.toPascalCase() != it }
         require(notPascalCase.isEmpty()) {
             "EnumTyping($typeName): itemsNames should be in PascalCase, but got: $notPascalCase"

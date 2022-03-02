@@ -20,7 +20,7 @@ class ListOfTypings(
 
     override fun buildCustomType(coords: ActionCoords): TypeSpec? = typing.buildCustomType(coords)
 
-    override fun asString() = ".joinToString(\"$delimiter\")${mapValue}"
+    override fun asString() = ".joinToString(\"$delimiter\")$mapValue"
 
     val mapValue: String = when (typing) {
         is StringTyping -> ""

@@ -1,7 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.6.10"
     application
+
+    // Code quality.
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
 repositories {
@@ -28,4 +33,10 @@ application {
 
 tasks.getByName("run") {
     finalizedBy(":library:ktlintFormat")
+}
+
+configure<KtlintExtension> {
+    filter {
+        exclude("**/wrappersfromunittests/**")
+    }
 }

@@ -48,7 +48,7 @@ private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String
             Request contains invalid properties:
             Available: ${metadata.inputs.keys}
             Invalid:   $invalidProperties
-            """.trimIndent()
+        """.trimIndent()
     }
 }
 
@@ -73,9 +73,10 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
 private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata) = apply {
     val deprecatedIsUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
     if (deprecatedIsUsed) {
-        addAnnotation(AnnotationSpec.builder(Suppress::class.asClassName())
-            .addMember(CodeBlock.of("%S", "DEPRECATION"))
-            .build()
+        addAnnotation(
+            AnnotationSpec.builder(Suppress::class.asClassName())
+                .addMember(CodeBlock.of("%S", "DEPRECATION"))
+                .build()
         )
     }
 }
@@ -139,13 +140,17 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
                     .build()
             )
             .addProperties(listOf(stepIdProperty) + propertiesFromOutputs)
-            .addFunction(FunSpec.builder("get")
-                .addModifiers(KModifier.OPERATOR)
-                .addParameter("outputName", String::class)
-                .addCode(CodeBlock.Builder().apply {
-                    add("return \"steps.\$stepId.outputs.\$outputName\"")
-                }.build())
-                .build())
+            .addFunction(
+                FunSpec.builder("get")
+                    .addModifiers(KModifier.OPERATOR)
+                    .addParameter("outputName", String::class)
+                    .addCode(
+                        CodeBlock.Builder().apply {
+                            add("return \"steps.\$stepId.outputs.\$outputName\"")
+                        }.build()
+                    )
+                    .build()
+            )
             .build()
     )
 
@@ -157,11 +162,13 @@ private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: M
         return this
     }
 
-    addFunction(FunSpec.builder("buildOutputObject")
-        .addModifiers(KModifier.OVERRIDE)
-        .addParameter("stepId", String::class)
-        .addCode(CodeBlock.of("return Outputs(stepId)"))
-        .build())
+    addFunction(
+        FunSpec.builder("buildOutputObject")
+            .addModifiers(KModifier.OVERRIDE)
+            .addParameter("stepId", String::class)
+            .addCode(CodeBlock.of("return Outputs(stepId)"))
+            .build()
+    )
 
     return this
 }
@@ -186,8 +193,6 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
         )
         .addCode(linkedMapOfInputs(inputTypings))
         .build()
-
-
 
 private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
     if (inputs.isEmpty()) {
@@ -218,13 +223,15 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
 
 private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
     val superclass = if (metadata.outputs.isEmpty()) {
-        ClassName("it.krzeminski.githubactions.actions","Action")
+        ClassName("it.krzeminski.githubactions.actions", "Action")
     } else {
-        ClassName("it.krzeminski.githubactions.actions","ActionWithOutputs")
-            .plusParameter(ClassName(
-                "it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}",
-                "${coords.buildActionClassName()}.Outputs"
-            ))
+        ClassName("it.krzeminski.githubactions.actions", "ActionWithOutputs")
+            .plusParameter(
+                ClassName(
+                    "it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}",
+                    "${coords.buildActionClassName()}.Outputs"
+                )
+            )
     }
     return this
         .superclass(superclass)

@@ -228,14 +228,16 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("8398a7", "action-slack", "v3"),
         mapOf(
-            "status" to EnumTyping("Status",
+            "status" to EnumTyping(
+                "Status",
                 listOf("success", "failure", "cancelled", "custom"),
                 listOf("Success", "Failure", "Cancelled", "CustomEnum"),
             ),
             "fields" to ListOfTypings(","),
             "if_mention" to ListOfTypings(
                 delimiter = ",",
-                typing = EnumTyping("MentionStatus",
+                typing = EnumTyping(
+                    "MentionStatus",
                     listOf("success", "failure", "cancelled", "custom", "always"),
                     listOf("Success", "Failure", "Cancelled", "CustomEnum", "Always"),
                 ),
@@ -250,7 +252,8 @@ val wrappersToGenerate = listOf(
         mapOf(
             "enable-AzPSSession" to BooleanTyping,
             "allow-no-subscriptions" to BooleanTyping,
-            "environment" to EnumTyping("Environment",
+            "environment" to EnumTyping(
+                "Environment",
                 listOf("azurecloud", "azurestack", "azureusgovernment", "azurechinacloud", "azuregermancloud"),
                 listOf("AzureCloud", "AzureStack", "AzureUsGovernment", "AzureChinaCloud", "AzureGermanCloud"),
             ),

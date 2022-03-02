@@ -448,7 +448,7 @@ class GenerationTest : FunSpec({
                 "baz-goo" to input
             )
         )
-        val  inputTypings = mapOf(
+        val inputTypings = mapOf(
             "check-latest" to BooleanTyping,
             "foo-bar" to BooleanTyping,
             "bazGoo" to BooleanTyping,
@@ -458,14 +458,14 @@ class GenerationTest : FunSpec({
         shouldThrowAny {
             // when
             coords.generateWrapper(inputTypings) { actionManifest }
-
         }.shouldHaveMessage(
             // then
             """
             Request contains invalid properties:
             Available: [foo-bar, baz-goo]
             Invalid:   [check-latest, bazGoo]
-        """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     test("action with no inputs") {
@@ -621,5 +621,4 @@ class GenerationTest : FunSpec({
             filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/SimpleActionWithListsV3.kt",
         )
     }
-
 })

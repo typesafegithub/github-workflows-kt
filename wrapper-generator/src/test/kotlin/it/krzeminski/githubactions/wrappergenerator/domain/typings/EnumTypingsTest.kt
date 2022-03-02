@@ -14,14 +14,16 @@ class EnumTypingsTest : FunSpec({
 
     test("Invalid number of itemsNames") {
         shouldThrowAny {
-            EnumTyping("MyEnum",
+            EnumTyping(
+                "MyEnum",
                 listOf("enum_one", "enum_two", "enum_three"),
                 listOf("One", "Two"),
             )
         }.shouldHaveMessage("EnumTyping(MyEnum): items has 3 elements while itemsNames has 2 elements")
 
         shouldThrowAny {
-            EnumTyping("MyEnum",
+            EnumTyping(
+                "MyEnum",
                 listOf("enum_one", "enum_two", "enum_three"),
                 listOf("One", "Two", "Three", "Four"),
             )
@@ -30,11 +32,11 @@ class EnumTypingsTest : FunSpec({
 
     test("itemNames should be in PascalCase") {
         shouldThrowAny {
-            EnumTyping("MyEnum",
+            EnumTyping(
+                "MyEnum",
                 listOf("enum_one", "enum_two", "enum_three", "enum_four"),
                 listOf("One", "two", "Three", "Enum-Four"),
             )
         }.shouldHaveMessage("EnumTyping(MyEnum): itemsNames should be in PascalCase, but got: [two, Enum-Four]")
     }
-
 })
