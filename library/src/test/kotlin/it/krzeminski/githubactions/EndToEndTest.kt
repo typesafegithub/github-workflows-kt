@@ -12,7 +12,7 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
-import it.krzeminski.githubactions.yaml.writeWorkflows
+import it.krzeminski.githubactions.yaml.writeWorkflowsOrPrintYaml
 import java.nio.file.Paths
 import kotlin.io.path.readText
 
@@ -536,7 +536,7 @@ class EndToEndTest : FunSpec({
         }
 
         withCapturedOutput {
-            writeWorkflows(
+            writeWorkflowsOrPrintYaml(
                 addConsistencyCheck = true,
                 workflows = listOf(
                     workflow1,
@@ -549,7 +549,7 @@ class EndToEndTest : FunSpec({
         }
 
         withCapturedOutput {
-            writeWorkflows(
+            writeWorkflowsOrPrintYaml(
                 addConsistencyCheck = true,
                 workflows = listOf(
                     workflow1,
@@ -565,7 +565,7 @@ class EndToEndTest : FunSpec({
         withCapturedOutput {
             workflow1.targetFile.parent.toFile().mkdirs()
             workflow2.targetFile.parent.toFile().mkdirs()
-            writeWorkflows(
+            writeWorkflowsOrPrintYaml(
                 addConsistencyCheck = true,
                 workflows = listOf(
                     workflow1,
@@ -584,7 +584,7 @@ class EndToEndTest : FunSpec({
         }
 
         shouldThrow<java.lang.IllegalArgumentException> {
-            writeWorkflows(
+            writeWorkflowsOrPrintYaml(
                 addConsistencyCheck = true,
                 workflows = listOf(
                     workflow1,

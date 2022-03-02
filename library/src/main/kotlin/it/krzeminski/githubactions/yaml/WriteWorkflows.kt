@@ -3,7 +3,7 @@ package it.krzeminski.githubactions.yaml
 import it.krzeminski.githubactions.domain.Workflow
 import kotlin.io.path.writeText
 
-fun writeWorkflows(
+fun writeWorkflowsOrPrintYaml(
     addConsistencyCheck: Boolean = true,
     workflows: List<Workflow>,
     vararg args: String,
