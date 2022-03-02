@@ -1,7 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.6.10"
     application
+
+    // Code quality.
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
 repositories {
@@ -9,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.40.0")
+    implementation("com.charleskorn.kaml:kaml:0.41.0")
     implementation("com.squareup:kotlinpoet:1.10.2")
 
     testImplementation("io.kotest:kotest-assertions-core:5.1.0")
@@ -28,4 +33,10 @@ application {
 
 tasks.getByName("run") {
     finalizedBy(":library:ktlintFormat")
+}
+
+configure<KtlintExtension> {
+    filter {
+        exclude("**/wrappersfromunittests/**")
+    }
 }

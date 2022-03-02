@@ -59,6 +59,8 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
 
 private fun fetchUri(uri: URI) = uri.toURL().readText()
 
-val myYaml = Yaml(configuration = Yaml.default.configuration.copy(
-    strictMode = false,
-))
+val myYaml = Yaml(
+    configuration = Yaml.default.configuration.copy(
+        strictMode = false,
+    )
+)

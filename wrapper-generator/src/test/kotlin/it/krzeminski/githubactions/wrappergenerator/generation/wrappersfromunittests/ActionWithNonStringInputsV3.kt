@@ -45,7 +45,11 @@ public class ActionWithNonStringInputsV3(
     /**
      * Integer with special value
      */
-    public val gooZen: ActionWithNonStringInputsV3.Zen
+    public val gooZen: ActionWithNonStringInputsV3.Zen,
+    /**
+     * Enum with custom naming
+     */
+    public val bahEnum: ActionWithNonStringInputsV3.Bah
 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -57,6 +61,7 @@ public class ActionWithNonStringInputsV3(
             "boo-zoo" to booZoo.joinToString(","),
             "fin-bin" to finBin.stringValue,
             "goo-zen" to gooZen.integerValue.toString(),
+            "bah-enum" to bahEnum.stringValue,
         ).toTypedArray()
     )
 
@@ -84,5 +89,15 @@ public class ActionWithNonStringInputsV3(
         public object Special1 : ActionWithNonStringInputsV3.Zen(3)
 
         public object Special2 : ActionWithNonStringInputsV3.Zen(-1)
+    }
+
+    public sealed class Bah(
+        public val stringValue: String
+    ) {
+        public object HelloWorld : ActionWithNonStringInputsV3.Bah("helloworld")
+
+        public class Custom(
+            customStringValue: String
+        ) : ActionWithNonStringInputsV3.Bah(customStringValue)
     }
 }
