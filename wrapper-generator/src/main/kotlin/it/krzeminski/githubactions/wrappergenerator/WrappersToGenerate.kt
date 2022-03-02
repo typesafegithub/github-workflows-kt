@@ -6,15 +6,15 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListsOfTypings
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 
 val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("actions", "cache", "v2"),
         mapOf(
-            "path" to ListsOfTypings("\\n"),
-            "restore-keys" to ListsOfTypings("\\n"),
+            "path" to ListOfTypings("\\n"),
+            "restore-keys" to ListOfTypings("\\n"),
             "upload-chunk-size" to IntegerTyping,
         )
     ),
@@ -60,7 +60,7 @@ val wrappersToGenerate = listOf(
             "always-auth" to BooleanTyping,
             "check-latest" to BooleanTyping,
             "cache" to EnumTyping("PackageManager", listOf("npm", "yarn", "pnpm")),
-            "cache-dependency-path" to ListsOfTypings("\\n"),
+            "cache-dependency-path" to ListOfTypings("\\n"),
         ),
     ),
     WrapperRequest(
@@ -68,13 +68,13 @@ val wrappersToGenerate = listOf(
         mapOf(
             "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv")),
             "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
-            "cache-dependency-path" to ListsOfTypings("\\n"),
+            "cache-dependency-path" to ListOfTypings("\\n"),
         )
     ),
     WrapperRequest(
         ActionCoords("actions", "upload-artifact", "v2"),
         mapOf(
-            "path" to ListsOfTypings("\\n"),
+            "path" to ListOfTypings("\\n"),
             "if-no-files-found" to EnumTyping(
                 "BehaviorIfNoFilesFound",
                 listOf("warn", "error", "ignore"),
@@ -96,7 +96,7 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("docker", "setup-buildx-action", "v1"),
         mapOf(
-            "driver-opts" to ListsOfTypings("\\n"),
+            "driver-opts" to ListOfTypings("\\n"),
             "install" to BooleanTyping,
             "use" to BooleanTyping,
         )
@@ -104,22 +104,22 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("docker", "build-push-action", "v2"),
         mapOf(
-            "add-hosts" to ListsOfTypings("\\n"),
-            "allow" to ListsOfTypings("\\n"),
-            "build-args" to ListsOfTypings("\\n"),
-            "cache-from" to ListsOfTypings("\\n"),
-            "cache-to" to ListsOfTypings("\\n"),
-            "labels" to ListsOfTypings(","),
+            "add-hosts" to ListOfTypings("\\n"),
+            "allow" to ListOfTypings("\\n"),
+            "build-args" to ListOfTypings("\\n"),
+            "cache-from" to ListOfTypings("\\n"),
+            "cache-to" to ListOfTypings("\\n"),
+            "labels" to ListOfTypings(","),
             "load" to BooleanTyping,
             "no-cache" to BooleanTyping,
-            "outputs" to ListsOfTypings(","),
-            "platforms" to ListsOfTypings(","),
+            "outputs" to ListOfTypings(","),
+            "platforms" to ListOfTypings(","),
             "pull" to BooleanTyping,
             "push" to BooleanTyping,
-            "secrets" to ListsOfTypings("\\n"),
-            "secret-files" to ListsOfTypings("\\n"),
-            "ssh" to ListsOfTypings("\\n"),
-            "tags" to ListsOfTypings("\\n"),
+            "secrets" to ListOfTypings("\\n"),
+            "secret-files" to ListOfTypings("\\n"),
+            "ssh" to ListOfTypings("\\n"),
+            "tags" to ListOfTypings("\\n"),
         )
     ),
 
@@ -148,8 +148,8 @@ val wrappersToGenerate = listOf(
         mapOf(
             "cache-disabled" to BooleanTyping,
             "cache-read-only" to BooleanTyping,
-            "gradle-home-cache-includes" to ListsOfTypings("\\n"),
-            "gradle-home-cache-excludes" to ListsOfTypings("\\n"),
+            "gradle-home-cache-includes" to ListOfTypings("\\n"),
+            "gradle-home-cache-excludes" to ListOfTypings("\\n"),
             "cache-write-only" to StringTyping,
             "gradle-home-cache-strict-match" to StringTyping,
         ),
@@ -159,19 +159,19 @@ val wrappersToGenerate = listOf(
         mapOf(
             "min-wrapper-count" to IntegerTyping,
             "allow-snapshots" to BooleanTyping,
-            "allow-checksums" to ListsOfTypings(","),
+            "allow-checksums" to ListOfTypings(","),
         ),
     ),
 
     WrapperRequest(
         ActionCoords("gradle-update", "update-gradle-wrapper-action", "v1"),
         mapOf(
-            "reviewers" to ListsOfTypings(","),
-            "team-reviewers" to ListsOfTypings(","),
-            "labels" to ListsOfTypings(","),
+            "reviewers" to ListOfTypings(","),
+            "team-reviewers" to ListOfTypings(","),
+            "labels" to ListOfTypings(","),
             "set-distribution-checksum" to BooleanTyping,
-            "paths" to ListsOfTypings(","),
-            "paths-ignore" to ListsOfTypings(","),
+            "paths" to ListOfTypings(","),
+            "paths-ignore" to ListOfTypings(","),
         ),
     ),
 
@@ -180,9 +180,9 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("repo-sync", "pull-request", "v2"),
         mapOf(
-            "pr_reviewer" to ListsOfTypings(","),
-            "pr_assignee" to ListsOfTypings(","),
-            "pr_label" to ListsOfTypings(","),
+            "pr_reviewer" to ListOfTypings(","),
+            "pr_assignee" to ListOfTypings(","),
+            "pr_label" to ListOfTypings(","),
             "pr_draft" to BooleanTyping,
             "pr_allow_empty" to BooleanTyping,
         ),

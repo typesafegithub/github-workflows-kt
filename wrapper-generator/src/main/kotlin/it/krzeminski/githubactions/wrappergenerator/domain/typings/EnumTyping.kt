@@ -47,7 +47,7 @@ data class EnumTyping(
             .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
             .addTypes(
                 this.items.map {
-                    TypeSpec.objectBuilder(itemsNameMap[it]!!)
+                    TypeSpec.objectBuilder(itemsNameMap[it] ?: error("FIXME: key=$it absent from $itemsNameMap"))
                         .superclass(sealedClassName)
                         .addSuperclassConstructorParameter("%S", it)
                         .build()

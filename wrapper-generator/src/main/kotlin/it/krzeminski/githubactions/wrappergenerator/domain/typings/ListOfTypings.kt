@@ -6,12 +6,12 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 
-class ListsOfTypings(
+class ListOfTypings(
     private val delimiter: String,
     private val typing: Typing = StringTyping,
 ) : Typing {
     init {
-        require(delimiter != "\n") { """ListOfStringsTyping(newline) invalid, use ListOfStringsTyping("\\n") instead""" }
+        require(delimiter != "\n") { """ListOfTypings(newline) invalid, use ListOfTypings("\\n") instead""" }
     }
 
     override fun getClassName(actionPackageName: String, actionClassName: String): TypeName =
@@ -27,6 +27,6 @@ class ListsOfTypings(
         is IntegerTyping -> " { it.toString() }"
         is EnumTyping -> " { it.stringValue }"
         is IntegerWithSpecialValueTyping -> " { it.integerValue.toString() }"
-        else -> error("ListsOfTypings: typing=$typing is not supported")
+        else -> error("ListOfTypings: typing=$typing is not supported")
     }
 }

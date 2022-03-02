@@ -9,7 +9,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListsOfTypings
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
@@ -221,7 +221,12 @@ class GenerationTest : FunSpec({
                     description = "Integer with special value",
                     required = true,
                     default = null,
-                )
+                ),
+                "bah-enum" to Input(
+                    description = "Enum with custom naming",
+                    required = true,
+                    default = null,
+                ),
             )
         )
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
@@ -233,12 +238,10 @@ class GenerationTest : FunSpec({
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
-                "boo-zoo" to ListsOfTypings(","),
-                "fin-bin" to EnumTyping(typeName = "Bin",
-                    items = listOf("foo", "boo-bar", "baz123"),
-                    itemsNames = listOf("Foo", "BooBar", "Baz"),
-                ),
+                "boo-zoo" to ListOfTypings(","),
+                "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
                 "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
+                "bah-enum" to EnumTyping("Bah", listOf("helloworld"), listOf("HelloWorld")),
             ),
         )
         writeToUnitTests(wrapper)
@@ -293,7 +296,11 @@ class GenerationTest : FunSpec({
                     /**
                      * Integer with special value
                      */
-                    public val gooZen: ActionWithNonStringInputsV3.Zen
+                    public val gooZen: ActionWithNonStringInputsV3.Zen,
+                    /**
+                     * Enum with custom naming
+                     */
+                    public val bahEnum: ActionWithNonStringInputsV3.Bah
                 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
                     @Suppress("SpreadOperator")
                     public override fun toYamlArguments() = linkedMapOf(
@@ -305,9 +312,10 @@ class GenerationTest : FunSpec({
                             "boo-zoo" to booZoo.joinToString(","),
                             "fin-bin" to finBin.stringValue,
                             "goo-zen" to gooZen.integerValue.toString(),
+                            "bah-enum" to bahEnum.stringValue,
                         ).toTypedArray()
                     )
-    
+
                     public sealed class Bin(
                         public val stringValue: String
                     ) {
@@ -315,7 +323,7 @@ class GenerationTest : FunSpec({
 
                         public object BooBar : ActionWithNonStringInputsV3.Bin("boo-bar")
 
-                        public object Baz : ActionWithNonStringInputsV3.Bin("baz123")
+                        public object Baz123 : ActionWithNonStringInputsV3.Bin("baz123")
 
                         public class Custom(
                             customStringValue: String
@@ -332,6 +340,16 @@ class GenerationTest : FunSpec({
                         public object Special1 : ActionWithNonStringInputsV3.Zen(3)
 
                         public object Special2 : ActionWithNonStringInputsV3.Zen(-1)
+                    }
+
+                    public sealed class Bah(
+                        public val stringValue: String
+                    ) {
+                        public object HelloWorld : ActionWithNonStringInputsV3.Bah("helloworld")
+
+                        public class Custom(
+                            customStringValue: String
+                        ) : ActionWithNonStringInputsV3.Bah(customStringValue)
                     }
                 }
 
@@ -507,13 +525,13 @@ class GenerationTest : FunSpec({
             )
         )
         val inputTypings = mapOf(
-            "list-strings" to ListsOfTypings(",", StringTyping),
-            "list-ints" to ListsOfTypings(",", IntegerTyping),
-            "list-enums" to ListsOfTypings(
+            "list-strings" to ListOfTypings(",", StringTyping),
+            "list-ints" to ListOfTypings(",", IntegerTyping),
+            "list-enums" to ListOfTypings(
                 delimiter = ",",
                 typing = EnumTyping("MyEnum", listOf("one", "two", "three"))
             ),
-            "list-int-special" to ListsOfTypings(
+            "list-int-special" to ListOfTypings(
                 delimiter = ",",
                 typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42))
             )
