@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.jasonetco
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -31,7 +32,7 @@ public class CreateAnIssueV2(
     /**
      * Update an open existing issue with the same title if it exists
      */
-    public val updateExisting: String? = null,
+    public val updateExisting: Boolean? = null,
     /**
      * Existing types of issues to search for (comma-separated)
      */
@@ -43,7 +44,7 @@ public class CreateAnIssueV2(
             assignees?.let { "assignees" to it.joinToString(",") },
             milestone?.let { "milestone" to it },
             filename?.let { "filename" to it },
-            updateExisting?.let { "update_existing" to it },
+            updateExisting?.let { "update_existing" to it.toString() },
             searchExisting?.let { "search_existing" to it.joinToString(",") },
         ).toTypedArray()
     )

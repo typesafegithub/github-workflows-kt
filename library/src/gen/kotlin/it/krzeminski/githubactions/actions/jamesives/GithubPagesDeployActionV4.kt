@@ -102,7 +102,7 @@ public class GithubPagesDeployActionV4(
     /**
      * Silences the action output preventing it from displaying git messages.
      */
-    public val silent: String? = null
+    public val silent: Boolean? = null
 ) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>(
     "JamesIves", "github-pages-deploy-action",
     "v4"
@@ -124,7 +124,7 @@ public class GithubPagesDeployActionV4(
             repositoryName?.let { "repository-name" to it },
             workspace?.let { "workspace" to it },
             singleCommit?.let { "single-commit" to it.toString() },
-            silent?.let { "silent" to it },
+            silent?.let { "silent" to it.toString() },
         ).toTypedArray()
     )
 

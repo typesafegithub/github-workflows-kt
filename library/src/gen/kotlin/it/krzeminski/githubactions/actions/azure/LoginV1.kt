@@ -67,15 +67,15 @@ public class LoginV1(
     public sealed class Environment(
         public val stringValue: String
     ) {
-        public object Azurecloud : LoginV1.Environment("azurecloud")
+        public object AzureCloud : LoginV1.Environment("azurecloud")
 
-        public object Azurestack : LoginV1.Environment("azurestack")
+        public object AzureStack : LoginV1.Environment("azurestack")
 
-        public object Azureusgovernment : LoginV1.Environment("azureusgovernment")
+        public object AzureUsGovernment : LoginV1.Environment("azureusgovernment")
 
-        public object Azurechinacloud : LoginV1.Environment("azurechinacloud")
+        public object AzureChinaCloud : LoginV1.Environment("azurechinacloud")
 
-        public object Azuregermancloud : LoginV1.Environment("azuregermancloud")
+        public object AzureGermanCloud : LoginV1.Environment("azuregermancloud")
 
         public class Custom(
             customStringValue: String

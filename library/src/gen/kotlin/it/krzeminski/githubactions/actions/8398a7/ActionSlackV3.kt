@@ -42,7 +42,7 @@ public class ActionSlackV3(
      * Multiple statuses can be specified in csv format.
      * e.g. success,failure
      */
-    public val ifMention: List<String>? = null,
+    public val ifMention: List<ActionSlackV3.MentionStatus>? = null,
     /**
      * User name for slack notification.
      */
@@ -87,7 +87,7 @@ public class ActionSlackV3(
             fields?.let { "fields" to it.joinToString(",") },
             customPayload?.let { "custom_payload" to it },
             mention?.let { "mention" to it },
-            ifMention?.let { "if_mention" to it.joinToString(",") },
+            ifMention?.let { "if_mention" to it.joinToString(",") { it.stringValue } },
             authorName?.let { "author_name" to it },
             text?.let { "text" to it },
             username?.let { "username" to it },
@@ -109,8 +109,28 @@ public class ActionSlackV3(
 
         public object Cancelled : ActionSlackV3.Status("cancelled")
 
+        public object CustomEnum : ActionSlackV3.Status("custom")
+
         public class Custom(
             customStringValue: String
         ) : ActionSlackV3.Status(customStringValue)
+    }
+
+    public sealed class MentionStatus(
+        public val stringValue: String
+    ) {
+        public object Success : ActionSlackV3.MentionStatus("success")
+
+        public object Failure : ActionSlackV3.MentionStatus("failure")
+
+        public object Cancelled : ActionSlackV3.MentionStatus("cancelled")
+
+        public object CustomEnum : ActionSlackV3.MentionStatus("custom")
+
+        public object Always : ActionSlackV3.MentionStatus("always")
+
+        public class Custom(
+            customStringValue: String
+        ) : ActionSlackV3.MentionStatus(customStringValue)
     }
 }

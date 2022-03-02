@@ -70,7 +70,7 @@ public class FTPDeployActionV4(
     /**
      * strict or loose
      */
-    public val security: String? = null
+    public val security: FTPDeployActionV4.Security? = null
 ) : Action("SamKirkland", "FTP-Deploy-Action", "v4.3.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -87,7 +87,7 @@ public class FTPDeployActionV4(
             dangerousCleanSlate?.let { "dangerous-clean-slate" to it.toString() },
             exclude?.let { "exclude" to it.joinToString("\n") },
             logLevel?.let { "log-level" to it.stringValue },
-            security?.let { "security" to it },
+            security?.let { "security" to it.stringValue },
         ).toTypedArray()
     )
 
@@ -117,5 +117,17 @@ public class FTPDeployActionV4(
         public class Custom(
             customStringValue: String
         ) : FTPDeployActionV4.LogLevel(customStringValue)
+    }
+
+    public sealed class Security(
+        public val stringValue: String
+    ) {
+        public object Strict : FTPDeployActionV4.Security("strict")
+
+        public object Loose : FTPDeployActionV4.Security("loose")
+
+        public class Custom(
+            customStringValue: String
+        ) : FTPDeployActionV4.Security(customStringValue)
     }
 }
