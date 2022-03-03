@@ -15,10 +15,10 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         ) {
             uses("Check out", CheckoutV2())
             run("Install Kotlin", "sudo snap install --classic kotlin")
+            run("Execute script", sourceFile.invariantSeparatorsPathString)
             run(
                 "Consistency check",
-                "diff -u '${targetFile.invariantSeparatorsPathString}' \\\n" +
-                    "<('${sourceFile.invariantSeparatorsPathString}' '${this@toYaml.name}')"
+                "test \$(git diff '${targetFile.invariantSeparatorsPathString}' | wc -l) -eq 0"
             )
         }
         listOf(consistencyCheckJob) + jobs.map {
@@ -54,10 +54,9 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     }
 }
 
-fun Workflow.writeToFile() {
+fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
     val yaml = this.toYaml(
-        // Because the current consistency check logic relies on writing to standard output.
-        addConsistencyCheck = false,
+        addConsistencyCheck = addConsistencyCheck,
     )
     this.targetFile.toFile().writeText(yaml)
 }

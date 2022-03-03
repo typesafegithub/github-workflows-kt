@@ -65,10 +65,11 @@ class EndToEndTest : FunSpec({
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - id: step-2
+                    name: Execute script
+                    run: .github/workflows/some_workflow.main.kts
+                  - id: step-3
                     name: Consistency check
-                    run: |
-                      diff -u '.github/workflows/some_workflow.yaml' \
-                      <('.github/workflows/some_workflow.main.kts' 'Test workflow')
+                    run: test ${'$'}(git diff '.github/workflows/some_workflow.yaml' | wc -l) -eq 0
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -138,10 +139,11 @@ class EndToEndTest : FunSpec({
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - id: step-2
+                    name: Execute script
+                    run: .github/workflows/some_workflow.main.kts
+                  - id: step-3
                     name: Consistency check
-                    run: |
-                      diff -u '.github/workflows/some_workflow.yaml' \
-                      <('.github/workflows/some_workflow.main.kts' 'Test workflow')
+                    run: test ${'$'}(git diff '.github/workflows/some_workflow.yaml' | wc -l) -eq 0
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -268,7 +270,7 @@ class EndToEndTest : FunSpec({
         }
 
         // when
-        workflowWithTempTargetFile.writeToFile()
+        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
 
         // then
         targetTempFile.readText() shouldBe """

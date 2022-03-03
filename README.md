@@ -70,26 +70,19 @@ names with your own.
        }
    }
 
-   writeWorkflows(
-      addConsistencyCheck = true,
-      workflows = listOf(
-          workflow
-      ),
-      args
-   )
+   println(workflow.toYaml())
    ```
 
    Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source and target
    file paths is to be able to generate consistency checks, to ensure that both source and target files are in sync.
    You'll see it in a moment in the generated file.What's written to the `workflow` variable is an object of type
-   `it.krzeminski.githubactions.domain.Workflow`, it's not a YAML yet. However, a call to `writeWorkflows` function
-   writes all the workflows into their respective files, the reason it needs `args` is that the consistency check 
-   passes the workflow name as parameter and expects the yaml output on stdout to compare it against the real file.
+   `it.krzeminski.githubactions.domain.Workflow`, it's not a YAML yet. However, a call to `toYaml()` extension function
+   does the final piece of job.
 
-   Alternatively, on `workflow` there exists `toYaml()` which returns the yaml as a string, and `writeToFile()` which puts the string
+   Alternatively, apart from `toYaml()` which returns a string, there's also `writeToFile()` which puts the string
    straight into the file specified in workflow's `targetFile`. It may come in handy when operating on multiple
-   workflows and having automation that regenerates them. Note that this function doesn't provide consistency check.
-4. Generate the YAML by calling the above script and redirecting its output to the desired YAML file path:
+   workflows and having automation that regenerates them.
+4. Generate the YAML by calling the above script
    ```
    .github/workflows/hello_world_workflow.main.kts
    ```
