@@ -14,7 +14,7 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = f
         ) {
             uses("Check out", CheckoutV2())
             run("Install Kotlin", "sudo snap install --classic kotlin")
-            if(useGitDiff) {
+            if (useGitDiff) {
                 run(
                     "Execute script",
                     "rm '$targetFile' && " + sourceFile.invariantSeparatorsPathString
@@ -23,11 +23,11 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = f
                     "Consistency check",
                     "test \$(git diff '${targetFile.invariantSeparatorsPathString}' | wc -l) -eq 0"
                 )
-            }else {
+            } else {
                 run(
                     "Consistency check",
                     "diff -u '${targetFile.invariantSeparatorsPathString}' " +
-                            "<('${sourceFile.invariantSeparatorsPathString}')"
+                        "<('${sourceFile.invariantSeparatorsPathString}')"
                 )
             }
         }
@@ -64,16 +64,10 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = f
     }
 }
 
-fun Workflow.writeToFile(addConsistencyCheck: Boolean = true, trailingLinebreak: Boolean = true) {
+fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
     val yaml = this.toYaml(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
-    ).let { yaml ->
-        if(trailingLinebreak) {
-            yaml + "\n"
-        } else {
-            yaml
-        }
-    }
+    )
     this.targetFile.toFile().writeText(yaml)
 }

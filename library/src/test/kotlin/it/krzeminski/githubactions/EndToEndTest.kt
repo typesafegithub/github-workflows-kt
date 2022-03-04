@@ -286,7 +286,6 @@ class EndToEndTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
-            
         """.trimIndent()
 
         // when
@@ -330,7 +329,6 @@ class EndToEndTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
-            
         """.trimIndent()
     }
 
@@ -575,7 +573,7 @@ class EndToEndTest : FunSpec({
             }
         }
 
-        //when
+        // when
         workflow1.targetFile.parent.toFile().mkdirs()
         workflow2.targetFile.parent.toFile().mkdirs()
 
@@ -587,7 +585,13 @@ class EndToEndTest : FunSpec({
         }
 
         // then
-        workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(addConsistencyCheck = true, useGitDiff = true) + "\n"
-        workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(addConsistencyCheck = true, useGitDiff = true) + "\n"
+        workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(
+            addConsistencyCheck = true,
+            useGitDiff = true,
+        )
+        workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(
+            addConsistencyCheck = true,
+            useGitDiff = true,
+        )
     }
 })
