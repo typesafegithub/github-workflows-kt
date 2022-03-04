@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
@@ -12,7 +11,7 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
-import it.krzeminski.githubactions.yaml.writeWorkflowsOrPrintYaml
+import it.krzeminski.githubactions.yaml.writeWorkflows
 import java.nio.file.Paths
 import kotlin.io.path.readText
 
@@ -538,41 +537,12 @@ class EndToEndTest : FunSpec({
         }
 
         withCapturedOutput {
-            writeWorkflowsOrPrintYaml(
-                addConsistencyCheck = true,
-                workflows = listOf(
-                    workflow1,
-                    workflow2
-                ),
-                "Test workflow 1",
-            )
-        }.also { (_, stdout, _) ->
-            stdout shouldBe workflow1.toYaml(addConsistencyCheck = true) + "\n"
-        }
-
-        withCapturedOutput {
-            writeWorkflowsOrPrintYaml(
-                addConsistencyCheck = true,
-                workflows = listOf(
-                    workflow1,
-                    workflow2
-                ),
-                "Test workflow 2",
-            )
-        }.also { (_, stdout, _) ->
-            stdout shouldBe workflow2.toYaml(addConsistencyCheck = true) + "\n"
-        }
-
-
-        withCapturedOutput {
             workflow1.targetFile.parent.toFile().mkdirs()
             workflow2.targetFile.parent.toFile().mkdirs()
-            writeWorkflowsOrPrintYaml(
+            writeWorkflows(
                 addConsistencyCheck = true,
-                workflows = listOf(
-                    workflow1,
-                    workflow2
-                ),
+                workflow1,
+                workflow2,
             )
         }.also { (_, stdout, _) ->
             stdout shouldBe """
@@ -583,17 +553,6 @@ class EndToEndTest : FunSpec({
 
             workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(addConsistencyCheck = true) + "\n"
             workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(addConsistencyCheck = true) + "\n"
-        }
-
-        shouldThrow<java.lang.IllegalArgumentException> {
-            writeWorkflowsOrPrintYaml(
-                addConsistencyCheck = true,
-                workflows = listOf(
-                    workflow1,
-                    workflow2
-                ),
-                "This workflow does not exist"
-            )
         }
     }
 })
