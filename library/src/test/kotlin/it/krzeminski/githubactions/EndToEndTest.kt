@@ -11,8 +11,8 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
-import it.krzeminski.githubactions.yaml.writeWorkflows
 import java.nio.file.Paths
+import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.io.path.readText
 
 class EndToEndTest : FunSpec({
@@ -40,7 +40,7 @@ class EndToEndTest : FunSpec({
 
     test("toYaml() - 'hello world' workflow") {
         // when
-        val actualYaml = workflow.toYaml()
+        val actualYaml = workflow.toYaml(addConsistencyCheck = true)
 
         // then
         actualYaml shouldBe """
@@ -64,11 +64,8 @@ class EndToEndTest : FunSpec({
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - id: step-2
-                    name: Execute script
-                    run: .github/workflows/some_workflow.main.kts
-                  - id: step-3
                     name: Consistency check
-                    run: test ${'$'}(git diff '.github/workflows/some_workflow.yaml' | wc -l) -eq 0
+                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -138,11 +135,8 @@ class EndToEndTest : FunSpec({
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
                   - id: step-2
-                    name: Execute script
-                    run: .github/workflows/some_workflow.main.kts
-                  - id: step-3
                     name: Consistency check
-                    run: test ${'$'}(git diff '.github/workflows/some_workflow.yaml' | wc -l) -eq 0
+                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -272,7 +266,7 @@ class EndToEndTest : FunSpec({
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
 
         // then
-        targetTempFile.readText() shouldBe """
+        targetTempFile.readText().fixNewlines() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
@@ -292,6 +286,50 @@ class EndToEndTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+            
+        """.trimIndent()
+
+        // when
+        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
+        // then
+        targetTempFile.readText() shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            
+            name: Test workflow
+
+            on:
+              push:
+
+            jobs:
+              "check_yaml_consistency":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+                  - id: step-1
+                    name: Install Kotlin
+                    run: sudo snap install --classic kotlin
+                  - id: step-2
+                    name: Execute script
+                    run: .github/workflows/some_workflow.main.kts
+                  - id: step-3
+                    name: Consistency check
+                    run: test ${'$'}(git diff '${targetTempFile.toPath().invariantSeparatorsPathString}' | wc -l) -eq 0
+              "test_job":
+                runs-on: "ubuntu-latest"
+                needs:
+                  - "check_yaml_consistency"
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+                  - id: step-1
+                    name: Hello world!
+                    run: echo 'hello!'
+            
         """.trimIndent()
     }
 
@@ -536,23 +574,19 @@ class EndToEndTest : FunSpec({
             }
         }
 
-        withCapturedOutput {
-            workflow1.targetFile.parent.toFile().mkdirs()
-            workflow2.targetFile.parent.toFile().mkdirs()
-            writeWorkflows(
-                addConsistencyCheck = true,
-                workflow1,
-                workflow2,
-            )
-        }.also { (_, stdout, _) ->
-            stdout shouldBe """
-                writing Test workflow 1
-                writing Test workflow 2
-                
-            """.trimIndent()
+        //when
+        workflow1.targetFile.parent.toFile().mkdirs()
+        workflow2.targetFile.parent.toFile().mkdirs()
 
-            workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(addConsistencyCheck = true) + "\n"
-            workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(addConsistencyCheck = true) + "\n"
+        listOf(
+            workflow1,
+            workflow2
+        ).forEach {
+            it.writeToFile(addConsistencyCheck = true)
         }
+
+        // then
+        workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(addConsistencyCheck = true, useGitDiff = true) + "\n"
+        workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(addConsistencyCheck = true, useGitDiff = true) + "\n"
     }
 })

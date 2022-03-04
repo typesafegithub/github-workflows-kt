@@ -5,9 +5,8 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
 import kotlin.io.path.invariantSeparatorsPathString
-import kotlin.io.path.pathString
 
-fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
+fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = false): String {
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
         val consistencyCheckJob = this.toBuilder().job(
             name = "check_yaml_consistency",
@@ -15,11 +14,19 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
         ) {
             uses("Check out", CheckoutV2())
             run("Install Kotlin", "sudo snap install --classic kotlin")
-            run("Execute script", sourceFile.invariantSeparatorsPathString)
-            run(
-                "Consistency check",
-                "test \$(git diff '${targetFile.invariantSeparatorsPathString}' | wc -l) -eq 0"
-            )
+            if(useGitDiff) {
+                run("Execute script", sourceFile.invariantSeparatorsPathString)
+                run(
+                    "Consistency check",
+                    "test \$(git diff '${targetFile.invariantSeparatorsPathString}' | wc -l) -eq 0"
+                )
+            }else {
+                run(
+                    "Consistency check",
+                    "diff -u '${targetFile.invariantSeparatorsPathString}' " +
+                            "<('${sourceFile.invariantSeparatorsPathString}')"
+                )
+            }
         }
         listOf(consistencyCheckJob) + jobs.map {
             it.copy(needs = it.needs + consistencyCheckJob)
@@ -54,9 +61,16 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     }
 }
 
-fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
+fun Workflow.writeToFile(addConsistencyCheck: Boolean = true, trailingLinebreak: Boolean = true) {
     val yaml = this.toYaml(
         addConsistencyCheck = addConsistencyCheck,
-    )
+        useGitDiff = true,
+    ).let { yaml ->
+        if(trailingLinebreak) {
+            yaml + "\n"
+        } else {
+            yaml
+        }
+    }
     this.targetFile.toFile().writeText(yaml)
 }
