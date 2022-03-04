@@ -292,6 +292,7 @@ class EndToEndTest : FunSpec({
         // when
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
         // then
+        val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
         targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -314,10 +315,10 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Execute script
-                    run: .github/workflows/some_workflow.main.kts
+                    run: rm '$targetPath' && .github/workflows/some_workflow.main.kts
                   - id: step-3
                     name: Consistency check
-                    run: test ${'$'}(git diff '${targetTempFile.toPath().invariantSeparatorsPathString}' | wc -l) -eq 0
+                    run: test ${'$'}(git diff '$targetPath' | wc -l) -eq 0
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:

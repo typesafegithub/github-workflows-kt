@@ -15,7 +15,10 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = f
             uses("Check out", CheckoutV2())
             run("Install Kotlin", "sudo snap install --classic kotlin")
             if(useGitDiff) {
-                run("Execute script", sourceFile.invariantSeparatorsPathString)
+                run(
+                    "Execute script",
+                    "rm '$targetFile' && " + sourceFile.invariantSeparatorsPathString
+                )
                 run(
                     "Consistency check",
                     "test \$(git diff '${targetFile.invariantSeparatorsPathString}' | wc -l) -eq 0"
