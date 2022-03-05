@@ -15,6 +15,7 @@ import java.nio.file.Paths
 import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.io.path.readText
 
+@Suppress("LargeClass") // maybe split this in separate test classes ?
 class EndToEndTest : FunSpec({
     val workflow = workflow(
         name = "Test workflow",
@@ -341,7 +342,7 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Execute script
-                    run: rm '$targetPath' && .github/workflows/some_workflow.main.kts
+                    run: rm '$targetPath' && '.github/workflows/some_workflow.main.kts'
                   - id: step-3
                     name: Consistency check
                     run: git diff --exit-code '$targetPath'
@@ -354,7 +355,7 @@ class EndToEndTest : FunSpec({
                     name: Check out
                     uses: actions/checkout@v2
                   - id: step-1
-                    name: Hello worldunixNewlines!
+                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -564,11 +565,11 @@ class EndToEndTest : FunSpec({
         """.trimIndent()
     }
 
-    test("writeWorkFlows() - write multiple workflows") {
+    test("writeToFile() - write multiple workflows") {
         val workflow1 = workflow(
             name = "Test workflow 1",
             on = listOf(Push()),
-            sourceFile = Paths.get("build/some_workflow.main.kts"),
+            sourceFile = Paths.get("build/workflows/some_workflow.main.kts"),
             targetFile = Paths.get("build/workflows/some_workflow_1.yaml"),
         ) {
             job(
@@ -612,13 +613,81 @@ class EndToEndTest : FunSpec({
         }
 
         // then
-        workflow1.targetFile.readText().unixNewlines() shouldBe workflow1.toYaml(
-            addConsistencyCheck = true,
-            useGitDiff = true,
-        )
-        workflow2.targetFile.readText().unixNewlines() shouldBe workflow2.toYaml(
-            addConsistencyCheck = true,
-            useGitDiff = true,
-        )
+        val sourcePath = workflow1.sourceFile.invariantSeparatorsPathString
+        val workflow1TargetPath = workflow1.targetFile.invariantSeparatorsPathString
+        workflow1.targetFile.readText().unixNewlines() shouldBe """
+            # This file was generated using Kotlin DSL ($sourcePath).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            
+            name: Test workflow 1
+
+            on:
+              push:
+
+            jobs:
+              "check_yaml_consistency":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+                  - id: step-1
+                    name: Install Kotlin
+                    run: sudo snap install --classic kotlin
+                  - id: step-2
+                    name: Execute script
+                    run: rm '$workflow1TargetPath' && '$sourcePath'
+                  - id: step-3
+                    name: Consistency check
+                    run: git diff --exit-code '$workflow1TargetPath'
+              "test_job":
+                runs-on: "ubuntu-latest"
+                needs:
+                  - "check_yaml_consistency"
+                if: ${'$'}{{ always() }}
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+        """.trimIndent()
+
+        val workflow2TargetPath = workflow2.targetFile.invariantSeparatorsPathString
+        workflow2.targetFile.readText().unixNewlines() shouldBe """
+            # This file was generated using Kotlin DSL ($sourcePath).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            
+            name: Test workflow 2
+
+            on:
+              push:
+
+            jobs:
+              "check_yaml_consistency":
+                runs-on: "ubuntu-latest"
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+                  - id: step-1
+                    name: Install Kotlin
+                    run: sudo snap install --classic kotlin
+                  - id: step-2
+                    name: Execute script
+                    run: rm '$workflow2TargetPath' && '$sourcePath'
+                  - id: step-3
+                    name: Consistency check
+                    run: git diff --exit-code '$workflow2TargetPath'
+              "test_job":
+                runs-on: "ubuntu-latest"
+                needs:
+                  - "check_yaml_consistency"
+                if: ${'$'}{{ always() }}
+                steps:
+                  - id: step-0
+                    name: Check out
+                    uses: actions/checkout@v2
+        """.trimIndent()
     }
 })
