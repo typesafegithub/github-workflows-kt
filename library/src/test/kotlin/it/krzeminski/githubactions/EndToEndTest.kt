@@ -40,7 +40,7 @@ class EndToEndTest : FunSpec({
 
     test("toYaml() - 'hello world' workflow") {
         // when
-        val actualYaml = workflow.toYaml(addConsistencyCheck = true)
+        val actualYaml = workflow.toYaml()
 
         // then
         actualYaml shouldBe """
@@ -266,7 +266,7 @@ class EndToEndTest : FunSpec({
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
 
         // then
-        targetTempFile.readText().fixNewlines() shouldBe """
+        targetTempFile.readText().unixNewlines() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
@@ -287,12 +287,39 @@ class EndToEndTest : FunSpec({
                     name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
+    }
+
+    test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
+        // given
+        val targetTempFile = tempfile()
+        val workflowWithTempTargetFile = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            targetFile = targetTempFile.toPath(),
+        ) {
+            job(
+                name = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV2(),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
+            }
+        }
 
         // when
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
+
         // then
         val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
-        targetTempFile.readText() shouldBe """
+        targetTempFile.readText().unixNewlines() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
@@ -317,7 +344,7 @@ class EndToEndTest : FunSpec({
                     run: rm '$targetPath' && .github/workflows/some_workflow.main.kts
                   - id: step-3
                     name: Consistency check
-                    run: test ${'$'}(git diff '$targetPath' | wc -l) -eq 0
+                    run: git diff --exit-code '$targetPath'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -327,7 +354,7 @@ class EndToEndTest : FunSpec({
                     name: Check out
                     uses: actions/checkout@v2
                   - id: step-1
-                    name: Hello world!
+                    name: Hello worldunixNewlines!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -585,11 +612,11 @@ class EndToEndTest : FunSpec({
         }
 
         // then
-        workflow1.targetFile.readText().fixNewlines() shouldBe workflow1.toYaml(
+        workflow1.targetFile.readText().unixNewlines() shouldBe workflow1.toYaml(
             addConsistencyCheck = true,
             useGitDiff = true,
         )
-        workflow2.targetFile.readText().fixNewlines() shouldBe workflow2.toYaml(
+        workflow2.targetFile.readText().unixNewlines() shouldBe workflow2.toYaml(
             addConsistencyCheck = true,
             useGitDiff = true,
         )

@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions
 
-fun String.fixNewlines(): String {
+fun String.unixNewlines(): String {
     return if (System.lineSeparator() != "\n") {
         replace(System.lineSeparator(), "\n")
     } else {

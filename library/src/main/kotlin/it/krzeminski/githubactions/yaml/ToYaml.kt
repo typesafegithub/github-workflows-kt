@@ -6,7 +6,7 @@ import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
 import kotlin.io.path.invariantSeparatorsPathString
 
-fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = false): String {
+private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
         val consistencyCheckJob = this.toBuilder().job(
             name = "check_yaml_consistency",
@@ -21,7 +21,7 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = f
                 )
                 run(
                     "Consistency check",
-                    "test \$(git diff '${targetFile.invariantSeparatorsPathString}' | wc -l) -eq 0"
+                    "git diff --exit-code '${targetFile.invariantSeparatorsPathString}'"
                 )
             } else {
                 run(
@@ -64,8 +64,15 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true, useGitDiff: Boolean = f
     }
 }
 
+fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
+    return generateYaml(
+        addConsistencyCheck = addConsistencyCheck,
+        useGitDiff = false,
+    )
+}
+
 fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
-    val yaml = this.toYaml(
+    val yaml = generateYaml(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
     )

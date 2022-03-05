@@ -10,5 +10,4 @@ data class Workflow(
     val sourceFile: Path,
     val targetFile: Path,
     val jobs: List<Job>,
-//    val consistencyCheckArgs: List<String> = emptyList(),
 )
