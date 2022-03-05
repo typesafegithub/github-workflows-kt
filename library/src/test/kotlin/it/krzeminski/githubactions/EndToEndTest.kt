@@ -672,10 +672,10 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Execute script
-                    run: rm 'build/workflows/some_workflow_1.yaml' && 'build/workflows/some_workflow.main.kts'
+                    run: rm 'build/workflows/some_workflow_2.yaml' && 'build/workflows/some_workflow.main.kts'
                   - id: step-3
                     name: Consistency check
-                    run: git diff --exit-code 'build/workflows/some_workflow_1.yaml'
+                    run: git diff --exit-code 'build/workflows/some_workflow_2.yaml'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
