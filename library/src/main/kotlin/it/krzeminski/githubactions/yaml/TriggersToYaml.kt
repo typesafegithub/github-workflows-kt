@@ -15,7 +15,7 @@ fun List<Trigger>.triggersToYaml(): String =
         .map { it.toYamlString() }
         .joinToString(separator = "\n") { it }
 
-private fun Trigger.toYamlString() =
+private fun Trigger. toYamlString() =
     when (this) {
         is WorkflowDispatch -> toYaml()
         is Push -> toYaml()
@@ -26,12 +26,12 @@ private fun Trigger.toYamlString() =
 
 private fun Push.toYaml() = buildString {
     appendLine("push:")
-    printIfHasElements(this@toYaml.branches, "branches")
-    printIfHasElements(this@toYaml.tags, "tags")
-    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
-    printIfHasElements(this@toYaml.tagsIgnore, "tags-ignore")
-    printIfHasElements(this@toYaml.paths, "paths")
-    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
+    printIfHasElements(this@toYaml.branches,  "branches")
+    printIfHasElements(this@toYaml.tags,  "tags")
+    printIfHasElements(this@toYaml.branchesIgnore,  "branches-ignore")
+    printIfHasElements(this@toYaml.tagsIgnore,  "tags-ignore")
+    printIfHasElements(this@toYaml.paths,  "paths")
+    printIfHasElements(this@toYaml.pathsIgnore,  "paths-ignore")
 }.removeSuffix("\n")
 
 private fun PullRequest.toYaml() = buildString {

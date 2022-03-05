@@ -35,7 +35,7 @@ data class WorkflowOn(
 data class Job(
     val name: String? = null,
     @SerialName("runs-on")
-    val runsOn: String? = null,
+    val runsOn: String,
     val steps: List<SerializedStep>,
     val needs: List<String> = emptyList(),
     val env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -49,8 +49,9 @@ data class SerializedStep(
     val name: String? = null,
     val run: String? = null,
     val uses: String? = null,
-    val with: LinkedHashMap<String, String> = linkedMapOf(),
-    val env: LinkedHashMap<String, String> = linkedMapOf(),
+    val with: LinkedHashMap<String, String?> = linkedMapOf(),
+    val env: LinkedHashMap<String, String?> = linkedMapOf(),
+    @SerialName("if")
     val condition: String? = null,
 )
 
