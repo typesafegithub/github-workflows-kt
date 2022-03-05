@@ -17,6 +17,7 @@ class GenerateKotlinScripts : FunSpec({
         "generated-source.yml",
         "update-gradle-wrapper.yml",
         "refreshversions-build.yml",
+        "refreshversions-website.yml",
     )
 
     testInputs.forEach { name ->
