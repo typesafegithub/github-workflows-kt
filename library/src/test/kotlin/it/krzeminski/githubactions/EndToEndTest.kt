@@ -267,7 +267,7 @@ class EndToEndTest : FunSpec({
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
 
         // then
-        targetTempFile.readText().unixNewlines() shouldBe """
+        targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
@@ -320,7 +320,7 @@ class EndToEndTest : FunSpec({
 
         // then
         val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
-        targetTempFile.readText().unixNewlines() shouldBe """
+        targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
@@ -615,7 +615,7 @@ class EndToEndTest : FunSpec({
         // then
         val sourcePath = workflow1.sourceFile.invariantSeparatorsPathString
         val workflow1TargetPath = workflow1.targetFile.invariantSeparatorsPathString
-        workflow1.targetFile.readText().unixNewlines() shouldBe """
+        workflow1.targetFile.readText() shouldBe """
             # This file was generated using Kotlin DSL ($sourcePath).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
@@ -653,7 +653,7 @@ class EndToEndTest : FunSpec({
         """.trimIndent()
 
         val workflow2TargetPath = workflow2.targetFile.invariantSeparatorsPathString
-        workflow2.targetFile.readText().unixNewlines() shouldBe """
+        workflow2.targetFile.readText() shouldBe """
             # This file was generated using Kotlin DSL ($sourcePath).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
