@@ -19,7 +19,7 @@ import it.krzeminski.githubactions.scriptmodel.ActionCoords
 import it.krzeminski.githubactions.scriptmodel.Job
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.SerializedStep
-import it.krzeminski.githubactions.scriptmodel.Workflow
+import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.scriptmodel.WorkflowOn
 import it.krzeminski.githubactions.scriptmodel.classname
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
@@ -39,12 +39,12 @@ import java.nio.file.Paths
 
 const val LIBRARY_VERSION = "0.9.0"
 
-fun Workflow.toKotlin(): String =
+fun GithubWorkflow.toKotlin(): String =
     "#!/usr/bin/env kotlin\n\n${toFileSpec()}"
 
 private const val PACKAGE = "it.krzeminski.githubactions"
 
-private fun Workflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
+fun GithubWorkflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
     .addAnnotation(AnnotationSpec.builder(ClassName("", "DependsOn"))
         .addMember("%S", "it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
         .build()
@@ -54,7 +54,7 @@ private fun Workflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
     .addProperty(workFlowProperty())
     .build()
 
-fun Workflow.workFlowProperty(): PropertySpec {
+fun GithubWorkflow.workFlowProperty(): PropertySpec {
     val filename = name.lowercase().replace(" ", "-")
     val initializer = CodeBlock.builder()
         .add("%M(\n", MemberName("$PACKAGE.dsl", "workflow"))
@@ -72,7 +72,7 @@ fun Workflow.workFlowProperty(): PropertySpec {
         .add(printlnGenerateYaml())
         .build()
 
-    return PropertySpec.builder("workflow", it.krzeminski.githubactions.domain.Workflow::class)
+    return PropertySpec.builder("workflow${name.toPascalCase()}", it.krzeminski.githubactions.domain.Workflow::class)
         .initializer(initializer)
         .build()
 }
@@ -87,7 +87,7 @@ fun printlnGenerateYaml(): CodeBlock = CodeBlock.of("""
 fun CodeBlock.Builder.addJobs(jobs: Map<String, Job>): CodeBlock.Builder {
     val builder = this
     jobs.forEach { (name, job) ->
-        add("job(%S, %M) {\n", name, enumMemberName<RunnerType>(job.runsOn))
+        add("job(%S, %M) {\n", name, enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest))
             .indent()
         job.steps.forEach {
             addStep(it, wrappersToGenerate)
@@ -172,7 +172,10 @@ fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): Pair<S
         is ListOfTypings -> {
             val delimeter = if (typing.delimiter == "\\n") "\n" else typing.delimiter
             val listString = value.trim().split(delimeter).joinToString(
-                prefix = "listOf(", postfix = ")", transform = { valueWithTyping(it, typing.typing, coords).second }
+                prefix = "listOf(", postfix = ")", transform = {
+                    val (percent, transformed) = valueWithTyping(it, typing.typing, coords)
+                    if (percent == "%S") "$QUOTE$transformed$QUOTE" else transformed
+                }
             )
             "%L" to listString
         }
@@ -202,9 +205,9 @@ private fun String.orExpression(): Pair<String, String> {
     val input = trim()
     if (input.startsWith(EXPR_PREFIX) && endsWith(EXPR_SUFFIX)) {
         val expression = input.removeSuffix(EXPR_SUFFIX).removePrefix(EXPR_PREFIX).trim()
-        return "%L" to "expr($QUOTE$expression$QUOTE)"
+        return "expr(%S)" to expression
     } else {
-        return "%S" to "$QUOTE$input$QUOTE"
+        return "%S" to input
     }
 }
 
@@ -304,7 +307,7 @@ fun Trigger?.toKotlin(): CodeBlock {
 
 
         builder
-            .add("%N = %L,\n", key,
+            .add("%N = %L,\n", key.toCamelCase(),
                 list?.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
                     ?: "$QUOTE$value$QUOTE"
             )

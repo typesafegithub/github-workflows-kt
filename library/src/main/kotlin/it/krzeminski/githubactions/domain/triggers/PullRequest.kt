@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import kotlinx.serialization.SerialInfo
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable

@@ -8,7 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Workflow(
+data class GithubWorkflow(
     val name: String,
     val on: WorkflowOn,
     val jobs: Map<String, Job> = emptyMap(),
