@@ -50,6 +50,11 @@ fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
 
         appendLine("jobs:")
         append(jobsWithConsistencyCheck.jobsToYaml().prependIndent("  "))
+        freeArgsToYaml().takeIf { it.isNotBlank() }
+            ?.let { freeargs ->
+                append("\n")
+                append(freeargs.replaceIndent(""))
+            }
     }
 }
 

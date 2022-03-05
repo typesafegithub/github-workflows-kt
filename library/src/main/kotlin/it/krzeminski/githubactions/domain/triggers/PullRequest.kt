@@ -1,5 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
+import it.krzeminski.githubactions.dsl.FreeYamlArgs
+
 data class PullRequest(
     val types: List<Type> = emptyList(),
     val branches: List<String>? = null,
@@ -7,6 +9,7 @@ data class PullRequest(
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
 ) : Trigger() {
+    override val freeYamlArgs: FreeYamlArgs = mutableListOf()
     init {
         require(!(branches != null && branchesIgnore != null)) {
             "Cannot define both 'branches' and 'branchesIgnore'!"

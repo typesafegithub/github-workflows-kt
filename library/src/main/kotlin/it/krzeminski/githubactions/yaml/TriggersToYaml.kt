@@ -9,6 +9,9 @@ import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
+import it.krzeminski.githubactions.dsl.HasFreeYamlArgs
+import it.krzeminski.githubactions.dsl.ListFreeArg
+import it.krzeminski.githubactions.dsl.StringFreeArg
 
 fun List<Trigger>.triggersToYaml(): String =
     this
@@ -22,7 +25,17 @@ private fun Trigger.toYamlString() =
         is PullRequest -> toYaml()
         is PullRequestTarget -> toYaml()
         is Schedule -> toYaml()
+    } + freeArgsToYaml()
+
+internal fun HasFreeYamlArgs.freeArgsToYaml(): String = buildString {
+    append("\n")
+    for (arg in freeYamlArgs) {
+        when (arg) {
+            is ListFreeArg -> printIfHasElements(arg.value, arg.key)
+            is StringFreeArg -> appendLine("  ${arg.key}: ${arg.value}")
+        }
     }
+}.removeSuffix("\n")
 
 private fun Push.toYaml() = buildString {
     appendLine("push:")
@@ -90,7 +103,7 @@ private fun Type.toYaml(): String = when (this) {
     Type.String -> "string"
 }
 
-private fun StringBuilder.printIfHasElements(
+internal fun StringBuilder.printIfHasElements(
     items: List<String>?,
     name: String,
     space: String = "  ",
