@@ -18,7 +18,8 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             if (useGitDiff) {
                 run(
                     "Execute script",
-                    "rm '$targetFile' && '${sourceFile.invariantSeparatorsPathString}'"
+                    "rm '${targetFile.invariantSeparatorsPathString}' " +
+                        "&& '${sourceFile.invariantSeparatorsPathString}'"
                 )
                 run(
                     "Consistency check",
