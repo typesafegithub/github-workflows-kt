@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.dsl.toBuilder
 import kotlin.io.path.invariantSeparatorsPathString
 
 private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
+    val workflow = this
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
         val consistencyCheckJob = this.toBuilder().job(
             name = "check_yaml_consistency",
@@ -50,12 +51,12 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
         appendLine("name: $name")
         appendLine()
         appendLine("on:")
-        appendLine(this@toYaml.on.triggersToYaml().prependIndent("  "))
+        appendLine(workflow.on.triggersToYaml().prependIndent("  "))
         appendLine()
 
-        if (this@toYaml.env.isNotEmpty()) {
+        if (workflow.env.isNotEmpty()) {
             appendLine("env:")
-            appendLine(this@toYaml.env.toYaml().prependIndent("  "))
+            appendLine(workflow.env.toYaml().prependIndent("  "))
             appendLine()
         }
 
