@@ -1,11 +1,17 @@
 package test
 
+import generated.workflowCheckBuild
+import generated.workflowGenerateWrappers
+import generated.workflowGenerated
+import generated.workflowPublishMkDocs
+import generated.workflowRefreshVersionsPR
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import it.krzeminski.githubactions.scriptgenerator.myYaml
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
+import it.krzeminski.githubactions.yaml.toYaml
 import kotlinx.serialization.decodeFromString
 import java.io.File
 
@@ -35,6 +41,18 @@ class GenerateKotlinScripts : FunSpec({
                 fail("${input.kotlinFile} and ${input.initialFile} differ")
             }
         }
+    }
+
+    test("Check the workflows compile") {
+        val workflows = listOf(
+            workflowCheckBuild,
+            workflowPublishMkDocs,
+            workflowPublishMkDocs,
+            workflowGenerated,
+            workflowGenerateWrappers,
+            workflowRefreshVersionsPR,
+        )
+        workflows.forEach { println(it.toYaml(addConsistencyCheck = false)) }
     }
 })
 
