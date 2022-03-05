@@ -15,7 +15,7 @@ import java.nio.file.Paths
 import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.io.path.readText
 
-@Suppress("LargeClass") // maybe split this in separate test classes ?
+@Suppress("LargeClass")
 class EndToEndTest : FunSpec({
     val workflow = workflow(
         name = "Test workflow",
@@ -613,10 +613,8 @@ class EndToEndTest : FunSpec({
         }
 
         // then
-        val sourcePath = workflow1.sourceFile.invariantSeparatorsPathString
-        val workflow1TargetPath = workflow1.targetFile.invariantSeparatorsPathString
         workflow1.targetFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL ($sourcePath).
+            # This file was generated using Kotlin DSL (build/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -637,10 +635,10 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Execute script
-                    run: rm '$workflow1TargetPath' && '$sourcePath'
+                    run: rm 'build/workflows/some_workflow_1.yaml' && 'build/workflows/some_workflow.main.kts'
                   - id: step-3
                     name: Consistency check
-                    run: git diff --exit-code '$workflow1TargetPath'
+                    run: git diff --exit-code 'build/workflows/some_workflow_1.yaml'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -652,9 +650,8 @@ class EndToEndTest : FunSpec({
                     uses: actions/checkout@v2
         """.trimIndent()
 
-        val workflow2TargetPath = workflow2.targetFile.invariantSeparatorsPathString
         workflow2.targetFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL ($sourcePath).
+            # This file was generated using Kotlin DSL (build/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -675,10 +672,10 @@ class EndToEndTest : FunSpec({
                     run: sudo snap install --classic kotlin
                   - id: step-2
                     name: Execute script
-                    run: rm '$workflow2TargetPath' && '$sourcePath'
+                    run: rm 'build/workflows/some_workflow_1.yaml' && 'build/workflows/some_workflow.main.kts'
                   - id: step-3
                     name: Consistency check
-                    run: git diff --exit-code '$workflow2TargetPath'
+                    run: git diff --exit-code 'build/workflows/some_workflow_1.yaml'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
