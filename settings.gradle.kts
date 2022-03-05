@@ -4,3 +4,4 @@ include(
     "library",
     "wrapper-generator",
 )
+include("script-generator")

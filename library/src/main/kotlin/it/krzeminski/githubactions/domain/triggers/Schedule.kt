@@ -5,6 +5,7 @@ data class Schedule(
 ) : Trigger()
 
 /** See https://crontab.guru **/
+@kotlinx.serialization.Serializable
 data class Cron(val expression: String)
 
 /** See https://crontab.guru **/

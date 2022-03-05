@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.domain.triggers
 
+@kotlinx.serialization.Serializable
 data class Push(
     val branches: List<String>? = null,
     val branchesIgnore: List<String>? = null,

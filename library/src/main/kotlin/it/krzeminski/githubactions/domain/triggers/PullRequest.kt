@@ -1,5 +1,9 @@
 package it.krzeminski.githubactions.domain.triggers
 
+import kotlinx.serialization.SerialInfo
+import kotlinx.serialization.SerialName
+
+@kotlinx.serialization.Serializable
 data class PullRequest(
     val types: List<Type> = emptyList(),
     val branches: List<String>? = null,
@@ -19,11 +23,13 @@ data class PullRequest(
     /**
      * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
      */
+    @kotlinx.serialization.Serializable
     enum class Type {
         Assigned,
         Unassigned,
         Labeled,
         Unlabeled,
+        @SerialName("opened")
         Opened,
         Edited,
         Closed,
@@ -36,6 +42,7 @@ data class PullRequest(
         ReviewRequested,
         ReviewRequestRemoved,
         AutoMergeEnabled,
+        @SerialName("auto_merge_disabled")
         AutoMergeDisabled,
     }
 }

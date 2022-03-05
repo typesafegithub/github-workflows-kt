@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+@kotlinx.serialization.Serializable
 data class PullRequestTarget(
     val types: List<Type> = emptyList(),
     val branches: List<String>? = null,
