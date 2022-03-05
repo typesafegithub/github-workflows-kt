@@ -29,6 +29,49 @@ language with good internal DSL support.
 * programmatically generate your workflow's arbitrarily complex logic, you can even call an external service and
   generate your workflow based on the response. Whatever Kotlin and the JVM allows you to do
 
+## 🎉 Generate your Kotlin Script from your existing YAML workflow
+
+Create a Github Gist with your existing workflow
+
+Its **url** should look like https://gist.githubusercontent.com/jmfayard/63416a2812475a39618a6b1aab16020b/raw/cd2a5d4dea15c76ca678612a814c59acb6e1b455/build.yml
+
+Then simply run the command:
+
+`./gradlew :script-generator:run --args https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml`
+
+You will see your Kotlin Script:
+
+```kotlin
+public val workflowPublishMkDocsWebsiteToGitHubPages: Workflow = workflow(
+      name = "Publish MkDocs website to GitHub pages",
+      on = listOf(
+        Push(
+          branches = listOf("release"),
+        ),
+        ),
+      sourceFile = Paths.get("publish-mkdocs-website-to-github-pages.main.kts"),
+      targetFile = Paths.get("publish-mkdocs-website-to-github-pages.yml"),
+    ) {
+      job("deploy", UbuntuLatest) {
+        uses(
+          name = "CheckoutV2",
+          action = CheckoutV2(),
+        )
+        run(
+          name = "./docs/DocsCopier.main.kts",
+          command = "./docs/DocsCopier.main.kts",
+        )
+        uses(
+          name = "SetupPythonV2",
+          action = SetupPythonV2(
+            pythonVersion = "3.x",
+          ),
+        )
+       // ...
+    }
+}        
+```
+
 ## 🛠️ Usage
 
 As an exercise, we'll add a job that prints out `Hello world!`. Feel free to replace the actual workflow's logic and all

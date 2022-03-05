@@ -30,7 +30,7 @@ tasks.withType<Test> {
 }
 
 application {
-    mainClass.set("it.krzeminski.githubactions.wrappergenerator.GenerationEntryPointKt")
+    mainClass.set("it.krzeminski.githubactions.scriptgenerator.MainKt")
     tasks.run.get().workingDir = rootProject.projectDir
 }
 
