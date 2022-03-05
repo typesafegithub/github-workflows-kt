@@ -16,10 +16,10 @@ import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.scriptmodel.ActionCoords
+import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.scriptmodel.Job
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.SerializedStep
-import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.scriptmodel.WorkflowOn
 import it.krzeminski.githubactions.scriptmodel.classname
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
@@ -45,9 +45,10 @@ fun GithubWorkflow.toKotlin(): String =
 private const val PACKAGE = "it.krzeminski.githubactions"
 
 fun GithubWorkflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
-    .addAnnotation(AnnotationSpec.builder(ClassName("", "DependsOn"))
-        .addMember("%S", "it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
-        .build()
+    .addAnnotation(
+        AnnotationSpec.builder(ClassName("", "DependsOn"))
+            .addMember("%S", "it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
+            .build()
     )
     .addImport("$PACKAGE.yaml", "toYaml")
     .addImport("$PACKAGE.dsl", "expr")
@@ -77,12 +78,14 @@ fun GithubWorkflow.workFlowProperty(): PropertySpec {
         .build()
 }
 
-fun printlnGenerateYaml(): CodeBlock = CodeBlock.of("""
+fun printlnGenerateYaml(): CodeBlock = CodeBlock.of(
+    """
     .also {
         println("Generating YAML")
         println(it.toYaml(addConsistencyCheck = false))
     }
-""".trimIndent())
+    """.trimIndent()
+)
 
 fun CodeBlock.Builder.addJobs(jobs: Map<String, Job>): CodeBlock.Builder {
     val builder = this
@@ -142,7 +145,7 @@ private fun CodeBlock.Builder.addStep(
         add(codeBlockOf("env", step.env))
         if (step.condition != null) {
             val (key, arg) = step.condition.orExpression()
-            add("condition = $key,\n",arg)
+            add("condition = $key,\n", arg)
         }
         unindent()
         add(")\n")
@@ -158,7 +161,6 @@ private fun CodeBlock.Builder.addStep(
             add("condition = $key,\n", arg)
         }
         builder.unindent().add(")\n")
-
     }
     return this
 }
@@ -213,7 +215,6 @@ private fun String.orExpression(): Pair<String, String> {
 
 private const val EXPR_PREFIX = "\${{"
 private const val EXPR_SUFFIX = "}}"
-
 
 private fun WorkflowOn.toKotlin(): CodeBlock {
     val builder = CodeBlock.builder()
@@ -305,9 +306,9 @@ fun Trigger?.toKotlin(): CodeBlock {
             else -> value.map { "$QUOTE$it$QUOTE" }
         }
 
-
         builder
-            .add("%N = %L,\n", key.toCamelCase(),
+            .add(
+                "%N = %L,\n", key.toCamelCase(),
                 list?.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
                     ?: "$QUOTE$value$QUOTE"
             )

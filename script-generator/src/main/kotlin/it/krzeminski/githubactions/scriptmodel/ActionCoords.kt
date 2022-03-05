@@ -12,4 +12,3 @@ fun ActionCoords(yaml: String): ActionCoords {
 
 fun ActionCoords.classname() =
     ClassName("it.krzeminski.githubactions.actions.${owner.toKotlinPackageName()}", buildActionClassName())
-

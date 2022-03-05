@@ -19,7 +19,7 @@ data class GithubWorkflow(
          $on
        jobs:
          ${jobs.entries.joinToString(separator = "\n         ")}
-        """.trimIndent()
+    """.trimIndent()
 }
 
 @Serializable

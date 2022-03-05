@@ -1,17 +1,11 @@
 package test
 
-import generated.workflowCheckBuild
-import generated.workflowGenerateWrappers
-import generated.workflowGenerated
-import generated.workflowPublishMkDocs
-import generated.workflowRefreshVersionsPR
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import it.krzeminski.githubactions.scriptgenerator.myYaml
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
-import it.krzeminski.githubactions.yaml.toYaml
 import kotlinx.serialization.decodeFromString
 import java.io.File
 
@@ -42,25 +36,14 @@ class GenerateKotlinScripts : FunSpec({
             }
         }
     }
-
-    test("Check the workflows compile") {
-        val workflows = listOf(
-            workflowCheckBuild,
-            workflowPublishMkDocs,
-            workflowPublishMkDocs,
-            workflowGenerated,
-            workflowGenerateWrappers,
-            workflowRefreshVersionsPR,
-        )
-        workflows.forEach { println(it.toYaml(addConsistencyCheck = false)) }
-    }
 })
 
 data class TestInput(val name: String) {
     val filename = name.removeSuffix(".yml")
-    val yamlFile = File("src/test/resources/$filename.yml")
+    private fun file(path: String) = File("src/test/resources/$path")
+    val yamlFile = file("$filename.yml")
         .also { require(it.canRead()) { "Invalid file ${it.canonicalPath}" } }
-    val kotlinFile = File("src/test/kotlin/generated/${filename.toPascalCase()}.kt")
-    val initialFile = File("src/test/kotlin/generated/${filename.toPascalCase()}Initial.kt")
+    val kotlinFile = file("${filename.toPascalCase()}.kt")
+    val initialFile = file("${filename.toPascalCase()}Initial.kt")
     val expected = if (kotlinFile.canRead()) kotlinFile.readText() else ""
 }
