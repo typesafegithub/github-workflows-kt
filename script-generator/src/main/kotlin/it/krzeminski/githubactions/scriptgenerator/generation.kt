@@ -26,6 +26,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
@@ -49,17 +50,19 @@ private fun Workflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
         .build()
     )
     .addImport("$PACKAGE.yaml", "toYaml")
+    .addImport("$PACKAGE.dsl", "expr")
     .addProperty(workFlowProperty())
     .build()
 
 fun Workflow.workFlowProperty(): PropertySpec {
+    val filename = name.lowercase().replace(" ", "-")
     val initializer = CodeBlock.builder()
         .add("%M(\n", MemberName("$PACKAGE.dsl", "workflow"))
         .indent()
         .add("name = %S,\n", name)
         .add("on = %L", on.toKotlin())
-        .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$name.main.kts"))
-        .add("targetFile = %T.get(%S),\n", Paths::class, Paths.get("$name.yml"))
+        .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.main.kts"))
+        .add("targetFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.yml"))
         .unindent()
         .add(") {\n")
         .indent()
@@ -96,14 +99,17 @@ fun CodeBlock.Builder.addJobs(jobs: Map<String, Job>): CodeBlock.Builder {
     return this
 }
 
-inline fun <reified T : Enum<T>> enumMemberName(input: T): MemberName =
+inline fun <reified T : Enum<T>> enumMemberName(input: T): MemberName? =
     enumMemberName<T>(input.name)
 
-inline fun <reified T : Enum<T>> enumMemberName(input: String): MemberName {
+inline fun <reified T : Enum<T>> enumMemberName(input: String): MemberName? {
     return enumValues<T>()
         .firstOrNull { it.name == input.toPascalCase() }
         ?.let { MemberName(T::class.asClassName(), it.name) }
-        ?: error("Unexpected enum ${T::class} $input=$input expected=${enumValues<T>()}")
+        ?: run {
+            println("WARNING: Unexpected enum ${T::class} $input=$input expected=${enumValues<T>()}")
+            null
+        }
 }
 
 private fun CodeBlock.Builder.addStep(
@@ -115,10 +121,9 @@ private fun CodeBlock.Builder.addStep(
     if (step.uses != null) {
         val coords = ActionCoords(step.uses)
         val wrapper = wrappersToGenerate.firstOrNull { it.actionCoords.actionYamlUrl == coords.actionYamlUrl }
-        println("wrapper=$wrapper")
         add("uses(\n")
         indent()
-        add("name = %S,\n", step.name)
+        add("name = %S,\n", step.name ?: coords.buildActionClassName())
         add("action = %T(", coords.classname())
 
         if (step.with.isEmpty()) {
@@ -128,26 +133,29 @@ private fun CodeBlock.Builder.addStep(
             step.with.forEach { (key, value) ->
                 if (value != null) {
                     val typing = wrapper?.inputTypings?.get(key) ?: StringTyping
-                    add("%N = %L,\n", key.toCamelCase(), valueWithTyping(value, typing, coords))
+                    val (percent, arg) = valueWithTyping(value, typing, coords)
+                    add("%N = $percent,\n", key.toCamelCase(), arg)
                 }
             }
             builder.unindent().add("),\n")
         }
         add(codeBlockOf("env", step.env))
         if (step.condition != null) {
-            add("condition = %S,\n", step.condition)
+            val (key, arg) = step.condition.orExpression()
+            add("condition = $key,\n",arg)
         }
-        add(")\n")
         unindent()
+        add(")\n")
     } else {
         builder
             .add(("run(\n"))
             .indent()
-            .add("name = %S,\n", step.name)
+            .add("name = %S,\n", step.name ?: step.run)
             .add("command = %S,\n", step.run)
             .add(codeBlockOf("env", step.env))
         if (step.condition != null) {
-            add("condition = %S,\n", step.condition)
+            val (key, arg) = step.condition.orExpression()
+            add("condition = $key,\n", arg)
         }
         builder.unindent().add(")\n")
 
@@ -155,19 +163,20 @@ private fun CodeBlock.Builder.addStep(
     return this
 }
 
-fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): String {
-    val quote = "\""
+fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): Pair<String, String> {
     val classname = coords.buildActionClassName()
     return when (typing) {
-        is EnumTyping -> "$classname.${typing.typeName}.${value.toPascalCase()}"
-        is BooleanTyping -> "$value"
+        is EnumTyping -> "%L" to "$classname.${typing.typeName}.${value.toPascalCase()}"
+        is BooleanTyping -> "%L" to value
+        is IntegerWithSpecialValueTyping -> "%L" to "$classname.${typing.typeName}.Value($value)"
         is ListOfTypings -> {
             val delimeter = if (typing.delimiter == "\\n") "\n" else typing.delimiter
-            value.trim().split(delimeter).joinToString(
-                prefix = "listOf(", postfix = ")", transform = { valueWithTyping(it, typing.typing, coords) }
+            val listString = value.trim().split(delimeter).joinToString(
+                prefix = "listOf(", postfix = ")", transform = { valueWithTyping(it, typing.typing, coords).second }
             )
+            "%L" to listString
         }
-        else -> "$quote$value$quote"
+        else -> "%S" to value
     }
 }
 
@@ -180,13 +189,28 @@ fun codeBlockOf(property: String, map: LinkedHashMap<String, String?>?): CodeBlo
         .indent()
     for ((key, value) in map) {
         if (value != null) {
-            builder.add("%S to %S,\n", key, value)
+            val (percent, arg) = value.orExpression()
+            builder.add("%S to $percent,\n", key, arg)
         }
     }
     builder.unindent()
         .add("),\n")
     return builder.build()
 }
+
+private fun String.orExpression(): Pair<String, String> {
+    val input = trim()
+    if (input.startsWith(EXPR_PREFIX) && endsWith(EXPR_SUFFIX)) {
+        val expression = input.removeSuffix(EXPR_SUFFIX).removePrefix(EXPR_PREFIX).trim()
+        return "%L" to "expr($QUOTE$expression$QUOTE)"
+    } else {
+        return "%S" to "$QUOTE$input$QUOTE"
+    }
+}
+
+private const val EXPR_PREFIX = "\${{"
+private const val EXPR_SUFFIX = "}}"
+
 
 private fun WorkflowOn.toKotlin(): CodeBlock {
     val builder = CodeBlock.builder()
@@ -258,13 +282,14 @@ fun Trigger.toMap(): LinkedHashMap<String, Any?> = when (this) {
     is WorkflowDispatch -> linkedMapOf()
 }
 
+const val QUOTE = "\""
+
 fun Trigger?.toKotlin(): CodeBlock {
     this ?: return CodeBlock.of("")
     val map = this.toMap()
     val builder = CodeBlock.builder()
     builder
         .add("%T(\n", classname()).indent()
-    val quote = "\""
     for ((key, value) in map) {
         value ?: continue
         val list: List<String>? = when {
@@ -274,14 +299,14 @@ fun Trigger?.toKotlin(): CodeBlock {
                 is PullRequestTarget -> value.map { "PullRequestTarget.Type.${it.toString().toPascalCase()}" }
                 else -> error("Unexpected types=$value for key=$key")
             }
-            else -> value.map { "$quote$it$quote" }
+            else -> value.map { "$QUOTE$it$QUOTE" }
         }
 
 
         builder
             .add("%N = %L,\n", key,
                 list?.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
-                    ?: "$quote$value$quote"
+                    ?: "$QUOTE$value$QUOTE"
             )
     }
     builder.unindent().add("),\n")
