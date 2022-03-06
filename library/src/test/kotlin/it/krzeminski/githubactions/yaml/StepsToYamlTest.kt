@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.CheckoutV2.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
@@ -23,6 +24,20 @@ class StepsToYamlTest : DescribeSpec({
                 name = "Some external action",
                 action = CheckoutV2(),
             ),
+            ExternalActionStep(
+                id = "latex",
+                name = "Latex",
+                action = MissingAction(
+                    actionOwner = "xu-cheng",
+                    actionName = "latex-action",
+                    actionVersion = "v2",
+                    freeArgs = linkedMapOf(
+                        "root_file" to "report.tex",
+                        "compiler" to "latexmk",
+                    )
+                )
+            )
+
         )
 
         // when
@@ -34,7 +49,13 @@ class StepsToYamlTest : DescribeSpec({
                          |  run: echo 'test!'
                          |- id: someId
                          |  name: Some external action
-                         |  uses: actions/checkout@v2""".trimMargin()
+                         |  uses: actions/checkout@v2
+                         |- id: latex
+                         |  name: Latex
+                         |  uses: xu-cheng/latex-action@v2
+                         |  with:
+                         |    root_file: report.tex
+                         |    compiler: latexmk""".trimMargin()
     }
 
     describe("command step") {

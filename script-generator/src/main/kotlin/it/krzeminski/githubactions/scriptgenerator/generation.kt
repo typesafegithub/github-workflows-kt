@@ -7,6 +7,7 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.asClassName
+import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -127,21 +128,15 @@ private fun CodeBlock.Builder.addStep(
         add("uses(\n")
         indent()
         add("name = %S,\n", step.name ?: coords.buildActionClassName())
-        add("action = %T(", coords.classname())
 
-        if (step.with.isEmpty()) {
-            builder.add("),\n")
+        if (wrapper == null) {
+            add(generateMissingAction(coords, step))
+        } else if (step.with.isEmpty()) {
+            add("action = %T(),\n", coords.classname())
         } else {
-            builder.add("\n").indent()
-            step.with.forEach { (key, value) ->
-                if (value != null) {
-                    val typing = wrapper?.inputTypings?.get(key) ?: StringTyping
-                    val (percent, arg) = valueWithTyping(value, typing, coords)
-                    add("%N = $percent,\n", key.toCamelCase(), arg)
-                }
-            }
-            builder.unindent().add("),\n")
+            add(generateActionWithWrapper(coords, step, wrapper))
         }
+
         add(codeBlockOf("env", step.env))
         if (step.condition != null) {
             val (key, arg) = step.condition.orExpression()
@@ -164,6 +159,44 @@ private fun CodeBlock.Builder.addStep(
     }
     return this
 }
+
+private fun generateActionWithWrapper(
+    coords: ActionCoords,
+    step: SerializedStep,
+    wrapper: WrapperRequest,
+): CodeBlock = with(CodeBlock.builder()) {
+    add("action = %T(", coords.classname())
+    add("\n").indent()
+    step.with.forEach { (key, value) ->
+        if (value != null) {
+            val typing = wrapper.inputTypings.get(key) ?: StringTyping
+            val (percent, arg) = valueWithTyping(value, typing, coords)
+            add("%N = $percent,\n", key.toCamelCase(), arg)
+        }
+    }
+    unindent()
+    add("),\n")
+}.build()
+
+fun generateMissingAction(
+    coords: ActionCoords,
+    step: SerializedStep,
+): CodeBlock = with(CodeBlock.builder()) {
+    add("action = %T(", MissingAction::class)
+    add("\n").indent()
+    add("actionOwner = %S,\n", coords.owner)
+    add("actionName = %S,\n", coords.name)
+    add("actionVersion = %S,\n", coords.version)
+    add("freeArgs = %M(\n", MemberName("kotlin.collections", "linkedMapOf"))
+    indent()
+    step.with.forEach { (key, value) ->
+        add("%S to %S,\n", key, value)
+    }
+    unindent()
+    add(")\n")
+    unindent()
+    add(")\n")
+}.build()
 
 fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): Pair<String, String> {
     val classname = coords.buildActionClassName()

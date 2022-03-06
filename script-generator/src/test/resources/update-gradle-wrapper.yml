@@ -34,3 +34,10 @@ jobs:
       - id: step-1
         name: Update Gradle Wrapper
         uses: gradle-update/update-gradle-wrapper-action@v1
+      - id: step-2
+        name: Latex
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: report.tex
+          compiler: latexmk
+

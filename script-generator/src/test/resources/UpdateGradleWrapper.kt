@@ -1,4 +1,5 @@
 package generated
+import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType
@@ -10,6 +11,7 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
+import kotlin.collections.linkedMapOf
 
 public val workflowUpdateGradleWrapper: Workflow = workflow(
       name = "Update Gradle Wrapper",
@@ -46,6 +48,18 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         uses(
           name = "Update Gradle Wrapper",
           action = UpdateGradleWrapperActionV1(),
+        )
+        uses(
+          name = "Latex",
+          action = MissingAction(
+            actionOwner = "xu-cheng",
+            actionName = "latex-action",
+            actionVersion = "v2",
+            freeArgs = linkedMapOf(
+              "root_file" to "report.tex",
+              "compiler" to "latexmk",
+            )
+          )
         )
       }
 
