@@ -34,7 +34,6 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
-import it.krzeminski.githubactions.wrappergenerator.metadata.actionYamlUrl
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 import java.nio.file.Paths
 
@@ -65,6 +64,7 @@ fun GithubWorkflow.workFlowProperty(): PropertySpec {
         .add("on = %L", on.toKotlin())
         .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.main.kts"))
         .add("targetFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.yml"))
+        .add(workflowEnv())
         .unindent()
         .add(") {\n")
         .indent()
@@ -78,6 +78,19 @@ fun GithubWorkflow.workFlowProperty(): PropertySpec {
         .initializer(initializer)
         .build()
 }
+
+private fun GithubWorkflow.workflowEnv(): CodeBlock = CodeBlock.builder().apply {
+    if (env.isNotEmpty()) {
+        add("env = %M(\n", MemberName("kotlin.collections", "linkedMapOf"))
+        indent()
+        for ((key, value) in env) {
+            val (template, arg) = value.orExpression()
+            add("%S to $template,\n", key, arg)
+        }
+        unindent()
+        add("),\n")
+    }
+}.build()
 
 fun printlnGenerateYaml(): CodeBlock = CodeBlock.of(
     """
@@ -124,7 +137,10 @@ private fun CodeBlock.Builder.addStep(
 
     if (step.uses != null) {
         val coords = ActionCoords(step.uses)
-        val wrapper = wrappersToGenerate.firstOrNull { it.actionCoords.actionYamlUrl == coords.actionYamlUrl }
+        val wrapper = wrappersToGenerate.firstOrNull {
+            it.actionCoords.buildActionClassName() == coords.buildActionClassName() &&
+                it.actionCoords.owner.lowercase() == coords.owner.lowercase()
+        }
         add("uses(\n")
         indent()
         add("name = %S,\n", step.name ?: coords.buildActionClassName())
@@ -195,7 +211,7 @@ fun generateMissingAction(
     unindent()
     add(")\n")
     unindent()
-    add(")\n")
+    add("),\n")
 }.build()
 
 fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): Pair<String, String> {

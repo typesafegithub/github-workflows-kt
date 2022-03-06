@@ -59,7 +59,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
               "root_file" to "report.tex",
               "compiler" to "latexmk",
             )
-          )
+          ),
         )
       }
 

@@ -12,6 +12,7 @@ data class GithubWorkflow(
     val name: String,
     val on: WorkflowOn,
     val jobs: Map<String, Job> = emptyMap(),
+    val env: Map<String, String> = emptyMap(),
 ) {
     override fun toString() = """
        name: $name

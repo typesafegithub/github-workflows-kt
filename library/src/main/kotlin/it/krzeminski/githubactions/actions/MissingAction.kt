@@ -8,7 +8,7 @@ class MissingAction(
     override val actionName: String,
     override val actionVersion: String,
     val freeArgs: LinkedHashMap<String, String>,
-): Action(actionOwner, actionName, actionVersion) {
+) : Action(actionOwner, actionName, actionVersion) {
     override fun toYamlArguments(): LinkedHashMap<String, String> =
         freeArgs
 }

@@ -36,6 +36,12 @@ on:
           - 'debug'
   pull_request_target:
 
+env:
+  # Set the GRADLE_ENTERPRISE_ACCESS_KEY so that Gradle Build Scans are generated
+  GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+  # Enable debug for the `gradle-build-action` cache operations
+  GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED: true
+
 jobs:
   "check_yaml_consistency":
     runs-on: "ubuntu-latest"

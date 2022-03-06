@@ -16,6 +16,7 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
+import kotlin.collections.linkedMapOf
 
 public val workflowGenerated: Workflow = workflow(
       name = "generated",
@@ -44,6 +45,10 @@ public val workflowGenerated: Workflow = workflow(
         ),
       sourceFile = Paths.get("generated.main.kts"),
       targetFile = Paths.get("generated.yml"),
+      env = linkedMapOf(
+        "GRADLE_ENTERPRISE_ACCESS_KEY" to expr("secrets.GRADLE_ENTERPRISE_ACCESS_KEY"),
+        "GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED" to "true",
+      ),
     ) {
       job("check_yaml_consistency", UbuntuLatest) {
         uses(
