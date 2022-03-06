@@ -394,12 +394,15 @@ val wrappersToGenerate = listOf(
         ActionCoords("actions-rs", "cargo", "v1"),
         mapOf(
             "use-cross" to BooleanTyping,
-            "command" to EnumTyping("Command", listOf(
-                "help", "version",
-                "bench", "build", "check", "clean", "doc", "fetch", "fix", "run", "rustc", "rustdoc", "test", "report",
-                "generate-lockfile", "locate-project", "metadata", "pkgid", "tree", "update", "vendor", "verify-project",
-                "init", "install", "new", "search", "uninstall",
-                "login", "owner", "package", "publish", "yank")
+            "command" to EnumTyping(
+                "Command",
+                listOf(
+                    "help", "version",
+                    "bench", "build", "check", "clean", "doc", "fetch", "fix", "run", "rustc", "rustdoc", "test", "report",
+                    "generate-lockfile", "locate-project", "metadata", "pkgid", "tree", "update", "vendor", "verify-project",
+                    "init", "install", "new", "search", "uninstall",
+                    "login", "owner", "package", "publish", "yank"
+                )
             ),
             "args" to ListOfTypings(" "),
         )
