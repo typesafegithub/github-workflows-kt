@@ -1,4 +1,5 @@
-package generated
+package expected
+
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1

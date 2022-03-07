@@ -27,17 +27,16 @@ class GenerateKotlinScripts : FunSpec({
         test("Generating $name") {
             val input = TestInput(name)
             val workflow: GithubWorkflow = myYaml.decodeFromString(input.yamlFile.readText())
-            input.initialFile.writeText(input.expected.replace("package generated", "package initial"))
-            val newContent = workflow.toFileSpec(workflow.name).toString().run {
-                "package generated\n" + removeRange(0, indexOf("import"))
-            }
-            input.kotlinFile.writeText(newContent)
+
+            val newContent = workflow.toFileSpec(workflow.name).toString()
+            input.actualFile.writeText("package actual\n\n$newContent")
+
             if (System.getenv("GITHUB_ACTIONS") == "true") {
-                input.kotlinFile.readText() shouldBe input.expected
-            } else if (input.kotlinFile.readText() == input.expected) {
-                input.initialFile.delete()
+                newContent shouldBe input.expected
+            } else if (newContent == input.expected) {
+                input.actualFile.delete()
             } else {
-                fail("${input.kotlinFile} and ${input.initialFile} differ")
+                fail("${input.expectedFile.name} != ${input.actualFile.name} in ${input.actualFile.parentFile.canonicalPath}")
             }
         }
     }
@@ -53,7 +52,9 @@ data class TestInput(val name: String) {
     private fun file(path: String) = File("src/test/resources/$path")
     val yamlFile = file("$filename.yml")
         .also { require(it.canRead()) { "Invalid file ${it.canonicalPath}" } }
-    val kotlinFile = file("${filename.toPascalCase()}.kt")
-    val initialFile = file("${filename.toPascalCase()}Initial.kt")
-    val expected = if (kotlinFile.canRead()) kotlinFile.readText() else ""
+    val expectedFile = file("${filename.toPascalCase()}.kt")
+    val actualFile = file("${filename.toPascalCase()}Actual.kt")
+    val expected = if (expectedFile.canRead())
+        expectedFile.readText().removePrefix("package expected\n\n")
+    else ""
 }

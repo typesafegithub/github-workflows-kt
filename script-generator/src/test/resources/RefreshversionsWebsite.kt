@@ -1,4 +1,5 @@
-package generated
+package expected
+
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupPythonV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -9,7 +10,7 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 
-public val workflowPublishMkDocs: Workflow = workflow(
+public val workflowPublishMkdocs: Workflow = workflow(
       name = "Publish MkDocs",
       on = listOf(
         Push(

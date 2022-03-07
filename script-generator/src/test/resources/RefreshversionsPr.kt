@@ -1,4 +1,5 @@
-package generated
+package expected
+
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
@@ -14,7 +15,7 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 
-public val workflowRefreshVersionsPR: Workflow = workflow(
+public val workflowRefreshversionsPr: Workflow = workflow(
       name = "RefreshVersions PR",
       on = listOf(
         Schedule(listOf(

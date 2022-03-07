@@ -1,4 +1,5 @@
-package generated
+package expected
+
 import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
