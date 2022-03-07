@@ -10,7 +10,7 @@ import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.nio.file.Paths
 
-fun GithubWorkflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
+fun GithubWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
     .addAnnotation(
         AnnotationSpec.builder(ClassName("", "DependsOn"))
             .addMember("%S", "it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
@@ -18,11 +18,11 @@ fun GithubWorkflow.toFileSpec() = FileSpec.builder("", "$name.main.kts")
     )
     .addImport("$PACKAGE.yaml", "toYaml")
     .addImport("$PACKAGE.dsl", "expr")
-    .addProperty(workFlowProperty())
+    .addProperty(workFlowProperty(filenameFromUrl))
     .build()
 
-fun GithubWorkflow.workFlowProperty(): PropertySpec {
-    val filename = name.lowercase().replace(" ", "-")
+fun GithubWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
+    val filename = filenameFromUrl ?: name.lowercase().replace(" ", "-")
     val initializer = CodeBlock.builder()
         .add("%M(\n", Members.workflow)
         .indent()
@@ -40,7 +40,7 @@ fun GithubWorkflow.workFlowProperty(): PropertySpec {
         .add(printlnGenerateYaml())
         .build()
 
-    return PropertySpec.builder("workflow${name.toPascalCase()}", Workflow::class)
+    return PropertySpec.builder("workflow${filename.toPascalCase()}", Workflow::class)
         .initializer(initializer)
         .build()
 }
@@ -57,8 +57,8 @@ private fun GithubWorkflow.workflowEnv() = CodeBlock { builder ->
     builder.add("),\n")
 }
 
-fun GithubWorkflow.toKotlin(): String =
-    "#!/usr/bin/env kotlin\n\n${toFileSpec()}"
+fun GithubWorkflow.toKotlin(filenameFromUrl: String?): String =
+    "#!/usr/bin/env kotlin\n\n${toFileSpec(filenameFromUrl)}"
 
 
 fun printlnGenerateYaml(): CodeBlock = CodeBlock.of(

@@ -21,7 +21,11 @@ fun main(args: Array<String>) {
             """.trimIndent()
         )
     }
-    val urlContent = URL(args.first()).readText()
+    val url = URL(args.first())
+    val urlContent = url.readText()
     val workflow: GithubWorkflow = myYaml.decodeFromString(urlContent)
-    println(workflow.toKotlin())
+    println(workflow.toKotlin(url.filename()))
 }
+
+fun URL.filename(): String =
+    path.substringAfterLast("/").removeSuffix(".yml")

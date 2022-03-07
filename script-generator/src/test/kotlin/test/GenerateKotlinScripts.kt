@@ -2,12 +2,15 @@ package test
 
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.scriptgenerator.filename
 import it.krzeminski.githubactions.scriptmodel.myYaml
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
+import java.net.URL
 
 class GenerateKotlinScripts : FunSpec({
 
@@ -25,7 +28,7 @@ class GenerateKotlinScripts : FunSpec({
             val input = TestInput(name)
             val workflow: GithubWorkflow = myYaml.decodeFromString(input.yamlFile.readText())
             input.initialFile.writeText(input.expected.replace("package generated", "package initial"))
-            val newContent = workflow.toFileSpec().toString().run {
+            val newContent = workflow.toFileSpec(workflow.name).toString().run {
                 "package generated\n" + removeRange(0, indexOf("import"))
             }
             input.kotlinFile.writeText(newContent)
@@ -35,6 +38,11 @@ class GenerateKotlinScripts : FunSpec({
                 fail("${input.kotlinFile} and ${input.initialFile} differ")
             }
         }
+    }
+
+    test("filename from URL") {
+        val url = URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml")
+        url.filename() shouldBe "publish-mkdocs-website"
     }
 })
 
