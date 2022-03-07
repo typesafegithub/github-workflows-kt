@@ -15,7 +15,6 @@ import it.krzeminski.githubactions.scriptmodel.WorkflowOn
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 
-
 fun WorkflowOn.toKotlin(): CodeBlock {
     val builder = CodeBlock.builder()
     builder.add("listOf(\n").indent()
@@ -27,7 +26,6 @@ fun WorkflowOn.toKotlin(): CodeBlock {
     builder.add("),\n").unindent()
     return builder.build()
 }
-
 
 fun Trigger?.toKotlin(): CodeBlock {
     this ?: return CodeBlock.of("")

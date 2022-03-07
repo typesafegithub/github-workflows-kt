@@ -19,7 +19,7 @@ fun GithubWorkflow.generateJobs() = CodeBlock { builder ->
                 val coords = ActionCoords(step.uses)
                 val wrapper = wrappersToGenerate.firstOrNull {
                     it.actionCoords.buildActionClassName() == coords.buildActionClassName() &&
-                            it.actionCoords.owner.lowercase() == coords.owner.lowercase()
+                        it.actionCoords.owner.lowercase() == coords.owner.lowercase()
                 }
 
                 builder.add(generateAction(step, coords, wrapper))
@@ -45,5 +45,3 @@ fun generateCommand(step: SerializedStep) = CodeBlock { builder ->
     }
     builder.unindent().add(")\n")
 }
-
-

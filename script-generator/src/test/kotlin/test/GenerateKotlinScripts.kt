@@ -4,9 +4,9 @@ import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.scriptgenerator.filename
-import it.krzeminski.githubactions.scriptmodel.myYaml
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
+import it.krzeminski.githubactions.scriptmodel.myYaml
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -32,7 +32,9 @@ class GenerateKotlinScripts : FunSpec({
                 "package generated\n" + removeRange(0, indexOf("import"))
             }
             input.kotlinFile.writeText(newContent)
-            if (input.kotlinFile.readText() == input.expected) {
+            if (System.getenv("GITHUB_ACTIONS") == "true") {
+                input.kotlinFile.readText() shouldBe input.expected
+            } else if (input.kotlinFile.readText() == input.expected) {
                 input.initialFile.delete()
             } else {
                 fail("${input.kotlinFile} and ${input.initialFile} differ")

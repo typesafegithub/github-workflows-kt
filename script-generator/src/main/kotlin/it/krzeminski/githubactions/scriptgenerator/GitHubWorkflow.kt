@@ -60,7 +60,6 @@ private fun GithubWorkflow.workflowEnv() = CodeBlock { builder ->
 fun GithubWorkflow.toKotlin(filenameFromUrl: String?): String =
     "#!/usr/bin/env kotlin\n\n${toFileSpec(filenameFromUrl)}"
 
-
 fun printlnGenerateYaml(): CodeBlock = CodeBlock.of(
     """
     .also {

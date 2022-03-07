@@ -81,8 +81,6 @@ fun generateMissingAction(
         .add("),\n")
 }
 
-
-
 fun ActionCoords(yaml: String): ActionCoords {
     val (owner, name, version) = yaml.split("/", "@")
     return ActionCoords(owner, name, version)
@@ -90,4 +88,3 @@ fun ActionCoords(yaml: String): ActionCoords {
 
 fun ActionCoords.classname() =
     ClassName("$PACKAGE.actions.${owner.toKotlinPackageName()}", buildActionClassName())
-

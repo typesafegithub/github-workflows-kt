@@ -11,7 +11,6 @@ const val PACKAGE = "it.krzeminski.githubactions"
 
 const val QUOTE = "\""
 
-
 fun main(args: Array<String>) {
     if (args.isEmpty() || args.first().startsWith("http").not()) {
         error(
