@@ -2,7 +2,7 @@ package test
 
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
-import it.krzeminski.githubactions.scriptgenerator.myYaml
+import it.krzeminski.githubactions.scriptmodel.myYaml
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase

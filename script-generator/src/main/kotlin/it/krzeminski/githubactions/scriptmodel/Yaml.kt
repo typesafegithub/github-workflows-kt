@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.scriptgenerator
+package it.krzeminski.githubactions.scriptmodel
 
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml

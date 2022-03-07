@@ -1,8 +1,16 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
+import it.krzeminski.githubactions.scriptmodel.myYaml
 import kotlinx.serialization.decodeFromString
 import java.net.URL
+
+const val LIBRARY_VERSION = "0.9.0"
+
+const val PACKAGE = "it.krzeminski.githubactions"
+
+const val QUOTE = "\""
+
 
 fun main(args: Array<String>) {
     if (args.isEmpty() || args.first().startsWith("http").not()) {
