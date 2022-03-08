@@ -326,35 +326,34 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "labeler", "v3"),
+        ActionCoords("actions", "labeler", "v4"),
         mapOf(
             "sync-labels" to BooleanTyping,
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-dotnet", "v1"),
+        ActionCoords("actions", "setup-dotnet", "v2"),
         mapOf(
             "include-prerelease" to BooleanTyping,
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-go", "v2"),
+        ActionCoords("actions", "setup-go", "v3"),
         mapOf(
             "check-latest" to BooleanTyping,
-            "stable" to BooleanTyping,
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "stale", "v4"),
+        ActionCoords("actions", "stale", "v5"),
         mapOf(
             "any-of-issue-labels" to ListOfTypings(","),
             "any-of-labels" to ListOfTypings(","),
             "any-of-pr-labels" to ListOfTypings(","),
             "ascending" to BooleanTyping,
             "days-before-close" to IntegerTyping,
-            "days-before-issue-close" to IntegerTyping,
-            "days-before-pr-close" to IntegerTyping,
-            "days-before-pr-stale" to IntegerTyping,
+            "days-before-issue-close" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
+            "days-before-pr-close" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
+            "days-before-pr-stale" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
             "days-before-stale" to IntegerTyping,
             "debug-only" to BooleanTyping,
             "delete-branch" to BooleanTyping,

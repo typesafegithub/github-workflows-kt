@@ -16,7 +16,7 @@ import kotlin.Suppress
  *
  * [Action on GitHub](https://github.com/actions/setup-dotnet)
  */
-public class SetupDotnetV1(
+public class SetupDotnetV2(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
      * available. Examples: 2.2.104, 3.1, 3.1.x
@@ -42,7 +42,7 @@ public class SetupDotnetV1(
      * 5.0.0-preview.6 being matched by 5, 5.0, 5.x or 5.0.x). Defaults to false if not provided.
      */
     public val includePrerelease: Boolean? = null
-) : Action("actions", "setup-dotnet", "v1") {
+) : Action("actions", "setup-dotnet", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

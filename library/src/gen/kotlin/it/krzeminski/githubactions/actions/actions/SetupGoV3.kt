@@ -15,7 +15,7 @@ import kotlin.Suppress
  *
  * [Action on GitHub](https://github.com/actions/setup-go)
  */
-public class SetupGoV2(
+public class SetupGoV3(
     /**
      * The Go version to download (if necessary) and use. Supports semver spec and ranges.
      */
@@ -26,21 +26,16 @@ public class SetupGoV2(
      */
     public val checkLatest: Boolean? = null,
     /**
-     * Whether to download only stable versions
-     */
-    public val stable: Boolean? = null,
-    /**
      * Used to pull node distributions from go-versions.  Since there's a default, this is typically
      * not supplied by the user.
      */
     public val token: String? = null
-) : Action("actions", "setup-go", "v2") {
+) : Action("actions", "setup-go", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             goVersion?.let { "go-version" to it },
             checkLatest?.let { "check-latest" to it.toString() },
-            stable?.let { "stable" to it.toString() },
             token?.let { "token" to it },
         ).toTypedArray()
     )

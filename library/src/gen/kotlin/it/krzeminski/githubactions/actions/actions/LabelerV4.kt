@@ -15,7 +15,7 @@ import kotlin.Suppress
  *
  * [Action on GitHub](https://github.com/actions/labeler)
  */
-public class LabelerV3(
+public class LabelerV4(
     /**
      * The GITHUB_TOKEN secret
      */
@@ -28,7 +28,7 @@ public class LabelerV3(
      * Whether or not to remove labels when matching files are reverted
      */
     public val syncLabels: Boolean? = null
-) : Action("actions", "labeler", "v3") {
+) : Action("actions", "labeler", "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

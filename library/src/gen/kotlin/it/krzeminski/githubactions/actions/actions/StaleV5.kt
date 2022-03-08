@@ -17,7 +17,7 @@ import kotlin.collections.List
  *
  * [Action on GitHub](https://github.com/actions/stale)
  */
-public class StaleV4(
+public class StaleV5(
     /**
      * Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -57,7 +57,7 @@ public class StaleV4(
      * pull requests as stale automatically. Override "days-before-stale" option regarding only the
      * pull requests.
      */
-    public val daysBeforePrStale: Int? = null,
+    public val daysBeforePrStale: StaleV5.Days? = null,
     /**
      * The number of days to wait to close an issue or a pull request after it being marked stale.
      * Set to -1 to never close stale issues or pull requests.
@@ -67,13 +67,13 @@ public class StaleV4(
      * The number of days to wait to close an issue after it being marked stale. Set to -1 to never
      * close stale issues. Override "days-before-close" option regarding only the issues.
      */
-    public val daysBeforeIssueClose: Int? = null,
+    public val daysBeforeIssueClose: StaleV5.Days? = null,
     /**
      * The number of days to wait to close a pull request after it being marked stale. Set to -1 to
      * never close stale pull requests. Override "days-before-close" option regarding only the pull
      * requests.
      */
-    public val daysBeforePrClose: Int? = null,
+    public val daysBeforePrClose: StaleV5.Days? = null,
     /**
      * The label to apply when an issue is stale.
      */
@@ -266,7 +266,7 @@ public class StaleV4(
      * "ignore-updates" option regarding only the pull requests.
      */
     public val ignorePrUpdates: Boolean? = null
-) : ActionWithOutputs<StaleV4.Outputs>("actions", "stale", "v4") {
+) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -277,10 +277,10 @@ public class StaleV4(
             closePrMessage?.let { "close-pr-message" to it },
             daysBeforeStale?.let { "days-before-stale" to it.toString() },
             daysBeforeIssueStale?.let { "days-before-issue-stale" to it },
-            daysBeforePrStale?.let { "days-before-pr-stale" to it.toString() },
+            daysBeforePrStale?.let { "days-before-pr-stale" to it.integerValue.toString() },
             daysBeforeClose?.let { "days-before-close" to it.toString() },
-            daysBeforeIssueClose?.let { "days-before-issue-close" to it.toString() },
-            daysBeforePrClose?.let { "days-before-pr-close" to it.toString() },
+            daysBeforeIssueClose?.let { "days-before-issue-close" to it.integerValue.toString() },
+            daysBeforePrClose?.let { "days-before-pr-close" to it.integerValue.toString() },
             staleIssueLabel?.let { "stale-issue-label" to it },
             closeIssueLabel?.let { "close-issue-label" to it },
             exemptIssueLabels?.let { "exempt-issue-labels" to it.joinToString(",") },
@@ -326,6 +326,16 @@ public class StaleV4(
     )
 
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+
+    public sealed class Days(
+        public val integerValue: Int
+    ) {
+        public class Value(
+            requestedValue: Int
+        ) : StaleV5.Days(requestedValue)
+
+        public object Never : StaleV5.Days(-1)
+    }
 
     public class Outputs(
         private val stepId: String
