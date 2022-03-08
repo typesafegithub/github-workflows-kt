@@ -18,6 +18,7 @@ fun main() {
     checkDuplicateWrappers()
 
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
+        println("Generating $actionCoords.prettyPrint")
         val (code, path) = actionCoords.generateWrapper(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
