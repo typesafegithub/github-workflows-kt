@@ -15,7 +15,7 @@ import java.nio.file.Paths
 import kotlin.io.path.invariantSeparatorsPathString
 
 @Suppress("LargeClass")
-class EndToEndTest : FunSpec({
+class IntegrationTest : FunSpec({
     val workflow = workflow(
         name = "Test workflow",
         on = listOf(Push()),
