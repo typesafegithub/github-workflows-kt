@@ -14,21 +14,31 @@ import it.krzeminski.githubactions.dsl.ListFreeArg
 import it.krzeminski.githubactions.dsl.StringFreeArg
 
 fun List<Trigger>.triggersToYaml(): String =
-    this
-        .map { it.toYamlString() }
-        .joinToString(separator = "\n") { it }
+    joinToString(separator = "\n") { it.toYaml() }
 
-private fun Trigger.toYamlString() =
+fun Trigger.toYaml() : String =
+    (toYamlFromMap() + toAdditionalYaml() + freeArgsToYaml()).removeSuffix("\n")
+
+fun Trigger.toMap(): MapOfYaml =
     when (this) {
-        is WorkflowDispatch -> toYaml()
-        is Push -> toYaml()
-        is PullRequest -> toYaml()
-        is PullRequestTarget -> toYaml()
-        is Schedule -> toYaml()
-    } + freeArgsToYaml()
+        is WorkflowDispatch -> LinkedHashMap()
+        is Push -> toMap()
+        is PullRequest -> toMap()
+        is PullRequestTarget -> toMap()
+        is Schedule -> LinkedHashMap()
+    }
+
+typealias MapOfYaml = java.util.LinkedHashMap<String, List<String>?>
+
+val Trigger.triggerName: String get() = when(this) {
+    is PullRequest -> "pull_request"
+    is PullRequestTarget -> "pull_request_target"
+    is Push -> "push"
+    is Schedule -> "schedule"
+    is WorkflowDispatch -> "workflow_dispatch"
+}
 
 internal fun HasFreeYamlArgs.freeArgsToYaml(): String = buildString {
-    append("\n")
     for (arg in freeYamlArgs) {
         when (arg) {
             is ListFreeArg -> printIfHasElements(arg.value, arg.key)
@@ -37,55 +47,64 @@ internal fun HasFreeYamlArgs.freeArgsToYaml(): String = buildString {
     }
 }.removeSuffix("\n")
 
-private fun Push.toYaml() = buildString {
-    appendLine("push:")
-    printIfHasElements(this@toYaml.branches, "branches")
-    printIfHasElements(this@toYaml.tags, "tags")
-    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
-    printIfHasElements(this@toYaml.tagsIgnore, "tags-ignore")
-    printIfHasElements(this@toYaml.paths, "paths")
-    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
-}.removeSuffix("\n")
-
-private fun PullRequest.toYaml() = buildString {
-    appendLine("pull_request:")
-    printIfHasElements(this@toYaml.types.map(PullRequest.Type::toYaml), "types")
-    printIfHasElements(this@toYaml.branches, "branches")
-    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
-    printIfHasElements(this@toYaml.paths, "paths")
-    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
-}.removeSuffix("\n")
-
-private fun PullRequestTarget.toYaml() = buildString {
-    appendLine("pull_request_target:")
-    printIfHasElements(this@toYaml.types.map(PullRequestTarget.Type::toYaml), "types")
-    printIfHasElements(this@toYaml.branches, "branches")
-    printIfHasElements(this@toYaml.branchesIgnore, "branches-ignore")
-    printIfHasElements(this@toYaml.paths, "paths")
-    printIfHasElements(this@toYaml.pathsIgnore, "paths-ignore")
-}.removeSuffix("\n")
-
-private fun PullRequestTarget.Type.toYaml(): String = this.toSnakeCase()
-
-private fun PullRequest.Type.toYaml(): String = this.toSnakeCase()
-
-private fun Schedule.toYaml() = buildString {
-    appendLine("schedule:")
-    this@toYaml.triggers.forEach {
-        appendLine(" - cron: '${it.expression}'")
+private fun Trigger.toYamlFromMap() = buildString {
+    val trigger = this@toYamlFromMap
+    appendLine("${trigger.triggerName}:")
+    for ((property, items) in trigger.toMap()) {
+        printIfHasElements(items, property)
     }
+}
+
+private fun Trigger.toAdditionalYaml(): String = when (this) {
+    is Push -> ""
+    is PullRequest -> ""
+    is PullRequestTarget -> ""
+    is Schedule -> toAdditionalYaml()
+    is WorkflowDispatch -> toAdditionalYaml()
 }.removeSuffix("\n")
 
-private fun WorkflowDispatch.toYaml(): String = buildString {
-    appendLine("workflow_dispatch:")
-    if (inputs.isNotEmpty()) {
-        appendLine("  inputs:")
-        for ((key, input) in inputs) {
-            appendLine("    $key:")
-            appendLine(input.toYaml())
-        }
+
+private fun Push.toMap(): MapOfYaml = linkedMapOf(
+    "branches" to branches,
+    "tags" to tags,
+    "branches-ignore" to branchesIgnore,
+    "tags-ignore" to tagsIgnore,
+    "paths" to paths,
+    "paths-ignore" to pathsIgnore,
+)
+
+private fun PullRequest.toMap(): MapOfYaml = linkedMapOf(
+    "types" to types.toSnakeCase(),
+    "branches" to branches,
+    "branches-ignore" to branchesIgnore,
+    "paths" to paths,
+    "paths-ignore" to pathsIgnore,
+)
+
+private fun PullRequestTarget.toMap(): MapOfYaml = linkedMapOf(
+    "types" to types.toSnakeCase(),
+    "branches" to branches,
+    "branches-ignore" to branchesIgnore,
+    "paths" to paths,
+    "paths-ignore" to pathsIgnore,
+)
+
+private fun Schedule.toAdditionalYaml() =
+    triggers.joinToString("\n") { cron ->
+        " - cron: '${cron.expression}'"
     }
-}.removeSuffix("\n")
+
+private fun WorkflowDispatch.toAdditionalYaml(): String = when {
+    inputs.isEmpty() -> ""
+    else -> {
+        val inputsToYaml = inputs
+            .entries
+            .joinToString("\n") { (key, input) ->
+                "    $key:\n${input.toYaml()}"
+            }
+        "  inputs:\n$inputsToYaml"
+    }
+}
 
 private fun WorkflowDispatch.Input.toYaml(): String = buildString {
     val space = "      "

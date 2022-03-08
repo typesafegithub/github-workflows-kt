@@ -58,6 +58,7 @@ private fun Job.toYaml() = buildString {
 
     appendLine("  steps:")
     append(steps.stepsToYaml().prependIndent("    "))
+    if (freeYamlArgs.isNotEmpty()) appendLine()
     append(freeArgsToYaml())
 }
 

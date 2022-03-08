@@ -5,4 +5,7 @@ inline fun <reified T : Enum<T>> T.toSnakeCase(): String {
     return pascalCaseRegex.findAll(name).joinToString(separator = "_") { it.value.lowercase() }
 }
 
+inline fun <reified T : Enum<T>> List<T>.toSnakeCase(): List<String> =
+    this.map { it.toSnakeCase() }
+
 val pascalCaseRegex = Regex("[A-Z][a-z]*")
