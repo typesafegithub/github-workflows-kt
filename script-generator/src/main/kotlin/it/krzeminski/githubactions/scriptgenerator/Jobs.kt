@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.scriptgenerator
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
 import it.krzeminski.githubactions.scriptmodel.SerializedStep
+import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
@@ -17,14 +18,16 @@ fun GithubWorkflow.generateJobs() = CodeBlock { builder ->
         job.steps.forEach { step ->
             if (step.uses != null) {
                 val coords = ActionCoords(step.uses)
-                val wrapper = wrappersToGenerate.firstOrNull {
-                    it.actionCoords.buildActionClassName() == coords.buildActionClassName() &&
-                        it.actionCoords.owner.lowercase() == coords.owner.lowercase()
+                val availableWrappers = wrappersToGenerate.filter {
+                    it.actionCoords.copy(version = "") == coords.copy(version = "")
                 }
+                val wrapper: WrapperRequest? = availableWrappers.firstOrNull {
+                    it.actionCoords.buildActionClassName() == coords.buildActionClassName()
+                } ?: availableWrappers.maxByOrNull { it.actionCoords.version }
 
-                builder.add(generateAction(step, coords, wrapper))
+                builder.add(step.generateAction(wrapper?.actionCoords ?: coords, wrapper?.inputTypings))
             } else {
-                builder.add(generateCommand(step))
+                builder.add(step.generateCommand())
             }
         }
         builder.unindent()
@@ -32,15 +35,15 @@ fun GithubWorkflow.generateJobs() = CodeBlock { builder ->
     }
 }
 
-fun generateCommand(step: SerializedStep) = CodeBlock { builder ->
+fun SerializedStep.generateCommand() = CodeBlock { builder ->
     builder
         .add(("run(\n"))
         .indent()
-        .add("name = %S,\n", step.name ?: step.run)
-        .add("command = %S,\n", step.run)
-        .add(generatePropertyWithLinkedMap("env", step.env))
-    if (step.condition != null) {
-        val (template, arg) = step.condition.orExpression()
+        .add("name = %S,\n", name ?: run)
+        .add("command = %S,\n", run)
+        .add(generatePropertyWithLinkedMap("env", env))
+    if (condition != null) {
+        val (template, arg) = condition.orExpression()
         builder.add("condition = $template,\n", arg)
     }
     builder.unindent().add(")\n")

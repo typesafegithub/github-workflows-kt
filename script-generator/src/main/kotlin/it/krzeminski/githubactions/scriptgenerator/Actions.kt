@@ -4,50 +4,48 @@ import com.squareup.kotlinpoet.ClassName
 import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.scriptmodel.SerializedStep
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
 
-fun generateAction(
-    step: SerializedStep,
+fun SerializedStep.generateAction(
     coords: ActionCoords,
-    wrapper: WrapperRequest?,
+    inputTypings: Map<String, Typing>?,
 ) = CodeBlock { builder ->
 
     builder.add("uses(\n")
     builder.indent()
-    builder.add("name = %S,\n", step.name ?: coords.buildActionClassName())
+    builder.add("name = %S,\n", name ?: coords.buildActionClassName())
 
-    if (wrapper == null) {
-        builder.add(generateMissingAction(coords, step))
-    } else if (step.with.isEmpty()) {
+    if (inputTypings == null) {
+        builder.add(generateMissingAction(coords))
+    } else if (with.isEmpty()) {
         builder.add("action = %T(),\n", coords.classname())
     } else {
-        builder.add(generateActionWithWrapper(coords, step, wrapper))
+        builder.add(generateActionWithWrapper(coords, inputTypings))
     }
 
-    builder.add(generatePropertyWithLinkedMap("env", step.env))
-    if (step.condition != null) {
-        val (template, arg) = step.condition.orExpression()
+    builder.add(generatePropertyWithLinkedMap("env", env))
+    if (condition != null) {
+        val (template, arg) = condition.orExpression()
         builder.add("condition = $template,\n", arg)
     }
     builder.unindent()
     builder.add(")\n")
 }
 
-fun generateActionWithWrapper(
+fun SerializedStep.generateActionWithWrapper(
     coords: ActionCoords,
-    step: SerializedStep,
-    wrapper: WrapperRequest,
+    inputTypings: Map<String, Typing>?,
 ) = CodeBlock { builder ->
     builder.add("action = %T(", coords.classname())
     builder.add("\n").indent()
 
-    step.with.forEach { (key, value) ->
+    with.forEach { (key, value) ->
         if (value != null) {
-            val typing = wrapper.inputTypings.get(key) ?: StringTyping
+            val typing = inputTypings?.get(key) ?: StringTyping
             val (percent, arg) = valueWithTyping(value, typing, coords)
             builder.add("%N = $percent,\n", key.toCamelCase(), arg)
         }
@@ -57,9 +55,8 @@ fun generateActionWithWrapper(
     builder.add("),\n")
 }
 
-fun generateMissingAction(
+fun SerializedStep.generateMissingAction(
     coords: ActionCoords,
-    step: SerializedStep,
 ) = CodeBlock { builder ->
     builder
         .add("action = %T(", MissingAction::class)
@@ -70,7 +67,7 @@ fun generateMissingAction(
         .add("freeArgs = %M(\n", Members.linkedMapOf)
         .indent()
 
-    step.with.forEach { (key, value) ->
+    with.forEach { (key, value) ->
         builder.add("%S to %S,\n", key, value)
     }
 

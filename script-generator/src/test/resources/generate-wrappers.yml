@@ -34,7 +34,7 @@ jobs:
           distribution: adopt
       - id: step-2
         name: Generate wrappers
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v1
         with:
           arguments: :wrapper-generator:run
       - id: step-3
