@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
 /**
- * Need type: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#label
+ * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#label
  */
-class Label : Trigger()
+data class Label(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

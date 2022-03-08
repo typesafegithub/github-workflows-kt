@@ -6,3 +6,7 @@ import it.krzeminski.githubactions.dsl.HasFreeYamlArgs
 sealed class Trigger : HasFreeYamlArgs {
     override val freeYamlArgs: FreeYamlArgs = mutableListOf()
 }
+
+interface HasTypes {
+    val types: List<String>
+}

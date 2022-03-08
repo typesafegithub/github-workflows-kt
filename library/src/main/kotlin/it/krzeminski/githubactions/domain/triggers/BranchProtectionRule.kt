@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-/**
- * Need type: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#branch_protection_rule
- */
-class BranchProtectionRule : Trigger()
+data class BranchProtectionRule(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
 /**
- * TODO https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#issue_comment
+ * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#issue_comment
  */
-class IssueComment : Trigger()
+data class IssueComment(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

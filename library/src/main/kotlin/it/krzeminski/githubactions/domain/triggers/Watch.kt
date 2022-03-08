@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
 /**
- * Need type: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#watch
+ * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#watch
  */
-class Watch : Trigger()
+data class Watch(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

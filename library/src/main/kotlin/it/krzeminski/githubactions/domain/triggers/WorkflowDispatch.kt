@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 // https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs
-class WorkflowDispatch(
+data class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
 ) : Trigger() {
 

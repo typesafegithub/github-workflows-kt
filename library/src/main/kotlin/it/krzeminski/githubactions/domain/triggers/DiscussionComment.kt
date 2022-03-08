@@ -1,3 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-class DiscussionComment : Trigger()
+data class DiscussionComment(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

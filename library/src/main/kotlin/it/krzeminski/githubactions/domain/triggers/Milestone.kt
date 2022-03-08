@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
 /**
- * Need type: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#milestone
+ * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#milestone
  */
-class Milestone : Trigger()
+data class Milestone(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

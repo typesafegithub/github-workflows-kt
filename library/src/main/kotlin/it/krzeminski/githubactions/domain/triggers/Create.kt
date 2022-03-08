@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-/**
- * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#create
- */
-class Create : Trigger()
+data class Create(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

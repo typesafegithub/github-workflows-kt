@@ -90,58 +90,56 @@ class OtherTriggersTest : FunSpec({
      */
     test("Creating all triggers with free arguments") {
         val triggers: List<Trigger> = listOf(
-            BranchProtectionRule().withFreeArgs(
-                "types" to listOf("created", "deleted")
+            BranchProtectionRule(
+                types = listOf("created", "deleted")
             ),
-            CheckRun().withFreeArgs(
-                "types" to listOf("completed", "rerequested")
+            CheckRun(
+                types = listOf("completed", "rerequested")
             ),
             CheckSuite(),
             Create(),
             Delete(),
             Deployment(),
             DeploymentStatus(),
-            Discussion().withFreeArgs(
-                "types" to listOf("created", "edited", "answered")
+            Discussion(
+                types = listOf("created", "edited", "answered")
             ),
             DiscussionComment(),
             Fork(),
             Gollum(),
-            IssueComment().withFreeArgs(
-                "types" to listOf("created", "edited", "deleted")
+            IssueComment(
+                types = listOf("created", "edited", "deleted")
             ),
-            Issues().withFreeArgs(
-                "types" to listOf("opened", "edited")
+            Issues(
+                types = listOf("opened", "edited")
             ),
-            Label().withFreeArgs(
-                "types" to listOf("crDiscussionCommenteated", "deleted", "edited")
+            Label(
+                types = listOf("crDiscussionCommenteated", "deleted", "edited")
             ),
-            Milestone().withFreeArgs(
-                "types" to listOf("created", "closed")
+            Milestone(
+                types = listOf("created", "closed")
             ),
             PageBuild(),
-            Project().withFreeArgs(
-                "types" to listOf("created", "deleted")
+            Project(
+                types = listOf("created", "deleted")
             ),
-            ProjectCard().withFreeArgs(
-                "types" to listOf("created", "moved")
+            ProjectCard(
+                types = listOf("created", "moved")
             ),
-            ProjectColumn().withFreeArgs(
-                "types" to listOf("moved")
+            ProjectColumn(
+                types = listOf("moved")
             ),
             PublicWorkflow(),
             PullRequest(),
             PullRequestReview(),
-            PullRequestReviewComment().withFreeArgs(
-                "types" to listOf("created", "edited")
+            PullRequestReviewComment(
+                types = listOf("created", "edited")
             ),
             PullRequestTarget(),
             Push(),
-            RegistryPackage().withFreeArgs(
-                "types" to listOf("published", "updated")
-            ),
-            Release().withFreeArgs(
-                "types" to listOf("published", "unpublished")
+            RegistryPackage(types = listOf("published", "updated")),
+            Release(
+                types = listOf("published", "unpublished")
             ),
             RepositoryDispatch(),
             Schedule(emptyList()),

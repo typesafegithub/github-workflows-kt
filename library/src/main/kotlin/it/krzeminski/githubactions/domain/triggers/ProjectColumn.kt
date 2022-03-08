@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
 /**
- * Need type: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#project_column
+ * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#project_column
  */
-class ProjectColumn : Trigger()
+data class ProjectColumn(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

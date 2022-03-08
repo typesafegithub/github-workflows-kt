@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-/**
- * Need type: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#discussion
- */
-class Discussion : Trigger()
+data class Discussion(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes

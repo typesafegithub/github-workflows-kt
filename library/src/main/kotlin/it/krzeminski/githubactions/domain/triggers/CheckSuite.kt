@@ -1,3 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-class CheckSuite : Trigger()
+data class CheckSuite(
+    override val types: List<String> = emptyList()
+) : Trigger(), HasTypes
