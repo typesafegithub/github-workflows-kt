@@ -28,7 +28,10 @@ class GenerateKotlinScripts : FunSpec({
             val input = TestInput(name)
             val workflow: GithubWorkflow = myYaml.decodeFromString(input.yamlFile.readText())
 
-            val newContent = workflow.toFileSpec(workflow.name).toString()
+            val newContent = workflow.toFileSpec(workflow.name)
+                .toString()
+                .removeWindowsEndings()
+
             input.actualFile.writeText("package actual\n\n$newContent")
 
             if (System.getenv("GITHUB_ACTIONS") == "true") {
@@ -55,6 +58,11 @@ data class TestInput(val name: String) {
     val expectedFile = file("${filename.toPascalCase()}.kt")
     val actualFile = file("${filename.toPascalCase()}Actual.kt")
     val expected = if (expectedFile.canRead())
-        expectedFile.readText().removePrefix("package expected\n\n")
+        expectedFile.readText()
+            .removeWindowsEndings()
+            .replace("package expected\n\n", "")
     else ""
 }
+
+fun String.removeWindowsEndings(): String =
+    replace("\r\n", "\n")
