@@ -8,6 +8,8 @@ class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
 ) : Trigger() {
 
+    override val triggerName = "workflow_dispatch"
+
     @kotlinx.serialization.Serializable
     enum class Type {
         @SerialName("choice")

@@ -10,6 +10,8 @@ data class PullRequest(
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
 ) : Trigger() {
+    override val triggerName: String = "pull_request"
+
     init {
         require(!(branches != null && branchesIgnore != null)) {
             "Cannot define both 'branches' and 'branchesIgnore'!"
@@ -24,22 +26,37 @@ data class PullRequest(
      */
     @kotlinx.serialization.Serializable
     enum class Type {
+        @SerialName("assigned")
         Assigned,
+        @SerialName("unassigned")
         Unassigned,
+        @SerialName("labeled")
         Labeled,
+        @SerialName("unlabeled")
         Unlabeled,
         @SerialName("opened")
         Opened,
+        @SerialName("edited")
         Edited,
+        @SerialName("closed")
         Closed,
+        @SerialName("reopened")
         Reopened,
+        @SerialName("synchronize")
         Synchronize,
+        @SerialName("converted_to_draft")
         ConvertedToDraft,
+        @SerialName("ready_for_review")
         ReadyForReview,
+        @SerialName("locked")
         Locked,
+        @SerialName("unlocked")
         Unlocked,
+        @SerialName("review_requested")
         ReviewRequested,
+        @SerialName("review_requested_removed")
         ReviewRequestRemoved,
+        @SerialName("auto_merge_enabled")
         AutoMergeEnabled,
         @SerialName("auto_merge_disabled")
         AutoMergeDisabled,

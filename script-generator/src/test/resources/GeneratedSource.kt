@@ -28,9 +28,9 @@ public val workflowGenerated: Workflow = workflow(
           paths = listOf("path1", "path2"),
         ),
         PullRequest(
+          types = listOf(PullRequest.Type.AutoMergeDisabled, PullRequest.Type.Opened),
           branches = listOf("branch1", "branch2"),
           paths = listOf("path1", "path2"),
-          types = listOf(PullRequest.Type.AutoMergeDisabled, PullRequest.Type.Opened),
         ),
         Schedule(listOf(
           Cron("0 0 * * *"),

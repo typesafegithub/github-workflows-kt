@@ -26,7 +26,6 @@ public val workflowCheckBuild: Workflow = workflow(
         PullRequest(
           paths = listOf("plugins/**", "sample-kotlin/**", "sample-groovy/**", "!**.md",
               "!.editorconfig", "!**/.gitignore", "!**.adoc", "!docs/**"),
-          types = listOf(),
         ),
         WorkflowDispatch(mapOf(
           "run-refreshVersions-task" to WorkflowDispatch.Input(

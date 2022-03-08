@@ -2,7 +2,9 @@ package it.krzeminski.githubactions.domain.triggers
 
 data class Schedule(
     val triggers: List<Cron>,
-) : Trigger()
+) : Trigger() {
+    override val triggerName = "schedule"
+}
 
 /** See https://crontab.guru **/
 @kotlinx.serialization.Serializable

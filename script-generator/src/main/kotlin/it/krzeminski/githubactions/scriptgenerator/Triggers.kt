@@ -14,6 +14,8 @@ import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.WorkflowOn
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
+import it.krzeminski.githubactions.yaml.MapOfYaml
+import it.krzeminski.githubactions.yaml.toMap
 
 fun WorkflowOn.toKotlin(): CodeBlock {
     val builder = CodeBlock.builder()
@@ -28,32 +30,36 @@ fun WorkflowOn.toKotlin(): CodeBlock {
 }
 
 fun Trigger?.toKotlin(): CodeBlock {
-    this ?: return CodeBlock.of("")
-    val map = this.toMap()
+    if (this == null) {
+        return CodeBlock.of("")
+    }
+    val map: MapOfYaml = this.toMap()
     val builder = CodeBlock.builder()
     builder
         .add("%T(\n", classname()).indent()
     for ((key, value) in map) {
-        value ?: continue
-        val list: List<String>? = when {
-            value !is List<*> -> null
-            key == "types" -> when (this) {
-                is PullRequest -> value.map { "PullRequest.Type.${it.toString().toPascalCase()}" }
-                is PullRequestTarget -> value.map { "PullRequestTarget.Type.${it.toString().toPascalCase()}" }
-                else -> error("Unexpected types=$value for key=$key")
-            }
-            else -> value.map { "$QUOTE$it$QUOTE" }
-        }
-
+        val list: List<String> = stringsOrEnums(key, value) ?: continue
         builder
             .add(
                 "%N = %L,\n", key.toCamelCase(),
-                list?.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
-                    ?: "$QUOTE$value$QUOTE"
+                list.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
             )
     }
     builder.unindent().add("),\n")
     return builder.build()
+}
+
+fun Trigger.stringsOrEnums(key: String, list: List<String>?) = when {
+    list == null || list.isEmpty() -> null
+    this is PullRequest && key == "types" -> list.map {
+        val enum = enumValueOf<PullRequest.Type>(it.toPascalCase())
+        "PullRequest.Type.$enum"
+    }
+    this is PullRequestTarget && key == "types" -> list.map {
+        val enum = enumValueOf<PullRequestTarget.Type>(it.toPascalCase())
+        "PullRequestTarget.Type.$enum"
+    }
+    else -> list.map { "$QUOTE$it$QUOTE" }
 }
 
 private fun Trigger.classname(): ClassName {
@@ -95,31 +101,4 @@ private fun List<ScheduleValue>?.toKotlin(): CodeBlock {
     }
     builder.unindent().add(")),\n")
     return builder.build()
-}
-
-fun Trigger.toMap(): LinkedHashMap<String, Any?> = when (this) {
-    is PullRequest -> linkedMapOf(
-        "branches" to branches,
-        "branches-ignore" to branchesIgnore,
-        "paths" to paths,
-        "paths-ignore" to pathsIgnore,
-        "types" to types,
-    )
-    is PullRequestTarget -> linkedMapOf(
-        "branches" to branches,
-        "branches-ignore" to branchesIgnore,
-        "paths" to paths,
-        "paths-ignore" to pathsIgnore,
-        "types" to types,
-    )
-    is Push -> linkedMapOf(
-        "branches" to branches,
-        "tags" to tags,
-        "branches-ignore" to branchesIgnore,
-        "tags-ignore" to tagsIgnore,
-        "paths" to paths,
-        "paths-ignore" to pathsIgnore,
-    )
-    is Schedule -> linkedMapOf()
-    is WorkflowDispatch -> linkedMapOf()
 }
