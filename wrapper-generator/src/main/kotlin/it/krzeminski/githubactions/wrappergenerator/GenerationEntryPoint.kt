@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
+import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import java.nio.file.Paths
 
 /***
@@ -18,7 +19,7 @@ fun main() {
     checkDuplicateWrappers()
 
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
-        println("Generating $actionCoords.prettyPrint")
+        println("Generating ${actionCoords.prettyPrint}")
         val (code, path) = actionCoords.generateWrapper(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
