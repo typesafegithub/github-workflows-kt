@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2

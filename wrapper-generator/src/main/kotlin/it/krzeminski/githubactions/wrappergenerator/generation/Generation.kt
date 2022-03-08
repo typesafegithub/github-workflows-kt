@@ -33,7 +33,6 @@ fun ActionCoords.generateWrapper(
     metadata.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
-
     val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
@@ -223,7 +222,10 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
 }
 
 private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.Builder {
-    val newerClass = coords.copy(version = coords.deprecatedByVersion ?: return this)
+    if (coords.deprecatedByVersion == null) {
+        return this
+    }
+    val newerClass = coords.copy(version = coords.deprecatedByVersion)
     addAnnotation(
         AnnotationSpec.builder(Deprecated::class)
             .addMember("message = %S", "This action has a newer major version")

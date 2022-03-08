@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec

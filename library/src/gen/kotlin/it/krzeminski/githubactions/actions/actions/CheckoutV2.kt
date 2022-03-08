@@ -1,10 +1,13 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -16,6 +19,10 @@ import kotlin.Suppress
  *
  * [Action on GitHub](https://github.com/actions/checkout)
  */
+@Deprecated(
+    message = "This action has a newer major version",
+    replaceWith = ReplaceWith("CheckoutV3")
+)
 public class CheckoutV2(
     /**
      * Repository name with owner. For example, actions/checkout
