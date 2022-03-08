@@ -306,5 +306,119 @@ val wrappersToGenerate = listOf(
             "log-level" to EnumTyping("LogLevel", listOf("minimal", "standard", "verbose")),
             "security" to EnumTyping("Security", listOf("strict", "loose")),
         ),
-    )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "create-release", "v1"),
+        mapOf(
+            "draft" to BooleanTyping,
+            "prerelease" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "first-interaction", "v1"),
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "github-script", "v6"),
+        mapOf(
+            "debug" to BooleanTyping,
+            "previews" to ListOfTypings(","),
+            "result-encoding" to EnumTyping("Encoding", listOf("string", "json"))
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "labeler", "v4"),
+        mapOf(
+            "sync-labels" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-dotnet", "v2"),
+        mapOf(
+            "include-prerelease" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-go", "v3"),
+        mapOf(
+            "check-latest" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "stale", "v5"),
+        mapOf(
+            "any-of-issue-labels" to ListOfTypings(","),
+            "any-of-labels" to ListOfTypings(","),
+            "any-of-pr-labels" to ListOfTypings(","),
+            "ascending" to BooleanTyping,
+            "days-before-close" to IntegerTyping,
+            "days-before-issue-close" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
+            "days-before-pr-close" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
+            "days-before-pr-stale" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
+            "days-before-stale" to IntegerTyping,
+            "debug-only" to BooleanTyping,
+            "delete-branch" to BooleanTyping,
+            "enable-statistics" to BooleanTyping,
+            "exempt-all-assignees" to BooleanTyping,
+            "exempt-all-milestones" to BooleanTyping,
+            "exempt-all-pr-assignees" to BooleanTyping,
+            "exempt-assignees" to ListOfTypings(","),
+            "exempt-draft-pr" to BooleanTyping,
+            "exempt-issue-assignees" to ListOfTypings(","),
+            "exempt-issue-labels" to ListOfTypings(","),
+            "exempt-issue-milestones" to ListOfTypings(","),
+            "exempt-pr-milestones" to ListOfTypings(","),
+            "exempt-milestones" to ListOfTypings(","),
+            "exempt-all-pr-milestones" to BooleanTyping,
+            "exempt-all-issue-milestones" to BooleanTyping,
+            "exempt-pr-assignees" to ListOfTypings(","),
+            "exempt-pr-labels" to ListOfTypings(","),
+            "ignore-issue-updates" to BooleanTyping,
+            "ignore-pr-updates" to BooleanTyping,
+            "ignore-updates" to BooleanTyping,
+            "labels-to-add-when-unstale" to ListOfTypings(","),
+            "labels-to-remove-when-unstale" to ListOfTypings(","),
+            "only-issue-labels" to ListOfTypings(","),
+            "only-labels" to ListOfTypings(","),
+            "only-pr-labels" to ListOfTypings(","),
+            "operations-per-run" to IntegerTyping,
+            "remove-issue-stale-when-updated" to BooleanTyping,
+            "remove-pr-stale-when-updated" to BooleanTyping,
+            "remove-stale-when-updated" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions-rs", "audit-check", "v1"),
+    ),
+    WrapperRequest(
+        ActionCoords("actions-rs", "cargo", "v1"),
+        mapOf(
+            "use-cross" to BooleanTyping,
+            "command" to EnumTyping(
+                "Command",
+                listOf(
+                    "help", "version",
+                    "bench", "build", "check", "clean", "doc", "fetch", "fix", "run", "rustc", "rustdoc", "test", "report",
+                    "generate-lockfile", "locate-project", "metadata", "pkgid", "tree", "update", "vendor", "verify-project",
+                    "init", "install", "new", "search", "uninstall",
+                    "login", "owner", "package", "publish", "yank"
+                )
+            ),
+            "args" to ListOfTypings(" "),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions-rs", "clippy-check", "v1"),
+        mapOf(
+            "use-cross" to BooleanTyping,
+            "args" to ListOfTypings(" "),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions-rs", "toolchain", "v1"),
+        mapOf(
+            "default" to BooleanTyping,
+            "override" to BooleanTyping,
+            "components" to ListOfTypings(","),
+        )
+    ),
 )
