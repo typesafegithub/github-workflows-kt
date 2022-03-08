@@ -521,7 +521,7 @@ class GenerationTest : FunSpec({
             description = "Description",
         )
 
-        val coords = ActionCoords("john-smith", "action-with-no-inputs", "v2", deprecatedByVersion = "v3")
+        val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
 
         // when
         val wrapper = coords.generateWrapper { actionManifest }
@@ -547,19 +547,19 @@ class GenerationTest : FunSpec({
                  *
                  * Description
                  *
-                 * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs)
+                 * [Action on GitHub](https://github.com/john-smith/deprecated-action)
                  */
                 @Deprecated(
                     message = "This action has a newer major version",
-                    replaceWith = ReplaceWith("ActionWithNoInputsV3")
+                    replaceWith = ReplaceWith("DeprecatedActionV3")
                 )
-                public class ActionWithNoInputsV2() : Action("john-smith", "action-with-no-inputs", "v2") {
+                public class DeprecatedActionV2() : Action("john-smith", "deprecated-action", "v2") {
                     @Suppress("SpreadOperator")
                     public override fun toYamlArguments() = LinkedHashMap<String, String>()
                 }
 
             """.trimIndent(),
-            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/ActionWithNoInputsV2.kt",
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/DeprecatedActionV2.kt",
         )
     }
 
