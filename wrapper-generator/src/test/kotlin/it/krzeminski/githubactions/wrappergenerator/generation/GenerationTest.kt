@@ -517,7 +517,7 @@ class GenerationTest : FunSpec({
         val actionManifestHasNoInputs = emptyMap<String, Input>()
         val actionManifest = Metadata(
             inputs = actionManifestHasNoInputs,
-            name = "Action With No Inputs",
+            name = "Deprecated Action",
             description = "Description",
         )
 
@@ -543,14 +543,14 @@ class GenerationTest : FunSpec({
                 import kotlin.Suppress
 
                 /**
-                 * Action: Action With No Inputs
+                 * Action: Deprecated Action
                  *
                  * Description
                  *
                  * [Action on GitHub](https://github.com/john-smith/deprecated-action)
                  */
                 @Deprecated(
-                    message = "This action has a newer major version",
+                    message = "This action has a newer major version: DeprecatedActionV3",
                     replaceWith = ReplaceWith("DeprecatedActionV3")
                 )
                 public class DeprecatedActionV2() : Action("john-smith", "deprecated-action", "v2") {

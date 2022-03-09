@@ -228,7 +228,7 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     val newerClass = coords.copy(version = coords.deprecatedByVersion)
     addAnnotation(
         AnnotationSpec.builder(Deprecated::class)
-            .addMember("message = %S", "This action has a newer major version")
+            .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")
             .addMember("replaceWith = ReplaceWith(%S)", newerClass.buildActionClassName())
             .build()
     )

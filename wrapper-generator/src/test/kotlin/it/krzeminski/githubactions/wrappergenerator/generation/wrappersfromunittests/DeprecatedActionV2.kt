@@ -11,14 +11,14 @@ import kotlin.Deprecated
 import kotlin.Suppress
 
 /**
- * Action: Action With No Inputs
+ * Action: Deprecated Action
  *
  * Description
  *
  * [Action on GitHub](https://github.com/john-smith/deprecated-action)
  */
 @Deprecated(
-    message = "This action has a newer major version",
+    message = "This action has a newer major version: DeprecatedActionV3",
     replaceWith = ReplaceWith("DeprecatedActionV3")
 )
 public class DeprecatedActionV2() : Action("john-smith", "deprecated-action", "v2") {

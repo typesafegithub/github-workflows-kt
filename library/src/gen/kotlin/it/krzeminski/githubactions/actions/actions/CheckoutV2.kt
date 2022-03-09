@@ -20,7 +20,7 @@ import kotlin.Suppress
  * [Action on GitHub](https://github.com/actions/checkout)
  */
 @Deprecated(
-    message = "This action has a newer major version",
+    message = "This action has a newer major version: CheckoutV3",
     replaceWith = ReplaceWith("CheckoutV3")
 )
 public class CheckoutV2(
