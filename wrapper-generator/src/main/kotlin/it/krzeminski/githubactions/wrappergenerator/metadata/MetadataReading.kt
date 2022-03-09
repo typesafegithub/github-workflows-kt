@@ -48,6 +48,7 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
     val list = listOf(actionYmlUrl, actionYamlUrl, actionYmlNoVUrl, actionYamlNoVUrl)
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {
+            println("  ... from $url")
             fetchUri(URI(url))
         } catch (e: IOException) {
             null
