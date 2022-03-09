@@ -21,6 +21,5 @@ fun <T : HasFreeYamlArgs> T.withFreeArgs(vararg pairs: Pair<String, Any>): T = a
         }
     }
     require(map.size == pairs.size) { "Invalid free args: must be String or List\nGot ${pairs.toList()}" }
-    freeYamlArgs.clear()
     freeYamlArgs.addAll(map)
 }

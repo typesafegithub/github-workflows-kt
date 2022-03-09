@@ -13,7 +13,6 @@ import it.krzeminski.githubactions.domain.triggers.Discussion
 import it.krzeminski.githubactions.domain.triggers.DiscussionComment
 import it.krzeminski.githubactions.domain.triggers.Fork
 import it.krzeminski.githubactions.domain.triggers.Gollum
-import it.krzeminski.githubactions.domain.triggers.HasTypes
 import it.krzeminski.githubactions.domain.triggers.IssueComment
 import it.krzeminski.githubactions.domain.triggers.Issues
 import it.krzeminski.githubactions.domain.triggers.Label
@@ -47,7 +46,7 @@ fun List<Trigger>.triggersToYaml(): String =
     joinToString(separator = "\n") { it.toYaml() }
 
 fun Trigger.toYaml(): String =
-    (toYamlFromMap() + typesToYaml() + toAdditionalYaml() + freeArgsToYaml()).removeSuffix("\n")
+    (toYamlFromMap() + toAdditionalYaml() + freeArgsToYaml()).removeSuffix("\n")
 
 typealias MapOfYaml = LinkedHashMap<String, List<String>?>
 
@@ -128,13 +127,6 @@ val Trigger.triggerName: String get() = when (this) {
     is Watch -> "watch"
     is WorkflowCall -> "workflow_call"
     is WorkflowRun -> "workflow_run"
-}
-
-private fun Trigger.typesToYaml() = buildString {
-    val trigger = this@typesToYaml
-    if (trigger is HasTypes) {
-        printIfHasElements(trigger.types, "types")
-    }
 }
 
 internal fun HasFreeYamlArgs.freeArgsToYaml(): String = buildString {
