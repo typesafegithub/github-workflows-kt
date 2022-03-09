@@ -7,7 +7,7 @@ import it.krzeminski.githubactions.dsl.withFreeArgs
 sealed class Trigger : HasFreeYamlArgs {
     override val freeYamlArgs: FreeYamlArgs = mutableListOf()
 
-    fun types(types: List<String>): Trigger = withFreeArgs(
-        "types" to types
+    fun types(vararg types: String): Trigger = withFreeArgs(
+        "types" to types.toList()
     )
 }

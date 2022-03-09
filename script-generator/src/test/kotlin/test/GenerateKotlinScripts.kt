@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.scriptgenerator.filename
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
-import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
+import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.myYaml
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import kotlinx.serialization.decodeFromString
@@ -15,6 +15,7 @@ import java.net.URL
 class GenerateKotlinScripts : FunSpec({
 
     val testInputs = listOf(
+        "all-triggers.yml",
         "refreshversions-pr.yml",
         "generate-wrappers.yml",
         "generated-source.yml",
@@ -26,7 +27,7 @@ class GenerateKotlinScripts : FunSpec({
     testInputs.forEach { name ->
         test("Generating $name") {
             val input = TestInput(name)
-            val workflow: GithubWorkflow = myYaml.decodeFromString(input.yamlFile.readText())
+            val workflow: YamlWorkflow = myYaml.decodeFromString(input.yamlFile.readText())
 
             val newContent = workflow.toFileSpec(workflow.name)
                 .toString()

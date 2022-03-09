@@ -41,6 +41,7 @@ import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.dsl.HasFreeYamlArgs
 import it.krzeminski.githubactions.dsl.ListFreeArg
 import it.krzeminski.githubactions.dsl.StringFreeArg
+import kotlin.reflect.KClass
 
 fun List<Trigger>.triggersToYaml(): String =
     joinToString(separator = "\n") { it.toYaml() }
@@ -92,42 +93,47 @@ fun Trigger.toMap(): MapOfYaml {
 
 private val emptyMap = LinkedHashMap<String, List<String>?>()
 
-val Trigger.triggerName: String get() = when (this) {
-    is PullRequest -> "pull_request"
-    is PullRequestTarget -> "pull_request_target"
-    is Push -> "push"
-    is Schedule -> "schedule"
-    is WorkflowDispatch -> "workflow_dispatch"
-    is BranchProtectionRule -> "branch_protection_rule"
-    is CheckRun -> "check_run"
-    is CheckSuite -> "check_suite"
-    is Create -> "create"
-    is Delete -> "delete"
-    is Deployment -> "deployment"
-    is DeploymentStatus -> "deployment_status"
-    is Discussion -> "discussion"
-    is DiscussionComment -> "discussion_comment"
-    is Fork -> "fork"
-    is Gollum -> "gollum"
-    is IssueComment -> "issue_comment"
-    is Issues -> "issues"
-    is Label -> "label"
-    is Milestone -> "milestone"
-    is PageBuild -> "page_build"
-    is Project -> "project"
-    is ProjectCard -> "project_card"
-    is ProjectColumn -> "project_column"
-    is PublicWorkflow -> "public"
-    is PullRequestReview -> "pull_request_review"
-    is PullRequestReviewComment -> "pull_request_review_comment"
-    is RegistryPackage -> "registry_package"
-    is Release -> "release"
-    is RepositoryDispatch -> "repository_dispatch"
-    is Status -> "status"
-    is Watch -> "watch"
-    is WorkflowCall -> "workflow_call"
-    is WorkflowRun -> "workflow_run"
-}
+val Trigger.triggerName: String get() = triggerClassMap
+    .firstOrNull { it.second == this::class }
+    ?.first
+    ?: error("Couldn't find triggerName for class ${this::class}")
+
+val triggerClassMap: List<Pair<String, KClass<*>>> = listOf(
+    "pull_request" to PullRequest::class,
+    "pull_request_target" to PullRequestTarget::class,
+    "push" to Push::class,
+    "schedule" to Schedule::class,
+    "workflow_dispatch" to WorkflowDispatch::class,
+    "branch_protection_rule" to BranchProtectionRule::class,
+    "check_run" to CheckRun::class,
+    "check_suite" to CheckSuite::class,
+    "create" to Create::class,
+    "delete" to Delete::class,
+    "deployment" to Deployment::class,
+    "deployment_status" to DeploymentStatus::class,
+    "discussion" to Discussion::class,
+    "discussion_comment" to DiscussionComment::class,
+    "fork" to Fork::class,
+    "gollum" to Gollum::class,
+    "issue_comment" to IssueComment::class,
+    "issues" to Issues::class,
+    "label" to Label::class,
+    "milestone" to Milestone::class,
+    "page_build" to PageBuild::class,
+    "project" to Project::class,
+    "project_card" to ProjectCard::class,
+    "project_column" to ProjectColumn::class,
+    "public" to PublicWorkflow::class,
+    "pull_request_review" to PullRequestReview::class,
+    "pull_request_review_comment" to PullRequestReviewComment::class,
+    "registry_package" to RegistryPackage::class,
+    "release" to Release::class,
+    "repository_dispatch" to RepositoryDispatch::class,
+    "status" to Status::class,
+    "watch" to Watch::class,
+    "workflow_call" to WorkflowCall::class,
+    "workflow_run" to WorkflowRun::class,
+)
 
 internal fun HasFreeYamlArgs.freeArgsToYaml(): String = buildString {
     for (arg in freeYamlArgs) {

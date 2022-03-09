@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.ClassName
 import it.krzeminski.githubactions.actions.MissingAction
-import it.krzeminski.githubactions.scriptmodel.SerializedStep
+import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
@@ -10,7 +10,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassN
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
 
-fun SerializedStep.generateAction(
+fun YamlStep.generateAction(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
 ) = CodeBlock { builder ->
@@ -36,7 +36,7 @@ fun SerializedStep.generateAction(
     builder.add(")\n")
 }
 
-fun SerializedStep.generateActionWithWrapper(
+fun YamlStep.generateActionWithWrapper(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
 ) = CodeBlock { builder ->
@@ -55,7 +55,7 @@ fun SerializedStep.generateActionWithWrapper(
     builder.add("),\n")
 }
 
-fun SerializedStep.generateMissingAction(
+fun YamlStep.generateMissingAction(
     coords: ActionCoords,
 ) = CodeBlock { builder ->
     builder

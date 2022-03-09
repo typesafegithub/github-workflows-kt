@@ -22,14 +22,14 @@ import kotlin.collections.linkedMapOf
 public val workflowGenerated: Workflow = workflow(
       name = "generated",
       on = listOf(
-        Push(
-          branches = listOf("branch1", "branch2"),
-          tags = listOf("tag1", "tag2"),
-          paths = listOf("path1", "path2"),
-        ),
         PullRequest(
           types = listOf(PullRequest.Type.AutoMergeDisabled, PullRequest.Type.Opened),
           branches = listOf("branch1", "branch2"),
+          paths = listOf("path1", "path2"),
+        ),
+        Push(
+          branches = listOf("branch1", "branch2"),
+          tags = listOf("tag1", "tag2"),
           paths = listOf("path1", "path2"),
         ),
         Schedule(listOf(

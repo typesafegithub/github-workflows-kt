@@ -84,55 +84,41 @@ class OtherTriggersTest : FunSpec({
 
     test("Creating all triggers with free arguments") {
         val triggers: List<Trigger> = listOf(
-            BranchProtectionRule()
-                .types(listOf("created", "deleted")),
-            CheckRun()
-                .types(listOf("completed", "rerequested")),
+            BranchProtectionRule().types("created", "deleted"),
+            CheckRun().types("completed", "rerequested"),
             CheckSuite(),
             Create(),
             Delete(),
             Deployment(),
             DeploymentStatus(),
-            Discussion()
-                .types(listOf("created", "edited", "answered")),
+            Discussion().types("created", "edited", "answered"),
             DiscussionComment(),
             Fork(),
             Gollum(),
-            IssueComment()
-                .types(listOf("created", "edited", "deleted")),
-            Issues()
-                .types(listOf("opened", "edited")),
-            Label()
-                .types(listOf("crDiscussionCommenteated", "deleted", "edited")),
-            Milestone()
-                .types(listOf("created", "closed")),
+            IssueComment().types("created", "edited", "deleted"),
+            Issues().types("opened", "edited"),
+            Label().types("commented", "deleted", "edited"),
+            Milestone().types("created", "closed"),
             PageBuild(),
-            Project()
-                .types(listOf("created", "deleted")),
-            ProjectCard()
-                .types(listOf("created", "moved")),
-            ProjectColumn()
-                .types(listOf("moved")),
+            Project().types("created", "deleted"),
+            ProjectCard().types("created", "moved"),
+            ProjectColumn().types("moved"),
             PublicWorkflow(),
             PullRequest(),
             PullRequestReview(),
-            PullRequestReviewComment()
-                .types(listOf("created", "edited")),
+            PullRequestReviewComment().types("created", "edited"),
             PullRequestTarget(),
             Push(),
-            RegistryPackage()
-                .types(listOf("published", "updated")),
+            RegistryPackage().types("published", "updated"),
             Release()
-                .types(listOf("published", "unpublished")),
+                .types("published", "unpublished"),
             RepositoryDispatch(),
             Schedule(emptyList()),
-            Status()
-                .types(listOf("started")),
+            Status().types("started"),
             Watch(),
             WorkflowCall(),
             WorkflowDispatch(),
-            WorkflowRun()
-                .types(listOf("completed", "requested")),
+            WorkflowRun().types("completed", "requested"),
         )
 
         triggers.triggersToYaml() shouldBe """
@@ -168,7 +154,7 @@ class OtherTriggersTest : FunSpec({
                 - 'edited'
             label:
               types:
-                - 'crDiscussionCommenteated'
+                - 'commented'
                 - 'deleted'
                 - 'edited'
             milestone:

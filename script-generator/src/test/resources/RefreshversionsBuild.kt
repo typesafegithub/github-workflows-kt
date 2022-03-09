@@ -18,12 +18,12 @@ import java.nio.`file`.Paths
 public val workflowCheckBuild: Workflow = workflow(
       name = "Check build",
       on = listOf(
-        Push(
-          branches = listOf("main"),
+        PullRequest(
           paths = listOf("plugins/**", "sample-kotlin/**", "sample-groovy/**", "!**.md",
               "!.editorconfig", "!**/.gitignore", "!**.adoc", "!docs/**"),
         ),
-        PullRequest(
+        Push(
+          branches = listOf("main"),
           paths = listOf("plugins/**", "sample-kotlin/**", "sample-groovy/**", "!**.md",
               "!.editorconfig", "!**/.gitignore", "!**.adoc", "!docs/**"),
         ),

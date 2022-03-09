@@ -3,59 +3,82 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asClassName
-import it.krzeminski.githubactions.domain.triggers.BranchProtectionRule
-import it.krzeminski.githubactions.domain.triggers.CheckRun
-import it.krzeminski.githubactions.domain.triggers.CheckSuite
-import it.krzeminski.githubactions.domain.triggers.Create
 import it.krzeminski.githubactions.domain.triggers.Cron
-import it.krzeminski.githubactions.domain.triggers.Delete
-import it.krzeminski.githubactions.domain.triggers.Deployment
-import it.krzeminski.githubactions.domain.triggers.DeploymentStatus
-import it.krzeminski.githubactions.domain.triggers.Discussion
-import it.krzeminski.githubactions.domain.triggers.DiscussionComment
-import it.krzeminski.githubactions.domain.triggers.Fork
-import it.krzeminski.githubactions.domain.triggers.Gollum
-import it.krzeminski.githubactions.domain.triggers.IssueComment
-import it.krzeminski.githubactions.domain.triggers.Issues
-import it.krzeminski.githubactions.domain.triggers.Label
-import it.krzeminski.githubactions.domain.triggers.Milestone
-import it.krzeminski.githubactions.domain.triggers.PageBuild
-import it.krzeminski.githubactions.domain.triggers.Project
-import it.krzeminski.githubactions.domain.triggers.ProjectCard
-import it.krzeminski.githubactions.domain.triggers.ProjectColumn
-import it.krzeminski.githubactions.domain.triggers.PublicWorkflow
 import it.krzeminski.githubactions.domain.triggers.PullRequest
-import it.krzeminski.githubactions.domain.triggers.PullRequestReview
-import it.krzeminski.githubactions.domain.triggers.PullRequestReviewComment
 import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
-import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.domain.triggers.RegistryPackage
-import it.krzeminski.githubactions.domain.triggers.Release
-import it.krzeminski.githubactions.domain.triggers.RepositoryDispatch
 import it.krzeminski.githubactions.domain.triggers.Schedule
-import it.krzeminski.githubactions.domain.triggers.Status
 import it.krzeminski.githubactions.domain.triggers.Trigger
-import it.krzeminski.githubactions.domain.triggers.Watch
-import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
-import it.krzeminski.githubactions.scriptmodel.WorkflowOn
+import it.krzeminski.githubactions.scriptmodel.YamlTrigger
+import it.krzeminski.githubactions.scriptmodel.YamlWorkflowTriggers
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import it.krzeminski.githubactions.yaml.MapOfYaml
 import it.krzeminski.githubactions.yaml.toMap
+import it.krzeminski.githubactions.yaml.triggerClassMap
 
-fun WorkflowOn.toKotlin(): CodeBlock {
-    val builder = CodeBlock.builder()
+fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
     builder.add("listOf(\n").indent()
-    builder.add(push.toKotlin())
-    builder.add(pull_request.toKotlin())
-    builder.add(pull_request_target.toKotlin())
-    builder.add(schedule.toKotlin())
-    builder.add(workflow_dispatch?.inputs.toKotlin())
-    builder.add("),\n").unindent()
-    return builder.build()
+        .add(pull_request.toKotlin())
+        .add(push.toKotlin())
+        .add(pull_request_target.toKotlin())
+        .add(schedule.toKotlin())
+        .add(workflow_dispatch?.inputs.toKotlin())
+        .add(branch_protection_rule.toKotlin("branch_protection_rule"))
+        .add(check_run.toKotlin("check_run"))
+        .add(check_suite.toKotlin("check_suite"))
+        .add(create.toKotlin("create"))
+        .add(delete.toKotlin("delete"))
+        .add(deployment.toKotlin("deployment"))
+        .add(deployment_status.toKotlin("deployment_status"))
+        .add(discussion.toKotlin("discussion"))
+        .add(discussion_comment.toKotlin("discussion_comment"))
+        .add(fork.toKotlin("fork"))
+        .add(gollum.toKotlin("gollum"))
+        .add(issue_comment.toKotlin("issue_comment"))
+        .add(issues.toKotlin("issues"))
+        .add(label.toKotlin("label"))
+        .add(milestone.toKotlin("milestone"))
+        .add(page_build.toKotlin("page_build"))
+        .add(project.toKotlin("project"))
+        .add(project_card.toKotlin("project_card"))
+        .add(project_column.toKotlin("project_column"))
+        .add(pull_request_review_comment.toKotlin("pull_request_review_comment"))
+        .add(registry_package.toKotlin("registry_package"))
+        .add(release.toKotlin("release"))
+        .add(status.toKotlin("status"))
+        .add(watch.toKotlin("watch"))
+        .add(workflow_call.toKotlin("workflow_call"))
+        .add(workflow_run.toKotlin("workflow_run"))
+        .add("),\n").unindent()
+}
+
+private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
+    return if (this == null) {
+        CodeBlock.of("")
+    } else {
+        val classname = triggerClassMap
+            .firstOrNull { it.first == triggerName }
+            ?.second
+            ?.asClassName()
+            ?: error("Couldn't find class for triggerName=$triggerName")
+
+        CodeBlock { builder ->
+            builder.add("%T()", classname)
+            if (types.isNullOrEmpty()) {
+                builder.add(",\n")
+            } else {
+                builder
+                    .indent()
+                    .add(
+                        ".types(%L),\n",
+                        types.joinToString(", ") { CodeBlock.of("%S", it).toString() }
+                    )
+                    .unindent()
+            }
+        }
+    }
 }
 
 fun Trigger?.toKotlin(): CodeBlock {
@@ -65,7 +88,11 @@ fun Trigger?.toKotlin(): CodeBlock {
     val map: MapOfYaml = this.toMap()
     val builder = CodeBlock.builder()
     builder
-        .add("%T(\n", classname()).indent()
+        .add("%T(", classname()).indent()
+
+    if (map.all { it.value.isNullOrEmpty() }.not()) {
+        builder.add("\n")
+    }
     for ((key, value) in map) {
         val list: List<String> = stringsOrEnums(key, value) ?: continue
         builder

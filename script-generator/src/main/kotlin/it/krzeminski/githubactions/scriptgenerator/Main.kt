@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.scriptgenerator
 
-import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
+import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.myYaml
 import kotlinx.serialization.decodeFromString
 import java.net.URL
@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
     }
     val url = URL(args.first())
     val urlContent = url.readText()
-    val workflow: GithubWorkflow = myYaml.decodeFromString(urlContent)
+    val workflow: YamlWorkflow = myYaml.decodeFromString(urlContent)
     println(workflow.toKotlin(url.filename()))
 }
 

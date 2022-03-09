@@ -4,17 +4,17 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.PropertySpec
 import it.krzeminski.githubactions.domain.Workflow
-import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
+import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.nio.file.Paths
 
-fun GithubWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
+fun YamlWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
     .addImport("$PACKAGE.yaml", "toYaml")
     .addImport("$PACKAGE.dsl", "expr")
     .addProperty(workFlowProperty(filenameFromUrl))
     .build()
 
-fun GithubWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
+fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
     val filename = (filenameFromUrl ?: name).lowercase().replace(" ", "-")
 
     return PropertySpec.builder("workflow${filename.toPascalCase()}", Workflow::class)
@@ -39,7 +39,7 @@ fun GithubWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
         .build()
 }
 
-private fun GithubWorkflow.workflowEnv() = CodeBlock { builder ->
+private fun YamlWorkflow.workflowEnv() = CodeBlock { builder ->
     if (env.isEmpty()) return@CodeBlock
     builder.add("env = %M(\n", Members.linkedMapOf)
     builder.indent()
@@ -51,7 +51,7 @@ private fun GithubWorkflow.workflowEnv() = CodeBlock { builder ->
     builder.add("),\n")
 }
 
-fun GithubWorkflow.toKotlin(filenameFromUrl: String?): String = """
+fun YamlWorkflow.toKotlin(filenameFromUrl: String?): String = """
         #!/usr/bin/env kotlin
         
         @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")

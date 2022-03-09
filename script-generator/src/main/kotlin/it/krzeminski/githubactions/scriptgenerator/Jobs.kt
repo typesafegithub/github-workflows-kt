@@ -1,13 +1,13 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.scriptmodel.GithubWorkflow
-import it.krzeminski.githubactions.scriptmodel.SerializedStep
+import it.krzeminski.githubactions.scriptmodel.YamlStep
+import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
-fun GithubWorkflow.generateJobs() = CodeBlock { builder ->
+fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
     jobs.forEach { (name, job) ->
         builder.add(
             "job(%S, %M) {\n",
@@ -35,7 +35,7 @@ fun GithubWorkflow.generateJobs() = CodeBlock { builder ->
     }
 }
 
-fun SerializedStep.generateCommand() = CodeBlock { builder ->
+fun YamlStep.generateCommand() = CodeBlock { builder ->
     builder
         .add(("run(\n"))
         .indent()
