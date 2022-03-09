@@ -9,7 +9,6 @@ import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.file.Paths
 
 val updateGradleWrapperWorkflow = workflow(
@@ -18,7 +17,7 @@ val updateGradleWrapperWorkflow = workflow(
         Schedule(listOf(Cron("0 0 * * *"))), // Daily, at midnight.
         WorkflowDispatch(),
     ),
-    sourceFile = Paths.get(".github/workflows/update-gradle-wrapper.main.kts"),
+    sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
     targetFile = Paths.get(".github/workflows/update-gradle-wrapper.yml"),
 ) {
     job(
@@ -35,5 +34,3 @@ val updateGradleWrapperWorkflow = workflow(
         )
     }
 }
-
-println(updateGradleWrapperWorkflow.toYaml())
