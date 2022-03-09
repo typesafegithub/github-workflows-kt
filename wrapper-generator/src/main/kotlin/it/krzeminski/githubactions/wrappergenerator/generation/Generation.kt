@@ -33,6 +33,7 @@ fun ActionCoords.generateWrapper(
     metadata.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
+
     val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
     return Wrapper(
         kotlinCode = actionWrapperSourceCode,
