@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
+import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import java.nio.file.Paths
@@ -17,6 +18,7 @@ fun main() {
     Paths.get("library/src/gen").toFile().deleteRecursively()
 
     checkDuplicateWrappers()
+    println(wrappersToGenerate.suggestDeprecations())
 
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
         println("Generating ${actionCoords.prettyPrint}")

@@ -62,7 +62,7 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
             """.trimIndent()
         )
         .addType(generateActionClass(metadata, coords, inputTypings))
-        .annotateSuppressDeprecation(metadata)
+        .annotateSuppressDeprecation(metadata, coords)
         .indent("    ")
         .build()
     return buildString {
@@ -70,9 +70,9 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
     }
 }
 
-private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata) = apply {
-    val deprecatedIsUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
-    if (deprecatedIsUsed) {
+private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata, coords: ActionCoords) = apply {
+    val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
+    if (isDeprecatedInputUsed || coords.deprecatedByVersion != null) {
         addAnnotation(
             AnnotationSpec.builder(Suppress::class.asClassName())
                 .addMember(CodeBlock.of("%S", "DEPRECATION"))
@@ -85,6 +85,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
     val actionClassName = coords.buildActionClassName()
     return TypeSpec.classBuilder(actionClassName)
         .addKdoc(actionKdoc(metadata, coords))
+        .addMaybeDeprecated(coords)
         .inheritsFromAction(coords, metadata)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
         .properties(metadata, coords, inputTypings)
@@ -221,6 +222,19 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
     }
 }
 
+private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.Builder {
+    if (coords.deprecatedByVersion == null) {
+        return this
+    }
+    val newerClass = coords.copy(version = coords.deprecatedByVersion)
+    addAnnotation(
+        AnnotationSpec.builder(Deprecated::class)
+            .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")
+            .addMember("replaceWith = ReplaceWith(%S)", newerClass.buildActionClassName())
+            .build()
+    )
+    return this
+}
 private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
     val superclass = if (metadata.outputs.isEmpty()) {
         ClassName("it.krzeminski.githubactions.actions", "Action")

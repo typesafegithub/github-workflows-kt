@@ -512,6 +512,57 @@ class GenerationTest : FunSpec({
         )
     }
 
+    test("action v2 deprecated by v3") {
+        // given
+        val actionManifestHasNoInputs = emptyMap<String, Input>()
+        val actionManifest = Metadata(
+            inputs = actionManifestHasNoInputs,
+            name = "Deprecated Action",
+            description = "Description",
+        )
+
+        val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
+
+        // when
+        val wrapper = coords.generateWrapper { actionManifest }
+        writeToUnitTests(wrapper)
+
+        // then
+        wrapper shouldBe Wrapper(
+            kotlinCode = """
+                // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+                // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+                // generator itself.
+                @file:Suppress("DEPRECATION")
+
+                package it.krzeminski.githubactions.actions.johnsmith
+
+                import it.krzeminski.githubactions.actions.Action
+                import java.util.LinkedHashMap
+                import kotlin.Deprecated
+                import kotlin.Suppress
+
+                /**
+                 * Action: Deprecated Action
+                 *
+                 * Description
+                 *
+                 * [Action on GitHub](https://github.com/john-smith/deprecated-action)
+                 */
+                @Deprecated(
+                    message = "This action has a newer major version: DeprecatedActionV3",
+                    replaceWith = ReplaceWith("DeprecatedActionV3")
+                )
+                public class DeprecatedActionV2() : Action("john-smith", "deprecated-action", "v2") {
+                    @Suppress("SpreadOperator")
+                    public override fun toYamlArguments() = LinkedHashMap<String, String>()
+                }
+
+            """.trimIndent(),
+            filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/DeprecatedActionV2.kt",
+        )
+    }
+
     test("action with ListOfTypings") {
         // given
         val actionManifest = Metadata(

@@ -19,7 +19,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "checkout", "v2"),
+        ActionCoords("actions", "checkout", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "ssh-strict" to BooleanTyping,
             "persist-credentials" to BooleanTyping,
