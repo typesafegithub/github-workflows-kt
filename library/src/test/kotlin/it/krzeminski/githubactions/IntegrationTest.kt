@@ -3,7 +3,7 @@ package it.krzeminski.githubactions
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
@@ -28,7 +28,7 @@ class IntegrationTest : FunSpec({
         ) {
             uses(
                 name = "Check out",
-                action = CheckoutV2(),
+                action = CheckoutV3(),
             )
 
             run(
@@ -59,7 +59,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
@@ -73,7 +73,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
@@ -130,7 +130,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
@@ -178,7 +178,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
@@ -252,7 +252,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                 )
 
                 run(
@@ -282,7 +282,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
@@ -304,7 +304,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                 )
 
                 run(
@@ -335,7 +335,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Install Kotlin
                     run: sudo snap install --classic kotlin
@@ -352,7 +352,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
@@ -374,7 +374,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                 )
             }
         }.toYaml(addConsistencyCheck = false)
@@ -397,7 +397,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
         """.trimIndent()
     }
 
@@ -432,7 +432,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                     env = linkedMapOf(
                         "SIMPLE_VAR" to "simple-value-uses",
                         "MULTILINE_VAR" to """
@@ -489,7 +489,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                     env:
                       SIMPLE_VAR: simple-value-uses
                       MULTILINE_VAR: |
@@ -527,7 +527,7 @@ class IntegrationTest : FunSpec({
 
                 uses(
                     name = "Some step consuming other step's output",
-                    action = CheckoutV2(
+                    action = CheckoutV3(
                         repository = expr(addAndCommit.id),
                         ref = expr(addAndCommit.outputs.commitSha),
                         token = expr(addAndCommit.outputs["my-unsafe-output"]),
@@ -556,7 +556,7 @@ class IntegrationTest : FunSpec({
                     uses: EndBug/add-and-commit@v8
                   - id: step-1
                     name: Some step consuming other step's output
-                    uses: actions/checkout@v2
+                    uses: actions/checkout@v3
                     with:
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}

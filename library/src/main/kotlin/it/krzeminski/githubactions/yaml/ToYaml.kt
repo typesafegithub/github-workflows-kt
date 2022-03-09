@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.yaml
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
@@ -28,7 +28,7 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             name = "check_yaml_consistency",
             runsOn = UbuntuLatest,
         ) {
-            uses("Check out", CheckoutV2())
+            uses("Check out", CheckoutV3())
             run("Install Kotlin", "sudo snap install --classic kotlin")
             if (useGitDiff) {
                 run(
