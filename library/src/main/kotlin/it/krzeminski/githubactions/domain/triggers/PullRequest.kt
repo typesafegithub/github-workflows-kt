@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import kotlinx.serialization.SerialName
+import it.krzeminski.githubactions.dsl.FreeYamlArgs
+
 
 @kotlinx.serialization.Serializable
 data class PullRequest(
@@ -10,7 +12,6 @@ data class PullRequest(
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
 ) : Trigger() {
-    override val triggerName: String = "pull_request"
 
     init {
         require(!(branches != null && branchesIgnore != null)) {

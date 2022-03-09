@@ -3,13 +3,42 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asClassName
+import it.krzeminski.githubactions.domain.triggers.BranchProtectionRule
+import it.krzeminski.githubactions.domain.triggers.CheckRun
+import it.krzeminski.githubactions.domain.triggers.CheckSuite
+import it.krzeminski.githubactions.domain.triggers.Create
 import it.krzeminski.githubactions.domain.triggers.Cron
+import it.krzeminski.githubactions.domain.triggers.Delete
+import it.krzeminski.githubactions.domain.triggers.Deployment
+import it.krzeminski.githubactions.domain.triggers.DeploymentStatus
+import it.krzeminski.githubactions.domain.triggers.Discussion
+import it.krzeminski.githubactions.domain.triggers.DiscussionComment
+import it.krzeminski.githubactions.domain.triggers.Fork
+import it.krzeminski.githubactions.domain.triggers.Gollum
+import it.krzeminski.githubactions.domain.triggers.IssueComment
+import it.krzeminski.githubactions.domain.triggers.Issues
+import it.krzeminski.githubactions.domain.triggers.Label
+import it.krzeminski.githubactions.domain.triggers.Milestone
+import it.krzeminski.githubactions.domain.triggers.PageBuild
+import it.krzeminski.githubactions.domain.triggers.Project
+import it.krzeminski.githubactions.domain.triggers.ProjectCard
+import it.krzeminski.githubactions.domain.triggers.ProjectColumn
+import it.krzeminski.githubactions.domain.triggers.PublicWorkflow
 import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.PullRequestReview
+import it.krzeminski.githubactions.domain.triggers.PullRequestReviewComment
 import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.domain.triggers.RegistryPackage
+import it.krzeminski.githubactions.domain.triggers.Release
+import it.krzeminski.githubactions.domain.triggers.RepositoryDispatch
 import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.Status
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import it.krzeminski.githubactions.domain.triggers.Watch
+import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.WorkflowOn
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
@@ -62,15 +91,8 @@ fun Trigger.stringsOrEnums(key: String, list: List<String>?) = when {
     else -> list.map { "$QUOTE$it$QUOTE" }
 }
 
-private fun Trigger.classname(): ClassName {
-    return when (this) {
-        is PullRequest -> PullRequest::class.asClassName()
-        is PullRequestTarget -> PullRequestTarget::class.asClassName()
-        is Push -> Push::class.asClassName()
-        is Schedule -> Schedule::class.asClassName()
-        is WorkflowDispatch -> WorkflowDispatch::class.asClassName()
-    }
-}
+private fun Trigger.classname(): ClassName =
+    this::class.asClassName()
 
 private fun Map<String, WorkflowDispatch.Input>?.toKotlin(): CodeBlock {
     if (this == null || isEmpty()) return CodeBlock.of("")

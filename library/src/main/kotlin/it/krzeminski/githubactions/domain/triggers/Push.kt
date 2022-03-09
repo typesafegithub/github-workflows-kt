@@ -14,7 +14,6 @@ data class Push(
     @SerialName("paths-ignore")
     val pathsIgnore: List<String>? = null,
 ) : Trigger() {
-    override val triggerName = "push"
 
     init {
         require(!(branches != null && branchesIgnore != null)) {

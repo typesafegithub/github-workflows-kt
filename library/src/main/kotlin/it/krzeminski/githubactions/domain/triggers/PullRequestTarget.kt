@@ -11,7 +11,6 @@ data class PullRequestTarget(
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
 ) : Trigger() {
-    override val triggerName = "pull_request_target"
 
     init {
         require(!(branches != null && branchesIgnore != null)) {

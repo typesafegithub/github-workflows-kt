@@ -4,11 +4,9 @@ import kotlinx.serialization.SerialName
 
 // https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs
 @kotlinx.serialization.Serializable
-class WorkflowDispatch(
+data class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
 ) : Trigger() {
-
-    override val triggerName = "workflow_dispatch"
 
     @kotlinx.serialization.Serializable
     enum class Type {

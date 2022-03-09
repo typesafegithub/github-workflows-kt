@@ -5,6 +5,8 @@ import it.krzeminski.githubactions.actions.fullName
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Step
+import it.krzeminski.githubactions.dsl.ListFreeArg
+import it.krzeminski.githubactions.dsl.StringFreeArg
 
 fun List<Step>.stepsToYaml(): String =
     this.joinToString(separator = "\n") {
@@ -17,15 +19,16 @@ private fun Step.toYaml() =
         is CommandStep -> toYaml()
     }
 
-private fun ExternalActionStep.toYaml() = buildString {
+private fun ExternalActionStep.toYaml(): String = buildString {
     appendLine("- id: $id")
     appendLine("  name: $name")
     appendLine("  uses: ${action.fullName}")
-    this@toYaml.action.argumentsToYaml().let { arguments ->
-        if (arguments.isNotEmpty()) {
-            appendLine("  with:")
-            appendLine(arguments.prependIndent("    "))
-        }
+
+    val allArguments = action.mergeArguments()
+    if (allArguments.isNotEmpty()) {
+        val arguments = allArguments.toYaml()
+        appendLine("  with:")
+        appendLine(arguments.prependIndent("    "))
     }
     if (this@toYaml.env.isNotEmpty()) {
         appendLine("  env:")
@@ -33,6 +36,9 @@ private fun ExternalActionStep.toYaml() = buildString {
     }
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
+    }
+    action.freeYamlArgs.filterIsInstance<ListFreeArg>().forEach {
+        printIfHasElements(it.value, it.key, "    ")
     }
 }.removeSuffix("\n")
 
@@ -59,8 +65,10 @@ private fun CommandStep.toYaml() = buildString {
     }
 }.removeSuffix("\n")
 
-private fun Action.argumentsToYaml() =
-    toYamlArguments().toYaml()
+private fun Action.mergeArguments(): LinkedHashMap<String, String> {
+    val freeArgsYaml = freeYamlArgs.filterIsInstance<StringFreeArg>().map { it.key to it.value }.toMap()
+    return LinkedHashMap(toYamlArguments() + freeArgsYaml)
+}
 
 private fun String.conditionToYaml() =
     "  if: $this"

@@ -58,6 +58,8 @@ private fun Job.toYaml() = buildString {
 
     appendLine("  steps:")
     append(steps.stepsToYaml().prependIndent("    "))
+    if (freeYamlArgs.isNotEmpty()) appendLine()
+    append(freeArgsToYaml())
 }
 
 fun requireMatchesRegex(field: String, value: String, regex: Regex, url: String?) {
