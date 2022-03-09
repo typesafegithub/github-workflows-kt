@@ -29,7 +29,6 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             runsOn = UbuntuLatest,
         ) {
             uses("Check out", CheckoutV3())
-            run("Install Kotlin", "sudo snap install --classic kotlin")
             if (useGitDiff) {
                 run(
                     "Execute script",

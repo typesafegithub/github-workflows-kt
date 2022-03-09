@@ -61,9 +61,6 @@ class IntegrationTest : FunSpec({
                     name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Install Kotlin
-                    run: sudo snap install --classic kotlin
-                  - id: step-2
                     name: Consistency check
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
@@ -132,9 +129,6 @@ class IntegrationTest : FunSpec({
                     name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Install Kotlin
-                    run: sudo snap install --classic kotlin
-                  - id: step-2
                     name: Consistency check
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job_1":
@@ -337,12 +331,9 @@ class IntegrationTest : FunSpec({
                     name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Install Kotlin
-                    run: sudo snap install --classic kotlin
-                  - id: step-2
                     name: Execute script
                     run: rm '$targetPath' && '.github/workflows/some_workflow.main.kts'
-                  - id: step-3
+                  - id: step-2
                     name: Consistency check
                     run: git diff --exit-code '$targetPath'
               "test_job":
