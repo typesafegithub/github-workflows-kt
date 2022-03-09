@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions
 
 import io.kotest.core.spec.style.FunSpec
