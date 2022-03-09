@@ -17,7 +17,7 @@ fun List<WrapperRequest>.suggestDeprecations(): String {
             when {
                 it.version == maxVersion && it.deprecatedByVersion == null -> null
                 it.version == maxVersion ->
-                    """WARNING: ActionCoords("owner", "other-name", "v3") is deprecatedByVersion "v2", an older version ?"""
+                    """WARNING: ${it.prettyPrint} is deprecatedByVersion "${it.deprecatedByVersion}", an older version ?"""
                 it.deprecatedByVersion == maxVersion -> null
                 else ->
                     """WARNING: newer version available for ${it.prettyPrint}. Maybe add: deprecatedByVersion = "$maxVersion" ?"""
