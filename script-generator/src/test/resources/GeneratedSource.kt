@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
@@ -32,6 +33,7 @@ public val workflowGenerated: Workflow = workflow(
           tags = listOf("tag1", "tag2"),
           paths = listOf("path1", "path2"),
         ),
+        PullRequestTarget(),
         Schedule(listOf(
           Cron("0 0 * * *"),
         )),

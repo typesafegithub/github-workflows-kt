@@ -10,26 +10,18 @@ on:
             - 'completed'
             - 'rerequested'
     check_suite:
-        types:
     create:
-        types:
     delete:
-        types:
     deployment:
-        types:
     deployment_status:
-        types:
     discussion:
         types:
             - 'created'
             - 'edited'
             - 'answered'
     discussion_comment:
-        types:
     fork:
-        types:
     gollum:
-        types:
     issue_comment:
         types:
             - 'created'
@@ -49,7 +41,6 @@ on:
             - 'created'
             - 'closed'
     page_build:
-        types:
     project:
         types:
             - 'created'
@@ -62,19 +53,14 @@ on:
         types:
             - 'moved'
     public:
-        branches:
     pull_request:
-        branches:
     pull_request_review:
-        types:
     pull_request_review_comment:
         types:
             - 'created'
             - 'edited'
     pull_request_target:
-        branches:
     push:
-        branches:
     registry_package:
         types:
             - 'published'
@@ -84,18 +70,14 @@ on:
             - 'published'
             - 'unpublished'
     repository_dispatch:
-        types:
     schedule:
         - cron: "* * * * *"
     status:
         types:
             - 'started'
     watch:
-        types:
     workflow_call:
-        types:
     workflow_dispatch:
-        types:
     workflow_run:
         types:
             - 'completed'

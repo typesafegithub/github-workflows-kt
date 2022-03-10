@@ -7,27 +7,25 @@ import it.krzeminski.githubactions.scriptgenerator.filename
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.myYaml
+import it.krzeminski.githubactions.scriptmodel.normalizeYaml
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
+import java.io.FileFilter
 import java.net.URL
 
 class GenerateKotlinScripts : FunSpec({
 
-    val testInputs = listOf(
-        "all-triggers.yml",
-        "refreshversions-pr.yml",
-        "generate-wrappers.yml",
-        "generated-source.yml",
-        "update-gradle-wrapper.yml",
-        "refreshversions-build.yml",
-        "refreshversions-website.yml",
-    )
+    val testInputs = File("src/test/resources")
+        .listFiles(FileFilter { it.extension == "yml" })!!
+        .map { it.name }
 
     testInputs.forEach { name ->
         test("Generating $name") {
             val input = TestInput(name)
-            val workflow: YamlWorkflow = myYaml.decodeFromString(input.yamlFile.readText())
+            val workflow: YamlWorkflow = myYaml.decodeFromString(
+                input.yamlFile.readText().normalizeYaml()
+            )
 
             val newContent = workflow.toFileSpec(workflow.name)
                 .toString()
