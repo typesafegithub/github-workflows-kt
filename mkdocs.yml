@@ -1,5 +1,20 @@
-site_name: My Docs
+site_name: GitHub Actions Kotlin DSL
+site_author: Piotr Krzemiński
+repo_url: https://github.com/krzema12/github-actions-kotlin-dsl/
 
 theme:
   name: material
+  features:
+    - navigation.expand
 
+nav:
+  - Introduction: 'index.md'
+  - Getting started: 'getting_started.md'
+  - User guide:
+      - Entering the Kotlin DSL world: 'user-guide/entering-the-kotlin-dsl-world.md'
+      - Using actions: 'user-guide/using-actions.md'
+      - Dealing with multiple workflows: 'user-guide/dealing-with-multiple-workflows.md'
+      - Consuming action outputs: 'user-guide/consuming-action-outputs.md'
+  - Contributing: 'contributing.md'
+  - Projects using this library: 'projects-using-this-library.md'
+  - Frequently Asked Questions (FAQ): 'faq.md'
