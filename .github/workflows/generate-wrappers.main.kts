@@ -47,7 +47,7 @@ val generateWrappersWorkflow = workflow(
             command = """
                 git config --global user.email "<>"
                 git config --global user.name "GitHub Actions Bot"
-                git add .
+                git add library/src/gen
                 git commit --allow-empty -m "Regenerate wrappers (${'$'}GITHUB_SHA)"  # an empty commit explicitly shows that the wrappers are up-to-date
                 git push
             """.trimIndent()
