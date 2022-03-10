@@ -24,7 +24,7 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
         .add(push.toKotlin())
         .add(pull_request_target.toKotlin())
         .add(schedule.toKotlin())
-        .add(workflow_dispatch?.inputs.toKotlin())
+        .add(workflow_dispatch.toKotlin())
         .add(branch_protection_rule.toKotlin("branch_protection_rule"))
         .add(check_run.toKotlin("check_run"))
         .add(check_suite.toKotlin("check_suite"))
@@ -121,22 +121,34 @@ fun Trigger.stringsOrEnums(key: String, list: List<String>?) = when {
 private fun Trigger.classname(): ClassName =
     this::class.asClassName()
 
-private fun Map<String, WorkflowDispatch.Input>?.toKotlin(): CodeBlock {
-    if (this == null || isEmpty()) return CodeBlock.of("")
+private fun WorkflowDispatch?.toKotlin(): CodeBlock {
+    if (this == null) return CodeBlock.of("")
+
     val builder = CodeBlock.builder()
-        .add("%T(mapOf(\n", WorkflowDispatch::class)
-        .indent()
-    forEach { (name, input) ->
-        builder.add("%S to %T(\n", name, WorkflowDispatch.Input::class)
+        .add("%T(", WorkflowDispatch::class)
+
+    val inputs = this.inputs
+
+    if (inputs.isEmpty()) {
+        builder.add("),\n")
+    } else {
+        builder.add("mapOf(\n")
             .indent()
-            .add("type = %M,\n", enumMemberName(input.type))
-            .add("description = %S,\n", input.description)
-            .add("default = %S,\n", input.default)
-            .add("required = %L,\n", input.required)
+        inputs.forEach { (name, input) ->
+            builder.add("%S to %T(\n", name, WorkflowDispatch.Input::class)
+                .indent()
+                .add("type = %M,\n", enumMemberName(input.type))
+                .add("description = %S,\n", input.description)
+                .add("default = %S,\n", input.default)
+                .add("required = %L,\n", input.required)
+                .unindent()
+                .add("),\n")
+        }
+        builder
             .unindent()
-            .add("),\n")
+            .add(")")
+            .add(")\n")
     }
-    builder.unindent().add("))\n")
     return builder.build()
 }
 

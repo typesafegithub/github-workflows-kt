@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.actions.actions.SetupPythonV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
@@ -16,6 +17,7 @@ public val workflowPublishMkdocs: Workflow = workflow(
         Push(
           branches = listOf("release"),
         ),
+        WorkflowDispatch(),
         ),
       sourceFile = Paths.get("publish-mkdocs.main.kts"),
       targetFile = Paths.get("publish-mkdocs.yml"),

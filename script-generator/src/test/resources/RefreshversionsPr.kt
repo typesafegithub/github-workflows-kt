@@ -10,6 +10,7 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
@@ -21,6 +22,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         Schedule(listOf(
           Cron("0 7 * * 1"),
         )),
+        WorkflowDispatch(),
         ),
       sourceFile = Paths.get("refreshversions-pr.main.kts"),
       targetFile = Paths.get("refreshversions-pr.yml"),

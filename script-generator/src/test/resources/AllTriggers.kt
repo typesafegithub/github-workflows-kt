@@ -33,6 +33,7 @@ import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Status
 import it.krzeminski.githubactions.domain.triggers.Watch
 import it.krzeminski.githubactions.domain.triggers.WorkflowCall
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
@@ -48,6 +49,7 @@ public val workflowAllTriggers: Workflow = workflow(
         Schedule(listOf(
           Cron("* * * * *"),
         )),
+        WorkflowDispatch(),
         BranchProtectionRule().types("created", "deleted"),
         CheckRun().types("completed", "rerequested"),
         CheckSuite(),

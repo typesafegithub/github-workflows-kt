@@ -8,6 +8,7 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
@@ -20,6 +21,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         Schedule(listOf(
           Cron("0 0 * * *"),
         )),
+        WorkflowDispatch(),
         ),
       sourceFile = Paths.get("update-gradle-wrapper.main.kts"),
       targetFile = Paths.get("update-gradle-wrapper.yml"),
