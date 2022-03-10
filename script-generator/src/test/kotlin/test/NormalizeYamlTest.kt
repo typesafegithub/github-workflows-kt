@@ -60,6 +60,19 @@ class NormalizeYamlTest : FunSpec({
         """.trimIndent()
     }
 
+    test("Normalize scalars") {
+        val input = """
+            name: Check build and run tests
+            on: workflow_dispatch
+        """.trimIndent()
+
+        input.normalizeYaml() shouldBe """
+           name: Check build and run tests
+           on:
+             workflow_dispatch: {}
+        """.trimIndent()
+    }
+
     test("Do not modify trigger with a list") {
         val input = """
             on:

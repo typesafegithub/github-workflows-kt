@@ -11,7 +11,7 @@ fun String.normalizeYaml(): String {
         val (space, name) = topLevelProperties.find(line)?.destructured?.toList()
             ?: listOf("", "")
 
-        val onLine = convertOnToObject(line)
+        val onLine = convertOnToObject(line, triggerNames)
         val nextLine = lines.nextNonBlank(i)
         when {
             onLine != null -> onLine
@@ -24,10 +24,17 @@ fun String.normalizeYaml(): String {
     return transformed.joinToString("\n")
 }
 
-fun convertOnToObject(line: String): String? {
-    if (line.startsWith("on:").not() || line.contains("[").not()) {
-        return null
+fun convertOnToObject(line: String, triggerNames: Set<String>): String? {
+    val afterOn = line.substringAfter("on:").trim()
+    when {
+        line.startsWith("on:").not() -> return null
+        afterOn.contains("[") -> {}
+        afterOn.isNotBlank() && afterOn in triggerNames ->
+            return "on:\n  $afterOn: {}"
+        afterOn.isBlank() ->
+            return null
     }
+
     val list = line
         .substringAfter("[")
         .substringBefore("]")
