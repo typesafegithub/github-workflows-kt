@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.9.0"
+version = file("../version.txt").readText().trim()
 
 repositories {
     mavenCentral()

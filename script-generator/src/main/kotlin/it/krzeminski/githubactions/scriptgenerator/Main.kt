@@ -4,9 +4,16 @@ import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.myYaml
 import it.krzeminski.githubactions.scriptmodel.normalizeYaml
 import kotlinx.serialization.decodeFromString
+import java.io.File
 import java.net.URL
 
-const val LIBRARY_VERSION = "0.9.0"
+val LIBRARY_VERSION by lazy {
+    rootProject.resolve("version.txt").readText().trim()
+}
+
+val rootProject = File(".").canonicalFile.let {
+    if (it.name == "github-actions-kotlin-dsl") it else it.parentFile
+}
 
 const val PACKAGE = "it.krzeminski.githubactions"
 

@@ -50,18 +50,18 @@ private fun YamlWorkflow.workflowEnv(): CodeBlock {
 }
 
 fun YamlWorkflow.toKotlin(filenameFromUrl: String?): String = """
-        #!/usr/bin/env kotlin
-        
-        @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
-        
-        ${toFileSpec(filenameFromUrl)}
-""".trimIndent()
+        |#!/usr/bin/env kotlin
+        |
+        |@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
+        |
+        |${toFileSpec(filenameFromUrl)}
+""".trimMargin()
 
 fun printlnGenerateYaml(): CodeBlock = CodeBlock.of(
     """
-    .also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
-    }
-    """.trimIndent()
+    |.also {
+    |    println("Generating YAML")
+    |    println(it.toYaml(addConsistencyCheck = false))
+    |}
+    """.trimMargin()
 )
