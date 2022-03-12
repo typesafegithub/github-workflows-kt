@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.scriptgenerator
 
+import com.squareup.kotlinpoet.CodeBlock
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
@@ -41,7 +42,16 @@ fun YamlStep.generateCommand() = CodeBlock { builder ->
         .indent()
         .add("name = %S,\n", name ?: run)
         .add("command = %S,\n", run)
-        .add(generatePropertyWithLinkedMap("env", env))
+        .add(env.joinToCodeBlock(
+            prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
+            postfix = CodeBlock.of("),"),
+            ifEmpty = CodeBlock.EMPTY
+        ) { key, value ->
+            value?.let {
+                val (template, arg) = value.orExpression()
+                CodeBlock.of("%S to $template", key, arg)
+            }
+        })
     if (condition != null) {
         val (template, arg) = condition.orExpression()
         builder.add("condition = $template,\n", arg)

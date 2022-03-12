@@ -55,30 +55,30 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
 }
 
 private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
-    return if (this == null) {
-        CodeBlock.of("")
-    } else {
-        val classname = triggerClassMap
-            .firstOrNull { it.first == triggerName }
-            ?.second
-            ?.asClassName()
-            ?: error("Couldn't find class for triggerName=$triggerName")
+    this?: return CodeBlock.EMPTY
 
-        CodeBlock { builder ->
-            builder.add("%T()", classname)
-            if (types.isNullOrEmpty()) {
-                builder.add(",\n")
-            } else {
-                builder
-                    .indent()
-                    .add(
-                        ".types(%L),\n",
-                        types.joinToString(", ") { CodeBlock.of("%S", it).toString() }
-                    )
-                    .unindent()
-            }
+    val classname = triggerClassMap
+        .firstOrNull { it.first == triggerName }
+        ?.second
+        ?.asClassName()
+        ?: error("Couldn't find class for triggerName=$triggerName")
+
+    val typesCodeblock = (this.types?: emptyList())
+        .joinToCodeBlock(
+            prefix = CodeBlock.of(".types(", classname),
+            postfix = CodeBlock.of("),"),
+            separator = CodeBlock.of(", "),
+            ifEmpty = CodeBlock.of(",\n"),
+            newLineAtEnd = true
+        ) { type ->
+            CodeBlock.of("%S", type)
         }
+
+    return CodeBlock { builder ->
+        builder.add("%T()", classname)
+            .add(typesCodeblock)
     }
+
 }
 
 fun Trigger?.toKotlin(): CodeBlock {
@@ -86,23 +86,20 @@ fun Trigger?.toKotlin(): CodeBlock {
         return CodeBlock.of("")
     }
     val map: MapOfYaml = this.toMap()
-    val builder = CodeBlock.builder()
-    builder
-        .add("%T(", classname()).indent()
-
-    if (map.all { it.value.isNullOrEmpty() }.not()) {
-        builder.add("\n")
-    }
-    for ((key, value) in map) {
-        val list: List<String> = stringsOrEnums(key, value) ?: continue
-        builder
-            .add(
-                "%N = %L,\n", key.toCamelCase(),
+    return map.joinToCodeBlock(
+        prefix = CodeBlock.of("%T(", classname()),
+        postfix = CodeBlock.of("),"),
+        ifEmpty = CodeBlock.of("%T(),\n", classname()),
+        newLineAtEnd = true,
+    ) { key, value ->
+        stringsOrEnums(key, value)?.let { list ->
+            CodeBlock.of(
+                "%N = %L",
+                key.toCamelCase(),
                 list.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
             )
+        }
     }
-    builder.unindent().add("),\n")
-    return builder.build()
 }
 
 fun Trigger.stringsOrEnums(key: String, list: List<String>?) = when {
@@ -123,43 +120,39 @@ private fun Trigger.classname(): ClassName =
 
 private fun WorkflowDispatch?.toKotlin(): CodeBlock {
     if (this == null) return CodeBlock.of("")
+    val trigger = CodeBlock.of("%T(", WorkflowDispatch::class)
 
-    val builder = CodeBlock.builder()
-        .add("%T(", WorkflowDispatch::class)
-
-    val inputs = this.inputs
-
-    if (inputs.isEmpty()) {
-        builder.add("),\n")
-    } else {
-        builder.add("mapOf(\n")
-            .indent()
-        inputs.forEach { (name, input) ->
-            builder.add("%S to %T(\n", name, WorkflowDispatch.Input::class)
-                .indent()
-                .add("type = %M,\n", enumMemberName(input.type))
-                .add("description = %S,\n", input.description)
-                .add("default = %S,\n", input.default)
-                .add("required = %L,\n", input.required)
-                .unindent()
-                .add("),\n")
-        }
-        builder
-            .unindent()
-            .add(")")
-            .add(")\n")
+    val inputsBlock = inputs.joinToCodeBlock(
+        prefix = CodeBlock.of("mapOf(\n"),
+        ifEmpty = CodeBlock.of("),\n"),
+        postfix = CodeBlock.of("))")
+    ) { name, input ->
+        workflowDispatchInput(name, input)
     }
-    return builder.build()
+
+    return CodeBlock { builder ->
+        builder.add(trigger)
+        builder.add(inputsBlock)
+    }
+}
+
+fun workflowDispatchInput(name: String, input: WorkflowDispatch.Input) = CodeBlock { builder ->
+    builder
+        .add("%S to %T(\n", name, WorkflowDispatch.Input::class)
+        .indent()
+        .add("type = %M,\n", enumMemberName(input.type))
+        .add("description = %S,\n", input.description)
+        .add("default = %S,\n", input.default)
+        .add("required = %L,\n", input.required)
+        .unindent()
+        .add("),\n")
 }
 
 private fun List<ScheduleValue>?.toKotlin(): CodeBlock {
-    if (this == null || isEmpty()) return CodeBlock.of("")
-    val builder = CodeBlock.builder()
-        .add("%T(listOf(\n", Schedule::class)
-        .indent()
-    forEach {
-        builder.add("%T(%S),\n", Cron::class, it.cron)
-    }
-    builder.unindent().add(")),\n")
-    return builder.build()
+    return this?.joinToCodeBlock(
+        prefix = CodeBlock.of("%T(listOf(\n", Schedule::class),
+        postfix = CodeBlock.of(")),")
+    ) {
+        CodeBlock.of("%T(%S)", Cron::class, it.cron)
+    } ?: CodeBlock.EMPTY
 }

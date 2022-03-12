@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.scriptgenerator
 
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.myYaml
+import it.krzeminski.githubactions.scriptmodel.normalizeYaml
 import kotlinx.serialization.decodeFromString
 import java.net.URL
 
@@ -22,9 +23,15 @@ fun main(args: Array<String>) {
     }
     val url = URL(args.first())
     val urlContent = url.readText()
-    val workflow: YamlWorkflow = myYaml.decodeFromString(urlContent)
+    val workflow: YamlWorkflow = decodeYamlWorkflow(urlContent)
     println(workflow.toKotlin(url.filename()))
 }
+
+fun decodeYamlWorkflow(text: String) : YamlWorkflow {
+    return myYaml.decodeFromString(text.normalizeYaml())
+}
+
+
 
 fun URL.filename(): String =
     path.substringAfterLast("/").removeSuffix(".yml")

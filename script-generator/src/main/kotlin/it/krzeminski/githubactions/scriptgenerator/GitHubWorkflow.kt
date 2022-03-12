@@ -39,16 +39,14 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
         .build()
 }
 
-private fun YamlWorkflow.workflowEnv() = CodeBlock { builder ->
-    if (env.isEmpty()) return@CodeBlock
-    builder.add("env = %M(\n", Members.linkedMapOf)
-    builder.indent()
-    for ((key, value) in env) {
+private fun YamlWorkflow.workflowEnv(): CodeBlock {
+    return env.joinToCodeBlock(
+        prefix = CodeBlock.of("env = %M(\n", Members.linkedMapOf),
+        postfix = CodeBlock.of("),")
+    ) { key, value ->
         val (template, arg) = value.orExpression()
-        builder.add("%S to $template,\n", key, arg)
+        CodeBlock.of("%S to $template,\n", key, arg)
     }
-    builder.unindent()
-    builder.add("),\n")
 }
 
 fun YamlWorkflow.toKotlin(filenameFromUrl: String?): String = """

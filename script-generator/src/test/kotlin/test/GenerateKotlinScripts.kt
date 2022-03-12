@@ -3,6 +3,7 @@ package test
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.scriptgenerator.decodeYamlWorkflow
 import it.krzeminski.githubactions.scriptgenerator.filename
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
@@ -23,9 +24,7 @@ class GenerateKotlinScripts : FunSpec({
     testInputs.forEach { name ->
         test("Generating $name") {
             val input = TestInput(name)
-            val workflow: YamlWorkflow = myYaml.decodeFromString(
-                input.yamlFile.readText().normalizeYaml()
-            )
+            val workflow: YamlWorkflow = decodeYamlWorkflow(input.yamlFile.readText())
 
             val newContent = workflow.toFileSpec(workflow.name)
                 .toString()

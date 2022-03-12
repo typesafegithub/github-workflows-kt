@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.scriptgenerator
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
@@ -33,7 +34,7 @@ fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): Templa
         is EnumTyping ->
             TemplateArg("%L", "$classname.${typing.typeName}.${value.toPascalCase()}")
 
-        is BooleanTyping ->
+        is BooleanTyping, is IntegerTyping ->
             TemplateArg("%L", value)
 
         is IntegerWithSpecialValueTyping ->

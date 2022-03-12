@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.CodeBlock
 import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
@@ -27,7 +28,16 @@ fun YamlStep.generateAction(
         builder.add(generateActionWithWrapper(coords, inputTypings))
     }
 
-    builder.add(generatePropertyWithLinkedMap("env", env))
+    builder.add(env.joinToCodeBlock(
+        prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
+        postfix = CodeBlock.of("),"),
+        ifEmpty = CodeBlock.EMPTY
+    ) { key, value ->
+        value?.let {
+            val (template, arg) = value.orExpression()
+            CodeBlock.of("%S to $template", key, arg)
+        }
+    })
     if (condition != null) {
         val (template, arg) = condition.orExpression()
         builder.add("condition = $template,\n", arg)
@@ -39,43 +49,43 @@ fun YamlStep.generateAction(
 fun YamlStep.generateActionWithWrapper(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
-) = CodeBlock { builder ->
-    builder.add("action = %T(", coords.classname())
-    builder.add("\n").indent()
-
-    with.forEach { (key, value) ->
-        if (value != null) {
+): CodeBlock {
+    return with.joinToCodeBlock(
+        prefix = CodeBlock.of("action = %T(", coords.classname()),
+        postfix = CodeBlock.of("),"),
+    ) { key, value ->
+        value?.let {
             val typing = inputTypings?.get(key) ?: StringTyping
             val (percent, arg) = valueWithTyping(value, typing, coords)
-            builder.add("%N = $percent,\n", key.toCamelCase(), arg)
+            CodeBlock.of("%N = $percent,\n", key.toCamelCase(), arg)
         }
     }
-
-    builder.unindent()
-    builder.add("),\n")
 }
 
 fun YamlStep.generateMissingAction(
     coords: ActionCoords,
-) = CodeBlock { builder ->
-    builder
-        .add("action = %T(", MissingAction::class)
-        .add("\n").indent()
-        .add("actionOwner = %S,\n", coords.owner)
-        .add("actionName = %S,\n", coords.name)
-        .add("actionVersion = %S,\n", coords.version)
-        .add("freeArgs = %M(\n", Members.linkedMapOf)
-        .indent()
-
-    with.forEach { (key, value) ->
-        builder.add("%S to %S,\n", key, value)
+): CodeBlock {
+    val coordsBlock = coords.toMap().joinToCodeBlock(
+        prefix = CodeBlock.of("action = %T(", MissingAction::class),
+        postfix = CodeBlock.EMPTY,
+        newLineAtEnd = false,
+    ) { key, value ->
+        CodeBlock.of("%L = %S", key.toCamelCase(), value)
     }
 
-    builder
-        .unindent()
-        .add(")\n")
-        .unindent()
-        .add("),\n")
+    val freeArgsBlock = with.joinToCodeBlock(
+        prefix = CodeBlock.of("freeArgs = %M(\n", Members.linkedMapOf)
+    ) { key, value ->
+        CodeBlock.of("%S to %S", key, value)
+    }
+
+    return CodeBlock { builder ->
+        builder.add(coordsBlock)
+        builder.indent()
+        builder.add(freeArgsBlock)
+        builder.unindent()
+        builder.add("),\n")
+    }
 }
 
 fun ActionCoords(yaml: String): ActionCoords {
@@ -85,3 +95,11 @@ fun ActionCoords(yaml: String): ActionCoords {
 
 fun ActionCoords.classname() =
     ClassName("$PACKAGE.actions.${owner.toKotlinPackageName()}", buildActionClassName())
+
+
+fun ActionCoords.toMap(): Map<String, String> =
+    mapOf(
+        "actionOwner" to owner,
+        "actionName" to name,
+        "actionVersion" to version,
+    )
