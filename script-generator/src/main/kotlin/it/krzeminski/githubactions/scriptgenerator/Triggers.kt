@@ -55,7 +55,7 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
 }
 
 private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
-    this?: return CodeBlock.EMPTY
+    this ?: return CodeBlock.EMPTY
 
     val classname = triggerClassMap
         .firstOrNull { it.first == triggerName }
@@ -63,7 +63,7 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
         ?.asClassName()
         ?: error("Couldn't find class for triggerName=$triggerName")
 
-    val typesCodeblock = (this.types?: emptyList())
+    val typesCodeblock = (this.types ?: emptyList())
         .joinToCodeBlock(
             prefix = CodeBlock.of(".types(", classname),
             postfix = CodeBlock.of("),"),
@@ -78,7 +78,6 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
         builder.add("%T()", classname)
             .add(typesCodeblock)
     }
-
 }
 
 fun Trigger?.toKotlin(): CodeBlock {

@@ -28,16 +28,18 @@ fun YamlStep.generateAction(
         builder.add(generateActionWithWrapper(coords, inputTypings))
     }
 
-    builder.add(env.joinToCodeBlock(
-        prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
-        postfix = CodeBlock.of("),"),
-        ifEmpty = CodeBlock.EMPTY
-    ) { key, value ->
-        value?.let {
-            val (template, arg) = value.orExpression()
-            CodeBlock.of("%S to $template", key, arg)
+    builder.add(
+        env.joinToCodeBlock(
+            prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
+            postfix = CodeBlock.of("),"),
+            ifEmpty = CodeBlock.EMPTY
+        ) { key, value ->
+            value?.let {
+                val (template, arg) = value.orExpression()
+                CodeBlock.of("%S to $template", key, arg)
+            }
         }
-    })
+    )
     if (condition != null) {
         val (template, arg) = condition.orExpression()
         builder.add("condition = $template,\n", arg)
@@ -95,7 +97,6 @@ fun ActionCoords(yaml: String): ActionCoords {
 
 fun ActionCoords.classname() =
     ClassName("$PACKAGE.actions.${owner.toKotlinPackageName()}", buildActionClassName())
-
 
 fun ActionCoords.toMap(): Map<String, String> =
     mapOf(

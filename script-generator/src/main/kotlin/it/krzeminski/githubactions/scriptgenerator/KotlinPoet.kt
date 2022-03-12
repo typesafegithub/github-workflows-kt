@@ -37,8 +37,8 @@ public fun <K : Any, V : Any?> Map<K, V>.joinToCodeBlock(
             value == null || (value is List<*> && value.isEmpty())
         }
         .joinToCodeBlock(separator, prefix, postfix, ifEmpty, newLineAtEnd) { (key, value) ->
-        transform(key, value)
-    }
+            transform(key, value)
+        }
 
 fun <T : Any> Iterable<T>.joinToCodeBlock(
     separator: CodeBlock = CodeBlock.of(",\n"),
@@ -55,7 +55,6 @@ fun <T : Any> Iterable<T>.joinToCodeBlock(
     val list = this.toList()
     if (list.isEmpty()) {
         return ifEmpty
-
     }
 
     builder.add(prefix)

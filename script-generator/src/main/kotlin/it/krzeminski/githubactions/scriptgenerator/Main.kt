@@ -34,11 +34,9 @@ fun main(args: Array<String>) {
     println(workflow.toKotlin(url.filename()))
 }
 
-fun decodeYamlWorkflow(text: String) : YamlWorkflow {
+fun decodeYamlWorkflow(text: String): YamlWorkflow {
     return myYaml.decodeFromString(text.normalizeYaml())
 }
-
-
 
 fun URL.filename(): String =
     path.substringAfterLast("/").removeSuffix(".yml")

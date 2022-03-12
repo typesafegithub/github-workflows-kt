@@ -115,14 +115,13 @@ class KotlinPoetTest : DescribeSpec({
                 token = "my-token",
               )
               
-              """.trimIndent()
+            """.trimIndent()
         }
 
         it("renders an empty map or empty list") {
             emptyMap<String, String>().joinToCodeBlock(
                 transform = { key, value -> CodeBlock.of("$key => $value") }
             ).toString() shouldBe ""
-
 
             emptyList<String>().joinToCodeBlock()
                 .toString() shouldBe ""
@@ -139,12 +138,12 @@ class KotlinPoetTest : DescribeSpec({
 
         table(
             headers("typing", "value", "expected"),
-            row(StringTyping, "hello", TemplateArg("%S","hello" )),
-            row(IntegerTyping, "42", TemplateArg("%L", "42" )),
+            row(StringTyping, "hello", TemplateArg("%S", "hello")),
+            row(IntegerTyping, "42", TemplateArg("%L", "42")),
             row(BooleanTyping, "true", TemplateArg("%L", "true")),
             row(enumTyping, "enum1", TemplateArg("%L", "CacheV2.Enum.Enum1")),
             row(listTyping1, "hello,world", TemplateArg("%L", """listOf("hello", "world")""")),
-            row(listTyping2, "enum1\nenum2" , TemplateArg("%L", "listOf(CacheV2.Enum.Enum1, CacheV2.Enum.Enum2)")),
+            row(listTyping2, "enum1\nenum2", TemplateArg("%L", "listOf(CacheV2.Enum.Enum1, CacheV2.Enum.Enum2)")),
             row(listTyping3, "1,2", TemplateArg("%L", """listOf(1, 2)""")),
             row(specialIntTyping, "42", TemplateArg("%L", "CacheV2.SpecialInt.Value(42)")),
         ).forAll { typing, value, templateArg ->
@@ -152,4 +151,3 @@ class KotlinPoetTest : DescribeSpec({
         }
     }
 })
-

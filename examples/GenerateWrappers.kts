@@ -1,4 +1,6 @@
-package expected
+#!/usr/bin/env kotlin
+
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -65,11 +67,11 @@ public val workflowGenerateWrappers: Workflow = workflow(
         run(
           name = "Commit and push",
           command = """
-          |git config --global user.email "<>"
-          |git config --global user.name "GitHub Actions Bot"
-          |git add .
-          |git commit --allow-empty -m "Regenerate wrappers (${'$'}GITHUB_SHA)"  # an empty commit explicitly shows that the wrappers are up-to-date
-          |git push
+git config --global user.email "<>"
+git config --global user.name "GitHub Actions Bot"
+git add .
+git commit --allow-empty -m "Regenerate wrappers (${'$'}GITHUB_SHA)"  # an empty commit explicitly shows that the wrappers are up-to-date
+git push
           """.trimMargin(),
         )
       }

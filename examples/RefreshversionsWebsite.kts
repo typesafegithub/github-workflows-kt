@@ -1,4 +1,6 @@
-package expected
+#!/usr/bin/env kotlin
+
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupPythonV2

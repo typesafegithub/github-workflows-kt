@@ -42,16 +42,18 @@ fun YamlStep.generateCommand() = CodeBlock { builder ->
         .indent()
         .add("name = %S,\n", name ?: run)
         .add("command = %S,\n", run)
-        .add(env.joinToCodeBlock(
-            prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
-            postfix = CodeBlock.of("),"),
-            ifEmpty = CodeBlock.EMPTY
-        ) { key, value ->
-            value?.let {
-                val (template, arg) = value.orExpression()
-                CodeBlock.of("%S to $template", key, arg)
+        .add(
+            env.joinToCodeBlock(
+                prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
+                postfix = CodeBlock.of("),"),
+                ifEmpty = CodeBlock.EMPTY
+            ) { key, value ->
+                value?.let {
+                    val (template, arg) = value.orExpression()
+                    CodeBlock.of("%S to $template", key, arg)
+                }
             }
-        })
+        )
     if (condition != null) {
         val (template, arg) = condition.orExpression()
         builder.add("condition = $template,\n", arg)
