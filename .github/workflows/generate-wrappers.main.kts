@@ -5,13 +5,13 @@ import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2.Distribution.Adopt
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.file.Paths
 
 val generateWrappersWorkflow = workflow(
     name = "Generate wrappers",
-    on = listOf(Push(branchesIgnore = listOf("main"))),
+    on = listOf(WorkflowDispatch()),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
     targetFile = Paths.get(".github/workflows/generate-wrappers.yaml"),
 ) {

@@ -5,9 +5,7 @@
 name: Generate wrappers
 
 on:
-  push:
-    branches-ignore:
-      - 'main'
+  workflow_dispatch:
 
 jobs:
   "check_yaml_consistency":
