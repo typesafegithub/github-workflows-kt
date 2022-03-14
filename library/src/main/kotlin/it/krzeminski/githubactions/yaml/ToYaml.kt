@@ -21,6 +21,7 @@ fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
     this.targetFile.toFile().writeText(yaml)
 }
 
+@Suppress("LongMethod")
 private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
     val workflow = this
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
