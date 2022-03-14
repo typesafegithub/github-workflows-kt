@@ -14,11 +14,11 @@ import java.nio.file.Paths
  *    ./gradlew :wrapper-generator:run
  */
 fun main() {
-    // To ensure there are no leftovers from previous generations.
-    Paths.get("library/src/gen").toFile().deleteRecursively()
-
     checkDuplicateWrappers()
     println(wrappersToGenerate.suggestDeprecations())
+
+    // To ensure there are no leftovers from previous generations.
+    Paths.get("library/src/gen").toFile().deleteRecursively()
 
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
         println("Generating ${actionCoords.prettyPrint}")
