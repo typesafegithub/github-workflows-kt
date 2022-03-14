@@ -128,7 +128,7 @@ class WorkflowBuilderTest : FunSpec({
             exception.message shouldBe "Duplicated job names: [Some job 1, Some job 3]"
         }
 
-        test("workflow with cutom arguments") {
+        test("workflow with custom arguments") {
             val workflow = workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
