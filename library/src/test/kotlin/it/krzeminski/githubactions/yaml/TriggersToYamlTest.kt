@@ -7,7 +7,13 @@ import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.dsl.BooleanCustomValue
+import it.krzeminski.githubactions.dsl.IntCustomValue
+import it.krzeminski.githubactions.dsl.ListCustomValue
+import it.krzeminski.githubactions.dsl.ObjectCustomValue
+import it.krzeminski.githubactions.dsl.StringCustomValue
 
 class TriggersToYamlTest : DescribeSpec({
     it("renders multiple triggers") {
@@ -356,5 +362,87 @@ class TriggersToYamlTest : DescribeSpec({
                 | - cron: '0 0 * * *'
             """.trimMargin()
         }
+    }
+
+    describe("triggers with custom arguments") {
+        val triggers: List<Trigger> = listOf(
+            PullRequest(
+                _customArguments = mapOf(
+                    "types" to ListCustomValue("ignored"),
+                    "lang" to StringCustomValue("french"),
+                    "fast" to BooleanCustomValue(true),
+                    "answer" to IntCustomValue(42),
+                    "list" to ListCustomValue(1, 2, 3),
+                ),
+            ),
+            WorkflowDispatch(
+                _customArguments = mapOf(
+                    "lang" to StringCustomValue("french"),
+                    "list" to ListCustomValue(1, 2, 3),
+                ),
+            ),
+            Push(
+                _customArguments = mapOf(
+                    "branches" to ListCustomValue("main", "master"),
+                    "tags" to ListCustomValue("tag1", "tag2"),
+                ),
+            ),
+            Schedule(
+                triggers = emptyList(),
+                _customArguments = mapOf(
+                    "cron" to StringCustomValue("0 7 * * *"),
+                    "object" to ObjectCustomValue(
+                        mapOf(
+                            "some-property" to "good",
+                            "other-property" to "better",
+                        ),
+                    )
+                ),
+            ),
+            PullRequestTarget(
+                _customArguments = mapOf(
+                    "branches" to ListCustomValue("main", "master"),
+                    "tags" to ListCustomValue("tag1", "tag2"),
+                ),
+            ),
+        )
+
+        triggers.triggersToYaml() shouldBe """
+            pull_request:
+              types:
+                - 'ignored'
+              lang: french
+              fast: true
+              answer: 42
+              list:
+                - '1'
+                - '2'
+                - '3'
+            workflow_dispatch:
+              lang: french
+              list:
+                - '1'
+                - '2'
+                - '3'
+            push:
+              branches:
+                - 'main'
+                - 'master'
+              tags:
+                - 'tag1'
+                - 'tag2'
+            schedule:
+              cron: 0 7 * * *
+              object:
+                some-property: good
+                other-property: better
+            pull_request_target:
+              branches:
+                - 'main'
+                - 'master'
+              tags:
+                - 'tag1'
+                - 'tag2'
+        """.trimIndent()
     }
 })
