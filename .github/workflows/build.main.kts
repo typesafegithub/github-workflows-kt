@@ -13,7 +13,10 @@ import java.nio.file.Paths
 
 val buildWorkflow = workflow(
     name = "Build",
-    on = listOf(Push(), PullRequest()),
+    on = listOf(
+        Push(branches = listOf("main")),
+        PullRequest(),
+    ),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
     targetFile = Paths.get(".github/workflows/build.yaml"),
 ) {

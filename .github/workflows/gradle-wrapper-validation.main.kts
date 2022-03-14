@@ -10,7 +10,10 @@ import java.nio.file.Paths
 
 val gradleWrapperValidationWorkflow = workflow(
     name = "Validate Gradle wrapper",
-    on = listOf(Push(), PullRequest()),
+    on = listOf(
+        Push(branches = listOf("main")),
+        PullRequest(),
+    ),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
     targetFile = Paths.get(".github/workflows/gradle-wrapper-validation.yaml"),
 ) {
