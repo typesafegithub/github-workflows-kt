@@ -13,15 +13,15 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.9.0"
+version = "0.10.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
-    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.2.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.2.1")
 }
 
 sourceSets {

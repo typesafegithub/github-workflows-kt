@@ -49,7 +49,7 @@ names with your own.
    ```kotlin
    #!/usr/bin/env kotlin
 
-   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.10.0")
 
    import it.krzeminski.githubactions.actions.actions.CheckoutV2
    import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -80,8 +80,7 @@ names with your own.
    does the final piece of job.
 
    Alternatively, apart from `toYaml()` which returns a string, there's also `writeToFile()` which puts the string
-   straight into the file specified in workflow's `targetFile`. It may come in handy when operating on multiple
-   workflows and having automation that regenerates them. Note that this function doesn't provide consistency check.
+   straight into the file specified in workflow's `targetFile`. It may come in handy when having a single script generating multiple workflows.
 4. Generate the YAML by calling the above script and redirecting its output to the desired YAML file path:
    ```
    .github/workflows/hello_world_workflow.main.kts > .github/workflows/hello_world_workflow.yml
