@@ -17,7 +17,7 @@ class JobBuilder(
     val env: LinkedHashMap<String, String>,
     val condition: String?,
     val strategyMatrix: Map<String, List<String>>?,
-    override val _customArguments: CustomArguments,
+    override val _customArguments: Map<String, CustomValue>,
 ) : HasCustomArguments {
     private var job = Job(
         name = name,

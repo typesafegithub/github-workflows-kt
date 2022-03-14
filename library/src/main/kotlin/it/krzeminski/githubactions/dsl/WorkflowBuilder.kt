@@ -15,7 +15,7 @@ class WorkflowBuilder(
     sourceFile: Path,
     targetFile: Path,
     jobs: List<Job> = emptyList(),
-    _customArguments: CustomArguments,
+    _customArguments: Map<String, CustomValue>,
 ) {
     internal var workflow = Workflow(
         name = name,
@@ -35,7 +35,7 @@ class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
-        _customArguments: CustomArguments = mapOf(),
+        _customArguments: Map<String, CustomValue> = mapOf(),
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
@@ -78,7 +78,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
-    _customArguments: CustomArguments = mapOf(),
+    _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
     require(on.isNotEmpty()) {

@@ -2,10 +2,8 @@
 
 package it.krzeminski.githubactions.dsl
 
-typealias CustomArguments = Map<String, CustomValue>
-
 interface HasCustomArguments {
-    val _customArguments: CustomArguments
+    val _customArguments: Map<String, CustomValue>
 }
 
 sealed class CustomValue
