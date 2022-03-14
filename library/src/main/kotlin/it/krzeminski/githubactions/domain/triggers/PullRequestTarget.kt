@@ -1,5 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
+import it.krzeminski.githubactions.dsl.CustomArguments
+
 // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 data class PullRequestTarget(
     val types: List<Type> = emptyList(),
@@ -7,6 +9,7 @@ data class PullRequestTarget(
     val branchesIgnore: List<String>? = null,
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
+    override val _customArguments: CustomArguments = mapOf(),
 ) : Trigger() {
 
     init {

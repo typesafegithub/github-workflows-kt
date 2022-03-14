@@ -1,8 +1,11 @@
 package it.krzeminski.githubactions.domain.triggers
 
+import it.krzeminski.githubactions.dsl.CustomArguments
+
 // https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs
 class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
+    override val _customArguments: CustomArguments = mapOf(),
 ) : Trigger() {
 
     enum class Type {

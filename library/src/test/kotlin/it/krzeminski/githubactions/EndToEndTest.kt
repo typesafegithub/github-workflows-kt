@@ -198,10 +198,10 @@ class EndToEndTest : FunSpec({
                 run(
                     name = "Hello world!",
                     command = """
-                        less test.txt \
-                        | grep -P "foobar" \
-                        | sort \
-                        > result.txt
+                            less test.txt \
+                            | grep -P "foobar" \
+                            | sort \
+                            > result.txt
                     """.trimIndent(),
                 )
             }
@@ -298,7 +298,7 @@ class EndToEndTest : FunSpec({
             job(
                 name = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
-                condition = "\${{ always() }}"
+                condition = "\${{ always() }}",
             ) {
                 uses(
                     name = "Check out",
@@ -364,9 +364,9 @@ class EndToEndTest : FunSpec({
                     env = linkedMapOf(
                         "SIMPLE_VAR" to "simple-value-uses",
                         "MULTILINE_VAR" to """
-                            hey,
-                            hi,
-                            hello! uses
+                                hey,
+                                hi,
+                                hello! uses
                         """.trimIndent()
                     ),
                 )
@@ -377,9 +377,9 @@ class EndToEndTest : FunSpec({
                     env = linkedMapOf(
                         "SIMPLE_VAR" to "simple-value-run",
                         "MULTILINE_VAR" to """
-                            hey,
-                            hi,
-                            hello! run
+                                hey,
+                                hi,
+                                hello! run
                         """.trimIndent()
                     ),
                 )

@@ -1,7 +1,10 @@
 package it.krzeminski.githubactions.domain.triggers
 
+import it.krzeminski.githubactions.dsl.CustomArguments
+
 data class Schedule(
     val triggers: List<Cron>,
+    override val _customArguments: CustomArguments = mapOf(),
 ) : Trigger()
 
 /** See https://crontab.guru **/

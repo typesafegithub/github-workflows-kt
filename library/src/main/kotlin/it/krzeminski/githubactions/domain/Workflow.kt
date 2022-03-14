@@ -1,8 +1,8 @@
 package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.domain.triggers.Trigger
-import it.krzeminski.githubactions.dsl.FreeYamlArgs
-import it.krzeminski.githubactions.dsl.HasFreeYamlArgs
+import it.krzeminski.githubactions.dsl.CustomArguments
+import it.krzeminski.githubactions.dsl.HasCustomArguments
 import java.nio.file.Path
 
 data class Workflow(
@@ -12,6 +12,5 @@ data class Workflow(
     val sourceFile: Path,
     val targetFile: Path,
     val jobs: List<Job>,
-) : HasFreeYamlArgs {
-    override val freeYamlArgs: FreeYamlArgs = mutableListOf()
-}
+    override val _customArguments: CustomArguments = mapOf()
+) : HasCustomArguments

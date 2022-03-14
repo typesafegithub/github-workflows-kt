@@ -1,5 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
+import it.krzeminski.githubactions.dsl.CustomArguments
+
 data class Push(
     val branches: List<String>? = null,
     val branchesIgnore: List<String>? = null,
@@ -7,6 +9,7 @@ data class Push(
     val tagsIgnore: List<String>? = null,
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
+    override val _customArguments: CustomArguments = mapOf(),
 ) : Trigger() {
     init {
         require(!(branches != null && branchesIgnore != null)) {

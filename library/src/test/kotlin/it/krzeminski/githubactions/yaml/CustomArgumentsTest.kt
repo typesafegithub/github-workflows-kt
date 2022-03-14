@@ -2,71 +2,63 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.withFreeArgs
+import it.krzeminski.githubactions.dsl.BooleanCustomValue
+import it.krzeminski.githubactions.dsl.IntCustomValue
+import it.krzeminski.githubactions.dsl.ListCustomValue
+import it.krzeminski.githubactions.dsl.ObjectCustomValue
+import it.krzeminski.githubactions.dsl.StringCustomValue
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.file.Paths
 
-class FreeYamlArgsTest : FunSpec({
-    test("Action with free arguments") {
-        val action = CheckoutV2(
-            repository = "repository",
-            ref = "main",
-        ).withFreeArgs(
-            "hello" to "world",
-            "repository" to "jcenter",
-            "groceries" to listOf("cheese", "wine"),
-        )
-
-        val step = ExternalActionStep(
-            id = "someId",
-            name = "Some external action",
-            action = action,
-        )
-        listOf(step).stepsToYaml() shouldBe """
-            - id: someId
-              name: Some external action
-              uses: actions/checkout@v2
-              with:
-                repository: jcenter
-                ref: main
-                hello: world
-                groceries:
-                  - 'cheese'
-                  - 'wine'
-        """.trimIndent()
-    }
+class CustomArgumentsTest : FunSpec({
 
     test("Triggers with free yaml args") {
         val triggers: List<Trigger> = listOf(
-            PullRequest().withFreeArgs(
-                "types" to listOf("ignored"),
-                "lang" to "french",
-                "list" to listOf(1, 2, 3)
+            PullRequest(
+                _customArguments = mapOf(
+                    "types" to ListCustomValue("ignored"),
+                    "lang" to StringCustomValue("french"),
+                    "fast" to BooleanCustomValue(true),
+                    "answer" to IntCustomValue(42),
+                    "list" to ListCustomValue(1, 2, 3),
+                ),
             ),
-            WorkflowDispatch().withFreeArgs(
-                "lang" to "french",
-                "list" to listOf(1, 2, 3)
+            WorkflowDispatch(
+                _customArguments = mapOf(
+                    "lang" to StringCustomValue("french"),
+                    "list" to ListCustomValue(1, 2, 3),
+                ),
             ),
-            Push().withFreeArgs(
-                "branches" to listOf("main", "master"),
-                "tags" to listOf("tag1", "tag2")
+            Push(
+                _customArguments = mapOf(
+                    "branches" to ListCustomValue("main", "master"),
+                    "tags" to ListCustomValue("tag1", "tag2"),
+                ),
             ),
-            Schedule(emptyList()).withFreeArgs(
-                "cron" to Cron(hour = "7", minute = "0").expression
+            Schedule(
+                triggers = emptyList(),
+                _customArguments = mapOf(
+                    "cron" to StringCustomValue("0 7 * * *"),
+                    "object" to ObjectCustomValue(
+                        mapOf(
+                            "some-property" to "good",
+                            "other-property" to "better",
+                        ),
+                    )
+                ),
             ),
-            PullRequestTarget().withFreeArgs(
-                "branches" to listOf("main", "master"),
-                "tags" to listOf("tag1", "tag2")
+            PullRequestTarget(
+                _customArguments = mapOf(
+                    "branches" to ListCustomValue("main", "master"),
+                    "tags" to ListCustomValue("tag1", "tag2"),
+                ),
             ),
         )
         triggers.triggersToYaml() shouldBe """
@@ -74,6 +66,8 @@ class FreeYamlArgsTest : FunSpec({
               types:
                 - 'ignored'
               lang: french
+              fast: true
+              answer: 42
               list:
                 - '1'
                 - '2'
@@ -93,6 +87,9 @@ class FreeYamlArgsTest : FunSpec({
                 - 'tag2'
             schedule:
               cron: 0 7 * * *
+              object:
+                some-property: good
+                other-property: better
             pull_request_target:
               branches:
                 - 'main'
@@ -109,24 +106,25 @@ class FreeYamlArgsTest : FunSpec({
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            _customArguments = mapOf(
+                "dry-run" to BooleanCustomValue(true),
+                "written-by" to ListCustomValue("Alice", "Bob"),
+            )
         ) {
             job(
                 name = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
+                _customArguments = mapOf(
+                    "distribute-job" to BooleanCustomValue(true),
+                    "servers" to ListCustomValue("server-1", "server-2")
+                ),
             ) {
                 run(
                     name = "Hello world!",
                     command = "echo 'hello!'",
                 )
-            }.withFreeArgs(
-                "distribute-job" to true,
-                "servers" to listOf("server-1", "server-2")
-            )
+            }
         }
-        workflow.withFreeArgs(
-            "dry-run" to true,
-            "written-by" to listOf("Alice", "Bob")
-        )
         workflow.toYaml(addConsistencyCheck = false) shouldBe """
           # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
           # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
