@@ -9,14 +9,10 @@ import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
-import it.krzeminski.githubactions.dsl.HasCustomArguments
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.ObjectCustomValue
-import it.krzeminski.githubactions.dsl.StringCustomValue
 
 fun List<Trigger>.triggersToYaml(): String =
     this
-        .map { it.toYamlString() }
+        .map { it.toYamlString() + it.customArgumentsToYaml() }
         .joinToString(separator = "\n") { it }
 
 private fun Trigger.toYamlString() =
@@ -26,23 +22,7 @@ private fun Trigger.toYamlString() =
         is PullRequest -> toYaml()
         is PullRequestTarget -> toYaml()
         is Schedule -> toYaml()
-    } + freeArgsToYaml()
-
-internal fun HasCustomArguments.freeArgsToYaml(): String = buildString {
-    append("\n")
-    for ((key, customValue) in _customArguments) {
-        when (customValue) {
-            is ListCustomValue -> printIfHasElements(customValue.value, key)
-            is StringCustomValue -> appendLine("  $key: ${customValue.value}")
-            is ObjectCustomValue -> {
-                appendLine("  $key:")
-                for ((subkey, subvalue) in customValue.value) {
-                    appendLine("    $subkey: $subvalue")
-                }
-            }
-        }
     }
-}.removeSuffix("\n")
 
 private fun Push.toYaml() = buildString {
     appendLine("push:")
@@ -108,17 +88,4 @@ private fun Type.toYaml(): String = when (this) {
     Type.Environment -> "environment"
     Type.Boolean -> "boolean"
     Type.String -> "string"
-}
-
-internal fun StringBuilder.printIfHasElements(
-    items: List<String>?,
-    name: String,
-    space: String = "  ",
-) {
-    if (!items.isNullOrEmpty()) {
-        appendLine("$name:".prependIndent(space))
-        items.forEach {
-            appendLine("  - '$it'".prependIndent(space))
-        }
-    }
 }

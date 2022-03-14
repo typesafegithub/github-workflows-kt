@@ -3,6 +3,10 @@ package it.krzeminski.githubactions.yaml
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
+import it.krzeminski.githubactions.dsl.HasCustomArguments
+import it.krzeminski.githubactions.dsl.ListCustomValue
+import it.krzeminski.githubactions.dsl.ObjectCustomValue
+import it.krzeminski.githubactions.dsl.StringCustomValue
 import it.krzeminski.githubactions.dsl.toBuilder
 import kotlin.io.path.invariantSeparatorsPathString
 
@@ -78,10 +82,39 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
 
         appendLine("jobs:")
         append(jobsWithConsistencyCheck.jobsToYaml().prependIndent("  "))
-        freeArgsToYaml().takeIf { it.isNotBlank() }
+        customArgumentsToYaml().takeIf { it.isNotBlank() }
             ?.let { freeargs ->
                 append("\n")
                 append(freeargs.replaceIndent(""))
             }
+    }
+}
+
+internal fun HasCustomArguments.customArgumentsToYaml(): String = buildString {
+    append("\n")
+    for ((key, customValue) in _customArguments) {
+        when (customValue) {
+            is ListCustomValue -> printIfHasElements(customValue.value, key)
+            is StringCustomValue -> appendLine("  $key: ${customValue.value}")
+            is ObjectCustomValue -> {
+                appendLine("  $key:")
+                for ((subkey, subvalue) in customValue.value) {
+                    appendLine("    $subkey: $subvalue")
+                }
+            }
+        }
+    }
+}.removeSuffix("\n")
+
+internal fun StringBuilder.printIfHasElements(
+    items: List<String>?,
+    name: String,
+    space: String = "  ",
+) {
+    if (!items.isNullOrEmpty()) {
+        appendLine("$name:".prependIndent(space))
+        items.forEach {
+            appendLine("  - '$it'".prependIndent(space))
+        }
     }
 }
