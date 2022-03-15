@@ -12,7 +12,7 @@ import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
 
 fun List<Trigger>.triggersToYaml(): String =
     this
-        .map { it.toYamlString() }
+        .map { it.toYamlString() + it.customArgumentsToYaml() }
         .joinToString(separator = "\n") { it }
 
 private fun Trigger.toYamlString() =
@@ -88,17 +88,4 @@ private fun Type.toYaml(): String = when (this) {
     Type.Environment -> "environment"
     Type.Boolean -> "boolean"
     Type.String -> "string"
-}
-
-private fun StringBuilder.printIfHasElements(
-    items: List<String>?,
-    name: String,
-    space: String = "  ",
-) {
-    if (!items.isNullOrEmpty()) {
-        appendLine("$name:".prependIndent(space))
-        items.forEach {
-            appendLine("  - '$it'".prependIndent(space))
-        }
-    }
 }

@@ -1,3 +1,5 @@
 package it.krzeminski.githubactions.domain.triggers
 
-sealed class Trigger
+import it.krzeminski.githubactions.dsl.HasCustomArguments
+
+sealed class Trigger : HasCustomArguments

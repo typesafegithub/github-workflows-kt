@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import it.krzeminski.githubactions.dsl.CustomValue
+import it.krzeminski.githubactions.dsl.HasCustomArguments
 import java.nio.file.Path
 
 data class Workflow(
@@ -10,4 +12,5 @@ data class Workflow(
     val sourceFile: Path,
     val targetFile: Path,
     val jobs: List<Job>,
-)
+    override val _customArguments: Map<String, CustomValue> = mapOf(),
+) : HasCustomArguments

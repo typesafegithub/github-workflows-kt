@@ -7,8 +7,11 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
+import it.krzeminski.githubactions.dsl.BooleanCustomValue
+import it.krzeminski.githubactions.dsl.ListCustomValue
 
 class JobsToYamlTest : DescribeSpec({
     it("renders multiple jobs") {
@@ -300,5 +303,42 @@ class JobsToYamlTest : DescribeSpec({
             val job = Job(jobName, UbuntuLatest, emptyList())
             listOf(job).jobsToYaml()
         }
+    }
+
+    it("should accept custom arguments") {
+        // given
+        val jobs = listOf(
+            Job(
+                name = "Job-1",
+                runsOn = RunnerType.UbuntuLatest,
+                _customArguments = mapOf(
+                    "distribute-job" to BooleanCustomValue(true),
+                    "servers" to ListCustomValue("server-1", "server-2")
+                ),
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+            ),
+        )
+
+        // when
+        val yaml = jobs.jobsToYaml()
+
+        // then
+        yaml shouldBe """|"Job-1":
+                         |  runs-on: "ubuntu-latest"
+                         |  steps:
+                         |    - id: someId
+                         |      name: Some command
+                         |      run: echo 'test!'
+                         |  distribute-job: true
+                         |  servers:
+                         |    - 'server-1'
+                         |    - 'server-2'
+                         """.trimMargin()
     }
 })
