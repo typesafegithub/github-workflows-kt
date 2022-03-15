@@ -8,6 +8,11 @@ theme:
   features:
     - navigation.expand
 
+markdown_extensions:
+  - pymdownx.magiclink
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+
 nav:
   - Introduction: 'index.md'
   - Getting started: 'getting_started.md'
