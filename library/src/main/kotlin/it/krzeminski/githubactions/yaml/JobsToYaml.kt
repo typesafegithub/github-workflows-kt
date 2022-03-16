@@ -56,10 +56,10 @@ private fun Job.toYaml() = buildString {
         }
     }
 
+    append(customArgumentsToYaml())
     appendLine("  steps:")
     append(steps.stepsToYaml().prependIndent("    "))
-    append(customArgumentsToYaml())
-}
+}.removeSuffix("\n")
 
 fun requireMatchesRegex(field: String, value: String, regex: Regex, url: String?) {
     require(regex.matchEntire(value) != null) {

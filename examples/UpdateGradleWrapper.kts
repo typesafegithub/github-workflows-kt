@@ -3,7 +3,7 @@
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
 
 import it.krzeminski.githubactions.actions.MissingAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -31,7 +31,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       job("check_yaml_consistency", UbuntuLatest) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
           condition = "true",
         )
         run(
@@ -48,7 +48,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       job("update-gradle-wrapper", UbuntuLatest) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         uses(
           name = "Update Gradle Wrapper",

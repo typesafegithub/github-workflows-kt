@@ -2,7 +2,7 @@
 
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
@@ -26,8 +26,8 @@ public val workflowPublishMkdocs: Workflow = workflow(
     ) {
       job("deploy", UbuntuLatest) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         run(
           name = "./docs/DocsCopier.main.kts",

@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import kotlinx.serialization.SerialName
 import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
 data class Push(

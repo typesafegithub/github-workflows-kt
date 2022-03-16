@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.Serializable
 
 data class Schedule(
     val triggers: List<Cron>,
@@ -8,7 +9,7 @@ data class Schedule(
 ) : Trigger()
 
 /** See https://crontab.guru **/
-@kotlinx.serialization.Serializable
+@Serializable
 data class Cron(val expression: String)
 
 /** See https://crontab.guru **/

@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.domain.triggers
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.yaml.triggersToYaml
 
 class OtherTriggersTest : FunSpec({
@@ -83,42 +84,45 @@ class OtherTriggersTest : FunSpec({
     }
 
     test("Creating all triggers with free arguments") {
+        fun types(vararg types: String) = mapOf(
+            "types" to ListCustomValue(types.toList())
+        )
+
         val triggers: List<Trigger> = listOf(
-            BranchProtectionRule().types("created", "deleted"),
-            CheckRun().types("completed", "rerequested"),
+            BranchProtectionRule(types("created", "deleted")),
+            CheckRun(types("completed", "rerequested")),
             CheckSuite(),
             Create(),
             Delete(),
             Deployment(),
             DeploymentStatus(),
-            Discussion().types("created", "edited", "answered"),
+            Discussion(types("created", "edited", "answered")),
             DiscussionComment(),
             Fork(),
             Gollum(),
-            IssueComment().types("created", "edited", "deleted"),
-            Issues().types("opened", "edited"),
-            Label().types("commented", "deleted", "edited"),
-            Milestone().types("created", "closed"),
+            IssueComment(types("created", "edited", "deleted")),
+            Issues(types("opened", "edited")),
+            Label(types("commented", "deleted", "edited")),
+            Milestone(types("created", "closed")),
             PageBuild(),
-            Project().types("created", "deleted"),
-            ProjectCard().types("created", "moved"),
-            ProjectColumn().types("moved"),
+            Project(types("created", "deleted")),
+            ProjectCard(types("created", "moved")),
+            ProjectColumn(types("moved")),
             PublicWorkflow(),
             PullRequest(),
             PullRequestReview(),
-            PullRequestReviewComment().types("created", "edited"),
+            PullRequestReviewComment(types("created", "edited")),
             PullRequestTarget(),
             Push(),
-            RegistryPackage().types("published", "updated"),
-            Release()
-                .types("published", "unpublished"),
+            RegistryPackage(types("published", "updated")),
+            Release(types("published", "unpublished")),
             RepositoryDispatch(),
             Schedule(emptyList()),
-            Status().types("started"),
+            Status(types("started")),
             Watch(),
             WorkflowCall(),
             WorkflowDispatch(),
-            WorkflowRun().types("completed", "requested"),
+            WorkflowRun(types("completed", "requested")),
         )
 
         triggers.triggersToYaml() shouldBe """

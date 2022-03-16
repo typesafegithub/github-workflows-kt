@@ -1,3 +1,9 @@
 package it.krzeminski.githubactions.domain.triggers
 
-class CheckRun : Trigger()
+import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class CheckRun(
+    override val _customArguments: Map<String, CustomValue> = mapOf(),
+) : Trigger()

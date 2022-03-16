@@ -38,16 +38,13 @@ import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
-import it.krzeminski.githubactions.dsl.HasCustomArguments
-import it.krzeminski.githubactions.dsl.ListFreeArg
-import it.krzeminski.githubactions.dsl.StringFreeArg
 import kotlin.reflect.KClass
 
 fun List<Trigger>.triggersToYaml(): String =
     joinToString(separator = "\n") { it.toYaml() }
 
 fun Trigger.toYaml(): String =
-    (toYamlFromMap() + toAdditionalYaml() + freeArgsToYaml()).removeSuffix("\n")
+    (toYamlFromMap() + toAdditionalYaml() + customArgumentsToYaml()).removeSuffix("\n")
 
 typealias MapOfYaml = LinkedHashMap<String, List<String>?>
 
@@ -135,15 +132,6 @@ val triggerClassMap: List<Pair<String, KClass<*>>> = listOf(
     "workflow_run" to WorkflowRun::class,
 )
 
-internal fun HasCustomArguments.freeArgsToYaml(): String = buildString {
-    for (arg in _customArguments) {
-        when (arg) {
-            is ListFreeArg -> printIfHasElements(arg.value, arg.key)
-            is StringFreeArg -> appendLine("  ${arg.key}: ${arg.value}")
-        }
-    }
-}.removeSuffix("\n")
-
 private fun Trigger.toYamlFromMap() = buildString {
     val trigger = this@toYamlFromMap
     appendLine("${trigger.triggerName}:")
@@ -188,7 +176,7 @@ private fun Trigger.toAdditionalYaml(): String = when (this) {
     is Watch -> ""
     is WorkflowCall -> ""
     is WorkflowRun -> ""
-}.removeSuffix("\n")
+}
 
 private fun Push.toMap(): MapOfYaml = linkedMapOf(
     "branches" to branches,
@@ -246,17 +234,4 @@ private fun Type.toYaml(): String = when (this) {
     Type.Environment -> "environment"
     Type.Boolean -> "boolean"
     Type.String -> "string"
-}
-
-internal fun StringBuilder.printIfHasElements(
-    items: List<String>?,
-    name: String,
-    space: String = "  ",
-) {
-    if (!items.isNullOrEmpty()) {
-        appendLine("$name:".prependIndent(space))
-        items.forEach {
-            appendLine("  - '$it'".prependIndent(space))
-        }
-    }
 }

@@ -2,7 +2,7 @@
 
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
@@ -27,7 +27,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
       job("check_yaml_consistency", UbuntuLatest) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         run(
           name = "Install Kotlin",
@@ -43,7 +43,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
       job("generate-wrappers", UbuntuLatest) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         uses(
           name = "Set up JDK",

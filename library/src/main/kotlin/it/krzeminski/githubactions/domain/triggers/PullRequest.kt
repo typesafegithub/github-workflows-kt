@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import kotlinx.serialization.SerialName
 import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
 data class PullRequest(
@@ -29,36 +29,52 @@ data class PullRequest(
     enum class Type {
         @SerialName("assigned")
         Assigned,
+
         @SerialName("unassigned")
         Unassigned,
+
         @SerialName("labeled")
         Labeled,
+
         @SerialName("unlabeled")
         Unlabeled,
+
         @SerialName("opened")
         Opened,
+
         @SerialName("edited")
         Edited,
+
         @SerialName("closed")
         Closed,
+
         @SerialName("reopened")
         Reopened,
+
         @SerialName("synchronize")
         Synchronize,
+
         @SerialName("converted_to_draft")
         ConvertedToDraft,
+
         @SerialName("ready_for_review")
         ReadyForReview,
+
         @SerialName("locked")
         Locked,
+
         @SerialName("unlocked")
         Unlocked,
+
         @SerialName("review_requested")
         ReviewRequested,
+
         @SerialName("review_requested_removed")
         ReviewRequestRemoved,
+
         @SerialName("auto_merge_enabled")
         AutoMergeEnabled,
+
         @SerialName("auto_merge_disabled")
         AutoMergeDisabled,
     }
