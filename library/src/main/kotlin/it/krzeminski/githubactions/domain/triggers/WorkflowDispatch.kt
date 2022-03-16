@@ -1,20 +1,29 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 // https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs
-class WorkflowDispatch(
+@Serializable
+data class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
     override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : Trigger() {
 
+    @Serializable
     enum class Type {
+        @SerialName("choice")
         Choice,
+        @SerialName("environment")
         Environment,
+        @SerialName("boolean")
         Boolean,
+        @SerialName("string")
         String,
     }
 
+    @Serializable
     class Input(
         val description: String,
         val required: Boolean,

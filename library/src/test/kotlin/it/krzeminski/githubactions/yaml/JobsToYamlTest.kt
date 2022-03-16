@@ -331,14 +331,14 @@ class JobsToYamlTest : DescribeSpec({
         // then
         yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command
-                         |      run: echo 'test!'
                          |  distribute-job: true
                          |  servers:
                          |    - 'server-1'
                          |    - 'server-2'
+                         |  steps:
+                         |    - id: someId
+                         |      name: Some command
+                         |      run: echo 'test!'
                          """.trimMargin()
     }
 })
