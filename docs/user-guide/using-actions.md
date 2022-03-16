@@ -17,36 +17,32 @@ Kotlin wrapper for the action needs a breaking change as well.
 ## User-defined actions
 
 If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
-just inherit from [`Action`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
+you can use a [`CustomAction`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt)
 in case of actions without outputs:
 
 ```kotlin
-class MyCoolActionV3(
-    private val someArgument: String,
-) : Action("acmecorp", "cool-action", "v3") {
-    override fun toYamlArguments() = linkedMapOf(
-        "some-argument" to someArgument,
+val customAction = CustomAction(
+    actionOwner = "xu-cheng",
+    actionName = "latex-action",
+    actionVersion = "v2",
+    inputs = linkedMapOf(
+        "root_file" to "report.tex",
+        "compiler" to "latexmk",
     )
-}
+)
 ```
 
-or, in case actions with outputs, from [`ActionWithOutputs`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/ActionWithOutputs.kt):
+If your customAction has outputs, you can access them, albeit in a type-unsafe manner :
 
 ```kotlin
-class MyCoolActionV3(
-    private val someArgument: String,
-) : ActionWithOutputs<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
-    override fun toYamlArguments() = linkedMapOf(
-        "some-argument" to someArgument,
+job("test_job", RunnerType.UbuntuLatest) {
+    val customActionStep = uses(
+        name = "Some step with output",
+        action = customAction,
     )
     
-    override fun buildOutputObject(stepId: String) = Outputs(stepId)
-    
-    class Outputs(private val stepId: String) {
-        public val coolOutput: String = "steps.$stepId.outputs.coolOutput"
-        
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
-    }
+    // use your outputs:
+    println(expr(customActionStep.outputs["custom-output"]))
 }
 ```
 
