@@ -15,7 +15,7 @@ markdown_extensions:
 
 nav:
   - Introduction: 'index.md'
-  - Getting started: 'getting_started.md'
   - User guide:
+      - Getting started: 'user-guide/getting_started.md'
       - Using actions: 'user-guide/using-actions.md'
   - Projects using this library: 'projects-using-this-library.md'
