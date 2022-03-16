@@ -3,7 +3,7 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.Action
-import it.krzeminski.githubactions.actions.MissingAction
+import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
@@ -24,20 +24,6 @@ class StepsToYamlTest : DescribeSpec({
                 name = "Some external action",
                 action = CheckoutV3(),
             ),
-            ExternalActionStep(
-                id = "latex",
-                name = "Latex",
-                action = MissingAction(
-                    actionOwner = "xu-cheng",
-                    actionName = "latex-action",
-                    actionVersion = "v2",
-                    with = linkedMapOf(
-                        "root_file" to "report.tex",
-                        "compiler" to "latexmk",
-                    )
-                )
-            )
-
         )
 
         // when
@@ -50,12 +36,44 @@ class StepsToYamlTest : DescribeSpec({
                          |- id: someId
                          |  name: Some external action
                          |  uses: actions/checkout@v3
-                         |- id: latex
+                         """.trimMargin()
+    }
+
+    describe("custom action") {
+        // given
+        val customAction = CustomAction(
+            actionOwner = "xu-cheng",
+            actionName = "latex-action",
+            actionVersion = "v2",
+            inputs = linkedMapOf(
+                "root_file" to "report.tex",
+                "compiler" to "latexmk",
+            )
+        )
+        val steps = listOf(
+            ExternalActionStep(
+                id = "latex",
+                name = "Latex",
+                action = customAction
+            )
+        )
+
+        // when
+        val yaml = steps.stepsToYaml()
+
+        // then
+        yaml shouldBe """|- id: latex
                          |  name: Latex
                          |  uses: xu-cheng/latex-action@v2
                          |  with:
                          |    root_file: report.tex
                          |    compiler: latexmk""".trimMargin()
+
+        // given
+        val outputs = customAction.buildOutputObject("someStepId")
+
+        // when & then
+        outputs["custom-output"] shouldBe "steps.someStepId.outputs.custom-output"
     }
 
     describe("command step") {
