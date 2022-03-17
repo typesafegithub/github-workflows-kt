@@ -1,6 +1,5 @@
 package test
 
-import generated.allWorkflows
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -10,7 +9,6 @@ import it.krzeminski.githubactions.scriptgenerator.rootProject
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.io.FileFilter
 import java.net.URL
 
@@ -49,16 +47,13 @@ class GenerateKotlinScripts : FunSpec({
             URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml")
         url.filename() shouldBe "publish-mkdocs-website"
     }
-
-    test("Execute Kotlin Scripts") {
-        allWorkflows.forEach { it.writeToFile(addConsistencyCheck = false) }
-    }
 })
 
 data class TestInput(val name: String) {
     val filename = name.removeSuffix(".yml")
     val yamlFile = rootProject.resolve("script-generator/yaml-input/$filename.yml")
         .also { require(it.canRead()) { "Invalid file ${it.canonicalPath}" } }
+
     private fun file(path: String) = rootProject.resolve("script-generator/src/test/kotlin/generated/$path")
     val expectedFile = file("${filename.toPascalCase()}.kt")
     val actualFile = file("../actual/${filename.toPascalCase()}.kt")
