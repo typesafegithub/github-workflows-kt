@@ -17,7 +17,7 @@ Kotlin wrapper for the action needs a breaking change as well.
 ## User-defined actions
 
 If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
-you have two ways go go.
+you have two ways to proceed.
 
 ### Typed wrapper
 
