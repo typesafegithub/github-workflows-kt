@@ -31,6 +31,7 @@ class GenerateKotlinScripts : FunSpec({
             input.actualFile.writeText(
                 "package actual\n" + newContent.removePrefix("package generated")
             )
+            newContent shouldBe input.expected
 
             if (System.getenv("GITHUB_ACTIONS") == "true") {
                 newContent shouldBe input.expected

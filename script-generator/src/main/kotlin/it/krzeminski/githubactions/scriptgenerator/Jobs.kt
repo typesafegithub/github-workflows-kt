@@ -29,8 +29,10 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
         job.steps.forEach { step ->
             if (step.uses != null) {
                 val coords = ActionCoords(step.uses)
+                val (owner, name) = coords
                 val availableWrappers = wrappersToGenerate.filter {
-                    it.actionCoords.copy(version = "") == coords.copy(version = "")
+                    val (theOwner, theName) = it.actionCoords
+                    owner == theOwner && name == theName
                 }
                 val wrapper: WrapperRequest? = availableWrappers.firstOrNull {
                     it.actionCoords.buildActionClassName() == coords.buildActionClassName()

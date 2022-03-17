@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
@@ -30,7 +30,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
       job("Refresh-Versions", UbuntuLatest) {
         uses(
           name = "check-out",
-          action = CheckoutV3(
+          action = CheckoutV2(
             ref = "main",
           ),
         )

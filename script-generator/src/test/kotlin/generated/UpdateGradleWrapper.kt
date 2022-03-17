@@ -1,7 +1,7 @@
 package generated
 
 import it.krzeminski.githubactions.actions.MissingAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -31,7 +31,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       job("check_yaml_consistency", UbuntuLatest) {
         uses(
           name = "Check out",
-          action = CheckoutV3(),
+          action = CheckoutV2(),
           condition = "true",
         )
         run(
@@ -51,7 +51,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV3(),
+          action = CheckoutV2(),
         )
         uses(
           name = "Update Gradle Wrapper",

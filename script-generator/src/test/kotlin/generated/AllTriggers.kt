@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.BranchProtectionRule
@@ -151,7 +151,7 @@ public val workflowAllTriggers: Workflow = workflow(
       job("job-0", UbuntuLatest) {
         uses(
           name = "Check out",
-          action = CheckoutV3(),
+          action = CheckoutV2(),
         )
       }
 

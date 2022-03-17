@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
@@ -27,7 +27,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
       job("check_yaml_consistency", UbuntuLatest) {
         uses(
           name = "Check out",
-          action = CheckoutV3(),
+          action = CheckoutV2(),
         )
         run(
           name = "Install Kotlin",
@@ -46,7 +46,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV3(),
+          action = CheckoutV2(),
         )
         uses(
           name = "Set up JDK",

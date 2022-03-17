@@ -15,7 +15,7 @@ jobs:
     steps:
       - id: step-0
         name: check-out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           ref: main
       - id: step-1

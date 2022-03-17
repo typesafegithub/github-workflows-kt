@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -85,8 +85,8 @@ public val workflowCheckBuild: Workflow = workflow(
           condition = expr("runner.os == 'Windows'"),
         )
         uses(
-          name = "CheckoutV3",
-          action = CheckoutV3(),
+          name = "CheckoutV2",
+          action = CheckoutV2(),
         )
         uses(
           name = "Configure JDK",
