@@ -11,10 +11,17 @@ import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
     jobs.forEach { (name, job) ->
         builder.add(
-            "job(%S, %M) {\n",
+            "job(%S, %M",
             name,
             enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest)
         )
+        builder.add(job.env.joinToCode(
+            ifEmpty = CodeBlock.EMPTY,
+            prefix = CodeBlock.of(",\nenv = %M(", Members.linkedMapOf),
+            postfix = ")\n",
+            transform = { key, value -> CodeBlock.of("%S to %S", key, value) }
+        ))
+        builder.add(") {\n")
         builder.indent()
         job.steps.forEach { step ->
             if (step.uses != null) {

@@ -63,6 +63,9 @@ jobs:
         if: true
   "build_for_UbuntuLatest":
     runs-on: "ubuntu-latest"
+    env:
+      COLOR: blue
+      SIZE: XXL
     steps:
       - id: step-0
         name: Checkout

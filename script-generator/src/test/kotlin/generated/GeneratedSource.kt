@@ -75,7 +75,13 @@ public val workflowGenerated: Workflow = workflow(
         )
       }
 
-      job("build_for_UbuntuLatest", UbuntuLatest) {
+      job("build_for_UbuntuLatest", UbuntuLatest,
+      env = linkedMapOf(
+        "COLOR" to "blue",
+        "SIZE" to "XXL",
+      )
+
+      ) {
         uses(
           name = "Checkout",
           action = CheckoutV3(),

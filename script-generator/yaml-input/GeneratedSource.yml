@@ -61,6 +61,9 @@ jobs:
           PAT: rick
   "build_for_UbuntuLatest":
     runs-on: "ubuntu-latest"
+    env:
+        COLOR: blue
+        SIZE: XXL
     needs:
       - "check_yaml_consistency"
     steps:
