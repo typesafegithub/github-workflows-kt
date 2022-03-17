@@ -16,8 +16,8 @@ import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 import kotlin.collections.listOf
 
-public val workflowCheckBuild: Workflow = workflow(
-      name = "Check build",
+public val workflowRefreshversionsBuild: Workflow = workflow(
+      name = "RefreshVersions build",
       on = listOf(
         PullRequest(
           paths = listOf("plugins/**", "sample-kotlin/**", "sample-groovy/**", "!**.md",
@@ -75,8 +75,8 @@ public val workflowCheckBuild: Workflow = workflow(
           ),
         ))
         ),
-      sourceFile = Paths.get("check-build.main.kts"),
-      targetFile = Paths.get("yaml-output/check-build.yml"),
+      sourceFile = Paths.get("refreshversions-build.main.kts"),
+      targetFile = Paths.get("yaml-output/refreshversions-build.yml"),
     ) {
       job("check-all", UbuntuLatest) {
         run(

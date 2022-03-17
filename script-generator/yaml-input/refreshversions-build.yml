@@ -4,7 +4,7 @@
 # https://docs.github.com/en/actions/learn-github-actions/expressions
 
 # https://github.com/marketplace/actions/gradle-build-action
-name: Check build
+name: RefreshVersions build
 on:
   workflow_dispatch:
     inputs:

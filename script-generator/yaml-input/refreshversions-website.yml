@@ -1,4 +1,4 @@
-name: Publish MkDocs
+name: RefreshVersions Website
 on:
   push:
     branches:

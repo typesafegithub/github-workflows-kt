@@ -11,16 +11,16 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 
-public val workflowPublishMkdocs: Workflow = workflow(
-      name = "Publish MkDocs",
+public val workflowRefreshversionsWebsite: Workflow = workflow(
+      name = "RefreshVersions Website",
       on = listOf(
         Push(
           branches = listOf("release"),
         ),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("publish-mkdocs.main.kts"),
-      targetFile = Paths.get("yaml-output/publish-mkdocs.yml"),
+      sourceFile = Paths.get("refreshversions-website.main.kts"),
+      targetFile = Paths.get("yaml-output/refreshversions-website.yml"),
     ) {
       job("deploy", UbuntuLatest) {
         uses(

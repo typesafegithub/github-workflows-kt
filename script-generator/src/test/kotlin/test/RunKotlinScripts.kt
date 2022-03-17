@@ -1,11 +1,12 @@
 package test
 
 import generated.workflowAllTriggers
-import generated.workflowCheckBuild
 import generated.workflowGenerateWrappers
 import generated.workflowGenerated
-import generated.workflowPublishMkdocs
+import generated.workflowNodejsPackage
+import generated.workflowRefreshversionsBuild
 import generated.workflowRefreshversionsPr
+import generated.workflowRefreshversionsWebsite
 import generated.workflowUpdateGradleWrapper
 import io.kotest.core.spec.style.FunSpec
 import it.krzeminski.githubactions.yaml.writeToFile
@@ -13,12 +14,13 @@ import it.krzeminski.githubactions.yaml.writeToFile
 class RunKotlinScripts: FunSpec({
     val allWorkflows = listOf(
         workflowGenerateWrappers,
-        workflowCheckBuild,
+        workflowRefreshversionsBuild,
         workflowAllTriggers,
         workflowGenerated,
         workflowRefreshversionsPr,
-        workflowPublishMkdocs,
-        workflowUpdateGradleWrapper
+        workflowRefreshversionsWebsite,
+        workflowUpdateGradleWrapper,
+        workflowNodejsPackage,
     )
 
 

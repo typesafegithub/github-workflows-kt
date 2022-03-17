@@ -17,7 +17,7 @@ import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 
 public val workflowRefreshversionsPr: Workflow = workflow(
-      name = "RefreshVersions PR",
+      name = "RefreshVersions Pr",
       on = listOf(
         Schedule(listOf(
           Cron("0 7 * * 1"),

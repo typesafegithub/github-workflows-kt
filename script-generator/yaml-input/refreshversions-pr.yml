@@ -1,4 +1,4 @@
-name: RefreshVersions PR
+name: RefreshVersions Pr
 
 on:
   workflow_dispatch:
