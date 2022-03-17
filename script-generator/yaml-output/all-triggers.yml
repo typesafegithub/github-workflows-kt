@@ -51,6 +51,7 @@ on:
       - 'created'
       - 'closed'
   page_build:
+  public:
   project:
     types:
       - 'created'
@@ -62,6 +63,7 @@ on:
   project_column:
     types:
       - 'moved'
+  pull_request_review:
   pull_request_review_comment:
     types:
       - 'created'
@@ -70,6 +72,7 @@ on:
     types:
       - 'published'
       - 'updated'
+  repository_dispatch:
   release:
     types:
       - 'published'

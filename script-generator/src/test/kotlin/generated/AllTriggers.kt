@@ -23,12 +23,15 @@ import it.krzeminski.githubactions.domain.triggers.PageBuild
 import it.krzeminski.githubactions.domain.triggers.Project
 import it.krzeminski.githubactions.domain.triggers.ProjectCard
 import it.krzeminski.githubactions.domain.triggers.ProjectColumn
+import it.krzeminski.githubactions.domain.triggers.PublicWorkflow
 import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.PullRequestReview
 import it.krzeminski.githubactions.domain.triggers.PullRequestReviewComment
 import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.RegistryPackage
 import it.krzeminski.githubactions.domain.triggers.Release
+import it.krzeminski.githubactions.domain.triggers.RepositoryDispatch
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Status
 import it.krzeminski.githubactions.domain.triggers.Watch
@@ -96,6 +99,7 @@ public val workflowAllTriggers: Workflow = workflow(
           ),
         ),
         PageBuild(),
+        PublicWorkflow(),
         Project(
           _customArguments = mapOf(
             "types" to ListCustomValue("created", "deleted")
@@ -111,6 +115,7 @@ public val workflowAllTriggers: Workflow = workflow(
             "types" to ListCustomValue("moved")
           ),
         ),
+        PullRequestReview(),
         PullRequestReviewComment(
           _customArguments = mapOf(
             "types" to ListCustomValue("created", "edited")
@@ -121,6 +126,7 @@ public val workflowAllTriggers: Workflow = workflow(
             "types" to ListCustomValue("published", "updated")
           ),
         ),
+        RepositoryDispatch(),
         Release(
           _customArguments = mapOf(
             "types" to ListCustomValue("published", "unpublished")
