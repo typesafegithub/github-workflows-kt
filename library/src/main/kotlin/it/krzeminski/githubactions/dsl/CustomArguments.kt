@@ -6,16 +6,12 @@ interface HasCustomArguments {
     val _customArguments: Map<String, CustomValue>
 }
 
-@kotlinx.serialization.Serializable
 sealed class CustomValue
 
-@kotlinx.serialization.Serializable
 data class StringCustomValue(val value: String) : CustomValue()
 
-@kotlinx.serialization.Serializable
 data class ListCustomValue(val value: List<String>) : CustomValue()
 
-@kotlinx.serialization.Serializable
 data class ObjectCustomValue(val value: Map<String, String>) : CustomValue()
 
 fun IntCustomValue(value: Int): StringCustomValue =
