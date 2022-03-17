@@ -37,7 +37,7 @@ private fun ExternalActionStep.toYaml(): String = buildString {
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
     }
-    action.freeYamlArgs.filterIsInstance<ListFreeArg>().forEach {
+    action._customArguments.filterIsInstance<ListFreeArg>().forEach {
         printIfHasElements(it.value, it.key, "    ")
     }
 }.removeSuffix("\n")
@@ -66,7 +66,7 @@ private fun CommandStep.toYaml() = buildString {
 }.removeSuffix("\n")
 
 private fun Action.mergeArguments(): LinkedHashMap<String, String> {
-    val freeArgsYaml = freeYamlArgs.filterIsInstance<StringFreeArg>().map { it.key to it.value }.toMap()
+    val freeArgsYaml = _customArguments.filterIsInstance<StringFreeArg>().map { it.key to it.value }.toMap()
     return LinkedHashMap(toYamlArguments() + freeArgsYaml)
 }
 

@@ -38,7 +38,7 @@ import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
-import it.krzeminski.githubactions.dsl.HasFreeYamlArgs
+import it.krzeminski.githubactions.dsl.HasCustomArguments
 import it.krzeminski.githubactions.dsl.ListFreeArg
 import it.krzeminski.githubactions.dsl.StringFreeArg
 import kotlin.reflect.KClass
@@ -135,8 +135,8 @@ val triggerClassMap: List<Pair<String, KClass<*>>> = listOf(
     "workflow_run" to WorkflowRun::class,
 )
 
-internal fun HasFreeYamlArgs.freeArgsToYaml(): String = buildString {
-    for (arg in freeYamlArgs) {
+internal fun HasCustomArguments.freeArgsToYaml(): String = buildString {
+    for (arg in _customArguments) {
         when (arg) {
             is ListFreeArg -> printIfHasElements(arg.value, arg.key)
             is StringFreeArg -> appendLine("  ${arg.key}: ${arg.value}")

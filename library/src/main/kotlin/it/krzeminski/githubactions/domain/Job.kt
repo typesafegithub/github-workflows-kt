@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain
 
-import it.krzeminski.githubactions.dsl.FreeYamlArgs
-import it.krzeminski.githubactions.dsl.HasFreeYamlArgs
+import it.krzeminski.githubactions.dsl.CustomValue
+import it.krzeminski.githubactions.dsl.HasCustomArguments
 
 data class Job(
     val name: String,
@@ -11,6 +11,7 @@ data class Job(
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
-) : HasFreeYamlArgs {
-    override val freeYamlArgs: FreeYamlArgs = mutableListOf()
+) : HasCustomArguments {
+    override val _customArguments: Map<String, CustomValue> =
+        mutableListOf()
 }
