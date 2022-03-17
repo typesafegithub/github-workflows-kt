@@ -152,7 +152,13 @@ fun workflowDispatchInput(name: String, input: WorkflowDispatch.Input) = CodeBlo
         .add("description = %S,\n", input.description)
         .add("default = %S,\n", input.default)
         .add("required = %L,\n", input.required)
-        .add(input.options.joinToCode())
+        .add(input.options.joinToCode(
+            ifEmpty = CodeBlock.EMPTY,
+            prefix = CodeBlock.of("options = %M(", Members.listOf),
+            postfix = "),",
+            separator = ", ",
+            transform = { CodeBlock.of("%S", it) }
+        ))
         .unindent()
         .add("),\n")
 }

@@ -35,6 +35,10 @@ on:
         type: choice
         required: true
         default: 'warning'
+        options:
+          - 'info'
+          - 'warning'
+          - 'debug'
 
 env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}

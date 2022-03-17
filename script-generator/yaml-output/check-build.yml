@@ -64,6 +64,16 @@ on:
         type: choice
         required: true
         default: 'ubuntu-latest'
+        options:
+          - 'windows-2022'
+          - 'windows-2019'
+          - 'windows-latest'
+          - 'macos-11'
+          - 'macos-10.5'
+          - 'macos-latest'
+          - 'ubuntu-20.04'
+          - 'ubuntu-18.04'
+          - 'ubuntu-latest'
 
 jobs:
   "check-all":

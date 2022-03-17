@@ -30,7 +30,9 @@ class GenerateKotlinScripts : FunSpec({
                 .toString()
                 .removeWindowsEndings()
 
-            input.actualFile.writeText(newContent)
+            input.actualFile.writeText(
+                "package actual\n" + newContent.removePrefix("package generated")
+            )
 
             if (System.getenv("GITHUB_ACTIONS") == "true") {
                 newContent shouldBe input.expected
@@ -59,7 +61,7 @@ data class TestInput(val name: String) {
         .also { require(it.canRead()) { "Invalid file ${it.canonicalPath}" } }
     private fun file(path: String) = rootProject.resolve("script-generator/src/test/kotlin/generated/$path")
     val expectedFile = file("${filename.toPascalCase()}.kt")
-    val actualFile = file("${filename.toPascalCase()}Actual.kt")
+    val actualFile = file("../actual/${filename.toPascalCase()}.kt")
     val expected = if (expectedFile.canRead())
         expectedFile.readText()
             .removeWindowsEndings()

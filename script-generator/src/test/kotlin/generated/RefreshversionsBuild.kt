@@ -14,6 +14,7 @@ import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
+import kotlin.collections.listOf
 
 public val workflowCheckBuild: Workflow = workflow(
       name = "Check build",
@@ -69,6 +70,8 @@ public val workflowCheckBuild: Workflow = workflow(
             description = "Where to run this workflow",
             default = "ubuntu-latest",
             required = true,
+            options = listOf("windows-2022", "windows-2019", "windows-latest", "macos-11",
+                "macos-10.5", "macos-latest", "ubuntu-20.04", "ubuntu-18.04", "ubuntu-latest"),
           ),
         ))
         ),

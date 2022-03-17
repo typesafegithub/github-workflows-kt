@@ -19,6 +19,7 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 import kotlin.collections.linkedMapOf
+import kotlin.collections.listOf
 
 public val workflowGenerated: Workflow = workflow(
       name = "generated",
@@ -43,6 +44,7 @@ public val workflowGenerated: Workflow = workflow(
             description = "Log level",
             default = "warning",
             required = true,
+            options = listOf("info", "warning", "debug"),
           ),
         ))
         ),
