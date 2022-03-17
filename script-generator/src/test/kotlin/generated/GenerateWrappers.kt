@@ -7,10 +7,12 @@ import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
+import kotlin.collections.mapOf
 
 public val workflowGenerateWrappers: Workflow = workflow(
       name = "Generate wrappers",
@@ -38,7 +40,10 @@ public val workflowGenerateWrappers: Workflow = workflow(
         )
       }
 
-      job("generate-wrappers", UbuntuLatest) {
+      job("generate-wrappers", UbuntuLatest, _customArguments = mapOf(
+      "needs" to ListCustomValue("check_yaml_consistency"),
+      )
+      ) {
         uses(
           name = "Checkout",
           action = CheckoutV3(),

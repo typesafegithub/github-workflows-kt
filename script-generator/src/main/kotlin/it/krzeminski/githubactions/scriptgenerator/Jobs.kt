@@ -2,6 +2,8 @@ package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.CodeBlock
 import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.dsl.ListCustomValue
+import it.krzeminski.githubactions.scriptmodel.YamlJob
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
@@ -21,6 +23,7 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
             postfix = ")\n",
             transform = { key, value -> CodeBlock.of("%S to %S", key, value) }
         ))
+        builder.add(job.customArguments())
         builder.add(") {\n")
         builder.indent()
         job.steps.forEach { step ->
@@ -41,6 +44,26 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
         builder.unindent()
             .add("}\n\n")
     }
+}
+
+private fun YamlJob.customArguments(): CodeBlock {
+    val map = listOfNotNull(
+        ("needs" to needs).takeIf { needs.isNotEmpty() },
+    ).toMap()
+    return map.joinToCode(
+        ifEmpty = CodeBlock.EMPTY,
+        prefix = CodeBlock.of(", _customArguments = %M(\n", Members.mapOf),
+        separator = "",
+        postfix = ")",
+        transform = { key, list -> list.joinToCode(
+            prefix = CodeBlock.of("%S to %T(", key, ListCustomValue::class),
+            separator = ", ",
+            postfix = "),\n",
+            newLineAtEnd = false,
+            transform = { CodeBlock.of("%S", it) }
+        )
+        }
+    )
 }
 
 fun YamlStep.generateCommand() = CodeBlock { builder ->

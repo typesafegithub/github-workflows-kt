@@ -14,12 +14,14 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Choice
+import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 import kotlin.collections.linkedMapOf
 import kotlin.collections.listOf
+import kotlin.collections.mapOf
 
 public val workflowGenerated: Workflow = workflow(
       name = "generated",
@@ -81,6 +83,9 @@ public val workflowGenerated: Workflow = workflow(
         "SIZE" to "XXL",
       )
 
+      , _customArguments = mapOf(
+      "needs" to ListCustomValue("check_yaml_consistency"),
+      )
       ) {
         uses(
           name = "Checkout",

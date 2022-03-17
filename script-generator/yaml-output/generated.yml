@@ -66,6 +66,8 @@ jobs:
     env:
       COLOR: blue
       SIZE: XXL
+    needs:
+      - 'check_yaml_consistency'
     steps:
       - id: step-0
         name: Checkout

@@ -24,6 +24,8 @@ jobs:
         run: diff -u '.github/workflows/generate-wrappers.yaml' <('.github/workflows/generate-wrappers.main.kts')
   "generate-wrappers":
     runs-on: "ubuntu-latest"
+    needs:
+      - 'check_yaml_consistency'
     steps:
       - id: step-0
         name: Checkout

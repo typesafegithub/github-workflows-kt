@@ -9,11 +9,13 @@ import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
 import kotlin.collections.linkedMapOf
+import kotlin.collections.mapOf
 
 public val workflowUpdateGradleWrapper: Workflow = workflow(
       name = "Update Gradle Wrapper",
@@ -43,7 +45,10 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         )
       }
 
-      job("update-gradle-wrapper", UbuntuLatest) {
+      job("update-gradle-wrapper", UbuntuLatest, _customArguments = mapOf(
+      "needs" to ListCustomValue("check_yaml_consistency"),
+      )
+      ) {
         uses(
           name = "Checkout",
           action = CheckoutV3(),
