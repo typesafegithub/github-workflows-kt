@@ -76,11 +76,10 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
                 .add("_customArguments = %M(\n", Members.mapOf)
                 .indent()
                 .add("%S to %T", "types", ListCustomValue::class.asClassName())
-                .add(types.joinToCodeBlock(separator = CodeBlock.of(", "), transform = { CodeBlock.of("%S", it) }))
+                .add(types.joinToCode(separator = ", ", transform = { CodeBlock.of("%S", it) }))
                 .unindent()
                 .add("),\n")
                 .unindent()
-
         }
 
     return CodeBlock { builder ->
@@ -95,9 +94,9 @@ fun Trigger?.toKotlin(): CodeBlock {
         return CodeBlock.of("")
     }
     val map: MapOfYaml = this.toMap()
-    return map.joinToCodeBlock(
+    return map.joinToCode(
         prefix = CodeBlock.of("%T(", classname()),
-        postfix = CodeBlock.of("),"),
+        postfix = "),",
         ifEmpty = CodeBlock.of("%T(),\n", classname()),
         newLineAtEnd = true,
     ) { key, value ->
@@ -131,10 +130,10 @@ private fun WorkflowDispatch?.toKotlin(): CodeBlock {
     if (this == null) return CodeBlock.of("")
     val trigger = CodeBlock.of("%T(", WorkflowDispatch::class)
 
-    val inputsBlock = inputs.joinToCodeBlock(
+    val inputsBlock = inputs.joinToCode(
         prefix = CodeBlock.of("mapOf(\n"),
         ifEmpty = CodeBlock.of("),\n"),
-        postfix = CodeBlock.of("))")
+        postfix = "))"
     ) { name, input ->
         workflowDispatchInput(name, input)
     }
@@ -153,14 +152,15 @@ fun workflowDispatchInput(name: String, input: WorkflowDispatch.Input) = CodeBlo
         .add("description = %S,\n", input.description)
         .add("default = %S,\n", input.default)
         .add("required = %L,\n", input.required)
+        .add(input.options.joinToCode())
         .unindent()
         .add("),\n")
 }
 
 private fun List<ScheduleValue>?.toKotlin(): CodeBlock {
-    return this?.joinToCodeBlock(
+    return this?.joinToCode(
         prefix = CodeBlock.of("%T(listOf(\n", Schedule::class),
-        postfix = CodeBlock.of(")),")
+        postfix = ")),"
     ) {
         CodeBlock.of("%T(%S)", Cron::class, it.cron)
     } ?: CodeBlock.EMPTY

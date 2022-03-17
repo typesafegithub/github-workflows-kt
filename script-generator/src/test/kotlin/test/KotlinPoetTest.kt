@@ -14,7 +14,7 @@ import it.krzeminski.githubactions.scriptgenerator.CodeBlock
 import it.krzeminski.githubactions.scriptgenerator.Members
 import it.krzeminski.githubactions.scriptgenerator.TemplateArg
 import it.krzeminski.githubactions.scriptgenerator.enumMemberName
-import it.krzeminski.githubactions.scriptgenerator.joinToCodeBlock
+import it.krzeminski.githubactions.scriptgenerator.joinToCode
 import it.krzeminski.githubactions.scriptgenerator.templateOf
 import it.krzeminski.githubactions.scriptgenerator.valueWithTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
@@ -48,7 +48,7 @@ class KotlinPoetTest : DescribeSpec({
     describe("List.joinToCodeBlock()") {
         it("generates listOf(...)") {
             val codeBlock = listOf(1, 2, 3)
-                .joinToCodeBlock(
+                .joinToCode(
                     prefix = CodeBlock.of("listOf("),
                     transform = { CodeBlock.of("%L", it * it) }
                 )
@@ -65,8 +65,8 @@ class KotlinPoetTest : DescribeSpec({
 
         it("generates linkedMapOf(...)") {
             val codeBlock = listOf(1, 2, 3)
-                .joinToCodeBlock(
-                    separator = CodeBlock.of(", "),
+                .joinToCode(
+                    separator = ", ",
                     prefix = CodeBlock.of("%M(", Members.linkedMapOf),
                     transform = { CodeBlock.of("%S", "$it$it") }
                 )
@@ -80,7 +80,7 @@ class KotlinPoetTest : DescribeSpec({
         it("generates empty list") {
             val list: List<Int> = emptyList()
 
-            val codeBlock = list.joinToCodeBlock(
+            val codeBlock = list.joinToCode(
                 ifEmpty = CodeBlock.of("emptyList<String>()"),
                 newLineAtEnd = false
             )
@@ -96,7 +96,7 @@ class KotlinPoetTest : DescribeSpec({
                 "token" to "my-token",
             )
 
-            val codeblock = actionMap.joinToCodeBlock(
+            val codeblock = actionMap.joinToCode(
                 prefix = CodeBlock.of("val %L = %T(", "myAction", SetupNodeV2::class.asTypeName()),
                 transform = { key, value ->
                     val template = templateOf(value)
@@ -119,11 +119,11 @@ class KotlinPoetTest : DescribeSpec({
         }
 
         it("renders an empty map or empty list") {
-            emptyMap<String, String>().joinToCodeBlock(
+            emptyMap<String, String>().joinToCode(
                 transform = { key, value -> CodeBlock.of("$key => $value") }
             ).toString() shouldBe ""
 
-            emptyList<String>().joinToCodeBlock()
+            emptyList<String>().joinToCode()
                 .toString() shouldBe ""
         }
     }

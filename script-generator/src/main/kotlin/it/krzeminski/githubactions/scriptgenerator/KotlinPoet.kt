@@ -24,10 +24,10 @@ inline fun <reified T : Enum<T>> enumMemberName(input: String): MemberName? {
         }
 }
 
-public fun <K : Any, V : Any?> Map<K, V>.joinToCodeBlock(
-    separator: CodeBlock = CodeBlock.of(",\n"),
+public fun <K : Any, V : Any?> Map<K, V>.joinToCode(
     prefix: CodeBlock = CodeBlock.of("("),
-    postfix: CodeBlock = CodeBlock.of(")"),
+    separator: String = ",\n",
+    postfix: String = ")",
     ifEmpty: CodeBlock = CodeBlock.EMPTY,
     newLineAtEnd: Boolean = true,
     transform: ((K, V) -> CodeBlock?),
@@ -36,14 +36,14 @@ public fun <K : Any, V : Any?> Map<K, V>.joinToCodeBlock(
         .filterNot { (key, value) ->
             value == null || (value is List<*> && value.isEmpty())
         }
-        .joinToCodeBlock(separator, prefix, postfix, ifEmpty, newLineAtEnd) { (key, value) ->
+        .joinToCode(prefix, separator, postfix, ifEmpty, newLineAtEnd) { (key, value) ->
             transform(key, value)
         }
 
-fun <T : Any> Iterable<T>.joinToCodeBlock(
-    separator: CodeBlock = CodeBlock.of(",\n"),
+fun <T : Any> Iterable<T>.joinToCode(
     prefix: CodeBlock = CodeBlock.of("("),
-    postfix: CodeBlock = CodeBlock.of(")"),
+    separator: String = ",\n",
+    postfix: String = ")",
     ifEmpty: CodeBlock = CodeBlock.EMPTY,
     newLineAtEnd: Boolean = true,
     transform: ((T) -> CodeBlock?) = { any ->

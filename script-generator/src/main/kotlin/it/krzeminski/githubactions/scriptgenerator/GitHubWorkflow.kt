@@ -25,10 +25,15 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
                     .add("name = %S,\n", name)
                     .add("on = %L", on.toKotlin())
                     .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.main.kts"))
-                    .add("targetFile = %T.get(%S),\n", Paths::class, Paths.get(when (outputFolder) {
-                        null -> "$filename.yml"
-                        else -> "$outputFolder/$filename.yml"
-                    }))
+                    .add(
+                        "targetFile = %T.get(%S),\n", Paths::class,
+                        Paths.get(
+                            when (outputFolder) {
+                                null -> "$filename.yml"
+                                else -> "$outputFolder/$filename.yml"
+                            }
+                        )
+                    )
                     .add(workflowEnv())
                     .unindent()
                     .add(") {\n")
@@ -42,9 +47,9 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
 }
 
 private fun YamlWorkflow.workflowEnv(): CodeBlock {
-    return env.joinToCodeBlock(
+    return env.joinToCode(
         prefix = CodeBlock.of("env = %M(\n", Members.linkedMapOf),
-        postfix = CodeBlock.of("),")
+        postfix = "),"
     ) { key, value ->
         val (template, arg) = value.orExpression()
         CodeBlock.of("%S to $template,\n", key, arg)

@@ -43,9 +43,9 @@ fun YamlStep.generateCommand() = CodeBlock { builder ->
         .add("name = %S,\n", name ?: run)
         .add("command = %S,\n", run)
         .add(
-            env.joinToCodeBlock(
+            env.joinToCode(
                 prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
-                postfix = CodeBlock.of("),"),
+                postfix = "),",
                 ifEmpty = CodeBlock.EMPTY
             ) { key, value ->
                 value?.let {

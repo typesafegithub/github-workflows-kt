@@ -29,9 +29,9 @@ fun YamlStep.generateAction(
     }
 
     builder.add(
-        env.joinToCodeBlock(
+        env.joinToCode(
             prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
-            postfix = CodeBlock.of("),"),
+            postfix = "),",
             ifEmpty = CodeBlock.EMPTY
         ) { key, value ->
             value?.let {
@@ -52,9 +52,9 @@ fun YamlStep.generateActionWithWrapper(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
 ): CodeBlock {
-    return with.joinToCodeBlock(
+    return with.joinToCode(
         prefix = CodeBlock.of("action = %T(", coords.classname()),
-        postfix = CodeBlock.of("),"),
+        postfix = "),",
     ) { key, value ->
         value?.let {
             val typing = inputTypings?.get(key) ?: StringTyping
@@ -67,15 +67,15 @@ fun YamlStep.generateActionWithWrapper(
 fun YamlStep.generateMissingAction(
     coords: ActionCoords,
 ): CodeBlock {
-    val coordsBlock = coords.toMap().joinToCodeBlock(
+    val coordsBlock = coords.toMap().joinToCode(
         prefix = CodeBlock.of("action = %T(", MissingAction::class),
-        postfix = CodeBlock.EMPTY,
+        postfix = "",
         newLineAtEnd = false,
     ) { key, value ->
         CodeBlock.of("%L = %S", key.toCamelCase(), value)
     }
 
-    val freeArgsBlock = with.joinToCodeBlock(
+    val freeArgsBlock = with.joinToCode(
         prefix = CodeBlock.of("freeArgs = %M(\n", Members.linkedMapOf)
     ) { key, value ->
         CodeBlock.of("%S to %S", key, value)
