@@ -12,6 +12,7 @@ markdown_extensions:
   - pymdownx.magiclink
   - pymdownx.inlinehilite
   - pymdownx.superfences
+  - admonition
 
 nav:
   - Introduction: 'index.md'

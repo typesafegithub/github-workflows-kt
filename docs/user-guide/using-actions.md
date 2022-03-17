@@ -17,8 +17,63 @@ Kotlin wrapper for the action needs a breaking change as well.
 ## User-defined actions
 
 If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
-you can use a [`CustomAction`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt)
+you have two ways go go.
+
+### Typed wrapper
+
+!!! info "When to use this approach"
+    It lets you create an action wrapper in a similar manner that is provided by the build-in action wrappers in this
+    library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
+    inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
+
+Inherit from [`Action`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
 in case of actions without outputs:
+
+```kotlin
+class MyCoolActionV3(
+    private val someArgument: String,
+) : Action("acmecorp", "cool-action", "v3") {
+    override fun toYamlArguments() = linkedMapOf(
+        "some-argument" to someArgument,
+    )
+}
+```
+
+or, in case actions with outputs, from [`ActionWithOutputs`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/ActionWithOutputs.kt):
+
+```kotlin
+class MyCoolActionV3(
+    private val someArgument: String,
+) : ActionWithOutputs<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
+    override fun toYamlArguments() = linkedMapOf(
+        "some-argument" to someArgument,
+    )
+    
+    override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    
+    class Outputs(private val stepId: String) {
+        public val coolOutput: String = "steps.$stepId.outputs.coolOutput"
+        
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
+}
+```
+
+Once you've got your action, it's now as simple as using it like this:
+
+```kotlin
+uses(name = "FooBar",
+     action = MyCoolActionV3(someArgument = "foobar"))
+```
+
+### Untyped wrapper
+
+!!! info "When to use this approach"
+    It omits typing entirely, and both inputs and outputs are referenced using strings. Use it if you don't care about
+    types because you're in the middle of experimenting. It's also more convenient to produce such code by a code
+    generator.
+
+Use a [`CustomAction`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
 
 ```kotlin
 val customAction = CustomAction(
@@ -32,7 +87,7 @@ val customAction = CustomAction(
 )
 ```
 
-If your customAction has outputs, you can access them, albeit in a type-unsafe manner :
+If your custom action has outputs, you can access them, albeit in a type-unsafe manner:
 
 ```kotlin
 job("test_job", RunnerType.UbuntuLatest) {
@@ -44,13 +99,4 @@ job("test_job", RunnerType.UbuntuLatest) {
     // use your outputs:
     println(expr(customActionStep.outputs["custom-output"]))
 }
-```
-
-## Using actions in jobs
-
-Once you've got your action, it's now as simple as using it like this:
-
-```kotlin
-uses(name = "FooBar",
-     action = MyCoolActionV3(someArgument = "foobar"))
 ```
