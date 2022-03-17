@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -37,10 +35,12 @@ import it.krzeminski.githubactions.domain.triggers.Watch
 import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
+import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.`file`.Paths
+import kotlin.collections.mapOf
 
 public val workflowAllTriggers: Workflow = workflow(
       name = "all-triggers",
@@ -52,35 +52,95 @@ public val workflowAllTriggers: Workflow = workflow(
           Cron("* * * * *"),
         )),
         WorkflowDispatch(),
-        BranchProtectionRule().types("created", "deleted"),
-        CheckRun().types("completed", "rerequested"),
+        BranchProtectionRule(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "deleted")
+          ),
+        ),
+        CheckRun(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("completed", "rerequested")
+          ),
+        ),
         CheckSuite(),
         Create(),
         Delete(),
         Deployment(),
         DeploymentStatus(),
-        Discussion().types("created", "edited", "answered"),
+        Discussion(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "edited", "answered")
+          ),
+        ),
         DiscussionComment(),
         Fork(),
         Gollum(),
-        IssueComment().types("created", "edited", "deleted"),
-        Issues().types("opened", "edited"),
-        Label().types("crDiscussionCommenteated", "deleted", "edited"),
-        Milestone().types("created", "closed"),
+        IssueComment(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "edited", "deleted")
+          ),
+        ),
+        Issues(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("opened", "edited")
+          ),
+        ),
+        Label(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("crDiscussionCommenteated", "deleted", "edited")
+          ),
+        ),
+        Milestone(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "closed")
+          ),
+        ),
         PageBuild(),
-        Project().types("created", "deleted"),
-        ProjectCard().types("created", "moved"),
-        ProjectColumn().types("moved"),
-        PullRequestReviewComment().types("created", "edited"),
-        RegistryPackage().types("published", "updated"),
-        Release().types("published", "unpublished"),
-        Status().types("started"),
+        Project(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "deleted")
+          ),
+        ),
+        ProjectCard(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "moved")
+          ),
+        ),
+        ProjectColumn(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("moved")
+          ),
+        ),
+        PullRequestReviewComment(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("created", "edited")
+          ),
+        ),
+        RegistryPackage(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("published", "updated")
+          ),
+        ),
+        Release(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("published", "unpublished")
+          ),
+        ),
+        Status(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("started")
+          ),
+        ),
         Watch(),
         WorkflowCall(),
-        WorkflowRun().types("completed", "requested"),
+        WorkflowRun(
+          _customArguments = mapOf(
+            "types" to ListCustomValue("completed", "requested")
+          ),
+        ),
         ),
       sourceFile = Paths.get("all-triggers.main.kts"),
-      targetFile = Paths.get("all-triggers.yml"),
+      targetFile = Paths.get("yaml-output/all-triggers.yml"),
     ) {
       job("job-0", UbuntuLatest) {
         uses(
@@ -89,7 +149,4 @@ public val workflowAllTriggers: Workflow = workflow(
         )
       }
 
-    }.also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
     }

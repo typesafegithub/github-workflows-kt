@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -75,7 +73,7 @@ public val workflowCheckBuild: Workflow = workflow(
         ))
         ),
       sourceFile = Paths.get("check-build.main.kts"),
-      targetFile = Paths.get("check-build.yml"),
+      targetFile = Paths.get("yaml-output/check-build.yml"),
     ) {
       job("check-all", UbuntuLatest) {
         run(
@@ -209,7 +207,4 @@ public val workflowCheckBuild: Workflow = workflow(
         )
       }
 
-    }.also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
     }

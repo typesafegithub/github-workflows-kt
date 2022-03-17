@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV2
@@ -22,7 +20,7 @@ public val workflowPublishMkdocs: Workflow = workflow(
         WorkflowDispatch(),
         ),
       sourceFile = Paths.get("publish-mkdocs.main.kts"),
-      targetFile = Paths.get("publish-mkdocs.yml"),
+      targetFile = Paths.get("yaml-output/publish-mkdocs.yml"),
     ) {
       job("deploy", UbuntuLatest) {
         uses(
@@ -49,7 +47,4 @@ public val workflowPublishMkdocs: Workflow = workflow(
         )
       }
 
-    }.also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
     }

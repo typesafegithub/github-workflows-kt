@@ -8,13 +8,13 @@ import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.nio.file.Paths
 
-fun YamlWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
+fun YamlWorkflow.toFileSpec(filenameFromUrl: String?, outputFolder: String?) = FileSpec.builder("", "$name.main.kts")
     .addImport("$PACKAGE.yaml", "toYaml")
     .addImport("$PACKAGE.dsl", "expr")
-    .addProperty(workFlowProperty(filenameFromUrl))
+    .addProperty(workFlowProperty(filenameFromUrl, outputFolder))
     .build()
 
-fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
+fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String?): PropertySpec {
     val filename = (filenameFromUrl ?: name).lowercase().replace(" ", "-")
 
     return PropertySpec.builder("workflow${filename.toPascalCase()}", Workflow::class)
@@ -25,7 +25,10 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
                     .add("name = %S,\n", name)
                     .add("on = %L", on.toKotlin())
                     .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.main.kts"))
-                    .add("targetFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.yml"))
+                    .add("targetFile = %T.get(%S),\n", Paths::class, Paths.get(when (outputFolder) {
+                        null -> "$filename.yml"
+                        else -> "$outputFolder/$filename.yml"
+                    }))
                     .add(workflowEnv())
                     .unindent()
                     .add(") {\n")
@@ -33,7 +36,6 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
                     .add(generateJobs())
                     .unindent()
                     .add("}")
-                    .add(printlnGenerateYaml())
             }
         )
         .build()
@@ -54,14 +56,5 @@ fun YamlWorkflow.toKotlin(filenameFromUrl: String?): String = """
         |
         |@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
         |
-        |${toFileSpec(filenameFromUrl)}
+        |${toFileSpec(filenameFromUrl, null)}
 """.trimMargin()
-
-fun printlnGenerateYaml(): CodeBlock = CodeBlock.of(
-    """
-    |.also {
-    |    println("Generating YAML")
-    |    println(it.toYaml(addConsistencyCheck = false))
-    |}
-    """.trimMargin()
-)

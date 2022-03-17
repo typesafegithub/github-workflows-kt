@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.YamlTrigger
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflowTriggers
@@ -54,6 +55,11 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
         .add("),\n").unindent()
 }
 
+/**
+ * BranchProtectionRule(_customArguments = mapOf(
+"types" to ListCustomValue("created", "delated")
+)).
+ */
 private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
     this ?: return CodeBlock.EMPTY
 
@@ -63,20 +69,24 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
         ?.asClassName()
         ?: error("Couldn't find class for triggerName=$triggerName")
 
-    val typesCodeblock = (this.types ?: emptyList())
-        .joinToCodeBlock(
-            prefix = CodeBlock.of(".types(", classname),
-            postfix = CodeBlock.of("),"),
-            separator = CodeBlock.of(", "),
-            ifEmpty = CodeBlock.of(",\n"),
-            newLineAtEnd = true
-        ) { type ->
-            CodeBlock.of("%S", type)
+    val typesCodeblock = if (types.isNullOrEmpty()) CodeBlock.of("") else
+        CodeBlock { builder ->
+            builder
+                .add("\n").indent()
+                .add("_customArguments = %M(\n", Members.mapOf)
+                .indent()
+                .add("%S to %T", "types", ListCustomValue::class.asClassName())
+                .add(types.joinToCodeBlock(separator = CodeBlock.of(", "), transform = { CodeBlock.of("%S", it) }))
+                .unindent()
+                .add("),\n")
+                .unindent()
+
         }
 
     return CodeBlock { builder ->
-        builder.add("%T()", classname)
+        builder.add("%T(", classname)
             .add(typesCodeblock)
+            .add("),\n")
     }
 }
 

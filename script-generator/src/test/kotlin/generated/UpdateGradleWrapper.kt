@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+package generated
 
 import it.krzeminski.githubactions.actions.MissingAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
@@ -26,7 +24,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         WorkflowDispatch(),
         ),
       sourceFile = Paths.get("update-gradle-wrapper.main.kts"),
-      targetFile = Paths.get("update-gradle-wrapper.yml"),
+      targetFile = Paths.get("yaml-output/update-gradle-wrapper.yml"),
     ) {
       job("check_yaml_consistency", UbuntuLatest) {
         uses(
@@ -68,7 +66,4 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         )
       }
 
-    }.also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
     }

@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -49,7 +47,7 @@ public val workflowGenerated: Workflow = workflow(
         ))
         ),
       sourceFile = Paths.get("generated.main.kts"),
-      targetFile = Paths.get("generated.yml"),
+      targetFile = Paths.get("yaml-output/generated.yml"),
       env = linkedMapOf(
         "GRADLE_ENTERPRISE_ACCESS_KEY" to expr("secrets.GRADLE_ENTERPRISE_ACCESS_KEY"),
         "GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED" to "true",
@@ -110,7 +108,4 @@ public val workflowGenerated: Workflow = workflow(
         )
       }
 
-    }.also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
     }

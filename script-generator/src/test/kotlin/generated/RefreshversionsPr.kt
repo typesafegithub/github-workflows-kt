@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -27,7 +25,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         WorkflowDispatch(),
         ),
       sourceFile = Paths.get("refreshversions-pr.main.kts"),
-      targetFile = Paths.get("refreshversions-pr.yml"),
+      targetFile = Paths.get("yaml-output/refreshversions-pr.yml"),
     ) {
       job("Refresh-Versions", UbuntuLatest) {
         uses(
@@ -82,7 +80,4 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         )
       }
 
-    }.also {
-        println("Generating YAML")
-        println(it.toYaml(addConsistencyCheck = false))
     }
