@@ -319,6 +319,21 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("google-github-actions", "auth", "v0"),
+        mapOf(
+            "credentials_json" to StringTyping,
+            "cleanup_credentials" to BooleanTyping,
+            "delegates" to ListOfTypings(","),
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("google-github-actions", "setup-gcloud", "v0"),
+        mapOf(
+            "export_default_credentials" to BooleanTyping,
+            "install_components" to ListOfTypings(","),
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("GoogleCloudPlatform", "github-actions", "v0"),
         mapOf(
             "export_default_credentials" to BooleanTyping,
