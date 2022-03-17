@@ -1,6 +1,4 @@
-#!/usr/bin/env kotlin
-
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.9.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.10.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -11,13 +9,15 @@ import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.file.Paths
 
 val buildWorkflow = workflow(
     name = "Build",
-    on = listOf(Push(), PullRequest()),
-    sourceFile = Paths.get(".github/workflows/build.main.kts"),
+    on = listOf(
+        Push(branches = listOf("main")),
+        PullRequest(),
+    ),
+    sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
     targetFile = Paths.get(".github/workflows/build.yaml"),
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
@@ -45,5 +45,3 @@ val buildWorkflow = workflow(
         }
     }
 }
-
-println(buildWorkflow.toYaml())

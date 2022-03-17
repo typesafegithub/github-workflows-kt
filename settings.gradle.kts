@@ -1,3 +1,11 @@
+rootProject.name = "github-actions-kotlin-dsl"
+
+include(
+    "library",
+    "wrapper-generator",
+    "script-generator"
+)
+
 plugins {
     id("com.gradle.enterprise").version("3.8.1")
 }
@@ -10,11 +18,3 @@ gradleEnterprise {
         publishOnFailure()
     }
 }
-
-rootProject.name = "github-actions-kotlin-dsl"
-
-include(
-    "library",
-    "wrapper-generator",
-)
-include("script-generator")

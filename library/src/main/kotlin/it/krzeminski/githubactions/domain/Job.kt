@@ -11,7 +11,5 @@ data class Job(
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
-) : HasCustomArguments {
-    override val _customArguments: Map<String, CustomValue> =
-        mutableListOf()
-}
+    override val _customArguments: Map<String, CustomValue> = mapOf(),
+) : HasCustomArguments

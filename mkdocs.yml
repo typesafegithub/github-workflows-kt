@@ -1,5 +1,22 @@
-site_name: My Docs
+site_name: GitHub Actions Kotlin DSL
+site_author: Piotr Krzemiński
+repo_url: https://github.com/krzema12/github-actions-kotlin-dsl/
+edit_uri: https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/docs
 
 theme:
   name: material
+  features:
+    - navigation.expand
 
+markdown_extensions:
+  - pymdownx.magiclink
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - admonition
+
+nav:
+  - Introduction: 'index.md'
+  - User guide:
+      - Getting started: 'user-guide/getting_started.md'
+      - Using actions: 'user-guide/using-actions.md'
+  - Projects using this library: 'projects-using-this-library.md'

@@ -8,6 +8,7 @@ import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 
+@Suppress("LongParameterList")
 @GithubActionsDsl
 class JobBuilder(
     val name: String,
@@ -16,7 +17,8 @@ class JobBuilder(
     val env: LinkedHashMap<String, String>,
     val condition: String?,
     val strategyMatrix: Map<String, List<String>>?,
-) {
+    override val _customArguments: Map<String, CustomValue>,
+) : HasCustomArguments {
     private var job = Job(
         name = name,
         runsOn = runsOn,
@@ -25,6 +27,7 @@ class JobBuilder(
         env = env,
         steps = emptyList(),
         strategyMatrix = strategyMatrix,
+        _customArguments = _customArguments
     )
 
     fun run(

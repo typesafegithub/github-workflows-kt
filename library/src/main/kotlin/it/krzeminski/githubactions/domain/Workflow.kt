@@ -12,7 +12,5 @@ data class Workflow(
     val sourceFile: Path,
     val targetFile: Path,
     val jobs: List<Job>,
-) : HasCustomArguments {
-    override val _customArguments: Map<String, CustomValue> =
-        mutableListOf()
-}
+    override val _customArguments: Map<String, CustomValue> = mapOf(),
+) : HasCustomArguments

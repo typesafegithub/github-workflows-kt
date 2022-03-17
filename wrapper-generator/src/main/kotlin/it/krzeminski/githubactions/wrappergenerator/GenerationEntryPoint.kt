@@ -1,7 +1,9 @@
 package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
+import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
+import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import java.nio.file.Paths
 
 /***
@@ -12,13 +14,15 @@ import java.nio.file.Paths
  *    ./gradlew :wrapper-generator:run
  */
 fun main() {
+    checkDuplicateWrappers()
+    checkWrappersOrder()
+    println(wrappersToGenerate.suggestDeprecations())
+
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
 
-    checkDuplicateWrappers()
-
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
-        println("Generating ${actionCoords.owner}/${actionCoords.name}@${actionCoords.version}...")
+        println("Generating ${actionCoords.prettyPrint}")
         val (code, path) = actionCoords.generateWrapper(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
@@ -38,4 +42,16 @@ private fun checkDuplicateWrappers() {
             .filterValues { it.size != 1 }
             .keys
     require(duplicateWrappers.isEmpty()) { "Duplicate wrappers requests: $duplicateWrappers" }
+}
+
+private fun checkWrappersOrder() {
+    val sortedWrappers = wrappersToGenerate.sortedBy { it.actionCoords.actionYmlUrl.lowercase() }
+    require(wrappersToGenerate == sortedWrappers) {
+        val firstNonMatchingRequest = (wrappersToGenerate zip sortedWrappers).first { it.first != it.second }
+        """Please sort the wrappers according to their owner, name and version.
+           First non-matching request:
+           - in current: ${firstNonMatchingRequest.first.actionCoords}
+           - in desired: ${firstNonMatchingRequest.second.actionCoords}
+        """
+    }
 }

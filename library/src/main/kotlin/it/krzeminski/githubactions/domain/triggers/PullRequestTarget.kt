@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import kotlinx.serialization.SerialName
+import it.krzeminski.githubactions.dsl.CustomValue
 
 // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 @kotlinx.serialization.Serializable
@@ -10,6 +11,7 @@ data class PullRequestTarget(
     val branchesIgnore: List<String>? = null,
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
+    override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : Trigger() {
 
     init {

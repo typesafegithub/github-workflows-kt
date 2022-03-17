@@ -3,9 +3,9 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.Action
-import it.krzeminski.githubactions.actions.MissingAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.CheckoutV2.FetchDepth
+import it.krzeminski.githubactions.actions.CustomAction
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
@@ -22,22 +22,8 @@ class StepsToYamlTest : DescribeSpec({
             ExternalActionStep(
                 id = "someId",
                 name = "Some external action",
-                action = CheckoutV2(),
+                action = CheckoutV3(),
             ),
-            ExternalActionStep(
-                id = "latex",
-                name = "Latex",
-                action = MissingAction(
-                    actionOwner = "xu-cheng",
-                    actionName = "latex-action",
-                    actionVersion = "v2",
-                    freeArgs = linkedMapOf(
-                        "root_file" to "report.tex",
-                        "compiler" to "latexmk",
-                    )
-                )
-            )
-
         )
 
         // when
@@ -49,13 +35,7 @@ class StepsToYamlTest : DescribeSpec({
                          |  run: echo 'test!'
                          |- id: someId
                          |  name: Some external action
-                         |  uses: actions/checkout@v2
-                         |- id: latex
-                         |  name: Latex
-                         |  uses: xu-cheng/latex-action@v2
-                         |  with:
-                         |    root_file: report.tex
-                         |    compiler: latexmk""".trimMargin()
+                         |  uses: actions/checkout@v3""".trimMargin()
     }
 
     describe("command step") {
@@ -166,7 +146,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Some external action",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                 ),
             )
 
@@ -176,7 +156,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some external action
-                             |  uses: actions/checkout@v2""".trimMargin()
+                             |  uses: actions/checkout@v3""".trimMargin()
         }
 
         it("renders with some parameters") {
@@ -185,7 +165,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Some external action",
-                    action = CheckoutV2(fetchDepth = FetchDepth.Infinite),
+                    action = CheckoutV3(fetchDepth = FetchDepth.Infinite),
                 ),
             )
 
@@ -195,7 +175,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some external action
-                             |  uses: actions/checkout@v2
+                             |  uses: actions/checkout@v3
                              |  with:
                              |    fetch-depth: 0""".trimMargin()
         }
@@ -206,7 +186,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Some external action",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                     env = linkedMapOf(
                         "FOO" to "bar",
                         "BAZ" to """
@@ -223,7 +203,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some external action
-                             |  uses: actions/checkout@v2
+                             |  uses: actions/checkout@v3
                              |  env:
                              |    FOO: bar
                              |    BAZ: |
@@ -237,7 +217,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Some external action",
-                    action = CheckoutV2(),
+                    action = CheckoutV3(),
                     condition = "\${{ matrix.foo == 'bar' }}"
                 ),
             )
@@ -248,7 +228,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some external action
-                             |  uses: actions/checkout@v2
+                             |  uses: actions/checkout@v3
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
         }
 
@@ -258,7 +238,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Some external action",
-                    action = CheckoutV2(fetchDepth = FetchDepth.Infinite),
+                    action = CheckoutV3(fetchDepth = FetchDepth.Infinite),
                     condition = "\${{ matrix.foo == 'bar' }}"
                 ),
             )
@@ -269,7 +249,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some external action
-                             |  uses: actions/checkout@v2
+                             |  uses: actions/checkout@v3
                              |  with:
                              |    fetch-depth: 0
                              |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
@@ -333,6 +313,36 @@ class StepsToYamlTest : DescribeSpec({
                              |    param3: '**/another/dir'
                              |    param4: '[test]'
                              |    param5: '!another-reserved-character'""".trimMargin()
+        }
+
+        describe("custom action") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "latex",
+                    name = "Latex",
+                    action = CustomAction(
+                        actionOwner = "xu-cheng",
+                        actionName = "latex-action",
+                        actionVersion = "v2",
+                        inputs = linkedMapOf(
+                            "root_file" to "report.tex",
+                            "compiler" to "latexmk",
+                        )
+                    )
+                )
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: latex
+                             |  name: Latex
+                             |  uses: xu-cheng/latex-action@v2
+                             |  with:
+                             |    root_file: report.tex
+                             |    compiler: latexmk""".trimMargin()
         }
     }
 })

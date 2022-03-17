@@ -14,15 +14,15 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = file("../version.txt").readText().trim()
+version = "0.10.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
-    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.2.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.2.1")
     implementation("com.charleskorn.kaml:kaml:0.42.0")
 }
 
@@ -110,7 +110,7 @@ tasks {
 val validateVersionInReadme by tasks.creating<Task> {
     doLast {
         require(
-            project.rootDir.resolve("README.md").readText()
+            project.rootDir.resolve("docs/user-guide/getting_started.md").readText()
                 .contains("   @file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
         ) { "Library versions stated in build.gradle.kts and in README.md should be equal!" }
     }

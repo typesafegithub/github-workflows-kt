@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.domain.triggers.Trigger
 import java.nio.file.Path
 
 @GithubActionsDsl
+@Suppress("LongParameterList", "FunctionParameterNaming", "ConstructorParameterNaming")
 class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
@@ -14,6 +15,7 @@ class WorkflowBuilder(
     sourceFile: Path,
     targetFile: Path,
     jobs: List<Job> = emptyList(),
+    _customArguments: Map<String, CustomValue>,
 ) {
     internal var workflow = Workflow(
         name = name,
@@ -22,6 +24,7 @@ class WorkflowBuilder(
         sourceFile = sourceFile,
         targetFile = targetFile,
         jobs = jobs,
+        _customArguments = _customArguments,
     )
 
     @Suppress("LongParameterList")
@@ -32,6 +35,7 @@ class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
+        _customArguments: Map<String, CustomValue> = mapOf(),
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
@@ -41,6 +45,7 @@ class WorkflowBuilder(
             condition = condition,
             env = env,
             strategyMatrix = strategyMatrix,
+            _customArguments = _customArguments,
         )
         jobBuilder.block()
         val newJob = jobBuilder.build()
@@ -63,15 +68,17 @@ fun Workflow.toBuilder() =
         sourceFile = sourceFile,
         targetFile = targetFile,
         jobs = jobs,
+        _customArguments = _customArguments,
     )
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "FunctionParameterNaming")
 fun workflow(
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
     require(on.isNotEmpty()) {
@@ -84,6 +91,7 @@ fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
+        _customArguments = _customArguments,
     )
     workflowBuilder.block()
 

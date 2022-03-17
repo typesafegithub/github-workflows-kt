@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import kotlinx.serialization.SerialName
+import it.krzeminski.githubactions.dsl.CustomValue
 
 @kotlinx.serialization.Serializable
 data class PullRequest(
@@ -9,6 +10,7 @@ data class PullRequest(
     val branchesIgnore: List<String>? = null,
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
+    override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : Trigger() {
 
     init {
