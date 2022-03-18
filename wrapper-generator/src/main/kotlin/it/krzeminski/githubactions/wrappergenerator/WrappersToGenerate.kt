@@ -280,6 +280,7 @@ val wrappersToGenerate = listOf(
             "add-hosts" to ListOfTypings("\\n"),
             "allow" to ListOfTypings("\\n"),
             "build-args" to ListOfTypings("\\n"),
+            "build-contexts" to ListOfTypings("\\n"),
             "cache-from" to ListOfTypings("\\n"),
             "cache-to" to ListOfTypings("\\n"),
             "labels" to ListOfTypings(","),

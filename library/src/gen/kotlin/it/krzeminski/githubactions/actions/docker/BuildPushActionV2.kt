@@ -30,6 +30,10 @@ public class BuildPushActionV2(
      */
     public val buildArgs: List<String>? = null,
     /**
+     * List of additional build contexts (e.g., name=path)
+     */
+    public val buildContexts: List<String>? = null,
+    /**
      * Builder instance
      */
     public val builder: String? = null,
@@ -79,7 +83,7 @@ public class BuildPushActionV2(
      */
     public val platforms: List<String>? = null,
     /**
-     * Always attempt to pull a newer version of the image
+     * Always attempt to pull all referenced images
      */
     public val pull: Boolean? = null,
     /**
@@ -125,6 +129,7 @@ public class BuildPushActionV2(
             addHosts?.let { "add-hosts" to it.joinToString("\n") },
             allow?.let { "allow" to it.joinToString("\n") },
             buildArgs?.let { "build-args" to it.joinToString("\n") },
+            buildContexts?.let { "build-contexts" to it.joinToString("\n") },
             builder?.let { "builder" to it },
             cacheFrom?.let { "cache-from" to it.joinToString("\n") },
             cacheTo?.let { "cache-to" to it.joinToString("\n") },
@@ -156,7 +161,12 @@ public class BuildPushActionV2(
         private val stepId: String
     ) {
         /**
-         * Image content-addressable identifier also called a digest
+         * Image ID
+         */
+        public val imageid: String = "steps.$stepId.outputs.imageid"
+
+        /**
+         * Image digest
          */
         public val digest: String = "steps.$stepId.outputs.digest"
 
