@@ -9,17 +9,21 @@ fun Wrapper.shouldMatchFile(path: String) {
         Paths.get("src/test/kotlin/it/krzeminski/githubactions/wrappergenerator/generation/wrappersfromunittests/$path")
             .toFile()
     val actualFile = expectedFile.resolveSibling(expectedFile.nameWithoutExtension + "Actual.kt")
-    val expected = if (expectedFile.canRead()) expectedFile.readText() else ""
+    val expectedContent = when {
+        expectedFile.canRead() -> expectedFile.readText().removeWindowsNewLines()
+        else -> ""
+    }
+    val actualContent = kotlinCode.removeWindowsNewLines()
 
     filePath shouldBe "library/src/gen/kotlin/it/krzeminski/githubactions/actions/johnsmith/$path"
 
     if (System.getenv("GITHUB_ACTIONS") == "true") {
-        kotlinCode shouldBe expected
-    } else if (kotlinCode == expected) {
+        actualContent shouldBe expectedContent
+    } else if (actualContent == expectedContent) {
         actualFile.delete()
     } else {
         actualFile.writeText(
-            kotlinCode.replace(
+            actualContent.replace(
                 "package it.krzeminski.githubactions.actions.johnsmith",
                 "package it.krzeminski.githubactions.actions.actual"
             )
@@ -27,3 +31,6 @@ fun Wrapper.shouldMatchFile(path: String) {
         fail("The Wrapper's kotlin code in ${actualFile.name} doesn't match ${expectedFile.name}\nSee folder ${expectedFile.parentFile.canonicalPath}")
     }
 }
+
+private fun String.removeWindowsNewLines(): String =
+    replace("\r\n", "\n")
