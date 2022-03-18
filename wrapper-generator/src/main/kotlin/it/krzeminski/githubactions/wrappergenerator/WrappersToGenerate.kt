@@ -334,7 +334,8 @@ val wrappersToGenerate = listOf(
         ActionCoords("google-github-actions", "setup-gcloud", "v0"),
         mapOf(
             "export_default_credentials" to BooleanTyping,
-            "install_components" to ListOfTypings(",",
+            "install_components" to ListOfTypings(
+                ",",
                 EnumTyping(
                     "Component",
                     // gcloud components list --format=json | jq -r '"\\"" + .[].id +"\","'
