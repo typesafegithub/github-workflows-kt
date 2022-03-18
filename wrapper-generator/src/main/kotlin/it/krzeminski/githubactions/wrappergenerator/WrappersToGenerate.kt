@@ -322,7 +322,6 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("google-github-actions", "auth", "v0"),
         mapOf(
-            "credentials_json" to StringTyping,
             "cleanup_credentials" to BooleanTyping,
             "delegates" to ListOfTypings(","),
             "token_format" to EnumTyping("TokenFormat", listOf("access_token", "id_token")),
