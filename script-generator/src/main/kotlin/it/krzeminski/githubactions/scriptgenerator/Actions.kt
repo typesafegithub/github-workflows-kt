@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
-import it.krzeminski.githubactions.actions.MissingAction
+import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
@@ -21,7 +21,7 @@ fun YamlStep.generateAction(
     builder.add("name = %S,\n", name ?: coords.buildActionClassName())
 
     if (inputTypings == null) {
-        builder.add(generateMissingAction(coords))
+        builder.add(generateCustomAction(coords))
     } else if (with.isEmpty()) {
         builder.add("action = %T(),\n", coords.classname())
     } else {
@@ -72,19 +72,20 @@ fun YamlStep.generateActionWithWrapper(
     }
 }
 
-fun YamlStep.generateMissingAction(
+fun YamlStep.generateCustomAction(
     coords: ActionCoords,
 ): CodeBlock {
     val coordsBlock = coords.toMap().joinToCode(
-        prefix = CodeBlock.of("action = %T(", MissingAction::class),
+        prefix = CodeBlock.of("action = %T(", CustomAction::class),
         postfix = "",
         newLineAtEnd = false,
     ) { key, value ->
         CodeBlock.of("%L = %S", key.toCamelCase(), value)
     }
 
-    val freeArgsBlock = with.joinToCode(
-        prefix = CodeBlock.of("freeArgs = %M(\n", Members.linkedMapOf)
+    val inputsBlock = with.joinToCode(
+        prefix = CodeBlock.of("inputs = %M(\n", Members.mapOf),
+        ifEmpty = CodeBlock.of("inputs = emptyMap()"),
     ) { key, value ->
         CodeBlock.of("%S to %S", key, value)
     }
@@ -92,7 +93,7 @@ fun YamlStep.generateMissingAction(
     return CodeBlock { builder ->
         builder.add(coordsBlock)
         builder.indent()
-        builder.add(freeArgsBlock)
+        builder.add(inputsBlock)
         builder.unindent()
         builder.add("),\n")
     }
