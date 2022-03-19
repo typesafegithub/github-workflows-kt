@@ -6,3 +6,7 @@ end_of_line = crlf
 indent_size = 4
 indent_style = space
 insert_final_newline = true
+
+[script-generator/src/test/kotlin/{generated,actual}/*.kt]
+# See https://github.com/pinterest/ktlint
+disabled_rules=indent,no-unused-imports,no-blank-line-before-rbrace,no-consecutive-blank-lines,comma-spacing,colon-spacing,curly-spacing,dot-spacing,keyword-spacing,op-spacing,paren-spacing,range-spacing
