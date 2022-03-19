@@ -49,7 +49,9 @@ data class TestInput(val name: String) {
 
     private fun file(path: String) = rootProject.resolve("script-generator/src/test/kotlin/generated/$path")
     val expectedFile = file("${filename.toPascalCase()}.kt")
-    val actualFile = file("../actual/${filename.toPascalCase()}.kt")
+    val actualDir = rootProject.resolve("script-generator/src/test/kotlin/actual")
+        .also { it.mkdirs() }
+    val actualFile = actualDir.resolve("${filename.toPascalCase()}.kt")
     val expected = if (expectedFile.canRead())
         expectedFile.readText()
             .removeWindowsEndings()

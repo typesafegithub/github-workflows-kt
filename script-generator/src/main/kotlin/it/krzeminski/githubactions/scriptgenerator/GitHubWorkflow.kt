@@ -27,12 +27,10 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
                     .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.main.kts"))
                     .add(
                         "targetFile = %T.get(%S),\n", Paths::class,
-                        Paths.get(
-                            when (outputFolder) {
-                                null -> "$filename.yml"
-                                else -> "$outputFolder/$filename.yml"
-                            }
-                        )
+                        when (outputFolder) {
+                            null -> "$filename.yml"
+                            else -> "$outputFolder/$filename.yml"
+                        }
                     )
                     .add(workflowEnv())
                     .unindent()

@@ -1,6 +1,7 @@
 package test
 
 import generated.workflowAllTriggers
+import generated.workflowDockerImage
 import generated.workflowGenerateWrappers
 import generated.workflowGenerated
 import generated.workflowNodejsPackage
@@ -21,6 +22,7 @@ class RunKotlinScripts : FunSpec({
         workflowRefreshversionsWebsite,
         workflowUpdateGradleWrapper,
         workflowNodejsPackage,
+        workflowDockerImage,
     )
 
     test("Execute Kotlin Scripts") {
