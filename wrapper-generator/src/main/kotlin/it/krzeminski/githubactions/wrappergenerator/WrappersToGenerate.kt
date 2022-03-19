@@ -338,7 +338,7 @@ val wrappersToGenerate = listOf(
                 ",",
                 EnumTyping(
                     "Component",
-                    // gcloud components list --format=json | jq -r '"\\"" + .[].id +"\","'
+                    // To regenerate, run: gcloud components list --format=json | jq -r '"\"" + .[].id + "\","' | sort
                     listOf(
                         "gsutil",
                         "core",
