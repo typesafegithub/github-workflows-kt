@@ -3,27 +3,14 @@ package test
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asTypeName
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.data.forAll
-import io.kotest.data.headers
-import io.kotest.data.row
-import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.SetupNodeV2
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.scriptgenerator.CodeBlock
 import it.krzeminski.githubactions.scriptgenerator.Members
-import it.krzeminski.githubactions.scriptgenerator.TemplateArg
 import it.krzeminski.githubactions.scriptgenerator.enumMemberName
 import it.krzeminski.githubactions.scriptgenerator.joinToCode
 import it.krzeminski.githubactions.scriptgenerator.templateOf
-import it.krzeminski.githubactions.scriptgenerator.valueWithTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 
 class KotlinPoetTest : DescribeSpec({
@@ -125,29 +112,6 @@ class KotlinPoetTest : DescribeSpec({
 
             emptyList<String>().joinToCode()
                 .toString() shouldBe ""
-        }
-    }
-
-    it("it understands typings") {
-        val coords = ActionCoords("actions", "cache", "v2")
-        val enumTyping = EnumTyping("Enum", listOf("enum1", "enum2"))
-        val listTyping1 = ListOfTypings(",", StringTyping)
-        val listTyping2 = ListOfTypings("\\n", enumTyping)
-        val listTyping3 = ListOfTypings(",", IntegerTyping)
-        val specialIntTyping = IntegerWithSpecialValueTyping("SpecialInt", mapOf("answer" to 4))
-
-        table(
-            headers("typing", "value", "expected"),
-            row(StringTyping, "hello", TemplateArg("%S", "hello")),
-            row(IntegerTyping, "42", TemplateArg("%L", "42")),
-            row(BooleanTyping, "true", TemplateArg("%L", "true")),
-            row(enumTyping, "enum1", TemplateArg("%L", "CacheV2.Enum.Enum1")),
-            row(listTyping1, "hello,world", TemplateArg("%L", """listOf("hello", "world")""")),
-            row(listTyping2, "enum1\nenum2", TemplateArg("%L", "listOf(CacheV2.Enum.Enum1, CacheV2.Enum.Enum2)")),
-            row(listTyping3, "1,2", TemplateArg("%L", """listOf(1, 2)""")),
-            row(specialIntTyping, "42", TemplateArg("%L", "CacheV2.SpecialInt.Value(42)")),
-        ).forAll { typing, value, templateArg ->
-            valueWithTyping(value, typing, coords) shouldBe templateArg
         }
     }
 })

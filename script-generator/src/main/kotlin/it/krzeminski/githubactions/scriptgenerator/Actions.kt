@@ -35,14 +35,18 @@ fun YamlStep.generateAction(
             ifEmpty = CodeBlock.EMPTY
         ) { key, value ->
             value?.let {
-                val (template, arg) = value.orExpression()
-                CodeBlock.of("%S to $template", key, arg)
+                CodeBlock { builder ->
+                    builder.add(CodeBlock.of("%S to ", key))
+                        .add(value.orExpression())
+                }
             }
         }
     )
     if (condition != null) {
-        val (template, arg) = condition.orExpression()
-        builder.add("condition = $template,\n", arg)
+        builder
+            .add("condition = ")
+            .add(condition.orExpression())
+            .add(",\n")
     }
     builder.unindent()
     builder.add(")\n")
@@ -57,9 +61,13 @@ fun YamlStep.generateActionWithWrapper(
         postfix = "),",
     ) { key, value ->
         value?.let {
-            val typing = inputTypings?.get(key) ?: StringTyping
-            val (percent, arg) = valueWithTyping(value, typing, coords)
-            CodeBlock.of("%N = $percent,\n", key.toCamelCase(), arg)
+            CodeBlock { builder ->
+                val typing = inputTypings?.get(key) ?: StringTyping
+                builder
+                    .add("%N = ", key.toCamelCase())
+                    .add(valueWithTyping(value, typing, coords))
+                    .add(",\n")
+            }
         }
     }
 }

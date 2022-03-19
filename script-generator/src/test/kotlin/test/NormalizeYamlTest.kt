@@ -2,7 +2,9 @@ package test
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.scriptgenerator.filename
 import it.krzeminski.githubactions.scriptmodel.normalizeYaml
+import java.net.URL
 
 class NormalizeYamlTest : FunSpec({
 
@@ -81,5 +83,11 @@ class NormalizeYamlTest : FunSpec({
         """.trimIndent()
 
         input.normalizeYaml() shouldBe input
+    }
+
+    test("filename from URL") {
+        val url =
+            URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml")
+        url.filename() shouldBe "publish-mkdocs-website"
     }
 })

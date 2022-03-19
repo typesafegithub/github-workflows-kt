@@ -115,7 +115,11 @@ public val workflowGenerated: Workflow = workflow(
         uses(
           name = "setup",
           action = SetupBuildxActionV1(
-            driverOpts = listOf("hello", "world"),
+            driverOpts = listOf(
+              "hello",
+              "world",
+            )
+            ,
             install = true,
           ),
         )

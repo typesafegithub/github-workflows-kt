@@ -51,8 +51,12 @@ private fun YamlWorkflow.workflowEnv(): CodeBlock {
         prefix = CodeBlock.of("env = %M(\n", Members.linkedMapOf),
         postfix = "),"
     ) { key, value ->
-        val (template, arg) = value.orExpression()
-        CodeBlock.of("%S to $template,\n", key, arg)
+        CodeBlock { builder ->
+            builder
+                .add("%S to ", key)
+                .add(value.orExpression())
+                .add(",\n")
+        }
     }
 }
 

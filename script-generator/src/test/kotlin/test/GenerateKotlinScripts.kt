@@ -4,13 +4,11 @@ import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.scriptgenerator.decodeYamlWorkflow
-import it.krzeminski.githubactions.scriptgenerator.filename
 import it.krzeminski.githubactions.scriptgenerator.rootProject
 import it.krzeminski.githubactions.scriptgenerator.toFileSpec
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.io.FileFilter
-import java.net.URL
 
 class GenerateKotlinScripts : FunSpec({
 
@@ -41,12 +39,6 @@ class GenerateKotlinScripts : FunSpec({
                 fail("${input.expectedFile.name} != ${input.actualFile.name} in ${input.actualFile.parentFile.canonicalPath}")
             }
         }
-    }
-
-    test("filename from URL") {
-        val url =
-            URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml")
-        url.filename() shouldBe "publish-mkdocs-website"
     }
 })
 

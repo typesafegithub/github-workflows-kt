@@ -84,14 +84,16 @@ fun YamlStep.generateCommand() = CodeBlock { builder ->
                 ifEmpty = CodeBlock.EMPTY
             ) { key, value ->
                 value?.let {
-                    val (template, arg) = value.orExpression()
-                    CodeBlock.of("%S to $template", key, arg)
+                    CodeBlock { builder ->
+                        builder.add("%S to ", key).add(value.orExpression())
+                    }
                 }
             }
         )
     if (condition != null) {
-        val (template, arg) = condition.orExpression()
-        builder.add("condition = $template,\n", arg)
+        builder.add("condition = ")
+            .add(condition.orExpression())
+            .add(",\n")
     }
     builder.unindent().add(")\n")
 }
