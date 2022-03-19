@@ -17,12 +17,14 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
             name,
             enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest)
         )
-        builder.add(job.env.joinToCode(
-            ifEmpty = CodeBlock.EMPTY,
-            prefix = CodeBlock.of(",\nenv = %M(", Members.linkedMapOf),
-            postfix = ")\n",
-            transform = { key, value -> CodeBlock.of("%S to %S", key, value) }
-        ))
+        builder.add(
+            job.env.joinToCode(
+                ifEmpty = CodeBlock.EMPTY,
+                prefix = CodeBlock.of(",\nenv = %M(", Members.linkedMapOf),
+                postfix = ")\n",
+                transform = { key, value -> CodeBlock.of("%S to %S", key, value) }
+            )
+        )
         builder.add(job.customArguments())
         builder.add(") {\n")
         builder.indent()
@@ -57,13 +59,14 @@ private fun YamlJob.customArguments(): CodeBlock {
         prefix = CodeBlock.of(", _customArguments = %M(\n", Members.mapOf),
         separator = "",
         postfix = ")",
-        transform = { key, list -> list.joinToCode(
-            prefix = CodeBlock.of("%S to %T(", key, ListCustomValue::class),
-            separator = ", ",
-            postfix = "),\n",
-            newLineAtEnd = false,
-            transform = { CodeBlock.of("%S", it) }
-        )
+        transform = { key, list ->
+            list.joinToCode(
+                prefix = CodeBlock.of("%S to %T(", key, ListCustomValue::class),
+                separator = ", ",
+                postfix = "),\n",
+                newLineAtEnd = false,
+                transform = { CodeBlock.of("%S", it) }
+            )
         }
     )
 }

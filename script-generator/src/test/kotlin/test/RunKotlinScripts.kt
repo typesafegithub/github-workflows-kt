@@ -11,7 +11,7 @@ import generated.workflowUpdateGradleWrapper
 import io.kotest.core.spec.style.FunSpec
 import it.krzeminski.githubactions.yaml.writeToFile
 
-class RunKotlinScripts: FunSpec({
+class RunKotlinScripts : FunSpec({
     val allWorkflows = listOf(
         workflowGenerateWrappers,
         workflowRefreshversionsBuild,
@@ -22,7 +22,6 @@ class RunKotlinScripts: FunSpec({
         workflowUpdateGradleWrapper,
         workflowNodejsPackage,
     )
-
 
     test("Execute Kotlin Scripts") {
         allWorkflows.forEach { it.writeToFile(addConsistencyCheck = false) }
