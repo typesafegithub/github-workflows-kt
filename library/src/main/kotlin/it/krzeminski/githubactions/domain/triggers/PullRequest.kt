@@ -1,9 +1,9 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import it.krzeminski.githubactions.dsl.CustomValue
-import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class PullRequest(
     val types: List<Type> = emptyList(),
     val branches: List<String>? = null,
@@ -22,60 +22,29 @@ data class PullRequest(
         }
     }
 
+    class Serializer : CaseEnumSerializer<Type>(Type::class.qualifiedName!!, Type.values())
+
     /**
      * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
      */
-    @kotlinx.serialization.Serializable
+    @Serializable(with = Serializer::class)
     enum class Type {
-        @SerialName("assigned")
         Assigned,
-
-        @SerialName("unassigned")
         Unassigned,
-
-        @SerialName("labeled")
         Labeled,
-
-        @SerialName("unlabeled")
         Unlabeled,
-
-        @SerialName("opened")
         Opened,
-
-        @SerialName("edited")
         Edited,
-
-        @SerialName("closed")
         Closed,
-
-        @SerialName("reopened")
         Reopened,
-
-        @SerialName("synchronize")
         Synchronize,
-
-        @SerialName("converted_to_draft")
         ConvertedToDraft,
-
-        @SerialName("ready_for_review")
         ReadyForReview,
-
-        @SerialName("locked")
         Locked,
-
-        @SerialName("unlocked")
         Unlocked,
-
-        @SerialName("review_requested")
         ReviewRequested,
-
-        @SerialName("review_requested_removed")
         ReviewRequestRemoved,
-
-        @SerialName("auto_merge_enabled")
         AutoMergeEnabled,
-
-        @SerialName("auto_merge_disabled")
         AutoMergeDisabled,
     }
 }
