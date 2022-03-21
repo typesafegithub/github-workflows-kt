@@ -42,38 +42,6 @@ class JobTest : FunSpec({
         }
     }
 
-    test("renders timeout-minutes") {
-        // given
-        val jobs = listOf(
-            Job(
-                name = "Job-1",
-                runsOn = RunnerType.UbuntuLatest,
-                timeoutMinutes = 30,
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command",
-                        command = "echo 'test!'",
-                    ),
-                ),
-            ),
-        )
-
-        // when
-        val yaml = jobs.jobsToYaml()
-
-        // then
-        yaml shouldBe """
-             |"Job-1":
-             |  runs-on: "ubuntu-latest"
-             |  timeout-minutes: 30
-             |  steps:
-             |    - id: someId
-             |      name: Some command
-             |      run: echo 'test!'
-             """.trimMargin()
-    }
-
     test("should reject invalid timeout values") {
         shouldThrowAny {
             Job(
