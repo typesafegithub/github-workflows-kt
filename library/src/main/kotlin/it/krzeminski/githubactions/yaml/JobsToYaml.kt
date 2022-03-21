@@ -20,12 +20,6 @@ fun List<Job>.jobsToYaml(): String =
 
 private fun Job.toYaml() = buildString {
     val job = this@toYaml
-    requireMatchesRegex(
-        field = "Job.name",
-        value = job.name,
-        regex = Regex("[a-zA-Z_][a-zA-Z0-9_-]*"),
-        url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job"
-    )
     appendLine("\"${job.name}\":")
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
 
@@ -59,13 +53,6 @@ private fun Job.toYaml() = buildString {
     appendLine("  steps:")
     append(steps.stepsToYaml().prependIndent("    "))
     append(customArgumentsToYaml())
-}
-
-fun requireMatchesRegex(field: String, value: String, regex: Regex, url: String?) {
-    require(regex.matchEntire(value) != null) {
-        val seeUrl = if (url.isNullOrBlank()) "" else "\nSee: $url"
-        """Invalid field ${field.replace('.', '(')}="$value") does not match regex: $regex$seeUrl"""
-    }
 }
 
 fun RunnerType.toYaml() =

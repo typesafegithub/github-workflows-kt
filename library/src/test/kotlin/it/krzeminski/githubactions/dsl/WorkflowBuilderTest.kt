@@ -34,7 +34,7 @@ class WorkflowBuilderTest : FunSpec({
                     targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
-                        name = "Some job",
+                        name = "Some-job",
                         runsOn = UbuntuLatest,
                     ) {
                         // No steps.
@@ -75,7 +75,7 @@ class WorkflowBuilderTest : FunSpec({
                     targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
-                        name = "Some job 1",
+                        name = "Some-job-1",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -85,7 +85,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some job 1",
+                        name = "Some-job-1",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -95,7 +95,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some job 2",
+                        name = "Some-job-2",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -105,7 +105,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some job 3",
+                        name = "Some-job-3",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -115,7 +115,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some job 3",
+                        name = "Some-job-3",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -125,7 +125,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
                 }
             }
-            exception.message shouldBe "Duplicated job names: [Some job 1, Some job 3]"
+            exception.message shouldBe "Duplicated job names: [Some-job-1, Some-job-3]"
         }
 
         test("workflow with custom arguments") {
