@@ -3,7 +3,9 @@ package it.krzeminski.githubactions.domain
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import it.krzeminski.githubactions.yaml.jobsToYaml
 
 class JobTest : FunSpec({
     test("should reject invalid job names") {
@@ -38,5 +40,54 @@ class JobTest : FunSpec({
         ).forAll { jobName ->
             Job(jobName, RunnerType.UbuntuLatest, emptyList())
         }
+    }
+
+    test("renders timeout-minutes") {
+        // given
+        val jobs = listOf(
+            Job(
+                name = "Job-1",
+                runsOn = RunnerType.UbuntuLatest,
+                timeoutMinutes = 30,
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+            ),
+        )
+
+        // when
+        val yaml = jobs.jobsToYaml()
+
+        // then
+        yaml shouldBe """
+             |"Job-1":
+             |  runs-on: "ubuntu-latest"
+             |  timeout-minutes: 30
+             |  steps:
+             |    - id: someId
+             |      name: Some command
+             |      run: echo 'test!'
+             """.trimMargin()
+    }
+
+    test("should reject invalid timeout values") {
+        shouldThrowAny {
+            Job(
+                name = "Job-1",
+                runsOn = RunnerType.UbuntuLatest,
+                timeoutMinutes = -1,
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+            )
+        } shouldHaveMessage "timeout should be positive"
     }
 })

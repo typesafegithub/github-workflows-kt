@@ -17,6 +17,7 @@ class JobBuilder(
     val env: LinkedHashMap<String, String>,
     val condition: String?,
     val strategyMatrix: Map<String, List<String>>?,
+    val timeoutMinutes: Int? = null,
     override val _customArguments: Map<String, CustomValue>,
 ) : HasCustomArguments {
     private var job = Job(
@@ -27,6 +28,7 @@ class JobBuilder(
         env = env,
         steps = emptyList(),
         strategyMatrix = strategyMatrix,
+        timeoutMinutes = timeoutMinutes,
         _customArguments = _customArguments
     )
 

@@ -50,6 +50,10 @@ private fun Job.toYaml() = buildString {
         }
     }
 
+    job.timeoutMinutes?.let { value ->
+        appendLine("  timeout-minutes: $value")
+    }
+
     appendLine("  steps:")
     append(steps.stepsToYaml().prependIndent("    "))
     append(customArgumentsToYaml())
