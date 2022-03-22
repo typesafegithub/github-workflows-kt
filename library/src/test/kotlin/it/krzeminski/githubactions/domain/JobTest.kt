@@ -3,9 +3,7 @@ package it.krzeminski.githubactions.domain
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import it.krzeminski.githubactions.yaml.jobsToYaml
 
 class JobTest : FunSpec({
     test("should reject invalid job names") {
