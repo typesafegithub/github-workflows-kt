@@ -19,4 +19,5 @@ nav:
   - User guide:
       - Getting started: 'user-guide/getting_started.md'
       - Using actions: 'user-guide/using-actions.md'
+      - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
   - Projects using this library: 'projects-using-this-library.md'
