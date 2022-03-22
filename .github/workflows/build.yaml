@@ -18,12 +18,9 @@ jobs:
         name: Check out
         uses: actions/checkout@v3
       - id: step-1
-        name: Install Kotlin
-        run: sudo snap install --classic kotlin
-      - id: step-2
         name: Execute script
         run: rm '.github/workflows/build.yaml' && '.github/workflows/_GenerateWorkflows.main.kts'
-      - id: step-3
+      - id: step-2
         name: Consistency check
         run: git diff --exit-code '.github/workflows/build.yaml'
   "build_for_UbuntuLatest":
@@ -33,7 +30,7 @@ jobs:
     steps:
       - id: step-0
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: step-1
         name: Set up JDK
         uses: actions/setup-java@v2
@@ -52,7 +49,7 @@ jobs:
     steps:
       - id: step-0
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: step-1
         name: Set up JDK
         uses: actions/setup-java@v2

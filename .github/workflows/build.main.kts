@@ -1,6 +1,6 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.10.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.11.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2.Distribution.Adopt
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
@@ -27,7 +27,7 @@ val buildWorkflow = workflow(
         ) {
             uses(
                 name = "Checkout",
-                action = CheckoutV2(),
+                action = CheckoutV3(),
             )
             uses(
                 name = "Set up JDK",

@@ -18,12 +18,9 @@ jobs:
         name: Check out
         uses: actions/checkout@v3
       - id: step-1
-        name: Install Kotlin
-        run: sudo snap install --classic kotlin
-      - id: step-2
         name: Execute script
         run: rm '.github/workflows/check-if-wrappers-up-to-date.yaml' && '.github/workflows/_GenerateWorkflows.main.kts'
-      - id: step-3
+      - id: step-2
         name: Consistency check
         run: git diff --exit-code '.github/workflows/check-if-wrappers-up-to-date.yaml'
   "check":
