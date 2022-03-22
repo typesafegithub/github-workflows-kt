@@ -103,7 +103,7 @@ internal fun HasCustomArguments.customArgumentsToYaml(): String = buildString {
             }
         }
     }
-}
+}.removeSuffix("\n")
 
 internal fun StringBuilder.printIfHasElements(
     items: List<String>?,
