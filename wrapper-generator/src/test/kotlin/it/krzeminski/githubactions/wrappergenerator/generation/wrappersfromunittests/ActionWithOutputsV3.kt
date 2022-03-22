@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.johnsmith
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Do something cool
@@ -18,12 +21,17 @@ public class ActionWithOutputsV3(
     /**
      * Short description
      */
-    public val fooBar: String
+    public val fooBar: String,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<ActionWithOutputsV3.Outputs>("john-smith", "action-with-outputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

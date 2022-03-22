@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Docker Setup Buildx
@@ -52,7 +55,11 @@ public class SetupBuildxActionV1(
     /**
      * Inline BuildKit config
      */
-    public val configInline: String? = null
+    public val configInline: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SetupBuildxActionV1.Outputs>("docker", "setup-buildx-action", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -66,6 +73,7 @@ public class SetupBuildxActionV1(
             endpoint?.let { "endpoint" to it },
             config?.let { "config" to it },
             configInline?.let { "config-inline" to it },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

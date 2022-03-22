@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.johnsmith
 import it.krzeminski.githubactions.actions.Action
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Do something cool
@@ -34,7 +37,11 @@ public class ActionWithSomeOptionalInputsV3(
     /**
      * Required is true, default is default
      */
-    public val `package`: String
+    public val `package`: String,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : Action("john-smith", "action-with-some-optional-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -44,6 +51,7 @@ public class ActionWithSomeOptionalInputsV3(
             zooDar?.let { "zoo-dar" to it },
             cooPoo?.let { "coo-poo" to it },
             "package" to `package`,
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

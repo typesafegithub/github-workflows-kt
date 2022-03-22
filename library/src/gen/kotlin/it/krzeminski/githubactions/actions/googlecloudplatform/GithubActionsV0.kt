@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  *         Action: Set up gcloud Cloud SDK environment
@@ -65,7 +68,11 @@ public class GithubActionsV0(
      * If true, the action will remove any generated credentials from the
      * filesystem upon completion.
      */
-    public val cleanupCredentials: Boolean? = null
+    public val cleanupCredentials: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : Action("GoogleCloudPlatform", "github-actions", "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -78,6 +85,7 @@ public class GithubActionsV0(
             exportDefaultCredentials?.let { "export_default_credentials" to it.toString() },
             credentialsFilePath?.let { "credentials_file_path" to it },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Azure Login
@@ -48,7 +51,11 @@ public class LoginV1(
     /**
      * Provide audience field for access-token. Default value is api://AzureADTokenExchange
      */
-    public val audience: String? = null
+    public val audience: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : Action("Azure", "login", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -61,6 +68,7 @@ public class LoginV1(
             environment?.let { "environment" to it.stringValue },
             allowNoSubscriptions?.let { "allow-no-subscriptions" to it.toString() },
             audience?.let { "audience" to it },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

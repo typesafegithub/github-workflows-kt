@@ -11,6 +11,9 @@ import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Setup Node.js environment
@@ -71,7 +74,11 @@ public class SetupNodeV2(
      * Deprecated. Use node-version instead. Will not be supported after October 1, 2019
      */
     @Deprecated("The version property will not be supported after October 1, 2019. Use node-version instead")
-    public val version: String? = null
+    public val version: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SetupNodeV2.Outputs>("actions", "setup-node", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -87,6 +94,7 @@ public class SetupNodeV2(
             cache?.let { "cache" to it.stringValue },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
             version?.let { "version" to it },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

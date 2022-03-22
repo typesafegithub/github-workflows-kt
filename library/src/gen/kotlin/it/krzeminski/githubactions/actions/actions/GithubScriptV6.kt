@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: GitHub Script
@@ -40,7 +43,11 @@ public class GithubScriptV6(
     /**
      * Either "string" or "json" (default "json")—how the result will be encoded
      */
-    public val resultEncoding: GithubScriptV6.Encoding? = null
+    public val resultEncoding: GithubScriptV6.Encoding? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<GithubScriptV6.Outputs>("actions", "github-script", "v6") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -51,6 +58,7 @@ public class GithubScriptV6(
             userAgent?.let { "user-agent" to it },
             previews?.let { "previews" to it.joinToString(",") },
             resultEncoding?.let { "result-encoding" to it.stringValue },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

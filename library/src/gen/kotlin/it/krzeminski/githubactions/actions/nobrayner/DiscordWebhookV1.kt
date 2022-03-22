@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Discord Workflow Status Notifier
@@ -58,7 +61,11 @@ public class DiscordWebhookV1(
      * Overrides the default cancelled color. Any valid hex-color-code. E.g. #17cf48, 17cf48,
      * 0x17cf48
      */
-    public val colorCancelled: String? = null
+    public val colorCancelled: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : Action("nobrayner", "discord-webhook", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -73,6 +80,7 @@ public class DiscordWebhookV1(
             colorSuccess?.let { "color-success" to it },
             colorFailure?.let { "color-failure" to it },
             colorCancelled?.let { "color-cancelled" to it },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

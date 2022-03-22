@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: GitHub Pull Request Action
@@ -64,7 +67,11 @@ public class PullRequestV2(
     /**
      * GitHub token secret
      */
-    public val githubToken: String
+    public val githubToken: String,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<PullRequestV2.Outputs>("repo-sync", "pull-request", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -81,6 +88,7 @@ public class PullRequestV2(
             prDraft?.let { "pr_draft" to it.toString() },
             prAllowEmpty?.let { "pr_allow_empty" to it.toString() },
             "github_token" to githubToken,
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

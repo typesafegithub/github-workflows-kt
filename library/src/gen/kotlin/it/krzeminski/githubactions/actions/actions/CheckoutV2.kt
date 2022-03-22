@@ -11,6 +11,9 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Checkout
@@ -96,7 +99,11 @@ public class CheckoutV2(
      * When the `ssh-key` input is not provided, SSH URLs beginning with `git@github.com:` are
      * converted to HTTPS.
      */
-    public val submodules: Boolean? = null
+    public val submodules: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : Action("actions", "checkout", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -113,6 +120,7 @@ public class CheckoutV2(
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

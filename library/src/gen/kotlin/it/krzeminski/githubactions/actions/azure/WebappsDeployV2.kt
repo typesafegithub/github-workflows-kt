@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Azure WebApp
@@ -49,7 +52,11 @@ public class WebappsDeployV2(
     /**
      * Enter the start up command. For ex. dotnet run or dotnet run
      */
-    public val startupCommand: String? = null
+    public val startupCommand: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -61,6 +68,7 @@ public class WebappsDeployV2(
             "images" to images.joinToString("\n"),
             configurationFile?.let { "configuration-file" to it },
             startupCommand?.let { "startup-command" to it },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 

@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Build and push Docker images
@@ -121,7 +124,11 @@ public class BuildPushActionV2(
     /**
      * GitHub Token used to authenticate against a repository for Git context
      */
-    public val githubToken: String? = null
+    public val githubToken: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customArguments: Map<String, String> = mapOf()
 ) : ActionWithOutputs<BuildPushActionV2.Outputs>("docker", "build-push-action", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -152,6 +159,7 @@ public class BuildPushActionV2(
             target?.let { "target" to it },
             ulimit?.let { "ulimit" to it },
             githubToken?.let { "github-token" to it },
+            *_customArguments.toList().toTypedArray(),
         ).toTypedArray()
     )
 
