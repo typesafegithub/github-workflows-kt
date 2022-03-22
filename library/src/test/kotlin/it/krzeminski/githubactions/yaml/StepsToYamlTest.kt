@@ -354,7 +354,7 @@ class StepsToYamlTest : DescribeSpec({
                     action = UploadArtifactV2(
                         name = "artifact",
                         path = listOf("path1", "path2"),
-                        _customArguments = mapOf(
+                        _customInputs = mapOf(
                             "path" to "override-path-value",
                             "answer" to "42",
                         )
