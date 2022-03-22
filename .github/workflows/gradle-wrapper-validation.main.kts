@@ -1,6 +1,6 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.10.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.11.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradle.WrapperValidationActionV1
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -28,7 +28,7 @@ val gradleWrapperValidationWorkflow = workflow(
     ) {
         uses(
             name = "Checkout",
-            action = CheckoutV2(),
+            action = CheckoutV3(),
         )
         uses(
             name = "Validate wrapper",
