@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Deploy to GitHub Pages
@@ -102,7 +105,11 @@ public class GithubPagesDeployActionV4(
     /**
      * Silences the action output preventing it from displaying git messages.
      */
-    public val silent: Boolean? = null
+    public val silent: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>(
     "JamesIves", "github-pages-deploy-action",
     "v4"
@@ -125,6 +132,7 @@ public class GithubPagesDeployActionV4(
             workspace?.let { "workspace" to it },
             singleCommit?.let { "single-commit" to it.toString() },
             silent?.let { "silent" to it.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

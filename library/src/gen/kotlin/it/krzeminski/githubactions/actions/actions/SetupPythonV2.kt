@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Setup Python
@@ -39,7 +42,11 @@ public class SetupPythonV2(
      * Used to specify the path to dependency files. Supports wildcards or a list of file names for
      * caching multiple dependencies.
      */
-    public val cacheDependencyPath: List<String>? = null
+    public val cacheDependencyPath: List<String>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SetupPythonV2.Outputs>("actions", "setup-python", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -49,6 +56,7 @@ public class SetupPythonV2(
             architecture?.let { "architecture" to it.stringValue },
             token?.let { "token" to it },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Create an issue
@@ -36,7 +39,11 @@ public class CreateAnIssueV2(
     /**
      * Existing types of issues to search for (comma-separated)
      */
-    public val searchExisting: List<String>? = null
+    public val searchExisting: List<String>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -46,6 +53,7 @@ public class CreateAnIssueV2(
             filename?.let { "filename" to it },
             updateExisting?.let { "update_existing" to it.toString() },
             searchExisting?.let { "search_existing" to it.joinToString(",") },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

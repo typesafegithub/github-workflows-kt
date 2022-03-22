@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Setup .NET Core SDK
@@ -41,7 +44,11 @@ public class SetupDotnetV2(
      * Whether prerelease versions should be matched with non-exact versions (for example
      * 5.0.0-preview.6 being matched by 5, 5.0, 5.x or 5.0.x). Defaults to false if not provided.
      */
-    public val includePrerelease: Boolean? = null
+    public val includePrerelease: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions", "setup-dotnet", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -51,6 +58,7 @@ public class SetupDotnetV2(
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
             includePrerelease?.let { "include-prerelease" to it.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

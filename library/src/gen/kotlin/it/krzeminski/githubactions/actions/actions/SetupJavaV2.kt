@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Setup Java JDK
@@ -80,7 +83,11 @@ public class SetupJavaV2(
      * Workaround to pass job status to post job step. This variable is not intended for manual
      * setting
      */
-    public val jobStatus: String? = null
+    public val jobStatus: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SetupJavaV2.Outputs>("actions", "setup-java", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -100,6 +107,7 @@ public class SetupJavaV2(
             gpgPassphrase?.let { "gpg-passphrase" to it },
             cache?.let { "cache" to it.stringValue },
             jobStatus?.let { "job-status" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
