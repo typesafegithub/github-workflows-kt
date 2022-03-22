@@ -23,7 +23,7 @@ data class Job(
             url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job"
         )
         timeoutMinutes?.let { value ->
-            require(value > 0) { """timeout should be positive""" }
+            require(value > 0) { "timeout should be positive" }
         }
     }
 }
