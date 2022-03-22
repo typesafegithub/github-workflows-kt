@@ -27,8 +27,13 @@ public class DeprecatedActionV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customInputs: Map<String, String> = mapOf()
-) : Action("john-smith", "deprecated-action", "v2") {
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("john-smith", "deprecated-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 }

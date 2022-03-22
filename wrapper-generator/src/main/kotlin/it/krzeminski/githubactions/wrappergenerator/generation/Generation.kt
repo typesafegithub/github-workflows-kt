@@ -18,6 +18,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_INPUTS
+import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_VERSION
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
@@ -30,12 +31,14 @@ data class Wrapper(
 
 object Types {
     val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
+    val nullableString = String::class.asTypeName().copy(nullable = true)
     val mapToList = MemberName("kotlin.collections", "toList")
     val listToArray = MemberName("kotlin.collections", "toTypedArray")
 }
 
 object Properties {
     val CUSTOM_INPUTS = "_customInputs"
+    val CUSTOM_VERSION = "_customVersion"
 }
 
 fun ActionCoords.generateWrapper(
@@ -267,7 +270,7 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: 
         .superclass(superclass)
         .addSuperclassConstructorParameter("%S", coords.owner)
         .addSuperclassConstructorParameter("%S", coords.name)
-        .addSuperclassConstructorParameter("%S", coords.version)
+        .addSuperclassConstructorParameter("_customVersion ?: %S", coords.version)
 }
 
 private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
@@ -282,6 +285,14 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
                 ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
                     .defaultValue("mapOf()")
                     .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
+                    .build()
+            ).plus(
+                ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
+                    .defaultValue("null")
+                    .addKdoc(
+                        "Allows overriding action's version, for example to use a specific minor version, " +
+                            "or a newer version that the wrapper doesn't yet know about"
+                    )
                     .build()
             )
         )
