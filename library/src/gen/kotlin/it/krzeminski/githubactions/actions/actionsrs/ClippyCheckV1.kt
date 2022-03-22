@@ -44,7 +44,7 @@ public class ClippyCheckV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions-rs", "clippy-check", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -54,7 +54,7 @@ public class ClippyCheckV1(
             args?.let { "args" to it.joinToString(" ") },
             useCross?.let { "use-cross" to it.toString() },
             name?.let { "name" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

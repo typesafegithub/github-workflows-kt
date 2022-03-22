@@ -33,7 +33,7 @@ public class DockerLoginV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("Azure", "docker-login", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -41,7 +41,7 @@ public class DockerLoginV1(
             username?.let { "username" to it },
             password?.let { "password" to it },
             loginServer?.let { "login-server" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

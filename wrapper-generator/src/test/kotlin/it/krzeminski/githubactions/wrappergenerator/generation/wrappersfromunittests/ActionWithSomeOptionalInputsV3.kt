@@ -41,7 +41,7 @@ public class ActionWithSomeOptionalInputsV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("john-smith", "action-with-some-optional-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -51,7 +51,7 @@ public class ActionWithSomeOptionalInputsV3(
             zooDar?.let { "zoo-dar" to it },
             cooPoo?.let { "coo-poo" to it },
             "package" to `package`,
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

@@ -34,7 +34,7 @@ public class LabelerV4(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions", "labeler", "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -42,7 +42,7 @@ public class LabelerV4(
             repoToken?.let { "repo-token" to it },
             configurationPath?.let { "configuration-path" to it },
             syncLabels?.let { "sync-labels" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

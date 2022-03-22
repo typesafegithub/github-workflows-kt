@@ -27,8 +27,8 @@ public class DeprecatedActionV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("john-smith", "deprecated-action", "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = LinkedHashMap(_customArguments)
+    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 }

@@ -47,7 +47,7 @@ public class GithubScriptV6(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<GithubScriptV6.Outputs>("actions", "github-script", "v6") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -58,7 +58,7 @@ public class GithubScriptV6(
             userAgent?.let { "user-agent" to it },
             previews?.let { "previews" to it.joinToString(",") },
             resultEncoding?.let { "result-encoding" to it.stringValue },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

@@ -36,7 +36,7 @@ public class SetupGoV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions", "setup-go", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -44,7 +44,7 @@ public class SetupGoV3(
             goVersion?.let { "go-version" to it },
             checkLatest?.let { "check-latest" to it.toString() },
             token?.let { "token" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

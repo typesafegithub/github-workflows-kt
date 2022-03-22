@@ -128,7 +128,7 @@ public class BuildPushActionV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<BuildPushActionV2.Outputs>("docker", "build-push-action", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -159,7 +159,7 @@ public class BuildPushActionV2(
             target?.let { "target" to it },
             ulimit?.let { "ulimit" to it },
             githubToken?.let { "github-token" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

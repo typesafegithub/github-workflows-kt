@@ -70,7 +70,7 @@ public class GradleBuildActionV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -86,7 +86,7 @@ public class GradleBuildActionV2(
             cacheWriteOnly?.let { "cache-write-only" to it },
             gradleHomeCacheStrictMatch?.let { "gradle-home-cache-strict-match" to it },
             workflowJobContext?.let { "workflow-job-context" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

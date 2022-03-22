@@ -37,7 +37,7 @@ public class SemverUtils(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SemverUtils.Outputs>("madhead", "semver-utils", "latest") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -46,7 +46,7 @@ public class SemverUtils(
             compareTo?.let { "compare-to" to it },
             satisfies?.let { "satisfies" to it },
             identifier?.let { "identifier" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

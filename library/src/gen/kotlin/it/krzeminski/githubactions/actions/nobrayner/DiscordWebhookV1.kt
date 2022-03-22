@@ -65,7 +65,7 @@ public class DiscordWebhookV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("nobrayner", "discord-webhook", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -80,7 +80,7 @@ public class DiscordWebhookV1(
             colorSuccess?.let { "color-success" to it },
             colorFailure?.let { "color-failure" to it },
             colorCancelled?.let { "color-cancelled" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

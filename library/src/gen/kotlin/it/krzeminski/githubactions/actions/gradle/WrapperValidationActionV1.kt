@@ -36,7 +36,7 @@ public class WrapperValidationActionV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("gradle", "wrapper-validation-action", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -44,7 +44,7 @@ public class WrapperValidationActionV1(
             minWrapperCount?.let { "min-wrapper-count" to it.toString() },
             allowSnapshots?.let { "allow-snapshots" to it.toString() },
             allowChecksums?.let { "allow-checksums" to it.joinToString(",") },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

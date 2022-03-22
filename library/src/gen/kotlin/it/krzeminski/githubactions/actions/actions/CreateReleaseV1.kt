@@ -62,7 +62,7 @@ public class CreateReleaseV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<CreateReleaseV1.Outputs>("actions", "create-release", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -76,7 +76,7 @@ public class CreateReleaseV1(
             commitish?.let { "commitish" to it },
             owner?.let { "owner" to it },
             repo?.let { "repo" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

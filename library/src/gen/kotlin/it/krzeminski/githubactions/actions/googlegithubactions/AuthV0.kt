@@ -107,7 +107,7 @@ public class AuthV0(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<AuthV0.Outputs>("google-github-actions", "auth", "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -126,7 +126,7 @@ public class AuthV0(
             accessTokenSubject?.let { "access_token_subject" to it },
             idTokenAudience?.let { "id_token_audience" to it },
             idTokenIncludeEmail?.let { "id_token_include_email" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

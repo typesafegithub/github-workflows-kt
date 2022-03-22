@@ -56,7 +56,7 @@ public class ActionWithNonStringInputsV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("john-smith", "action-with-non-string-inputs", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -69,7 +69,7 @@ public class ActionWithNonStringInputsV3(
             "fin-bin" to finBin.stringValue,
             "goo-zen" to gooZen.integerValue.toString(),
             "bah-enum" to bahEnum.stringValue,
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

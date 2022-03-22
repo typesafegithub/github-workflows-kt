@@ -56,7 +56,7 @@ public class WebappsDeployV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -68,7 +68,7 @@ public class WebappsDeployV2(
             "images" to images.joinToString("\n"),
             configurationFile?.let { "configuration-file" to it },
             startupCommand?.let { "startup-command" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

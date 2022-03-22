@@ -39,7 +39,7 @@ public class CacheV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<CacheV2.Outputs>("actions", "cache", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -48,7 +48,7 @@ public class CacheV2(
             "key" to key,
             restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
             uploadChunkSize?.let { "upload-chunk-size" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

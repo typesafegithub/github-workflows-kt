@@ -72,7 +72,7 @@ public class GithubActionsV0(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("GoogleCloudPlatform", "github-actions", "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -85,7 +85,7 @@ public class GithubActionsV0(
             exportDefaultCredentials?.let { "export_default_credentials" to it.toString() },
             credentialsFilePath?.let { "credentials_file_path" to it },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

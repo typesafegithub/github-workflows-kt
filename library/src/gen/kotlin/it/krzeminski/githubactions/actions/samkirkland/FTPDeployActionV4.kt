@@ -77,7 +77,7 @@ public class FTPDeployActionV4(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("SamKirkland", "FTP-Deploy-Action", "v4.3.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -95,7 +95,7 @@ public class FTPDeployActionV4(
             exclude?.let { "exclude" to it.joinToString("\n") },
             logLevel?.let { "log-level" to it.stringValue },
             security?.let { "security" to it.stringValue },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

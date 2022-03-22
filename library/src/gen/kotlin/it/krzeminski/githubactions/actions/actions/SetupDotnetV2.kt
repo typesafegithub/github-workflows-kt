@@ -48,7 +48,7 @@ public class SetupDotnetV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions", "setup-dotnet", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -58,7 +58,7 @@ public class SetupDotnetV2(
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
             includePrerelease?.let { "include-prerelease" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

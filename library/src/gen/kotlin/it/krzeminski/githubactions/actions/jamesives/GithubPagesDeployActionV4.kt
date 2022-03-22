@@ -109,7 +109,7 @@ public class GithubPagesDeployActionV4(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>(
     "JamesIves", "github-pages-deploy-action",
     "v4"
@@ -132,7 +132,7 @@ public class GithubPagesDeployActionV4(
             workspace?.let { "workspace" to it },
             singleCommit?.let { "single-commit" to it.toString() },
             silent?.let { "silent" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

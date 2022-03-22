@@ -38,7 +38,7 @@ public class ReadJavaProperties(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<ReadJavaProperties.Outputs>("madhead", "read-java-properties", "latest") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -47,7 +47,7 @@ public class ReadJavaProperties(
             `property`?.let { "property" to it },
             all?.let { "all" to it.toString() },
             default?.let { "default" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

@@ -43,7 +43,7 @@ public class CreateAnIssueV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -53,7 +53,7 @@ public class CreateAnIssueV2(
             filename?.let { "filename" to it },
             updateExisting?.let { "update_existing" to it.toString() },
             searchExisting?.let { "search_existing" to it.joinToString(",") },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

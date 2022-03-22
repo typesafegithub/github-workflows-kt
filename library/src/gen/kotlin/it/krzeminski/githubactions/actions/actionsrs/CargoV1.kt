@@ -39,7 +39,7 @@ public class CargoV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions-rs", "cargo", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -48,7 +48,7 @@ public class CargoV1(
             toolchain?.let { "toolchain" to it },
             args?.let { "args" to it.joinToString(" ") },
             useCross?.let { "use-cross" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

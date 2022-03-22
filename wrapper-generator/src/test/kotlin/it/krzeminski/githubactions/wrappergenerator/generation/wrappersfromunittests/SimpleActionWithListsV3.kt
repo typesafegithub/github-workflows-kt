@@ -39,7 +39,7 @@ public class SimpleActionWithListsV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("john-smith", "simple-action-with-lists", "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -49,7 +49,7 @@ public class SimpleActionWithListsV3(
             listEnums?.let { "list-enums" to it.joinToString(",") { it.stringValue } },
             listIntSpecial?.let { "list-int-special" to it.joinToString(",") {
                     it.integerValue.toString() } },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

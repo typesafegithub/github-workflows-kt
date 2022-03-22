@@ -33,7 +33,7 @@ public class ActionsYarnV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("Borales", "actions-yarn", "v2.3.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -41,7 +41,7 @@ public class ActionsYarnV2(
             "cmd" to cmd,
             authToken?.let { "auth-token" to it },
             registryUrl?.let { "registry-url" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

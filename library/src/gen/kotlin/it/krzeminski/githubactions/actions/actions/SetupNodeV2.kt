@@ -78,7 +78,7 @@ public class SetupNodeV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SetupNodeV2.Outputs>("actions", "setup-node", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -94,7 +94,7 @@ public class SetupNodeV2(
             cache?.let { "cache" to it.stringValue },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
             version?.let { "version" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

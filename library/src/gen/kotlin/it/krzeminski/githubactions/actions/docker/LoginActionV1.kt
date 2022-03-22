@@ -42,7 +42,7 @@ public class LoginActionV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("docker", "login-action", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -52,7 +52,7 @@ public class LoginActionV1(
             password?.let { "password" to it },
             ecr?.let { "ecr" to it.toString() },
             logout?.let { "logout" to it.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

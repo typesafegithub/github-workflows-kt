@@ -44,7 +44,7 @@ public class UploadArtifactV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("actions", "upload-artifact", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -53,7 +53,7 @@ public class UploadArtifactV2(
             "path" to path.joinToString("\n"),
             ifNoFilesFound?.let { "if-no-files-found" to it.stringValue },
             retentionDays?.let { "retention-days" to it.integerValue.toString() },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

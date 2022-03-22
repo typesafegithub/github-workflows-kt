@@ -52,7 +52,7 @@ public class ToolchainV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<ToolchainV1.Outputs>("actions-rs", "toolchain", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -63,7 +63,7 @@ public class ToolchainV1(
             `override`?.let { "override" to it.toString() },
             profile?.let { "profile" to it },
             components?.let { "components" to it.joinToString(",") },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

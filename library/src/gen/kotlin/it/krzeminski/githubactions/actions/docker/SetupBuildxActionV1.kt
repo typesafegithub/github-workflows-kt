@@ -59,7 +59,7 @@ public class SetupBuildxActionV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<SetupBuildxActionV1.Outputs>("docker", "setup-buildx-action", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -73,7 +73,7 @@ public class SetupBuildxActionV1(
             endpoint?.let { "endpoint" to it },
             config?.let { "config" to it },
             configInline?.let { "config-inline" to it },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

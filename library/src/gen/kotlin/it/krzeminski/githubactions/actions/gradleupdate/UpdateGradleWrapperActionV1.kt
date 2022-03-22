@@ -60,7 +60,7 @@ public class UpdateGradleWrapperActionV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customArguments: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("gradle-update", "update-gradle-wrapper-action", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -74,7 +74,7 @@ public class UpdateGradleWrapperActionV1(
             setDistributionChecksum?.let { "set-distribution-checksum" to it.toString() },
             paths?.let { "paths" to it.joinToString(",") },
             pathsIgnore?.let { "paths-ignore" to it.joinToString(",") },
-            *_customArguments.toList().toTypedArray(),
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }
