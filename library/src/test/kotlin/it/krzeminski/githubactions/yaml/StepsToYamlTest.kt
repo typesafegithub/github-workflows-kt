@@ -344,5 +344,35 @@ class StepsToYamlTest : DescribeSpec({
                              |    root_file: report.tex
                              |    compiler: latexmk""".trimMargin()
         }
+
+        it("renders with action with custom arguments") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Action with multiline parameter",
+                    action = UploadArtifactV2(
+                        name = "artifact",
+                        path = listOf("path1", "path2"),
+                        _customArguments = mapOf(
+                            "path" to "override-path-value",
+                            "answer" to "42",
+                        )
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Action with multiline parameter
+                             |  uses: actions/upload-artifact@v2
+                             |  with:
+                             |    name: artifact
+                             |    path: override-path-value
+                             |    answer: 42""".trimMargin()
+        }
     }
 })

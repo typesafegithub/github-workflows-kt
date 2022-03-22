@@ -6,14 +6,18 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
+import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
+import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_ARGUMENTS
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
@@ -23,6 +27,16 @@ data class Wrapper(
     val kotlinCode: String,
     val filePath: String,
 )
+
+object Types {
+    val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
+    val mapToList = MemberName("kotlin.collections", "toList")
+    val listToArray = MemberName("kotlin.collections", "toTypedArray")
+}
+
+object Properties {
+    val CUSTOM_ARGUMENTS = "_customArguments"
+}
 
 fun ActionCoords.generateWrapper(
     inputTypings: Map<String, Typing> = emptyMap(),
@@ -112,6 +126,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
                 .build()
         )
     }
+    addProperty(PropertySpec.builder(CUSTOM_ARGUMENTS, Types.mapStringString).initializer(CUSTOM_ARGUMENTS).build())
     return this
 }
 
@@ -198,7 +213,7 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
 private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
     if (inputs.isEmpty()) {
         return CodeBlock.Builder()
-            .add(CodeBlock.of("return %T<String, String>()", LinkedHashMap::class))
+            .add(CodeBlock.of("return %T($CUSTOM_ARGUMENTS)", LinkedHashMap::class))
             .build()
     } else {
         return CodeBlock.Builder().apply {
@@ -214,6 +229,7 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
                     add("%S to %N$asStringCode,\n", key, key.toCamelCase())
                 }
             }
+            add("*$CUSTOM_ARGUMENTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
             unindent()
             add(").toTypedArray()\n")
             unindent()
@@ -262,7 +278,12 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
                     .defaultValueIfNullable(input)
                     .addKdoc(input.description)
                     .build()
-            }
+            }.plus(
+                ParameterSpec.builder(CUSTOM_ARGUMENTS, Types.mapStringString)
+                    .defaultValue("mapOf()")
+                    .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
+                    .build()
+            )
         )
         .build()
 }
