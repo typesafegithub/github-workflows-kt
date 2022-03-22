@@ -17,7 +17,7 @@ import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
-import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_ARGUMENTS
+import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_INPUTS
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
@@ -35,7 +35,7 @@ object Types {
 }
 
 object Properties {
-    val CUSTOM_ARGUMENTS = "_customArguments"
+    val CUSTOM_INPUTS = "_customInputs"
 }
 
 fun ActionCoords.generateWrapper(
@@ -126,7 +126,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
                 .build()
         )
     }
-    addProperty(PropertySpec.builder(CUSTOM_ARGUMENTS, Types.mapStringString).initializer(CUSTOM_ARGUMENTS).build())
+    addProperty(PropertySpec.builder(CUSTOM_INPUTS, Types.mapStringString).initializer(CUSTOM_INPUTS).build())
     return this
 }
 
@@ -213,7 +213,7 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
 private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
     if (inputs.isEmpty()) {
         return CodeBlock.Builder()
-            .add(CodeBlock.of("return %T($CUSTOM_ARGUMENTS)", LinkedHashMap::class))
+            .add(CodeBlock.of("return %T($CUSTOM_INPUTS)", LinkedHashMap::class))
             .build()
     } else {
         return CodeBlock.Builder().apply {
@@ -229,7 +229,7 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
                     add("%S to %N$asStringCode,\n", key, key.toCamelCase())
                 }
             }
-            add("*$CUSTOM_ARGUMENTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
+            add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
             unindent()
             add(").toTypedArray()\n")
             unindent()
@@ -279,7 +279,7 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
                     .addKdoc(input.description)
                     .build()
             }.plus(
-                ParameterSpec.builder(CUSTOM_ARGUMENTS, Types.mapStringString)
+                ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
                     .defaultValue("mapOf()")
                     .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
                     .build()
