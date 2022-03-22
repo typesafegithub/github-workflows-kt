@@ -1,10 +1,7 @@
 package it.krzeminski.githubactions.yaml
 
-import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.throwable.shouldHaveMessage
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
@@ -118,12 +115,12 @@ class JobsToYamlTest : DescribeSpec({
     it("renders with dependencies on other jobs") {
         // given
         val anotherJob1 = Job(
-            name = "Another job 1",
+            name = "Another-job-1",
             runsOn = UbuntuLatest,
             steps = listOf(),
         )
         val anotherJob2 = Job(
-            name = "Another job 2",
+            name = "Another-job-2",
             runsOn = UbuntuLatest,
             steps = listOf(),
         )
@@ -149,8 +146,8 @@ class JobsToYamlTest : DescribeSpec({
         yaml shouldBe """|"Job-1":
                          |  runs-on: "ubuntu-latest"
                          |  needs:
-                         |    - "Another job 1"
-                         |    - "Another job 2"
+                         |    - "Another-job-1"
+                         |    - "Another-job-2"
                          |  steps:
                          |    - id: someId
                          |      name: Some command
@@ -269,42 +266,6 @@ class JobsToYamlTest : DescribeSpec({
                          |      run: echo 'test!'""".trimMargin()
     }
 
-    it("should reject invalid job names") {
-        listOf(
-            "job   1",
-            "job1  ",
-            "  job1",
-            "",
-            "-job",
-            "4job",
-            "job()"
-        ).forAll { jobName ->
-            shouldThrowAny {
-                val job = Job(jobName, UbuntuLatest, emptyList())
-                listOf(job).jobsToYaml()
-            }.shouldHaveMessage(
-                """
-                Invalid field Job(name="$jobName") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
-                See: https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job
-                """.trimIndent()
-            )
-        }
-    }
-
-    it("should not reject valid job names") {
-        listOf(
-            "job-42",
-            "_42",
-            "_job",
-            "a",
-            "JOB_JOB",
-            "_--4",
-        ).forAll { jobName ->
-            val job = Job(jobName, UbuntuLatest, emptyList())
-            listOf(job).jobsToYaml()
-        }
-    }
-
     it("should accept custom arguments") {
         // given
         val jobs = listOf(
@@ -340,5 +301,37 @@ class JobsToYamlTest : DescribeSpec({
                          |      name: Some command
                          |      run: echo 'test!'
                          """.trimMargin()
+    }
+
+    it("renders timeout-minutes") {
+        // given
+        val jobs = listOf(
+            Job(
+                name = "Job-1",
+                runsOn = RunnerType.UbuntuLatest,
+                timeoutMinutes = 30,
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+            ),
+        )
+
+        // when
+        val yaml = jobs.jobsToYaml()
+
+        // then
+        yaml shouldBe """
+             |"Job-1":
+             |  runs-on: "ubuntu-latest"
+             |  timeout-minutes: 30
+             |  steps:
+             |    - id: someId
+             |      name: Some command
+             |      run: echo 'test!'
+             """.trimMargin()
     }
 })

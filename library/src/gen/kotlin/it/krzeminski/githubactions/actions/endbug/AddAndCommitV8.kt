@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.endbug
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Add & Commit
@@ -82,7 +85,11 @@ public class AddAndCommitV8(
      * The token used to make requests to the GitHub API. It's NOT used to make commits and should
      * not be changed.
      */
-    public val githubToken: String? = null
+    public val githubToken: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", "v8") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -103,6 +110,7 @@ public class AddAndCommitV8(
             remove?.let { "remove" to it },
             tag?.let { "tag" to it },
             githubToken?.let { "github_token" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

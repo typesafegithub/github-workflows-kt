@@ -8,6 +8,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Cache
@@ -32,7 +35,11 @@ public class CacheV2(
     /**
      * The chunk size used to split up large files during upload, in bytes
      */
-    public val uploadChunkSize: Int? = null
+    public val uploadChunkSize: Int? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<CacheV2.Outputs>("actions", "cache", "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -41,6 +48,7 @@ public class CacheV2(
             "key" to key,
             restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
             uploadChunkSize?.let { "upload-chunk-size" to it.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

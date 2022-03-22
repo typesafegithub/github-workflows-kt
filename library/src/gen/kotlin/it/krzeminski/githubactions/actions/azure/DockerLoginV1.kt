@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.azure
 import it.krzeminski.githubactions.actions.Action
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Azure Container Registry Login
@@ -26,7 +29,11 @@ public class DockerLoginV1(
     /**
      * Container registry server url
      */
-    public val loginServer: String? = null
+    public val loginServer: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("Azure", "docker-login", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -34,6 +41,7 @@ public class DockerLoginV1(
             username?.let { "username" to it },
             password?.let { "password" to it },
             loginServer?.let { "login-server" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

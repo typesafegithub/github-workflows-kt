@@ -17,7 +17,16 @@ Kotlin wrapper for the action needs a breaking change as well.
 ## User-defined actions
 
 If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
-just inherit from [`Action`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
+you have two ways to proceed.
+
+### Typed wrapper
+
+!!! info "When to use this approach"
+    It lets you create an action wrapper in a similar manner that is provided by the build-in action wrappers in this
+    library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
+    inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
+
+Inherit from [`Action`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
 in case of actions without outputs:
 
 ```kotlin
@@ -50,11 +59,44 @@ class MyCoolActionV3(
 }
 ```
 
-## Using actions in jobs
-
 Once you've got your action, it's now as simple as using it like this:
 
 ```kotlin
 uses(name = "FooBar",
      action = MyCoolActionV3(someArgument = "foobar"))
+```
+
+### Untyped wrapper
+
+!!! info "When to use this approach"
+    It omits typing entirely, and both inputs and outputs are referenced using strings. Use it if you don't care about
+    types because you're in the middle of experimenting. It's also more convenient to produce such code by a code
+    generator.
+
+Use a [`CustomAction`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
+
+```kotlin
+val customAction = CustomAction(
+    actionOwner = "xu-cheng",
+    actionName = "latex-action",
+    actionVersion = "v2",
+    inputs = linkedMapOf(
+        "root_file" to "report.tex",
+        "compiler" to "latexmk",
+    )
+)
+```
+
+If your custom action has outputs, you can access them, albeit in a type-unsafe manner:
+
+```kotlin
+job("test_job", RunnerType.UbuntuLatest) {
+    val customActionStep = uses(
+        name = "Some step with output",
+        action = customAction,
+    )
+    
+    // use your outputs:
+    println(expr(customActionStep.outputs["custom-output"]))
+}
 ```

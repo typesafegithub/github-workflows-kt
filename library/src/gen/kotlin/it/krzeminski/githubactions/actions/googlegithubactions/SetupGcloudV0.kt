@@ -1,7 +1,7 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-package it.krzeminski.githubactions.actions.googlecloudplatform
+package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
@@ -18,9 +18,9 @@ import kotlin.collections.toTypedArray
  *         Downloads, installs, and configures a Google Cloud SDK environment.
  * Adds the `gcloud` CLI command to the $PATH.
  *
- *         [Action on GitHub](https://github.com/GoogleCloudPlatform/github-actions)
+ *         [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
  */
-public class GithubActionsV0(
+public class SetupGcloudV0(
     /**
      * Version of the gcloud SDK to install. If unspecified or set to "latest",
      * the latest available gcloud SDK version for the target platform will be
@@ -48,7 +48,7 @@ public class GithubActionsV0(
     /**
      * List of Cloud SDK components to install
      */
-    public val installComponents: List<String>? = null,
+    public val installComponents: List<SetupGcloudV0.Component>? = null,
     /**
      * Export the provided credentials as Google Default Application Credentials.
      * This will make the credentials available to later steps via the
@@ -73,7 +73,7 @@ public class GithubActionsV0(
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf()
-) : Action("GoogleCloudPlatform", "github-actions", "v0") {
+) : Action("google-github-actions", "setup-gcloud", "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -81,11 +81,85 @@ public class GithubActionsV0(
             serviceAccountEmail?.let { "service_account_email" to it },
             serviceAccountKey?.let { "service_account_key" to it },
             projectId?.let { "project_id" to it },
-            installComponents?.let { "install_components" to it.joinToString("\n") },
+            installComponents?.let {
+                "install_components" to it.joinToString(",") { it.stringValue }
+            },
             exportDefaultCredentials?.let { "export_default_credentials" to it.toString() },
             credentialsFilePath?.let { "credentials_file_path" to it },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public sealed class Component(
+        public val stringValue: String
+    ) {
+        public object Alpha : SetupGcloudV0.Component("alpha")
+
+        public object AnthosAuth : SetupGcloudV0.Component("anthos-auth")
+
+        public object Appctl : SetupGcloudV0.Component("appctl")
+
+        public object AppEngineGo : SetupGcloudV0.Component("app-engine-go")
+
+        public object AppEngineJava : SetupGcloudV0.Component("app-engine-java")
+
+        public object AppEnginePython : SetupGcloudV0.Component("app-engine-python")
+
+        public object AppEnginePythonExtras : SetupGcloudV0.Component("app-engine-python-extras")
+
+        public object Beta : SetupGcloudV0.Component("beta")
+
+        public object Bigtable : SetupGcloudV0.Component("bigtable")
+
+        public object Bq : SetupGcloudV0.Component("bq")
+
+        public object BundledPython3Unix : SetupGcloudV0.Component("bundled-python3-unix")
+
+        public object Cbt : SetupGcloudV0.Component("cbt")
+
+        public object CloudBuildLocal : SetupGcloudV0.Component("cloud-build-local")
+
+        public object CloudDatastoreEmulator : SetupGcloudV0.Component("cloud-datastore-emulator")
+
+        public object CloudFirestoreEmulator : SetupGcloudV0.Component("cloud-firestore-emulator")
+
+        public object CloudSpannerEmulator : SetupGcloudV0.Component("cloud-spanner-emulator")
+
+        public object CloudSqlProxy : SetupGcloudV0.Component("cloud_sql_proxy")
+
+        public object ConfigConnector : SetupGcloudV0.Component("config-connector")
+
+        public object Core : SetupGcloudV0.Component("core")
+
+        public object Datalab : SetupGcloudV0.Component("datalab")
+
+        public object DockerCredentialGcr : SetupGcloudV0.Component("docker-credential-gcr")
+
+        public object Gsutil : SetupGcloudV0.Component("gsutil")
+
+        public object Kpt : SetupGcloudV0.Component("kpt")
+
+        public object Kubectl : SetupGcloudV0.Component("kubectl")
+
+        public object KubectlOidc : SetupGcloudV0.Component("kubectl-oidc")
+
+        public object Kustomize : SetupGcloudV0.Component("kustomize")
+
+        public object LocalExtract : SetupGcloudV0.Component("local-extract")
+
+        public object Minikube : SetupGcloudV0.Component("minikube")
+
+        public object Nomos : SetupGcloudV0.Component("nomos")
+
+        public object Pkg : SetupGcloudV0.Component("pkg")
+
+        public object PubsubEmulator : SetupGcloudV0.Component("pubsub-emulator")
+
+        public object Skaffold : SetupGcloudV0.Component("skaffold")
+
+        public class Custom(
+            customStringValue: String
+        ) : SetupGcloudV0.Component(customStringValue)
+    }
 }

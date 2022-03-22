@@ -36,6 +36,7 @@ class WorkflowBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
         _customArguments: Map<String, CustomValue> = mapOf(),
+        timeoutMinutes: Int? = null,
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
@@ -45,6 +46,7 @@ class WorkflowBuilder(
             condition = condition,
             env = env,
             strategyMatrix = strategyMatrix,
+            timeoutMinutes = timeoutMinutes,
             _customArguments = _customArguments,
         )
         jobBuilder.block()

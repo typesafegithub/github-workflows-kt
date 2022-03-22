@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: WordPress Plugin Deploy
@@ -19,7 +22,11 @@ public class ActionWordpressPluginDeployV2(
     /**
      * Generate package zip file?
      */
-    public val generateZip: Boolean? = null
+    public val generateZip: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : ActionWithOutputs<ActionWordpressPluginDeployV2.Outputs>(
     "10up",
     "action-wordpress-plugin-deploy", "v2.0.0"
@@ -28,6 +35,7 @@ public class ActionWordpressPluginDeployV2(
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             generateZip?.let { "generate-zip" to it.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

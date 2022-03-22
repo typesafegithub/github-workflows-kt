@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Update Gradle Wrapper Action
@@ -53,7 +56,11 @@ public class UpdateGradleWrapperActionV1(
      * List of paths to be excluded when searching for Gradle Wrapper files (comma or
      * newline-separated).
      */
-    public val pathsIgnore: List<String>? = null
+    public val pathsIgnore: List<String>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf()
 ) : Action("gradle-update", "update-gradle-wrapper-action", "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -67,6 +74,7 @@ public class UpdateGradleWrapperActionV1(
             setDistributionChecksum?.let { "set-distribution-checksum" to it.toString() },
             paths?.let { "paths" to it.joinToString(",") },
             pathsIgnore?.let { "paths-ignore" to it.joinToString(",") },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

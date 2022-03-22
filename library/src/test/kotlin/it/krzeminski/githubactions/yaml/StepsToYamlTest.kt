@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
@@ -312,6 +313,66 @@ class StepsToYamlTest : DescribeSpec({
                              |    param3: '**/another/dir'
                              |    param4: '[test]'
                              |    param5: '!another-reserved-character'""".trimMargin()
+        }
+
+        describe("custom action") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "latex",
+                    name = "Latex",
+                    action = CustomAction(
+                        actionOwner = "xu-cheng",
+                        actionName = "latex-action",
+                        actionVersion = "v2",
+                        inputs = linkedMapOf(
+                            "root_file" to "report.tex",
+                            "compiler" to "latexmk",
+                        )
+                    )
+                )
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: latex
+                             |  name: Latex
+                             |  uses: xu-cheng/latex-action@v2
+                             |  with:
+                             |    root_file: report.tex
+                             |    compiler: latexmk""".trimMargin()
+        }
+
+        it("renders with action with custom arguments") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Action with multiline parameter",
+                    action = UploadArtifactV2(
+                        name = "artifact",
+                        path = listOf("path1", "path2"),
+                        _customInputs = mapOf(
+                            "path" to "override-path-value",
+                            "answer" to "42",
+                        )
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Action with multiline parameter
+                             |  uses: actions/upload-artifact@v2
+                             |  with:
+                             |    name: artifact
+                             |    path: override-path-value
+                             |    answer: 42""".trimMargin()
         }
     }
 })
