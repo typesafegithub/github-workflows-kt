@@ -106,9 +106,9 @@ public class SetupGcloudV0(
 
         public object Bq : SetupGcloudV0.Component("bq")
 
-        public object Cbt : SetupGcloudV0.Component("cbt")
-
         public object BundledPython3Unix : SetupGcloudV0.Component("bundled-python3-unix")
+
+        public object Cbt : SetupGcloudV0.Component("cbt")
 
         public object CloudBuildLocal : SetupGcloudV0.Component("cloud-build-local")
 
