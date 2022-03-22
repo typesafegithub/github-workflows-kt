@@ -39,4 +39,21 @@ class JobTest : FunSpec({
             Job(jobName, RunnerType.UbuntuLatest, emptyList())
         }
     }
+
+    test("should reject invalid timeout values") {
+        shouldThrowAny {
+            Job(
+                name = "Job-1",
+                runsOn = RunnerType.UbuntuLatest,
+                timeoutMinutes = -1,
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+            )
+        } shouldHaveMessage "timeout should be positive"
+    }
 })
