@@ -39,8 +39,13 @@ public class SimpleActionWithListsV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customInputs: Map<String, String> = mapOf()
-) : Action("john-smith", "simple-action-with-lists", "v3") {
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("john-smith", "simple-action-with-lists", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

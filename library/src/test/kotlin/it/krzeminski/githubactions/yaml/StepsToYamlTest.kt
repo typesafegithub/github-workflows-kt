@@ -374,5 +374,33 @@ class StepsToYamlTest : DescribeSpec({
                              |    path: override-path-value
                              |    answer: 42""".trimMargin()
         }
+
+        it("renders with action's custom version") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Action with multiline parameter",
+                    action = UploadArtifactV2(
+                        name = "artifact",
+                        path = listOf("path1", "path2"),
+                        _customVersion = "v2.3.4"
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Action with multiline parameter
+                             |  uses: actions/upload-artifact@v2.3.4
+                             |  with:
+                             |    name: artifact
+                             |    path: |
+                             |      path1
+                             |      path2""".trimMargin()
+        }
     }
 })

@@ -26,10 +26,15 @@ public class ActionWordpressPluginDeployV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customInputs: Map<String, String> = mapOf()
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
 ) : ActionWithOutputs<ActionWordpressPluginDeployV2.Outputs>(
     "10up",
-    "action-wordpress-plugin-deploy", "v2.0.0"
+    "action-wordpress-plugin-deploy", _customVersion ?: "v2.0.0"
 ) {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(

@@ -272,8 +272,13 @@ public class StaleV5(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
-    public val _customInputs: Map<String, String> = mapOf()
-) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", "v5") {
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
