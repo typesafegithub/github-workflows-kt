@@ -86,51 +86,13 @@ public class SetupGcloudV0(
     public sealed class Component(
         public val stringValue: String
     ) {
-        public object Gsutil : SetupGcloudV0.Component("gsutil")
-
-        public object Core : SetupGcloudV0.Component("core")
-
         public object Alpha : SetupGcloudV0.Component("alpha")
-
-        public object Beta : SetupGcloudV0.Component("beta")
-
-        public object AppEngineGo : SetupGcloudV0.Component("app-engine-go")
-
-        public object Appctl : SetupGcloudV0.Component("appctl")
-
-        public object Cbt : SetupGcloudV0.Component("cbt")
-
-        public object Bigtable : SetupGcloudV0.Component("bigtable")
-
-        public object Datalab : SetupGcloudV0.Component("datalab")
-
-        public object CloudDatastoreEmulator : SetupGcloudV0.Component("cloud-datastore-emulator")
-
-        public object CloudFirestoreEmulator : SetupGcloudV0.Component("cloud-firestore-emulator")
-
-        public object PubsubEmulator : SetupGcloudV0.Component("pubsub-emulator")
-
-        public object CloudSqlProxy : SetupGcloudV0.Component("cloud_sql_proxy")
-
-        public object CloudSpannerEmulator : SetupGcloudV0.Component("cloud-spanner-emulator")
-
-        public object CloudBuildLocal : SetupGcloudV0.Component("cloud-build-local")
-
-        public object DockerCredentialGcr : SetupGcloudV0.Component("docker-credential-gcr")
-
-        public object Kustomize : SetupGcloudV0.Component("kustomize")
-
-        public object Minikube : SetupGcloudV0.Component("minikube")
-
-        public object Nomos : SetupGcloudV0.Component("nomos")
-
-        public object LocalExtract : SetupGcloudV0.Component("local-extract")
-
-        public object Skaffold : SetupGcloudV0.Component("skaffold")
 
         public object AnthosAuth : SetupGcloudV0.Component("anthos-auth")
 
-        public object ConfigConnector : SetupGcloudV0.Component("config-connector")
+        public object Appctl : SetupGcloudV0.Component("appctl")
+
+        public object AppEngineGo : SetupGcloudV0.Component("app-engine-go")
 
         public object AppEngineJava : SetupGcloudV0.Component("app-engine-java")
 
@@ -138,17 +100,55 @@ public class SetupGcloudV0(
 
         public object AppEnginePythonExtras : SetupGcloudV0.Component("app-engine-python-extras")
 
+        public object Beta : SetupGcloudV0.Component("beta")
+
+        public object Bigtable : SetupGcloudV0.Component("bigtable")
+
+        public object Bq : SetupGcloudV0.Component("bq")
+
+        public object BundledPython3Unix : SetupGcloudV0.Component("bundled-python3-unix")
+
+        public object Cbt : SetupGcloudV0.Component("cbt")
+
+        public object CloudBuildLocal : SetupGcloudV0.Component("cloud-build-local")
+
+        public object CloudDatastoreEmulator : SetupGcloudV0.Component("cloud-datastore-emulator")
+
+        public object CloudFirestoreEmulator : SetupGcloudV0.Component("cloud-firestore-emulator")
+
+        public object CloudSpannerEmulator : SetupGcloudV0.Component("cloud-spanner-emulator")
+
+        public object CloudSqlProxy : SetupGcloudV0.Component("cloud_sql_proxy")
+
+        public object ConfigConnector : SetupGcloudV0.Component("config-connector")
+
+        public object Core : SetupGcloudV0.Component("core")
+
+        public object Datalab : SetupGcloudV0.Component("datalab")
+
+        public object DockerCredentialGcr : SetupGcloudV0.Component("docker-credential-gcr")
+
+        public object Gsutil : SetupGcloudV0.Component("gsutil")
+
         public object Kpt : SetupGcloudV0.Component("kpt")
 
         public object Kubectl : SetupGcloudV0.Component("kubectl")
 
         public object KubectlOidc : SetupGcloudV0.Component("kubectl-oidc")
 
+        public object Kustomize : SetupGcloudV0.Component("kustomize")
+
+        public object LocalExtract : SetupGcloudV0.Component("local-extract")
+
+        public object Minikube : SetupGcloudV0.Component("minikube")
+
+        public object Nomos : SetupGcloudV0.Component("nomos")
+
         public object Pkg : SetupGcloudV0.Component("pkg")
 
-        public object Bq : SetupGcloudV0.Component("bq")
+        public object PubsubEmulator : SetupGcloudV0.Component("pubsub-emulator")
 
-        public object BundledPython3Unix : SetupGcloudV0.Component("bundled-python3-unix")
+        public object Skaffold : SetupGcloudV0.Component("skaffold")
 
         public class Custom(
             customStringValue: String
