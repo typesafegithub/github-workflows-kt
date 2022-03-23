@@ -10,7 +10,6 @@ data class PullRequest(
     val pathsIgnore: List<String>? = null,
     override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : Trigger() {
-
     init {
         require(!(branches != null && branchesIgnore != null)) {
             "Cannot define both 'branches' and 'branchesIgnore'!"
