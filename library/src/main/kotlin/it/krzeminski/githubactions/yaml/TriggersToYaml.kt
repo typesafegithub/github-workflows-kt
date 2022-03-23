@@ -45,7 +45,7 @@ fun List<Trigger>.triggersToYaml(): String =
 fun Trigger.toYaml(): String =
     (toYamlFromMap() + toAdditionalYaml() + customArgumentsToYaml()).removeSuffix("\n")
 
-typealias MapOfYaml = LinkedHashMap<String, List<String>?>
+private typealias MapOfYaml = LinkedHashMap<String, List<String>?>
 
 private fun Trigger.toYamlFromMap() = buildString {
     val trigger = this@toYamlFromMap
@@ -61,37 +61,7 @@ fun Trigger.toMap(): MapOfYaml {
         is Push -> toMap()
         is PullRequest -> toMap()
         is PullRequestTarget -> toMap()
-        is WorkflowDispatch -> emptyMap
-        is Schedule -> emptyMap
-        is BranchProtectionRule -> emptyMap
-        is CheckRun -> emptyMap
-        is CheckSuite -> emptyMap
-        is Create -> emptyMap
-        is Delete -> emptyMap
-        is Deployment -> emptyMap
-        is DeploymentStatus -> emptyMap
-        is Discussion -> emptyMap
-        is DiscussionComment -> emptyMap
-        is Fork -> emptyMap
-        is Gollum -> emptyMap
-        is IssueComment -> emptyMap
-        is Issues -> emptyMap
-        is Label -> emptyMap
-        is Milestone -> emptyMap
-        is PageBuild -> emptyMap
-        is Project -> emptyMap
-        is ProjectCard -> emptyMap
-        is ProjectColumn -> emptyMap
-        is PublicWorkflow -> emptyMap
-        is PullRequestReview -> emptyMap
-        is PullRequestReviewComment -> emptyMap
-        is RegistryPackage -> emptyMap
-        is Release -> emptyMap
-        is RepositoryDispatch -> emptyMap
-        is Status -> emptyMap
-        is Watch -> emptyMap
-        is WorkflowCall -> emptyMap
-        is WorkflowRun -> emptyMap
+        else -> LinkedHashMap()
     }
 }
 
@@ -119,8 +89,6 @@ private fun PullRequestTarget.toMap(): MapOfYaml = linkedMapOf(
     "paths" to paths,
     "paths-ignore" to pathsIgnore,
 )
-
-private val emptyMap = LinkedHashMap<String, List<String>?>()
 
 @Suppress("ComplexMethod")
 @InternalGithubActionsApi
@@ -164,38 +132,7 @@ fun Trigger.triggerName() = when (this) {
 private fun Trigger.toAdditionalYaml(): String = when (this) {
     is Schedule -> toAdditionalYaml()
     is WorkflowDispatch -> toAdditionalYaml()
-    is Push -> ""
-    is PullRequest -> ""
-    is PullRequestTarget -> ""
-    is BranchProtectionRule -> ""
-    is CheckRun -> ""
-    is CheckSuite -> ""
-    is Create -> ""
-    is Delete -> ""
-    is Deployment -> ""
-    is DeploymentStatus -> ""
-    is Discussion -> ""
-    is DiscussionComment -> ""
-    is Fork -> ""
-    is Gollum -> ""
-    is IssueComment -> ""
-    is Issues -> ""
-    is Label -> ""
-    is Milestone -> ""
-    is PageBuild -> ""
-    is Project -> ""
-    is ProjectCard -> ""
-    is ProjectColumn -> ""
-    is PublicWorkflow -> ""
-    is PullRequestReview -> ""
-    is PullRequestReviewComment -> ""
-    is RegistryPackage -> ""
-    is Release -> ""
-    is RepositoryDispatch -> ""
-    is Status -> ""
-    is Watch -> ""
-    is WorkflowCall -> ""
-    is WorkflowRun -> ""
+    else -> ""
 }
 
 private fun Schedule.toAdditionalYaml() =
