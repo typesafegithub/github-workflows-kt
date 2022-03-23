@@ -23,7 +23,8 @@ class IntegrationTest : FunSpec({
         targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
     ) {
         job(
-            name = "test_job",
+            id = "test_job",
+            name = "Test Job",
             runsOn = RunnerType.UbuntuLatest,
         ) {
             uses(
@@ -65,6 +66,7 @@ class IntegrationTest : FunSpec({
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
                 runs-on: "ubuntu-latest"
+                name: Test Job
                 needs:
                   - "check_yaml_consistency"
                 steps:
@@ -86,7 +88,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             val testJob1 = job(
-                name = "test_job_1",
+                id = "test_job_1",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 run(
@@ -96,7 +98,7 @@ class IntegrationTest : FunSpec({
             }
 
             job(
-                name = "test_job_2",
+                id = "test_job_2",
                 runsOn = RunnerType.UbuntuLatest,
                 needs = listOf(testJob1),
             ) {
@@ -169,6 +171,7 @@ class IntegrationTest : FunSpec({
             jobs:
               "test_job":
                 runs-on: "ubuntu-latest"
+                name: Test Job
                 steps:
                   - id: step-0
                     name: Check out
@@ -188,7 +191,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 run(
@@ -241,7 +244,7 @@ class IntegrationTest : FunSpec({
             targetFile = targetTempFile.toPath(),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 uses(
@@ -293,7 +296,7 @@ class IntegrationTest : FunSpec({
             targetFile = targetTempFile.toPath(),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 uses(
@@ -359,7 +362,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
                 condition = "\${{ always() }}"
             ) {
@@ -409,7 +412,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
                 condition = "\${{ always() }}",
                 env = linkedMapOf(
@@ -508,7 +511,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 val addAndCommit = uses(

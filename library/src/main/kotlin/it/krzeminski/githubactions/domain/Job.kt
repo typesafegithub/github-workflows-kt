@@ -6,9 +6,9 @@ import it.krzeminski.githubactions.validation.requireMatchesRegex
 
 data class Job(
     val id: String,
-    val name: String? = null,
     val runsOn: RunnerType,
     val steps: List<Step>,
+    val name: String? = null,
     val needs: List<Job> = emptyList(),
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,

@@ -34,7 +34,7 @@ class WorkflowBuilderTest : FunSpec({
                     targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
-                        name = "Some-job",
+                        id = "Some-job",
                         runsOn = UbuntuLatest,
                     ) {
                         // No steps.
@@ -53,7 +53,7 @@ class WorkflowBuilderTest : FunSpec({
                     targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
-                        name = "Some job",
+                        id = "Some job",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -75,7 +75,7 @@ class WorkflowBuilderTest : FunSpec({
                     targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
-                        name = "Some-job-1",
+                        id = "Some-job-1",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -85,7 +85,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some-job-1",
+                        id = "Some-job-1",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -95,7 +95,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some-job-2",
+                        id = "Some-job-2",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -105,7 +105,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some-job-3",
+                        id = "Some-job-3",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -115,7 +115,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
 
                     job(
-                        name = "Some-job-3",
+                        id = "Some-job-3",
                         runsOn = UbuntuLatest,
                     ) {
                         run(
@@ -146,7 +146,7 @@ class WorkflowBuilderTest : FunSpec({
                 ),
             ) {
                 job(
-                    name = "test_job",
+                    id = "test_job",
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
                     run(
