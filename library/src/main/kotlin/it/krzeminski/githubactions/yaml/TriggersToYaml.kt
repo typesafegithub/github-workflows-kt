@@ -37,6 +37,7 @@ import it.krzeminski.githubactions.domain.triggers.Watch
 import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
+import it.krzeminski.githubactions.internal.InternalGithubActionsApi
 
 fun List<Trigger>.triggersToYaml(): String =
     joinToString(separator = "\n") { it.toYaml() }
@@ -54,7 +55,7 @@ private fun Trigger.toYamlFromMap() = buildString {
     }
 }
 
-@Suppress("ComplexMethod")
+@InternalGithubActionsApi
 fun Trigger.toMap(): MapOfYaml {
     return when (this) {
         is Push -> toMap()
@@ -122,6 +123,7 @@ private fun PullRequestTarget.toMap(): MapOfYaml = linkedMapOf(
 private val emptyMap = LinkedHashMap<String, List<String>?>()
 
 @Suppress("ComplexMethod")
+@InternalGithubActionsApi
 fun Trigger.triggerName() = when (this) {
     is PullRequest -> "pull_request"
     is PullRequestTarget -> "pull_request_target"
@@ -159,7 +161,6 @@ fun Trigger.triggerName() = when (this) {
     is WorkflowRun -> "workflow_run"
 }
 
-@Suppress("ComplexMethod")
 private fun Trigger.toAdditionalYaml(): String = when (this) {
     is Schedule -> toAdditionalYaml()
     is WorkflowDispatch -> toAdditionalYaml()
