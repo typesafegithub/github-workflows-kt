@@ -43,7 +43,7 @@ class JobTest : FunSpec({
     test("should reject invalid timeout values") {
         shouldThrowAny {
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = RunnerType.UbuntuLatest,
                 timeoutMinutes = -1,
                 steps = listOf(

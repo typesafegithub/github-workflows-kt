@@ -20,13 +20,17 @@ fun List<Job>.jobsToYaml(): String =
 
 private fun Job.toYaml() = buildString {
     val job = this@toYaml
-    appendLine("\"${job.name}\":")
+    appendLine("\"${job.id}\":")
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
+
+    job.name?.let {
+        appendLine("  name: $it")
+    }
 
     if (job.needs.isNotEmpty()) {
         appendLine("  needs:")
         job.needs.forEach {
-            appendLine("    - \"${it.name}\"")
+            appendLine("    - \"${it.id}\"")
         }
     }
 

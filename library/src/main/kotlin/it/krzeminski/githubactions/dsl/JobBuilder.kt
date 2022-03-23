@@ -11,7 +11,8 @@ import it.krzeminski.githubactions.domain.RunnerType
 @Suppress("LongParameterList")
 @GithubActionsDsl
 class JobBuilder(
-    val name: String,
+    val id: String,
+    val name: String?,
     val runsOn: RunnerType,
     val needs: List<Job>,
     val env: LinkedHashMap<String, String>,
@@ -21,6 +22,7 @@ class JobBuilder(
     override val _customArguments: Map<String, CustomValue>,
 ) : HasCustomArguments {
     private var job = Job(
+        id = id,
         name = name,
         runsOn = runsOn,
         needs = needs,

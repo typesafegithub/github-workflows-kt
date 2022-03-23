@@ -29,7 +29,8 @@ class WorkflowBuilder(
 
     @Suppress("LongParameterList")
     fun job(
-        name: String,
+        id: String,
+        name: String? = null,
         runsOn: RunnerType,
         needs: List<Job> = emptyList(),
         condition: String? = null,
@@ -40,6 +41,7 @@ class WorkflowBuilder(
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
+            id = id,
             name = name,
             runsOn = runsOn,
             needs = needs,
@@ -59,6 +61,36 @@ class WorkflowBuilder(
         workflow = workflow.copy(jobs = workflow.jobs + newJob)
         return newJob
     }
+
+    @Suppress("LongParameterList")
+    @Deprecated(
+        "parameter name was renamed to id",
+        ReplaceWith(
+            "job(name,name,runsOn,needs,condition,env,strategyMatrix,_customArguments,timeoutMinutes,block)"
+        )
+    )
+    fun job(
+        name: String,
+        runsOn: RunnerType,
+        needs: List<Job> = emptyList(),
+        condition: String? = null,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        strategyMatrix: Map<String, List<String>>? = null,
+        _customArguments: Map<String, CustomValue> = mapOf(),
+        timeoutMinutes: Int? = null,
+        block: JobBuilder.() -> Unit,
+    ): Job = job(
+        id = name,
+        name = name,
+        runsOn = runsOn,
+        needs = needs,
+        condition = condition,
+        env = env,
+        strategyMatrix = strategyMatrix,
+        _customArguments = _customArguments,
+        timeoutMinutes = timeoutMinutes,
+        block = block,
+    )
 
     fun build() = workflow
 }
@@ -107,7 +139,7 @@ fun workflow(
 
 private fun List<Job>.requireUniqueJobNames() {
     val countPerJobName = this
-        .map { it.name }
+        .map { it.id }
         .groupBy { it }
         .mapValues { it.value.count() }
 
