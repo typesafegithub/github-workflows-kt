@@ -46,6 +46,10 @@ public val workflowDockerImage: Workflow = workflow(
             registry = "ghcr.io",
             username = "${'$'}{{ github.actor }}",
             password = "${'$'}{{ secrets.GITHUB_TOKEN }}",
+            _customInputs = mapOf(
+              "custom-boolean" to "true",
+              "custom-string" to "Hello World",
+            ),
           ),
         )
         uses(

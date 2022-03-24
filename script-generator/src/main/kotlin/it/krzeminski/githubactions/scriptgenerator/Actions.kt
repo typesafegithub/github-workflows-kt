@@ -56,20 +56,49 @@ fun YamlStep.generateActionWithWrapper(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
 ): CodeBlock {
-    return with.joinToCode(
-        prefix = CodeBlock.of("action = %T(", coords.classname()),
-        postfix = "),",
-    ) { key, value ->
-        value?.let {
-            CodeBlock { builder ->
-                val typing = inputTypings?.get(key) ?: StringTyping
-                builder
-                    .add("%N = ", key.toCamelCase())
-                    .add(valueWithTyping(value, typing, coords))
-                    .add(",\n")
-            }
-        }
+    val kclass = Class.forName(coords.classname().reflectionName()).kotlin
+    val kclassProperties = kclass.members.map { it.name }.toSet()
+
+    val existingActionProperties = with
+        .filterKeys { key -> key.toCamelCase() in kclassProperties }
+        .joinToCode(
+            prefix = CodeBlock.of("action = %T(", coords.classname()),
+            postfix = "",
+            newLineAtEnd = false,
+        ) { key, value ->
+            existingActionProperty(coords, inputTypings, value, key)
     }
+    val customActionProperties = with
+        .filterKeys { key -> key.toCamelCase() !in kclassProperties }
+        .joinToCode(
+            ifEmpty = CodeBlock.EMPTY,
+            prefix = CodeBlock.of("_customInputs = mapOf(\n"),
+            newLineAtEnd = false,
+            postfix = "),\n"
+        ) { key, value ->
+            CodeBlock.of("%S to %S", key, value)
+        }
+    return CodeBlock { builder ->
+        builder.add(existingActionProperties)
+        builder.indent()
+        builder.add(customActionProperties)
+        builder.unindent()
+        builder.add("),\n")
+    }
+}
+
+private fun existingActionProperty(
+    coords: ActionCoords,
+    inputTypings: Map<String, Typing>?,
+    value: String?,
+    key: String,
+) = CodeBlock { builder ->
+    value ?: return@CodeBlock
+    val typing = inputTypings?.get(key) ?: StringTyping
+    builder
+        .add("%N = ", key.toCamelCase())
+        .add(valueWithTyping(value, typing, coords))
+        .add(",\n")
 }
 
 fun YamlStep.generateCustomAction(
