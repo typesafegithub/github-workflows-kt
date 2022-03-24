@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,11 +23,13 @@ data class PullRequest(
         }
     }
 
+    @InternalSerializationApi
     class Serializer : CaseEnumSerializer<Type>(Type::class.qualifiedName!!, Type.values())
 
     /**
      * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
      */
+    @OptIn(InternalSerializationApi::class)
     @Serializable(with = Serializer::class)
     enum class Type {
         Assigned,
