@@ -24,8 +24,6 @@ jobs:
         run: diff -u '.github/workflows/generate-wrappers.yaml' <('.github/workflows/generate-wrappers.main.kts')
   "generate-wrappers":
     runs-on: "ubuntu-latest"
-    needs:
-      - 'check_yaml_consistency'
     steps:
       - id: step-0
         name: Checkout
@@ -54,3 +52,5 @@ jobs:
           git add .
           git commit --allow-empty -m "Regenerate wrappers ($GITHUB_SHA)"  # an empty commit explicitly shows that the wrappers are up-to-date
           git push
+    needs:
+      - 'check_yaml_consistency'

@@ -3,21 +3,51 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asClassName
+import it.krzeminski.githubactions.domain.triggers.BranchProtectionRule
+import it.krzeminski.githubactions.domain.triggers.CheckRun
+import it.krzeminski.githubactions.domain.triggers.CheckSuite
+import it.krzeminski.githubactions.domain.triggers.Create
 import it.krzeminski.githubactions.domain.triggers.Cron
+import it.krzeminski.githubactions.domain.triggers.Delete
+import it.krzeminski.githubactions.domain.triggers.Deployment
+import it.krzeminski.githubactions.domain.triggers.DeploymentStatus
+import it.krzeminski.githubactions.domain.triggers.Discussion
+import it.krzeminski.githubactions.domain.triggers.DiscussionComment
+import it.krzeminski.githubactions.domain.triggers.Fork
+import it.krzeminski.githubactions.domain.triggers.Gollum
+import it.krzeminski.githubactions.domain.triggers.IssueComment
+import it.krzeminski.githubactions.domain.triggers.Issues
+import it.krzeminski.githubactions.domain.triggers.Label
+import it.krzeminski.githubactions.domain.triggers.Milestone
+import it.krzeminski.githubactions.domain.triggers.PageBuild
+import it.krzeminski.githubactions.domain.triggers.Project
+import it.krzeminski.githubactions.domain.triggers.ProjectCard
+import it.krzeminski.githubactions.domain.triggers.ProjectColumn
+import it.krzeminski.githubactions.domain.triggers.PublicWorkflow
 import it.krzeminski.githubactions.domain.triggers.PullRequest
+import it.krzeminski.githubactions.domain.triggers.PullRequestReview
+import it.krzeminski.githubactions.domain.triggers.PullRequestReviewComment
 import it.krzeminski.githubactions.domain.triggers.PullRequestTarget
+import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.domain.triggers.RegistryPackage
+import it.krzeminski.githubactions.domain.triggers.Release
+import it.krzeminski.githubactions.domain.triggers.RepositoryDispatch
 import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.Status
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import it.krzeminski.githubactions.domain.triggers.Watch
+import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
+import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.YamlTrigger
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflowTriggers
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
-import it.krzeminski.githubactions.yaml.MapOfYaml
 import it.krzeminski.githubactions.yaml.toMap
-import it.krzeminski.githubactions.yaml.triggerClassMap
+import it.krzeminski.githubactions.yaml.triggerName
+import java.util.LinkedHashMap
 
 fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
     builder.add("listOf(\n").indent()
@@ -66,10 +96,7 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
 private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
     this ?: return CodeBlock.EMPTY
 
-    val classname = triggerClassMap
-        .firstOrNull { it.first == triggerName }
-        ?.second
-        ?.asClassName()
+    val classname: ClassName = allTriggersMap[triggerName]?.classname()
         ?: error("Couldn't find class for triggerName=$triggerName")
 
     val typesCodeblock = if (types.isNullOrEmpty()) CodeBlock.of("") else
@@ -96,7 +123,7 @@ fun Trigger?.toKotlin(): CodeBlock {
     if (this == null) {
         return CodeBlock.of("")
     }
-    val map: MapOfYaml = this.toMap()
+    val map: LinkedHashMap<String, List<String>?> = this.toMap()
     return map.joinToCode(
         prefix = CodeBlock.of("%T(", classname()),
         postfix = "),",
@@ -176,3 +203,47 @@ private fun List<ScheduleValue>?.toKotlin(): CodeBlock {
         CodeBlock.of("%T(%S)", Cron::class, it.cron)
     } ?: CodeBlock.EMPTY
 }
+
+
+val allTriggers: List<Trigger> = listOf(
+    BranchProtectionRule(),
+    CheckRun(),
+    CheckSuite(),
+    Create(),
+    Delete(),
+    Deployment(),
+    DeploymentStatus(),
+    Discussion(),
+    DiscussionComment(),
+    Fork(),
+    Gollum(),
+    IssueComment(),
+    Issues(),
+    Label(),
+    Milestone(),
+    PageBuild(),
+    Project(),
+    ProjectCard(),
+    ProjectColumn(),
+    PublicWorkflow(),
+    PullRequest(),
+    PullRequestReview(),
+    PullRequestReviewComment(),
+    PullRequestTarget(),
+    Push(),
+    RegistryPackage(),
+    Release(),
+    RepositoryDispatch(),
+    Schedule(emptyList()),
+    Status(),
+    Watch(),
+    WorkflowCall(),
+    WorkflowDispatch(),
+    WorkflowRun(),
+)
+
+val allTriggersNames: List<String> =
+    allTriggers.map { it.triggerName() }
+
+val allTriggersMap: Map<String, Trigger> =
+    allTriggersNames.zip(allTriggers).toMap()

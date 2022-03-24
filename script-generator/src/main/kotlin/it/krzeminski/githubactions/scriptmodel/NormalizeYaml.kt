@@ -1,17 +1,17 @@
 package it.krzeminski.githubactions.scriptmodel
 
-import it.krzeminski.githubactions.yaml.triggerClassMap
+import it.krzeminski.githubactions.scriptgenerator.allTriggersNames
 
 @OptIn(ExperimentalStdlibApi::class)
 fun String.normalizeYaml(): String {
     val lines = lines()
-    val triggerNames = triggerClassMap.map { it.first }.toSet()
+    val triggerNames = allTriggersNames
 
     val transformed: List<String> = lines.mapIndexed line@{ i, line ->
         val (space, name) = topLevelProperties.find(line)?.destructured?.toList()
             ?: listOf("", "")
 
-        val onLine = convertOnToObject(line, triggerNames)
+        val onLine = convertOnToObject(line, triggerNames.toSet())
         val nextLine = lines.nextNonBlank(i)
         when {
             onLine != null -> onLine
