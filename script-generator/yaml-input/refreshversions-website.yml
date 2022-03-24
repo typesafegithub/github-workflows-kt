@@ -1,0 +1,17 @@
+name: RefreshVersions Website
+on:
+  push:
+    branches:
+      - release
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./docs/DocsCopier.main.kts
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install -r docs/requirements.txt
+      - run: mkdocs gh-deploy --force
