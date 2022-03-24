@@ -18,6 +18,7 @@ import kotlinx.serialization.encoding.Encoder
  * Copy/pasted from the kotlinx.serialization library
  * What changed is that the enum value is the PascalCase version of its snake_case
  */
+@InternalSerializationApi
 open class CaseEnumSerializer<T : Enum<T>>(
     serialName: String,
     private val values: Array<T>,
