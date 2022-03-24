@@ -25,6 +25,7 @@ data class EnumTyping(
             "EnumTyping($typeName): itemsNames should be in PascalCase, but got: $notPascalCase"
         }
     }
+    val itemsNameMap = items.zip(itemsNames).toMap()
 
     override fun getClassName(actionPackageName: String, actionClassName: String): TypeName =
         ClassName("it.krzeminski.githubactions.actions.$actionPackageName", "$actionClassName.$typeName")
@@ -35,7 +36,6 @@ data class EnumTyping(
         val actionPackageName = coords.owner.toKotlinPackageName()
         val actionClassName = coords.buildActionClassName()
         val sealedClassName = this.getClassName(actionPackageName, actionClassName)
-        val itemsNameMap = items.zip(itemsNames).toMap()
 
         return TypeSpec.classBuilder(this.typeName)
             .addModifiers(KModifier.SEALED)

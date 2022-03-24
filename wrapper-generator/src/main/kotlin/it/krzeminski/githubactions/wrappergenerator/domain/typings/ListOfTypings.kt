@@ -7,8 +7,8 @@ import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 
 class ListOfTypings(
-    private val delimiter: String,
-    private val typing: Typing = StringTyping,
+    val delimiter: String,
+    val typing: Typing = StringTyping,
 ) : Typing {
     init {
         require(delimiter != "\n") { """ListOfTypings(newline) invalid, use ListOfTypings("\\n") instead""" }
