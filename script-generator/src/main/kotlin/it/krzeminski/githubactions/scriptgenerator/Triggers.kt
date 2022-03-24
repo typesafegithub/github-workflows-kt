@@ -47,6 +47,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import it.krzeminski.githubactions.yaml.toMap
 import it.krzeminski.githubactions.yaml.triggerName
+import java.io.File
 import java.util.LinkedHashMap
 
 fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
@@ -153,6 +154,8 @@ fun Trigger.stringsOrEnums(key: String, list: List<String>?) = when {
     else -> list.map { "$QUOTE$it$QUOTE" }
 }
 
+const val QUOTE = "\""
+
 private fun Trigger.classname(): ClassName =
     this::class.asClassName()
 
@@ -204,7 +207,6 @@ private fun List<ScheduleValue>?.toKotlin(): CodeBlock {
     } ?: CodeBlock.EMPTY
 }
 
-
 val allTriggers: List<Trigger> = listOf(
     BranchProtectionRule(),
     CheckRun(),
@@ -247,3 +249,9 @@ val allTriggersNames: List<String> =
 
 val allTriggersMap: Map<String, Trigger> =
     allTriggersNames.zip(allTriggers).toMap()
+
+val rootProject = File(".").canonicalFile.let {
+    if (it.name == "github-actions-kotlin-dsl") it else it.parentFile
+}
+
+const val PACKAGE = "it.krzeminski.githubactions"
