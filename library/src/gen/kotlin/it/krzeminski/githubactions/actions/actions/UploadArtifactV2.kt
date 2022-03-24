@@ -8,6 +8,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Upload a Build Artifact
@@ -37,8 +40,17 @@ public class UploadArtifactV2(
      * Duration after which artifact will expire in days. 0 means using default retention.
      * Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
      */
-    public val retentionDays: UploadArtifactV2.RetentionPeriod? = null
-) : Action("actions", "upload-artifact", "v2") {
+    public val retentionDays: UploadArtifactV2.RetentionPeriod? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("actions", "upload-artifact", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -46,6 +58,7 @@ public class UploadArtifactV2(
             "path" to path.joinToString("\n"),
             ifNoFilesFound?.let { "if-no-files-found" to it.stringValue },
             retentionDays?.let { "retention-days" to it.integerValue.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

@@ -8,7 +8,9 @@ package it.krzeminski.githubactions.actions.johnsmith
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Deprecated
+import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
 
 /**
  * Action: Deprecated Action
@@ -21,7 +23,17 @@ import kotlin.Suppress
     message = "This action has a newer major version: DeprecatedActionV3",
     replaceWith = ReplaceWith("DeprecatedActionV3")
 )
-public class DeprecatedActionV2() : Action("john-smith", "deprecated-action", "v2") {
+public class DeprecatedActionV2(
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("john-smith", "deprecated-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = LinkedHashMap<String, String>()
+    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 }

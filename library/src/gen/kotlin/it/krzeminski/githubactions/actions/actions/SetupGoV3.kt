@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Setup Go environment
@@ -29,14 +32,24 @@ public class SetupGoV3(
      * Used to pull node distributions from go-versions.  Since there's a default, this is typically
      * not supplied by the user.
      */
-    public val token: String? = null
-) : Action("actions", "setup-go", "v3") {
+    public val token: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("actions", "setup-go", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             goVersion?.let { "go-version" to it },
             checkLatest?.let { "check-latest" to it.toString() },
             token?.let { "token" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

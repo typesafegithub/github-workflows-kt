@@ -9,6 +9,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: FTP Deploy
@@ -70,8 +73,17 @@ public class FTPDeployActionV4(
     /**
      * strict or loose
      */
-    public val security: FTPDeployActionV4.Security? = null
-) : Action("SamKirkland", "FTP-Deploy-Action", "v4.3.0") {
+    public val security: FTPDeployActionV4.Security? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("SamKirkland", "FTP-Deploy-Action", _customVersion ?: "v4.3.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -88,6 +100,7 @@ public class FTPDeployActionV4(
             exclude?.let { "exclude" to it.joinToString("\n") },
             logLevel?.let { "log-level" to it.stringValue },
             security?.let { "security" to it.stringValue },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

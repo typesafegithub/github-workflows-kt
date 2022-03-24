@@ -280,6 +280,7 @@ val wrappersToGenerate = listOf(
             "add-hosts" to ListOfTypings("\\n"),
             "allow" to ListOfTypings("\\n"),
             "build-args" to ListOfTypings("\\n"),
+            "build-contexts" to ListOfTypings("\\n"),
             "cache-from" to ListOfTypings("\\n"),
             "cache-to" to ListOfTypings("\\n"),
             "labels" to ListOfTypings(","),
@@ -317,6 +318,66 @@ val wrappersToGenerate = listOf(
             "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
             "push" to StringTyping,
         )
+    ),
+    WrapperRequest(
+        ActionCoords("google-github-actions", "auth", "v0"),
+        mapOf(
+            "cleanup_credentials" to BooleanTyping,
+            "delegates" to ListOfTypings(","),
+            "token_format" to EnumTyping("TokenFormat", listOf("access_token", "id_token")),
+            "create_credentials_file" to BooleanTyping,
+            "access_token_scopes" to ListOfTypings(","),
+            "id_token_include_email" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("google-github-actions", "setup-gcloud", "v0"),
+        mapOf(
+            "export_default_credentials" to BooleanTyping,
+            "install_components" to ListOfTypings(
+                ",",
+                EnumTyping(
+                    "Component",
+                    // To regenerate, run: gcloud components list --format=json | jq -r '"\"" + .[].id + "\","' | sort
+                    listOf(
+                        "alpha",
+                        "anthos-auth",
+                        "appctl",
+                        "app-engine-go",
+                        "app-engine-java",
+                        "app-engine-python",
+                        "app-engine-python-extras",
+                        "beta",
+                        "bigtable",
+                        "bq",
+                        "bundled-python3-unix",
+                        "cbt",
+                        "cloud-build-local",
+                        "cloud-datastore-emulator",
+                        "cloud-firestore-emulator",
+                        "cloud-spanner-emulator",
+                        "cloud_sql_proxy",
+                        "config-connector",
+                        "core",
+                        "datalab",
+                        "docker-credential-gcr",
+                        "gsutil",
+                        "kpt",
+                        "kubectl",
+                        "kubectl-oidc",
+                        "kustomize",
+                        "local-extract",
+                        "minikube",
+                        "nomos",
+                        "pkg",
+                        "pubsub-emulator",
+                        "skaffold",
+
+                    )
+                )
+            ),
+            "cleanup_credentials" to BooleanTyping,
+        ),
     ),
     WrapperRequest(
         ActionCoords("GoogleCloudPlatform", "github-actions", "v0"),

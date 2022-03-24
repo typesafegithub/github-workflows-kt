@@ -344,5 +344,63 @@ class StepsToYamlTest : DescribeSpec({
                              |    root_file: report.tex
                              |    compiler: latexmk""".trimMargin()
         }
+
+        it("renders with action with custom arguments") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Action with multiline parameter",
+                    action = UploadArtifactV2(
+                        name = "artifact",
+                        path = listOf("path1", "path2"),
+                        _customInputs = mapOf(
+                            "path" to "override-path-value",
+                            "answer" to "42",
+                        )
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Action with multiline parameter
+                             |  uses: actions/upload-artifact@v2
+                             |  with:
+                             |    name: artifact
+                             |    path: override-path-value
+                             |    answer: 42""".trimMargin()
+        }
+
+        it("renders with action's custom version") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Action with multiline parameter",
+                    action = UploadArtifactV2(
+                        name = "artifact",
+                        path = listOf("path1", "path2"),
+                        _customVersion = "v2.3.4"
+                    ),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Action with multiline parameter
+                             |  uses: actions/upload-artifact@v2.3.4
+                             |  with:
+                             |    name: artifact
+                             |    path: |
+                             |      path1
+                             |      path2""".trimMargin()
+        }
     }
 })

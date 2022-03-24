@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.10.0"
+version = "0.11.0"
 
 repositories {
     mavenCentral()
@@ -38,7 +38,10 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "11"
         allWarningsAsErrors = true
-        freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs += listOf(
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-Xopt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
+        )
     }
 }
 

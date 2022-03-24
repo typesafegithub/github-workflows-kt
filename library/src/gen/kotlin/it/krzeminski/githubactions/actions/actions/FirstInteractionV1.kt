@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.actions
 import it.krzeminski.githubactions.actions.Action
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: First interaction
@@ -26,14 +29,24 @@ public class FirstInteractionV1(
     /**
      * Comment to post on an individual's first pull request
      */
-    public val prMessage: String? = null
-) : Action("actions", "first-interaction", "v1") {
+    public val prMessage: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("actions", "first-interaction", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             "repo-token" to repoToken,
             issueMessage?.let { "issue-message" to it },
             prMessage?.let { "pr-message" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

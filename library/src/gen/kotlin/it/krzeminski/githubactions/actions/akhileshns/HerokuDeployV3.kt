@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Deploy to Heroku
@@ -104,8 +107,21 @@ public class HerokuDeployV3(
     /**
      * If deploying to an organization, then specify the name of the team or organization here
      */
-    public val team: String? = null
-) : ActionWithOutputs<HerokuDeployV3.Outputs>("AkhileshNS", "heroku-deploy", "v3.12.12") {
+    public val team: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : ActionWithOutputs<HerokuDeployV3.Outputs>(
+    "AkhileshNS", "heroku-deploy",
+    _customVersion
+        ?: "v3.12.12"
+) {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -130,6 +146,7 @@ public class HerokuDeployV3(
             region?.let { "region" to it },
             stack?.let { "stack" to it },
             team?.let { "team" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

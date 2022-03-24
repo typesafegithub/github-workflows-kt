@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: action-slack
@@ -78,8 +81,17 @@ public class ActionSlackV3(
     /**
      * Specify if you want to use GitHub Enterprise.
      */
-    public val githubBaseUrl: String? = null
-) : Action("8398a7", "action-slack", "v3") {
+    public val githubBaseUrl: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("8398a7", "action-slack", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -97,6 +109,7 @@ public class ActionSlackV3(
             jobName?.let { "job_name" to it },
             githubToken?.let { "github_token" to it },
             githubBaseUrl?.let { "github_base_url" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

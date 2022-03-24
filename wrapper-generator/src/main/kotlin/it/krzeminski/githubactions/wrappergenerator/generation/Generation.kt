@@ -6,14 +6,19 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
+import com.squareup.kotlinpoet.asTypeName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
+import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_INPUTS
+import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_VERSION
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
 import it.krzeminski.githubactions.wrappergenerator.metadata.Metadata
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchMetadata
@@ -23,6 +28,18 @@ data class Wrapper(
     val kotlinCode: String,
     val filePath: String,
 )
+
+object Types {
+    val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
+    val nullableString = String::class.asTypeName().copy(nullable = true)
+    val mapToList = MemberName("kotlin.collections", "toList")
+    val listToArray = MemberName("kotlin.collections", "toTypedArray")
+}
+
+object Properties {
+    val CUSTOM_INPUTS = "_customInputs"
+    val CUSTOM_VERSION = "_customVersion"
+}
 
 fun ActionCoords.generateWrapper(
     inputTypings: Map<String, Typing> = emptyMap(),
@@ -112,6 +129,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
                 .build()
         )
     }
+    addProperty(PropertySpec.builder(CUSTOM_INPUTS, Types.mapStringString).initializer(CUSTOM_INPUTS).build())
     return this
 }
 
@@ -198,7 +216,7 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
 private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
     if (inputs.isEmpty()) {
         return CodeBlock.Builder()
-            .add(CodeBlock.of("return %T<String, String>()", LinkedHashMap::class))
+            .add(CodeBlock.of("return %T($CUSTOM_INPUTS)", LinkedHashMap::class))
             .build()
     } else {
         return CodeBlock.Builder().apply {
@@ -214,6 +232,7 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
                     add("%S to %N$asStringCode,\n", key, key.toCamelCase())
                 }
             }
+            add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
             unindent()
             add(").toTypedArray()\n")
             unindent()
@@ -251,7 +270,7 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: 
         .superclass(superclass)
         .addSuperclassConstructorParameter("%S", coords.owner)
         .addSuperclassConstructorParameter("%S", coords.name)
-        .addSuperclassConstructorParameter("%S", coords.version)
+        .addSuperclassConstructorParameter("_customVersion ?: %S", coords.version)
 }
 
 private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
@@ -262,7 +281,20 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
                     .defaultValueIfNullable(input)
                     .addKdoc(input.description)
                     .build()
-            }
+            }.plus(
+                ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
+                    .defaultValue("mapOf()")
+                    .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
+                    .build()
+            ).plus(
+                ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
+                    .defaultValue("null")
+                    .addKdoc(
+                        "Allows overriding action's version, for example to use a specific minor version, " +
+                            "or a newer version that the wrapper doesn't yet know about"
+                    )
+                    .build()
+            )
         )
         .build()
 }

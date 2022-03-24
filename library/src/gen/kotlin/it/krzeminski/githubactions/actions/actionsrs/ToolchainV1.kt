@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: rust-toolchain
@@ -45,8 +48,17 @@ public class ToolchainV1(
     /**
      * Comma-separated list of components to be additionally installed for a new toolchain
      */
-    public val components: List<String>? = null
-) : ActionWithOutputs<ToolchainV1.Outputs>("actions-rs", "toolchain", "v1") {
+    public val components: List<String>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : ActionWithOutputs<ToolchainV1.Outputs>("actions-rs", "toolchain", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -56,6 +68,7 @@ public class ToolchainV1(
             `override`?.let { "override" to it.toString() },
             profile?.let { "profile" to it },
             components?.let { "components" to it.joinToString(",") },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

@@ -9,6 +9,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Do something cool
@@ -49,8 +52,17 @@ public class ActionWithNonStringInputsV3(
     /**
      * Enum with custom naming
      */
-    public val bahEnum: ActionWithNonStringInputsV3.Bah
-) : Action("john-smith", "action-with-non-string-inputs", "v3") {
+    public val bahEnum: ActionWithNonStringInputsV3.Bah,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("john-smith", "action-with-non-string-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -62,6 +74,7 @@ public class ActionWithNonStringInputsV3(
             "fin-bin" to finBin.stringValue,
             "goo-zen" to gooZen.integerValue.toString(),
             "bah-enum" to bahEnum.stringValue,
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

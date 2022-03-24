@@ -2,10 +2,13 @@
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
-name: Generate wrappers
+name: Check if wrappers up to date
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+  pull_request:
 
 jobs:
   "check_yaml_consistency":
@@ -15,22 +18,19 @@ jobs:
         name: Check out
         uses: actions/checkout@v3
       - id: step-1
-        name: Install Kotlin
-        run: sudo snap install --classic kotlin
-      - id: step-2
         name: Execute script
-        run: rm '.github/workflows/generate-wrappers.yaml' && '.github/workflows/_GenerateWorkflows.main.kts'
-      - id: step-3
+        run: rm '.github/workflows/check-if-wrappers-up-to-date.yaml' && '.github/workflows/_GenerateWorkflows.main.kts'
+      - id: step-2
         name: Consistency check
-        run: git diff --exit-code '.github/workflows/generate-wrappers.yaml'
-  "generate-wrappers":
+        run: git diff --exit-code '.github/workflows/check-if-wrappers-up-to-date.yaml'
+  "check":
     runs-on: "ubuntu-latest"
     needs:
       - "check_yaml_consistency"
     steps:
       - id: step-0
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: step-1
         name: Set up JDK
         uses: actions/setup-java@v2
@@ -43,15 +43,5 @@ jobs:
         with:
           arguments: :wrapper-generator:run
       - id: step-3
-        name: Check that the library builds fine with newly generated wrappers
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
-      - id: step-4
-        name: Commit and push
-        run: |
-          git config --global user.email "<>"
-          git config --global user.name "GitHub Actions Bot"
-          git add library/src/gen
-          git commit --allow-empty -m "Regenerate wrappers ($GITHUB_SHA)"  # an empty commit explicitly shows that the wrappers are up-to-date
-          git push
+        name: Fail if there are any changes in the generated wrappers
+        run: git diff --exit-code library/src/gen/

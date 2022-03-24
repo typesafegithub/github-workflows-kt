@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.madhead
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: semver-utils
@@ -30,8 +33,17 @@ public class SemverUtils(
     /**
      * An identifier to pass to the semver's inc function
      */
-    public val identifier: String? = null
-) : ActionWithOutputs<SemverUtils.Outputs>("madhead", "semver-utils", "latest") {
+    public val identifier: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : ActionWithOutputs<SemverUtils.Outputs>("madhead", "semver-utils", _customVersion ?: "latest") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -39,6 +51,7 @@ public class SemverUtils(
             compareTo?.let { "compare-to" to it },
             satisfies?.let { "satisfies" to it },
             identifier?.let { "identifier" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

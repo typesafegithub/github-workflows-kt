@@ -9,6 +9,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Close Stale Issues
@@ -265,8 +268,17 @@ public class StaleV5(
      * Any update (update/comment) can reset the stale idle time on the pull requests. Override
      * "ignore-updates" option regarding only the pull requests.
      */
-    public val ignorePrUpdates: Boolean? = null
-) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", "v5") {
+    public val ignorePrUpdates: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -322,6 +334,7 @@ public class StaleV5(
             ignoreUpdates?.let { "ignore-updates" to it.toString() },
             ignoreIssueUpdates?.let { "ignore-issue-updates" to it.toString() },
             ignorePrUpdates?.let { "ignore-pr-updates" to it.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

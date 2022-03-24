@@ -8,6 +8,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Do something cool
@@ -32,8 +35,17 @@ public class SimpleActionWithListsV3(
     /**
      * List of integer with special values
      */
-    public val listIntSpecial: List<SimpleActionWithListsV3.MyInt>? = null
-) : Action("john-smith", "simple-action-with-lists", "v3") {
+    public val listIntSpecial: List<SimpleActionWithListsV3.MyInt>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("john-smith", "simple-action-with-lists", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -42,6 +54,7 @@ public class SimpleActionWithListsV3(
             listEnums?.let { "list-enums" to it.joinToString(",") { it.stringValue } },
             listIntSpecial?.let { "list-int-special" to it.joinToString(",") {
                     it.integerValue.toString() } },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 

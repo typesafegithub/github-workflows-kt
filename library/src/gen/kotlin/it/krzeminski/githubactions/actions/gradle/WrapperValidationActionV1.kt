@@ -9,6 +9,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Gradle Wrapper Validation
@@ -29,14 +32,24 @@ public class WrapperValidationActionV1(
     /**
      * Allow arbitrary checksums, comma separated
      */
-    public val allowChecksums: List<String>? = null
-) : Action("gradle", "wrapper-validation-action", "v1") {
+    public val allowChecksums: List<String>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("gradle", "wrapper-validation-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             minWrapperCount?.let { "min-wrapper-count" to it.toString() },
             allowSnapshots?.let { "allow-snapshots" to it.toString() },
             allowChecksums?.let { "allow-checksums" to it.joinToString(",") },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

@@ -6,6 +6,9 @@ package it.krzeminski.githubactions.actions.borales
 import it.krzeminski.githubactions.actions.Action
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: GitHub Action for Yarn
@@ -26,14 +29,24 @@ public class ActionsYarnV2(
     /**
      * NPM_REGISTRY_URL
      */
-    public val registryUrl: String? = null
-) : Action("Borales", "actions-yarn", "v2.3.0") {
+    public val registryUrl: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("Borales", "actions-yarn", _customVersion ?: "v2.3.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             "cmd" to cmd,
             authToken?.let { "auth-token" to it },
             registryUrl?.let { "registry-url" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

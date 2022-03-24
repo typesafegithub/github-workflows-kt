@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: Docker Login
@@ -35,8 +38,17 @@ public class LoginActionV1(
     /**
      * Log out from the Docker registry at the end of a job
      */
-    public val logout: Boolean? = null
-) : Action("docker", "login-action", "v1") {
+    public val logout: Boolean? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("docker", "login-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -45,6 +57,7 @@ public class LoginActionV1(
             password?.let { "password" to it },
             ecr?.let { "ecr" to it.toString() },
             logout?.let { "logout" to it.toString() },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }

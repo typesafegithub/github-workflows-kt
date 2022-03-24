@@ -36,9 +36,8 @@ import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.Watch
 import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
-import kotlin.reflect.KClass
+import it.krzeminski.githubactions.internal.InternalGithubActionsApi
 
 fun List<Trigger>.triggersToYaml(): String =
     joinToString(separator = "\n") { it.toYaml() }
@@ -46,136 +45,24 @@ fun List<Trigger>.triggersToYaml(): String =
 fun Trigger.toYaml(): String =
     (toYamlFromMap() + toAdditionalYaml() + customArgumentsToYaml()).removeSuffix("\n")
 
-typealias MapOfYaml = LinkedHashMap<String, List<String>?>
-
-@Suppress("ComplexMethod")
-fun Trigger.toMap(): MapOfYaml {
-    return when (this) {
-        is Push -> toMap()
-        is PullRequest -> toMap()
-        is PullRequestTarget -> toMap()
-        is WorkflowDispatch -> emptyMap
-        is Schedule -> emptyMap
-        is BranchProtectionRule -> emptyMap
-        is CheckRun -> emptyMap
-        is CheckSuite -> emptyMap
-        is Create -> emptyMap
-        is Delete -> emptyMap
-        is Deployment -> emptyMap
-        is DeploymentStatus -> emptyMap
-        is Discussion -> emptyMap
-        is DiscussionComment -> emptyMap
-        is Fork -> emptyMap
-        is Gollum -> emptyMap
-        is IssueComment -> emptyMap
-        is Issues -> emptyMap
-        is Label -> emptyMap
-        is Milestone -> emptyMap
-        is PageBuild -> emptyMap
-        is Project -> emptyMap
-        is ProjectCard -> emptyMap
-        is ProjectColumn -> emptyMap
-        is PublicWorkflow -> emptyMap
-        is PullRequestReview -> emptyMap
-        is PullRequestReviewComment -> emptyMap
-        is RegistryPackage -> emptyMap
-        is Release -> emptyMap
-        is RepositoryDispatch -> emptyMap
-        is Status -> emptyMap
-        is Watch -> emptyMap
-        is WorkflowCall -> emptyMap
-        is WorkflowRun -> emptyMap
-    }
-}
-
-private val emptyMap = LinkedHashMap<String, List<String>?>()
-
-val Trigger.triggerName: String get() = triggerClassMap
-    .firstOrNull { it.second == this::class }
-    ?.first
-    ?: error("Couldn't find triggerName for class ${this::class}")
-
-val triggerClassMap: List<Pair<String, KClass<*>>> = listOf(
-    "pull_request" to PullRequest::class,
-    "pull_request_target" to PullRequestTarget::class,
-    "push" to Push::class,
-    "schedule" to Schedule::class,
-    "workflow_dispatch" to WorkflowDispatch::class,
-    "branch_protection_rule" to BranchProtectionRule::class,
-    "check_run" to CheckRun::class,
-    "check_suite" to CheckSuite::class,
-    "create" to Create::class,
-    "delete" to Delete::class,
-    "deployment" to Deployment::class,
-    "deployment_status" to DeploymentStatus::class,
-    "discussion" to Discussion::class,
-    "discussion_comment" to DiscussionComment::class,
-    "fork" to Fork::class,
-    "gollum" to Gollum::class,
-    "issue_comment" to IssueComment::class,
-    "issues" to Issues::class,
-    "label" to Label::class,
-    "milestone" to Milestone::class,
-    "page_build" to PageBuild::class,
-    "project" to Project::class,
-    "project_card" to ProjectCard::class,
-    "project_column" to ProjectColumn::class,
-    "public" to PublicWorkflow::class,
-    "pull_request_review" to PullRequestReview::class,
-    "pull_request_review_comment" to PullRequestReviewComment::class,
-    "registry_package" to RegistryPackage::class,
-    "release" to Release::class,
-    "repository_dispatch" to RepositoryDispatch::class,
-    "status" to Status::class,
-    "watch" to Watch::class,
-    "workflow_call" to WorkflowCall::class,
-    "workflow_run" to WorkflowRun::class,
-)
+private typealias MapOfYaml = LinkedHashMap<String, List<String>?>
 
 private fun Trigger.toYamlFromMap() = buildString {
     val trigger = this@toYamlFromMap
-    appendLine("${trigger.triggerName}:")
+    appendLine("${trigger.triggerName()}:")
     for ((property, items) in trigger.toMap()) {
         printIfHasElements(items, property)
     }
 }
 
-@Suppress("ComplexMethod")
-private fun Trigger.toAdditionalYaml(): String = when (this) {
-    is Schedule -> toAdditionalYaml()
-    is WorkflowDispatch -> toAdditionalYaml()
-    is Push -> ""
-    is PullRequest -> ""
-    is PullRequestTarget -> ""
-    is BranchProtectionRule -> ""
-    is CheckRun -> ""
-    is CheckSuite -> ""
-    is Create -> ""
-    is Delete -> ""
-    is Deployment -> ""
-    is DeploymentStatus -> ""
-    is Discussion -> ""
-    is DiscussionComment -> ""
-    is Fork -> ""
-    is Gollum -> ""
-    is IssueComment -> ""
-    is Issues -> ""
-    is Label -> ""
-    is Milestone -> ""
-    is PageBuild -> ""
-    is Project -> ""
-    is ProjectCard -> ""
-    is ProjectColumn -> ""
-    is PublicWorkflow -> ""
-    is PullRequestReview -> ""
-    is PullRequestReviewComment -> ""
-    is RegistryPackage -> ""
-    is Release -> ""
-    is RepositoryDispatch -> ""
-    is Status -> ""
-    is Watch -> ""
-    is WorkflowCall -> ""
-    is WorkflowRun -> ""
+@InternalGithubActionsApi
+fun Trigger.toMap(): MapOfYaml {
+    return when (this) {
+        is Push -> toMap()
+        is PullRequest -> toMap()
+        is PullRequestTarget -> toMap()
+        else -> LinkedHashMap()
+    }
 }
 
 private fun Push.toMap(): MapOfYaml = linkedMapOf(
@@ -203,6 +90,51 @@ private fun PullRequestTarget.toMap(): MapOfYaml = linkedMapOf(
     "paths-ignore" to pathsIgnore,
 )
 
+@Suppress("ComplexMethod")
+@InternalGithubActionsApi
+fun Trigger.triggerName() = when (this) {
+    is PullRequest -> "pull_request"
+    is PullRequestTarget -> "pull_request_target"
+    is Push -> "push"
+    is Schedule -> "schedule"
+    is WorkflowDispatch -> "workflow_dispatch"
+    is BranchProtectionRule -> "branch_protection_rule"
+    is CheckRun -> "check_run"
+    is CheckSuite -> "check_suite"
+    is Create -> "create"
+    is Delete -> "delete"
+    is Deployment -> "deployment"
+    is DeploymentStatus -> "deployment_status"
+    is Discussion -> "discussion"
+    is DiscussionComment -> "discussion_comment"
+    is Fork -> "fork"
+    is Gollum -> "gollum"
+    is IssueComment -> "issue_comment"
+    is Issues -> "issues"
+    is Label -> "label"
+    is Milestone -> "milestone"
+    is PageBuild -> "page_build"
+    is Project -> "project"
+    is ProjectCard -> "project_card"
+    is ProjectColumn -> "project_column"
+    is PublicWorkflow -> "public"
+    is PullRequestReview -> "pull_request_review"
+    is PullRequestReviewComment -> "pull_request_review_comment"
+    is RegistryPackage -> "registry_package"
+    is Release -> "release"
+    is RepositoryDispatch -> "repository_dispatch"
+    is Status -> "status"
+    is Watch -> "watch"
+    is WorkflowCall -> "workflow_call"
+    is WorkflowRun -> "workflow_run"
+}
+
+private fun Trigger.toAdditionalYaml(): String = when (this) {
+    is Schedule -> toAdditionalYaml()
+    is WorkflowDispatch -> toAdditionalYaml()
+    else -> ""
+}
+
 private fun Schedule.toAdditionalYaml() =
     triggers.joinToString("\n") { cron ->
         " - cron: '${cron.expression}'"
@@ -223,15 +155,8 @@ private fun WorkflowDispatch.toAdditionalYaml(): String = when {
 private fun WorkflowDispatch.Input.toYaml(): String = buildString {
     val space = "      "
     appendLine("${space}description: '$description'")
-    appendLine("${space}type: ${type.toYaml()}")
+    appendLine("${space}type: ${type.toSnakeCase()}")
     appendLine("${space}required: $required")
     if (default != null) appendLine("${space}default: '$default'")
     printIfHasElements(options, "options", space = "      ")
 }.removeSuffix("\n")
-
-private fun Type.toYaml(): String = when (this) {
-    Type.Choice -> "choice"
-    Type.Environment -> "environment"
-    Type.Boolean -> "boolean"
-    Type.String -> "string"
-}

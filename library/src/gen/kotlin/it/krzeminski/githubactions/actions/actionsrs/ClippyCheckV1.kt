@@ -8,6 +8,9 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
  * Action: rust-clippy-check
@@ -37,8 +40,17 @@ public class ClippyCheckV1(
      * Display name of the created GitHub check. Must be unique across several
      * actions-rs/clippy-check invocations.
      */
-    public val name: String? = null
-) : Action("actions-rs", "clippy-check", "v1") {
+    public val name: String? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null
+) : Action("actions-rs", "clippy-check", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -47,6 +59,7 @@ public class ClippyCheckV1(
             args?.let { "args" to it.joinToString(" ") },
             useCross?.let { "use-cross" to it.toString() },
             name?.let { "name" to it },
+            *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 }
