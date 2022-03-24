@@ -91,7 +91,6 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
 }
 
 internal fun HasCustomArguments.customArgumentsToYaml(): String = buildString {
-    append("\n")
     for ((key, customValue) in _customArguments) {
         when (customValue) {
             is ListCustomValue -> printIfHasElements(customValue.value, key)
