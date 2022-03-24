@@ -30,9 +30,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          custom-boolean: true
+          custom-string: Hello World
       - id: step-4
         name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.10.0
         with:
           context: .
           push: true

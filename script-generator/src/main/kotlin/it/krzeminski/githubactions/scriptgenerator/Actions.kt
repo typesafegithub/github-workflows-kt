@@ -14,6 +14,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageNa
 fun YamlStep.generateAction(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
+    _customVersion: String?,
 ) = CodeBlock { builder ->
 
     builder.add("uses(\n")
@@ -22,10 +23,10 @@ fun YamlStep.generateAction(
 
     if (inputTypings == null) {
         builder.add(generateCustomAction(coords))
-    } else if (with.isEmpty()) {
+    } else if (with.isEmpty() && _customVersion == null) {
         builder.add("action = %T(),\n", coords.classname())
     } else {
-        builder.add(generateActionWithWrapper(coords, inputTypings))
+        builder.add(generateActionWithWrapper(coords, inputTypings, _customVersion))
     }
 
     builder.add(
@@ -55,6 +56,7 @@ fun YamlStep.generateAction(
 fun YamlStep.generateActionWithWrapper(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>?,
+    _customVersion: String?,
 ): CodeBlock {
     val kclass = Class.forName(coords.classname().reflectionName()).kotlin
     val kclassProperties = kclass.members.map { it.name }.toSet()
@@ -67,7 +69,7 @@ fun YamlStep.generateActionWithWrapper(
             newLineAtEnd = false,
         ) { key, value ->
             existingActionProperty(coords, inputTypings, value, key)
-    }
+        }
     val customActionProperties = with
         .filterKeys { key -> key.toCamelCase() !in kclassProperties }
         .joinToCode(
@@ -82,6 +84,9 @@ fun YamlStep.generateActionWithWrapper(
         builder.add(existingActionProperties)
         builder.indent()
         builder.add(customActionProperties)
+        if (_customVersion != null) {
+            builder.add("_customVersion = %S,\n", _customVersion)
+        }
         builder.unindent()
         builder.add("),\n")
     }

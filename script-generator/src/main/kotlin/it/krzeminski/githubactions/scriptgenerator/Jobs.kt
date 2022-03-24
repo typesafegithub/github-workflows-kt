@@ -39,8 +39,8 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
                 val wrapper: WrapperRequest? = availableWrappers.firstOrNull {
                     it.actionCoords.buildActionClassName() == coords.buildActionClassName()
                 } ?: availableWrappers.maxByOrNull { it.actionCoords.version }
-
-                builder.add(step.generateAction(wrapper?.actionCoords ?: coords, wrapper?.inputTypings))
+                val _customVersion = coords.version.takeIf { it != wrapper?.actionCoords?.version }
+                builder.add(step.generateAction(wrapper?.actionCoords ?: coords, wrapper?.inputTypings, _customVersion))
             } else {
                 builder.add(step.generateCommand())
             }

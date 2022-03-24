@@ -35,6 +35,7 @@ public val workflowNodejsPackage: Workflow = workflow(
             nodeVersion = "12.x",
             registryUrl = "https://npm.pkg.github.com",
             scope = "octocat",
+            _customVersion = "v1",
           ),
         )
         run(

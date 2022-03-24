@@ -61,6 +61,7 @@ public val workflowDockerImage: Workflow = workflow(
               "ghcr.io/mhprodev/mhddos:${'$'}{{ github.sha }},ghcr.io/mhprodev/mhddos:latest",
             )
             ,
+            _customVersion = "v2.10.0",
           ),
         )
       }

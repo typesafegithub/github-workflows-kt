@@ -59,6 +59,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
           name = "Generate wrappers",
           action = GradleBuildActionV2(
             arguments = ":wrapper-generator:run",
+            _customVersion = "v1",
           ),
         )
         uses(

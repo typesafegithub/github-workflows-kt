@@ -26,7 +26,7 @@ jobs:
                   custom-string: "Hello World"
 
             - name: Build and push Docker image
-              uses: docker/build-push-action@v2
+              uses: docker/build-push-action@v2.10.0
               with:
                   context: .
                   push: true
