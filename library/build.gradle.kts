@@ -6,6 +6,7 @@ plugins {
     // Code quality.
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    kotlin("plugin.serialization") version "1.6.10"
 
     // Publishing.
     `maven-publish`
@@ -22,6 +23,7 @@ repositories {
 dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.2.1")
     testImplementation("io.kotest:kotest-runner-junit5:5.2.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2")
 }
 
 sourceSets {

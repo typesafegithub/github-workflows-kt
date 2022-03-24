@@ -1,7 +1,9 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PullRequest(
     val types: List<Type> = emptyList(),
     val branches: List<String>? = null,
@@ -10,6 +12,7 @@ data class PullRequest(
     val pathsIgnore: List<String>? = null,
     override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : Trigger() {
+
     init {
         require(!(branches != null && branchesIgnore != null)) {
             "Cannot define both 'branches' and 'branchesIgnore'!"
@@ -19,9 +22,12 @@ data class PullRequest(
         }
     }
 
+    class Serializer : CaseEnumSerializer<Type>(Type::class.qualifiedName!!, Type.values())
+
     /**
      * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
      */
+    @Serializable(with = Serializer::class)
     enum class Type {
         Assigned,
         Unassigned,
