@@ -14,6 +14,7 @@ import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+
 /**
  * Copy/pasted from the kotlinx.serialization library
  * What changed is that the enum value is the PascalCase version of its snake_case
