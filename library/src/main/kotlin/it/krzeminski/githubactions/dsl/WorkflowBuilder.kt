@@ -62,36 +62,6 @@ class WorkflowBuilder(
         return newJob
     }
 
-    @Suppress("LongParameterList")
-    @Deprecated(
-        "parameter name was renamed to id",
-        ReplaceWith(
-            "job(name,name,runsOn,needs,condition,env,strategyMatrix,_customArguments,timeoutMinutes,block)"
-        )
-    )
-    fun job(
-        name: String,
-        runsOn: RunnerType,
-        needs: List<Job> = emptyList(),
-        condition: String? = null,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
-        strategyMatrix: Map<String, List<String>>? = null,
-        _customArguments: Map<String, CustomValue> = mapOf(),
-        timeoutMinutes: Int? = null,
-        block: JobBuilder.() -> Unit,
-    ): Job = job(
-        id = name,
-        name = name,
-        runsOn = runsOn,
-        needs = needs,
-        condition = condition,
-        env = env,
-        strategyMatrix = strategyMatrix,
-        _customArguments = _customArguments,
-        timeoutMinutes = timeoutMinutes,
-        block = block,
-    )
-
     fun build() = workflow
 }
 
@@ -132,12 +102,12 @@ fun workflow(
     require(workflowBuilder.workflow.jobs.isNotEmpty()) {
         "There are no jobs defined!"
     }
-    workflowBuilder.workflow.jobs.requireUniqueJobNames()
+    workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
     return workflowBuilder.build()
 }
 
-private fun List<Job>.requireUniqueJobNames() {
+private fun List<Job>.requireUniqueJobIds() {
     val countPerJobName = this
         .map { it.id }
         .groupBy { it }

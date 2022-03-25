@@ -6,7 +6,7 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class JobTest : FunSpec({
-    test("should reject invalid job ids") {
+    test("should reject invalid job IDs") {
         listOf(
             "job   1",
             "job1  ",
@@ -17,7 +17,7 @@ class JobTest : FunSpec({
             "job()"
         ).forAll { jobId ->
             shouldThrowAny {
-                Job(jobId, RunnerType.UbuntuLatest, emptyList())
+                Job(jobId, null, RunnerType.UbuntuLatest, emptyList())
             }.shouldHaveMessage(
                 """
                 Invalid field Job(id="$jobId") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
@@ -27,7 +27,7 @@ class JobTest : FunSpec({
         }
     }
 
-    test("should not reject valid job ids") {
+    test("should not reject valid job IDs") {
         listOf(
             "job-42",
             "_42",
@@ -36,7 +36,7 @@ class JobTest : FunSpec({
             "JOB_JOB",
             "_--4",
         ).forAll { jobName ->
-            Job(jobName, RunnerType.UbuntuLatest, emptyList())
+            Job(jobName, null, RunnerType.UbuntuLatest, emptyList())
         }
     }
 

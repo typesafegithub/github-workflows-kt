@@ -65,8 +65,8 @@ class IntegrationTest : FunSpec({
                     name: Consistency check
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
-                runs-on: "ubuntu-latest"
                 name: Test Job
+                runs-on: "ubuntu-latest"
                 needs:
                   - "check_yaml_consistency"
                 steps:
@@ -170,8 +170,8 @@ class IntegrationTest : FunSpec({
 
             jobs:
               "test_job":
-                runs-on: "ubuntu-latest"
                 name: Test Job
+                runs-on: "ubuntu-latest"
                 steps:
                   - id: step-0
                     name: Check out
