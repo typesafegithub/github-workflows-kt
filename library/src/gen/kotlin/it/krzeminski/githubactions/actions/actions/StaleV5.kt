@@ -277,7 +277,7 @@ public class StaleV5(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -341,17 +341,17 @@ public class StaleV5(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class Days(
-        public val integerValue: Int
+        public val integerValue: Int,
     ) {
         public class Value(
-            requestedValue: Int
+            requestedValue: Int,
         ) : StaleV5.Days(requestedValue)
 
         public object Never : StaleV5.Days(-1)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * List of all closed issues and pull requests.

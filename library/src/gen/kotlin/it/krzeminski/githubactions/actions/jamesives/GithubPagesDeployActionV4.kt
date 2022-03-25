@@ -114,7 +114,7 @@ public class GithubPagesDeployActionV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>(
     "JamesIves", "github-pages-deploy-action",
     _customVersion ?: "v4"
@@ -144,7 +144,7 @@ public class GithubPagesDeployActionV4(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * The status of the deployment that indicates if the run failed or passed. Possible outputs

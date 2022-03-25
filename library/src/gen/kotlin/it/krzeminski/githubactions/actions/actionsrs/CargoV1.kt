@@ -44,7 +44,7 @@ public class CargoV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("actions-rs", "cargo", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -58,7 +58,7 @@ public class CargoV1(
     )
 
     public sealed class Command(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Help : CargoV1.Command("help")
 
@@ -125,7 +125,7 @@ public class CargoV1(
         public object Yank : CargoV1.Command("yank")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : CargoV1.Command(customStringValue)
     }
 }

@@ -83,7 +83,7 @@ public class SetupNodeV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<SetupNodeV2.Outputs>("actions", "setup-node", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -106,7 +106,7 @@ public class SetupNodeV2(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class PackageManager(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Npm : SetupNodeV2.PackageManager("npm")
 
@@ -115,12 +115,12 @@ public class SetupNodeV2(
         public object Pnpm : SetupNodeV2.PackageManager("pnpm")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupNodeV2.PackageManager(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * A boolean value to indicate if a cache was hit

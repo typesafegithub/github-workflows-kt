@@ -34,7 +34,7 @@ public class ActionCreateBranchV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("peterjgrainger", "action-create-branch", _customVersion ?: "v2.1.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(

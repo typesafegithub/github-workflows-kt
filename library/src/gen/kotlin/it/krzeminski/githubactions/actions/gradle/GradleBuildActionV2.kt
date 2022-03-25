@@ -75,7 +75,7 @@ public class GradleBuildActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<GradleBuildActionV2.Outputs>(
     "gradle", "gradle-build-action",
     _customVersion
@@ -102,7 +102,7 @@ public class GradleBuildActionV2(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * Link to the build scan if any
