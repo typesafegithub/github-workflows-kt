@@ -61,7 +61,7 @@ public class ActionWithNonStringInputsV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("john-smith", "action-with-non-string-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -79,7 +79,7 @@ public class ActionWithNonStringInputsV3(
     )
 
     public sealed class Bin(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Foo : ActionWithNonStringInputsV3.Bin("foo")
 
@@ -88,15 +88,15 @@ public class ActionWithNonStringInputsV3(
         public object Baz123 : ActionWithNonStringInputsV3.Bin("baz123")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : ActionWithNonStringInputsV3.Bin(customStringValue)
     }
 
     public sealed class Zen(
-        public val integerValue: Int
+        public val integerValue: Int,
     ) {
         public class Value(
-            requestedValue: Int
+            requestedValue: Int,
         ) : ActionWithNonStringInputsV3.Zen(requestedValue)
 
         public object Special1 : ActionWithNonStringInputsV3.Zen(3)
@@ -105,12 +105,12 @@ public class ActionWithNonStringInputsV3(
     }
 
     public sealed class Bah(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object HelloWorld : ActionWithNonStringInputsV3.Bah("helloworld")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : ActionWithNonStringInputsV3.Bah(customStringValue)
     }
 }
