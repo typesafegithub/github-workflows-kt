@@ -101,7 +101,7 @@ public class CheckoutV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("actions", "checkout", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -123,10 +123,10 @@ public class CheckoutV3(
     )
 
     public sealed class FetchDepth(
-        public val integerValue: Int
+        public val integerValue: Int,
     ) {
         public class Value(
-            requestedValue: Int
+            requestedValue: Int,
         ) : CheckoutV3.FetchDepth(requestedValue)
 
         public object Infinite : CheckoutV3.FetchDepth(0)

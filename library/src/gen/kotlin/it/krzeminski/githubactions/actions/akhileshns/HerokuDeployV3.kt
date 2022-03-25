@@ -116,7 +116,7 @@ public class HerokuDeployV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<HerokuDeployV3.Outputs>(
     "AkhileshNS", "heroku-deploy",
     _customVersion
@@ -153,19 +153,19 @@ public class HerokuDeployV3(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class HerokuProcessType(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Web : HerokuDeployV3.HerokuProcessType("web")
 
         public object Worker : HerokuDeployV3.HerokuProcessType("worker")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : HerokuDeployV3.HerokuProcessType(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * The Success/Failure of the action

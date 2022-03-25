@@ -30,7 +30,7 @@ public class ActionWithOutputsV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<ActionWithOutputsV3.Outputs>("john-smith", "action-with-outputs",
         _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
@@ -44,7 +44,7 @@ public class ActionWithOutputsV3(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * Cool output!

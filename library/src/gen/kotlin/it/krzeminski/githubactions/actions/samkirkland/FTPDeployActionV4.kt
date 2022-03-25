@@ -82,7 +82,7 @@ public class FTPDeployActionV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("SamKirkland", "FTP-Deploy-Action", _customVersion ?: "v4.3.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -105,7 +105,7 @@ public class FTPDeployActionV4(
     )
 
     public sealed class Protocol(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Ftp : FTPDeployActionV4.Protocol("ftp")
 
@@ -114,12 +114,12 @@ public class FTPDeployActionV4(
         public object FtpsLegacy : FTPDeployActionV4.Protocol("ftps-legacy")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : FTPDeployActionV4.Protocol(customStringValue)
     }
 
     public sealed class LogLevel(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Minimal : FTPDeployActionV4.LogLevel("minimal")
 
@@ -128,19 +128,19 @@ public class FTPDeployActionV4(
         public object Verbose : FTPDeployActionV4.LogLevel("verbose")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : FTPDeployActionV4.LogLevel(customStringValue)
     }
 
     public sealed class Security(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Strict : FTPDeployActionV4.Security("strict")
 
         public object Loose : FTPDeployActionV4.Security("loose")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : FTPDeployActionV4.Security(customStringValue)
     }
 }

@@ -71,7 +71,7 @@ private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String
 
 private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
     val fileSpec = FileSpec.builder("it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
-        .addComment(
+        .addFileComment(
             """
             This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
             be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
@@ -139,7 +139,6 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
     }
 
     val stepIdConstructorParameter = ParameterSpec.builder("stepId", String::class)
-        .addModifiers(KModifier.PRIVATE)
         .build()
     val stepIdProperty = PropertySpec.builder("stepId", String::class)
         .initializer("stepId")

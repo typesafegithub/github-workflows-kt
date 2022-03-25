@@ -44,7 +44,7 @@ public class SimpleActionWithListsV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("john-smith", "simple-action-with-lists", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -59,7 +59,7 @@ public class SimpleActionWithListsV3(
     )
 
     public sealed class MyEnum(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object One : SimpleActionWithListsV3.MyEnum("one")
 
@@ -68,15 +68,15 @@ public class SimpleActionWithListsV3(
         public object Three : SimpleActionWithListsV3.MyEnum("three")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SimpleActionWithListsV3.MyEnum(customStringValue)
     }
 
     public sealed class MyInt(
-        public val integerValue: Int
+        public val integerValue: Int,
     ) {
         public class Value(
-            requestedValue: Int
+            requestedValue: Int,
         ) : SimpleActionWithListsV3.MyInt(requestedValue)
 
         public object TheAnswer : SimpleActionWithListsV3.MyInt(42)

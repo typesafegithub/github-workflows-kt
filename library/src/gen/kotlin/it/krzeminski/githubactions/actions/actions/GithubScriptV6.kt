@@ -52,7 +52,7 @@ public class GithubScriptV6(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<GithubScriptV6.Outputs>("actions", "github-script", _customVersion ?: "v6") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -70,19 +70,19 @@ public class GithubScriptV6(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class Encoding(
-        public val stringValue: kotlin.String
+        public val stringValue: kotlin.String,
     ) {
         public object String : GithubScriptV6.Encoding("string")
 
         public object Json : GithubScriptV6.Encoding("json")
 
         public class Custom(
-            customStringValue: kotlin.String
+            customStringValue: kotlin.String,
         ) : GithubScriptV6.Encoding(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * The return value of the script, stringified with `JSON.stringify`

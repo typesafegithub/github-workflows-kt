@@ -49,7 +49,7 @@ public class UploadArtifactV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("actions", "upload-artifact", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -63,7 +63,7 @@ public class UploadArtifactV2(
     )
 
     public sealed class BehaviorIfNoFilesFound(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Warn : UploadArtifactV2.BehaviorIfNoFilesFound("warn")
 
@@ -72,15 +72,15 @@ public class UploadArtifactV2(
         public object Ignore : UploadArtifactV2.BehaviorIfNoFilesFound("ignore")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : UploadArtifactV2.BehaviorIfNoFilesFound(customStringValue)
     }
 
     public sealed class RetentionPeriod(
-        public val integerValue: Int
+        public val integerValue: Int,
     ) {
         public class Value(
-            requestedValue: Int
+            requestedValue: Int,
         ) : UploadArtifactV2.RetentionPeriod(requestedValue)
 
         public object Default : UploadArtifactV2.RetentionPeriod(0)

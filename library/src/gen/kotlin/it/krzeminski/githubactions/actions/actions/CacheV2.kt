@@ -44,7 +44,7 @@ public class CacheV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<CacheV2.Outputs>("actions", "cache", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -60,7 +60,7 @@ public class CacheV2(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * A boolean value to indicate an exact match was found for the primary key

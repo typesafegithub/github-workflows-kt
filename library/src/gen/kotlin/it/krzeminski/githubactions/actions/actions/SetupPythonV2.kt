@@ -51,7 +51,7 @@ public class SetupPythonV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<SetupPythonV2.Outputs>("actions", "setup-python", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -68,31 +68,31 @@ public class SetupPythonV2(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class PackageManager(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Pip : SetupPythonV2.PackageManager("pip")
 
         public object Pipenv : SetupPythonV2.PackageManager("pipenv")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupPythonV2.PackageManager(customStringValue)
     }
 
     public sealed class Architecture(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object X64 : SetupPythonV2.Architecture("x64")
 
         public object X86 : SetupPythonV2.Architecture("x86")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupPythonV2.Architecture(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * The installed python version. Useful when given a version range as input.

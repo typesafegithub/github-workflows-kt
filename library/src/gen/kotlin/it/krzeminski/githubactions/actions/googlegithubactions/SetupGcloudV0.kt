@@ -77,7 +77,7 @@ public class SetupGcloudV0(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("google-github-actions", "setup-gcloud", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -97,7 +97,7 @@ public class SetupGcloudV0(
     )
 
     public sealed class Component(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Alpha : SetupGcloudV0.Component("alpha")
 
@@ -164,7 +164,7 @@ public class SetupGcloudV0(
         public object Skaffold : SetupGcloudV0.Component("skaffold")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupGcloudV0.Component(customStringValue)
     }
 }

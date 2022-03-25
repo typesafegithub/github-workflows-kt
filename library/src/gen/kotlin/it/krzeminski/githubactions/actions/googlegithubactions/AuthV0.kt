@@ -112,7 +112,7 @@ public class AuthV0(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -138,19 +138,19 @@ public class AuthV0(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class TokenFormat(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object AccessToken : AuthV0.TokenFormat("access_token")
 
         public object IdToken : AuthV0.TokenFormat("id_token")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : AuthV0.TokenFormat(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * Provided or extracted value for the Google Cloud project ID.
