@@ -29,7 +29,8 @@ class WorkflowBuilder(
 
     @Suppress("LongParameterList")
     fun job(
-        name: String,
+        id: String,
+        name: String? = null,
         runsOn: RunnerType,
         needs: List<Job> = emptyList(),
         condition: String? = null,
@@ -40,6 +41,7 @@ class WorkflowBuilder(
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
+            id = id,
             name = name,
             runsOn = runsOn,
             needs = needs,
@@ -100,14 +102,14 @@ fun workflow(
     require(workflowBuilder.workflow.jobs.isNotEmpty()) {
         "There are no jobs defined!"
     }
-    workflowBuilder.workflow.jobs.requireUniqueJobNames()
+    workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
     return workflowBuilder.build()
 }
 
-private fun List<Job>.requireUniqueJobNames() {
+private fun List<Job>.requireUniqueJobIds() {
     val countPerJobName = this
-        .map { it.name }
+        .map { it.id }
         .groupBy { it }
         .mapValues { it.value.count() }
 
