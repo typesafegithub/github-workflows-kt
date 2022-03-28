@@ -27,15 +27,8 @@ class IntegrationTest : FunSpec({
             name = "Test Job",
             runsOn = RunnerType.UbuntuLatest,
         ) {
-            uses(
-                name = "Check out",
-                action = CheckoutV3(),
-            )
-
-            run(
-                name = "Hello world!",
-                command = "echo 'hello!'",
-            )
+            uses(CheckoutV3())
+            run("echo 'hello!'")
         }
     }
 
@@ -71,10 +64,8 @@ class IntegrationTest : FunSpec({
                   - "check_yaml_consistency"
                 steps:
                   - id: step-0
-                    name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -174,10 +165,8 @@ class IntegrationTest : FunSpec({
                 runs-on: "ubuntu-latest"
                 steps:
                   - id: step-0
-                    name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -514,10 +503,7 @@ class IntegrationTest : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                val addAndCommit = uses(
-                    name = "Some step with output",
-                    action = AddAndCommitV8(),
-                )
+                val addAndCommit = uses(AddAndCommitV8())
 
                 uses(
                     name = "Some step consuming other step's output",
@@ -546,7 +532,6 @@ class IntegrationTest : FunSpec({
                 runs-on: "ubuntu-latest"
                 steps:
                   - id: step-0
-                    name: Some step with output
                     uses: EndBug/add-and-commit@v8
                   - id: step-1
                     name: Some step consuming other step's output

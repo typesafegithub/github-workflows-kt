@@ -18,7 +18,9 @@ private fun Step.toYaml() =
 
 private fun ExternalActionStep.toYaml(): String = buildString {
     appendLine("- id: $id")
-    appendLine("  name: $name")
+    name?.let {
+        appendLine("  name: $it")
+    }
     appendLine("  uses: ${action.fullName}")
 
     val allArguments = action.toYamlArguments()
@@ -38,7 +40,9 @@ private fun ExternalActionStep.toYaml(): String = buildString {
 
 private fun CommandStep.toYaml() = buildString {
     appendLine("- id: $id")
-    appendLine("  name: $name")
+    name?.let {
+        appendLine("  name: $it")
+    }
 
     if (this@toYaml.env.isNotEmpty()) {
         appendLine("  env:")

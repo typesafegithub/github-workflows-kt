@@ -44,6 +44,23 @@ class StepsToYamlTest : DescribeSpec({
             val steps = listOf(
                 CommandStep(
                     id = "someId",
+                    command = "echo 'test!'",
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  run: echo 'test!'""".trimMargin()
+        }
+
+        it("renders with name") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
                     name = "Some command",
                     command = "echo 'test!'",
                 ),
@@ -140,7 +157,24 @@ class StepsToYamlTest : DescribeSpec({
     }
 
     describe("external action step") {
-        it("renders with no parameters") {
+        it("renders with required parameters and no action inputs") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    action = CheckoutV3(),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  uses: actions/checkout@v3""".trimMargin()
+        }
+
+        it("renders with name") {
             // given
             val steps = listOf(
                 ExternalActionStep(
