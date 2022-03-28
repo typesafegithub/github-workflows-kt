@@ -15,7 +15,7 @@ interface WithOutputs<T> {
 
 data class CommandStep(
     override val id: String,
-    val name: String,
+    val name: String? = null,
     val command: String,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
@@ -23,7 +23,7 @@ data class CommandStep(
 
 open class ExternalActionStep(
     override val id: String,
-    open val name: String,
+    open val name: String? = null,
     open val action: Action,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
@@ -31,7 +31,7 @@ open class ExternalActionStep(
 
 data class ExternalActionStepWithOutputs<T>(
     override val id: String,
-    override val name: String,
+    override val name: String? = null,
     override val action: ActionWithOutputs<T>,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
