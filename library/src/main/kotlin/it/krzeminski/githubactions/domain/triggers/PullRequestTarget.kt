@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
 import it.krzeminski.githubactions.dsl.CustomValue
+import it.krzeminski.githubactions.internal.CaseEnumSerializer
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 

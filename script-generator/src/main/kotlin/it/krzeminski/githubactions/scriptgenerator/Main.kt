@@ -19,12 +19,14 @@ fun main(args: Array<String>) {
     val buildFile = File("$filename.main.kts")
     buildFile.writeText(workflow.toKotlin(filename))
     buildFile.setExecutable(true)
-    println("""
+    println(
+        """
         Kotlin script written to $buildFile
         Run it with:
           ./$buildFile
         The resulting YAML file with be available at $filename.yml
-        """.trimIndent())
+        """.trimIndent()
+    )
 }
 
 fun usage(): Nothing {

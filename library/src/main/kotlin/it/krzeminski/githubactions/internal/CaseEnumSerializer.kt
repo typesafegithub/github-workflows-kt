@@ -1,6 +1,6 @@
 @file:OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 
-package it.krzeminski.githubactions.domain.triggers
+package it.krzeminski.githubactions.internal
 
 import it.krzeminski.githubactions.yaml.snakeCaseOf
 import kotlinx.serialization.ExperimentalSerializationApi
