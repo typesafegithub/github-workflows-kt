@@ -43,7 +43,7 @@ public class ReadJavaProperties(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<ReadJavaProperties.Outputs>(
     "madhead", "read-java-properties",
     _customVersion
@@ -63,7 +63,7 @@ public class ReadJavaProperties(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * Property's value

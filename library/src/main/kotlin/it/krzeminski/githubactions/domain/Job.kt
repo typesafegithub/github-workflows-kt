@@ -5,7 +5,8 @@ import it.krzeminski.githubactions.dsl.HasCustomArguments
 import it.krzeminski.githubactions.validation.requireMatchesRegex
 
 data class Job(
-    val name: String,
+    val id: String,
+    val name: String? = null,
     val runsOn: RunnerType,
     val steps: List<Step>,
     val needs: List<Job> = emptyList(),
@@ -17,8 +18,8 @@ data class Job(
 ) : HasCustomArguments {
     init {
         requireMatchesRegex(
-            field = "Job.name",
-            value = name,
+            field = "Job.id",
+            value = id,
             regex = Regex("[a-zA-Z_][a-zA-Z0-9_-]*"),
             url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job"
         )

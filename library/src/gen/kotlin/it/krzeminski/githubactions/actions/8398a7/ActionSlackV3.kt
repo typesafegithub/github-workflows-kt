@@ -90,7 +90,7 @@ public class ActionSlackV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("8398a7", "action-slack", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -114,7 +114,7 @@ public class ActionSlackV3(
     )
 
     public sealed class Status(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Success : ActionSlackV3.Status("success")
 
@@ -125,12 +125,12 @@ public class ActionSlackV3(
         public object CustomEnum : ActionSlackV3.Status("custom")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : ActionSlackV3.Status(customStringValue)
     }
 
     public sealed class MentionStatus(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Success : ActionSlackV3.MentionStatus("success")
 
@@ -143,7 +143,7 @@ public class ActionSlackV3(
         public object Always : ActionSlackV3.MentionStatus("always")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : ActionSlackV3.MentionStatus(customStringValue)
     }
 }

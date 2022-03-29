@@ -23,18 +23,12 @@ class IntegrationTest : FunSpec({
         targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
     ) {
         job(
-            name = "test_job",
+            id = "test_job",
+            name = "Test Job",
             runsOn = RunnerType.UbuntuLatest,
         ) {
-            uses(
-                name = "Check out",
-                action = CheckoutV3(),
-            )
-
-            run(
-                name = "Hello world!",
-                command = "echo 'hello!'",
-            )
+            uses(CheckoutV3())
+            run("echo 'hello!'")
         }
     }
 
@@ -64,15 +58,14 @@ class IntegrationTest : FunSpec({
                     name: Consistency check
                     run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job":
+                name: Test Job
                 runs-on: "ubuntu-latest"
                 needs:
                   - "check_yaml_consistency"
                 steps:
                   - id: step-0
-                    name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -86,7 +79,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             val testJob1 = job(
-                name = "test_job_1",
+                id = "test_job_1",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 run(
@@ -96,7 +89,7 @@ class IntegrationTest : FunSpec({
             }
 
             job(
-                name = "test_job_2",
+                id = "test_job_2",
                 runsOn = RunnerType.UbuntuLatest,
                 needs = listOf(testJob1),
             ) {
@@ -168,13 +161,12 @@ class IntegrationTest : FunSpec({
 
             jobs:
               "test_job":
+                name: Test Job
                 runs-on: "ubuntu-latest"
                 steps:
                   - id: step-0
-                    name: Check out
                     uses: actions/checkout@v3
                   - id: step-1
-                    name: Hello world!
                     run: echo 'hello!'
         """.trimIndent()
     }
@@ -188,7 +180,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 run(
@@ -241,7 +233,7 @@ class IntegrationTest : FunSpec({
             targetFile = targetTempFile.toPath(),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 uses(
@@ -293,7 +285,7 @@ class IntegrationTest : FunSpec({
             targetFile = targetTempFile.toPath(),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 uses(
@@ -359,7 +351,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
                 condition = "\${{ always() }}"
             ) {
@@ -409,7 +401,7 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
                 condition = "\${{ always() }}",
                 env = linkedMapOf(
@@ -508,13 +500,10 @@ class IntegrationTest : FunSpec({
             targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
-                name = "test_job",
+                id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                val addAndCommit = uses(
-                    name = "Some step with output",
-                    action = AddAndCommitV8(),
-                )
+                val addAndCommit = uses(AddAndCommitV8())
 
                 uses(
                     name = "Some step consuming other step's output",
@@ -543,7 +532,6 @@ class IntegrationTest : FunSpec({
                 runs-on: "ubuntu-latest"
                 steps:
                   - id: step-0
-                    name: Some step with output
                     uses: EndBug/add-and-commit@v8
                   - id: step-1
                     name: Some step consuming other step's output

@@ -6,7 +6,7 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class JobTest : FunSpec({
-    test("should reject invalid job names") {
+    test("should reject invalid job IDs") {
         listOf(
             "job   1",
             "job1  ",
@@ -15,19 +15,19 @@ class JobTest : FunSpec({
             "-job",
             "4job",
             "job()"
-        ).forAll { jobName ->
+        ).forAll { jobId ->
             shouldThrowAny {
-                Job(jobName, RunnerType.UbuntuLatest, emptyList())
+                Job(jobId, null, RunnerType.UbuntuLatest, emptyList())
             }.shouldHaveMessage(
                 """
-                Invalid field Job(name="$jobName") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
+                Invalid field Job(id="$jobId") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
                 See: https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job
                 """.trimIndent()
             )
         }
     }
 
-    test("should not reject valid job names") {
+    test("should not reject valid job IDs") {
         listOf(
             "job-42",
             "_42",
@@ -36,14 +36,14 @@ class JobTest : FunSpec({
             "JOB_JOB",
             "_--4",
         ).forAll { jobName ->
-            Job(jobName, RunnerType.UbuntuLatest, emptyList())
+            Job(jobName, null, RunnerType.UbuntuLatest, emptyList())
         }
     }
 
     test("should reject invalid timeout values") {
         shouldThrowAny {
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = RunnerType.UbuntuLatest,
                 timeoutMinutes = -1,
                 steps = listOf(

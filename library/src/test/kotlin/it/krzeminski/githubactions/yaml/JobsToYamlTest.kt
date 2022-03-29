@@ -15,7 +15,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -26,7 +26,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
             ),
             Job(
-                name = "Job-2",
+                id = "Job-2",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -60,7 +60,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = UbuntuLatest,
                 steps = listOf(
                     CommandStep(
@@ -88,7 +88,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = Windows2022,
                 steps = listOf(
                     CommandStep(
@@ -115,18 +115,18 @@ class JobsToYamlTest : DescribeSpec({
     it("renders with dependencies on other jobs") {
         // given
         val anotherJob1 = Job(
-            name = "Another-job-1",
+            id = "Another-job-1",
             runsOn = UbuntuLatest,
             steps = listOf(),
         )
         val anotherJob2 = Job(
-            name = "Another-job-2",
+            id = "Another-job-2",
             runsOn = UbuntuLatest,
             steps = listOf(),
         )
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = UbuntuLatest,
                 needs = listOf(anotherJob1, anotherJob2),
                 steps = listOf(
@@ -158,7 +158,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = UbuntuLatest,
                 env = linkedMapOf(
                     "FOO" to "bar",
@@ -200,7 +200,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = UbuntuLatest,
                 condition = "\${{ always() }}",
                 steps = listOf(
@@ -230,7 +230,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = UbuntuLatest,
                 strategyMatrix = mapOf(
                     "strategyParam1" to listOf("foo", "bar"),
@@ -270,7 +270,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = RunnerType.UbuntuLatest,
                 _customArguments = mapOf(
                     "distribute-job" to BooleanCustomValue(true),
@@ -307,7 +307,7 @@ class JobsToYamlTest : DescribeSpec({
         // given
         val jobs = listOf(
             Job(
-                name = "Job-1",
+                id = "Job-1",
                 runsOn = RunnerType.UbuntuLatest,
                 timeoutMinutes = 30,
                 steps = listOf(

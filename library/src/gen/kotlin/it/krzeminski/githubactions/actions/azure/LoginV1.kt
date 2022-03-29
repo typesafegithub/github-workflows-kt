@@ -60,7 +60,7 @@ public class LoginV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : Action("Azure", "login", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -78,7 +78,7 @@ public class LoginV1(
     )
 
     public sealed class Environment(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object AzureCloud : LoginV1.Environment("azurecloud")
 
@@ -91,7 +91,7 @@ public class LoginV1(
         public object AzureGermanCloud : LoginV1.Environment("azuregermancloud")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : LoginV1.Environment(customStringValue)
     }
 }

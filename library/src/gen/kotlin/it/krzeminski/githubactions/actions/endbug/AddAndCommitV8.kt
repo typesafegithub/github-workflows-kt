@@ -94,7 +94,7 @@ public class AddAndCommitV8(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v8") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -122,7 +122,7 @@ public class AddAndCommitV8(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class DefaultActor(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object GithubActor : AddAndCommitV8.DefaultActor("github_actor")
 
@@ -131,12 +131,12 @@ public class AddAndCommitV8(
         public object GithubActions : AddAndCommitV8.DefaultActor("github_actions")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : AddAndCommitV8.DefaultActor(customStringValue)
     }
 
     public sealed class PathSpecErrorHandling(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Ignore : AddAndCommitV8.PathSpecErrorHandling("ignore")
 
@@ -145,12 +145,12 @@ public class AddAndCommitV8(
         public object ExitAtEnd : AddAndCommitV8.PathSpecErrorHandling("exitAtEnd")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : AddAndCommitV8.PathSpecErrorHandling(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * Whether the action has created a commit.

@@ -92,7 +92,7 @@ public class SetupJavaV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null
+    _customVersion: String? = null,
 ) : ActionWithOutputs<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
@@ -119,7 +119,7 @@ public class SetupJavaV2(
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class Distribution(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Adopt : SetupJavaV2.Distribution("adopt")
 
@@ -136,12 +136,12 @@ public class SetupJavaV2(
         public object Zulu : SetupJavaV2.Distribution("zulu")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupJavaV2.Distribution(customStringValue)
     }
 
     public sealed class JavaPackage(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Jdk : SetupJavaV2.JavaPackage("jdk")
 
@@ -152,24 +152,24 @@ public class SetupJavaV2(
         public object JrePlusFx : SetupJavaV2.JavaPackage("jre+fx")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupJavaV2.JavaPackage(customStringValue)
     }
 
     public sealed class BuildPlatform(
-        public val stringValue: String
+        public val stringValue: String,
     ) {
         public object Maven : SetupJavaV2.BuildPlatform("maven")
 
         public object Gradle : SetupJavaV2.BuildPlatform("gradle")
 
         public class Custom(
-            customStringValue: String
+            customStringValue: String,
         ) : SetupJavaV2.BuildPlatform(customStringValue)
     }
 
     public class Outputs(
-        private val stepId: String
+        private val stepId: String,
     ) {
         /**
          * Distribution of Java that has been installed

@@ -11,7 +11,8 @@ import it.krzeminski.githubactions.domain.RunnerType
 @Suppress("LongParameterList")
 @GithubActionsDsl
 class JobBuilder(
-    val name: String,
+    val id: String,
+    val name: String?,
     val runsOn: RunnerType,
     val needs: List<Job>,
     val env: LinkedHashMap<String, String>,
@@ -21,6 +22,7 @@ class JobBuilder(
     override val _customArguments: Map<String, CustomValue>,
 ) : HasCustomArguments {
     private var job = Job(
+        id = id,
         name = name,
         runsOn = runsOn,
         needs = needs,
@@ -33,7 +35,18 @@ class JobBuilder(
     )
 
     fun run(
-        name: String,
+        command: String,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        condition: String? = null,
+    ): CommandStep = run(
+        name = null,
+        command = command,
+        env = env,
+        condition = condition,
+    )
+
+    fun run(
+        name: String? = null,
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
@@ -50,7 +63,18 @@ class JobBuilder(
     }
 
     fun uses(
-        name: String,
+        action: Action,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        condition: String? = null,
+    ): ExternalActionStep = uses(
+        name = null,
+        action = action,
+        env = env,
+        condition = condition,
+    )
+
+    fun uses(
+        name: String? = null,
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
@@ -67,7 +91,18 @@ class JobBuilder(
     }
 
     fun <T> uses(
-        name: String,
+        action: ActionWithOutputs<T>,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        condition: String? = null,
+    ): ExternalActionStepWithOutputs<T> = uses(
+        name = null,
+        action = action,
+        env = env,
+        condition = condition,
+    )
+
+    fun <T> uses(
+        name: String? = null,
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
