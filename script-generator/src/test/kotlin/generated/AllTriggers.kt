@@ -149,7 +149,10 @@ public val workflowAllTriggers: Workflow = workflow(
       sourceFile = Paths.get("all-triggers.main.kts"),
       targetFile = Paths.get("yaml-output/all-triggers.yml"),
     ) {
-      job("job-0", UbuntuLatest) {
+      job(
+        id = "job-0",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "Check out",
           action = CheckoutV2(),

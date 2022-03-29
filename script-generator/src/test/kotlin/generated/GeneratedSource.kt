@@ -58,7 +58,10 @@ public val workflowGenerated: Workflow = workflow(
         "GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED" to "true",
       ),
     ) {
-      job("check_yaml_consistency", UbuntuLatest) {
+      job(
+        id = "check_yaml_consistency",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "Check out",
           action = CheckoutV2(),
@@ -78,15 +81,17 @@ public val workflowGenerated: Workflow = workflow(
         )
       }
 
-      job("build_for_UbuntuLatest", UbuntuLatest,
-      env = linkedMapOf(
-        "COLOR" to "blue",
-        "SIZE" to "XXL",
-      )
+      job(
+        id = "build_for_UbuntuLatest",
+        runsOn = UbuntuLatest,
+        env = linkedMapOf(
+          "COLOR" to "blue",
+          "SIZE" to "XXL",
+        ),
 
-      , _customArguments = mapOf(
-      "needs" to ListCustomValue("check_yaml_consistency"),
-      )
+        _customArguments = mapOf(
+        "needs" to ListCustomValue("check_yaml_consistency"),
+        )
       ) {
         uses(
           name = "Checkout",

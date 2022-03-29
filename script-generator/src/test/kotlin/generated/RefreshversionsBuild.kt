@@ -79,7 +79,10 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
       sourceFile = Paths.get("refreshversions-build.main.kts"),
       targetFile = Paths.get("yaml-output/refreshversions-build.yml"),
     ) {
-      job("check-all", UbuntuLatest) {
+      job(
+        id = "check-all",
+        runsOn = UbuntuLatest,
+      ) {
         run(
           name = "Enable long paths for git Windows",
           command = "git config --global core.longpaths true",

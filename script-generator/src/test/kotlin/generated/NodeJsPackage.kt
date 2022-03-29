@@ -25,7 +25,10 @@ public val workflowNodejsPackage: Workflow = workflow(
       sourceFile = Paths.get("nodejs-package.main.kts"),
       targetFile = Paths.get("yaml-output/nodejs-package.yml"),
     ) {
-      job("build", UbuntuLatest) {
+      job(
+        id = "build",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "CheckoutV2",
           action = CheckoutV2(),

@@ -23,7 +23,10 @@ public val workflowRefreshversionsWebsite: Workflow = workflow(
       sourceFile = Paths.get("refreshversions-website.main.kts"),
       targetFile = Paths.get("yaml-output/refreshversions-website.yml"),
     ) {
-      job("deploy", UbuntuLatest) {
+      job(
+        id = "deploy",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "CheckoutV2",
           action = CheckoutV2(),

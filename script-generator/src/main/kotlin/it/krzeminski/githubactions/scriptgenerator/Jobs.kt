@@ -11,21 +11,22 @@ import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassN
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
 fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
-    jobs.forEach { (name, job) ->
-        builder.add(
-            "job(%S, %M",
-            name,
-            enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest)
-        )
+    jobs.forEach { (jobId, job) ->
+        builder.add("job(\n")
+            .indent()
+            .add("id = %S,\n", jobId)
+        if (job.name != null) builder.add("name = %S,\n", job.name)
+        builder.add("runsOn = %M,\n", enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest))
         builder.add(
             job.env.joinToCode(
                 ifEmpty = CodeBlock.EMPTY,
-                prefix = CodeBlock.of(",\nenv = %M(", Members.linkedMapOf),
-                postfix = ")\n",
+                prefix = CodeBlock.of("env = %M(", Members.linkedMapOf),
+                postfix = "),\n",
                 transform = { key, value -> CodeBlock.of("%S to %S", key, value) }
             )
         )
         builder.add(job.customArguments())
+        builder.unindent()
         builder.add(") {\n")
         builder.indent()
         job.steps.forEach { step ->
@@ -56,7 +57,7 @@ private fun YamlJob.customArguments(): CodeBlock {
     ).toMap()
     return map.joinToCode(
         ifEmpty = CodeBlock.EMPTY,
-        prefix = CodeBlock.of(", _customArguments = %M(\n", Members.mapOf),
+        prefix = CodeBlock.of("_customArguments = %M(\n", Members.mapOf),
         separator = "",
         postfix = ")",
         transform = { key, list ->

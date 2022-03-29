@@ -24,7 +24,10 @@ public val workflowDockerImage: Workflow = workflow(
       sourceFile = Paths.get("docker-image.main.kts"),
       targetFile = Paths.get("yaml-output/docker-image.yml"),
     ) {
-      job("push_image", UbuntuLatest) {
+      job(
+        id = "push_image",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "CheckoutV2",
           action = CheckoutV2(),

@@ -28,7 +28,10 @@ public val workflowRefreshversionsPr: Workflow = workflow(
       sourceFile = Paths.get("refreshversions-pr.main.kts"),
       targetFile = Paths.get("yaml-output/refreshversions-pr.yml"),
     ) {
-      job("Refresh-Versions", UbuntuLatest) {
+      job(
+        id = "Refresh-Versions",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "check-out",
           action = CheckoutV2(

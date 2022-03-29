@@ -25,7 +25,10 @@ public val workflowGenerateWrappers: Workflow = workflow(
       sourceFile = Paths.get("generate-wrappers.main.kts"),
       targetFile = Paths.get("yaml-output/generate-wrappers.yml"),
     ) {
-      job("check_yaml_consistency", UbuntuLatest) {
+      job(
+        id = "check_yaml_consistency",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "Check out",
           action = CheckoutV2(),
@@ -41,9 +44,12 @@ public val workflowGenerateWrappers: Workflow = workflow(
         )
       }
 
-      job("generate-wrappers", UbuntuLatest, _customArguments = mapOf(
-      "needs" to ListCustomValue("check_yaml_consistency"),
-      )
+      job(
+        id = "generate-wrappers",
+        runsOn = UbuntuLatest,
+        _customArguments = mapOf(
+        "needs" to ListCustomValue("check_yaml_consistency"),
+        )
       ) {
         uses(
           name = "Checkout",

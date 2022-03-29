@@ -28,7 +28,10 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       sourceFile = Paths.get("update-gradle-wrapper.main.kts"),
       targetFile = Paths.get("yaml-output/update-gradle-wrapper.yml"),
     ) {
-      job("check_yaml_consistency", UbuntuLatest) {
+      job(
+        id = "check_yaml_consistency",
+        runsOn = UbuntuLatest,
+      ) {
         uses(
           name = "Check out",
           action = CheckoutV2(),
@@ -45,9 +48,12 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         )
       }
 
-      job("update-gradle-wrapper", UbuntuLatest, _customArguments = mapOf(
-      "needs" to ListCustomValue("check_yaml_consistency"),
-      )
+      job(
+        id = "update-gradle-wrapper",
+        runsOn = UbuntuLatest,
+        _customArguments = mapOf(
+        "needs" to ListCustomValue("check_yaml_consistency"),
+        )
       ) {
         uses(
           name = "Checkout",
