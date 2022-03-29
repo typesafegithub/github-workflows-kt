@@ -18,6 +18,7 @@ import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
+import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.linkedMapOf
 import kotlin.collections.listOf

@@ -11,6 +11,7 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
+import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowDockerImage: Workflow = workflow(

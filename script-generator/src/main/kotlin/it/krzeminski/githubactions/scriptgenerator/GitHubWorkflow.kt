@@ -9,7 +9,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.nio.file.Paths
 
 fun YamlWorkflow.toFileSpec(filenameFromUrl: String?, outputFolder: String?) = FileSpec.builder("", "$name.main.kts")
-    .addImport("$PACKAGE.yaml", "toYaml")
+    .addImport("$PACKAGE.yaml", "toYaml", "writeToFile")
     .addImport("$PACKAGE.dsl", "expr")
     .addProperty(workFlowProperty(filenameFromUrl, outputFolder))
     .build()
@@ -58,10 +58,11 @@ private fun YamlWorkflow.workflowEnv(): CodeBlock {
     }
 }
 
-fun YamlWorkflow.toKotlin(filenameFromUrl: String?): String = """
+fun YamlWorkflow.toKotlin(filename: String): String = """
         |#!/usr/bin/env kotlin
         |
         |@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
         |
-        |${toFileSpec(filenameFromUrl, null)}
+        |${toFileSpec(filename, null)}
+        |workflow${filename.toPascalCase()}.writeToFile()
 """.trimMargin()

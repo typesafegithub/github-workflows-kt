@@ -16,7 +16,15 @@ fun main(args: Array<String>) {
     }
 
     val workflow: YamlWorkflow = decodeYamlWorkflow(content)
-    println(workflow.toKotlin(filename))
+    val buildFile = File("$filename.main.kts")
+    buildFile.writeText(workflow.toKotlin(filename))
+    buildFile.setExecutable(true)
+    println("""
+        Kotlin script written to $buildFile
+        Run it with:
+          ./$buildFile
+        The resulting YAML file with be available at $filename.yml
+        """.trimIndent())
 }
 
 fun usage(): Nothing {

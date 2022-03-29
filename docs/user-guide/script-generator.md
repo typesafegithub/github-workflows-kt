@@ -27,51 +27,15 @@ You can also create a GitHub Gist at https://gist.github.com/
 ./gradlew :script-generator:run --args https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml
 ```
 
-In any case, the script-generator will output your Kotlin Script:
-
-```kotlin
-public val workflowPublishMkDocsWebsiteToGitHubPages: Workflow = workflow(
-      name = "Publish MkDocs website to GitHub pages",
-      on = listOf(
-        Push(
-          branches = listOf("release"),
-        ),
-        ),
-      sourceFile = Paths.get("publish-mkdocs-website-to-github-pages.main.kts"),
-      targetFile = Paths.get("publish-mkdocs-website-to-github-pages.yml"),
-    ) {
-      job("deploy", UbuntuLatest) {
-        uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
-        )
-        run(
-          name = "./docs/DocsCopier.main.kts",
-          command = "./docs/DocsCopier.main.kts",
-        )
-        uses(
-          name = "SetupPythonV2",
-          action = SetupPythonV2(
-            pythonVersion = "3.x",
-          ),
-        )
-       // ...
-    }
-}
-```
-
-You simply have to add for example `workflowPublishMkDocsWebsiteToGitHubPages.writeToFile()`
-
 ## Run the script
 
-Copy the script to for example `/path/to/.github/workflows/build.main.kts`
+Whether you use an URL or a path to a local file, the script-generator should show something like:
 
-Make the script executable and run it:
-
-```bash
-cd /path/to/.github/workflows
-chmod a+x build.main.kts
-./build.main.kts
+```
+Kotlin script written to update-gradle-wrapper.main.kts
+Run it with:
+  ./build.main.kts
+The resulting YAML file with be available at build.yml
 ```
 
 ## Compare the YAML files - semantically
