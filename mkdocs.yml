@@ -18,6 +18,7 @@ nav:
   - Introduction: 'index.md'
   - User guide:
       - Getting started: 'user-guide/getting_started.md'
+      - Script generator: 'user-guide/script-generator.md'
       - Using actions: 'user-guide/using-actions.md'
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
