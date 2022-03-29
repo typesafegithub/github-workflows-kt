@@ -3,7 +3,6 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.asClassName
-import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 
 val CodeBlock.Companion.EMPTY: CodeBlock
     get() = of("")
@@ -16,13 +15,16 @@ inline fun <reified T : Enum<T>> enumMemberName(input: T): MemberName? =
 
 inline fun <reified T : Enum<T>> enumMemberName(input: String): MemberName? {
     return enumValues<T>()
-        .firstOrNull { it.name == input.toPascalCase() }
+        .firstOrNull { normalizeEnum(it.name) == normalizeEnum(input) }
         ?.let { MemberName(T::class.asClassName(), it.name) }
         ?: run {
-            println("WARNING: Unexpected enum ${T::class} $input=$input expected=${enumValues<T>()}")
+            println("WARNING: Unexpected enum ${T::class} input=${normalizeEnum(input)} expected=${enumValues<T>().map { normalizeEnum(it.name) }}")
             null
         }
 }
+
+fun normalizeEnum(s: String): String =
+    s.replace("[ _+-]".toRegex(), "").lowercase()
 
 public fun <K : Any, V : Any?> Map<K, V>.joinToCode(
     prefix: CodeBlock = CodeBlock.of("("),
