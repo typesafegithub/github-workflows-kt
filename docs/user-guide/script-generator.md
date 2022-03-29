@@ -24,7 +24,7 @@ If your YAML workflow is available publicly on GitHub, run:
 You can also create a GitHub Gist at https://gist.github.com/
 
 ```bash
-./gradlew :script-generator:run --args https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml
+./gradlew :script-generator:run --args https://gist.githubusercontent.com/jmfayard/dba8b5195292cac0e5f83c42de7cc3c2/raw/ca6143d70a8a34eea5ea64871f87cfec69443ab1/build.yml
 ```
 
 ## Run the script
