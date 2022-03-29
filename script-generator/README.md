@@ -1,17 +1,33 @@
 ## 🎉 Generate your Kotlin Script from your existing YAML workflow
 
-Create a Github Gist with your existing workflow
+If you have an existing working GitHub YAML workflow, the script-generator can convert it to a Kotlin script !
 
-Its **url** should look like https://gist.githubusercontent.com/jmfayard/63416a2812475a39618a6b1aab16020b/raw/cd2a5d4dea15c76ca678612a814c59acb6e1b455/build.yml
-
-Then simply run the command:
+To use it, clone the repository locally:
 
 ```bash
-export URL=https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml
-./gradlew :script-generator:run --args $URL
+git clone https://github.com/krzema12/github-actions-kotlin-dsl
+cd github-actions-kotlin-dsl
 ```
 
-You will see your Kotlin Script:
+If you have your workflow available locally, run:
+
+```bash
+./gradlew :script-generator:run --args /path/to/.github/workflows/build.yml
+```
+
+If your YAML workflow is available publicly on GitHub, run:
+
+```bash
+./gradlew :script-generator:run --args https://raw.githubusercontent.com/krzema12/github-actions-kotlin-dsl/0f41e3322a3e7de4199000fae54b398380eace2f/.github/workflows/build.yaml
+```
+
+You can also create a GitHub Gist at https://gist.github.com/ 
+
+```bash
+./gradlew :script-generator:run --args https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml
+```
+
+In any case, the script-generator will show your Kotlin Script:
 
 ```kotlin
 public val workflowPublishMkDocsWebsiteToGitHubPages: Workflow = workflow(

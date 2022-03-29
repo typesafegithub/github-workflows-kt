@@ -89,5 +89,9 @@ class NormalizeYamlTest : FunSpec({
         val url =
             URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yml")
         url.filename() shouldBe "publish-mkdocs-website"
+
+        val url2 =
+            URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yaml")
+        url2.filename() shouldBe "publish-mkdocs-website"
     }
 })
