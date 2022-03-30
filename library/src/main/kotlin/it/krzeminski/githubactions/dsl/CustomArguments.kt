@@ -2,16 +2,22 @@
 
 package it.krzeminski.githubactions.dsl
 
+import kotlinx.serialization.Serializable
+
 interface HasCustomArguments {
     val _customArguments: Map<String, CustomValue>
 }
 
+@Serializable
 sealed class CustomValue
 
+@Serializable
 data class StringCustomValue(val value: String) : CustomValue()
 
+@Serializable
 data class ListCustomValue(val value: List<String>) : CustomValue()
 
+@Serializable
 data class ObjectCustomValue(val value: Map<String, String>) : CustomValue()
 
 fun IntCustomValue(value: Int): StringCustomValue =

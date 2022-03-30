@@ -6,6 +6,7 @@ plugins {
     // Code quality.
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    kotlin("plugin.serialization") version "1.6.10"
 
     // Publishing.
     `maven-publish`
@@ -22,6 +23,7 @@ repositories {
 dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.2.2")
     testImplementation("io.kotest:kotest-runner-junit5:5.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2")
 }
 
 sourceSets {
@@ -109,13 +111,17 @@ tasks {
     }
 }
 
-val validateVersionInReadme by tasks.creating<Task> {
+val validateDuplicatedVersion by tasks.creating<Task> {
     doLast {
         require(
             project.rootDir.resolve("docs/user-guide/getting_started.md").readText()
                 .contains("   @file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
-        ) { "Library versions stated in build.gradle.kts and in README.md should be equal!" }
+        ) { "Library version stated in the docs should be equal to $version!" }
+        require(
+            project.rootDir.resolve("script-generator/src/main/kotlin/it/krzeminski/githubactions/scriptgenerator/Version.kt").readText()
+                .contains("val LIBRARY_VERSION = \"$version\"")
+        ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
     }
 }
 
-tasks.getByName("check").dependsOn(validateVersionInReadme)
+tasks.getByName("check").dependsOn(validateDuplicatedVersion)
