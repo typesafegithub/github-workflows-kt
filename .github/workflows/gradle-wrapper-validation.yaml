@@ -33,7 +33,6 @@ jobs:
       - "check_yaml_consistency"
     steps:
       - id: step-0
-        name: Checkout
         uses: actions/checkout@v3
       - id: step-1
         name: Validate wrapper
