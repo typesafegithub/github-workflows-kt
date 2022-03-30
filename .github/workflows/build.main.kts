@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.11.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.12.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -22,13 +22,10 @@ val buildWorkflow = workflow(
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
-            name = "build_for_$runnerType",
+            id = "build_for_$runnerType",
             runsOn = runnerType,
         ) {
-            uses(
-                name = "Checkout",
-                action = CheckoutV3(),
-            )
+            uses(CheckoutV3())
             uses(
                 name = "Set up JDK",
                 action = SetupJavaV2(
