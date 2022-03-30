@@ -16,4 +16,4 @@ fun snakeCaseOf(name: String): String {
 inline fun <reified T : Enum<T>> List<T>.toSnakeCase(): List<String> =
     this.map { it.toSnakeCase() }
 
-private val pascalCaseRegex = Regex("[A-Z][a-z]*")
+val pascalCaseRegex = Regex("[A-Z][a-z]*")
