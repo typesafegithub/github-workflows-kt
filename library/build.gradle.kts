@@ -111,19 +111,17 @@ tasks {
     }
 }
 
-val validateVersion by tasks.creating<Task> {
-    doFirst {
+val validateDuplicatedVersion by tasks.creating<Task> {
+    doLast {
+        require(
+            project.rootDir.resolve("docs/user-guide/getting_started.md").readText()
+                .contains("   @file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
+        ) { "Library version stated in the docs should be equal to $version!" }
         require(
             project.rootDir.resolve("script-generator/src/main/kotlin/it/krzeminski/githubactions/scriptgenerator/Version.kt").readText()
                 .contains("val LIBRARY_VERSION = \"$version\"")
         ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
     }
-    doLast {
-        require(
-            project.rootDir.resolve("docs/user-guide/getting_started.md").readText()
-                .contains("   @file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
-        ) { "Library versions stated in README.md should be equal to $version!" }
-    }
 }
 
-tasks.getByName("check").dependsOn(validateVersion)
+tasks.getByName("check").dependsOn(validateDuplicatedVersion)
