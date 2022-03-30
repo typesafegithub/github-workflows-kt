@@ -1,6 +1,8 @@
-## Generate your Kotlin Script from your existing YAML workflow
+If you have an existing working GitHub YAML workflow, the **script generator** can convert it to a Kotlin script! It may
+not produce the most readable or by any means final code (as with every code generator), but it's a good starting point
+when you want to save time on migrating your workflows to YAML.
 
-If you have an existing working GitHub YAML workflow, the **script-generator** can convert it to a Kotlin script !
+## Generate Kotlin Script from existing YAML
 
 To use it, clone the repository locally:
 
@@ -15,24 +17,16 @@ If you have your workflow available in a local file, run:
 ./gradlew :script-generator:run --args /path/to/.github/workflows/build.yml
 ```
 
-If your YAML workflow is available publicly on GitHub, run:
+If your YAML workflow is available publicly, e.g. on GitHub, use such command referring to the raw file:
 
 ```bash
 ./gradlew :script-generator:run --args https://raw.githubusercontent.com/krzema12/github-actions-kotlin-dsl/0f41e3322a3e7de4199000fae54b398380eace2f/.github/workflows/build.yaml
 ```
 
-You can also create a GitHub Gist at https://gist.github.com/
-
-```bash
-./gradlew :script-generator:run --args https://gist.githubusercontent.com/jmfayard/dba8b5195292cac0e5f83c42de7cc3c2/raw/ca6143d70a8a34eea5ea64871f87cfec69443ab1/build.yml
-```
-
-## Run the script
-
-Whether you use an URL or a path to a local file, the script-generator should show something like:
+The script generator will communicate a successful generation and hint you what to do next:
 
 ```
-Kotlin script written to update-gradle-wrapper.main.kts
+Kotlin script written to build.main.kts
 Run it with:
   ./build.main.kts
 The resulting YAML file with be available at build.yml
@@ -40,10 +34,20 @@ The resulting YAML file with be available at build.yml
 
 ## Compare the YAML files - semantically
 
-Running the script produced a file like `build.yaml`
+Running the script produced a file like `build.yml`. It's recommended to verify if the generator produced a correct
+script. You cannot compare it directly with the original file because there are multiple ways to encode the same YAML
+content. For example, certain formatting differences are possible, the lists can be expressed either as separate lines
+starting with `-` or as values between `[` and `]`, and so on.
 
-You cannot compare it directly with the original file because there are lots of way to write in YAML the same content.
-
-Instead, do a Semantic YAML Diff using **https://yamldiff.com/**
+Instead, a semantic YAML diff may be helpful, using e.g. **https://yamldiff.com/**. It will show you what really
+changed:
 
 <img width="1336" alt="YAML_Diff_-_Semantically_compare_YAML" src="https://user-images.githubusercontent.com/459464/159888285-069cef9c-f35d-4555-93f8-7623c0c73744.png">
+
+## Use the Kotlin script
+
+Now you don't need your old YAML file. The new source of truth about your workflow's logic is the Kotlin script, and the
+generated YAML serves only as a preview what actually will be executed by GitHub.
+
+Please refer to [Getting started](getting_started.md) chapter to learn how to use the new script and make it work on
+GitHub.
