@@ -2,11 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
 
     // Code quality.
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
-    kotlin("plugin.serialization") version "1.6.10"
+    id("io.gitlab.arturbosch.detekt")
+    id("org.jlleitschuh.gradle.ktlint")
 
     // Publishing.
     `maven-publish`
