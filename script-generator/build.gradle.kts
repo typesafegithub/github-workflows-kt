@@ -42,8 +42,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "11"
         freeCompilerArgs += listOf(
-            "-Xopt-in=kotlin.RequiresOptIn",
-            "-Xopt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
+            "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )
     }
 }
