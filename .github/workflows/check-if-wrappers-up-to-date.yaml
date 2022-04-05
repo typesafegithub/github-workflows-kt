@@ -9,6 +9,8 @@ on:
     branches:
       - 'main'
   pull_request:
+  schedule:
+   - cron: '0 1 * * *'
 
 jobs:
   "check_yaml_consistency":
