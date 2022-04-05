@@ -426,6 +426,7 @@ val wrappersToGenerate = listOf(
             "dry-run" to BooleanTyping,
             "single-commit" to BooleanTyping,
             "silent" to BooleanTyping,
+            "force" to BooleanTyping,
         )
     ),
     WrapperRequest(

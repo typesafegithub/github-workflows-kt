@@ -75,6 +75,12 @@ public class GithubPagesDeployActionV4(
      */
     public val dryRun: Boolean? = null,
     /**
+     * Whether to force-push and overwrite any existing deployment. Setting this to false will
+     * attempt to rebase simultaneous deployments. This option is on by default and can be toggled off
+     * by setting it to false.
+     */
+    public val force: Boolean? = null,
+    /**
      * Allows you to customize the name that is attached to the GitHub config which is used when
      * pushing the deployment commits. If this is not included it will use the name in the GitHub
      * context, followed by the name of the action.
@@ -131,6 +137,7 @@ public class GithubPagesDeployActionV4(
             clean?.let { "clean" to it.toString() },
             cleanExclude?.let { "clean-exclude" to it.joinToString("\n") },
             dryRun?.let { "dry-run" to it.toString() },
+            force?.let { "force" to it.toString() },
             gitConfigName?.let { "git-config-name" to it },
             gitConfigEmail?.let { "git-config-email" to it },
             repositoryName?.let { "repository-name" to it },
