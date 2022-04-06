@@ -328,6 +328,7 @@ val wrappersToGenerate = listOf(
             "create_credentials_file" to BooleanTyping,
             "access_token_scopes" to ListOfTypings(","),
             "id_token_include_email" to BooleanTyping,
+            "export_environment_variables" to BooleanTyping,
         ),
     ),
     WrapperRequest(

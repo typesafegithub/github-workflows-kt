@@ -59,6 +59,28 @@ public class AuthV0(
      */
     public val createCredentialsFile: Boolean? = null,
     /**
+     * If true, the action will export common environment variables which are
+     * known to be consumed by popular downstream libraries and tools, including:
+     *
+     * - CLOUDSDK_PROJECT
+     * - CLOUDSDK_CORE_PROJECT
+     * - GCP_PROJECT
+     * - GCLOUD_PROJECT
+     * - GOOGLE_CLOUD_PROJECT
+     *
+     * If "create_credentials_file" is true, additional environment variables are
+     * exported:
+     *
+     * - CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
+     * - GOOGLE_APPLICATION_CREDENTIALS
+     * - GOOGLE_GHA_CREDS_PATH
+     *
+     * If false, the action will not export any environment variables, meaning
+     * future steps are unlikely to be automatically authenticated to Google
+     * Cloud.
+     */
+    public val exportEnvironmentVariables: Boolean? = null,
+    /**
      * Output format for the generated authentication token. For OAuth 2.0 access
      * tokens, specify "access_token". For OIDC tokens, specify "id_token". To
      * skip token generation, leave this value empty.
@@ -123,6 +145,7 @@ public class AuthV0(
             audience?.let { "audience" to it },
             credentialsJson?.let { "credentials_json" to it },
             createCredentialsFile?.let { "create_credentials_file" to it.toString() },
+            exportEnvironmentVariables?.let { "export_environment_variables" to it.toString() },
             tokenFormat?.let { "token_format" to it.stringValue },
             delegates?.let { "delegates" to it.joinToString(",") },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },
