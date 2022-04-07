@@ -37,7 +37,7 @@ fun Input.suggestTyping(): String? {
     return when {
         default in listOf("true", "false") -> "BooleanTyping"
         default?.toIntOrNull() != null -> "IntegerTyping"
-        listKeywords.any { normalizedDescription.contains(it) } -> """ListOfStringsTyping(TODO("please check"))"""
+        listKeywords.any { normalizedDescription.contains(it) } -> """ListOfTypings(TODO("please check"))"""
         else -> null
     }
 }

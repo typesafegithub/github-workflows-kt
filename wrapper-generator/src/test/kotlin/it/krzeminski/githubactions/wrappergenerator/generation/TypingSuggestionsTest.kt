@@ -26,7 +26,7 @@ class TypingSuggestionsTest : FunSpec({
         }
     }
 
-    test("Detect ListOfStringsTyping") {
+    test("Detect ListOfTypings") {
         listOf(
             Input(description = "a list of file names for caching multiple dependencies."),
             Input(description = "Accept paths to code"),
@@ -35,7 +35,7 @@ class TypingSuggestionsTest : FunSpec({
             Input(description = "labels to set on the Pull Request comma separated"),
             Input(description = "users to request a review from (comma or newline-separated)."),
         ).forAll { input ->
-            input.suggestTyping() shouldBe """ListOfStringsTyping(TODO("please check"))"""
+            input.suggestTyping() shouldBe """ListOfTypings(TODO("please check"))"""
         }
     }
 
@@ -54,7 +54,7 @@ class TypingSuggestionsTest : FunSpec({
             |    mapOf(
             |            "bool" to BooleanTyping,
             |            "int" to IntegerTyping,
-            |            "list" to ListOfStringsTyping(TODO("please check")),
+            |            "list" to ListOfTypings(TODO("please check")),
             |    )
         """.trimMargin()
     }
