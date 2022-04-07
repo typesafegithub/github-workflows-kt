@@ -238,6 +238,13 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("ad-m", "github-push-action", "v0.6.0"),
+        mapOf(
+            "force" to BooleanTyping,
+            "tags" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
         ActionCoords("AkhileshNS", "heroku-deploy", "v3.12.12"),
         mapOf(
             "dontuseforce" to BooleanTyping,
@@ -248,6 +255,95 @@ val wrappersToGenerate = listOf(
             "justlogin" to BooleanTyping,
             "docker_heroku_process_type" to EnumTyping("HerokuProcessType", listOf("web", "worker")),
             "docker_build_args" to StringTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("anmol098", "waka-readme-stats", "v4"),
+        mapOf(
+            "SHOW_OS" to BooleanTyping,
+            "SHOW_PROJECTS" to BooleanTyping,
+            "SHOW_EDITORS" to BooleanTyping,
+            "SHOW_TIMEZONE" to BooleanTyping,
+            "SHOW_COMMIT" to BooleanTyping,
+            "SHOW_LANGUAGE" to BooleanTyping,
+            "SHOW_LINES_OF_CODE" to BooleanTyping,
+            "SHOW_LANGUAGE_PER_REPO" to BooleanTyping,
+            "SHOW_LOC_CHART" to BooleanTyping,
+            "SHOW_DAYS_OF_WEEK" to BooleanTyping,
+            "SHOW_PROFILE_VIEWS" to BooleanTyping,
+            "SHOW_SHORT_INFO" to BooleanTyping,
+            "COMMIT_BY_ME" to BooleanTyping,
+            "IGNORED_REPOS" to ListOfTypings(","),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("anothrNick", "github-tag-action", "v1.38.0"),
+        mapOf()
+    ),
+    WrapperRequest(
+        ActionCoords("appleboy", "scp-action", "v0.1.2"),
+        mapOf(
+            "port" to IntegerTyping,
+            "use_insecure_cipher" to BooleanTyping,
+            "rm" to BooleanTyping,
+            "debug" to BooleanTyping,
+            "strip_components" to IntegerTyping,
+            "overwrite" to BooleanTyping,
+            "proxy_port" to IntegerTyping,
+            "proxy_use_insecure_cipher" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("appleboy", "ssh-action", "v0.1.4"),
+        mapOf(
+            "port" to IntegerTyping,
+            "sync" to BooleanTyping,
+            "use_insecure_cipher" to BooleanTyping,
+            "proxy_port" to IntegerTyping,
+            "proxy_use_insecure_cipher" to BooleanTyping,
+            "script_stop" to BooleanTyping,
+            "debug" to BooleanTyping,
+            "envs" to ListOfTypings(","),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("appleboy", "telegram-action", "v0.1.1"),
+        mapOf(
+            "debug" to BooleanTyping,
+            "disable_web_page_preview" to BooleanTyping,
+            "disable_notification" to BooleanTyping,
+            "format" to EnumTyping(
+                "Format",
+                listOf("markdown", "html")
+            )
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("aws-actions", "amazon-ecr-login", "v1"),
+        mapOf(
+            "registries" to ListOfTypings(","),
+            "skip-logout" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("aws-actions", "amazon-ecs-deploy-task-definition", "v1"),
+        mapOf(
+            "wait-for-service-stability" to BooleanTyping,
+            "wait-for-minutes" to IntegerTyping,
+            "force-new-deployment" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("aws-actions", "amazon-ecs-render-task-definition", "v1"),
+        mapOf(
+            "environment-variables" to ListOfTypings("\\n")
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("aws-actions", "configure-aws-credentials", "v1"),
+        mapOf(
+            "role-duration-seconds" to IntegerTyping,
+            "role-skip-session-tagging" to BooleanTyping,
         )
     ),
     WrapperRequest(
@@ -272,7 +368,50 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("bahmutov", "npm-install", "v1.8.7"),
+        mapOf(
+            "useLockFile" to BooleanTyping,
+            "useRollingCache" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
         ActionCoords("Borales", "actions-yarn", "v2.3.0"),
+    ),
+    WrapperRequest(
+        ActionCoords("cachix", "install-nix-action", "v17"),
+        mapOf(
+            "install_options" to ListOfTypings("\\n")
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("calibreapp", "image-actions", "v1.1.0"),
+        mapOf(
+            "jpegQuality" to IntegerTyping,
+            "pngQuality" to IntegerTyping,
+            "webpQuality" to IntegerTyping,
+            "ignorePaths" to StringTyping,
+            "ignorePaths" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("codecov", "codecov-action", "v3"),
+        mapOf(
+            "files" to ListOfTypings(","),
+            "flags" to ListOfTypings(","),
+            "dry_run" to BooleanTyping,
+            "env_vars" to ListOfTypings(","),
+            "fail_ci_if_error" to BooleanTyping,
+            "functionalities" to ListOfTypings(","),
+            "gcov" to BooleanTyping,
+            "gcov_args" to ListOfTypings(" "),
+            "gcov_ignore" to ListOfTypings("\\n"),
+            "gcov_include" to ListOfTypings("\\n"),
+            "move_coverage_to_trash" to BooleanTyping,
+            "os" to EnumTyping("OperatingSystem", listOf("alpine", "linux", "macos", "windows"), listOf("Alpine", "Linux", "MacOs", "Windows")),
+            "override_build" to IntegerTyping,
+            "override_pr" to IntegerTyping,
+            "verbose" to BooleanTyping,
+        )
     ),
     WrapperRequest(
         ActionCoords("docker", "build-push-action", "v2"),

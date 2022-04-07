@@ -1,0 +1,122 @@
+// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+// generator itself.
+package it.krzeminski.githubactions.actions.anmol098
+
+import it.krzeminski.githubactions.actions.Action
+import kotlin.Boolean
+import kotlin.String
+import kotlin.Suppress
+import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
+
+/**
+ * Action: Profile Readme Development Stats
+ *
+ * Are you an early 🐤 or a night 🦉? When are you most productive during the day? Let's check out
+ * in your readme!
+ *
+ * [Action on GitHub](https://github.com/anmol098/waka-readme-stats)
+ */
+public class WakaReadmeStatsV4(
+    /**
+     * GitHub access token with Repo scope
+     */
+    public val ghToken: String? = null,
+    /**
+     * Your Wakatime API Key
+     */
+    public val wakatimeApiKey: String,
+    /**
+     * Show the list of OS Worked on In dev metrics
+     */
+    public val showOs: Boolean? = null,
+    /**
+     * Show the list of projects worked on in dev metrics
+     */
+    public val showProjects: Boolean? = null,
+    /**
+     * Show the Editors used in dev metrics
+     */
+    public val showEditors: Boolean? = null,
+    /**
+     * Show the time zone in the dev metrics
+     */
+    public val showTimezone: Boolean? = null,
+    /**
+     * Shows the number of commit graph in the dev metrics
+     */
+    public val showCommit: Boolean? = null,
+    /**
+     * Show the Coding language used in dev metrics
+     */
+    public val showLanguage: Boolean? = null,
+    /**
+     * Show the Total Lines of code written Badge till date
+     */
+    public val showLinesOfCode: Boolean? = null,
+    /**
+     * Show language or framework used across different repository
+     */
+    public val showLanguagePerRepo: Boolean? = null,
+    public val showLocChart: Boolean? = null,
+    /**
+     * show day of week you are most productive
+     */
+    public val showDaysOfWeek: Boolean? = null,
+    /**
+     * Shows the current profile views
+     */
+    public val showProfileViews: Boolean? = null,
+    /**
+     * Shows the short facts
+     */
+    public val showShortInfo: Boolean? = null,
+    /**
+     * Show stats in your own language
+     */
+    public val locale: String? = null,
+    /**
+     * Git commit with your own name and email
+     */
+    public val commitByMe: Boolean? = null,
+    /**
+     * Repos you don't want to be counted
+     */
+    public val ignoredRepos: List<String>? = null,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     */
+    public val _customInputs: Map<String, String> = mapOf(),
+    /**
+     * Allows overriding action's version, for example to use a specific minor version, or a newer
+     * version that the wrapper doesn't yet know about
+     */
+    _customVersion: String? = null,
+) : Action("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
+    @Suppress("SpreadOperator")
+    public override fun toYamlArguments() = linkedMapOf(
+        *listOfNotNull(
+            ghToken?.let { "GH_TOKEN" to it },
+            "WAKATIME_API_KEY" to wakatimeApiKey,
+            showOs?.let { "SHOW_OS" to it.toString() },
+            showProjects?.let { "SHOW_PROJECTS" to it.toString() },
+            showEditors?.let { "SHOW_EDITORS" to it.toString() },
+            showTimezone?.let { "SHOW_TIMEZONE" to it.toString() },
+            showCommit?.let { "SHOW_COMMIT" to it.toString() },
+            showLanguage?.let { "SHOW_LANGUAGE" to it.toString() },
+            showLinesOfCode?.let { "SHOW_LINES_OF_CODE" to it.toString() },
+            showLanguagePerRepo?.let { "SHOW_LANGUAGE_PER_REPO" to it.toString() },
+            showLocChart?.let { "SHOW_LOC_CHART" to it.toString() },
+            showDaysOfWeek?.let { "SHOW_DAYS_OF_WEEK" to it.toString() },
+            showProfileViews?.let { "SHOW_PROFILE_VIEWS" to it.toString() },
+            showShortInfo?.let { "SHOW_SHORT_INFO" to it.toString() },
+            locale?.let { "LOCALE" to it },
+            commitByMe?.let { "COMMIT_BY_ME" to it.toString() },
+            ignoredRepos?.let { "IGNORED_REPOS" to it.joinToString(",") },
+            *_customInputs.toList().toTypedArray(),
+        ).toTypedArray()
+    )
+}
