@@ -4,10 +4,10 @@ when you want to save time on migrating your workflows to YAML.
 
 ## Generate Kotlin Script from existing YAML
 
-To use it, clone the repository locally:
+To use it, clone the repository locally, in a version corresponding to the latest released version of the library:
 
 ```bash
-git clone https://github.com/krzema12/github-actions-kotlin-dsl
+git clone -b v0.12.0 https://github.com/krzema12/github-actions-kotlin-dsl
 cd github-actions-kotlin-dsl
 ```
 
