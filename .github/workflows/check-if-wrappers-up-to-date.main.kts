@@ -41,8 +41,8 @@ val checkIfWrappersUpToDateWorkflow = workflow(
             )
         )
         run(
-            name = "Fail if there are any changes in the generated wrappers",
-            command = "git diff --exit-code library/src/gen/"
+            name = "Fail if there are any changes in the generated wrappers or their list in the docs",
+            command = "git diff --exit-code library/src/gen/ docs/supported-actions.md"
         )
     }
 }

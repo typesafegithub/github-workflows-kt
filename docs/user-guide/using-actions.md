@@ -6,7 +6,7 @@ your possibilities.
 
 ## Built-in actions
 
-Take a look here: [library/src/gen/kotlin/it/krzeminski/githubactions/actions](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions).
+Take a look here: [Supported actions](../supported-actions.md).
 These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to

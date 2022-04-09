@@ -44,5 +44,5 @@ jobs:
         with:
           arguments: :wrapper-generator:run
       - id: step-3
-        name: Fail if there are any changes in the generated wrappers
-        run: git diff --exit-code library/src/gen/
+        name: Fail if there are any changes in the generated wrappers or their list in the docs
+        run: git diff --exit-code library/src/gen/ docs/supported-actions.md
