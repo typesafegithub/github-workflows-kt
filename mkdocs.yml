@@ -14,6 +14,9 @@ markdown_extensions:
   - pymdownx.superfences
   - admonition
 
+plugins:
+  - markdownextradata: {}
+
 nav:
   - Introduction: 'index.md'
   - User guide:
@@ -23,3 +26,6 @@ nav:
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Projects using this library: 'projects-using-this-library.md'
+
+extra:
+  version: 0.12.0

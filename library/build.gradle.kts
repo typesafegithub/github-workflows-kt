@@ -114,13 +114,9 @@ tasks {
 val validateDuplicatedVersion by tasks.creating<Task> {
     doLast {
         require(
-            project.rootDir.resolve("docs/user-guide/getting_started.md").readText()
-                .contains("   @file:DependsOn(\"it.krzeminski:github-actions-kotlin-dsl:$version\")")
+            project.rootDir.resolve("mkdocs.yml").readText()
+                .contains("  version: $version")
         ) { "Library version stated in the docs should be equal to $version!" }
-        require(
-            project.rootDir.resolve("docs/user-guide/script-generator.md").readText()
-                .contains("git clone -b v$version https://github.com/krzema12/github-actions-kotlin-dsl")
-        ) { "Library version stated in the docs, in script generator chapter, should be equal to $version!" }
         require(
             project.rootDir.resolve("script-generator/src/main/kotlin/it/krzeminski/githubactions/scriptgenerator/Version.kt").readText()
                 .contains("val LIBRARY_VERSION = \"$version\"")
