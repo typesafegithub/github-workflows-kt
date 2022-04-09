@@ -1,9 +1,13 @@
 package it.krzeminski.githubactions.wrappergenerator
 
+import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
+import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
+import java.nio.file.Path
 import java.nio.file.Paths
 
 /***
@@ -18,9 +22,17 @@ fun main() {
     checkWrappersOrder()
     println(wrappersToGenerate.suggestDeprecations())
 
+    val listOfWrappersInDocs = Paths.get("docs/supported-actions.md")
+
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
+    listOfWrappersInDocs.toFile().delete()
 
+    generateWrappers()
+    generateListOfWrappersForDocs(listOfWrappersInDocs)
+}
+
+private fun generateWrappers() {
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
         println("Generating ${actionCoords.prettyPrint}")
         val (code, path) = actionCoords.generateWrapper(inputTypings)
@@ -35,6 +47,49 @@ fun main() {
     """.trimMargin()
     )
 }
+
+private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
+    listOfWrappersInDocs.toFile().printWriter().use { writer ->
+        writer.println(
+            """
+            This is a complete list of actions for which the library provides typed wrappers, grouped by owners. If your
+            action is not on the list, see [Using actions](user-guide/using-actions.md) section.
+
+            Click on a version to see the wrapper's code.
+
+            ## Wrappers
+
+            """.trimIndent()
+        )
+
+        wrappersToGenerate
+            .map { it.actionCoords }
+            .groupBy { it.owner }
+            .forEach { (owner, ownedActions) ->
+                writer.println("* $owner")
+                ownedActions
+                    .groupBy { it.name }
+                    .forEach { (action, versions) ->
+                        writer.println("    * $action (${versions.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }})")
+                    }
+            }
+
+        writer.println(
+            """
+
+            ## Statistics
+
+            Number of wrappers available:
+
+            * counting by actions: ${wrappersToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size}
+            * counting each version separately: ${wrappersToGenerate.size}
+            """.trimIndent()
+        )
+    }
+}
+
+private fun ActionCoords.toMarkdownLinkToKotlinCode() =
+    "[$version](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
 
 private fun checkDuplicateWrappers() {
     val duplicateWrappers =
