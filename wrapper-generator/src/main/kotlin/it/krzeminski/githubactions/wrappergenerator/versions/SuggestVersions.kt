@@ -27,12 +27,13 @@ fun main() {
             """
             |Missing environment variable export GITHUB_TOKEN=token
             |Create a personal token at https://github.com/settings/tokens
+            |The token needs to have public_repo scope.
            """.trimMargin()
         )
 
     val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
         .map { it.actionCoords }
-        .groupBy { ActionCoords(it.owner, it.name, version = "") }
+        .groupBy { ActionCoords(it.owner, it.name, version = "*") }
         .mapValues { (_, value) -> value.map { Version(it.version) } }
 
     for ((coords, existingVersions) in actionsMap) {

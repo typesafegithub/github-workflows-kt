@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.wrappergenerator.versions
 
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
@@ -9,7 +10,7 @@ import okhttp3.Request
 val ActionCoords.apiTagsUrl: String
     get() = "https://api.github.com/repos/$owner/$name/git/matching-refs/tags/v"
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class GithubTag(
     val ref: String,
 )
@@ -20,9 +21,9 @@ val okhttpClient by lazy {
     OkHttpClient()
 }
 
-fun ActionCoords.fetchAvailableVersions(GITHUB_TOKEN: String): List<String> {
+fun ActionCoords.fetchAvailableVersions(githubToken: String): List<Version> {
     val request: Request = Request.Builder()
-        .header("Authorization", "token $GITHUB_TOKEN")
+        .header("Authorization", "token $githubToken")
         .url(apiTagsUrl)
         .build()
 
