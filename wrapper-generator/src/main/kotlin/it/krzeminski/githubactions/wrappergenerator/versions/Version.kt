@@ -1,11 +1,11 @@
 package it.krzeminski.githubactions.wrappergenerator.versions
 
-data class VersionComparable(val version: String) : Comparable<VersionComparable> {
+data class Version(val version: String) : Comparable<Version> {
     val input: String = version.removePrefix("v").removePrefix("V")
     val major = input.substringBefore(".").toIntOrNull() ?: 0
     val minor = input.substringAfter(".").substringBefore(".").toIntOrNull() ?: 0
     val patch = input.substringAfterLast(".").toIntOrNull() ?: 0
-    override fun compareTo(other: VersionComparable): Int {
+    override fun compareTo(other: Version): Int {
         val c1 = major.compareTo(other.major)
         val c2 = minor.compareTo(other.minor)
         val c3 = patch.compareTo(other.patch)
@@ -16,4 +16,11 @@ data class VersionComparable(val version: String) : Comparable<VersionComparable
             else -> version.compareTo(other.version)
         }
     }
+
+    override fun toString(): String = version
+
+    fun isMajorVersion(): Boolean =
+        version.contains(".").not()
+
+    fun majorVersion() = Version("v$major")
 }

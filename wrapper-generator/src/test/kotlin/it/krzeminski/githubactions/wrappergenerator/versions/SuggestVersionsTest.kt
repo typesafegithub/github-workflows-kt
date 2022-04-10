@@ -10,7 +10,10 @@ import io.kotest.data.table
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-class SuggestVersionsKtTest : FunSpec({
+class SuggestVersionsTest : FunSpec({
+    fun String.versions(): List<Version> =
+        split(", ").map { Version(it) }
+
     test("Compare versions") {
         val sortedVersions = listOf(
             "v1.0.0",
@@ -22,7 +25,10 @@ class SuggestVersionsKtTest : FunSpec({
             "v9.0.0",
             "v12.0.0",
         )
-        sortedVersions.sortedBy { VersionComparable(it) } shouldBe sortedVersions
+        val actual = sortedVersions
+            .shuffled()
+            .sortedBy { Version(it) }
+        actual shouldBe sortedVersions
     }
 
     context("Wrappers using major versions") {
@@ -39,7 +45,7 @@ class SuggestVersionsKtTest : FunSpec({
                 row("v12", "v9.0.1"),
             )
             testCases.forAll { current, available ->
-                suggestNewerVersion(current.split(", "), available.split(", ")) shouldBe null
+                suggestNewerVersion(current.versions(), available.versions()) shouldBe null
             }
         }
 
@@ -47,15 +53,15 @@ class SuggestVersionsKtTest : FunSpec({
             assertSoftly {
 
                 suggestNewerVersion(
-                    listOf("v1"), listOf("v1.1.1", "v2.0.1", "v3.1.1")
+                    "v1".versions(), "v1.1.1, v2.0.1, v3.1.1".versions()
                 ) shouldBe "new major version(s) available: [v2, v3]"
 
                 suggestNewerVersion(
-                    listOf("v2"), listOf("v1.1.1", "v2.0.1", "v3.1.1")
+                    "v2".versions(), "v1.1.1, v2.0.1, v3.1.1".versions()
                 ) shouldBe "new major version(s) available: [v3]"
 
                 suggestNewerVersion(
-                    listOf("v9"), listOf("v12.0.1")
+                    "v9".versions(), "v12.0.1".versions()
                 ) shouldBe "new major version(s) available: [v12]"
             }
         }
@@ -63,7 +69,7 @@ class SuggestVersionsKtTest : FunSpec({
 
     context("Wrappers using hardcoded version") {
         test("No available versions") {
-            val currentVersion = "v2.1.0"
+            val currentVersion = Version("v2.1.0")
             val testCases = listOf(
                 "",
                 "v2.1.0",
@@ -72,25 +78,25 @@ class SuggestVersionsKtTest : FunSpec({
                 "v1.1.0, v2.1.0",
             )
             testCases.forAll { available ->
-                suggestNewerVersion(listOf(currentVersion), available.split(", ")) shouldBe null
+                suggestNewerVersion(listOf(currentVersion), available.versions()) shouldBe null
             }
         }
 
         test("Minor version available") {
             assertSoftly {
                 suggestNewerVersion(
-                    listOf("v2.1.0", "v1.0.4"),
-                    listOf("v2.1.0", "v1.0.4", "v2.3.0", "v1.0.5"),
+                    "v2.1.0, v1.0.4".versions(),
+                    "v2.1.0, v1.0.4, v2.3.0, v1.0.5".versions(),
                 ) shouldBe "new minor version available: v2.3.0"
 
                 suggestNewerVersion(
-                    listOf("v9.0.1"),
-                    listOf("v12.1.2"),
+                    "v9.0.1".versions(),
+                    "v12.1.2".versions(),
                 ) shouldBe "new minor version available: v12.1.2"
 
                 suggestNewerVersion(
-                    listOf("v9.0.9"),
-                    listOf("v9.0.12"),
+                    "v9.0.9".versions(),
+                    "v9.0.12".versions(),
                 ) shouldBe "new minor version available: v9.0.12"
             }
         }

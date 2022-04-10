@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator.versions
 
+import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
@@ -29,13 +30,12 @@ fun main() {
            """.trimMargin()
         )
 
-    val actionsMap = wrappersToGenerate
-        // .take(3)
+    val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
         .map { it.actionCoords }
-        .groupBy { "${it.owner}/${it.name}" }
-    for (list in actionsMap.values) {
-        val coords = list.maxByOrNull { it.version }!!
-        val existingVersions = list.map { it.version }
+        .groupBy { ActionCoords(it.owner, it.name, version = "") }
+        .mapValues { (_, value) -> value.map { Version(it.version) } }
+
+    for ((coords, existingVersions) in actionsMap) {
         val available = coords.fetchAvailableVersions(githubAuthorization)
         suggestNewerVersion(existingVersions, available)?.let { message ->
             println("$message for ${coords.prettyPrint}")
@@ -43,25 +43,28 @@ fun main() {
     }
 }
 
-fun List<GithubTag>.versions(): List<String> =
-    this.map { it.ref.substringAfterLast("/") }
+fun List<GithubTag>.versions(): List<Version> =
+    this.map { githubTag ->
+        val version = githubTag.ref.substringAfterLast("/")
+        Version(version)
+    }
 
-fun suggestNewerVersion(existingVersions: List<String>, availableVersions: List<String>): String? {
-    val maxExisting = existingVersions.maxByOrNull { VersionComparable(it) }!!
+fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List<Version>): String? {
+    val maxExisting = existingVersions.maxOrNull()
+        ?: error("Invalid call existingVersions=$existingVersions availableVersions=$availableVersions")
 
-    if (existingVersions.all { isMajorVersion(it) }) {
+    return if (existingVersions.all { it.isMajorVersion() }) {
         val majorVersions = availableVersions
-            .map { it.substringBefore(".") }
+            .map { Version("v${it.major}") }
             .distinct()
-            .sortedBy { VersionComparable(it) }
-        val newer = majorVersions.filter { VersionComparable(it) > VersionComparable(maxExisting) }
-        return "new major version(s) available: $newer".takeIf { newer.isNotEmpty() }
+            .sorted()
+
+        val newer = majorVersions.filter { it > maxExisting }
+        "new major version(s) available: $newer"
+            .takeIf { newer.isNotEmpty() }
     } else {
-        val maxAvailableVersion = availableVersions.maxOrNull()
-        return "new minor version available: $maxAvailableVersion"
-            .takeIf { maxAvailableVersion != null && VersionComparable(maxAvailableVersion) > VersionComparable(maxExisting) }
+        val maxAvailableVersion = availableVersions.maxOrNull() ?: return null
+        "new minor version available: $maxAvailableVersion"
+            .takeIf { maxAvailableVersion > maxExisting }
     }
 }
-
-private fun isMajorVersion(version: String): Boolean =
-    version.contains(".").not()
