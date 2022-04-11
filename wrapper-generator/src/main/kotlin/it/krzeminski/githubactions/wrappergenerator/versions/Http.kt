@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.wrappergenerator.versions
 
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -34,6 +34,6 @@ fun ActionCoords.fetchAvailableVersions(githubToken: String): List<Version> {
         }
         response.body!!.string()
     }
-    val data = json.decodeFromString(ListSerializer(GithubTag.serializer()), content)
+    val data = json.decodeFromString<List<GithubTag>>(content)
     return data.versions()
 }

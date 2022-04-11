@@ -16,9 +16,6 @@ import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
  *
  *  ```
  * $ ./gradlew :wrapper-generator:suggestVersions
- * new major version(s) available: [v3] for ActionCoords("actions", "cache", "v2")
- * new major version(s) available: [v3] for ActionCoords("actions", "download-artifact", "v2")
- * new version available: v2.2.0 for ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")
  * ```
  */
 fun main() {
@@ -34,6 +31,7 @@ fun main() {
     val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
         .map { it.actionCoords }
         .groupBy { ActionCoords(it.owner, it.name, version = "*") }
+        .mapKeys { it.key.copy(version = it.value.last().version) }
         .mapValues { (_, value) -> value.map { Version(it.version) } }
 
     for ((coords, existingVersions) in actionsMap) {

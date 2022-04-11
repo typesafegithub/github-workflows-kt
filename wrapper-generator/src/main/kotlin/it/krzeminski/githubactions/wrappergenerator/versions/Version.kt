@@ -5,6 +5,7 @@ data class Version(val version: String) : Comparable<Version> {
     val major = input.substringBefore(".").toIntOrNull() ?: 0
     val minor = input.substringAfter(".").substringBefore(".").toIntOrNull() ?: 0
     val patch = input.substringAfterLast(".").toIntOrNull() ?: 0
+
     override fun compareTo(other: Version): Int {
         val c1 = major.compareTo(other.major)
         val c2 = minor.compareTo(other.minor)
@@ -21,6 +22,4 @@ data class Version(val version: String) : Comparable<Version> {
 
     fun isMajorVersion(): Boolean =
         version.contains(".").not()
-
-    fun majorVersion() = Version("v$major")
 }
