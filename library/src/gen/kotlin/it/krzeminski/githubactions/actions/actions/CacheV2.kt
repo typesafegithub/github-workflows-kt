@@ -1,9 +1,12 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -19,6 +22,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/cache)
  */
+@Deprecated(
+    message = "This action has a newer major version: CacheV3",
+    replaceWith = ReplaceWith("CacheV3"),
+)
 public class CacheV2(
     /**
      * A list of files, directories, and wildcard patterns to cache and restore

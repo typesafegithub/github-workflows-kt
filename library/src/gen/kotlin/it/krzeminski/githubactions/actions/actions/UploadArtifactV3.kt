@@ -1,12 +1,9 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -22,11 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/upload-artifact)
  */
-@Deprecated(
-    message = "This action has a newer major version: UploadArtifactV3",
-    replaceWith = ReplaceWith("UploadArtifactV3"),
-)
-public class UploadArtifactV2(
+public class UploadArtifactV3(
     /**
      * Artifact name
      */
@@ -42,12 +35,12 @@ public class UploadArtifactV2(
      *   error: Fail the action with an error message
      *   ignore: Do not output any warnings or errors, the action does not fail
      */
-    public val ifNoFilesFound: UploadArtifactV2.BehaviorIfNoFilesFound? = null,
+    public val ifNoFilesFound: UploadArtifactV3.BehaviorIfNoFilesFound? = null,
     /**
      * Duration after which artifact will expire in days. 0 means using default retention.
      * Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
      */
-    public val retentionDays: UploadArtifactV2.RetentionPeriod? = null,
+    public val retentionDays: UploadArtifactV3.RetentionPeriod? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -57,7 +50,7 @@ public class UploadArtifactV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("actions", "upload-artifact", _customVersion ?: "v2") {
+) : Action("actions", "upload-artifact", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -72,15 +65,15 @@ public class UploadArtifactV2(
     public sealed class BehaviorIfNoFilesFound(
         public val stringValue: String,
     ) {
-        public object Warn : UploadArtifactV2.BehaviorIfNoFilesFound("warn")
+        public object Warn : UploadArtifactV3.BehaviorIfNoFilesFound("warn")
 
-        public object Error : UploadArtifactV2.BehaviorIfNoFilesFound("error")
+        public object Error : UploadArtifactV3.BehaviorIfNoFilesFound("error")
 
-        public object Ignore : UploadArtifactV2.BehaviorIfNoFilesFound("ignore")
+        public object Ignore : UploadArtifactV3.BehaviorIfNoFilesFound("ignore")
 
         public class Custom(
             customStringValue: String,
-        ) : UploadArtifactV2.BehaviorIfNoFilesFound(customStringValue)
+        ) : UploadArtifactV3.BehaviorIfNoFilesFound(customStringValue)
     }
 
     public sealed class RetentionPeriod(
@@ -88,8 +81,8 @@ public class UploadArtifactV2(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : UploadArtifactV2.RetentionPeriod(requestedValue)
+        ) : UploadArtifactV3.RetentionPeriod(requestedValue)
 
-        public object Default : UploadArtifactV2.RetentionPeriod(0)
+        public object Default : UploadArtifactV3.RetentionPeriod(0)
     }
 }

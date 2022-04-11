@@ -1,12 +1,9 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -20,11 +17,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/EndBug/add-and-commit)
  */
-@Deprecated(
-    message = "This action has a newer major version: AddAndCommitV9",
-    replaceWith = ReplaceWith("AddAndCommitV9"),
-)
-public class AddAndCommitV8(
+public class AddAndCommitV9(
     /**
      * Arguments for the git add command
      */
@@ -57,7 +50,7 @@ public class AddAndCommitV8(
     /**
      * How the action should fill missing author name or email.
      */
-    public val defaultAuthor: AddAndCommitV8.DefaultActor? = null,
+    public val defaultAuthor: AddAndCommitV9.DefaultActor? = null,
     /**
      * The message for the commit
      */
@@ -69,7 +62,7 @@ public class AddAndCommitV8(
     /**
      * The way the action should handle pathspec errors from the add and remove commands.
      */
-    public val pathspecErrorHandling: AddAndCommitV8.PathSpecErrorHandling? = null,
+    public val pathspecErrorHandling: AddAndCommitV9.PathSpecErrorHandling? = null,
     /**
      * Arguments for the git pull command. By default, the action does not pull.
      */
@@ -89,6 +82,11 @@ public class AddAndCommitV8(
      */
     public val tag: String? = null,
     /**
+     * Arguments for the git push --tags command (any additional argument will be added
+     * after --tags)
+     */
+    public val tagPush: String? = null,
+    /**
      * The token used to make requests to the GitHub API. It's NOT used to make commits and should
      * not be changed.
      */
@@ -102,7 +100,7 @@ public class AddAndCommitV8(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v8") {
+) : ActionWithOutputs<AddAndCommitV9.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v9") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -121,6 +119,7 @@ public class AddAndCommitV8(
             push?.let { "push" to it },
             remove?.let { "remove" to it },
             tag?.let { "tag" to it },
+            tagPush?.let { "tag_push" to it },
             githubToken?.let { "github_token" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
@@ -131,29 +130,29 @@ public class AddAndCommitV8(
     public sealed class DefaultActor(
         public val stringValue: String,
     ) {
-        public object GithubActor : AddAndCommitV8.DefaultActor("github_actor")
+        public object GithubActor : AddAndCommitV9.DefaultActor("github_actor")
 
-        public object UserInfo : AddAndCommitV8.DefaultActor("user_info")
+        public object UserInfo : AddAndCommitV9.DefaultActor("user_info")
 
-        public object GithubActions : AddAndCommitV8.DefaultActor("github_actions")
+        public object GithubActions : AddAndCommitV9.DefaultActor("github_actions")
 
         public class Custom(
             customStringValue: String,
-        ) : AddAndCommitV8.DefaultActor(customStringValue)
+        ) : AddAndCommitV9.DefaultActor(customStringValue)
     }
 
     public sealed class PathSpecErrorHandling(
         public val stringValue: String,
     ) {
-        public object Ignore : AddAndCommitV8.PathSpecErrorHandling("ignore")
+        public object Ignore : AddAndCommitV9.PathSpecErrorHandling("ignore")
 
-        public object ExitImmediately : AddAndCommitV8.PathSpecErrorHandling("exitImmediately")
+        public object ExitImmediately : AddAndCommitV9.PathSpecErrorHandling("exitImmediately")
 
-        public object ExitAtEnd : AddAndCommitV8.PathSpecErrorHandling("exitAtEnd")
+        public object ExitAtEnd : AddAndCommitV9.PathSpecErrorHandling("exitAtEnd")
 
         public class Custom(
             customStringValue: String,
-        ) : AddAndCommitV8.PathSpecErrorHandling(customStringValue)
+        ) : AddAndCommitV9.PathSpecErrorHandling(customStringValue)
     }
 
     public class Outputs(
@@ -183,6 +182,11 @@ public class AddAndCommitV8(
          * Whether the action has created a tag.
          */
         public val tagged: String = "steps.$stepId.outputs.tagged"
+
+        /**
+         * Whether the action has pushed a tag.
+         */
+        public val tagPushed: String = "steps.$stepId.outputs.tag_pushed"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }

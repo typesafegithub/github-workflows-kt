@@ -1,12 +1,9 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -21,11 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/download-artifact)
  */
-@Deprecated(
-    message = "This action has a newer major version: DownloadArtifactV3",
-    replaceWith = ReplaceWith("DownloadArtifactV3"),
-)
-public class DownloadArtifactV2(
+public class DownloadArtifactV3(
     /**
      * Artifact name
      */
@@ -43,7 +36,7 @@ public class DownloadArtifactV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("actions", "download-artifact", _customVersion ?: "v2") {
+) : Action("actions", "download-artifact", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

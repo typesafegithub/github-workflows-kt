@@ -1,31 +1,41 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-package it.krzeminski.githubactions.actions.peterjgrainger
+package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- * Action: Create Branch
+ * Action: Cache
  *
- * Creates a branch
+ * Cache artifacts like dependencies and build outputs to improve workflow execution time
  *
- * [Action on GitHub](https://github.com/peterjgrainger/action-create-branch)
+ * [Action on GitHub](https://github.com/actions/cache)
  */
-public class ActionCreateBranchV2(
+public class CacheV3(
     /**
-     * The branch to create
+     * A list of files, directories, and wildcard patterns to cache and restore
      */
-    public val branch: String? = null,
+    public val path: List<String>,
     /**
-     * The SHA1 value for the branch reference
+     * An explicit key for restoring and saving the cache
      */
-    public val sha: String? = null,
+    public val key: String,
+    /**
+     * An ordered list of keys to use for restoring the cache if no cache hit occurred for key
+     */
+    public val restoreKeys: List<String>? = null,
+    /**
+     * The chunk size used to split up large files during upload, in bytes
+     */
+    public val uploadChunkSize: Int? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -35,15 +45,14 @@ public class ActionCreateBranchV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<ActionCreateBranchV2.Outputs>(
-    "peterjgrainger", "action-create-branch",
-    _customVersion ?: "v2.2.0"
-) {
+) : ActionWithOutputs<CacheV3.Outputs>("actions", "cache", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
-            branch?.let { "branch" to it },
-            sha?.let { "sha" to it },
+            "path" to path.joinToString("\n"),
+            "key" to key,
+            restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
+            uploadChunkSize?.let { "upload-chunk-size" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -54,9 +63,9 @@ public class ActionCreateBranchV2(
         private val stepId: String,
     ) {
         /**
-         * Boolean value representing whether or not a new branch was created.
+         * A boolean value to indicate an exact match was found for the primary key
          */
-        public val created: String = "steps.$stepId.outputs.created"
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
