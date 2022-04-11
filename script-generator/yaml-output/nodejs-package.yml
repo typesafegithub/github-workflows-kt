@@ -17,8 +17,8 @@ jobs:
         name: CheckoutV2
         uses: actions/checkout@v2
       - id: step-1
-        name: SetupNodeV2
-        uses: actions/setup-node@v1
+        name: SetupNodeV3
+        uses: actions/setup-node@v3
         with:
           node-version: 12.x
           registry-url: https://npm.pkg.github.com
