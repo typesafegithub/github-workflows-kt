@@ -69,8 +69,9 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
                 writer.println("* $owner")
                 ownedActions
                     .groupBy { it.name }
-                    .forEach { (action, versions) ->
-                        writer.println("    * $action (${versions.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }})")
+                    .forEach { (_, versions) ->
+                        val kotlinClasses = versions.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
+                        writer.println("    * ${versions.first().toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
 
@@ -89,7 +90,10 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
 }
 
 private fun ActionCoords.toMarkdownLinkToKotlinCode() =
-    "[$version](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
+    "$version: [`${buildActionClassName()}`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
+
+private fun ActionCoords.toMarkdownLinkGithub() =
+    "[$name](https://github.com/$owner/$name)"
 
 private fun checkDuplicateWrappers() {
     val duplicateWrappers =
