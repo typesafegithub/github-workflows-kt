@@ -87,17 +87,17 @@ class SuggestVersionsTest : FunSpec({
                 suggestNewerVersion(
                     "v2.1.0, v1.0.4".versions(),
                     "v2.1.0, v1.0.4, v2.3.0, v1.0.5".versions(),
-                ) shouldBe "new minor version available: v2.3.0"
+                ) shouldBe "new version available: v2.3.0"
 
                 suggestNewerVersion(
                     "v9.0.1".versions(),
                     "v12.1.2".versions(),
-                ) shouldBe "new minor version available: v12.1.2"
+                ) shouldBe "new version available: v12.1.2"
 
                 suggestNewerVersion(
                     "v9.0.9".versions(),
                     "v9.0.12".versions(),
-                ) shouldBe "new minor version available: v9.0.12"
+                ) shouldBe "new version available: v9.0.12"
             }
         }
     }

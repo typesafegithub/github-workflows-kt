@@ -18,7 +18,7 @@ import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
  * $ ./gradlew :wrapper-generator:suggestVersions
  * new major version(s) available: [v3] for ActionCoords("actions", "cache", "v2")
  * new major version(s) available: [v3] for ActionCoords("actions", "download-artifact", "v2")
- * new minor version available: v2.2.0 for ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")
+ * new version available: v2.2.0 for ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")
  * ```
  */
 fun main() {
@@ -65,7 +65,7 @@ fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List
             .takeIf { newer.isNotEmpty() }
     } else {
         val maxAvailableVersion = availableVersions.maxOrNull() ?: return null
-        "new minor version available: $maxAvailableVersion"
+        "new version available: $maxAvailableVersion"
             .takeIf { maxAvailableVersion > maxExisting }
     }
 }
