@@ -54,18 +54,20 @@ fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List
     val maxExisting = existingVersions.maxOrNull()
         ?: error("Invalid call existingVersions=$existingVersions availableVersions=$availableVersions")
 
-    return if (existingVersions.all { it.isMajorVersion() }) {
-        val majorVersions = availableVersions
-            .map { Version("v${it.major}") }
-            .distinct()
-            .sorted()
+    val majorVersions = availableVersions
+        .filter { it.isMajorVersion() }
+        .sorted()
 
-        val newer = majorVersions.filter { it > maxExisting }
-        "new major version(s) available: $newer"
-            .takeIf { newer.isNotEmpty() }
-    } else {
-        val maxAvailableVersion = availableVersions.maxOrNull() ?: return null
-        "new version available: $maxAvailableVersion"
-            .takeIf { maxAvailableVersion > maxExisting }
+    val maxAvailableVersion = availableVersions.maxOrNull()
+    val coordsUseMajorVersion = existingVersions.all { it.isMajorVersion() }
+
+    return when {
+        maxAvailableVersion == null -> null
+        coordsUseMajorVersion -> {
+            val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
+            "new major version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
+        }
+        majorVersions.isNotEmpty() -> "major version(s) could be used: $majorVersions"
+        else -> "new version available: $maxAvailableVersion".takeIf { maxAvailableVersion > maxExisting }
     }
 }
