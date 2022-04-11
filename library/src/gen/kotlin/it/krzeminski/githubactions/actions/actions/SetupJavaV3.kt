@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -21,11 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-java)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupJavaV3",
-    replaceWith = ReplaceWith("SetupJavaV3"),
-)
-public class SetupJavaV2(
+public class SetupJavaV3(
     /**
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported
      * syntax in README file
@@ -34,11 +27,11 @@ public class SetupJavaV2(
     /**
      * Java distribution. See the list of supported distributions in README file
      */
-    public val distribution: SetupJavaV2.Distribution,
+    public val distribution: SetupJavaV3.Distribution,
     /**
      * The package type (jdk, jre, jdk+fx, jre+fx)
      */
-    public val javaPackage: SetupJavaV2.JavaPackage? = null,
+    public val javaPackage: SetupJavaV3.JavaPackage? = null,
     /**
      * The architecture of the package
      */
@@ -85,7 +78,7 @@ public class SetupJavaV2(
     /**
      * Name of the build platform to cache dependencies. It can be "maven" or "gradle".
      */
-    public val cache: SetupJavaV2.BuildPlatform? = null,
+    public val cache: SetupJavaV3.BuildPlatform? = null,
     /**
      * Workaround to pass job status to post job step. This variable is not intended for manual
      * setting
@@ -100,7 +93,7 @@ public class SetupJavaV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
+) : ActionWithOutputs<SetupJavaV3.Outputs>("actions", "setup-java", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -128,51 +121,51 @@ public class SetupJavaV2(
     public sealed class Distribution(
         public val stringValue: String,
     ) {
-        public object Adopt : SetupJavaV2.Distribution("adopt")
+        public object Adopt : SetupJavaV3.Distribution("adopt")
 
-        public object AdoptHotspot : SetupJavaV2.Distribution("adopt-hotspot")
+        public object AdoptHotspot : SetupJavaV3.Distribution("adopt-hotspot")
 
-        public object AdoptOpenj9 : SetupJavaV2.Distribution("adopt-openj9")
+        public object AdoptOpenj9 : SetupJavaV3.Distribution("adopt-openj9")
 
-        public object Liberica : SetupJavaV2.Distribution("liberica")
+        public object Liberica : SetupJavaV3.Distribution("liberica")
 
-        public object Microsoft : SetupJavaV2.Distribution("microsoft")
+        public object Microsoft : SetupJavaV3.Distribution("microsoft")
 
-        public object Temurin : SetupJavaV2.Distribution("temurin")
+        public object Temurin : SetupJavaV3.Distribution("temurin")
 
-        public object Zulu : SetupJavaV2.Distribution("zulu")
+        public object Zulu : SetupJavaV3.Distribution("zulu")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJavaV2.Distribution(customStringValue)
+        ) : SetupJavaV3.Distribution(customStringValue)
     }
 
     public sealed class JavaPackage(
         public val stringValue: String,
     ) {
-        public object Jdk : SetupJavaV2.JavaPackage("jdk")
+        public object Jdk : SetupJavaV3.JavaPackage("jdk")
 
-        public object Jre : SetupJavaV2.JavaPackage("jre")
+        public object Jre : SetupJavaV3.JavaPackage("jre")
 
-        public object JdkPlusFx : SetupJavaV2.JavaPackage("jdk+fx")
+        public object JdkPlusFx : SetupJavaV3.JavaPackage("jdk+fx")
 
-        public object JrePlusFx : SetupJavaV2.JavaPackage("jre+fx")
+        public object JrePlusFx : SetupJavaV3.JavaPackage("jre+fx")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJavaV2.JavaPackage(customStringValue)
+        ) : SetupJavaV3.JavaPackage(customStringValue)
     }
 
     public sealed class BuildPlatform(
         public val stringValue: String,
     ) {
-        public object Maven : SetupJavaV2.BuildPlatform("maven")
+        public object Maven : SetupJavaV3.BuildPlatform("maven")
 
-        public object Gradle : SetupJavaV2.BuildPlatform("gradle")
+        public object Gradle : SetupJavaV3.BuildPlatform("gradle")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJavaV2.BuildPlatform(customStringValue)
+        ) : SetupJavaV3.BuildPlatform(customStringValue)
     }
 
     public class Outputs(

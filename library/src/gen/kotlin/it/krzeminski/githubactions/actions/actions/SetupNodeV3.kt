@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -23,11 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-node)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupNodeV3",
-    replaceWith = ReplaceWith("SetupNodeV3"),
-)
-public class SetupNodeV2(
+public class SetupNodeV3(
     /**
      * Set always-auth in npmrc
      */
@@ -68,17 +61,12 @@ public class SetupNodeV2(
      * Used to specify a package manager for caching in the default directory. Supported values:
      * npm, yarn, pnpm
      */
-    public val cache: SetupNodeV2.PackageManager? = null,
+    public val cache: SetupNodeV3.PackageManager? = null,
     /**
      * Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports
      * wildcards or a list of file names for caching multiple dependencies.
      */
     public val cacheDependencyPath: List<String>? = null,
-    /**
-     * Deprecated. Use node-version instead. Will not be supported after October 1, 2019
-     */
-    @Deprecated("The version property will not be supported after October 1, 2019. Use node-version instead")
-    public val version: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -88,7 +76,7 @@ public class SetupNodeV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupNodeV2.Outputs>("actions", "setup-node", _customVersion ?: "v2") {
+) : ActionWithOutputs<SetupNodeV3.Outputs>("actions", "setup-node", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -102,7 +90,6 @@ public class SetupNodeV2(
             token?.let { "token" to it },
             cache?.let { "cache" to it.stringValue },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
-            version?.let { "version" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -112,15 +99,15 @@ public class SetupNodeV2(
     public sealed class PackageManager(
         public val stringValue: String,
     ) {
-        public object Npm : SetupNodeV2.PackageManager("npm")
+        public object Npm : SetupNodeV3.PackageManager("npm")
 
-        public object Yarn : SetupNodeV2.PackageManager("yarn")
+        public object Yarn : SetupNodeV3.PackageManager("yarn")
 
-        public object Pnpm : SetupNodeV2.PackageManager("pnpm")
+        public object Pnpm : SetupNodeV3.PackageManager("pnpm")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupNodeV2.PackageManager(customStringValue)
+        ) : SetupNodeV3.PackageManager(customStringValue)
     }
 
     public class Outputs(

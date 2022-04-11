@@ -1,12 +1,9 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -21,11 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-python)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupPythonV3",
-    replaceWith = ReplaceWith("SetupPythonV3"),
-)
-public class SetupPythonV2(
+public class SetupPythonV3(
     /**
      * Version range or exact version of a Python version to use, using SemVer's version range
      * syntax.
@@ -33,13 +26,13 @@ public class SetupPythonV2(
     public val pythonVersion: String? = null,
     /**
      * Used to specify a package manager for caching in the default directory. Supported values:
-     * pip, pipenv.
+     * pip, pipenv, poetry.
      */
-    public val cache: SetupPythonV2.PackageManager? = null,
+    public val cache: SetupPythonV3.PackageManager? = null,
     /**
      * The target architecture (x86, x64) of the Python interpreter.
      */
-    public val architecture: SetupPythonV2.Architecture? = null,
+    public val architecture: SetupPythonV3.Architecture? = null,
     /**
      * Used to pull python distributions from actions/python-versions. Since there's a default, this
      * is typically not supplied by the user.
@@ -59,7 +52,7 @@ public class SetupPythonV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupPythonV2.Outputs>("actions", "setup-python", _customVersion ?: "v2") {
+) : ActionWithOutputs<SetupPythonV3.Outputs>("actions", "setup-python", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -77,25 +70,27 @@ public class SetupPythonV2(
     public sealed class PackageManager(
         public val stringValue: String,
     ) {
-        public object Pip : SetupPythonV2.PackageManager("pip")
+        public object Pip : SetupPythonV3.PackageManager("pip")
 
-        public object Pipenv : SetupPythonV2.PackageManager("pipenv")
+        public object Pipenv : SetupPythonV3.PackageManager("pipenv")
+
+        public object Poetry : SetupPythonV3.PackageManager("poetry")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupPythonV2.PackageManager(customStringValue)
+        ) : SetupPythonV3.PackageManager(customStringValue)
     }
 
     public sealed class Architecture(
         public val stringValue: String,
     ) {
-        public object X64 : SetupPythonV2.Architecture("x64")
+        public object X64 : SetupPythonV3.Architecture("x64")
 
-        public object X86 : SetupPythonV2.Architecture("x86")
+        public object X86 : SetupPythonV3.Architecture("x86")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupPythonV2.Architecture(customStringValue)
+        ) : SetupPythonV3.Architecture(customStringValue)
     }
 
     public class Outputs(
@@ -105,6 +100,11 @@ public class SetupPythonV2(
          * The installed python version. Useful when given a version range as input.
          */
         public val pythonVersion: String = "steps.$stepId.outputs.python-version"
+
+        /**
+         * A boolean value to indicate a cache entry was found
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }

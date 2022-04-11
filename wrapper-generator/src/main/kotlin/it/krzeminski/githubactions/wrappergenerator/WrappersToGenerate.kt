@@ -71,7 +71,15 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "cache", "v2"),
+        ActionCoords("actions", "cache", "v2", deprecatedByVersion = "v3"),
+        mapOf(
+            "path" to ListOfTypings("\\n"),
+            "restore-keys" to ListOfTypings("\\n"),
+            "upload-chunk-size" to IntegerTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "cache", "v3"),
         mapOf(
             "path" to ListOfTypings("\\n"),
             "restore-keys" to ListOfTypings("\\n"),
@@ -108,7 +116,10 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "download-artifact", "v2")
+        ActionCoords("actions", "download-artifact", "v2", deprecatedByVersion = "v3")
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "download-artifact", "v3")
     ),
     WrapperRequest(
         ActionCoords("actions", "first-interaction", "v1"),
@@ -140,7 +151,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-java", "v2"),
+        ActionCoords("actions", "setup-java", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "distribution" to EnumTyping(
                 "Distribution",
@@ -164,7 +175,31 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-node", "v2"),
+        ActionCoords("actions", "setup-java", "v3"),
+        mapOf(
+            "distribution" to EnumTyping(
+                "Distribution",
+                listOf(
+                    "adopt",
+                    "adopt-hotspot",
+                    "adopt-openj9",
+                    "liberica",
+                    "microsoft",
+                    "temurin",
+                    "zulu",
+                ),
+            ),
+            "java-package" to EnumTyping(
+                "JavaPackage",
+                listOf("jdk", "jre", "jdk+fx", "jre+fx"),
+            ),
+            "check-latest" to BooleanTyping,
+            "overwrite-settings" to BooleanTyping,
+            "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle")),
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-node", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "always-auth" to BooleanTyping,
             "check-latest" to BooleanTyping,
@@ -173,9 +208,26 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-python", "v2"),
+        ActionCoords("actions", "setup-node", "v3"),
+        mapOf(
+            "always-auth" to BooleanTyping,
+            "check-latest" to BooleanTyping,
+            "cache" to EnumTyping("PackageManager", listOf("npm", "yarn", "pnpm")),
+            "cache-dependency-path" to ListOfTypings("\\n"),
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-python", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
+            "cache-dependency-path" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-python", "v3"),
+        mapOf(
+            "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
             "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
             "cache-dependency-path" to ListOfTypings("\\n"),
         )
@@ -224,7 +276,21 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "upload-artifact", "v2"),
+        ActionCoords("actions", "upload-artifact", "v2", deprecatedByVersion = "v3"),
+        mapOf(
+            "path" to ListOfTypings("\\n"),
+            "if-no-files-found" to EnumTyping(
+                "BehaviorIfNoFilesFound",
+                listOf("warn", "error", "ignore"),
+            ),
+            "retention-days" to IntegerWithSpecialValueTyping(
+                "RetentionPeriod",
+                mapOf("Default" to 0),
+            )
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "upload-artifact", "v3"),
         mapOf(
             "path" to ListOfTypings("\\n"),
             "if-no-files-found" to EnumTyping(
@@ -451,7 +517,15 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("EndBug", "add-and-commit", "v8"),
+        ActionCoords("EndBug", "add-and-commit", "v8", deprecatedByVersion = "v9"),
+        mapOf(
+            "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
+            "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
+            "push" to StringTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("EndBug", "add-and-commit", "v9"),
         mapOf(
             "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
             "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
@@ -595,7 +669,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("peterjgrainger", "action-create-branch", "v2.1.0")
+        ActionCoords("peterjgrainger", "action-create-branch", "v2.2.0")
     ),
 
     WrapperRequest(

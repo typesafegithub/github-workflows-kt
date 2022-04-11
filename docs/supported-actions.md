@@ -15,20 +15,20 @@ Click on a version to see the wrapper's code.
     * [clippy-check](https://github.com/actions-rs/clippy-check) - v1: [`ClippyCheckV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actionsrs/ClippyCheckV1.kt)
     * [toolchain](https://github.com/actions-rs/toolchain) - v1: [`ToolchainV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actionsrs/ToolchainV1.kt)
 * actions
-    * [cache](https://github.com/actions/cache) - v2: [`CacheV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheV2.kt)
+    * [cache](https://github.com/actions/cache) - v2: [`CacheV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheV2.kt), v3: [`CacheV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheV3.kt)
     * [checkout](https://github.com/actions/checkout) - v2: [`CheckoutV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV2.kt), v3: [`CheckoutV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
     * [create-release](https://github.com/actions/create-release) - v1: [`CreateReleaseV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CreateReleaseV1.kt)
-    * [download-artifact](https://github.com/actions/download-artifact) - v2: [`DownloadArtifactV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/DownloadArtifactV2.kt)
+    * [download-artifact](https://github.com/actions/download-artifact) - v2: [`DownloadArtifactV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/DownloadArtifactV2.kt), v3: [`DownloadArtifactV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/DownloadArtifactV3.kt)
     * [first-interaction](https://github.com/actions/first-interaction) - v1: [`FirstInteractionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/FirstInteractionV1.kt)
     * [github-script](https://github.com/actions/github-script) - v6: [`GithubScriptV6`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/GithubScriptV6.kt)
     * [labeler](https://github.com/actions/labeler) - v4: [`LabelerV4`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/LabelerV4.kt)
     * [setup-dotnet](https://github.com/actions/setup-dotnet) - v2: [`SetupDotnetV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupDotnetV2.kt)
     * [setup-go](https://github.com/actions/setup-go) - v3: [`SetupGoV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupGoV3.kt)
-    * [setup-java](https://github.com/actions/setup-java) - v2: [`SetupJavaV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV2.kt)
-    * [setup-node](https://github.com/actions/setup-node) - v2: [`SetupNodeV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV2.kt)
-    * [setup-python](https://github.com/actions/setup-python) - v2: [`SetupPythonV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupPythonV2.kt)
+    * [setup-java](https://github.com/actions/setup-java) - v2: [`SetupJavaV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV2.kt), v3: [`SetupJavaV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV3.kt)
+    * [setup-node](https://github.com/actions/setup-node) - v2: [`SetupNodeV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV2.kt), v3: [`SetupNodeV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV3.kt)
+    * [setup-python](https://github.com/actions/setup-python) - v2: [`SetupPythonV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupPythonV2.kt), v3: [`SetupPythonV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupPythonV3.kt)
     * [stale](https://github.com/actions/stale) - v5: [`StaleV5`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/StaleV5.kt)
-    * [upload-artifact](https://github.com/actions/upload-artifact) - v2: [`UploadArtifactV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/UploadArtifactV2.kt)
+    * [upload-artifact](https://github.com/actions/upload-artifact) - v2: [`UploadArtifactV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/UploadArtifactV2.kt), v3: [`UploadArtifactV3`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/UploadArtifactV3.kt)
 * ad-m
     * [github-push-action](https://github.com/ad-m/github-push-action) - v0.6.0: [`GithubPushActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/adm/GithubPushActionV0.kt)
 * AkhileshNS
@@ -65,7 +65,7 @@ Click on a version to see the wrapper's code.
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt)
     * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt)
 * EndBug
-    * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt)
+    * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV9.kt)
 * google-github-actions
     * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/AuthV0.kt)
     * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/SetupGcloudV0.kt)
@@ -87,7 +87,7 @@ Click on a version to see the wrapper's code.
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/nobrayner/DiscordWebhookV1.kt)
 * peterjgrainger
-    * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.1.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
+    * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.2.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
 * repo-sync
     * [pull-request](https://github.com/repo-sync/pull-request) - v2: [`PullRequestV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reposync/PullRequestV2.kt)
 * SamKirkland
@@ -98,4 +98,4 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 58
-* counting each version separately: 59
+* counting each version separately: 66
