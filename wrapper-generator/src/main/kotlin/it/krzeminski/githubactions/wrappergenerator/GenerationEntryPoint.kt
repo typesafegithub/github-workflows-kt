@@ -71,7 +71,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
                     .groupBy { it.name }
                     .forEach { (_, versions) ->
                         val kotlinClasses = versions.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
-                        writer.println("    *  ${versions.first().toMarkdownLinkGithub()} - $kotlinClasses")
+                        writer.println("    * ${versions.first().toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
 
