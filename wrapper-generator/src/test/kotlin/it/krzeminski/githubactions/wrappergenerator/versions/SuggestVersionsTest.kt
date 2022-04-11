@@ -107,5 +107,12 @@ class SuggestVersionsTest : FunSpec({
                 "v1, v2".versions(),
             ) shouldBe "major version(s) could be used: [v1, v2]"
         }
+
+        test("version=latest") {
+            suggestNewerVersion(
+                "latest".versions(),
+                "v1, v1.0, v2, v2.0".versions()
+            ) shouldBe "new major version(s) available: [v1, v2]"
+        }
     }
 })
