@@ -2,7 +2,7 @@ package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
-import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
+import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.peterjgrainger.ActionCreateBranchV2
 import it.krzeminski.githubactions.actions.reposync.PullRequestV2
@@ -49,6 +49,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
           name = "create-branch",
           action = ActionCreateBranchV2(
             branch = "dependency-update",
+            _customVersion = "v2.1.0",
           ),
           env = linkedMapOf(
             "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN"),
@@ -62,7 +63,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         )
         uses(
           name = "Commit",
-          action = AddAndCommitV8(
+          action = AddAndCommitV9(
             authorName = "GitHub Actions",
             authorEmail = "noreply@github.com",
             message = "Refresh versions.properties",

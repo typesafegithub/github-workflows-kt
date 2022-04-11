@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
+import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expr
@@ -503,7 +503,7 @@ class IntegrationTest : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                val addAndCommit = uses(AddAndCommitV8())
+                val addAndCommit = uses(AddAndCommitV9())
 
                 uses(
                     name = "Some step consuming other step's output",
@@ -532,7 +532,7 @@ class IntegrationTest : FunSpec({
                 runs-on: "ubuntu-latest"
                 steps:
                   - id: step-0
-                    uses: EndBug/add-and-commit@v8
+                    uses: EndBug/add-and-commit@v9
                   - id: step-1
                     name: Some step consuming other step's output
                     uses: actions/checkout@v3

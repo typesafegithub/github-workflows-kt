@@ -29,7 +29,7 @@ jobs:
         with:
           arguments: refreshVersions
       - name: Commit
-        uses: EndBug/add-and-commit@v8
+        uses: EndBug/add-and-commit@v9
         with:
           author_name: GitHub Actions
           author_email: noreply@github.com

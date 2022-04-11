@@ -6,7 +6,7 @@ import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
-import it.krzeminski.githubactions.actions.actions.UploadArtifactV2
+import it.krzeminski.githubactions.actions.actions.UploadArtifactV3
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 
@@ -295,7 +295,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Action with multiline parameter",
-                    action = UploadArtifactV2(
+                    action = UploadArtifactV3(
                         name = "artifact",
                         path = listOf("path1", "path2"),
                     ),
@@ -308,7 +308,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Action with multiline parameter
-                             |  uses: actions/upload-artifact@v2
+                             |  uses: actions/upload-artifact@v3
                              |  with:
                              |    name: artifact
                              |    path: |
@@ -385,7 +385,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Action with multiline parameter",
-                    action = UploadArtifactV2(
+                    action = UploadArtifactV3(
                         name = "artifact",
                         path = listOf("path1", "path2"),
                         _customInputs = mapOf(
@@ -402,7 +402,7 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Action with multiline parameter
-                             |  uses: actions/upload-artifact@v2
+                             |  uses: actions/upload-artifact@v3
                              |  with:
                              |    name: artifact
                              |    path: override-path-value
@@ -415,7 +415,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     name = "Action with multiline parameter",
-                    action = UploadArtifactV2(
+                    action = UploadArtifactV3(
                         name = "artifact",
                         path = listOf("path1", "path2"),
                         _customVersion = "v2.3.4"
