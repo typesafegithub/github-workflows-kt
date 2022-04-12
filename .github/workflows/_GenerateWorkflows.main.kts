@@ -5,6 +5,7 @@
 @file:Import("check-if-wrappers-up-to-date.main.kts")
 @file:Import("gradle-wrapper-validation.main.kts")
 @file:Import("update-gradle-wrapper.main.kts")
+@file:Import("actions-versions.main.kts")
 
 import it.krzeminski.githubactions.yaml.writeToFile
 
@@ -13,4 +14,5 @@ listOf(
     checkIfWrappersUpToDateWorkflow,
     gradleWrapperValidationWorkflow,
     updateGradleWrapperWorkflow,
+    checkIfNewActionVersionsWorkflow,
 ).forEach { it.writeToFile() }
