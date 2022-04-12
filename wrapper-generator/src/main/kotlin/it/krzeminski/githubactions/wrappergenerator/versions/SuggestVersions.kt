@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.wrappergenerator.versions
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
+import java.io.File
 
 /**
  * Suggest newer versions for the wrapper generator
@@ -19,6 +20,7 @@ import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
  * ```
  */
 fun main() {
+    var output: String = ""
     val githubAuthorization = System.getenv("GITHUB_TOKEN")
         ?: error(
             """
@@ -37,8 +39,13 @@ fun main() {
     for ((coords, existingVersions) in actionsMap) {
         val available = coords.fetchAvailableVersions(githubAuthorization)
         suggestNewerVersion(existingVersions, available)?.let { message ->
-            println("$message for ${coords.prettyPrint}")
+            output += "$message for ${coords.prettyPrint}\n"
         }
+    }
+    println(output)
+    File("build/suggestVersions.md").let { file ->
+        println("Updated ${file.absolutePath}")
+        file.writeText(output)
     }
 }
 
