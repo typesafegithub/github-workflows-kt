@@ -49,6 +49,7 @@ val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
     val cacheFile = actionYamlDir.resolve("$owner-$name-$version.yml")
     if (cacheFile.canRead()) {
+        println("  ... from cache: $cacheFile")
         return myYaml.decodeFromString(cacheFile.readText())
     }
 
