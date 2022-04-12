@@ -6,6 +6,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
+import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -33,6 +34,7 @@ fun main() {
 }
 
 private fun generateWrappers() {
+    deleteActionYamlCacheIfObsolete()
     wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
         println("Generating ${actionCoords.prettyPrint}")
         val (code, path) = actionCoords.generateWrapper(inputTypings)

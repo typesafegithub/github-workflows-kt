@@ -4,8 +4,10 @@ import com.charleskorn.kaml.Yaml
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import java.io.File
 import java.io.IOException
 import java.net.URI
+import java.time.LocalDate
 
 /**
  * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
@@ -45,6 +47,12 @@ val ActionCoords.releasesUrl: String get() = "https://github.com/$owner/$name/re
 val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
+    val cacheFile = actionYamlDir.resolve("$owner-$name-$version.yml")
+    if (cacheFile.canRead()) {
+        println("  ... from cache: $cacheFile")
+        return myYaml.decodeFromString(cacheFile.readText())
+    }
+
     val list = listOf(actionYmlUrl, actionYamlUrl, actionYmlNoVUrl, actionYamlNoVUrl)
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {
@@ -55,6 +63,7 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
         }
     } ?: error("$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\nCheck release page $releasesUrl")
 
+    cacheFile.writeText(metadataYaml)
     return myYaml.decodeFromString(metadataYaml)
 }
 
@@ -65,3 +74,17 @@ val myYaml = Yaml(
         strictMode = false,
     )
 )
+
+val actionYamlDir = File("build/action-yaml")
+
+fun deleteActionYamlCacheIfObsolete() {
+    val today = LocalDate.now().toString()
+    val dateTxt = actionYamlDir.resolve("date.txt")
+    val cacheUpToDate = dateTxt.canRead() && dateTxt.readText() == today
+
+    if (!cacheUpToDate) {
+        actionYamlDir.deleteRecursively()
+        actionYamlDir.mkdir()
+        dateTxt.writeText(today)
+    }
+}
