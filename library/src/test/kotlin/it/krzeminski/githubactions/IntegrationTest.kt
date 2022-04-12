@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.engine.spec.tempfile
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
@@ -12,7 +12,6 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Paths
-import kotlin.io.path.invariantSeparatorsPathString
 
 @Suppress("LargeClass")
 class IntegrationTest : FunSpec({
@@ -225,12 +224,15 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - 'hello world' workflow") {
         // given
-        val targetTempFile = tempfile()
+        val baseDir = tempdir("repo")
+        val targetTempFile = baseDir.resolve(".github/workflows/some_workflow.yml")
+        targetTempFile.parentFile.mkdirs()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = baseDir.resolve(".github/workflows/some_workflow.main.kts").toPath(),
             targetFile = targetTempFile.toPath(),
+            rootDirectory = baseDir.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -277,12 +279,15 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
         // given
-        val targetTempFile = tempfile()
+        val baseDir = tempdir("repo")
+        val targetTempFile = baseDir.resolve(".github/workflows/some_workflow.yml")
+        targetTempFile.parentFile.mkdirs()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = baseDir.resolve(".github/workflows/some_workflow.main.kts").toPath(),
             targetFile = targetTempFile.toPath(),
+            rootDirectory = baseDir.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -304,7 +309,6 @@ class IntegrationTest : FunSpec({
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
 
         // then
-        val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
         targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -324,10 +328,10 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     name: Execute script
-                    run: rm '$targetPath' && '.github/workflows/some_workflow.main.kts'
+                    run: rm '.github/workflows/some_workflow.yml' && '.github/workflows/some_workflow.main.kts'
                   - id: step-2
                     name: Consistency check
-                    run: git diff --exit-code '$targetPath'
+                    run: git diff --exit-code '.github/workflows/some_workflow.yml'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:

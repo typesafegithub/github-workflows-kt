@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 @GithubActionsDsl
 @Suppress("LongParameterList", "FunctionParameterNaming", "ConstructorParameterNaming")
@@ -14,6 +15,7 @@ class WorkflowBuilder(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    rootDirectory: Path = Paths.get("."),
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, CustomValue>,
 ) {
@@ -23,6 +25,7 @@ class WorkflowBuilder(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
+        rootDirectory = rootDirectory,
         jobs = jobs,
         _customArguments = _customArguments,
     )
@@ -82,6 +85,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    rootDirectory: Path = Paths.get("."),
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -95,6 +99,7 @@ fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
+        rootDirectory = rootDirectory,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()

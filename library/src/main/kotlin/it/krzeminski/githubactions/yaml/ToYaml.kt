@@ -8,7 +8,10 @@ import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.ObjectCustomValue
 import it.krzeminski.githubactions.dsl.StringCustomValue
 import it.krzeminski.githubactions.dsl.toBuilder
+import java.nio.file.Path
+import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
+import kotlin.io.path.relativeTo
 
 fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     return generateYaml(
@@ -22,8 +25,11 @@ fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
     )
-    this.targetFile.toFile().writeText(yaml)
+    rootDirectory.resolve(targetFile).toFile().writeText(yaml)
 }
+
+private fun Path.getPathString(base: Path): String =
+    absolute().relativeTo(base.absolute()).invariantSeparatorsPathString
 
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
@@ -37,18 +43,18 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             if (useGitDiff) {
                 run(
                     "Execute script",
-                    "rm '${targetFile.invariantSeparatorsPathString}' " +
-                        "&& '${sourceFile.invariantSeparatorsPathString}'"
+                    "rm '${targetFile.getPathString(rootDirectory)}' " +
+                        "&& '${sourceFile.getPathString(rootDirectory)}'"
                 )
                 run(
                     "Consistency check",
-                    "git diff --exit-code '${targetFile.invariantSeparatorsPathString}'"
+                    "git diff --exit-code '${targetFile.getPathString(rootDirectory)}'"
                 )
             } else {
                 run(
                     "Consistency check",
-                    "diff -u '${targetFile.invariantSeparatorsPathString}' " +
-                        "<('${sourceFile.invariantSeparatorsPathString}')"
+                    "diff -u '${targetFile.getPathString(rootDirectory)}' " +
+                        "<('${sourceFile.getPathString(rootDirectory)}')"
                 )
             }
         }
@@ -62,7 +68,7 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
     return buildString {
         appendLine(
             """
-            # This file was generated using Kotlin DSL (${sourceFile.invariantSeparatorsPathString}).
+            # This file was generated using Kotlin DSL (${sourceFile.getPathString(rootDirectory)}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             """.trimIndent()
