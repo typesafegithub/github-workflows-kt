@@ -25,7 +25,7 @@ fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
     )
-    rootDirectory.resolve(targetFile).toFile().writeText(yaml)
+    rootDir.resolve(targetFile).toFile().writeText(yaml)
 }
 
 private fun Path.getPathString(base: Path): String =
@@ -43,18 +43,18 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             if (useGitDiff) {
                 run(
                     "Execute script",
-                    "rm '${targetFile.getPathString(rootDirectory)}' " +
-                        "&& '${sourceFile.getPathString(rootDirectory)}'"
+                    "rm '${targetFile.getPathString(rootDir)}' " +
+                        "&& '${sourceFile.getPathString(rootDir)}'"
                 )
                 run(
                     "Consistency check",
-                    "git diff --exit-code '${targetFile.getPathString(rootDirectory)}'"
+                    "git diff --exit-code '${targetFile.getPathString(rootDir)}'"
                 )
             } else {
                 run(
                     "Consistency check",
-                    "diff -u '${targetFile.getPathString(rootDirectory)}' " +
-                        "<('${sourceFile.getPathString(rootDirectory)}')"
+                    "diff -u '${targetFile.getPathString(rootDir)}' " +
+                        "<('${sourceFile.getPathString(rootDir)}')"
                 )
             }
         }
@@ -68,7 +68,7 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
     return buildString {
         appendLine(
             """
-            # This file was generated using Kotlin DSL (${sourceFile.getPathString(rootDirectory)}).
+            # This file was generated using Kotlin DSL (${sourceFile.getPathString(rootDir)}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             """.trimIndent()

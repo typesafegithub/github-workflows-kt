@@ -11,7 +11,7 @@ data class Workflow(
     val env: LinkedHashMap<String, String>,
     val sourceFile: Path,
     val targetFile: Path,
-    val rootDirectory: Path,
+    val rootDir: Path,
     val jobs: List<Job>,
     override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : HasCustomArguments

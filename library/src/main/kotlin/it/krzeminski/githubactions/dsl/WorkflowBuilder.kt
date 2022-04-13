@@ -4,6 +4,7 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -15,7 +16,7 @@ class WorkflowBuilder(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
-    rootDirectory: Path = Paths.get("."),
+    rootDir: Path = Paths.get("."),
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, CustomValue>,
 ) {
@@ -25,7 +26,7 @@ class WorkflowBuilder(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
-        rootDirectory = rootDirectory,
+        rootDir = rootDir,
         jobs = jobs,
         _customArguments = _customArguments,
     )
@@ -85,7 +86,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
-    rootDirectory: Path = Paths.get("."),
+    rootDir: Path = Paths.get("."),
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -99,7 +100,7 @@ fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
-        rootDirectory = rootDirectory,
+        rootDir = rootDir,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()
@@ -111,6 +112,28 @@ fun workflow(
 
     return workflowBuilder.build()
 }
+
+@Suppress("LongParameterList", "FunctionParameterNaming")
+fun workflow(
+    name: String,
+    on: List<Trigger>,
+    env: LinkedHashMap<String, String> = linkedMapOf(),
+    sourceFile: File,
+    targetFileName: String = sourceFile.name.substringBeforeLast(".main.kts") + ".yml",
+    rootFolder: File = File("."),
+    targetFileFolder: File = rootFolder.resolve(".github/workflows"),
+    _customArguments: Map<String, CustomValue> = mapOf(),
+    block: WorkflowBuilder.() -> Unit,
+): Workflow = workflow(
+    name = name,
+    on = on,
+    env = env,
+    sourceFile = sourceFile.toPath(),
+    targetFile = targetFileFolder.toPath().resolve(targetFileName),
+    rootDir = rootFolder.toPath(),
+    _customArguments = _customArguments,
+    block = block,
+)
 
 private fun List<Job>.requireUniqueJobIds() {
     val countPerJobName = this
