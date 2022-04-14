@@ -659,7 +659,7 @@ val wrappersToGenerate = listOf(
         mapOf("all" to BooleanTyping)
     ),
     WrapperRequest(
-        ActionCoords("madhead", "semver-utils", "latest")
+        ActionCoords("madhead", "semver-utils", "v2")
     ),
 
     WrapperRequest(
