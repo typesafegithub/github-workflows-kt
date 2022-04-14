@@ -83,7 +83,7 @@ Click on a version to see the wrapper's code.
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1: [`CheckGradleVersionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
     * [read-java-properties](https://github.com/madhead/read-java-properties) - latest: [`ReadJavaProperties`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/ReadJavaProperties.kt)
-    * [semver-utils](https://github.com/madhead/semver-utils) - latest: [`SemverUtils`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtils.kt)
+    * [semver-utils](https://github.com/madhead/semver-utils) - v2: [`SemverUtilsV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt)
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/nobrayner/DiscordWebhookV1.kt)
 * peterjgrainger
