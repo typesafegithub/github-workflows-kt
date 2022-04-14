@@ -74,6 +74,13 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
         appendLine(workflow.on.triggersToYaml().prependIndent("  "))
         appendLine()
 
+        if (concurrency != null) {
+            appendLine("concurrency:")
+            appendLine("  group: ${concurrency.group}")
+            appendLine("  cancel-in-progress: ${concurrency.cancelInProgress}")
+            appendLine()
+        }
+
         if (workflow.env.isNotEmpty()) {
             appendLine("env:")
             appendLine(workflow.env.toYaml().prependIndent("  "))

@@ -14,6 +14,7 @@ data class Job(
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
     val timeoutMinutes: Int? = null,
+    val concurrency: Concurrency? = null,
     override val _customArguments: Map<String, CustomValue> = mapOf(),
 ) : HasCustomArguments {
     init {
