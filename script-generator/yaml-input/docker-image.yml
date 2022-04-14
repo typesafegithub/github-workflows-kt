@@ -1,5 +1,9 @@
 name: Docker Image
 
+concurrency:
+  group: workflow_staging_environment
+  cancel-in-progress: true
+
 on:
     push:
         branches: [ "main", "feature/dockerfile" ]
@@ -8,6 +12,9 @@ jobs:
 
     push_image:
         runs-on: ubuntu-latest
+        concurrency:
+          group: job_staging_environment
+          cancel-in-progress: true
         steps:
             - uses: actions/checkout@v2
 

@@ -94,4 +94,30 @@ class NormalizeYamlTest : FunSpec({
             URL("https://raw.githubusercontent.com/jmfayard/refreshVersions/main/.github/workflows/publish-mkdocs-website.yaml")
         url2.filename() shouldBe "publish-mkdocs-website"
     }
+
+    test("Normalize workflow and job concurrency") {
+        val input = """
+            name: Test workflow
+            
+            concurrency: workflow_staging_environment
+              
+            jobs:
+              "test_job":
+                concurrency: job_staging_environment
+        """.trimIndent()
+
+        input.normalizeYaml() shouldBe """
+            name: Test workflow
+            
+            concurrency:
+              group: workflow_staging_environment
+              cancel-in-progress: false
+              
+            jobs:
+              "test_job":
+                concurrency:
+                  group: job_staging_environment
+                  cancel-in-progress: false
+        """.trimIndent()
+    }
 })

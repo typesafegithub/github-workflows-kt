@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.docker.BuildPushActionV2
 import it.krzeminski.githubactions.actions.docker.LoginActionV1
 import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
@@ -23,10 +24,12 @@ public val workflowDockerImage: Workflow = workflow(
         ),
       sourceFile = Paths.get("docker-image.main.kts"),
       targetFile = Paths.get("yaml-output/docker-image.yml"),
+      concurrency = Concurrency(group = "workflow_staging_environment", cancelInProgress = true),
     ) {
       job(
         id = "push_image",
         runsOn = UbuntuLatest,
+        concurrency = Concurrency(group = "job_staging_environment", cancelInProgress = true),
       ) {
         uses(
           name = "CheckoutV2",
