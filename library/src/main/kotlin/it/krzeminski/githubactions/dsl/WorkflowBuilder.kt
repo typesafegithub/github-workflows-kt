@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.dsl
 
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
@@ -14,6 +15,7 @@ class WorkflowBuilder(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    concurrency: Concurrency? = null,
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, CustomValue>,
 ) {
@@ -24,6 +26,7 @@ class WorkflowBuilder(
         sourceFile = sourceFile,
         targetFile = targetFile,
         jobs = jobs,
+        concurrency = concurrency,
         _customArguments = _customArguments,
     )
 
@@ -38,6 +41,7 @@ class WorkflowBuilder(
         strategyMatrix: Map<String, List<String>>? = null,
         _customArguments: Map<String, CustomValue> = mapOf(),
         timeoutMinutes: Int? = null,
+        concurrency: Concurrency? = null,
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
@@ -49,6 +53,7 @@ class WorkflowBuilder(
             env = env,
             strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
             _customArguments = _customArguments,
         )
         jobBuilder.block()
@@ -82,6 +87,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    concurrency: Concurrency? = null,
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -95,6 +101,7 @@ fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
+        concurrency = concurrency,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()

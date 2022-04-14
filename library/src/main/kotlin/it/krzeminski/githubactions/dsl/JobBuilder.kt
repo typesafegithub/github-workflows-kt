@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.dsl
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import it.krzeminski.githubactions.domain.CommandStep
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
@@ -19,6 +20,7 @@ class JobBuilder(
     val condition: String?,
     val strategyMatrix: Map<String, List<String>>?,
     val timeoutMinutes: Int? = null,
+    val concurrency: Concurrency? = null,
     override val _customArguments: Map<String, CustomValue>,
 ) : HasCustomArguments {
     private var job = Job(
@@ -31,7 +33,8 @@ class JobBuilder(
         steps = emptyList(),
         strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
-        _customArguments = _customArguments
+        concurrency = concurrency,
+        _customArguments = _customArguments,
     )
 
     fun run(

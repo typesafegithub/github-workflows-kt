@@ -25,6 +25,11 @@ private fun Job.toYaml() = buildString {
         appendLine("  name: $it")
     }
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
+    if (concurrency != null) {
+        appendLine("  concurrency:")
+        appendLine("    group: ${concurrency.group}")
+        appendLine("    cancel-in-progress: ${concurrency.cancelInProgress}")
+    }
 
     if (job.needs.isNotEmpty()) {
         appendLine("  needs:")
