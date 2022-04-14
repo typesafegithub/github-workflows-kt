@@ -1,5 +1,7 @@
 name: NodeJs Package
 
+concurrency: workflow_staging_environment
+
 on:
     release:
         types: [ created ]
@@ -7,6 +9,7 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        concurrency: job_staging_environment
 
         steps:
             -   uses: actions/checkout@v2

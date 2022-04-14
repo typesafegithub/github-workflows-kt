@@ -2,6 +2,7 @@ package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupNodeV3
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Release
@@ -24,10 +25,12 @@ public val workflowNodejsPackage: Workflow = workflow(
         ),
       sourceFile = Paths.get("nodejs-package.main.kts"),
       targetFile = Paths.get("yaml-output/nodejs-package.yml"),
+      concurrency = Concurrency(group = "workflow_staging_environment", cancelInProgress = false),
     ) {
       job(
         id = "build",
         runsOn = UbuntuLatest,
+        concurrency = Concurrency(group = "job_staging_environment", cancelInProgress = false),
       ) {
         uses(
           name = "CheckoutV2",
