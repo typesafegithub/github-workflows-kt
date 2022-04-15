@@ -19,6 +19,6 @@ class CustomAction(
         Output(stepId)
 
     class Output(private val stepId: String) {
-        operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        operator fun get(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
 }
