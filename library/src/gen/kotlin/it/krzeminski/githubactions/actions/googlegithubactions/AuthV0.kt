@@ -13,12 +13,12 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- *         Action: Authenticate to Google Cloud
+ * Action: Authenticate to Google Cloud
  *
- *         Authenticate to Google Cloud from GitHub Actions via Workload Identity
+ * Authenticate to Google Cloud from GitHub Actions via Workload Identity
  * Federation or service account keys.
  *
- *         [Action on GitHub](https://github.com/google-github-actions/auth)
+ * [Action on GitHub](https://github.com/google-github-actions/auth)
  */
 public class AuthV0(
     /**
