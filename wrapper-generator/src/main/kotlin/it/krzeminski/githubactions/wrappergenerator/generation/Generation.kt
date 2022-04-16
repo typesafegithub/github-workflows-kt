@@ -307,12 +307,12 @@ private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): Paramete
 
 private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
     """
-        Action: ${metadata.name}
-
-        ${metadata.description}
-
-        [Action on GitHub](https://github.com/${coords.owner}/${coords.name})
-    """.trimIndent()
+       |Action: ${metadata.name}
+       |
+       |${metadata.description}
+       |
+       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name})
+    """.trimMargin()
 
 private fun Map<String, Typing>.getInputTyping(key: String) =
     this[key] ?: StringTyping

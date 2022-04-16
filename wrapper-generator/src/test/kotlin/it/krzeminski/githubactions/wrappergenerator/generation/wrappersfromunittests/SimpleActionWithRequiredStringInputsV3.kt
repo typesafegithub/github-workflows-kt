@@ -14,13 +14,12 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- *         Action: Do something cool
+ * Action: Do something cool
  * and describe it in multiple lines
  *
- *         This is a test description that should be put in the KDoc comment for a class
+ * This is a test description that should be put in the KDoc comment for a class
  *
- *         [Action on
- * GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
+ * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
  */
 public class SimpleActionWithRequiredStringInputsV3(
     /**
