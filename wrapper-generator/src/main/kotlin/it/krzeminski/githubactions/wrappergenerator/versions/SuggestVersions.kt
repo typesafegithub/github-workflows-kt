@@ -44,8 +44,13 @@ fun main() {
     }
     println(output)
     File("build/suggestVersions.md").let { file ->
-        println("Updated ${file.absolutePath}")
-        file.writeText(output)
+        if (output.isNotEmpty()) {
+            println("Updated ${file.absolutePath}")
+            file.writeText(output)
+        } else {
+            println("No versions to suggest - ensuring that ${file.absolutePath} doesn't exist")
+            file.delete()
+        }
     }
 }
 
