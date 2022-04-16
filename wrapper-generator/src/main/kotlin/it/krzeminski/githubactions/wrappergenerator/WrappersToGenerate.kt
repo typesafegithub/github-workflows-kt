@@ -669,6 +669,14 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("peter-evans", "create-issue-from-file", "v4"),
+        mapOf(
+            "issue-number" to IntegerTyping,
+            "labels" to ListOfTypings(","),
+            "assignees" to ListOfTypings(","),
+        )
+    ),
+    WrapperRequest(
         ActionCoords("peterjgrainger", "action-create-branch", "v2.2.0")
     ),
 
