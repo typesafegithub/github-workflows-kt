@@ -17,7 +17,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/semver-utils)
  */
-public class SemverUtils(
+public class SemverUtilsV2(
     /**
      * A version to process
      */
@@ -43,7 +43,7 @@ public class SemverUtils(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SemverUtils.Outputs>("madhead", "semver-utils", _customVersion ?: "latest") {
+) : ActionWithOutputs<SemverUtilsV2.Outputs>("madhead", "semver-utils", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

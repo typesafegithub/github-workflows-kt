@@ -34,7 +34,5 @@ class CaseTest : DescribeSpec({
 })
 
 private enum class MyEnum {
-    invalid,
-    `in-valid`,
-    in_valid,
+    In_valid,
 }
