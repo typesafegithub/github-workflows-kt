@@ -18,7 +18,10 @@ class GenerationTest : FunSpec({
     test("action with required inputs as strings, no outputs") {
         // given
         val actionManifest = Metadata(
-            name = "Do something cool",
+            name = """
+                Do something cool
+                and describe it in multiple lines
+            """.trimIndent(),
             description = "This is a test description that should be put in the KDoc comment for a class",
             inputs = mapOf(
                 "foo-bar" to Input(
@@ -27,7 +30,10 @@ class GenerationTest : FunSpec({
                     default = null,
                 ),
                 "baz-goo" to Input(
-                    description = "Just another input",
+                    description = """
+                        Just another input
+                        with multiline description
+                    """.trimIndent(),
                     deprecationMessage = "this is deprecated",
                     required = true,
                     default = null,
