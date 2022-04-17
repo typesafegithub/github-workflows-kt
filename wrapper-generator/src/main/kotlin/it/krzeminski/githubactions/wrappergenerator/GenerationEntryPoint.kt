@@ -44,9 +44,10 @@ private fun generateWrappers() {
         }
     }
     println(
-        """Now reformat the code with the command:
-        |./gradlew ktlintFormat
-    """.trimMargin()
+        """
+            |Now reformat the code with the command:
+            |./gradlew ktlintFormat
+        """.trimMargin()
     )
 }
 
