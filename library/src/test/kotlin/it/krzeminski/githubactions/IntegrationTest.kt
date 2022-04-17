@@ -232,7 +232,7 @@ class IntegrationTest : FunSpec({
             on = listOf(Push()),
             sourceFile = baseDir.resolve(".github/workflows/some_workflow.main.kts").toPath(),
             targetFile = targetTempFile.toPath(),
-            rootDir = baseDir.toPath(),
+            gitRootDir = baseDir.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -287,7 +287,7 @@ class IntegrationTest : FunSpec({
             on = listOf(Push()),
             sourceFile = baseDir.resolve(".github/workflows/some_workflow.main.kts").toPath(),
             targetFile = targetTempFile.toPath(),
-            rootDir = baseDir.toPath(),
+            gitRootDir = baseDir.toPath(),
         ) {
             job(
                 id = "test_job",

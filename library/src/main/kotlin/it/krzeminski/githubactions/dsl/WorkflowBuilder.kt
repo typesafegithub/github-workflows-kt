@@ -16,7 +16,7 @@ class WorkflowBuilder(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
-    rootDir: Path = Paths.get("."),
+    gitRootDir: Path = Paths.get("."),
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, CustomValue>,
 ) {
@@ -26,7 +26,7 @@ class WorkflowBuilder(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
-        rootDir = rootDir,
+        rootDir = gitRootDir,
         jobs = jobs,
         _customArguments = _customArguments,
     )
@@ -86,7 +86,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
-    rootDir: Path = Paths.get("."),
+    gitRootDir: Path = Paths.get("."),
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -100,7 +100,7 @@ fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
-        rootDir = rootDir,
+        gitRootDir = gitRootDir,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()
@@ -113,6 +113,15 @@ fun workflow(
     return workflowBuilder.build()
 }
 
+fun findGitRoot(file: File): File {
+    val parentFolder = file.parentFile ?: error("cannot navigate to parent of $file")
+    return if(parentFolder.resolve(".git").isDirectory) {
+        parentFolder
+    } else {
+        findGitRoot(parentFolder)
+    }
+}
+
 @Suppress("LongParameterList", "FunctionParameterNaming")
 fun workflow(
     name: String,
@@ -120,8 +129,8 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: File,
     targetFileName: String = sourceFile.name.substringBeforeLast(".main.kts") + ".yml",
-    rootFolder: File = File("."),
-    targetFileFolder: File = rootFolder.resolve(".github/workflows"),
+    gitRootFolder: File = findGitRoot(sourceFile.absoluteFile),
+    targetFolder: File = gitRootFolder.resolve(".github/workflows"),
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow = workflow(
@@ -129,8 +138,8 @@ fun workflow(
     on = on,
     env = env,
     sourceFile = sourceFile.toPath(),
-    targetFile = targetFileFolder.toPath().resolve(targetFileName),
-    rootDir = rootFolder.toPath(),
+    targetFile = targetFolder.toPath().resolve(targetFileName),
+    gitRootDir = gitRootFolder.toPath(),
     _customArguments = _customArguments,
     block = block,
 )
