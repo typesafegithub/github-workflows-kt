@@ -113,12 +113,11 @@ fun workflow(
     return workflowBuilder.build()
 }
 
-fun findGitRoot(file: File): File {
-    val parentFolder = file.parentFile ?: error("cannot navigate to parent of $file")
-    return if(parentFolder.resolve(".git").isDirectory) {
-        parentFolder
+fun findGitRoot(folder: File): File {
+    return if (folder.resolve(".git").isDirectory) {
+        folder
     } else {
-        findGitRoot(parentFolder)
+        findGitRoot(folder.parentFile ?: error("cannot navigate to parent of $folder"))
     }
 }
 
