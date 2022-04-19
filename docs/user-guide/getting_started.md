@@ -38,7 +38,7 @@ names with your own.
        sourceFile = Paths.get(".github/workflows/hello_world_workflow.main.kts"),
        targetFile = Paths.get(".github/workflows/hello_world_workflow.yml")
    ) {
-       job(name = "test_job", runsOn = UbuntuLatest) {
+       job(id = "test_job", runsOn = UbuntuLatest) {
            uses(name = "Check out", action = CheckoutV2())
            run(name = "Print greeting", command = "echo 'Hello world!'")
        }
