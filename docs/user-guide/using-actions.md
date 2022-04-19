@@ -90,7 +90,7 @@ val customAction = CustomAction(
 If your custom action has outputs, you can access them, albeit in a type-unsafe manner:
 
 ```kotlin
-job("test_job", RunnerType.UbuntuLatest) {
+job("test_job", runsOn = RunnerType.UbuntuLatest) {
     val customActionStep = uses(
         name = "Some step with output",
         action = customAction,
