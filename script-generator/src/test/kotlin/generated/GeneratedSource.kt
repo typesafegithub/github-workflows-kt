@@ -5,7 +5,6 @@ import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -60,7 +59,7 @@ public val workflowGenerated: Workflow = workflow(
     ) {
       job(
         id = "check_yaml_consistency",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "Check out",
@@ -83,7 +82,7 @@ public val workflowGenerated: Workflow = workflow(
 
       job(
         id = "build_for_UbuntuLatest",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
         env = linkedMapOf(
           "COLOR" to "blue",
           "SIZE" to "XXL",

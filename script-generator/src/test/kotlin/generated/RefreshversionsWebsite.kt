@@ -2,7 +2,7 @@ package generated
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupPythonV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
@@ -25,7 +25,7 @@ public val workflowRefreshversionsWebsite: Workflow = workflow(
     ) {
       job(
         id = "deploy",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "CheckoutV2",

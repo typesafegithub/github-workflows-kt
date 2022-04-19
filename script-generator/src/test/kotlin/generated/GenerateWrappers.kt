@@ -4,7 +4,6 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.ListCustomValue
@@ -27,7 +26,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
     ) {
       job(
         id = "check_yaml_consistency",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "Check out",
@@ -46,7 +45,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
 
       job(
         id = "generate-wrappers",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
         _customArguments = mapOf(
         "needs" to ListCustomValue("check_yaml_consistency"),
         )

@@ -3,7 +3,7 @@ package generated
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
@@ -81,7 +81,7 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
     ) {
       job(
         id = "check-all",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.Custom(expr("github.event.inputs.run-on || 'ubuntu-latest'")),
       ) {
         run(
           name = "Enable long paths for git Windows",
