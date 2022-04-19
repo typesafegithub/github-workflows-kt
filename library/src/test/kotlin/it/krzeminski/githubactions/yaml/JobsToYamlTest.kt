@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.dsl.BooleanCustomValue
 import it.krzeminski.githubactions.dsl.ListCustomValue
+import it.krzeminski.githubactions.dsl.expr
 
 class JobsToYamlTest : DescribeSpec({
     it("renders multiple jobs") {
@@ -328,6 +329,45 @@ class JobsToYamlTest : DescribeSpec({
              |"Job-1":
              |  runs-on: "ubuntu-latest"
              |  timeout-minutes: 30
+             |  steps:
+             |    - id: someId
+             |      name: Some command
+             |      run: echo 'test!'
+             """.trimMargin()
+    }
+
+    it("renders a custom RunnerType - hardcoded or from an expression") {
+        fun job(id: String, runnerType: RunnerType) = Job(
+            id = id,
+            runsOn = runnerType,
+            steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    name = "Some command",
+                    command = "echo 'test!'",
+                ),
+            ),
+        )
+
+        // given
+        val jobs = listOf(
+            job("Job-1", RunnerType.Custom("windows-3.0")),
+            job("Job-2", RunnerType.Custom(expr("github.event.inputs.run-on"))),
+        )
+
+        // when
+        val yaml = jobs.jobsToYaml()
+
+        // then
+        yaml shouldBe """
+             |"Job-1":
+             |  runs-on: "windows-3.0"
+             |  steps:
+             |    - id: someId
+             |      name: Some command
+             |      run: echo 'test!'
+             |"Job-2":
+             |  runs-on: "${'$'}{{ github.event.inputs.run-on }}"
              |  steps:
              |    - id: someId
              |      name: Some command
