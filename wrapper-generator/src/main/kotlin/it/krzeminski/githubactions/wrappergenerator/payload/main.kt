@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.wrappergenerator.payload
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
@@ -75,9 +76,17 @@ fun generateObjectType(key: String, value: JsonObject): TypeSpec {
                 PropertySpec.builder(child.toCamelCase(), ClassName(PACKAGE, payloadClassName("$key.$child")))
                     .initializer("%L", payloadClassName("$key.$child").toPascalCase())
                     .build()
+            is JsonArray ->
+                PropertySpec.builder(child.toCamelCase(), List::class.asClassName().parameterizedBy(String::class.asClassName()))
+                    .initializer("%T(%S)", FakeList::class.asClassName(), "$key.$child")
+                    .build()
             else -> { println("Warning: unhandled $child") ; null }
         }
         if (property != null) builder.addProperty(property)
     }
     return builder.build().also { println(it) }
+}
+
+class FakeList(val name: String) : List<String> by emptyList() {
+    override fun get(index: Int): String = "$name[$index]"
 }

@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.wrappergenerator.payload
 
 import kotlin.String
+import kotlin.collections.List
 
 public val event: Event = Event
 
@@ -619,6 +620,14 @@ public object EventPullRequest {
     public val mergeCommitSha: String = "event.pull_request.merge_commit_sha"
 
     public val assignee: String = "event.pull_request.assignee"
+
+    public val assignees: List<String> = FakeList("event.pull_request.assignees")
+
+    public val requestedReviewers: List<String> = FakeList("event.pull_request.requested_reviewers")
+
+    public val requestedTeams: List<String> = FakeList("event.pull_request.requested_teams")
+
+    public val labels: List<String> = FakeList("event.pull_request.labels")
 
     public val milestone: String = "event.pull_request.milestone"
 

@@ -5,26 +5,19 @@ import io.kotest.matchers.shouldBe
 
 class PayloadTest : FunSpec({
     test("Type-safe expressions for pull-request event") {
-        """
-        action = ${event.action}
-        sender = ${event.sender.login}
-        commits = ${event.pullRequest.commits}
-        """.trimIndent() shouldBe """
-        action = event.action
-        sender = event.sender.login
-        commits = event.pull_request.commits
-        """.trimIndent()
+        event.action shouldBe "event.action"
+        event.sender.login shouldBe "event.sender.login"
+        event.pullRequest.commits shouldBe "event.pull_request.commits"
     }
 
     test("Type-safe expressions for GitHub's payload") {
-        """
-        token = ${github.token}
-        env = ${github.env}
-        job = ${github.job}
-        """.trimIndent() shouldBe """
-        token = github.token
-        env = github.env
-        job = github.job
-        """.trimIndent()
+        github.token shouldBe "github.token"
+        github.env shouldBe "github.env"
+        github.job shouldBe "github.job"
+    }
+
+    test("Arrays") {
+        event.pullRequest.assignees[1] shouldBe "event.pull_request.assignees[1]"
+        event.pullRequest.labels[1] shouldBe "event.pull_request.labels[1]"
     }
 })
