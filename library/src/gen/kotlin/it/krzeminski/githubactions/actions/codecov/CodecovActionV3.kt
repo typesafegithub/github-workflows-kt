@@ -136,6 +136,15 @@ public class CodecovActionV3(
      */
     public val workingDirectory: String? = null,
     /**
+     * Run with xcode support
+     */
+    public val xcode: String? = null,
+    /**
+     * Specify the xcode archive path. Likely specified as the -resultBundlePath and should end in
+     * .xcresult
+     */
+    public val xcodeArchivePath: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -176,6 +185,8 @@ public class CodecovActionV3(
             verbose?.let { "verbose" to it.toString() },
             version?.let { "version" to it },
             workingDirectory?.let { "working-directory" to it },
+            xcode?.let { "xcode" to it },
+            xcodeArchivePath?.let { "xcode_archive_path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
