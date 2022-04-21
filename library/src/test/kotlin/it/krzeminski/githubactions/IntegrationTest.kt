@@ -1,5 +1,7 @@
 package it.krzeminski.githubactions
 
+import com.charleskorn.kaml.MalformedYamlException
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
@@ -664,5 +666,27 @@ class IntegrationTest : FunSpec({
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
         """.trimIndent()
+    }
+
+    test("Malformed YAML") {
+
+        val invalidWorkflow = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
+            targetFile = Paths.get("../.github/workflows/invalid_workflow.yaml"),
+        ) {
+            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+                run(name = "property: something", command = "echo hello")
+            }
+        }
+        shouldThrow<MalformedYamlException> {
+            invalidWorkflow.toYaml()
+        }.message shouldBe """
+            |mapping values are not allowed here (is the indentation level of this line or a line nearby incorrect?)
+            | at line 26, column 23:
+            |            name: property: something
+            |                          ^
+        """.trimMargin()
     }
 })
