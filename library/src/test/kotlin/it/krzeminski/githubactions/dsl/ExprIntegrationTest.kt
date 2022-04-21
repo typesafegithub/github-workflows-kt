@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.dsl
 
 import io.kotest.core.spec.style.FunSpec
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupNodeV3
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.expr.Env

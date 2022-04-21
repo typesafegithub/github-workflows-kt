@@ -7,15 +7,42 @@ package it.krzeminski.githubactions.expr
  *
  * https://docs.github.com/en/actions/learn-github-actions/expressions#functions
  */
-@Suppress("FunctionOnlyReturningConstant")
+@Suppress("FunctionOnlyReturningConstant", "TooManyFunctions")
 open class FunctionsContext {
-    private fun formatArgs(vararg args: String) =
-        args.joinToString(prefix = "(", postfix = ")") { "'$it'" }
+    private fun formatArgs(vararg args: String, quote: Boolean) =
+        args.joinToString(prefix = "(", postfix = ")") { if (quote) "'$it'" else it }
 
     fun always() = "always()"
 
-    fun contains(search: String, item: String) =
-        "contains" + formatArgs(search, item)
+    fun success() = "success()"
 
-    // TODO: other functions from https://docs.github.com/en/actions/learn-github-actions/expressions#functions
+    fun cancelled() = "cancelled()"
+
+    fun failure() = "failure()"
+
+    fun contains(search: String, item: String, quote: Boolean = false) =
+        "contains" + formatArgs(search, item, quote = quote)
+
+    fun startsWith(searchString: String, searchValue: String, quote: Boolean = false) =
+        "startsWith" + formatArgs(searchString, searchValue, quote = quote)
+
+    fun endsWith(searchString: String, searchValue: String, quote: Boolean = false) =
+        "endsWith" + formatArgs(searchString, searchValue, quote = quote)
+
+    fun format(vararg args: String, quote: Boolean = false): String {
+        require(args.isNotEmpty()) { "Expected first arg like : format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')" }
+        return "format" + formatArgs(*args, quote = quote)
+    }
+
+    fun join(array: String, separator: String = ",", quote: Boolean = false) =
+        "join" + formatArgs(array, separator, quote = quote)
+
+    fun toJSON(value: String, quote: Boolean = false) =
+        "toJSON" + formatArgs(value, quote = quote)
+
+    fun fromJSON(value: String, quote: Boolean = false) =
+        "fromJSON" + formatArgs(value, quote = quote)
+
+    fun hashFiles(vararg paths: String, quote: Boolean = false) =
+        "hashFiles" + formatArgs(*paths, quote = quote)
 }

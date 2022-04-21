@@ -78,7 +78,32 @@ class ExprUnitTest : FunSpec({
     test("Functions") {
         assertSoftly {
             expr { always() } shouldBe expr("always()")
-            expr { contains("he", "hello") } shouldBe expr("contains('he', 'hello')")
+            expr { success() } shouldBe expr("success()")
+            expr { always() } shouldBe expr("always()")
+            expr { failure() } shouldBe expr("failure()")
+            expr { cancelled() } shouldBe expr("cancelled()")
+            expr { toJSON("job") } shouldBe expr("toJSON(job)")
+
+            expr { contains("he", "hello", quote = true) } shouldBe
+                expr("contains('he', 'hello')")
+
+            expr { fromJSON("needs.job1.outputs.matrix") } shouldBe
+                expr("fromJSON(needs.job1.outputs.matrix)")
+
+            expr { format("Hello {0} {1} {2}", "Mona", "the", "Octocat", quote = true) } shouldBe
+                expr("format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')")
+
+            expr { hashFiles("**/package-lock.json", "**/Gemfile.lock", quote = true) } shouldBe
+                expr("hashFiles('**/package-lock.json', '**/Gemfile.lock')")
+
+            expr { startsWith("Hello world", "He", quote = true) } shouldBe
+                expr("startsWith('Hello world', 'He')")
+
+            expr { endsWith("Hello world", "ld", quote = true) } shouldBe
+                expr("endsWith('Hello world', 'ld')")
+
+            expr { join("github.event.issue.labels.*.name", "', '") } shouldBe
+                expr("join(github.event.issue.labels.*.name, ', ')")
         }
     }
 })
