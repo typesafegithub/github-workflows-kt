@@ -479,6 +479,7 @@ val wrappersToGenerate = listOf(
             "override_build" to IntegerTyping,
             "override_pr" to IntegerTyping,
             "verbose" to BooleanTyping,
+            "xcode" to BooleanTyping,
         )
     ),
     WrapperRequest(
