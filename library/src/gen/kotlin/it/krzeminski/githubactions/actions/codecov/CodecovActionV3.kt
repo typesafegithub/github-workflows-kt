@@ -138,7 +138,7 @@ public class CodecovActionV3(
     /**
      * Run with xcode support
      */
-    public val xcode: String? = null,
+    public val xcode: Boolean? = null,
     /**
      * Specify the xcode archive path. Likely specified as the -resultBundlePath and should end in
      * .xcresult
@@ -185,7 +185,7 @@ public class CodecovActionV3(
             verbose?.let { "verbose" to it.toString() },
             version?.let { "version" to it },
             workingDirectory?.let { "working-directory" to it },
-            xcode?.let { "xcode" to it },
+            xcode?.let { "xcode" to it.toString() },
             xcodeArchivePath?.let { "xcode_archive_path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
