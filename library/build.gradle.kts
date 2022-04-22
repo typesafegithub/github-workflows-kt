@@ -23,6 +23,7 @@ repositories {
 dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.2.3")
     testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
+    implementation("com.charleskorn.kaml:kaml:0.43.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2")
 }
 
