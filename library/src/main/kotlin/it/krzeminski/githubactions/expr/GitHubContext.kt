@@ -9,13 +9,64 @@ package it.krzeminski.githubactions.expr
  * See https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
  * **/
 object GitHubContext : ExprContext("github") {
+
+    val token by map
+
+    val job by map
+
+    val ref by map
+
     val sha by map
 
-    // TODO: add other fields
+    val repository by map
 
-    object Event : ExprContext("$path.event") {
-        val action by map
+    val repository_owner by map
 
-        // TODO: add other fields
-    }
+    val repositoryUrl by map
+
+    val run_id by map
+
+    val run_number by map
+
+    val retention_days by map
+
+    val run_attempt by map
+
+    val actor by map
+
+    val workflow by map
+
+    val head_ref by map
+
+    val base_ref by map
+
+    val event_name by map
+
+    val server_url by map
+
+    val api_url by map
+
+    val graphql_url by map
+
+    val ref_name by map
+
+    val ref_protected by map
+
+    val ref_type by map
+
+    val secret_source by map
+
+    val workspace by map
+
+    val action by map
+
+    val event_path by map
+
+    val action_repository by map
+
+    val action_ref by map
+
+    val path by map
+
+    val env by map
 }
