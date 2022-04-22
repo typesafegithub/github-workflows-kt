@@ -95,6 +95,7 @@ val wrappersToGenerate = listOf(
             "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
             "lfs" to BooleanTyping,
             "submodules" to BooleanTyping,
+            "set-safe-directory" to BooleanTyping,
         ),
     ),
     WrapperRequest(
@@ -106,6 +107,7 @@ val wrappersToGenerate = listOf(
             "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
             "lfs" to BooleanTyping,
             "submodules" to BooleanTyping,
+            "set-safe-directory" to BooleanTyping,
         ),
     ),
     WrapperRequest(
