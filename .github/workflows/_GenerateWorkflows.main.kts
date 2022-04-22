@@ -6,6 +6,7 @@
 @file:Import("gradle-wrapper-validation.main.kts")
 @file:Import("update-gradle-wrapper.main.kts")
 @file:Import("actions-versions.main.kts")
+@file:Import("release.main.kts")
 
 import it.krzeminski.githubactions.yaml.writeToFile
 
@@ -15,4 +16,5 @@ listOf(
     gradleWrapperValidationWorkflow,
     updateGradleWrapperWorkflow,
     checkIfNewActionVersionsWorkflow,
+    releaseWorkflow,
 ).forEach { it.writeToFile() }
