@@ -51,7 +51,9 @@ private fun Job.toYaml() = buildString {
     job.strategyMatrix?.let {
         appendLine("  strategy:")
         appendLine("    matrix:")
-        it.forEach { (strategyParam, values) ->
+        it.forEach { (rawStrategyParam, values) ->
+            // Needed for type-safe matrix variables. See Expr.matrix
+            val strategyParam = rawStrategyParam.removePrefix("matrix.")
             appendLine("      $strategyParam:")
             values.forEach { value ->
                 appendLine("        - $value")

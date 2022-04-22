@@ -11,13 +11,13 @@ jobs:
   "job1":
     runs-on: "ubuntu-latest"
     env:
-      $GREETING: World
+      GREETING: World
     strategy:
       matrix:
         OS:
           - ubuntu-latest
           - windows-latest
-        matrix.NODE:
+        NODE:
           - 14
           - 16
     steps:
@@ -30,13 +30,13 @@ jobs:
       - id: step-2
         name: Custom environment variable
         env:
-          $FIRST_NAME: Patrick
+          FIRST_NAME: Patrick
         run: echo ${{ $GREETING }} ${{ $FIRST_NAME }}
       - id: step-3
         name: Encrypted secret
         env:
-          $SECRET: ${{ secrets.SUPER_SECRET }}
-          $TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SECRET: ${{ secrets.SUPER_SECRET }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: echo secret=$SECRET token=$TOKEN
       - id: step-4
         name: MatrixContext node

@@ -14,7 +14,6 @@ import java.nio.file.Path
 class ExprIntegrationTest : FunSpec({
 
     test("Executing workflow with type-safe expressions") {
-        // TODO
         exprWorkflow.writeToFile(addConsistencyCheck = false)
     }
 })

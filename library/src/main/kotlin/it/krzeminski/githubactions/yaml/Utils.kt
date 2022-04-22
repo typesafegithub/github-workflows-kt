@@ -1,7 +1,9 @@
 package it.krzeminski.githubactions.yaml
 
 fun LinkedHashMap<String, String>.toYaml() =
-    map { (key, value) ->
+    map { (rawKey, value) ->
+        // Needed for type-safe environment variables. See Expr.env
+        val key = rawKey.removePrefix("\$")
         if (value.lines().size == 1) {
             val valueMaybeQuoted = if (value.first() in specialYamlCharactersWhenStartingValues) {
                 "'$value'"
