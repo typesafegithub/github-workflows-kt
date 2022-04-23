@@ -45,4 +45,4 @@ jobs:
         name: Publish to Sonatype
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :library:publishToSonatype :library:closeAndReleaseSonatypeStagingRepository
+          arguments: :library:publishToSonatype closeAndReleaseSonatypeStagingRepository
