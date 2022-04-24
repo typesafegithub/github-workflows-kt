@@ -70,6 +70,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -144,6 +145,7 @@ class IntegrationTest : FunSpec({
                   - id: step-0
                     name: Hello world, again!
                     run: echo 'hello again!'
+
         """.trimIndent()
     }
 
@@ -171,6 +173,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -223,6 +226,7 @@ class IntegrationTest : FunSpec({
                       | grep -P "foobar" \
                       | sort \
                       > result.txt
+
         """.trimIndent()
     }
 
@@ -275,6 +279,7 @@ class IntegrationTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -342,6 +347,7 @@ class IntegrationTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -384,6 +390,7 @@ class IntegrationTest : FunSpec({
                   - id: step-0
                     name: Check out
                     uses: actions/checkout@v3
+
         """.trimIndent()
     }
 
@@ -491,6 +498,7 @@ class IntegrationTest : FunSpec({
                         hi,
                         hello! run
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -543,6 +551,7 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
     }
 
@@ -604,6 +613,7 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
     }
 
@@ -665,6 +675,7 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
     }
 

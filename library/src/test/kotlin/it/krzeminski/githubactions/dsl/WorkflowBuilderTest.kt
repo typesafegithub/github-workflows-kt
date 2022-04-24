@@ -179,6 +179,7 @@ class WorkflowBuilderTest : FunSpec({
                 concurrency:
                   group: ${'$'}{{ github.ref }}
                   cancel-in-progress: true
+
             """.trimIndent()
         }
     }
