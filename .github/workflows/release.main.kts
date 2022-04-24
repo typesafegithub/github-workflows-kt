@@ -40,5 +40,11 @@ val releaseWorkflow = workflow(
                 arguments = ":library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
             )
         )
+        uses(
+            name = "Wait until library present in Maven Central",
+            action = GradleBuildActionV2(
+                arguments = ":library:waitUntilLibraryPresentInMavenCentral",
+            )
+        )
     }
 }
