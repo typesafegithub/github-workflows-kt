@@ -33,6 +33,11 @@ private fun ExternalActionStep.toYaml(): String = buildString {
         appendLine("  env:")
         appendLine(this@toYaml.env.toYaml().prependIndent("    "))
     }
+    customArgumentsToYaml().takeIf { it.isNotBlank() }
+        ?.let { freeargs ->
+            append(freeargs.replaceIndent("  "))
+            appendLine()
+        }
     this@toYaml.condition?.let {
         appendLine(it.conditionToYaml())
     }
@@ -48,6 +53,12 @@ private fun CommandStep.toYaml() = buildString {
         appendLine("  env:")
         appendLine(this@toYaml.env.toYaml().prependIndent("    "))
     }
+
+    customArgumentsToYaml().takeIf { it.isNotBlank() }
+        ?.let { freeargs ->
+            append(freeargs.replaceIndent("  "))
+            appendLine()
+        }
 
     if (command.lines().size == 1) {
         appendLine("  run: $command")

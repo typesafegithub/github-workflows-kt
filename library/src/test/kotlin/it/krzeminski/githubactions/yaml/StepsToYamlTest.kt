@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV3
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
+import it.krzeminski.githubactions.dsl.BooleanCustomValue
 
 class StepsToYamlTest : DescribeSpec({
     it("renders multiple steps") {
@@ -153,6 +154,27 @@ class StepsToYamlTest : DescribeSpec({
                              |    echo 'second line'
                              |    
                              |    echo 'third line'""".trimMargin()
+        }
+
+        it("renders with custom arguments") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    name = "Some command",
+                    command = "echo 'hello!'",
+                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                )
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Some command
+                             |  foo: true
+                             |  run: echo 'hello!'""".trimMargin()
         }
     }
 
@@ -314,6 +336,27 @@ class StepsToYamlTest : DescribeSpec({
                              |    path: |
                              |      path1
                              |      path2""".trimMargin()
+        }
+
+        it("renders with custom arguments") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Some external action",
+                    action = CheckoutV3(),
+                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
+                             |  uses: actions/checkout@v3
+                             |  foo: true""".trimMargin()
         }
 
         it("renders correctly with values starting with special YAML characters") {
