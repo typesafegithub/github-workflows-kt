@@ -13,12 +13,12 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- *         Action: Set up gcloud Cloud SDK environment
+ * Action: Set up gcloud Cloud SDK environment
  *
- *         Downloads, installs, and configures a Google Cloud SDK environment.
+ * Downloads, installs, and configures a Google Cloud SDK environment.
  * Adds the `gcloud` CLI command to the $PATH.
  *
- *         [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
+ * [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
  */
 public class SetupGcloudV0(
     /**

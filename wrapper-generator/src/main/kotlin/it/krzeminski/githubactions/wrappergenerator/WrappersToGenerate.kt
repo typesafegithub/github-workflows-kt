@@ -95,6 +95,7 @@ val wrappersToGenerate = listOf(
             "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
             "lfs" to BooleanTyping,
             "submodules" to BooleanTyping,
+            "set-safe-directory" to BooleanTyping,
         ),
     ),
     WrapperRequest(
@@ -106,6 +107,7 @@ val wrappersToGenerate = listOf(
             "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
             "lfs" to BooleanTyping,
             "submodules" to BooleanTyping,
+            "set-safe-directory" to BooleanTyping,
         ),
     ),
     WrapperRequest(
@@ -477,6 +479,7 @@ val wrappersToGenerate = listOf(
             "override_build" to IntegerTyping,
             "override_pr" to IntegerTyping,
             "verbose" to BooleanTyping,
+            "xcode" to BooleanTyping,
         )
     ),
     WrapperRequest(
@@ -666,6 +669,14 @@ val wrappersToGenerate = listOf(
         ActionCoords("nobrayner", "discord-webhook", "v1"),
         mapOf(
             "include-details" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("peter-evans", "create-issue-from-file", "v4"),
+        mapOf(
+            "issue-number" to IntegerTyping,
+            "labels" to ListOfTypings(","),
+            "assignees" to ListOfTypings(","),
         )
     ),
     WrapperRequest(

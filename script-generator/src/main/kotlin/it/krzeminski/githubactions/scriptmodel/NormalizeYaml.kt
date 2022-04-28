@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.scriptgenerator.allTriggersNames
 @OptIn(ExperimentalStdlibApi::class)
 fun String.normalizeYaml(): String {
     val lines = lines()
+        .map { normalizeConcurrency(it) }
     val triggerNames = allTriggersNames
 
     val transformed: List<String> = lines.mapIndexed line@{ i, line ->
@@ -22,6 +23,17 @@ fun String.normalizeYaml(): String {
         }
     }
     return transformed.joinToString("\n")
+}
+
+private fun normalizeConcurrency(line: String): String {
+    val (space, name) = concurrencyRegex.find(line)?.destructured?.toList()
+        ?: return line
+
+    return """
+        |${space}concurrency:
+        |$space  group: $name
+        |$space  cancel-in-progress: false
+    """.trimMargin()
 }
 
 fun convertOnToObject(line: String, triggerNames: Set<String>): String? {
@@ -47,6 +59,9 @@ fun convertOnToObject(line: String, triggerNames: Set<String>): String? {
 
 private val topLevelProperties =
     "^(\\s*)(\\w+):\\s*$".toRegex()
+
+private val concurrencyRegex =
+    "^(\\s*)concurrency\\s*:\\s*(\\S+)\\s*$".toRegex()
 
 private fun List<String>.nextNonBlank(index: Int): String =
     IntRange(start = Math.min(index + 1, lastIndex), endInclusive = lastIndex)

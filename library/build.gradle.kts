@@ -1,4 +1,12 @@
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse.BodyHandlers
+import kotlin.time.ExperimentalTime
+import kotlin.time.minutes
 
 plugins {
     kotlin("jvm")
@@ -14,7 +22,7 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.13.0"
+version = "0.14.0"
 
 repositories {
     mavenCentral()
@@ -23,6 +31,7 @@ repositories {
 dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.2.3")
     testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
+    implementation("com.charleskorn.kaml:kaml:0.43.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2")
 }
 
@@ -108,6 +117,40 @@ publishing {
 tasks {
     signing {
         sign(publishing.publications["mavenJava"])
+
+        val signingKey = System.getenv("SIGNING_KEY")
+        val signingPassword = System.getenv("SIGNING_PASSWORD")
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+
+@OptIn(ExperimentalTime::class)
+val waitUntilLibraryPresentInMavenCentral by tasks.creating<Task> {
+    group = "publishing"
+    doLast {
+        val queriedUrl = "https://repo1.maven.org/maven2/it/krzeminski/github-actions-kotlin-dsl/$version/"
+        println("Querying URL: $queriedUrl")
+
+        fun isPresent(): Boolean {
+            val request = HttpRequest.newBuilder()
+                .uri(URI(queriedUrl))
+                .GET()
+                .build()
+            val response = HttpClient.newHttpClient()
+                .send(request, BodyHandlers.ofString())
+            return response.statusCode() != 404
+        }
+
+        runBlocking {
+            while (!isPresent()) {
+                println("Library still not present...")
+                delay(1.minutes)
+            }
+
+            if (isPresent()) {
+                println("Library present!")
+            }
+        }
     }
 }
 

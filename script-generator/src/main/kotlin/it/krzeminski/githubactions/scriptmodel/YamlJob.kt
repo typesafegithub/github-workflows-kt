@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.scriptmodel
 
+import it.krzeminski.githubactions.domain.Concurrency
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -13,4 +14,5 @@ data class YamlJob(
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
+    val concurrency: Concurrency? = null,
 )

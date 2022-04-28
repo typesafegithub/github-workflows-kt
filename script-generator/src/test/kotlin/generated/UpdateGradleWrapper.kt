@@ -4,7 +4,6 @@ import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
@@ -30,7 +29,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
     ) {
       job(
         id = "check_yaml_consistency",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "Check out",
@@ -50,7 +49,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
 
       job(
         id = "update-gradle-wrapper",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
         _customArguments = mapOf(
         "needs" to ListCustomValue("check_yaml_consistency"),
         )

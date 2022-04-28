@@ -1,11 +1,11 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.CodeBlock
-import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.scriptmodel.YamlJob
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
+import it.krzeminski.githubactions.scriptmodel.runnerTypeBlockOf
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
@@ -16,7 +16,8 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
             .indent()
             .add("id = %S,\n", jobId)
         if (job.name != null) builder.add("name = %S,\n", job.name)
-        builder.add("runsOn = %M,\n", enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest))
+        builder.add(runnerTypeBlockOf(job.runsOn))
+        builder.add(concurrencyOf(job.concurrency))
         builder.add(
             job.env.joinToCode(
                 ifEmpty = CodeBlock.EMPTY,

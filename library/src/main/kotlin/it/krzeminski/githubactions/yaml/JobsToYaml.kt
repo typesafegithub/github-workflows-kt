@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.RunnerType.Custom
 import it.krzeminski.githubactions.domain.RunnerType.MacOS1015
 import it.krzeminski.githubactions.domain.RunnerType.MacOS11
 import it.krzeminski.githubactions.domain.RunnerType.MacOSLatest
@@ -25,6 +26,11 @@ private fun Job.toYaml() = buildString {
         appendLine("  name: $it")
     }
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
+    if (concurrency != null) {
+        appendLine("  concurrency:")
+        appendLine("    group: ${concurrency.group}")
+        appendLine("    cancel-in-progress: ${concurrency.cancelInProgress}")
+    }
 
     if (job.needs.isNotEmpty()) {
         appendLine("  needs:")
@@ -65,6 +71,7 @@ private fun Job.toYaml() = buildString {
 
 fun RunnerType.toYaml() =
     when (this) {
+        is Custom -> runsOn
         UbuntuLatest -> "ubuntu-latest"
         WindowsLatest -> "windows-latest"
         MacOSLatest -> "macos-latest"

@@ -86,6 +86,8 @@ Click on a version to see the wrapper's code.
     * [semver-utils](https://github.com/madhead/semver-utils) - v2: [`SemverUtilsV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt)
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/nobrayner/DiscordWebhookV1.kt)
+* peter-evans
+    * [create-issue-from-file](https://github.com/peter-evans/create-issue-from-file) - v4: [`CreateIssueFromFileV4`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterevans/CreateIssueFromFileV4.kt)
 * peterjgrainger
     * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.2.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
 * repo-sync
@@ -97,5 +99,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 58
-* counting each version separately: 66
+* counting by actions: 59
+* counting each version separately: 67

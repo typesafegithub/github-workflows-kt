@@ -77,7 +77,7 @@ on:
 
 jobs:
   "check-all":
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ github.event.inputs.run-on || 'ubuntu-latest' }}"
     steps:
       - id: step-0
         name: Enable long paths for git Windows

@@ -10,9 +10,16 @@ on:
       - 'main'
       - 'feature/dockerfile'
 
+concurrency:
+  group: workflow_staging_environment
+  cancel-in-progress: true
+
 jobs:
   "push_image":
     runs-on: "ubuntu-latest"
+    concurrency:
+      group: job_staging_environment
+      cancel-in-progress: true
     steps:
       - id: step-0
         name: CheckoutV2

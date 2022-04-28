@@ -1,15 +1,15 @@
 package test
 
-import com.squareup.kotlinpoet.MemberName
+import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asClassName
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.PullRequest
-import it.krzeminski.githubactions.scriptgenerator.enumMemberName
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflowTriggers
 import it.krzeminski.githubactions.scriptmodel.myYaml
+import it.krzeminski.githubactions.scriptmodel.runnerTypeBlockOf
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
@@ -32,11 +32,16 @@ class EnumsTest : FunSpec({
     test("Convert RunnerType") {
         val runnerTypes = listOf(
             RunnerType.UbuntuLatest, RunnerType.WindowsLatest,
-            RunnerType.MacOSLatest, RunnerType.Windows2022, RunnerType.MacOS11
+            RunnerType.MacOSLatest, RunnerType.Windows2022, RunnerType.MacOS11,
         )
         val inputs = listOf("UbuntuLatest", "windows_latest", "mac+os+latest", "windows_2022", "macos 1 1")
         inputs.zip(runnerTypes).forAll { (input, runnerType) ->
-            enumMemberName<RunnerType>(input) shouldBe MemberName(RunnerType::class.asClassName(), runnerType.name)
+            runnerTypeBlockOf(input) shouldBe CodeBlock.of("runsOn = %T,\n", runnerType::class.asClassName())
         }
+        runnerTypeBlockOf("windows-3.0") shouldBe CodeBlock.of("runsOn = it.krzeminski.githubactions.domain.RunnerType.Custom(\"windows-3.0\"),\n")
+
+        runnerTypeBlockOf("${'$'}{{ github.event.inputs.run-on || 'ubuntu-latest' }}") shouldBe CodeBlock.of(
+            "runsOn = it.krzeminski.githubactions.domain.RunnerType.Custom(expr(\"github.event.inputs.run-on || 'ubuntu-latest'\")),\n"
+        )
     }
 })

@@ -1,8 +1,18 @@
 plugins {
-    kotlin("jvm") version "1.6.20" apply false
-    kotlin("plugin.serialization") version "1.6.20" apply false
+    kotlin("jvm") version "1.6.21" apply false
+    kotlin("plugin.serialization") version "1.6.21" apply false
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt") version "1.20.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1" apply false
+
+    // Publishing.
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // Needs to be applied to the root project.
+}
+
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
+    packageGroup.set("it.krzeminski")
 }

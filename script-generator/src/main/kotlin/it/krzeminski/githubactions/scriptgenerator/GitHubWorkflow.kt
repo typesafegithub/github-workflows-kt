@@ -3,6 +3,8 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.asClassName
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
@@ -33,6 +35,7 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
                         }
                     )
                     .add(workflowEnv())
+                    .add(concurrencyOf(concurrency))
                     .unindent()
                     .add(") {\n")
                     .indent()
@@ -42,6 +45,16 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
             }
         )
         .build()
+}
+
+fun concurrencyOf(concurrency: Concurrency?): CodeBlock = when (concurrency) {
+    null -> CodeBlock.EMPTY
+    else -> CodeBlock.of(
+        "concurrency = %T(group = %S, cancelInProgress = %L),\n",
+        Concurrency::class.asClassName(),
+        concurrency.group,
+        concurrency.cancelInProgress
+    )
 }
 
 private fun YamlWorkflow.workflowEnv(): CodeBlock {

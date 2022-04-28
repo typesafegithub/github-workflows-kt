@@ -6,7 +6,7 @@ import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.peterjgrainger.ActionCreateBranchV2
 import it.krzeminski.githubactions.actions.reposync.PullRequestV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
@@ -30,7 +30,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
     ) {
       job(
         id = "Refresh-Versions",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "check-out",

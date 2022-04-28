@@ -1,10 +1,13 @@
 package it.krzeminski.githubactions
 
+import com.charleskorn.kaml.MalformedYamlException
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expr
@@ -66,6 +69,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -140,6 +144,7 @@ class IntegrationTest : FunSpec({
                   - id: step-0
                     name: Hello world, again!
                     run: echo 'hello again!'
+
         """.trimIndent()
     }
 
@@ -167,6 +172,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -219,6 +225,7 @@ class IntegrationTest : FunSpec({
                       | grep -P "foobar" \
                       | sort \
                       > result.txt
+
         """.trimIndent()
     }
 
@@ -274,6 +281,7 @@ class IntegrationTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -343,6 +351,7 @@ class IntegrationTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -385,6 +394,7 @@ class IntegrationTest : FunSpec({
                   - id: step-0
                     name: Check out
                     uses: actions/checkout@v3
+
         """.trimIndent()
     }
 
@@ -492,6 +502,7 @@ class IntegrationTest : FunSpec({
                         hi,
                         hello! run
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -544,6 +555,153 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
+    }
+
+    test("toYaml() - with concurrency, default behavior") {
+        // when
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            concurrency = Concurrency("workflow_staging_environment"),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                concurrency = Concurrency("job_staging_environment"),
+            ) {
+                val addAndCommit = uses(AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    )
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+            
+            on:
+              push:
+
+            concurrency:
+              group: workflow_staging_environment
+              cancel-in-progress: false
+
+            jobs:
+              "test_job":
+                runs-on: "ubuntu-latest"
+                concurrency:
+                  group: job_staging_environment
+                  cancel-in-progress: false
+                steps:
+                  - id: step-0
+                    uses: EndBug/add-and-commit@v9
+                  - id: step-1
+                    name: Some step consuming other step's output
+                    uses: actions/checkout@v3
+                    with:
+                      repository: ${'$'}{{ step-0 }}
+                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - with concurrency, cancel in progress") {
+        // when
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                concurrency = Concurrency("job_staging_environment", cancelInProgress = true),
+            ) {
+                val addAndCommit = uses(AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    )
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+            
+            on:
+              push:
+
+            concurrency:
+              group: workflow_staging_environment
+              cancel-in-progress: true
+
+            jobs:
+              "test_job":
+                runs-on: "ubuntu-latest"
+                concurrency:
+                  group: job_staging_environment
+                  cancel-in-progress: true
+                steps:
+                  - id: step-0
+                    uses: EndBug/add-and-commit@v9
+                  - id: step-1
+                    name: Some step consuming other step's output
+                    uses: actions/checkout@v3
+                    with:
+                      repository: ${'$'}{{ step-0 }}
+                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
+        """.trimIndent()
+    }
+
+    test("Malformed YAML") {
+
+        val invalidWorkflow = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
+            targetFile = Paths.get("../.github/workflows/invalid_workflow.yaml"),
+        ) {
+            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+                run(name = "property: something", command = "echo hello")
+            }
+        }
+        shouldThrow<MalformedYamlException> {
+            invalidWorkflow.toYaml()
+        }.message shouldBe """
+            |mapping values are not allowed here (is the indentation level of this line or a line nearby incorrect?)
+            | at line 26, column 23:
+            |            name: property: something
+            |                          ^
+        """.trimMargin()
     }
 })

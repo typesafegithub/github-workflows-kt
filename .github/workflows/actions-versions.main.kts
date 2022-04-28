@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.12.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.13.0")
 
 import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
