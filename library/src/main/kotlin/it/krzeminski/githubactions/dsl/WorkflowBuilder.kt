@@ -8,6 +8,9 @@ import it.krzeminski.githubactions.domain.triggers.Trigger
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.io.path.absolute
+import kotlin.io.path.exists
+import kotlin.io.path.isDirectory
 
 @GithubActionsDsl
 @Suppress("LongParameterList", "FunctionParameterNaming", "ConstructorParameterNaming")
@@ -17,8 +20,8 @@ class WorkflowBuilder(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    rootDir: Path = Paths.get("."),
     concurrency: Concurrency? = null,
-    gitRootDir: Path = Paths.get("."),
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, CustomValue>,
 ) {
@@ -28,7 +31,7 @@ class WorkflowBuilder(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
-        rootDir = gitRootDir,
+        rootDir = rootDir,
         jobs = jobs,
         concurrency = concurrency,
         _customArguments = _customArguments,
@@ -84,6 +87,21 @@ fun Workflow.toBuilder() =
         _customArguments = _customArguments,
     )
 
+private fun findGitRoot(startFolder: Path): Path {
+    var currentFolder = startFolder.absolute()
+    val root = startFolder.absolute().root
+
+    while (currentFolder != root) {
+        val gitFolder = currentFolder.resolve(".git")
+        if (gitFolder.exists() && gitFolder.isDirectory()) {
+            return currentFolder
+        } else {
+            currentFolder = currentFolder.parent
+        }
+    }
+    error("could not find a git root from $startFolder")
+}
+
 @Suppress("LongParameterList", "FunctionParameterNaming")
 fun workflow(
     name: String,
@@ -91,8 +109,8 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFile: Path,
+    rootDir: Path = Paths.get("."),
     concurrency: Concurrency? = null,
-    gitRootDir: Path = Paths.get("."),
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -106,8 +124,8 @@ fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFile = targetFile,
+        rootDir = rootDir,
         concurrency = concurrency,
-        gitRootDir = gitRootDir,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()
@@ -120,14 +138,6 @@ fun workflow(
     return workflowBuilder.build()
 }
 
-fun findGitRoot(folder: File): File {
-    return if (folder.resolve(".git").isDirectory) {
-        folder
-    } else {
-        findGitRoot(folder.parentFile ?: error("cannot navigate to parent of $folder"))
-    }
-}
-
 @Suppress("LongParameterList", "FunctionParameterNaming")
 fun workflow(
     name: String,
@@ -135,8 +145,9 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: File,
     targetFileName: String = sourceFile.name.substringBeforeLast(".main.kts") + ".yml",
-    gitRootFolder: File = findGitRoot(sourceFile.absoluteFile),
-    targetFolder: File = gitRootFolder.resolve(".github/workflows"),
+    rootDir: Path = findGitRoot(sourceFile.absoluteFile.toPath()),
+    targetFolder: Path = rootDir.resolve(".github/workflows"),
+    concurrency: Concurrency? = null,
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow = workflow(
@@ -144,8 +155,9 @@ fun workflow(
     on = on,
     env = env,
     sourceFile = sourceFile.toPath(),
-    targetFile = targetFolder.toPath().resolve(targetFileName),
-    gitRootDir = gitRootFolder.toPath(),
+    targetFile = targetFolder.resolve(targetFileName),
+    rootDir = rootDir,
+    concurrency = concurrency,
     _customArguments = _customArguments,
     block = block,
 )
