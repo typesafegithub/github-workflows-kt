@@ -3,6 +3,7 @@
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Adopt
+import it.krzeminski.githubactions.actions.actions.SetupPythonV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Push
@@ -40,6 +41,12 @@ val releaseWorkflow = workflow(
                 arguments = "build",
             )
         )
+
+        uses(SetupPythonV3(pythonVersion = "3.8"))
+        run("pip install -r docs/requirements.txt")
+
+        // From here, there are steps performing deployments. Before, it's only about building and testing.
+
         uses(
             name = "Publish to Sonatype",
             action = GradleBuildActionV2(
@@ -51,6 +58,10 @@ val releaseWorkflow = workflow(
             action = GradleBuildActionV2(
                 arguments = ":library:waitUntilLibraryPresentInMavenCentral",
             )
+        )
+        run(
+            name = "Deploy docs",
+            command = "mkdocs gh-deploy --force",
         )
     }
 }
