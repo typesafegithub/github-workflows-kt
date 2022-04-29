@@ -42,11 +42,16 @@ jobs:
           java-version: 11
           distribution: adopt
       - id: step-2
+        name: Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+      - id: step-3
         name: Publish to Sonatype
         uses: gradle/gradle-build-action@v2
         with:
           arguments: :library:publishToSonatype closeAndReleaseSonatypeStagingRepository
-      - id: step-3
+      - id: step-4
         name: Wait until library present in Maven Central
         uses: gradle/gradle-build-action@v2
         with:

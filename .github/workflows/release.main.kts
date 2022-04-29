@@ -35,6 +35,12 @@ val releaseWorkflow = workflow(
             )
         )
         uses(
+            name = "Build",
+            action = GradleBuildActionV2(
+                arguments = "build",
+            )
+        )
+        uses(
             name = "Publish to Sonatype",
             action = GradleBuildActionV2(
                 arguments = ":library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
