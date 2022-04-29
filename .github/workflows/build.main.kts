@@ -3,6 +3,7 @@
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2.Distribution.Adopt
+import it.krzeminski.githubactions.actions.actions.SetupPythonV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
@@ -40,5 +41,16 @@ val buildWorkflow = workflow(
                 )
             )
         }
+    }
+
+    job(
+        id = "build_docs",
+        name = "Build docs",
+        runsOn = UbuntuLatest,
+    ) {
+        uses(CheckoutV3())
+        uses(SetupPythonV3(pythonVersion = "3.8"))
+        run("pip install -r docs/requirements.txt")
+        run("mkdocs build --site-dir public")
     }
 }
