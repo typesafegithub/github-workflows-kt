@@ -57,10 +57,12 @@ class PayloadTest : FunSpec({
 
 infix fun List<String>.shouldMatch(other: List<String>) {
     if (this.toSet() != other.toSet()) {
-        fail("""
+        fail(
+            """
                 |The lists don't match
                 |Missing:    ${(other - toSet()).distinct().sorted()}
                 |Unexpected: ${(this - other.toSet()).distinct().sorted()}
-            """.trimMargin())
+            """.trimMargin()
+        )
     }
 }

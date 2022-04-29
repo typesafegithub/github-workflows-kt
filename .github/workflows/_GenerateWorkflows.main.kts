@@ -17,4 +17,5 @@ listOf(
     updateGradleWrapperWorkflow,
     checkIfNewActionVersionsWorkflow,
     releaseWorkflow,
+    githubPayloadsWorkflow,
 ).forEach { it.writeToFile() }
