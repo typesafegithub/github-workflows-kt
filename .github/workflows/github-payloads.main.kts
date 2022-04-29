@@ -33,9 +33,13 @@ val githubPayloadsWorkflow = workflow(
     ) {
         uses(CheckoutV3())
         for (context in contexts) {
+            val filename = when (context) {
+                "github" -> "github-${'$'}GITHUB_EVENT_NAME.json"
+                else -> "$context.json"
+            }
             run(
                 name = "Payload for context = $context",
-                command = """echo '${expr("toJSON($context)")}' | tee $payloads/$context.json """
+                command = """echo '${expr("toJSON($context)")}' | tee $payloads/$filename"""
             )
         }
         uses(
