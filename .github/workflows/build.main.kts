@@ -1,8 +1,8 @@
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2.Distribution.Adopt
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Adopt
 import it.krzeminski.githubactions.actions.actions.SetupPythonV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -30,7 +30,7 @@ val buildWorkflow = workflow(
             uses(CheckoutV3())
             uses(
                 name = "Set up JDK",
-                action = SetupJavaV2(
+                action = SetupJavaV3(
                     javaVersion = "11",
                     distribution = Adopt,
                 )
