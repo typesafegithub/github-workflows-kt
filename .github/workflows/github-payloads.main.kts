@@ -15,7 +15,6 @@ import java.nio.file.Paths
 val githubPayloadsWorkflow = workflow(
     name = "Download GitHub payloads",
     on = listOf(
-        Push(),
         Schedule(listOf(
             Cron(dayWeek = "4", hour = "7", minute = "0"),
         )),
@@ -48,6 +47,7 @@ val githubPayloadsWorkflow = workflow(
                 add = payloads,
                 message = "Commit GitHub payloads",
                 push = "true",
+                newBranch = "payloads",
             )
         )
     }

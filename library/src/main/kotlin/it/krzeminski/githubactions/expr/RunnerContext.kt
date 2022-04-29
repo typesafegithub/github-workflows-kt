@@ -10,4 +10,5 @@ object RunnerContext : ExprContext("runner") {
     val arch by map
     val temp by map
     val tool_cache by map
+    val workspace by map
 }

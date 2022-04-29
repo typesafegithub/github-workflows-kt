@@ -69,4 +69,14 @@ object GitHubContext : ExprContext("github") {
     val path by map
 
     val env by map
+
+    val actor_id by map
+
+    val artifact_cache_size_limit by map
+
+    val repository_id by map
+
+    val repository_owner_id by map
+
+    val step_summary by map
 }

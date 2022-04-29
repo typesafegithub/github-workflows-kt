@@ -18,6 +18,6 @@ listOf(
     gradleWrapperValidationWorkflow,
     updateGradleWrapperWorkflow,
     checkIfNewActionVersionsWorkflow,
-    updateGradleWrapperWorkflow,
     githubPayloadsWorkflow,
+    updateGradleWrapperWorkflow,
 ).forEach { it.writeToFile() }

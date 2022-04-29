@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.expr
  * https://docs.github.com/en/actions/learn-github-actions/contexts#job-context
  */
 object JobContext : ExprContext("job") {
+    val status by map
     val container = Container
     object Container : ExprContext("job.container") {
         val id by map
