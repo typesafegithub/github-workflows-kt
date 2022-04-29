@@ -19,7 +19,11 @@ data class CommandStep(
     val command: String,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
-) : Step(id = id, condition = condition, env = env)
+) : Step(
+    id = id,
+    condition = condition,
+    env = env,
+)
 
 open class ExternalActionStep(
     override val id: String,
@@ -27,7 +31,11 @@ open class ExternalActionStep(
     open val action: Action,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
-) : Step(id = id, condition = condition, env = env)
+) : Step(
+    id = id,
+    condition = condition,
+    env = env,
+)
 
 data class ExternalActionStepWithOutputs<T>(
     override val id: String,
@@ -36,4 +44,11 @@ data class ExternalActionStepWithOutputs<T>(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val outputs: T,
-) : ExternalActionStep(name = name, action = action, id = id, condition = condition, env = env), WithOutputs<T>
+) : ExternalActionStep(
+    name = name,
+    action = action,
+    id = id,
+    condition = condition,
+    env = env,
+),
+    WithOutputs<T>
