@@ -45,7 +45,7 @@ public class NpmInstallV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("bahmutov", "npm-install", _customVersion ?: "v1.8.7") {
+) : Action("bahmutov", "npm-install", _customVersion ?: "v1.8.8") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

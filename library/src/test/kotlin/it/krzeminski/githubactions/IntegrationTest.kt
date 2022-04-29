@@ -1,22 +1,19 @@
 package it.krzeminski.githubactions
 
+import com.charleskorn.kaml.MalformedYamlException
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupNodeV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.expr.Env
-import it.krzeminski.githubactions.expr.Expr
-import it.krzeminski.githubactions.expr.Secrets
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
-import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.invariantSeparatorsPathString
 
@@ -73,6 +70,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -147,6 +145,7 @@ class IntegrationTest : FunSpec({
                   - id: step-0
                     name: Hello world, again!
                     run: echo 'hello again!'
+
         """.trimIndent()
     }
 
@@ -174,6 +173,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -226,6 +226,7 @@ class IntegrationTest : FunSpec({
                       | grep -P "foobar" \
                       | sort \
                       > result.txt
+
         """.trimIndent()
     }
 
@@ -278,6 +279,7 @@ class IntegrationTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -345,6 +347,7 @@ class IntegrationTest : FunSpec({
                   - id: step-1
                     name: Hello world!
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -387,6 +390,7 @@ class IntegrationTest : FunSpec({
                   - id: step-0
                     name: Check out
                     uses: actions/checkout@v3
+
         """.trimIndent()
     }
 
@@ -494,6 +498,7 @@ class IntegrationTest : FunSpec({
                         hi,
                         hello! run
                     run: echo 'hello!'
+
         """.trimIndent()
     }
 
@@ -546,6 +551,7 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
     }
 
@@ -607,6 +613,7 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
     }
 
@@ -668,132 +675,29 @@ class IntegrationTest : FunSpec({
                       repository: ${'$'}{{ step-0 }}
                       ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
                       token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
         """.trimIndent()
     }
 
-    test("Executing workflow with type-safe expressions") {
-        @Suppress("VariableNaming")
-        val actualYaml = workflow(
-            name = "expr-typesafe",
+    test("Malformed YAML") {
+
+        val invalidWorkflow = workflow(
+            name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Path.of("ExprIntegrationTest.kt"),
-            targetFile = Path.of("expr-testing.yml"),
+            sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
+            targetFile = Paths.get("../.github/workflows/invalid_workflow.yaml"),
         ) {
-            val NODE by Expr.matrix
-            val GREETING by Expr.env
-            val FIRST_NAME by Expr.env
-            val SECRET by Expr.env
-            val TOKEN by Expr.env
-            val SUPER_SECRET by Expr.secrets
-
-            job(
-                id = "job1",
-                runsOn = RunnerType.UbuntuLatest,
-                strategyMatrix = mapOf(
-                    "OS" to listOf("ubuntu-latest", "windows-latest"),
-                    NODE to listOf("14", "16"),
-                ),
-                env = linkedMapOf(
-                    GREETING to "World",
-                )
-            ) {
-                uses(CheckoutV3())
-                run(
-                    name = "Default environment variable",
-                    command = "action=${Env.GITHUB_ACTION} repo=${Env.GITHUB_REPOSITORY}",
-                    condition = expr { always() }
-                )
-                run(
-                    name = "Custom environment variable",
-                    env = linkedMapOf(
-                        FIRST_NAME to "Patrick",
-                    ),
-                    command = "echo " + expr { GREETING } + " " + expr { FIRST_NAME }
-                )
-                run(
-                    name = "Encrypted secret",
-                    env = linkedMapOf(
-                        SECRET to expr { SUPER_SECRET },
-                        TOKEN to expr { Secrets.GITHUB_TOKEN }
-                    ),
-                    command = "echo secret=$SECRET token=$TOKEN"
-                )
-                uses(
-                    name = "MatrixContext node",
-                    SetupNodeV3(nodeVersion = expr { NODE })
-                )
-                run(
-                    name = "RunnerContext create temp directory",
-                    command = "mkdir " + expr { runner.temp } + "/build_logs"
-                )
-                run(
-                    name = "GitHubContext echo sha",
-                    command = "echo " + expr { github.sha }
-                )
-                run(
-                    name = "StrategyContext job-index",
-                    command = "npm test > test-job-" + expr { strategy.`job-index` } + ".txt"
-                )
+            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+                run(name = "property: something", command = "echo hello")
             }
-        }.toYaml(addConsistencyCheck = false)
-
-        val d = '$'.toString() // Escape dollar signs
-
-        actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (ExprIntegrationTest.kt).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: expr-typesafe
-
-            on:
-              push:
-
-            jobs:
-              "job1":
-                runs-on: "ubuntu-latest"
-                env:
-                  GREETING: World
-                strategy:
-                  matrix:
-                    OS:
-                      - ubuntu-latest
-                      - windows-latest
-                    NODE:
-                      - 14
-                      - 16
-                steps:
-                  - id: step-0
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    name: Default environment variable
-                    run: action=${d}GITHUB_ACTION repo=${d}GITHUB_REPOSITORY
-                    if: $d{{ always() }}
-                  - id: step-2
-                    name: Custom environment variable
-                    env:
-                      FIRST_NAME: Patrick
-                    run: echo $d{{ ${d}GREETING }} $d{{ ${d}FIRST_NAME }}
-                  - id: step-3
-                    name: Encrypted secret
-                    env:
-                      SECRET: $d{{ secrets.SUPER_SECRET }}
-                      TOKEN: $d{{ secrets.GITHUB_TOKEN }}
-                    run: echo secret=${d}SECRET token=${d}TOKEN
-                  - id: step-4
-                    name: MatrixContext node
-                    uses: actions/setup-node@v3
-                    with:
-                      node-version: $d{{ matrix.NODE }}
-                  - id: step-5
-                    name: RunnerContext create temp directory
-                    run: mkdir $d{{ runner.temp }}/build_logs
-                  - id: step-6
-                    name: GitHubContext echo sha
-                    run: echo $d{{ github.sha }}
-                  - id: step-7
-                    name: StrategyContext job-index
-                    run: npm test > test-job-$d{{ strategy.job-index }}.txt
-        """.trimIndent()
+        }
+        shouldThrow<MalformedYamlException> {
+            invalidWorkflow.toYaml()
+        }.message shouldBe """
+            |mapping values are not allowed here (is the indentation level of this line or a line nearby incorrect?)
+            | at line 26, column 23:
+            |            name: property: something
+            |                          ^
+        """.trimMargin()
     }
 })

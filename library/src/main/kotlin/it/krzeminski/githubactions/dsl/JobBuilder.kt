@@ -41,11 +41,14 @@ class JobBuilder(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, CustomValue> = mapOf(),
     ): CommandStep = run(
         name = null,
         command = command,
         env = env,
         condition = condition,
+        _customArguments = _customArguments,
     )
 
     fun run(
@@ -53,6 +56,8 @@ class JobBuilder(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, CustomValue> = mapOf(),
     ): CommandStep {
         val newStep = CommandStep(
             id = "step-${job.steps.size}",
@@ -60,6 +65,7 @@ class JobBuilder(
             command = command,
             env = env,
             condition = condition,
+            _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep
@@ -69,11 +75,14 @@ class JobBuilder(
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStep = uses(
         name = null,
         action = action,
         env = env,
         condition = condition,
+        _customArguments = _customArguments,
     )
 
     fun uses(
@@ -81,6 +90,8 @@ class JobBuilder(
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStep {
         val newStep = ExternalActionStep(
             id = "step-${job.steps.size}",
@@ -88,6 +99,7 @@ class JobBuilder(
             action = action,
             env = env,
             condition = condition,
+            _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep
@@ -97,11 +109,14 @@ class JobBuilder(
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStepWithOutputs<T> = uses(
         name = null,
         action = action,
         env = env,
         condition = condition,
+        _customArguments = _customArguments,
     )
 
     fun <T> uses(
@@ -109,6 +124,8 @@ class JobBuilder(
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStepWithOutputs<T> {
         val stepId = "step-${job.steps.size}"
         val newStep = ExternalActionStepWithOutputs(
@@ -118,6 +135,7 @@ class JobBuilder(
             env = env,
             condition = condition,
             outputs = action.buildOutputObject(stepId),
+            _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep

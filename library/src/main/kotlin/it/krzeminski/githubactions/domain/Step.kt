@@ -2,12 +2,15 @@ package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.dsl.CustomValue
+import it.krzeminski.githubactions.dsl.HasCustomArguments
 
 sealed class Step(
     open val id: String,
     open val env: LinkedHashMap<String, String> = linkedMapOf(),
     open val condition: String? = null,
-)
+    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+) : HasCustomArguments
 
 interface WithOutputs<T> {
     val outputs: T
@@ -19,7 +22,13 @@ data class CommandStep(
     val command: String,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
-) : Step(id = id, condition = condition, env = env)
+    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+) : Step(
+    id = id,
+    condition = condition,
+    env = env,
+    _customArguments = _customArguments,
+)
 
 open class ExternalActionStep(
     override val id: String,
@@ -27,7 +36,13 @@ open class ExternalActionStep(
     open val action: Action,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
-) : Step(id = id, condition = condition, env = env)
+    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+) : Step(
+    id = id,
+    condition = condition,
+    env = env,
+    _customArguments = _customArguments,
+)
 
 data class ExternalActionStepWithOutputs<T>(
     override val id: String,
@@ -36,4 +51,13 @@ data class ExternalActionStepWithOutputs<T>(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val outputs: T,
-) : ExternalActionStep(name = name, action = action, id = id, condition = condition, env = env), WithOutputs<T>
+    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+) : ExternalActionStep(
+    name = name,
+    action = action,
+    id = id,
+    condition = condition,
+    env = env,
+    _customArguments = _customArguments,
+),
+    WithOutputs<T>

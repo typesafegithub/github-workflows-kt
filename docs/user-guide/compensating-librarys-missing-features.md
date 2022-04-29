@@ -8,7 +8,7 @@ to one of the next releases. See the below sections to find your specific case.
 The general approach is that whatever is overridden/customized using the below approaches, takes the precedence over
 built-in arguments.
 
-## Workflows and jobs
+## Workflows, jobs and steps
 
 They have an extra argument - `_customArguments` - which is a map from `String` to various subtypes of `CustomValue`.
 For example:

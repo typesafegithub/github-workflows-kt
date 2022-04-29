@@ -94,6 +94,10 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
                 append("\n")
                 append(freeargs.replaceIndent(""))
             }
+
+        appendLine()
+    }.also { yamlContent ->
+        failIfMalformedYml(yamlContent)
     }
 }
 
