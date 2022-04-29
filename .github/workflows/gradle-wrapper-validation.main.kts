@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.13.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradle.WrapperValidationActionV1

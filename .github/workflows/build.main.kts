@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.13.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -10,6 +10,7 @@ import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.workflow
+import it.krzeminski.githubactions.yaml.toYaml
 import java.nio.file.Paths
 
 val buildWorkflow = workflow(
@@ -23,7 +24,7 @@ val buildWorkflow = workflow(
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
-            id = "build_for_$runnerType",
+            id = "build-for-${runnerType.toYaml()}",
             runsOn = runnerType,
         ) {
             uses(CheckoutV3())

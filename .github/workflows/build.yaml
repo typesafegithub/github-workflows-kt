@@ -23,7 +23,7 @@ jobs:
       - id: step-2
         name: Consistency check
         run: git diff --exit-code '.github/workflows/build.yaml'
-  "build_for_UbuntuLatest":
+  "build-for-ubuntu-latest":
     runs-on: "ubuntu-latest"
     needs:
       - "check_yaml_consistency"
@@ -41,7 +41,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
-  "build_for_Windows2022":
+  "build-for-windows-2022":
     runs-on: "windows-2022"
     needs:
       - "check_yaml_consistency"
