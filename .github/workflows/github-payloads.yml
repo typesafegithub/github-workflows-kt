@@ -32,4 +32,20 @@ jobs:
         uses: actions/checkout@v3
       - id: step-1
         name: Payload for context = github
-        run: echo '${{ toJSON(github) }} | tee library/src/test/resources/payloads/github.json 
+        run: echo '${{ toJSON(github) }}' | tee library/src/test/resources/payloads/github.json 
+      - id: step-2
+        name: Payload for context = job
+        run: echo '${{ toJSON(job) }}' | tee library/src/test/resources/payloads/job.json 
+      - id: step-3
+        name: Payload for context = runner
+        run: echo '${{ toJSON(runner) }}' | tee library/src/test/resources/payloads/runner.json 
+      - id: step-4
+        name: Payload for context = strategy
+        run: echo '${{ toJSON(strategy) }}' | tee library/src/test/resources/payloads/strategy.json 
+      - id: step-5
+        name: commit
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: library/src/test/resources/payloads
+          message: Commit GitHub payloads
+          push: true

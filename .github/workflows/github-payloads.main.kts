@@ -1,6 +1,7 @@
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.12.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.endbug.AddAndCommitV8
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Cron
@@ -24,7 +25,7 @@ val githubPayloadsWorkflow = workflow(
     targetFile = Paths.get(".github/workflows/github-payloads.yml"),
 ) {
     val payloads = "library/src/test/resources/payloads"
-    val contexts = listOf("github")
+    val contexts = listOf("github", "job", "runner", "strategy")
 
     job(
         id = "github-payload",
@@ -37,6 +38,13 @@ val githubPayloadsWorkflow = workflow(
                 command = """echo '${expr("toJSON($context)")}' | tee $payloads/$context.json """
             )
         }
-
+        uses(
+            name = "commit",
+            action = AddAndCommitV8(
+                add = payloads,
+                message = "Commit GitHub payloads",
+                push = "true",
+            )
+        )
     }
 }
