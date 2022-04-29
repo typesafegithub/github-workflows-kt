@@ -436,7 +436,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("bahmutov", "npm-install", "v1.8.7"),
+        ActionCoords("bahmutov", "npm-install", "v1.8.8"),
         mapOf(
             "useLockFile" to BooleanTyping,
             "useRollingCache" to BooleanTyping,
