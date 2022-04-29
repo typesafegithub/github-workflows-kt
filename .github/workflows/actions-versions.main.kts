@@ -4,6 +4,7 @@ import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
+import it.krzeminski.githubactions.actions.peterevans.CreateIssueFromFileV4
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
@@ -44,12 +45,10 @@ val checkIfNewActionVersionsWorkflow = workflow(
         )
         uses(
             name = "Create issue",
-            action = CustomAction(
-                "peter-evans", "create-issue-from-file", "v4",
-                inputs = mapOf(
-                    "title" to "Updates available",
-                    "content-filepath" to "wrapper-generator/build/suggestVersions.md",
-                ))
+            action = CreateIssueFromFileV4(
+                title = "Updates available",
+                contentFilepath = "wrapper-generator/build/suggestVersions.md",
+            )
         )
     }
 }
