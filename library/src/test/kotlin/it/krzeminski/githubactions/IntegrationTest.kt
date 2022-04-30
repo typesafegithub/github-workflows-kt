@@ -714,12 +714,12 @@ class IntegrationTest : FunSpec({
             sourceFile = Path.of("ExprIntegrationTest.kt"),
             targetFile = Path.of("expr-testing.yml"),
         ) {
-            val NODE by Expr.matrix
-            val GREETING by Expr.env
-            val FIRST_NAME by Expr.env
-            val SECRET by Expr.env
-            val TOKEN by Expr.env
-            val SUPER_SECRET by Expr.secrets
+            val NODE by Expr.matrix.map
+            val GREETING by Expr.env.map
+            val FIRST_NAME by Expr.env.map
+            val SECRET by Expr.env.map
+            val TOKEN by Expr.env.map
+            val SUPER_SECRET by Expr.secrets.map
 
             job(
                 id = "job1",

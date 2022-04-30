@@ -230,7 +230,7 @@ class JobsToYamlTest : DescribeSpec({
 
     it("renders with strategy matrix") {
         @Suppress("VariableNaming")
-        val NODE by Expr.matrix
+        val NODE by Expr.matrix.map
 
         // given
         val jobs = listOf(
