@@ -1,0 +1,19 @@
+# This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+name: Test workflow
+
+on:
+  push:
+
+jobs:
+  "test_job":
+    runs-on: "ubuntu-latest"
+    steps:
+      - id: step-0
+        name: Check out
+        uses: actions/checkout@v3
+      - id: step-1
+        name: Hello world!
+        run: echo 'hello!'

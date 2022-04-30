@@ -1,0 +1,29 @@
+# This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+name: Test workflow
+
+on:
+  push:
+
+concurrency:
+  group: workflow_staging_environment
+  cancel-in-progress: true
+
+jobs:
+  "test_job":
+    runs-on: "ubuntu-latest"
+    concurrency:
+      group: job_staging_environment
+      cancel-in-progress: true
+    steps:
+      - id: step-0
+        uses: EndBug/add-and-commit@v9
+      - id: step-1
+        name: Some step consuming other step's output
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ step-0 }}
+          ref: ${{ steps.step-0.outputs.commit_sha }}
+          token: ${{ steps.step-0.outputs.my-unsafe-output }}
