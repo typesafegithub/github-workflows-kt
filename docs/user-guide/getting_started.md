@@ -12,6 +12,9 @@ names with your own.
    ```
    sudo snap install kotlin --classic
    ```
+   Make sure this is the newest version available. Kotlin scripting still has some rough edges, and improvements
+   are introduced with each new Kotlin release.
+   Also make sure that you use Java 11+.
 2. Create a new executable file in your repository:
    ```
    touch    .github/workflows/hello_world_workflow.main.kts
