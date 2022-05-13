@@ -483,7 +483,29 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "build-push-action", "v2"),
+        ActionCoords("docker", "build-push-action", "v2", deprecatedByVersion = "v3"),
+        mapOf(
+            "add-hosts" to ListOfTypings("\\n"),
+            "allow" to ListOfTypings("\\n"),
+            "build-args" to ListOfTypings("\\n"),
+            "build-contexts" to ListOfTypings("\\n"),
+            "cache-from" to ListOfTypings("\\n"),
+            "cache-to" to ListOfTypings("\\n"),
+            "labels" to ListOfTypings(","),
+            "load" to BooleanTyping,
+            "no-cache" to BooleanTyping,
+            "outputs" to ListOfTypings(","),
+            "platforms" to ListOfTypings(","),
+            "pull" to BooleanTyping,
+            "push" to BooleanTyping,
+            "secrets" to ListOfTypings("\\n"),
+            "secret-files" to ListOfTypings("\\n"),
+            "ssh" to ListOfTypings("\\n"),
+            "tags" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "build-push-action", "v3"),
         mapOf(
             "add-hosts" to ListOfTypings("\\n"),
             "allow" to ListOfTypings("\\n"),

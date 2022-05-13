@@ -61,7 +61,7 @@ Click on a version to see the wrapper's code.
 * codecov
     * [codecov-action](https://github.com/codecov/codecov-action) - v3: [`CodecovActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/codecov/CodecovActionV3.kt)
 * docker
-    * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt)
+    * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV3.kt)
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt)
     * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt)
 * EndBug
@@ -100,4 +100,4 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 59
-* counting each version separately: 67
+* counting each version separately: 68
