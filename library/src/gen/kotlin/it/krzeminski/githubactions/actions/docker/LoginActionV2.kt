@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.actions.Action
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -21,11 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/login-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: LoginActionV2",
-    replaceWith = ReplaceWith("LoginActionV2"),
-)
-public class LoginActionV1(
+public class LoginActionV2(
     /**
      * Server address of Docker registry. If not set then will default to Docker Hub
      */
@@ -55,7 +48,7 @@ public class LoginActionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("docker", "login-action", _customVersion ?: "v1") {
+) : Action("docker", "login-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
