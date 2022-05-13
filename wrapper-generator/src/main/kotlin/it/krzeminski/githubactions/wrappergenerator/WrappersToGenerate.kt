@@ -527,7 +527,14 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "login-action", "v1"),
+        ActionCoords("docker", "login-action", "v1", deprecatedByVersion = "v2"),
+        mapOf(
+            "ecr" to BooleanTyping,
+            "logout" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "login-action", "v2"),
         mapOf(
             "ecr" to BooleanTyping,
             "logout" to BooleanTyping,
