@@ -742,4 +742,10 @@ val wrappersToGenerate = listOf(
             "security" to EnumTyping("Security", listOf("strict", "loose")),
         ),
     ),
+    WrapperRequest(
+        ActionCoords("supercharge", "mongodb-github-action", "1.7.0"),
+        mapOf(
+            "mongodb-port" to IntegerTyping,
+        )
+    ),
 )
