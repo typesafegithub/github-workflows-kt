@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -46,7 +46,7 @@ public class SetupGoV3(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("actions", "setup-go", _customVersion ?: "v3") {
+) : ActionWithOutputs<SetupGoV3.Outputs>("actions", "setup-go", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -57,4 +57,17 @@ public class SetupGoV3(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+
+    public class Outputs(
+        private val stepId: String,
+    ) {
+        /**
+         * The installed Go version. Useful when given a version range as input.
+         */
+        public val goVersion: String = "steps.$stepId.outputs.go-version"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }
