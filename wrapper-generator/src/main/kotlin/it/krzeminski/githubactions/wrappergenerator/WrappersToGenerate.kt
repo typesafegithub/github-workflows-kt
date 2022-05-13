@@ -541,7 +541,15 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "setup-buildx-action", "v1"),
+        ActionCoords("docker", "setup-buildx-action", "v1", deprecatedByVersion = "v2"),
+        mapOf(
+            "driver-opts" to ListOfTypings("\\n"),
+            "install" to BooleanTyping,
+            "use" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "setup-buildx-action", "v2"),
         mapOf(
             "driver-opts" to ListOfTypings("\\n"),
             "install" to BooleanTyping,

@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -22,11 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/setup-buildx-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupBuildxActionV2",
-    replaceWith = ReplaceWith("SetupBuildxActionV2"),
-)
-public class SetupBuildxActionV1(
+public class SetupBuildxActionV2(
     /**
      * Buildx version. (eg. v0.3.0)
      */
@@ -72,10 +65,10 @@ public class SetupBuildxActionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupBuildxActionV1.Outputs>(
+) : ActionWithOutputs<SetupBuildxActionV2.Outputs>(
     "docker", "setup-buildx-action",
     _customVersion
-        ?: "v1"
+        ?: "v2"
 ) {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(

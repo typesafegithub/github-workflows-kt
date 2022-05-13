@@ -63,7 +63,7 @@ Click on a version to see the wrapper's code.
 * docker
     * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV3.kt)
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt), v2: [`LoginActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV2.kt)
-    * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt)
+    * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt), v2: [`SetupBuildxActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV2.kt)
 * EndBug
     * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV9.kt)
 * google-github-actions
@@ -100,4 +100,4 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 59
-* counting each version separately: 69
+* counting each version separately: 70
