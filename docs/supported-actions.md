@@ -94,10 +94,12 @@ Click on a version to see the wrapper's code.
     * [pull-request](https://github.com/repo-sync/pull-request) - v2: [`PullRequestV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reposync/PullRequestV2.kt)
 * SamKirkland
     * [FTP-Deploy-Action](https://github.com/SamKirkland/FTP-Deploy-Action) - v4.3.0: [`FTPDeployActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/samkirkland/FTPDeployActionV4.kt)
+* supercharge
+    * [mongodb-github-action](https://github.com/supercharge/mongodb-github-action) - 1.7.0: [`MongodbGithubActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/supercharge/MongodbGithubActionV1.kt)
 
 ## Statistics
 
 Number of wrappers available:
 
-* counting by actions: 59
-* counting each version separately: 70
+* counting by actions: 60
+* counting each version separately: 71
