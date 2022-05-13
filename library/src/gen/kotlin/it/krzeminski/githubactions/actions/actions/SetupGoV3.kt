@@ -24,6 +24,10 @@ public class SetupGoV3(
      */
     public val goVersion: String? = null,
     /**
+     * Path to the go.mod file.
+     */
+    public val goVersionFile: String? = null,
+    /**
      * Set this option to true if you want the action to always check for the latest available
      * version that satisfies the version spec
      */
@@ -47,6 +51,7 @@ public class SetupGoV3(
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             goVersion?.let { "go-version" to it },
+            goVersionFile?.let { "go-version-file" to it },
             checkLatest?.let { "check-latest" to it.toString() },
             token?.let { "token" to it },
             *_customInputs.toList().toTypedArray(),
