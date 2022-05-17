@@ -17,7 +17,7 @@ val checkIfNewActionVersionsWorkflow = workflow(
     name = "Updates available",
     on = listOf(
         Schedule(listOf(
-            Cron(dayWeek = "4", hour = "7", minute = "0")
+            Cron(hour = "7", minute = "0")
         )),
         WorkflowDispatch(),
     ),

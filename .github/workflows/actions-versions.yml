@@ -6,7 +6,7 @@ name: Updates available
 
 on:
   schedule:
-   - cron: '0 7 * * 4'
+   - cron: '0 7 * * *'
   workflow_dispatch:
 
 jobs:
