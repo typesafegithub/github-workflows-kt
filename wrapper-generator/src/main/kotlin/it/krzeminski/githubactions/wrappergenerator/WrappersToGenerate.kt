@@ -582,6 +582,9 @@ val wrappersToGenerate = listOf(
             "access_token_scopes" to ListOfTypings(","),
             "id_token_include_email" to BooleanTyping,
             "export_environment_variables" to BooleanTyping,
+            "retries" to IntegerTyping,
+            "backoff" to IntegerTyping,
+            "backoff_limit" to IntegerTyping,
         ),
     ),
     WrapperRequest(
