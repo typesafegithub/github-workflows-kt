@@ -38,6 +38,14 @@ public class SetupGoV3(
      */
     public val token: String? = null,
     /**
+     * Used to specify whether caching is needed. Set to true, if you'd like to enable caching.
+     */
+    public val cache: Boolean? = null,
+    /**
+     * Used to specify the path to a dependency file - go.sum
+     */
+    public val cacheDependencyPath: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -54,6 +62,8 @@ public class SetupGoV3(
             goVersionFile?.let { "go-version-file" to it },
             checkLatest?.let { "check-latest" to it.toString() },
             token?.let { "token" to it },
+            cache?.let { "cache" to it.toString() },
+            cacheDependencyPath?.let { "cache-dependency-path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -67,6 +77,11 @@ public class SetupGoV3(
          * The installed Go version. Useful when given a version range as input.
          */
         public val goVersion: String = "steps.$stepId.outputs.go-version"
+
+        /**
+         * A boolean value to indicate if a cache was hit
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
