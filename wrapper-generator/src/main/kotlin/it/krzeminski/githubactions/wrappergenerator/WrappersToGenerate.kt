@@ -150,6 +150,7 @@ val wrappersToGenerate = listOf(
         ActionCoords("actions", "setup-go", "v3"),
         mapOf(
             "check-latest" to BooleanTyping,
+            "cache" to BooleanTyping,
         )
     ),
     WrapperRequest(
