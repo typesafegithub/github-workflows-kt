@@ -51,7 +51,7 @@ Click on a version to see the wrapper's code.
     * [login](https://github.com/Azure/login) - v1: [`LoginV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/azure/LoginV1.kt)
     * [webapps-deploy](https://github.com/Azure/webapps-deploy) - v2: [`WebappsDeployV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/azure/WebappsDeployV2.kt)
 * bahmutov
-    * [npm-install](https://github.com/bahmutov/npm-install) - v1.8.12: [`NpmInstallV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/bahmutov/NpmInstallV1.kt)
+    * [npm-install](https://github.com/bahmutov/npm-install) - v1: [`NpmInstallV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/bahmutov/NpmInstallV1.kt)
 * Borales
     * [actions-yarn](https://github.com/Borales/actions-yarn) - v2.3.0: [`ActionsYarnV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV2.kt)
 * cachix
