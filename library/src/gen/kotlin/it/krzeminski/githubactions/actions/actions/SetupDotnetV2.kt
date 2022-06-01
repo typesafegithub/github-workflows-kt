@@ -26,6 +26,10 @@ public class SetupDotnetV2(
      */
     public val dotnetVersion: String? = null,
     /**
+     * Optional global.json location, if your global.json isn't located in the root of the repo.
+     */
+    public val globalJsonFile: String? = null,
+    /**
      * Optional package source for which to set up authentication. Will consult any existing
      * NuGet.config in the root of the repo and provide a temporary NuGet.config using the
      * NUGET_AUTH_TOKEN environment variable as a ClearTextPassword
@@ -59,6 +63,7 @@ public class SetupDotnetV2(
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             dotnetVersion?.let { "dotnet-version" to it },
+            globalJsonFile?.let { "global-json-file" to it },
             sourceUrl?.let { "source-url" to it },
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },

@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -115,6 +116,21 @@ public class AuthV0(
      */
     public val accessTokenSubject: String? = null,
     /**
+     * Number of times to retry a failed authentication attempt. This is useful
+     * for automated pipelines that may execute before IAM permissions are fully propogated.
+     */
+    public val retries: Int? = null,
+    /**
+     * Delay time before trying another authentication attempt. This
+     * is implemented using a fibonacci backoff method (e.g. 1-1-2-3-5).
+     * This value defaults to 100 milliseconds when retries are greater than 0.
+     */
+    public val backoff: Int? = null,
+    /**
+     * Limits the retry backoff to the specified value.
+     */
+    public val backoffLimit: Int? = null,
+    /**
      * The audience (aud) for the generated Google Cloud ID Token. This is only
      * valid when "token_format" is "id_token".
      */
@@ -152,6 +168,9 @@ public class AuthV0(
             accessTokenLifetime?.let { "access_token_lifetime" to it },
             accessTokenScopes?.let { "access_token_scopes" to it.joinToString(",") },
             accessTokenSubject?.let { "access_token_subject" to it },
+            retries?.let { "retries" to it.toString() },
+            backoff?.let { "backoff" to it.toString() },
+            backoffLimit?.let { "backoff_limit" to it.toString() },
             idTokenAudience?.let { "id_token_audience" to it },
             idTokenIncludeEmail?.let { "id_token_include_email" to it.toString() },
             *_customInputs.toList().toTypedArray(),

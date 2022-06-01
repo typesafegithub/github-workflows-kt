@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV3
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
+import it.krzeminski.githubactions.dsl.BooleanCustomValue
 
 class StepsToYamlTest : DescribeSpec({
     it("renders multiple steps") {
@@ -35,7 +36,8 @@ class StepsToYamlTest : DescribeSpec({
                          |  run: echo 'test!'
                          |- id: someId
                          |  name: Some external action
-                         |  uses: actions/checkout@v3""".trimMargin()
+                         |  uses: actions/checkout@v3
+        """.trimMargin()
     }
 
     describe("command step") {
@@ -53,7 +55,8 @@ class StepsToYamlTest : DescribeSpec({
 
             // then
             yaml shouldBe """|- id: someId
-                             |  run: echo 'test!'""".trimMargin()
+                             |  run: echo 'test!'
+            """.trimMargin()
         }
 
         it("renders with name") {
@@ -72,7 +75,8 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some command
-                             |  run: echo 'test!'""".trimMargin()
+                             |  run: echo 'test!'
+            """.trimMargin()
         }
 
         it("renders with environment variables") {
@@ -103,7 +107,8 @@ class StepsToYamlTest : DescribeSpec({
                              |    BAZ: |
                              |      goo,
                              |      zoo
-                             |  run: echo 'test!'""".trimMargin()
+                             |  run: echo 'test!'
+            """.trimMargin()
         }
 
         it("renders with condition") {
@@ -124,7 +129,8 @@ class StepsToYamlTest : DescribeSpec({
             yaml shouldBe """|- id: someId
                              |  name: Some command
                              |  run: echo 'test!'
-                             |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
+                             |  if: ${'$'}{{ matrix.foo == 'bar' }}
+            """.trimMargin()
         }
 
         it("renders multiline command") {
@@ -152,7 +158,30 @@ class StepsToYamlTest : DescribeSpec({
                              |    echo 'first line'
                              |    echo 'second line'
                              |    
-                             |    echo 'third line'""".trimMargin()
+                             |    echo 'third line'
+            """.trimMargin()
+        }
+
+        it("renders with custom arguments") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    name = "Some command",
+                    command = "echo 'hello!'",
+                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                )
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Some command
+                             |  foo: true
+                             |  run: echo 'hello!'
+            """.trimMargin()
         }
     }
 
@@ -171,7 +200,8 @@ class StepsToYamlTest : DescribeSpec({
 
             // then
             yaml shouldBe """|- id: someId
-                             |  uses: actions/checkout@v3""".trimMargin()
+                             |  uses: actions/checkout@v3
+            """.trimMargin()
         }
 
         it("renders with name") {
@@ -190,7 +220,8 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  name: Some external action
-                             |  uses: actions/checkout@v3""".trimMargin()
+                             |  uses: actions/checkout@v3
+            """.trimMargin()
         }
 
         it("renders with some parameters") {
@@ -211,7 +242,8 @@ class StepsToYamlTest : DescribeSpec({
                              |  name: Some external action
                              |  uses: actions/checkout@v3
                              |  with:
-                             |    fetch-depth: 0""".trimMargin()
+                             |    fetch-depth: 0
+            """.trimMargin()
         }
 
         it("renders with environment variables") {
@@ -242,7 +274,8 @@ class StepsToYamlTest : DescribeSpec({
                              |    FOO: bar
                              |    BAZ: |
                              |      goo,
-                             |      zoo""".trimMargin()
+                             |      zoo
+            """.trimMargin()
         }
 
         it("renders with condition") {
@@ -263,7 +296,8 @@ class StepsToYamlTest : DescribeSpec({
             yaml shouldBe """|- id: someId
                              |  name: Some external action
                              |  uses: actions/checkout@v3
-                             |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
+                             |  if: ${'$'}{{ matrix.foo == 'bar' }}
+            """.trimMargin()
         }
 
         it("renders with some parameters and condition") {
@@ -286,7 +320,8 @@ class StepsToYamlTest : DescribeSpec({
                              |  uses: actions/checkout@v3
                              |  with:
                              |    fetch-depth: 0
-                             |  if: ${'$'}{{ matrix.foo == 'bar' }}""".trimMargin()
+                             |  if: ${'$'}{{ matrix.foo == 'bar' }}
+            """.trimMargin()
         }
 
         it("renders with action parameter that renders to more than one line") {
@@ -313,7 +348,30 @@ class StepsToYamlTest : DescribeSpec({
                              |    name: artifact
                              |    path: |
                              |      path1
-                             |      path2""".trimMargin()
+                             |      path2
+            """.trimMargin()
+        }
+
+        it("renders with custom arguments") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    name = "Some external action",
+                    action = CheckoutV3(),
+                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  name: Some external action
+                             |  uses: actions/checkout@v3
+                             |  foo: true
+            """.trimMargin()
         }
 
         it("renders correctly with values starting with special YAML characters") {
@@ -346,7 +404,8 @@ class StepsToYamlTest : DescribeSpec({
                              |    param2: '*/some/dir'
                              |    param3: '**/another/dir'
                              |    param4: '[test]'
-                             |    param5: '!another-reserved-character'""".trimMargin()
+                             |    param5: '!another-reserved-character'
+            """.trimMargin()
         }
 
         describe("custom action") {
@@ -376,7 +435,8 @@ class StepsToYamlTest : DescribeSpec({
                              |  uses: xu-cheng/latex-action@v2
                              |  with:
                              |    root_file: report.tex
-                             |    compiler: latexmk""".trimMargin()
+                             |    compiler: latexmk
+            """.trimMargin()
         }
 
         it("renders with action with custom arguments") {
@@ -406,7 +466,8 @@ class StepsToYamlTest : DescribeSpec({
                              |  with:
                              |    name: artifact
                              |    path: override-path-value
-                             |    answer: 42""".trimMargin()
+                             |    answer: 42
+            """.trimMargin()
         }
 
         it("renders with action's custom version") {
@@ -434,7 +495,8 @@ class StepsToYamlTest : DescribeSpec({
                              |    name: artifact
                              |    path: |
                              |      path1
-                             |      path2""".trimMargin()
+                             |      path2
+            """.trimMargin()
         }
     }
 })

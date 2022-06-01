@@ -6,7 +6,7 @@ import java.util.Locale
 fun ActionCoords.buildActionClassName(): String {
     val versionString = when (version) {
         "latest" -> ""
-        else -> version
+        else -> version.let { if (it.startsWith("v")) it else "v$it" }
     }.substringBefore(".")
         .replaceFirstChar { it.titlecase(Locale.getDefault()) }
     return "${name.toPascalCase()}$versionString"

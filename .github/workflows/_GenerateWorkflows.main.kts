@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.13.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
 
 @file:Import("build.main.kts")
 @file:Import("check-if-wrappers-up-to-date.main.kts")

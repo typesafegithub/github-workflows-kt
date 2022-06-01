@@ -150,6 +150,7 @@ val wrappersToGenerate = listOf(
         ActionCoords("actions", "setup-go", "v3"),
         mapOf(
             "check-latest" to BooleanTyping,
+            "cache" to BooleanTyping,
         )
     ),
     WrapperRequest(
@@ -436,7 +437,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("bahmutov", "npm-install", "v1.8.7"),
+        ActionCoords("bahmutov", "npm-install", "v1"),
         mapOf(
             "useLockFile" to BooleanTyping,
             "useRollingCache" to BooleanTyping,
@@ -483,7 +484,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "build-push-action", "v2"),
+        ActionCoords("docker", "build-push-action", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "add-hosts" to ListOfTypings("\\n"),
             "allow" to ListOfTypings("\\n"),
@@ -505,14 +506,51 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "login-action", "v1"),
+        ActionCoords("docker", "build-push-action", "v3"),
+        mapOf(
+            "add-hosts" to ListOfTypings("\\n"),
+            "allow" to ListOfTypings("\\n"),
+            "build-args" to ListOfTypings("\\n"),
+            "build-contexts" to ListOfTypings("\\n"),
+            "cache-from" to ListOfTypings("\\n"),
+            "cache-to" to ListOfTypings("\\n"),
+            "labels" to ListOfTypings(","),
+            "load" to BooleanTyping,
+            "no-cache" to BooleanTyping,
+            "outputs" to ListOfTypings(","),
+            "platforms" to ListOfTypings(","),
+            "pull" to BooleanTyping,
+            "push" to BooleanTyping,
+            "secrets" to ListOfTypings("\\n"),
+            "secret-files" to ListOfTypings("\\n"),
+            "ssh" to ListOfTypings("\\n"),
+            "tags" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "login-action", "v1", deprecatedByVersion = "v2"),
         mapOf(
             "ecr" to BooleanTyping,
             "logout" to BooleanTyping,
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "setup-buildx-action", "v1"),
+        ActionCoords("docker", "login-action", "v2"),
+        mapOf(
+            "ecr" to BooleanTyping,
+            "logout" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "setup-buildx-action", "v1", deprecatedByVersion = "v2"),
+        mapOf(
+            "driver-opts" to ListOfTypings("\\n"),
+            "install" to BooleanTyping,
+            "use" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "setup-buildx-action", "v2"),
         mapOf(
             "driver-opts" to ListOfTypings("\\n"),
             "install" to BooleanTyping,
@@ -545,6 +583,9 @@ val wrappersToGenerate = listOf(
             "access_token_scopes" to ListOfTypings(","),
             "id_token_include_email" to BooleanTyping,
             "export_environment_variables" to BooleanTyping,
+            "retries" to IntegerTyping,
+            "backoff" to IntegerTyping,
+            "backoff_limit" to IntegerTyping,
         ),
     ),
     WrapperRequest(
@@ -704,5 +745,11 @@ val wrappersToGenerate = listOf(
             "log-level" to EnumTyping("LogLevel", listOf("minimal", "standard", "verbose")),
             "security" to EnumTyping("Security", listOf("strict", "loose")),
         ),
+    ),
+    WrapperRequest(
+        ActionCoords("supercharge", "mongodb-github-action", "1.7.0"),
+        mapOf(
+            "mongodb-port" to IntegerTyping,
+        )
     ),
 )
