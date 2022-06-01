@@ -8,10 +8,7 @@ import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.ObjectCustomValue
 import it.krzeminski.githubactions.dsl.StringCustomValue
 import it.krzeminski.githubactions.dsl.toBuilder
-import java.nio.file.Path
-import kotlin.io.path.absolute
-import kotlin.io.path.invariantSeparatorsPathString
-import kotlin.io.path.relativeTo
+import it.krzeminski.githubactions.internal.relativeToAbsolute
 
 fun Workflow.toYaml(addConsistencyCheck: Boolean = true): String {
     return generateYaml(
@@ -28,9 +25,6 @@ fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
     rootDir.resolve(targetFile).toFile().writeText(yaml)
 }
 
-private fun Path.getPathString(base: Path): String =
-    absolute().relativeTo(base.absolute()).invariantSeparatorsPathString
-
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
     val workflow = this
@@ -43,18 +37,18 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             if (useGitDiff) {
                 run(
                     "Execute script",
-                    "rm '${targetFile.getPathString(rootDir)}' " +
-                        "&& '${sourceFile.getPathString(rootDir)}'"
+                    "rm '${targetFile.relativeToAbsolute(rootDir)}' " +
+                        "&& '${sourceFile.relativeToAbsolute(rootDir)}'"
                 )
                 run(
                     "Consistency check",
-                    "git diff --exit-code '${targetFile.getPathString(rootDir)}'"
+                    "git diff --exit-code '${targetFile.relativeToAbsolute(rootDir)}'"
                 )
             } else {
                 run(
                     "Consistency check",
-                    "diff -u '${targetFile.getPathString(rootDir)}' " +
-                        "<('${sourceFile.getPathString(rootDir)}')"
+                    "diff -u '${targetFile.relativeToAbsolute(rootDir)}' " +
+                        "<('${sourceFile.relativeToAbsolute(rootDir)}')"
                 )
             }
         }
@@ -68,7 +62,7 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
     return buildString {
         appendLine(
             """
-            # This file was generated using Kotlin DSL (${sourceFile.getPathString(rootDir)}).
+            # This file was generated using Kotlin DSL (${sourceFile.relativeToAbsolute(rootDir)}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             """.trimIndent()

@@ -5,12 +5,10 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import it.krzeminski.githubactions.internal.findGitRoot
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.io.path.absolute
-import kotlin.io.path.exists
-import kotlin.io.path.isDirectory
 
 @GithubActionsDsl
 @Suppress("LongParameterList", "FunctionParameterNaming", "ConstructorParameterNaming")
@@ -87,21 +85,6 @@ fun Workflow.toBuilder() =
         _customArguments = _customArguments,
     )
 
-private fun findGitRoot(startFolder: Path): Path {
-    var currentFolder = startFolder.absolute()
-    val root = startFolder.absolute().root
-
-    while (currentFolder != root) {
-        val gitFolder = currentFolder.resolve(".git")
-        if (gitFolder.exists() && gitFolder.isDirectory()) {
-            return currentFolder
-        } else {
-            currentFolder = currentFolder.parent
-        }
-    }
-    error("could not find a git root from $startFolder")
-}
-
 @Suppress("LongParameterList", "FunctionParameterNaming")
 fun workflow(
     name: String,
@@ -145,7 +128,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: File,
     targetFileName: String = sourceFile.name.substringBeforeLast(".main.kts") + ".yml",
-    rootDir: Path = findGitRoot(sourceFile.absoluteFile.toPath()),
+    rootDir: Path = sourceFile.absoluteFile.toPath().findGitRoot(),
     targetFolder: Path = rootDir.resolve(".github/workflows"),
     concurrency: Concurrency? = null,
     _customArguments: Map<String, CustomValue> = mapOf(),
