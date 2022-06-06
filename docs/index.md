@@ -22,3 +22,9 @@ language with good internal DSL support.
 * remove duplication: ability to extract common parts to constants or functions
 * programmatically generate your workflow's arbitrarily complex logic, you can even call an external service and
   generate your workflow based on the response. Whatever Kotlin and the JVM allows you to do
+
+## 🎥 Video presentation
+
+Here's a detailed presentation of the library by Piotr Krzemiński, along with simple demos:
+
+![type:video](https://www.youtube.com/embed/jrDQXqQicek)

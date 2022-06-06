@@ -25,6 +25,7 @@ markdown_extensions:
 
 plugins:
   - markdownextradata: {}
+  - mkdocs-video
 
 nav:
   - Introduction: 'index.md'
