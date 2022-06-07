@@ -661,9 +661,10 @@ val wrappersToGenerate = listOf(
         mapOf(
             "cache-disabled" to BooleanTyping,
             "cache-read-only" to BooleanTyping,
+            "generate-job-summary" to BooleanTyping,
             "gradle-home-cache-includes" to ListOfTypings("\\n"),
             "gradle-home-cache-excludes" to ListOfTypings("\\n"),
-            "cache-write-only" to StringTyping,
+            "cache-write-only" to BooleanTyping,
             "gradle-home-cache-strict-match" to StringTyping,
         ),
     ),
