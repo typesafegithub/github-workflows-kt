@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.18.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
@@ -20,7 +20,7 @@ val checkIfWrappersUpToDateWorkflow = workflow(
         Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
     ),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/check-if-wrappers-up-to-date.yaml"),
+    targetFileName = "check-if-wrappers-up-to-date.yaml",
 ) {
     job(
         id = "check",
