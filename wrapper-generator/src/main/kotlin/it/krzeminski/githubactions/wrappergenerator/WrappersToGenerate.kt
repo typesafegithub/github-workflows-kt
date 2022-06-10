@@ -228,7 +228,15 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-python", "v3"),
+        ActionCoords("actions", "setup-python", "v3", deprecatedByVersion = "v4"),
+        mapOf(
+            "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
+            "cache-dependency-path" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-python", "v4"),
         mapOf(
             "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
             "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
