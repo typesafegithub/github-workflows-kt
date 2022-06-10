@@ -24,8 +24,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         )),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("update-gradle-wrapper.main.kts"),
-      targetFile = Paths.get("yaml-output/update-gradle-wrapper.yml"),
+      sourceFile = Paths.get(".github/workflows/update-gradle-wrapper.main.kts"),
     ) {
       job(
         id = "check_yaml_consistency",

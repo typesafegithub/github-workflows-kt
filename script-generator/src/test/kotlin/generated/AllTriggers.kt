@@ -146,8 +146,7 @@ public val workflowAllTriggers: Workflow = workflow(
           ),
         ),
         ),
-      sourceFile = Paths.get("all-triggers.main.kts"),
-      targetFile = Paths.get("yaml-output/all-triggers.yml"),
+      sourceFile = Paths.get(".github/workflows/all-triggers.main.kts"),
     ) {
       job(
         id = "job-0",

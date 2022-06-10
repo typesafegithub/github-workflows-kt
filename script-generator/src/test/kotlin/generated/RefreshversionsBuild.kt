@@ -76,8 +76,7 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
           ),
         ))
         ),
-      sourceFile = Paths.get("refreshversions-build.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-build.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-build.main.kts"),
     ) {
       job(
         id = "check-all",

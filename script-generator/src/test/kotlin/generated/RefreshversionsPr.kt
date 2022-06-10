@@ -25,8 +25,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         )),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("refreshversions-pr.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-pr.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-pr.main.kts"),
     ) {
       job(
         id = "Refresh-Versions",

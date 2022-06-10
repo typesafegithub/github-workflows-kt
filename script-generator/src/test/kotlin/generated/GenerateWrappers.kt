@@ -21,8 +21,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
           branchesIgnore = listOf("main"),
         ),
         ),
-      sourceFile = Paths.get("generate-wrappers.main.kts"),
-      targetFile = Paths.get("yaml-output/generate-wrappers.yml"),
+      sourceFile = Paths.get(".github/workflows/generate-wrappers.main.kts"),
     ) {
       job(
         id = "check_yaml_consistency",
