@@ -22,12 +22,17 @@ fun Workflow.writeToFile(addConsistencyCheck: Boolean = true) {
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
     )
-    this.targetFile.toFile().writeText(yaml)
+    // Assuming that the source file lies next to YAML files.
+    this.sourceFile.parent.resolve(this.targetFileName).toFile().let {
+        it.parentFile.mkdirs()
+        it.writeText(yaml)
+    }
 }
 
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean): String {
     val workflow = this
+    val targetFile = this.sourceFile.parent.resolve(this.targetFileName)
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
         val consistencyCheckJob = this.toBuilder().job(
             id = "check_yaml_consistency",

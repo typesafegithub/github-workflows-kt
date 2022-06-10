@@ -20,8 +20,7 @@ public val workflowRefreshversionsWebsite: Workflow = workflow(
         ),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("refreshversions-website.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-website.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-website.main.kts"),
     ) {
       job(
         id = "deploy",

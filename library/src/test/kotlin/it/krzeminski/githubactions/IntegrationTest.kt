@@ -3,7 +3,7 @@ package it.krzeminski.githubactions
 import com.charleskorn.kaml.MalformedYamlException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.engine.spec.tempfile
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
@@ -15,7 +15,6 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Paths
-import kotlin.io.path.invariantSeparatorsPathString
 
 @Suppress("LargeClass")
 class IntegrationTest : FunSpec({
@@ -23,7 +22,6 @@ class IntegrationTest : FunSpec({
         name = "Test workflow",
         on = listOf(Push()),
         sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-        targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
     ) {
         job(
             id = "test_job",
@@ -74,13 +72,14 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    @Suppress("MaxLineLength")
     test("toYaml() - workflow with one job depending on another") {
         // given
         val workflowWithDependency = workflow(
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            targetFileName = "some_workflow_with_dependency.yaml"
         ) {
             val testJob1 = job(
                 id = "test_job_1",
@@ -127,7 +126,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+                    run: diff -u '.github/workflows/some_workflow_with_dependency.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -183,7 +182,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
                 id = "test_job",
@@ -232,12 +230,12 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - 'hello world' workflow") {
         // given
-        val targetTempFile = tempfile()
+        val sourceTempFile = tempdir().resolve(".github/workflows/some_workflow.main.kts")
+        val targetTempFile = sourceTempFile.parentFile.resolve("some_workflow.yaml")
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = targetTempFile.toPath(),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -260,7 +258,7 @@ class IntegrationTest : FunSpec({
 
         // then
         targetTempFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # This file was generated using Kotlin DSL (${sourceTempFile.invariantSeparatorsPath}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
@@ -285,12 +283,12 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
         // given
-        val targetTempFile = tempfile()
+        val sourceTempFile = tempdir().resolve(".github/workflows/some_workflow.main.kts")
+        val targetTempFile = sourceTempFile.parentFile.resolve("some_workflow.yaml")
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = targetTempFile.toPath(),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -312,9 +310,8 @@ class IntegrationTest : FunSpec({
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
 
         // then
-        val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
         targetTempFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # This file was generated using Kotlin DSL (${sourceTempFile.invariantSeparatorsPath}).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -332,10 +329,10 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     name: Execute script
-                    run: rm '$targetPath' && '.github/workflows/some_workflow.main.kts'
+                    run: rm '${targetTempFile.invariantSeparatorsPath}' && '${sourceTempFile.invariantSeparatorsPath}'
                   - id: step-2
                     name: Consistency check
-                    run: git diff --exit-code '$targetPath'
+                    run: git diff --exit-code '${targetTempFile.invariantSeparatorsPath}'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -357,7 +354,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
                 id = "test_job",
@@ -408,7 +404,6 @@ class IntegrationTest : FunSpec({
                 """.trimIndent()
             ),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
                 id = "test_job",
@@ -508,7 +503,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
         ) {
             job(
                 id = "test_job",
@@ -561,7 +555,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
             concurrency = Concurrency("workflow_staging_environment"),
         ) {
             job(
@@ -623,7 +616,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
             concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
         ) {
             job(
@@ -685,7 +677,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
-            targetFile = Paths.get("../.github/workflows/invalid_workflow.yaml"),
         ) {
             job("test_job", runsOn = RunnerType.UbuntuLatest) {
                 run(name = "property: something", command = "echo hello")

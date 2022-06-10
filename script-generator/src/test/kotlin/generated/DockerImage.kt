@@ -22,8 +22,7 @@ public val workflowDockerImage: Workflow = workflow(
           branches = listOf("main", "feature/dockerfile"),
         ),
         ),
-      sourceFile = Paths.get("docker-image.main.kts"),
-      targetFile = Paths.get("yaml-output/docker-image.yml"),
+      sourceFile = Paths.get(".github/workflows/docker-image.main.kts"),
       concurrency = Concurrency(group = "workflow_staging_environment", cancelInProgress = true),
     ) {
       job(

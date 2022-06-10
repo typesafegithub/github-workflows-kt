@@ -13,7 +13,7 @@ import java.io.FileFilter
 class GenerateKotlinScripts : FunSpec({
 
     val testInputs = rootProject.resolve("script-generator/yaml-input")
-        .listFiles(FileFilter { it.extension == "yml" })!!
+        .listFiles(FileFilter { it.extension == "yaml" })!!
         .map { it.name }
 
     testInputs.forEach { name ->
@@ -21,7 +21,7 @@ class GenerateKotlinScripts : FunSpec({
             val input = TestInput(name)
             val workflow: YamlWorkflow = decodeYamlWorkflow(input.yamlFile.readText())
 
-            val newContent = workflow.toFileSpec(workflow.name, "yaml-output")
+            val newContent = workflow.toFileSpec(workflow.name)
                 .toBuilder(packageName = "generated").build()
                 .toString()
                 .removeWindowsEndings()

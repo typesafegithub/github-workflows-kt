@@ -17,7 +17,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = listOf(Push()),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     // No jobs.
                 }
@@ -31,7 +30,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = listOf(Push()),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
                         id = "Some-job",
@@ -50,7 +48,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = emptyList(),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
                         id = "Some job",
@@ -72,7 +69,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = listOf(Push()),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
                         id = "Some-job-1",
@@ -133,7 +129,6 @@ class WorkflowBuilderTest : FunSpec({
                 name = "Test workflow",
                 on = listOf(Push()),
                 sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 _customArguments = mapOf(
                     "dry-run" to BooleanCustomValue(true),
                     "written-by" to ListCustomValue("Alice", "Bob"),

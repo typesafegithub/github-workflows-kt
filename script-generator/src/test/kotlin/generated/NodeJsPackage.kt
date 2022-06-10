@@ -23,8 +23,7 @@ public val workflowNodejsPackage: Workflow = workflow(
           ),
         ),
         ),
-      sourceFile = Paths.get("nodejs-package.main.kts"),
-      targetFile = Paths.get("yaml-output/nodejs-package.yml"),
+      sourceFile = Paths.get(".github/workflows/nodejs-package.main.kts"),
       concurrency = Concurrency(group = "workflow_staging_environment", cancelInProgress = false),
     ) {
       job(
