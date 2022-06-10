@@ -18,10 +18,14 @@ import java.nio.file.Paths
 
 @Suppress("LargeClass")
 class IntegrationTest : FunSpec({
+
+    val gitRootDir = tempdir().also {
+        it.resolve(".git").mkdirs()
+    }.toPath()
     val workflow = workflow(
         name = "Test workflow",
         on = listOf(Push()),
-        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+        sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
     ) {
         job(
             id = "test_job",
@@ -78,7 +82,7 @@ class IntegrationTest : FunSpec({
         val workflowWithDependency = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             targetFileName = "some_workflow_with_dependency.yaml"
         ) {
             val testJob1 = job(
@@ -181,7 +185,7 @@ class IntegrationTest : FunSpec({
         val workflowWithMultilineCommand = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -230,8 +234,8 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - 'hello world' workflow") {
         // given
-        val sourceTempFile = tempdir().resolve(".github/workflows/some_workflow.main.kts")
-        val targetTempFile = sourceTempFile.parentFile.resolve("some_workflow.yaml")
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
@@ -254,11 +258,11 @@ class IntegrationTest : FunSpec({
         }
 
         // when
-        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
+        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false, gitRootDir = gitRootDir)
 
         // then
         targetTempFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL (${sourceTempFile.invariantSeparatorsPath}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
@@ -283,8 +287,8 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
         // given
-        val sourceTempFile = tempdir().resolve(".github/workflows/some_workflow.main.kts")
-        val targetTempFile = sourceTempFile.parentFile.resolve("some_workflow.yaml")
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
@@ -311,7 +315,7 @@ class IntegrationTest : FunSpec({
 
         // then
         targetTempFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL (${sourceTempFile.invariantSeparatorsPath}).
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
             
@@ -329,10 +333,10 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     name: Execute script
-                    run: rm '${targetTempFile.invariantSeparatorsPath}' && '${sourceTempFile.invariantSeparatorsPath}'
+                    run: rm '.github/workflows/some_workflow.yaml' && '.github/workflows/some_workflow.main.kts'
                   - id: step-2
                     name: Consistency check
-                    run: git diff --exit-code '${targetTempFile.invariantSeparatorsPath}'
+                    run: git diff --exit-code '.github/workflows/some_workflow.yaml'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -353,7 +357,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -403,7 +407,7 @@ class IntegrationTest : FunSpec({
                     hello! workflow
                 """.trimIndent()
             ),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -502,7 +506,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -554,7 +558,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             concurrency = Concurrency("workflow_staging_environment"),
         ) {
             job(
@@ -615,7 +619,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
         ) {
             job(
