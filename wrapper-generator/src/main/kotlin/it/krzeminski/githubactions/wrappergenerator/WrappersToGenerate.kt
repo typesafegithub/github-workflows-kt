@@ -665,6 +665,7 @@ val wrappersToGenerate = listOf(
             "set-distribution-checksum" to BooleanTyping,
             "paths" to ListOfTypings(","),
             "paths-ignore" to ListOfTypings(","),
+            "release-channel" to EnumTyping("ReleaseChannel", listOf("stable", "release-candidate")),
         ),
     ),
     WrapperRequest(
