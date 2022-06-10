@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.18.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
@@ -20,7 +20,7 @@ val buildWorkflow = workflow(
         PullRequest(),
     ),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/build.yaml"),
+    targetFileName = "build.yaml",
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(

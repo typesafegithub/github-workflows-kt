@@ -1,6 +1,5 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.18.0")
 
-import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
@@ -22,7 +21,7 @@ val checkIfNewActionVersionsWorkflow = workflow(
         WorkflowDispatch(),
     ),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/actions-versions.yml"),
+    targetFileName = "actions-versions.yml",
 ) {
     job(
         id = "updates-available",

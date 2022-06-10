@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.18.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
@@ -16,7 +16,7 @@ val updateGradleWrapperWorkflow = workflow(
         WorkflowDispatch(),
     ),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/update-gradle-wrapper.yml"),
+    targetFileName = "update-gradle-wrapper.yml",
 ) {
     job(
         id = "update-gradle-wrapper",

@@ -1,4 +1,4 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.18.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
@@ -15,7 +15,7 @@ val releaseWorkflow = workflow(
     name = "Release",
     on = listOf(Push(tags = listOf("v*.*.*"))),
     sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/release.yaml"),
+    targetFileName = "release.yaml",
     env = linkedMapOf(
         "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
         "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
