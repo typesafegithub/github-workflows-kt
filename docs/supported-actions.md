@@ -60,12 +60,18 @@ Click on a version to see the wrapper's code.
     * [image-actions](https://github.com/calibreapp/image-actions) - v1.1.0: [`ImageActionsV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/calibreapp/ImageActionsV1.kt)
 * codecov
     * [codecov-action](https://github.com/codecov/codecov-action) - v3: [`CodecovActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/codecov/CodecovActionV3.kt)
+* coverallsapp
+    * [github-action](https://github.com/coverallsapp/github-action) - 1.1.3: [`GithubActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/coverallsapp/GithubActionV1.kt)
 * docker
     * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV3.kt)
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt), v2: [`LoginActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV2.kt)
     * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt), v2: [`SetupBuildxActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV2.kt)
+* elgohr
+    * [Publish-Docker-Github-Action](https://github.com/elgohr/Publish-Docker-Github-Action) - v4: [`PublishDockerGithubActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV4.kt)
 * EndBug
     * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV9.kt)
+* gautamkrishnar
+    * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - 1.7.2: [`BlogPostWorkflowV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
 * google-github-actions
     * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/AuthV0.kt)
     * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/SetupGcloudV0.kt)
@@ -80,26 +86,42 @@ Click on a version to see the wrapper's code.
     * [github-pages-deploy-action](https://github.com/JamesIves/github-pages-deploy-action) - v4: [`GithubPagesDeployActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/jamesives/GithubPagesDeployActionV4.kt)
 * JasonEtco
     * [create-an-issue](https://github.com/JasonEtco/create-an-issue) - v2: [`CreateAnIssueV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/jasonetco/CreateAnIssueV2.kt)
+* julia-actions
+    * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/juliaactions/SetupJuliaV1.kt)
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1: [`CheckGradleVersionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
     * [read-java-properties](https://github.com/madhead/read-java-properties) - latest: [`ReadJavaProperties`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/ReadJavaProperties.kt)
     * [semver-utils](https://github.com/madhead/semver-utils) - v2: [`SemverUtilsV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt)
+* microsoft
+    * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1.1: [`SetupMsbuildV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/microsoft/SetupMsbuildV1.kt)
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/nobrayner/DiscordWebhookV1.kt)
+* peaceiris
+    * [actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) - v3: [`ActionsGhPagesV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peaceiris/ActionsGhPagesV3.kt)
+    * [actions-hugo](https://github.com/peaceiris/actions-hugo) - v2: [`ActionsHugoV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peaceiris/ActionsHugoV2.kt)
 * peter-evans
     * [create-issue-from-file](https://github.com/peter-evans/create-issue-from-file) - v4: [`CreateIssueFromFileV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterevans/CreateIssueFromFileV4.kt)
+    * [create-pull-request](https://github.com/peter-evans/create-pull-request) - v4: [`CreatePullRequestV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterevans/CreatePullRequestV4.kt)
 * peterjgrainger
     * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.2.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
 * repo-sync
     * [pull-request](https://github.com/repo-sync/pull-request) - v2: [`PullRequestV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reposync/PullRequestV2.kt)
+* ruby
+    * [setup-ruby](https://github.com/ruby/setup-ruby) - v1: [`SetupRubyV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/ruby/SetupRubyV1.kt)
 * SamKirkland
     * [FTP-Deploy-Action](https://github.com/SamKirkland/FTP-Deploy-Action) - v4.3.0: [`FTPDeployActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/samkirkland/FTPDeployActionV4.kt)
+* softprops
+    * [action-gh-release](https://github.com/softprops/action-gh-release) - v1: [`ActionGhReleaseV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/softprops/ActionGhReleaseV1.kt)
+* subosito
+    * [flutter-action](https://github.com/subosito/flutter-action) - v2: [`FlutterActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/subosito/FlutterActionV2.kt)
 * supercharge
     * [mongodb-github-action](https://github.com/supercharge/mongodb-github-action) - 1.7.0: [`MongodbGithubActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/supercharge/MongodbGithubActionV1.kt)
+* w9jds
+    * [firebase-action](https://github.com/w9jds/firebase-action) - v2.2.2: [`FirebaseActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/w9jds/FirebaseActionV2.kt)
 
 ## Statistics
 
 Number of wrappers available:
 
-* counting by actions: 60
-* counting each version separately: 73
+* counting by actions: 72
+* counting each version separately: 85

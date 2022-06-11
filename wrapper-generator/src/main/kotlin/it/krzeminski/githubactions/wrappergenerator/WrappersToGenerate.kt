@@ -495,6 +495,13 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("coverallsapp", "github-action", "1.1.3"),
+        mapOf(
+            "parallel" to BooleanTyping,
+            "parallel-finished" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("docker", "build-push-action", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "add-hosts" to ListOfTypings("\\n"),
@@ -569,6 +576,18 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("elgohr", "Publish-Docker-Github-Action", "v4"),
+        mapOf(
+            "buildargs" to ListOfTypings(","),
+            "cache" to BooleanTyping,
+            "no_push" to BooleanTyping,
+            "tags" to ListOfTypings(","),
+            "tag_names" to BooleanTyping,
+            "tag_semver" to BooleanTyping,
+            "snapshot" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
         ActionCoords("EndBug", "add-and-commit", "v8", deprecatedByVersion = "v9"),
         mapOf(
             "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
@@ -583,6 +602,26 @@ val wrappersToGenerate = listOf(
             "pathspec_error_handling" to EnumTyping("PathSpecErrorHandling", listOf("ignore", "exitImmediately", "exitAtEnd")),
             "push" to StringTyping,
         )
+    ),
+    WrapperRequest(
+        ActionCoords("gautamkrishnar", "blog-post-workflow", "1.7.2"),
+        mapOf(
+            "custom_tags" to ListOfTypings(","),
+            "disable_html_encoding" to BooleanTyping,
+            "disable_item_validation" to BooleanTyping,
+            "disable_sort" to BooleanTyping,
+            "enable_keepalive" to BooleanTyping,
+            "feed_list" to ListOfTypings(","),
+            "feed_names" to ListOfTypings(","),
+            "filter_comments" to ListOfTypings(","),
+            "max_post_count" to IntegerTyping,
+            "output_only" to BooleanTyping,
+            "readme_path" to ListOfTypings(","),
+            "retry_count" to IntegerTyping,
+            "retry_wait_time" to IntegerTyping,
+            "tag_post_pre_newline" to BooleanTyping,
+            "title_max_length" to IntegerTyping,
+        ),
     ),
     WrapperRequest(
         ActionCoords("google-github-actions", "auth", "v0"),
@@ -709,6 +748,14 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("julia-actions", "setup-julia", "v1"),
+        mapOf(
+            "arch" to EnumTyping("Architecture", listOf("x64", "x86", "aarch64")),
+            "show-versioninfo" to BooleanTyping,
+            "version" to StringTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("madhead", "check-gradle-version", "v1")
     ),
     WrapperRequest(
@@ -718,6 +765,13 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("madhead", "semver-utils", "v2")
     ),
+    WrapperRequest(
+        ActionCoords("microsoft", "setup-msbuild", "v1.1"),
+        mapOf(
+            "vs-prerelease" to BooleanTyping,
+            "msbuild-architecture" to EnumTyping("Architecture", listOf("x86", "x64")),
+        ),
+    ),
 
     WrapperRequest(
         ActionCoords("nobrayner", "discord-webhook", "v1"),
@@ -726,12 +780,42 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("peaceiris", "actions-gh-pages", "v3"),
+        mapOf(
+            "allow_empty_commit" to BooleanTyping,
+            "keep_files" to BooleanTyping,
+            "force_orphan" to BooleanTyping,
+            "enable_jekyll" to BooleanTyping,
+            "disable_nojekyll" to BooleanTyping,
+            "exclude_assets" to ListOfTypings(","),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("peaceiris", "actions-hugo", "v2"),
+        mapOf(
+            "extended" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("peter-evans", "create-issue-from-file", "v4"),
         mapOf(
             "issue-number" to IntegerTyping,
             "labels" to ListOfTypings(","),
             "assignees" to ListOfTypings(","),
         )
+    ),
+    WrapperRequest(
+        ActionCoords("peter-evans", "create-pull-request", "v4"),
+        mapOf(
+            "add-paths" to ListOfTypings("\\n"),
+            "signoff" to BooleanTyping,
+            "delete-branch" to BooleanTyping,
+            "labels" to ListOfTypings("\\n"),
+            "assignees" to ListOfTypings("\\n"),
+            "reviewers" to ListOfTypings("\\n"),
+            "team-reviewers" to ListOfTypings("\\n"),
+            "draft" to BooleanTyping,
+        ),
     ),
     WrapperRequest(
         ActionCoords("peterjgrainger", "action-create-branch", "v2.2.0")
@@ -748,6 +832,13 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("ruby", "setup-ruby", "v1"),
+        mapOf(
+            "bundler-cache" to BooleanTyping,
+            "working-directory" to StringTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("SamKirkland", "FTP-Deploy-Action", "v4.3.0"),
         mapOf(
             "port" to IntegerTyping,
@@ -760,9 +851,30 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("softprops", "action-gh-release", "v1"),
+        mapOf(
+            "draft" to BooleanTyping,
+            "prerelease" to BooleanTyping,
+            "files" to ListOfTypings("\\n"),
+            "fail_on_unmatched_files" to BooleanTyping,
+            "generate_release_notes" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("subosito", "flutter-action", "v2"),
+        mapOf(
+            "cache" to BooleanTyping,
+            "channel" to EnumTyping("Channel", listOf("stable", "beta", "master", "dev", "any")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "arm64")),
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("supercharge", "mongodb-github-action", "1.7.0"),
         mapOf(
             "mongodb-port" to IntegerTyping,
         )
+    ),
+    WrapperRequest(
+        ActionCoords("w9jds", "firebase-action", "v2.2.2"),
     ),
 )
