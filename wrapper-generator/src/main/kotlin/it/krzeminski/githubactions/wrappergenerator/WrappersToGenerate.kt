@@ -620,6 +620,7 @@ val wrappersToGenerate = listOf(
             "retry_count" to IntegerTyping,
             "retry_wait_time" to IntegerTyping,
             "tag_post_pre_newline" to BooleanTyping,
+            "template" to StringTyping,
             "title_max_length" to IntegerTyping,
         ),
     ),
