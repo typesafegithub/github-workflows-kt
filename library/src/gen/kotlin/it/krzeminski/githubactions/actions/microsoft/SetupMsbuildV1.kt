@@ -4,7 +4,6 @@
 package it.krzeminski.githubactions.actions.microsoft
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
-import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -28,15 +27,6 @@ public class SetupMsbuildV1(
      */
     public val vsVersion: String? = null,
     /**
-     * Enable searching for pre-release versions of Visual Studio/MSBuild
-     */
-    public val vsPrerelease: Boolean? = null,
-    /**
-     * The preferred processor architecture of MSBuild. Can be either "x86" or "x64". "x64" is only
-     * available from Visual Studio version 17.0 and later.
-     */
-    public val msbuildArchitecture: SetupMsbuildV1.Architecture? = null,
-    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -45,35 +35,17 @@ public class SetupMsbuildV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupMsbuildV1.Outputs>(
-    "microsoft", "setup-msbuild",
-    _customVersion
-        ?: "v1.1"
-) {
+) : ActionWithOutputs<SetupMsbuildV1.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             vswherePath?.let { "vswhere-path" to it },
             vsVersion?.let { "vs-version" to it },
-            vsPrerelease?.let { "vs-prerelease" to it.toString() },
-            msbuildArchitecture?.let { "msbuild-architecture" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
-
-    public sealed class Architecture(
-        public val stringValue: String,
-    ) {
-        public object X86 : SetupMsbuildV1.Architecture("x86")
-
-        public object X64 : SetupMsbuildV1.Architecture("x64")
-
-        public class Custom(
-            customStringValue: String,
-        ) : SetupMsbuildV1.Architecture(customStringValue)
-    }
 
     public class Outputs(
         private val stepId: String,

@@ -766,11 +766,7 @@ val wrappersToGenerate = listOf(
         ActionCoords("madhead", "semver-utils", "v2")
     ),
     WrapperRequest(
-        ActionCoords("microsoft", "setup-msbuild", "v1.1"),
-        mapOf(
-            "vs-prerelease" to BooleanTyping,
-            "msbuild-architecture" to EnumTyping("Architecture", listOf("x86", "x64")),
-        ),
+        ActionCoords("microsoft", "setup-msbuild", "v1"),
     ),
 
     WrapperRequest(
