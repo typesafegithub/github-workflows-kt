@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
         Kotlin script written to $buildFile
         Run it with:
           ./$buildFile
-        The resulting YAML file with be available at $filename.yml
+        The resulting YAML file with be available at $filename.yaml
         """.trimIndent()
     )
 }

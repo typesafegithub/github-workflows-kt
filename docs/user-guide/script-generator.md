@@ -29,12 +29,12 @@ The script generator will communicate a successful generation and hint you what 
 Kotlin script written to build.main.kts
 Run it with:
   ./build.main.kts
-The resulting YAML file with be available at build.yml
+The resulting YAML file with be available at build.yaml
 ```
 
 ## Compare the YAML files - semantically
 
-Running the script produced a file like `build.yml`. It's recommended to verify if the generator produced a correct
+Running the script produced a file like `build.yaml`. It's recommended to verify if the generator produced a correct
 script. You cannot compare it directly with the original file because there are multiple ways to encode the same YAML
 content. For example, certain formatting differences are possible, the lists can be expressed either as separate lines
 starting with `-` or as values between `[` and `]`, and so on.
