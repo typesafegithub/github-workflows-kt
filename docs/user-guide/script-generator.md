@@ -14,7 +14,7 @@ cd github-actions-kotlin-dsl
 If you have your workflow available in a local file, run:
 
 ```bash
-./gradlew :script-generator:run --args /path/to/.github/workflows/build.yml
+./gradlew :script-generator:run --args /path/to/.github/workflows/build.yaml
 ```
 
 If your YAML workflow is available publicly, e.g. on GitHub, use such command referring to the raw file:
