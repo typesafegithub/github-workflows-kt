@@ -75,3 +75,13 @@ jobs:
         run: pip install -r docs/requirements.txt
       - id: step-3
         run: mkdocs build --site-dir public
+  "build_kotlin_scripts":
+    name: Build Kotlin scripts
+    runs-on: "ubuntu-latest"
+    needs:
+      - "check_yaml_consistency"
+    steps:
+      - id: step-0
+        uses: actions/checkout@v3
+      - id: step-1
+        run: find -name '*.main.kts' | xargs kotlinc

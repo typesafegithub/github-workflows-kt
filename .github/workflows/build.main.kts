@@ -54,4 +54,13 @@ workflow(
         run("pip install -r docs/requirements.txt")
         run("mkdocs build --site-dir public")
     }
+
+    job(
+        id = "build_kotlin_scripts",
+        name = "Build Kotlin scripts",
+        runsOn = UbuntuLatest,
+    ) {
+        uses(CheckoutV3())
+        run("find -name '*.main.kts' | xargs kotlinc")
+    }
 }.writeToFile()
