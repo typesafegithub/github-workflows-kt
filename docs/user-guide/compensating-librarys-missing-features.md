@@ -32,7 +32,7 @@ workflow(
 
 ## Action's inputs
 
-Each action wrapper has an extra constructor parameter - `_customInputs` - which is a map from `String` to `String:
+Each action wrapper has an extra constructor parameter - `_customInputs` - which is a map from `String` to `String`:
 
 ```kotlin
 UploadArtifactV2(
