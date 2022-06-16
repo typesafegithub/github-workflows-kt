@@ -22,7 +22,7 @@ you have two ways to proceed.
 ### Typed wrapper
 
 !!! info "When to use this approach"
-    It lets you create an action wrapper in a similar manner that is provided by the build-in action wrappers in this
+    It lets you create an action wrapper in a similar manner that is provided by the built-in action wrappers in this
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
