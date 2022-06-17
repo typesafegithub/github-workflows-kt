@@ -41,7 +41,7 @@ public fun <K : Any, V : Any?> Map<K, V>.joinToCode(
     transform: ((K, V) -> CodeBlock?),
 ): CodeBlock =
     entries
-        .filterNot { (key, value) ->
+        .filterNot { (_, value) ->
             value == null || (value is List<*> && value.isEmpty())
         }
         .joinToCode(prefix, separator, postfix, ifEmpty, newLineAtEnd) { (key, value) ->

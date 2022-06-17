@@ -1,10 +1,10 @@
 package generated
 
 import it.krzeminski.githubactions.actions.CustomAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.docker.BuildPushActionV2
-import it.krzeminski.githubactions.actions.docker.LoginActionV1
-import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.docker.BuildPushActionV3
+import it.krzeminski.githubactions.actions.docker.LoginActionV2
+import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
@@ -31,8 +31,8 @@ public val workflowDockerImage: Workflow = workflow(
         concurrency = Concurrency(group = "job_staging_environment", cancelInProgress = true),
       ) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         uses(
           name = "Set up QEMU",
@@ -44,11 +44,11 @@ public val workflowDockerImage: Workflow = workflow(
         )
         uses(
           name = "Set up Docker Buildx",
-          action = SetupBuildxActionV1(),
+          action = SetupBuildxActionV2(),
         )
         uses(
           name = "Log in to the Container registry",
-          action = LoginActionV1(
+          action = LoginActionV2(
             registry = "ghcr.io",
             username = "${'$'}{{ github.actor }}",
             password = "${'$'}{{ secrets.GITHUB_TOKEN }}",
@@ -60,7 +60,7 @@ public val workflowDockerImage: Workflow = workflow(
         )
         uses(
           name = "Build and push Docker image",
-          action = BuildPushActionV2(
+          action = BuildPushActionV3(
             context = ".",
             push = true,
             tags = listOf(

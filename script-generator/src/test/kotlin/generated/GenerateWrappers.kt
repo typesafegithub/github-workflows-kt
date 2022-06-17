@@ -1,7 +1,7 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
@@ -29,7 +29,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         run(
           name = "Install Kotlin",
@@ -51,13 +51,13 @@ public val workflowGenerateWrappers: Workflow = workflow(
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         uses(
           name = "Set up JDK",
-          action = SetupJavaV2(
+          action = SetupJavaV3(
             javaVersion = "11",
-            distribution = SetupJavaV2.Distribution.Adopt,
+            distribution = SetupJavaV3.Distribution.Adopt,
           ),
         )
         uses(
