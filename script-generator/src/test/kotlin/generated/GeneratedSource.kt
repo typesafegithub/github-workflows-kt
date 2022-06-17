@@ -1,8 +1,8 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
-import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
+import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
@@ -62,7 +62,7 @@ public val workflowGenerated: Workflow = workflow(
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         run(
           name = "Install Kotlin",
@@ -93,7 +93,7 @@ public val workflowGenerated: Workflow = workflow(
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
           env = linkedMapOf(
             "HELLO" to "ok",
             "PAT" to "rick",
@@ -101,9 +101,9 @@ public val workflowGenerated: Workflow = workflow(
         )
         uses(
           name = "Set up JDK",
-          action = SetupJavaV2(
+          action = SetupJavaV3(
             javaVersion = "11",
-            distribution = SetupJavaV2.Distribution.Adopt,
+            distribution = SetupJavaV3.Distribution.Adopt,
           ),
           env = linkedMapOf(
             "HELLO" to "ok",
@@ -118,7 +118,7 @@ public val workflowGenerated: Workflow = workflow(
         )
         uses(
           name = "setup",
-          action = SetupBuildxActionV1(
+          action = SetupBuildxActionV2(
             driverOpts = listOf(
               "hello",
               "world",

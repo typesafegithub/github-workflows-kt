@@ -12,7 +12,7 @@ jobs:
         concurrency: job_staging_environment
 
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
 
             # Set up .npmrc file to publish to GitHub Packages
             -   uses: actions/setup-node@v3

@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupNodeV3
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
@@ -32,8 +32,8 @@ public val workflowNodejsPackage: Workflow = workflow(
         concurrency = Concurrency(group = "job_staging_environment", cancelInProgress = false),
       ) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         uses(
           name = "SetupNodeV3",

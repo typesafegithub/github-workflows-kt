@@ -1,7 +1,7 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupPythonV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
@@ -27,16 +27,16 @@ public val workflowRefreshversionsWebsite: Workflow = workflow(
         runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         run(
           name = "./docs/DocsCopier.main.kts",
           command = "./docs/DocsCopier.main.kts",
         )
         uses(
-          name = "SetupPythonV2",
-          action = SetupPythonV2(
+          name = "SetupPythonV4",
+          action = SetupPythonV4(
             pythonVersion = "3.x",
           ),
         )

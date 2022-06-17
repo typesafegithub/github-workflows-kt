@@ -15,13 +15,13 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - id: step-0
-        name: CheckoutV2
-        uses: actions/checkout@v2
+        name: CheckoutV3
+        uses: actions/checkout@v3
       - id: step-1
         name: ./docs/DocsCopier.main.kts
         run: ./docs/DocsCopier.main.kts
       - id: step-2
-        name: SetupPythonV2
+        name: SetupPythonV4
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
