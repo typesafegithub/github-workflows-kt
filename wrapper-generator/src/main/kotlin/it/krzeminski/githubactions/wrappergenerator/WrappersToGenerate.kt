@@ -358,7 +358,7 @@ val wrappersToGenerate = listOf(
         mapOf()
     ),
     WrapperRequest(
-        ActionCoords("appleboy", "scp-action", "v0.1.2"),
+        ActionCoords("appleboy", "scp-action", "v0.1.3"),
         mapOf(
             "port" to IntegerTyping,
             "use_insecure_cipher" to BooleanTyping,
