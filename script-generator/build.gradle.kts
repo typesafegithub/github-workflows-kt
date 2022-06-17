@@ -1,4 +1,4 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":wrapper-generator"))
-    implementation(project(":library"))
+    implementation(projects.wrapperGenerator)
+    implementation(projects.library)
     implementation("com.charleskorn.kaml:kaml:0.45.0")
     implementation("com.squareup:kotlinpoet:1.12.0")
 
@@ -33,13 +33,13 @@ application {
     tasks.run.get().workingDir = rootProject.projectDir
 }
 
-configure<KtlintExtension> {
+ktlint {
     filter {
         exclude("**/generated/**", "**/actual/**")
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "11"
         freeCompilerArgs += listOf(

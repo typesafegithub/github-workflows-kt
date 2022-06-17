@@ -167,4 +167,6 @@ val validateDuplicatedVersion by tasks.creating<Task> {
     }
 }
 
-tasks.getByName("check").dependsOn(validateDuplicatedVersion)
+tasks.check {
+    dependsOn(validateDuplicatedVersion)
+}

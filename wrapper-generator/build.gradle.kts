@@ -1,5 +1,3 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
@@ -21,7 +19,7 @@ dependencies {
 
     testImplementation("io.kotest:kotest-assertions-core:5.3.1")
     testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
-    testImplementation(project(":library"))
+    testImplementation(projects.library)
 }
 
 tasks.withType<Test> {
@@ -30,20 +28,20 @@ tasks.withType<Test> {
 
 application {
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.GenerationEntryPointKt")
-    tasks.run.get().workingDir = rootProject.projectDir
 }
 
-tasks.getByName("run") {
+tasks.run.configure {
     finalizedBy(":library:ktlintFormat")
+    workingDir(rootProject.layout.projectDirectory)
 }
 
 tasks.register<JavaExec>("suggestVersions") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.versions.SuggestVersionsKt")
-    dependsOn("compileKotlin")
+    dependsOn(tasks.compileKotlin)
 }
 
-configure<KtlintExtension> {
+ktlint {
     filter {
         exclude("**/wrappersfromunittests/**")
     }
