@@ -10,3 +10,5 @@ language would be beneficial. This library aims at filling this gap, utilizing K
 language with good internal DSL support.
 
 # For more info please see [the documentation](https://krzema12.github.io/github-actions-kotlin-dsl/).
+
+![carbon(10)](https://user-images.githubusercontent.com/459464/174327449-0c978c3f-8204-4e39-8c4b-aeabf287e35a.png)
