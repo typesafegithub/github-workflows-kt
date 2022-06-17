@@ -11,4 +11,4 @@ language with good internal DSL support.
 
 # For more info please see [the documentation](https://krzema12.github.io/github-actions-kotlin-dsl/).
 
-![carbon(11)](https://user-images.githubusercontent.com/459464/174332063-300d9204-8652-46a6-be52-2bb81af57907.png)
+![carbon(12)](https://user-images.githubusercontent.com/459464/174335482-9e2744e4-332d-490d-9427-6b5ee7d66100.png)
