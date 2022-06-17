@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
@@ -44,5 +46,12 @@ tasks.register<JavaExec>("suggestVersions") {
 ktlint {
     filter {
         exclude("**/wrappersfromunittests/**")
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+        allWarningsAsErrors = true
     }
 }
