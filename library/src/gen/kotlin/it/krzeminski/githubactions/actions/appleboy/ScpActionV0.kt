@@ -141,7 +141,7 @@ public class ScpActionV0(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("appleboy", "scp-action", _customVersion ?: "v0.1.2") {
+) : Action("appleboy", "scp-action", _customVersion ?: "v0.1.3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
