@@ -71,7 +71,7 @@ Click on a version to see the wrapper's code.
 * EndBug
     * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV9.kt)
 * gautamkrishnar
-    * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - 1.7.2: [`BlogPostWorkflowV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
+    * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - v1: [`BlogPostWorkflowV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
 * google-github-actions
     * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/AuthV0.kt)
     * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/SetupGcloudV0.kt)
