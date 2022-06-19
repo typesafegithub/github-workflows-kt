@@ -604,7 +604,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("gautamkrishnar", "blog-post-workflow", "1.7.2"),
+        ActionCoords("gautamkrishnar", "blog-post-workflow", "v1"),
         mapOf(
             "custom_tags" to ListOfTypings(","),
             "disable_html_encoding" to BooleanTyping,

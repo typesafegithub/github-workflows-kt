@@ -149,7 +149,7 @@ public class BlogPostWorkflowV1(
     _customVersion: String? = null,
 ) : ActionWithOutputs<BlogPostWorkflowV1.Outputs>(
     "gautamkrishnar", "blog-post-workflow",
-    _customVersion ?: "1.7.2"
+    _customVersion ?: "v1"
 ) {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
