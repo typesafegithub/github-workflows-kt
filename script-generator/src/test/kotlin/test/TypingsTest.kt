@@ -1,5 +1,6 @@
 package test
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.Table3
 import io.kotest.data.forAll
@@ -14,6 +15,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 
 class TypingsTest : FunSpec({
@@ -69,4 +71,33 @@ class TypingsTest : FunSpec({
             valueWithTyping(value, typing, coords).toString() shouldBe expected
         }
     }
+
+    test("proposed 'type' attribute for 'action.yaml'") {
+        fun Typing.type(): String = TODO()
+
+        assertSoftly {
+            StringTyping.type() shouldBe "string"
+            IntegerTyping.type() shouldBe "number"
+            BooleanTyping.type() shouldBe "boolean"
+
+            val enumType = EnumTyping("Status", listOf("success", "failure"))
+            enumType.type() shouldBe " 'success' | 'failure' "
+
+            IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0))
+                .type() shouldBe "number | { 0 : 'Infinite' }"
+
+            ListOfTypings(",", StringTyping)
+                .typing shouldBe "string[].join(',')"
+            ListOfTypings("\\n", BooleanTyping)
+                .typing shouldBe "boolean[].join('\n')"
+            ListOfTypings(",", IntegerTyping)
+                .typing shouldBe "int[].join(',')"
+            ListOfTypings(",", enumTyping)
+                .typing shouldBe "('success' | 'failure')[].join(',')"
+        }
+    }
+
 })
+
+
+
