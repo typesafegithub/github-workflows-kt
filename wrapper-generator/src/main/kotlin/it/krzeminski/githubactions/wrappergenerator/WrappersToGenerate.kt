@@ -757,6 +757,12 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("krzema12", "github-actions-typing", "v0"),
+        mapOf(
+            "verbose" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
         ActionCoords("madhead", "check-gradle-version", "v1")
     ),
     WrapperRequest(

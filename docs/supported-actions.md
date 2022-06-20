@@ -88,6 +88,8 @@ Click on a version to see the wrapper's code.
     * [create-an-issue](https://github.com/JasonEtco/create-an-issue) - v2: [`CreateAnIssueV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/jasonetco/CreateAnIssueV2.kt)
 * julia-actions
     * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/juliaactions/SetupJuliaV1.kt)
+* krzema12
+    * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0: [`GithubActionsTypingV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt)
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1: [`CheckGradleVersionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
     * [read-java-properties](https://github.com/madhead/read-java-properties) - latest: [`ReadJavaProperties`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/ReadJavaProperties.kt)
@@ -125,5 +127,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 73
-* counting each version separately: 86
+* counting by actions: 74
+* counting each version separately: 87
