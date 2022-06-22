@@ -127,6 +127,8 @@ public class SetupJavaV3(
 
         public object AdoptOpenj9 : SetupJavaV3.Distribution("adopt-openj9")
 
+        public object Corretto : SetupJavaV3.Distribution("corretto")
+
         public object Liberica : SetupJavaV3.Distribution("liberica")
 
         public object Microsoft : SetupJavaV3.Distribution("microsoft")
