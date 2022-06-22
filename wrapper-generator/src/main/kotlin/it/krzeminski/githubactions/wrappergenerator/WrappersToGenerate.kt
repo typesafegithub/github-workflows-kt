@@ -186,6 +186,7 @@ val wrappersToGenerate = listOf(
                     "adopt",
                     "adopt-hotspot",
                     "adopt-openj9",
+                    "corretto",
                     "liberica",
                     "microsoft",
                     "temurin",
