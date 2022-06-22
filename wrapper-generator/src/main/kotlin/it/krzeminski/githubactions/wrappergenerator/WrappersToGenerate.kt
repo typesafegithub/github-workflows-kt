@@ -198,7 +198,7 @@ val wrappersToGenerate = listOf(
             ),
             "check-latest" to BooleanTyping,
             "overwrite-settings" to BooleanTyping,
-            "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle")),
+            "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle", "sbt")),
         ),
     ),
     WrapperRequest(
