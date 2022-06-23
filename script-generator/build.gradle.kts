@@ -16,7 +16,7 @@ repositories {
 dependencies {
     implementation(projects.wrapperGenerator)
     implementation(projects.library)
-    implementation("com.charleskorn.kaml:kaml:0.45.0")
+    implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("com.squareup:kotlinpoet:1.12.0")
 
     testImplementation("io.kotest:kotest-assertions-core:5.3.1")
