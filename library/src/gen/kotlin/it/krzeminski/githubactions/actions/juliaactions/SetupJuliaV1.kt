@@ -24,7 +24,8 @@ public class SetupJuliaV1(
      */
     public val version: String? = null,
     /**
-     * Architecture of the Julia binaries. Defaults to x64.
+     * Architecture of the Julia binaries. Defaults to the architecture of the runner executing the
+     * job.
      */
     public val arch: SetupJuliaV1.Architecture? = null,
     /**
