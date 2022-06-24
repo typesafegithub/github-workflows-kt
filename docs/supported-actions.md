@@ -114,6 +114,8 @@ Click on a version to see the wrapper's code.
     * [FTP-Deploy-Action](https://github.com/SamKirkland/FTP-Deploy-Action) - v4.3.0: [`FTPDeployActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/samkirkland/FTPDeployActionV4.kt)
 * softprops
     * [action-gh-release](https://github.com/softprops/action-gh-release) - v1: [`ActionGhReleaseV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/softprops/ActionGhReleaseV1.kt)
+* stefanzweifel
+    * [git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action) - v4: [`GitAutoCommitActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/stefanzweifel/GitAutoCommitActionV4.kt)
 * subosito
     * [flutter-action](https://github.com/subosito/flutter-action) - v2: [`FlutterActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/subosito/FlutterActionV2.kt)
 * supercharge
@@ -127,5 +129,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 74
-* counting each version separately: 87
+* counting by actions: 75
+* counting each version separately: 88

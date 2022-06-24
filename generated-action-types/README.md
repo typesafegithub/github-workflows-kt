@@ -87,6 +87,7 @@ See https://github.com/krzema12/github-actions-typing
 | [ruby/setup-ruby@v1](ruby-setup-ruby-v1.yml) | https://github.com/ruby/setup-ruby|
 | [SamKirkland/FTP-Deploy-Action@v4.3.0](SamKirkland-FTP-Deploy-Action-v4.3.0.yml) | https://github.com/SamKirkland/FTP-Deploy-Action|
 | [softprops/action-gh-release@v1](softprops-action-gh-release-v1.yml) | https://github.com/softprops/action-gh-release|
+| [stefanzweifel/git-auto-commit-action@v4](stefanzweifel-git-auto-commit-action-v4.yml) | https://github.com/stefanzweifel/git-auto-commit-action|
 | [subosito/flutter-action@v2](subosito-flutter-action-v2.yml) | https://github.com/subosito/flutter-action|
 | [supercharge/mongodb-github-action@1.7.0](supercharge-mongodb-github-action-1.7.0.yml) | https://github.com/supercharge/mongodb-github-action|
 | [Vampire/setup-wsl@v1](Vampire-setup-wsl-v1.yml) | https://github.com/Vampire/setup-wsl|
