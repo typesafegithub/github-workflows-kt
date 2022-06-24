@@ -42,7 +42,7 @@ inputs:
   title_max_length:
     type: integer
   description_max_length:
-    type: string
+    type: integer
   item_exec:
     type: string
   commit_message:

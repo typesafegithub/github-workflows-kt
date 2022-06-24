@@ -84,7 +84,7 @@ public class BlogPostWorkflowV1(
     /**
      * Allows you to trim the description in the posts list
      */
-    public val descriptionMaxLength: String? = null,
+    public val descriptionMaxLength: Int? = null,
     /**
      * Allows you to execute custom JavaScript code on each item to do advanced text manipulation
      */
@@ -168,7 +168,7 @@ public class BlogPostWorkflowV1(
             acceptHeader?.let { "accept_header" to it },
             customTags?.let { "custom_tags" to it.joinToString(",") },
             titleMaxLength?.let { "title_max_length" to it.toString() },
-            descriptionMaxLength?.let { "description_max_length" to it },
+            descriptionMaxLength?.let { "description_max_length" to it.toString() },
             itemExec?.let { "item_exec" to it },
             commitMessage?.let { "commit_message" to it },
             committerUsername?.let { "committer_username" to it },

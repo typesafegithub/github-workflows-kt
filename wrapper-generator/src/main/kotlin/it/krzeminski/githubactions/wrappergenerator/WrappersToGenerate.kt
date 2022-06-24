@@ -623,6 +623,7 @@ val wrappersToGenerate = listOf(
             "tag_post_pre_newline" to BooleanTyping,
             "template" to StringTyping,
             "title_max_length" to IntegerTyping,
+            "description_max_length" to IntegerTyping,
         ),
     ),
     WrapperRequest(
