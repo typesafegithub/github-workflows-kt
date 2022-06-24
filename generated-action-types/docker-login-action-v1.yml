@@ -1,0 +1,13 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  registry:
+    type: string
+  username:
+    type: string
+  password:
+    type: string
+  ecr:
+    type: boolean
+  logout:
+    type: boolean

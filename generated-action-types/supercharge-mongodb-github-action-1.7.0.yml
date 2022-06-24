@@ -1,0 +1,15 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  mongodb-version:
+    type: string
+  mongodb-replica-set:
+    type: string
+  mongodb-port:
+    type: integer
+  mongodb-db:
+    type: string
+  mongodb-username:
+    type: string
+  mongodb-password:
+    type: string

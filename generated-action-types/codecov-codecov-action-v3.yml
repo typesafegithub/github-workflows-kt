@@ -1,0 +1,89 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  token:
+    type: string
+  files:
+    type: list
+    separator: ','
+    listItem:
+      type: string
+  directory:
+    type: string
+  flags:
+    type: list
+    separator: ','
+    listItem:
+      type: string
+  commit_parent:
+    type: string
+  dry_run:
+    type: boolean
+  env_vars:
+    type: list
+    separator: ','
+    listItem:
+      type: string
+  fail_ci_if_error:
+    type: boolean
+  file:
+    type: string
+  functionalities:
+    type: list
+    separator: ','
+    listItem:
+      type: string
+  gcov:
+    type: boolean
+  gcov_args:
+    type: list
+    separator: ' '
+    listItem:
+      type: string
+  gcov_ignore:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  gcov_include:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  move_coverage_to_trash:
+    type: boolean
+  name:
+    type: string
+  override_branch:
+    type: string
+  override_build:
+    type: integer
+  override_commit:
+    type: string
+  override_pr:
+    type: integer
+  override_tag:
+    type: string
+  os:
+    type: enum
+    allowedValues:
+    - alpine
+    - linux
+    - macos
+    - windows
+  root_dir:
+    type: string
+  slug:
+    type: string
+  url:
+    type: string
+  verbose:
+    type: boolean
+  version:
+    type: string
+  working-directory:
+    type: string
+  xcode:
+    type: boolean
+  xcode_archive_path:
+    type: string

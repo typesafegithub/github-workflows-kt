@@ -1,0 +1,48 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  status:
+    type: enum
+    allowedValues:
+    - success
+    - failure
+    - cancelled
+    - custom
+  fields:
+    type: list
+    separator: ','
+    listItem:
+      type: string
+  custom_payload:
+    type: string
+  mention:
+    type: string
+  if_mention:
+    type: list
+    separator: ','
+    listItem:
+      type: enum
+      allowedValues:
+      - success
+      - failure
+      - cancelled
+      - custom
+      - always
+  author_name:
+    type: string
+  text:
+    type: string
+  username:
+    type: string
+  icon_emoji:
+    type: string
+  icon_url:
+    type: string
+  channel:
+    type: string
+  job_name:
+    type: string
+  github_token:
+    type: string
+  github_base_url:
+    type: string

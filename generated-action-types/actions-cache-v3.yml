@@ -1,0 +1,21 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  path:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  key:
+    type: string
+  restore-keys:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  upload-chunk-size:
+    type: integer
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  cache-hit:
+    type: string
