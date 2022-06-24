@@ -1,0 +1,36 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  always-auth:
+    type: boolean
+  node-version:
+    type: string
+  node-version-file:
+    type: string
+  architecture:
+    type: string
+  check-latest:
+    type: boolean
+  registry-url:
+    type: string
+  scope:
+    type: string
+  token:
+    type: string
+  cache:
+    type: enum
+    allowedValues:
+    - npm
+    - yarn
+    - pnpm
+  cache-dependency-path:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  version:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  cache-hit:
+    type: string

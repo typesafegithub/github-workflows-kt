@@ -1,0 +1,19 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  version:
+    type: string
+  arch:
+    type: enum
+    allowedValues:
+    - x64
+    - x86
+    - aarch64
+  show-versioninfo:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  julia-version:
+    type: string
+  julia-bindir:
+    type: string

@@ -1,0 +1,24 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  app-name:
+    type: string
+  publish-profile:
+    type: string
+  slot-name:
+    type: string
+  package:
+    type: string
+  images:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  configuration-file:
+    type: string
+  startup-command:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  webapp-url:
+    type: string

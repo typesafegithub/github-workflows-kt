@@ -1,0 +1,40 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  GH_TOKEN:
+    type: string
+  WAKATIME_API_KEY:
+    type: string
+  SHOW_OS:
+    type: boolean
+  SHOW_PROJECTS:
+    type: boolean
+  SHOW_EDITORS:
+    type: boolean
+  SHOW_TIMEZONE:
+    type: boolean
+  SHOW_COMMIT:
+    type: boolean
+  SHOW_LANGUAGE:
+    type: boolean
+  SHOW_LINES_OF_CODE:
+    type: boolean
+  SHOW_LANGUAGE_PER_REPO:
+    type: boolean
+  SHOW_LOC_CHART:
+    type: boolean
+  SHOW_DAYS_OF_WEEK:
+    type: boolean
+  SHOW_PROFILE_VIEWS:
+    type: boolean
+  SHOW_SHORT_INFO:
+    type: boolean
+  LOCALE:
+    type: string
+  COMMIT_BY_ME:
+    type: boolean
+  IGNORED_REPOS:
+    type: list
+    separator: ','
+    listItem:
+      type: string

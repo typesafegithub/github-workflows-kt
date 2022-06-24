@@ -1,0 +1,37 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  gradle-version:
+    type: string
+  cache-disabled:
+    type: boolean
+  cache-read-only:
+    type: boolean
+  cache-write-only:
+    type: boolean
+  gradle-home-cache-includes:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  gradle-home-cache-excludes:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  arguments:
+    type: string
+  build-root-directory:
+    type: string
+  gradle-executable:
+    type: string
+  generate-job-summary:
+    type: boolean
+  gradle-home-cache-strict-match:
+    type: string
+  workflow-job-context:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  build-scan-url:
+    type: string

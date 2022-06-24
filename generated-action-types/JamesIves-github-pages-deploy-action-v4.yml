@@ -1,0 +1,42 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  ssh-key:
+    type: string
+  token:
+    type: string
+  branch:
+    type: string
+  folder:
+    type: string
+  target-folder:
+    type: string
+  commit-message:
+    type: string
+  clean:
+    type: boolean
+  clean-exclude:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  dry-run:
+    type: boolean
+  force:
+    type: boolean
+  git-config-name:
+    type: string
+  git-config-email:
+    type: string
+  repository-name:
+    type: string
+  workspace:
+    type: string
+  single-commit:
+    type: boolean
+  silent:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  deployment-status:
+    type: string
