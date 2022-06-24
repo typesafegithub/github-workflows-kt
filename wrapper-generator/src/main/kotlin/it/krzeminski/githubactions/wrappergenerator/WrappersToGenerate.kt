@@ -865,6 +865,16 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("stefanzweifel", "git-auto-commit-action", "v4"),
+        mapOf(
+            "skip_dirty_check" to BooleanTyping,
+            "skip_fetch" to BooleanTyping,
+            "skip_checkout" to BooleanTyping,
+            "disable_globbing" to BooleanTyping,
+            "create_branch" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("subosito", "flutter-action", "v2"),
         mapOf(
             "cache" to BooleanTyping,
