@@ -10,7 +10,7 @@ import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
@@ -46,7 +46,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -115,7 +115,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -161,7 +161,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -318,7 +318,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -376,7 +376,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -455,7 +455,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -586,7 +586,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            
+
             on:
               push:
 
@@ -647,7 +647,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            
+
             on:
               push:
 

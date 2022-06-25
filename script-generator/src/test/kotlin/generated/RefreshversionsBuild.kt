@@ -10,10 +10,8 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Boolean
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Choice
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.listOf
 

@@ -9,7 +9,7 @@ import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.dsl.BooleanCustomValue
 import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 
 class JobsToYamlTest : DescribeSpec({
     it("renders multiple jobs") {
