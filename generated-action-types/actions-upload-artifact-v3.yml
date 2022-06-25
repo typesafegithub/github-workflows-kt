@@ -1,0 +1,20 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  name:
+    type: string
+  path:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  if-no-files-found:
+    type: enum
+    allowedValues:
+    - warn
+    - error
+    - ignore
+  retention-days:
+    type: integer
+    namedValues:
+      Default: 0

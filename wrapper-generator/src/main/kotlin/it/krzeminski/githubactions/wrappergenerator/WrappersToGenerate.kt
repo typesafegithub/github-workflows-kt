@@ -150,6 +150,7 @@ val wrappersToGenerate = listOf(
         ActionCoords("actions", "setup-go", "v3"),
         mapOf(
             "check-latest" to BooleanTyping,
+            "cache" to BooleanTyping,
         )
     ),
     WrapperRequest(
@@ -185,6 +186,7 @@ val wrappersToGenerate = listOf(
                     "adopt",
                     "adopt-hotspot",
                     "adopt-openj9",
+                    "corretto",
                     "liberica",
                     "microsoft",
                     "temurin",
@@ -197,7 +199,7 @@ val wrappersToGenerate = listOf(
             ),
             "check-latest" to BooleanTyping,
             "overwrite-settings" to BooleanTyping,
-            "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle")),
+            "cache" to EnumTyping("BuildPlatform", listOf("maven", "gradle", "sbt")),
         ),
     ),
     WrapperRequest(
@@ -227,7 +229,15 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-python", "v3"),
+        ActionCoords("actions", "setup-python", "v3", deprecatedByVersion = "v4"),
+        mapOf(
+            "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
+            "cache-dependency-path" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-python", "v4"),
         mapOf(
             "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
             "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
@@ -349,7 +359,7 @@ val wrappersToGenerate = listOf(
         mapOf()
     ),
     WrapperRequest(
-        ActionCoords("appleboy", "scp-action", "v0.1.2"),
+        ActionCoords("appleboy", "scp-action", "v0.1.3"),
         mapOf(
             "port" to IntegerTyping,
             "use_insecure_cipher" to BooleanTyping,
@@ -436,14 +446,17 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("bahmutov", "npm-install", "v1.8.8"),
+        ActionCoords("bahmutov", "npm-install", "v1"),
         mapOf(
             "useLockFile" to BooleanTyping,
             "useRollingCache" to BooleanTyping,
         )
     ),
     WrapperRequest(
-        ActionCoords("Borales", "actions-yarn", "v2.3.0"),
+        ActionCoords("Borales", "actions-yarn", "v2.3.0", deprecatedByVersion = "v3.0.0"),
+    ),
+    WrapperRequest(
+        ActionCoords("Borales", "actions-yarn", "v3.0.0"),
     ),
     WrapperRequest(
         ActionCoords("cachix", "install-nix-action", "v17"),
@@ -483,7 +496,14 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "build-push-action", "v2"),
+        ActionCoords("coverallsapp", "github-action", "1.1.3"),
+        mapOf(
+            "parallel" to BooleanTyping,
+            "parallel-finished" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "build-push-action", "v2", deprecatedByVersion = "v3"),
         mapOf(
             "add-hosts" to ListOfTypings("\\n"),
             "allow" to ListOfTypings("\\n"),
@@ -505,18 +525,67 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "login-action", "v1"),
+        ActionCoords("docker", "build-push-action", "v3"),
+        mapOf(
+            "add-hosts" to ListOfTypings("\\n"),
+            "allow" to ListOfTypings("\\n"),
+            "build-args" to ListOfTypings("\\n"),
+            "build-contexts" to ListOfTypings("\\n"),
+            "cache-from" to ListOfTypings("\\n"),
+            "cache-to" to ListOfTypings("\\n"),
+            "labels" to ListOfTypings(","),
+            "load" to BooleanTyping,
+            "no-cache" to BooleanTyping,
+            "outputs" to ListOfTypings(","),
+            "platforms" to ListOfTypings(","),
+            "pull" to BooleanTyping,
+            "push" to BooleanTyping,
+            "secrets" to ListOfTypings("\\n"),
+            "secret-files" to ListOfTypings("\\n"),
+            "ssh" to ListOfTypings("\\n"),
+            "tags" to ListOfTypings("\\n"),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "login-action", "v1", deprecatedByVersion = "v2"),
         mapOf(
             "ecr" to BooleanTyping,
             "logout" to BooleanTyping,
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "setup-buildx-action", "v1"),
+        ActionCoords("docker", "login-action", "v2"),
+        mapOf(
+            "ecr" to BooleanTyping,
+            "logout" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "setup-buildx-action", "v1", deprecatedByVersion = "v2"),
         mapOf(
             "driver-opts" to ListOfTypings("\\n"),
             "install" to BooleanTyping,
             "use" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("docker", "setup-buildx-action", "v2"),
+        mapOf(
+            "driver-opts" to ListOfTypings("\\n"),
+            "install" to BooleanTyping,
+            "use" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("elgohr", "Publish-Docker-Github-Action", "v4"),
+        mapOf(
+            "buildargs" to ListOfTypings(","),
+            "cache" to BooleanTyping,
+            "no_push" to BooleanTyping,
+            "tags" to ListOfTypings(","),
+            "tag_names" to BooleanTyping,
+            "tag_semver" to BooleanTyping,
+            "snapshot" to BooleanTyping,
         )
     ),
     WrapperRequest(
@@ -536,6 +605,28 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("gautamkrishnar", "blog-post-workflow", "v1"),
+        mapOf(
+            "custom_tags" to ListOfTypings(","),
+            "disable_html_encoding" to BooleanTyping,
+            "disable_item_validation" to BooleanTyping,
+            "disable_sort" to BooleanTyping,
+            "enable_keepalive" to BooleanTyping,
+            "feed_list" to ListOfTypings(","),
+            "feed_names" to ListOfTypings(","),
+            "filter_comments" to ListOfTypings(","),
+            "max_post_count" to IntegerTyping,
+            "output_only" to BooleanTyping,
+            "readme_path" to ListOfTypings(","),
+            "retry_count" to IntegerTyping,
+            "retry_wait_time" to IntegerTyping,
+            "tag_post_pre_newline" to BooleanTyping,
+            "template" to StringTyping,
+            "title_max_length" to IntegerTyping,
+            "description_max_length" to IntegerTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("google-github-actions", "auth", "v0"),
         mapOf(
             "cleanup_credentials" to BooleanTyping,
@@ -545,6 +636,9 @@ val wrappersToGenerate = listOf(
             "access_token_scopes" to ListOfTypings(","),
             "id_token_include_email" to BooleanTyping,
             "export_environment_variables" to BooleanTyping,
+            "retries" to IntegerTyping,
+            "backoff" to IntegerTyping,
+            "backoff_limit" to IntegerTyping,
         ),
     ),
     WrapperRequest(
@@ -613,6 +707,7 @@ val wrappersToGenerate = listOf(
             "set-distribution-checksum" to BooleanTyping,
             "paths" to ListOfTypings(","),
             "paths-ignore" to ListOfTypings(","),
+            "release-channel" to EnumTyping("ReleaseChannel", listOf("stable", "release-candidate")),
         ),
     ),
     WrapperRequest(
@@ -620,9 +715,10 @@ val wrappersToGenerate = listOf(
         mapOf(
             "cache-disabled" to BooleanTyping,
             "cache-read-only" to BooleanTyping,
+            "generate-job-summary" to BooleanTyping,
             "gradle-home-cache-includes" to ListOfTypings("\\n"),
             "gradle-home-cache-excludes" to ListOfTypings("\\n"),
-            "cache-write-only" to StringTyping,
+            "cache-write-only" to BooleanTyping,
             "gradle-home-cache-strict-match" to StringTyping,
         ),
     ),
@@ -655,6 +751,20 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("julia-actions", "setup-julia", "v1"),
+        mapOf(
+            "arch" to EnumTyping("Architecture", listOf("x64", "x86", "aarch64")),
+            "show-versioninfo" to BooleanTyping,
+            "version" to StringTyping,
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("krzema12", "github-actions-typing", "v0"),
+        mapOf(
+            "verbose" to BooleanTyping,
+        )
+    ),
+    WrapperRequest(
         ActionCoords("madhead", "check-gradle-version", "v1")
     ),
     WrapperRequest(
@@ -664,6 +774,9 @@ val wrappersToGenerate = listOf(
     WrapperRequest(
         ActionCoords("madhead", "semver-utils", "v2")
     ),
+    WrapperRequest(
+        ActionCoords("microsoft", "setup-msbuild", "v1"),
+    ),
 
     WrapperRequest(
         ActionCoords("nobrayner", "discord-webhook", "v1"),
@@ -672,12 +785,42 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("peaceiris", "actions-gh-pages", "v3"),
+        mapOf(
+            "allow_empty_commit" to BooleanTyping,
+            "keep_files" to BooleanTyping,
+            "force_orphan" to BooleanTyping,
+            "enable_jekyll" to BooleanTyping,
+            "disable_nojekyll" to BooleanTyping,
+            "exclude_assets" to ListOfTypings(","),
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("peaceiris", "actions-hugo", "v2"),
+        mapOf(
+            "extended" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("peter-evans", "create-issue-from-file", "v4"),
         mapOf(
             "issue-number" to IntegerTyping,
             "labels" to ListOfTypings(","),
             "assignees" to ListOfTypings(","),
         )
+    ),
+    WrapperRequest(
+        ActionCoords("peter-evans", "create-pull-request", "v4"),
+        mapOf(
+            "add-paths" to ListOfTypings("\\n"),
+            "signoff" to BooleanTyping,
+            "delete-branch" to BooleanTyping,
+            "labels" to ListOfTypings("\\n"),
+            "assignees" to ListOfTypings("\\n"),
+            "reviewers" to ListOfTypings("\\n"),
+            "team-reviewers" to ListOfTypings("\\n"),
+            "draft" to BooleanTyping,
+        ),
     ),
     WrapperRequest(
         ActionCoords("peterjgrainger", "action-create-branch", "v2.2.0")
@@ -694,6 +837,13 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("ruby", "setup-ruby", "v1"),
+        mapOf(
+            "bundler-cache" to BooleanTyping,
+            "working-directory" to StringTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("SamKirkland", "FTP-Deploy-Action", "v4.3.0"),
         mapOf(
             "port" to IntegerTyping,
@@ -704,5 +854,66 @@ val wrappersToGenerate = listOf(
             "log-level" to EnumTyping("LogLevel", listOf("minimal", "standard", "verbose")),
             "security" to EnumTyping("Security", listOf("strict", "loose")),
         ),
+    ),
+    WrapperRequest(
+        ActionCoords("softprops", "action-gh-release", "v1"),
+        mapOf(
+            "draft" to BooleanTyping,
+            "prerelease" to BooleanTyping,
+            "files" to ListOfTypings("\\n"),
+            "fail_on_unmatched_files" to BooleanTyping,
+            "generate_release_notes" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("stefanzweifel", "git-auto-commit-action", "v4"),
+        mapOf(
+            "skip_dirty_check" to BooleanTyping,
+            "skip_fetch" to BooleanTyping,
+            "skip_checkout" to BooleanTyping,
+            "disable_globbing" to BooleanTyping,
+            "create_branch" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("subosito", "flutter-action", "v2"),
+        mapOf(
+            "cache" to BooleanTyping,
+            "channel" to EnumTyping("Channel", listOf("stable", "beta", "master", "dev", "any")),
+            "architecture" to EnumTyping("Architecture", listOf("x64", "arm64")),
+        ),
+    ),
+    WrapperRequest(
+        ActionCoords("supercharge", "mongodb-github-action", "1.7.0"),
+        mapOf(
+            "mongodb-port" to IntegerTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("Vampire", "setup-wsl", "v1"),
+        mapOf(
+            "distribution" to EnumTyping(
+                "Distribution",
+                listOf(
+                    "Alpine",
+                    "Debian",
+                    "kali-linux",
+                    "openSUSE-Leap-15.2",
+                    "Ubuntu-20.04",
+                    "Ubuntu-18.04",
+                    "Ubuntu-16.04"
+                )
+            ),
+            "use-cache" to BooleanTyping,
+            "wsl-conf" to StringTyping,
+            "set-as-default" to BooleanTyping,
+            "update" to BooleanTyping,
+            "additional-packages" to ListOfTypings(" "),
+            "wsl-shell-user" to StringTyping,
+            "wsl-shell-command" to StringTyping,
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("w9jds", "firebase-action", "v2.2.2"),
     ),
 )

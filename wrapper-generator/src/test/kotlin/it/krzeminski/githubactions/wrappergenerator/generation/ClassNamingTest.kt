@@ -9,6 +9,7 @@ class ClassNamingTest : FunSpec({
         listOf(
             ActionCoords("irrelevant", "some-action-name", "v2") to "SomeActionNameV2",
             ActionCoords("irrelevant", "some-action-name", "v3.2.1") to "SomeActionNameV3",
+            ActionCoords("irrelevant", "some-action-name", "3.2.1") to "SomeActionNameV3",
             ActionCoords("irrelevant", "some-action-name", "latest") to "SomeActionName",
         ).forEach { (input, output) ->
             test("should get '$input' and produde '$output'") {

@@ -1,9 +1,12 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.borales
 
 import it.krzeminski.githubactions.actions.Action
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -17,6 +20,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Borales/actions-yarn)
  */
+@Deprecated(
+    message = "This action has a newer major version: ActionsYarnV3",
+    replaceWith = ReplaceWith("ActionsYarnV3"),
+)
 public class ActionsYarnV2(
     /**
      * Yarn command

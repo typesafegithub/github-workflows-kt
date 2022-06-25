@@ -42,9 +42,13 @@ val ActionCoords.actionYmlNoVUrl: String get() = "https://raw.githubusercontent.
 
 val ActionCoords.actionYamlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
 
-val ActionCoords.releasesUrl: String get() = "https://github.com/$owner/$name/releases"
+val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
+
+val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
 val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
+
+val ActionCoords.yamlName: String get() = "$owner/$name@$version"
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
     val cacheFile = actionYamlDir.resolve("$owner-$name-$version.yml")

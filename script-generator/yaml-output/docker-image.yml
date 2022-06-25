@@ -22,8 +22,8 @@ jobs:
       cancel-in-progress: true
     steps:
       - id: step-0
-        name: CheckoutV2
-        uses: actions/checkout@v2
+        name: CheckoutV3
+        uses: actions/checkout@v3
       - id: step-1
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1

@@ -1,4 +1,5 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+#!/usr/bin/env kotlin
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.20.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
@@ -10,17 +11,16 @@ import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.dsl.workflow
-import java.nio.file.Paths
+import it.krzeminski.githubactions.yaml.writeToFile
 
-val checkIfWrappersUpToDateWorkflow = workflow(
+workflow(
     name = "Check if wrappers up to date",
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
         Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
     ),
-    sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/check-if-wrappers-up-to-date.yaml"),
+    sourceFile = __FILE__.toPath(),
 ) {
     job(
         id = "check",
@@ -45,4 +45,4 @@ val checkIfWrappersUpToDateWorkflow = workflow(
             command = "git diff --exit-code library/src/gen/ docs/supported-actions.md"
         )
     }
-}
+}.writeToFile()

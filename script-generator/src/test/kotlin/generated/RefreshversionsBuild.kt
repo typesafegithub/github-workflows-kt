@@ -1,7 +1,7 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
@@ -76,8 +76,7 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
           ),
         ))
         ),
-      sourceFile = Paths.get("refreshversions-build.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-build.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-build.main.kts"),
     ) {
       job(
         id = "check-all",
@@ -89,13 +88,13 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
           condition = expr("runner.os == 'Windows'"),
         )
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         uses(
           name = "Configure JDK",
-          action = SetupJavaV2(
-            distribution = SetupJavaV2.Distribution.Adopt,
+          action = SetupJavaV3(
+            distribution = SetupJavaV3.Distribution.Adopt,
             javaVersion = "11",
           ),
         )

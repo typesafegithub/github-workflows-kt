@@ -1,0 +1,43 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  server:
+    type: string
+  username:
+    type: string
+  password:
+    type: string
+  port:
+    type: integer
+  protocol:
+    type: enum
+    allowedValues:
+    - ftp
+    - ftps
+    - ftps-legacy
+  local-dir:
+    type: string
+  server-dir:
+    type: string
+  state-name:
+    type: string
+  dry-run:
+    type: boolean
+  dangerous-clean-slate:
+    type: boolean
+  exclude:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  log-level:
+    type: enum
+    allowedValues:
+    - minimal
+    - standard
+    - verbose
+  security:
+    type: enum
+    allowedValues:
+    - strict
+    - loose

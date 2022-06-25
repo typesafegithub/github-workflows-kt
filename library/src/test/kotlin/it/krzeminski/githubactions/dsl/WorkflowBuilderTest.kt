@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.dsl
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -17,7 +18,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = listOf(Push()),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     // No jobs.
                 }
@@ -31,7 +31,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = listOf(Push()),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
                         id = "Some-job",
@@ -50,7 +49,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = emptyList(),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
                         id = "Some job",
@@ -72,7 +70,6 @@ class WorkflowBuilderTest : FunSpec({
                     name = "Some workflow",
                     on = listOf(Push()),
                     sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                    targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
                 ) {
                     job(
                         id = "Some-job-1",
@@ -129,11 +126,13 @@ class WorkflowBuilderTest : FunSpec({
         }
 
         test("workflow with custom arguments") {
+            val gitRootDir = tempdir().also {
+                it.resolve(".git").mkdirs()
+            }.toPath()
             val workflow = workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
-                sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
                 _customArguments = mapOf(
                     "dry-run" to BooleanCustomValue(true),
                     "written-by" to ListCustomValue("Alice", "Bob"),

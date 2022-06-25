@@ -1,0 +1,47 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  command:
+    type: enum
+    allowedValues:
+    - help
+    - version
+    - bench
+    - build
+    - check
+    - clean
+    - doc
+    - fetch
+    - fix
+    - run
+    - rustc
+    - rustdoc
+    - test
+    - report
+    - generate-lockfile
+    - locate-project
+    - metadata
+    - pkgid
+    - tree
+    - update
+    - vendor
+    - verify-project
+    - init
+    - install
+    - new
+    - search
+    - uninstall
+    - login
+    - owner
+    - package
+    - publish
+    - yank
+  toolchain:
+    type: string
+  args:
+    type: list
+    separator: ' '
+    listItem:
+      type: string
+  use-cross:
+    type: boolean

@@ -1,4 +1,4 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -14,14 +14,14 @@ repositories {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.43.0")
-    implementation("com.squareup:kotlinpoet:1.11.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.charleskorn.kaml:kaml:0.46.0")
+    implementation("com.squareup:kotlinpoet:1.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
-    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
-    testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
-    testImplementation(project(":library"))
+    testImplementation("io.kotest:kotest-assertions-core:5.3.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
+    testImplementation(projects.library)
 }
 
 tasks.withType<Test> {
@@ -30,21 +30,28 @@ tasks.withType<Test> {
 
 application {
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.GenerationEntryPointKt")
-    tasks.run.get().workingDir = rootProject.projectDir
 }
 
-tasks.getByName("run") {
+tasks.run.configure {
     finalizedBy(":library:ktlintFormat")
+    workingDir(rootProject.layout.projectDirectory)
 }
 
 tasks.register<JavaExec>("suggestVersions") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.versions.SuggestVersionsKt")
-    dependsOn("compileKotlin")
+    dependsOn(tasks.compileKotlin)
 }
 
-configure<KtlintExtension> {
+ktlint {
     filter {
         exclude("**/wrappersfromunittests/**")
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+        allWarningsAsErrors = true
     }
 }

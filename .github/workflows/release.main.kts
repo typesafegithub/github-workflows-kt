@@ -1,21 +1,21 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+#!/usr/bin/env kotlin
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.20.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Adopt
-import it.krzeminski.githubactions.actions.actions.SetupPythonV3
+import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import java.nio.file.Paths
+import it.krzeminski.githubactions.yaml.writeToFile
 
-val releaseWorkflow = workflow(
+workflow(
     name = "Release",
     on = listOf(Push(tags = listOf("v*.*.*"))),
-    sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/release.yaml"),
+    sourceFile = __FILE__.toPath(),
     env = linkedMapOf(
         "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
         "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
@@ -42,7 +42,7 @@ val releaseWorkflow = workflow(
             )
         )
 
-        uses(SetupPythonV3(pythonVersion = "3.8"))
+        uses(SetupPythonV4(pythonVersion = "3.8"))
         run("pip install -r docs/requirements.txt")
 
         // From here, there are steps performing deployments. Before, it's only about building and testing.
@@ -64,4 +64,4 @@ val releaseWorkflow = workflow(
             command = "mkdocs gh-deploy --force",
         )
     }
-}
+}.writeToFile()

@@ -1,4 +1,4 @@
-# This file was generated using Kotlin DSL (.github/workflows/_GenerateWorkflows.main.kts).
+# This file was generated using Kotlin DSL (.github/workflows/check-if-wrappers-up-to-date.main.kts).
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
       - id: step-1
         name: Execute script
-        run: rm '.github/workflows/check-if-wrappers-up-to-date.yaml' && '.github/workflows/_GenerateWorkflows.main.kts'
+        run: rm '.github/workflows/check-if-wrappers-up-to-date.yaml' && '.github/workflows/check-if-wrappers-up-to-date.main.kts'
       - id: step-2
         name: Consistency check
         run: git diff --exit-code '.github/workflows/check-if-wrappers-up-to-date.yaml'

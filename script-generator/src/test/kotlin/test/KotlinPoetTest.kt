@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asTypeName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.actions.SetupNodeV2
+import it.krzeminski.githubactions.actions.actions.SetupNodeV3
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.scriptgenerator.CodeBlock
 import it.krzeminski.githubactions.scriptgenerator.Members
@@ -46,7 +46,7 @@ class KotlinPoetTest : DescribeSpec({
                   4,
                   9,
                 )
-                
+
             """.trimIndent()
         }
 
@@ -60,7 +60,7 @@ class KotlinPoetTest : DescribeSpec({
 
             codeBlock.toString() shouldBe """
                 kotlin.collections.linkedMapOf("11", "22", "33")
-                
+
             """.trimIndent()
         }
 
@@ -84,7 +84,7 @@ class KotlinPoetTest : DescribeSpec({
             )
 
             val codeblock = actionMap.joinToCode(
-                prefix = CodeBlock.of("val %L = %T(", "myAction", SetupNodeV2::class.asTypeName()),
+                prefix = CodeBlock.of("val %L = %T(", "myAction", SetupNodeV3::class.asTypeName()),
                 transform = { key, value ->
                     val template = templateOf(value)
                     if (value == null || template == null) {
@@ -96,12 +96,12 @@ class KotlinPoetTest : DescribeSpec({
             )
 
             codeblock.toString() shouldBe """
-              val myAction = it.krzeminski.githubactions.actions.actions.SetupNodeV2(
+              val myAction = it.krzeminski.githubactions.actions.actions.SetupNodeV3(
                 alwaysAuth = false,
                 nodeVersion = "1.0.0",
                 token = "my-token",
               )
-              
+
             """.trimIndent()
         }
 

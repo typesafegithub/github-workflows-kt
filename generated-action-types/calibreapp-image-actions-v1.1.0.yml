@@ -1,0 +1,16 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  githubToken:
+    type: string
+  jpegQuality:
+    type: integer
+  pngQuality:
+    type: integer
+  webpQuality:
+    type: integer
+  ignorePaths:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string

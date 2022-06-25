@@ -1,7 +1,7 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.peterjgrainger.ActionCreateBranchV2
@@ -25,8 +25,7 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         )),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("refreshversions-pr.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-pr.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-pr.main.kts"),
     ) {
       job(
         id = "Refresh-Versions",
@@ -34,15 +33,15 @@ public val workflowRefreshversionsPr: Workflow = workflow(
       ) {
         uses(
           name = "check-out",
-          action = CheckoutV2(
+          action = CheckoutV3(
             ref = "main",
           ),
         )
         uses(
           name = "setup-java",
-          action = SetupJavaV2(
+          action = SetupJavaV3(
             javaVersion = "11",
-            distribution = SetupJavaV2.Distribution.Adopt,
+            distribution = SetupJavaV3.Distribution.Adopt,
           ),
         )
         uses(

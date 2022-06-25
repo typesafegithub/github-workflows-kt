@@ -22,19 +22,18 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.15.0"
+version = "0.20.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2")
-    implementation("com.charleskorn.kaml:kaml:0.43.0")
-
-    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
-    testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    testImplementation("io.kotest:kotest-assertions-core:5.3.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
+    implementation("com.charleskorn.kaml:kaml:0.46.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     testImplementation(kotlin("reflect"))
 }
 
@@ -170,4 +169,6 @@ val validateDuplicatedVersion by tasks.creating<Task> {
     }
 }
 
-tasks.getByName("check").dependsOn(validateDuplicatedVersion)
+tasks.check {
+    dependsOn(validateDuplicatedVersion)
+}

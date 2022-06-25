@@ -1,6 +1,6 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.15.0")
+#!/usr/bin/env kotlin
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.20.0")
 
-import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
@@ -11,18 +11,17 @@ import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import java.nio.file.Paths
+import it.krzeminski.githubactions.yaml.writeToFile
 
-val checkIfNewActionVersionsWorkflow = workflow(
+workflow(
     name = "Updates available",
     on = listOf(
         Schedule(listOf(
-            Cron(dayWeek = "4", hour = "7", minute = "0")
+            Cron(hour = "7", minute = "0")
         )),
         WorkflowDispatch(),
     ),
-    sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/actions-versions.yml"),
+    sourceFile = __FILE__.toPath(),
 ) {
     job(
         id = "updates-available",
@@ -51,4 +50,4 @@ val checkIfNewActionVersionsWorkflow = workflow(
             )
         )
     }
-}
+}.writeToFile()

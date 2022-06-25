@@ -1,4 +1,4 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -14,13 +14,13 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":wrapper-generator"))
-    implementation(project(":library"))
-    implementation("com.charleskorn.kaml:kaml:0.43.0")
-    implementation("com.squareup:kotlinpoet:1.11.0")
+    implementation(projects.wrapperGenerator)
+    implementation(projects.library)
+    implementation("com.charleskorn.kaml:kaml:0.46.0")
+    implementation("com.squareup:kotlinpoet:1.12.0")
 
-    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
-    testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
+    testImplementation("io.kotest:kotest-assertions-core:5.3.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
     implementation(kotlin("reflect"))
 }
 
@@ -33,15 +33,16 @@ application {
     tasks.run.get().workingDir = rootProject.projectDir
 }
 
-configure<KtlintExtension> {
+ktlint {
     filter {
         exclude("**/generated/**", "**/actual/**")
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "11"
+        allWarningsAsErrors = true
         freeCompilerArgs += listOf(
             "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"

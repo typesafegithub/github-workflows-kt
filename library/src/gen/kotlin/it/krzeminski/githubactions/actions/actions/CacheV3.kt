@@ -29,7 +29,8 @@ public class CacheV3(
      */
     public val key: String,
     /**
-     * An ordered list of keys to use for restoring the cache if no cache hit occurred for key
+     * An ordered list of keys to use for restoring stale cache if no cache hit occurred for key.
+     * Note `cache-hit` returns false in this case.
      */
     public val restoreKeys: List<String>? = null,
     /**

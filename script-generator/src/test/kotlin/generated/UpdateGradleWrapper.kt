@@ -1,7 +1,7 @@
 package generated
 
 import it.krzeminski.githubactions.actions.CustomAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
@@ -24,8 +24,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         )),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("update-gradle-wrapper.main.kts"),
-      targetFile = Paths.get("yaml-output/update-gradle-wrapper.yml"),
+      sourceFile = Paths.get(".github/workflows/update-gradle-wrapper.main.kts"),
     ) {
       job(
         id = "check_yaml_consistency",
@@ -33,7 +32,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
           condition = "true",
         )
         run(
@@ -56,7 +55,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         uses(
           name = "Update Gradle Wrapper",

@@ -25,6 +25,7 @@ markdown_extensions:
 
 plugins:
   - markdownextradata: {}
+  - mkdocs-video
 
 nav:
   - Introduction: 'index.md'
@@ -38,4 +39,4 @@ nav:
   - Projects using this library: 'projects-using-this-library.md'
 
 extra:
-  version: 0.15.0
+  version: 0.20.0

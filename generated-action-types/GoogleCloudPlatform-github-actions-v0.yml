@@ -1,0 +1,22 @@
+# See https://github.com/krzema12/github-actions-typing
+typingSpec: krzema12/github-actions-typing@v0.3
+inputs:
+  version:
+    type: string
+  service_account_email:
+    type: string
+  service_account_key:
+    type: string
+  project_id:
+    type: string
+  install_components:
+    type: list
+    separator: "\n"
+    listItem:
+      type: string
+  export_default_credentials:
+    type: boolean
+  credentials_file_path:
+    type: string
+  cleanup_credentials:
+    type: boolean

@@ -1,4 +1,4 @@
-# This file was generated using Kotlin DSL (.github/workflows/_GenerateWorkflows.main.kts).
+# This file was generated using Kotlin DSL (.github/workflows/release.main.kts).
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v3
       - id: step-1
         name: Execute script
-        run: rm '.github/workflows/release.yaml' && '.github/workflows/_GenerateWorkflows.main.kts'
+        run: rm '.github/workflows/release.yaml' && '.github/workflows/release.main.kts'
       - id: step-2
         name: Consistency check
         run: git diff --exit-code '.github/workflows/release.yaml'
@@ -47,7 +47,7 @@ jobs:
         with:
           arguments: build
       - id: step-3
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: 3.8
       - id: step-4

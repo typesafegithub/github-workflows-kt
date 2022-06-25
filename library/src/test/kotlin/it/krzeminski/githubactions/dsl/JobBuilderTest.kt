@@ -17,7 +17,6 @@ class JobBuilderTest : FunSpec({
                 name = "Test workflow",
                 on = listOf(Push()),
                 sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-                targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
             ) {
                 job(
                     id = "test_job",

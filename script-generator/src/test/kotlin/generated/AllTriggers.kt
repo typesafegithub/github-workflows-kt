@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.BranchProtectionRule
@@ -146,8 +146,7 @@ public val workflowAllTriggers: Workflow = workflow(
           ),
         ),
         ),
-      sourceFile = Paths.get("all-triggers.main.kts"),
-      targetFile = Paths.get("yaml-output/all-triggers.yml"),
+      sourceFile = Paths.get(".github/workflows/all-triggers.main.kts"),
     ) {
       job(
         id = "job-0",
@@ -155,7 +154,7 @@ public val workflowAllTriggers: Workflow = workflow(
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
       }
 

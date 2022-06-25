@@ -3,7 +3,7 @@ package it.krzeminski.githubactions
 import com.charleskorn.kaml.MalformedYamlException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.engine.spec.tempfile
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupNodeV3
@@ -20,15 +20,17 @@ import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.io.path.invariantSeparatorsPathString
 
 @Suppress("LargeClass")
 class IntegrationTest : FunSpec({
+
+    val gitRootDir = tempdir().also {
+        it.resolve(".git").mkdirs()
+    }.toPath()
     val workflow = workflow(
         name = "Test workflow",
         on = listOf(Push()),
-        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-        targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+        sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
     ) {
         job(
             id = "test_job",
@@ -49,7 +51,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -79,13 +81,14 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    @Suppress("MaxLineLength")
     test("toYaml() - workflow with one job depending on another") {
         // given
         val workflowWithDependency = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            targetFileName = "some_workflow_with_dependency.yaml"
         ) {
             val testJob1 = job(
                 id = "test_job_1",
@@ -117,7 +120,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -132,7 +135,7 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+                    run: diff -u '.github/workflows/some_workflow_with_dependency.yaml' <('.github/workflows/some_workflow.main.kts')
               "test_job_1":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -163,7 +166,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -187,8 +190,7 @@ class IntegrationTest : FunSpec({
         val workflowWithMultilineCommand = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -237,12 +239,12 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - 'hello world' workflow") {
         // given
-        val targetTempFile = tempfile()
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = targetTempFile.toPath(),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -261,7 +263,7 @@ class IntegrationTest : FunSpec({
         }
 
         // when
-        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false)
+        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false, gitRootDir = gitRootDir)
 
         // then
         targetTempFile.readText() shouldBe """
@@ -290,12 +292,12 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
         // given
-        val targetTempFile = tempfile()
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         val workflowWithTempTargetFile = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = targetTempFile.toPath(),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -317,12 +319,11 @@ class IntegrationTest : FunSpec({
         workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
 
         // then
-        val targetPath = targetTempFile.toPath().invariantSeparatorsPathString
         targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -337,10 +338,10 @@ class IntegrationTest : FunSpec({
                     uses: actions/checkout@v3
                   - id: step-1
                     name: Execute script
-                    run: rm '$targetPath' && '.github/workflows/some_workflow.main.kts'
+                    run: rm '.github/workflows/some_workflow.yaml' && '.github/workflows/some_workflow.main.kts'
                   - id: step-2
                     name: Consistency check
-                    run: git diff --exit-code '$targetPath'
+                    run: git diff --exit-code '.github/workflows/some_workflow.yaml'
               "test_job":
                 runs-on: "ubuntu-latest"
                 needs:
@@ -361,8 +362,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -381,7 +381,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -412,8 +412,7 @@ class IntegrationTest : FunSpec({
                     hello! workflow
                 """.trimIndent()
             ),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -461,7 +460,7 @@ class IntegrationTest : FunSpec({
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            
+
             name: Test workflow
 
             on:
@@ -512,8 +511,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -565,8 +563,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             concurrency = Concurrency("workflow_staging_environment"),
         ) {
             job(
@@ -594,7 +591,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            
+
             on:
               push:
 
@@ -627,8 +624,7 @@ class IntegrationTest : FunSpec({
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            targetFile = Paths.get(".github/workflows/some_workflow.yaml"),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
         ) {
             job(
@@ -656,7 +652,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            
+
             on:
               push:
 
@@ -690,7 +686,6 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
-            targetFile = Paths.get("../.github/workflows/invalid_workflow.yaml"),
         ) {
             job("test_job", runsOn = RunnerType.UbuntuLatest) {
                 run(name = "property: something", command = "echo hello")
@@ -712,7 +707,6 @@ class IntegrationTest : FunSpec({
             name = "expr-typesafe",
             on = listOf(Push()),
             sourceFile = Path.of("ExprIntegrationTest.kt"),
-            targetFile = Path.of("expr-testing.yml"),
         ) {
             val NODE by Expr.matrix.map
             val GREETING by Expr.env.map
@@ -775,7 +769,7 @@ class IntegrationTest : FunSpec({
         val d = '$'.toString() // Escape dollar signs
 
         actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (ExprIntegrationTest.kt).
+            # This file was generated using Kotlin DSL (library/ExprIntegrationTest.kt).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 

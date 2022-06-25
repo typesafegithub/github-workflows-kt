@@ -76,7 +76,7 @@ public class SetupJavaV3(
      */
     public val gpgPassphrase: String? = null,
     /**
-     * Name of the build platform to cache dependencies. It can be "maven" or "gradle".
+     * Name of the build platform to cache dependencies. It can be "maven", "gradle" or "sbt".
      */
     public val cache: SetupJavaV3.BuildPlatform? = null,
     /**
@@ -127,6 +127,8 @@ public class SetupJavaV3(
 
         public object AdoptOpenj9 : SetupJavaV3.Distribution("adopt-openj9")
 
+        public object Corretto : SetupJavaV3.Distribution("corretto")
+
         public object Liberica : SetupJavaV3.Distribution("liberica")
 
         public object Microsoft : SetupJavaV3.Distribution("microsoft")
@@ -162,6 +164,8 @@ public class SetupJavaV3(
         public object Maven : SetupJavaV3.BuildPlatform("maven")
 
         public object Gradle : SetupJavaV3.BuildPlatform("gradle")
+
+        public object Sbt : SetupJavaV3.BuildPlatform("sbt")
 
         public class Custom(
             customStringValue: String,
