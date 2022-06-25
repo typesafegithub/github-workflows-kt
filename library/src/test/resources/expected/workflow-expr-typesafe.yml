@@ -1,0 +1,18 @@
+# This file was generated using Kotlin DSL (library/ExprIntegrationTest.kt).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+name: workflow-expr-typesafe
+
+on:
+  push:
+
+jobs:
+  "job1":
+    runs-on: "ubuntu-latest"
+    steps:
+      - id: step-0
+        uses: actions/checkout@v3
+      - id: step-1
+        name: RunnerContext create temp directory
+        run: mkdir ${{ runner.temp }}/build_logs
