@@ -33,6 +33,8 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
     implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+    testImplementation(kotlin("reflect"))
 }
 
 sourceSets {

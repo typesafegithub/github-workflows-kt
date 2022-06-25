@@ -12,8 +12,10 @@ import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
+import it.krzeminski.githubactions.testutils.shouldMatchFile
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
+import java.nio.file.Path
 import java.nio.file.Paths
 
 @Suppress("LargeClass")
@@ -694,5 +696,26 @@ class IntegrationTest : FunSpec({
             |            name: property: something
             |                          ^
         """.trimMargin()
+    }
+
+    test("Executing workflow with type-safe expressions") {
+        val workflowWithTypeSafeExpressions = workflow(
+            name = "workflow-expr-typesafe",
+            on = listOf(Push()),
+            sourceFile = Path.of("ExprIntegrationTest.kt"),
+        ) {
+            job(
+                id = "job1",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                uses(CheckoutV3())
+                run(
+                    name = "RunnerContext create temp directory",
+                    command = "mkdir " + expr { runner.temp } + "/build_logs"
+                )
+            }
+        }
+
+        workflowWithTypeSafeExpressions.toYaml(addConsistencyCheck = false) shouldMatchFile "workflow-expr-typesafe.yml"
     }
 })
