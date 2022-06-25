@@ -11,10 +11,8 @@ import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowRefreshversionsPr: Workflow = workflow(

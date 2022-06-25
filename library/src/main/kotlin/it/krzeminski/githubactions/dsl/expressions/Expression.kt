@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.dsl
+package it.krzeminski.githubactions.dsl.expressions
 
 /**
  * Creates an expression, i.e. something evaluated by GitHub.
