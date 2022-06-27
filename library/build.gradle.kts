@@ -32,7 +32,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
 
-    testImplementation(platform("io.kotest:kotest-bom:5.3.1"))
+    testImplementation(platform("io.kotest:kotest-bom:5.3.2"))
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
