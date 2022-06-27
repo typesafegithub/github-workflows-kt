@@ -43,7 +43,7 @@ public class GithubPagesDeployActionV4(
     /**
      * This is the branch you wish to deploy to, for example gh-pages or docs.
      */
-    public val branch: String,
+    public val branch: String? = null,
     /**
      * The folder in your repository that you want to deploy. If your build script compiles into a
      * directory named build you would put it here. Folder paths cannot have a leading / or ./. If you
@@ -130,7 +130,7 @@ public class GithubPagesDeployActionV4(
         *listOfNotNull(
             sshKey?.let { "ssh-key" to it },
             token?.let { "token" to it },
-            "branch" to branch,
+            branch?.let { "branch" to it },
             "folder" to folder,
             targetFolder?.let { "target-folder" to it },
             commitMessage?.let { "commit-message" to it },
