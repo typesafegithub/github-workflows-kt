@@ -46,6 +46,8 @@ Click on a version to see the wrapper's code.
     * [amazon-ecs-deploy-task-definition](https://github.com/aws-actions/amazon-ecs-deploy-task-definition) - v1: [`AmazonEcsDeployTaskDefinitionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/AmazonEcsDeployTaskDefinitionV1.kt)
     * [amazon-ecs-render-task-definition](https://github.com/aws-actions/amazon-ecs-render-task-definition) - v1: [`AmazonEcsRenderTaskDefinitionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/AmazonEcsRenderTaskDefinitionV1.kt)
     * [configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) - v1: [`ConfigureAwsCredentialsV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/ConfigureAwsCredentialsV1.kt)
+* axel-op
+    * [googlejavaformat-action](https://github.com/axel-op/googlejavaformat-action) - v3: [`GooglejavaformatActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/axelop/GooglejavaformatActionV3.kt)
 * Azure
     * [docker-login](https://github.com/Azure/docker-login) - v1: [`DockerLoginV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/azure/DockerLoginV1.kt)
     * [login](https://github.com/Azure/login) - v1: [`LoginV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/azure/LoginV1.kt)
@@ -129,5 +131,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 75
-* counting each version separately: 88
+* counting by actions: 76
+* counting each version separately: 89
