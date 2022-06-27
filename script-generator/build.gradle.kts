@@ -18,10 +18,10 @@ dependencies {
     implementation(projects.library)
     implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("com.squareup:kotlinpoet:1.12.0")
+    implementation(kotlin("reflect"))
 
     testImplementation("io.kotest:kotest-assertions-core:5.3.1")
     testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
-    implementation(kotlin("reflect"))
 }
 
 tasks.withType<Test> {
