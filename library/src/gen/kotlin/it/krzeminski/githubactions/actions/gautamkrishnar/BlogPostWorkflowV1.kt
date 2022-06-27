@@ -139,6 +139,10 @@ public class BlogPostWorkflowV1(
      */
     public val filterDates: String? = null,
     /**
+     * Provide your own seeding string for the randomness
+     */
+    public val randSeed: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -182,6 +186,7 @@ public class BlogPostWorkflowV1(
             categoriesTemplate?.let { "categories_template" to it },
             disableItemValidation?.let { "disable_item_validation" to it.toString() },
             filterDates?.let { "filter_dates" to it },
+            randSeed?.let { "rand_seed" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
