@@ -425,6 +425,12 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("axel-op", "googlejavaformat-action", "v3"),
+        mapOf(
+            "skipCommit" to BooleanTyping,
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("Azure", "docker-login", "v1"),
     ),
     WrapperRequest(
