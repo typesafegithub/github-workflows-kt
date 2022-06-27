@@ -19,8 +19,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
-    testImplementation("io.kotest:kotest-assertions-core:5.3.1")
-    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
+    testImplementation(platform("io.kotest:kotest-bom:5.3.1"))
+    testImplementation("io.kotest:kotest-assertions-core")
+    testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation(projects.library)
 }
 
