@@ -10,4 +10,8 @@ import it.krzeminski.githubactions.dsl.expressions.contexts.RunnerContext
  */
 object Contexts {
     val runner: RunnerContext = RunnerContext
+
+    val env: Env = Env
+
+    val secrets: Secrets = Secrets
 }

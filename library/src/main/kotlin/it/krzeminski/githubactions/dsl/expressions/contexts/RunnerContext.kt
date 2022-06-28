@@ -7,10 +7,10 @@ import it.krzeminski.githubactions.dsl.expressions.ExpressionContext
  * https://docs.github.com/en/actions/learn-github-actions/contexts#example-contents-of-the-runner-context
  */
 object RunnerContext : ExpressionContext("runner") {
-    val name by propertyToExprPath
-    val os by propertyToExprPath
-    val arch by propertyToExprPath
-    val temp by propertyToExprPath
-    val tool_cache by propertyToExprPath
-    val workspace by propertyToExprPath
+    val name by map
+    val os by map
+    val arch by map
+    val temp by map
+    val tool_cache by map
+    val workspace by map
 }

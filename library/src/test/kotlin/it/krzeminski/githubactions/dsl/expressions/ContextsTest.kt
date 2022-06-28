@@ -4,7 +4,29 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
+@Suppress("VariableNaming")
 class ContextsTest : FunSpec({
+
+    val dollar = '$'.toString()
+
+    test("Environment variables") {
+        assertSoftly {
+            val DAY_OF_WEEK by Env
+            "$DAY_OF_WEEK == 'Monday'" shouldBe "${dollar}DAY_OF_WEEK == 'Monday'"
+
+            "${Env.CI} == true && ${Env.GITHUB_ACTIONS} == true" shouldBe
+                "${dollar}CI == true && ${dollar}GITHUB_ACTIONS == true"
+        }
+    }
+
+    test("Secrets") {
+        assertSoftly {
+            expr { secrets.GITHUB_TOKEN } shouldBe expr("secrets.GITHUB_TOKEN")
+
+            val NPM_TOKEN by Contexts.secrets
+            expr { NPM_TOKEN } shouldBe expr("secrets.NPM_TOKEN")
+        }
+    }
 
     test("Runner context") {
         assertSoftly {

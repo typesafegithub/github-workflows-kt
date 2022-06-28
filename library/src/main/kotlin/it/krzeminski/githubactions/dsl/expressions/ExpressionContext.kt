@@ -1,11 +1,11 @@
 package it.krzeminski.githubactions.dsl.expressions
 
 open class ExpressionContext(
-    private val path: String,
-    val propertyToExprPath: Map<String, String> = MapFromLambda { propertyName -> "$path.$propertyName" }
-)
+    internal val _path: String,
+    val map: Map<String, String> = MapFromLambda { propertyName -> "$_path.$propertyName" }
+): Map<String, String> by map
 
-private class MapFromLambda<T>(val operation: (String) -> T) : Map<String, T> by emptyMap() {
+internal class MapFromLambda<T>(val operation: (String) -> T) : Map<String, T> by emptyMap() {
     override fun containsKey(key: String) = true
     override fun get(key: String): T = operation(key)
     override fun getOrDefault(key: String, defaultValue: T): T = get(key)
