@@ -1,6 +1,8 @@
 package it.krzeminski.githubactions.dsl.expressions
 
+import it.krzeminski.githubactions.dsl.expressions.contexts.EnvContext
 import it.krzeminski.githubactions.dsl.expressions.contexts.RunnerContext
+import it.krzeminski.githubactions.dsl.expressions.contexts.SecretsContext
 
 /**
  * Root elements of GitHub expressions.
@@ -11,7 +13,7 @@ import it.krzeminski.githubactions.dsl.expressions.contexts.RunnerContext
 object Contexts {
     val runner: RunnerContext = RunnerContext
 
-    val env: Env = Env
+    val env: EnvContext = EnvContext
 
-    val secrets: Secrets = Secrets
+    val secrets: SecretsContext = SecretsContext
 }

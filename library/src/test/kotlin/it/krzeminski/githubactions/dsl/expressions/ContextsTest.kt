@@ -11,10 +11,10 @@ class ContextsTest : FunSpec({
 
     test("Environment variables") {
         assertSoftly {
-            val DAY_OF_WEEK by Env
+            val DAY_OF_WEEK by Contexts.env
             "$DAY_OF_WEEK == 'Monday'" shouldBe "${dollar}DAY_OF_WEEK == 'Monday'"
 
-            "${Env.CI} == true && ${Env.GITHUB_ACTIONS} == true" shouldBe
+            "${Contexts.env.CI} == true && ${Contexts.env.GITHUB_ACTIONS} == true" shouldBe
                 "${dollar}CI == true && ${dollar}GITHUB_ACTIONS == true"
         }
     }

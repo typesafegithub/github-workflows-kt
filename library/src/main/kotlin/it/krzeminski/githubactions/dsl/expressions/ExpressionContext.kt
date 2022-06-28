@@ -1,9 +1,10 @@
 package it.krzeminski.githubactions.dsl.expressions
 
+@Suppress("ConstructorParameterNaming")
 open class ExpressionContext(
     internal val _path: String,
-    val map: Map<String, String> = MapFromLambda { propertyName -> "$_path.$propertyName" }
-): Map<String, String> by map
+    val propertyToExprPath: Map<String, String> = MapFromLambda { propertyName -> "$_path.$propertyName" }
+) : Map<String, String> by propertyToExprPath
 
 internal class MapFromLambda<T>(val operation: (String) -> T) : Map<String, T> by emptyMap() {
     override fun containsKey(key: String) = true
