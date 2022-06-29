@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator
 
+import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
@@ -19,6 +20,7 @@ import java.nio.file.Paths
  *    ./gradlew :wrapper-generator:run
  */
 fun main() {
+    generateEventPayloads()
     checkDuplicateWrappers()
     checkWrappersOrder()
     println(wrappersToGenerate.suggestDeprecations())
