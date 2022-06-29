@@ -11,3 +11,7 @@ internal class MapFromLambda<T>(val operation: (String) -> T) : Map<String, T> b
     override fun get(key: String): T = operation(key)
     override fun getOrDefault(key: String, defaultValue: T): T = get(key)
 }
+
+internal class FakeList(val name: String) : List<String> by emptyList() {
+    override fun get(index: Int): String = "$name[$index]"
+}

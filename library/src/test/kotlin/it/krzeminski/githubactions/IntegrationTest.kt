@@ -743,6 +743,10 @@ class IntegrationTest : FunSpec({
                     name = "RunnerContext create temp directory",
                     command = "mkdir " + expr { runner.temp } + "/build_logs"
                 )
+                run(
+                    name = "GitHubContext echo sha",
+                    command = "echo " + expr { github.sha } + " event " + expr { github.eventRelease.release.url }
+                )
             }
         }
 

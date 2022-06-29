@@ -33,3 +33,6 @@ jobs:
       - id: step-4
         name: RunnerContext create temp directory
         run: mkdir ${{ runner.temp }}/build_logs
+      - id: step-5
+        name: GitHubContext echo sha
+        run: echo ${{ github.sha }} event ${{ github.event.release.url }}
