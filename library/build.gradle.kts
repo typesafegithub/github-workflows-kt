@@ -37,7 +37,6 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     testImplementation(kotlin("reflect"))
-    testImplementation("com.squareup:kotlinpoet:1.12.0")
 }
 
 sourceSets {
