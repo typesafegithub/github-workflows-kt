@@ -18,6 +18,7 @@ jobs:
       - id: step-1
         name: Default environment variable
         run: action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY
+        if: ${{ always() }}
       - id: step-2
         name: Custom environment variable
         env:

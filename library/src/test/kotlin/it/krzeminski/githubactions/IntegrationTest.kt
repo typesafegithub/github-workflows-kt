@@ -722,6 +722,7 @@ class IntegrationTest : FunSpec({
                 run(
                     name = "Default environment variable",
                     command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
+                    condition = expr { always() },
                 )
                 run(
                     name = "Custom environment variable",
