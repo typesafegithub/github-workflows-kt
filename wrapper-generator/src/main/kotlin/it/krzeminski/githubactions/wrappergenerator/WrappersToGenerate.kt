@@ -400,6 +400,7 @@ val wrappersToGenerate = listOf(
         ActionCoords("aws-actions", "amazon-ecr-login", "v1"),
         mapOf(
             "registries" to ListOfTypings(","),
+            "registry-type" to EnumTyping("RegistryType", listOf("private", "public")),
             "skip-logout" to BooleanTyping,
         )
     ),
