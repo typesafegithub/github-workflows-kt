@@ -10,6 +10,7 @@ import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.testutils.shouldMatchFile
@@ -18,7 +19,7 @@ import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Path
 import java.nio.file.Paths
 
-@Suppress("LargeClass")
+@Suppress("LargeClass", "VariableNaming")
 class IntegrationTest : FunSpec({
 
     val gitRootDir = tempdir().also {
@@ -704,11 +705,39 @@ class IntegrationTest : FunSpec({
             on = listOf(Push()),
             sourceFile = Path.of("ExprIntegrationTest.kt"),
         ) {
+            val GREETING by Contexts.env
+            val FIRST_NAME by Contexts.env
+            val SECRET by Contexts.env
+            val TOKEN by Contexts.env
+            val SUPER_SECRET by Contexts.secrets
+
             job(
                 id = "job1",
                 runsOn = RunnerType.UbuntuLatest,
+                env = linkedMapOf(
+                    GREETING to "World",
+                )
             ) {
                 uses(CheckoutV3())
+                run(
+                    name = "Default environment variable",
+                    command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
+                )
+                run(
+                    name = "Custom environment variable",
+                    env = linkedMapOf(
+                        FIRST_NAME to "Patrick",
+                    ),
+                    command = "echo " + expr { GREETING } + " " + expr { FIRST_NAME }
+                )
+                run(
+                    name = "Encrypted secret",
+                    env = linkedMapOf(
+                        SECRET to expr { SUPER_SECRET },
+                        TOKEN to expr { secrets.GITHUB_TOKEN }
+                    ),
+                    command = "echo secret=$SECRET token=$TOKEN"
+                )
                 run(
                     name = "RunnerContext create temp directory",
                     command = "mkdir " + expr { runner.temp } + "/build_logs"
