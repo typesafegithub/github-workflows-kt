@@ -1,5 +1,7 @@
 package it.krzeminski.githubactions.dsl.expressions.contexts
 
+import kotlin.text.Typography.quote
+
 /**
  * GitHub offers a set of built-in functions that you can use in expressions.
  * Some functions cast values to a string to perform comparisons.
@@ -9,8 +11,13 @@ package it.krzeminski.githubactions.dsl.expressions.contexts
  */
 @Suppress("FunctionOnlyReturningConstant", "TooManyFunctions")
 open class FunctionsContext {
-    private fun formatArgs(vararg args: String, quote: Boolean) =
-        args.joinToString(prefix = "(", postfix = ")") { if (quote) "'$it'" else it }
+    private fun formatArgs(vararg args: String, quote: Boolean): String {
+        fun String.maybeQuote(): String {
+            val escaped = replace("'", "\\'")
+            return if (quote) "'$escaped'" else this
+        }
+        return args.joinToString(prefix = "(", postfix = ")", transform = String::maybeQuote)
+    }
 
     fun always() = "always()"
 

@@ -68,6 +68,11 @@ class ContextsTest : FunSpec({
 
             expr { join("github.event.issue.labels.*.name", "', '") } shouldBe
                 expr("join(github.event.issue.labels.*.name, ', ')")
+
+            // Escape the single quotes in order to prevent having invalid JSONs
+            expr {
+                startsWith("Let's dance", "Let's dance and be happy!", quote = true)
+            } shouldBe expr("startsWith('Let\\'s dance', 'Let\\'s dance and be happy!')")
         }
     }
 })
