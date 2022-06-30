@@ -906,6 +906,7 @@ val wrappersToGenerate = listOf(
                     "Debian",
                     "kali-linux",
                     "openSUSE-Leap-15.2",
+                    "Ubuntu-22.04",
                     "Ubuntu-20.04",
                     "Ubuntu-18.04",
                     "Ubuntu-16.04"
