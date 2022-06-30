@@ -231,7 +231,7 @@ public object ReleaseEventRepository {
 
     public const val homepage: String = "github.event.repository.homepage"
 
-    public const val length: String = "github.event.repository.size"
+    public const val size: String = "github.event.repository.size"
 
     public const val stargazers_count: String = "github.event.repository.stargazers_count"
 

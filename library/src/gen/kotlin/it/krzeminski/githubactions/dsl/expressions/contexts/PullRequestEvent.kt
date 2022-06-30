@@ -242,7 +242,7 @@ public object PullRequestEventPullRequestHeadRepo {
 
     public const val homepage: String = "github.event.pull_request.head.repo.homepage"
 
-    public const val length: String = "github.event.pull_request.head.repo.size"
+    public const val size: String = "github.event.pull_request.head.repo.size"
 
     public const val stargazers_count: String = "github.event.pull_request.head.repo.stargazers_count"
 
@@ -501,7 +501,7 @@ public object PullRequestEventPullRequestBaseRepo {
 
     public const val homepage: String = "github.event.pull_request.base.repo.homepage"
 
-    public const val length: String = "github.event.pull_request.base.repo.size"
+    public const val size: String = "github.event.pull_request.base.repo.size"
 
     public const val stargazers_count: String = "github.event.pull_request.base.repo.stargazers_count"
 
@@ -862,7 +862,7 @@ public object PullRequestEventRepository {
 
     public const val homepage: String = "github.event.repository.homepage"
 
-    public const val length: String = "github.event.repository.size"
+    public const val size: String = "github.event.repository.size"
 
     public const val stargazers_count: String = "github.event.repository.stargazers_count"
 

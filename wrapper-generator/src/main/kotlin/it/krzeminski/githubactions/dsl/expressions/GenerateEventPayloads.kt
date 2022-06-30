@@ -138,14 +138,10 @@ fun Map.Entry<String, JsonElement>.generatePropertySpec(
     filename: String
 ): PropertySpec? {
     val (child, element) = this
-    val propertyName = when (child) {
-        "size" -> "length"
-        else -> child
-    }
 
     return when (element) {
         is JsonPrimitive -> {
-            PropertySpec.builder(propertyName, String::class.asClassName())
+            PropertySpec.builder(child, String::class.asClassName())
                 .addModifiers(KModifier.CONST)
                 .initializer("%S", "github.$key.$child")
                 .build()

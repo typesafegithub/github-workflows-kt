@@ -197,7 +197,7 @@ public object WorkflowDispatchEventRepository {
 
     public const val releases_url: String = "github.event.repository.releases_url"
 
-    public const val length: String = "github.event.repository.size"
+    public const val size: String = "github.event.repository.size"
 
     public const val ssh_url: String = "github.event.repository.ssh_url"
 

@@ -93,7 +93,7 @@ class ContextsTest : FunSpec({
             expr { github.eventPullRequest.pull_request.number } shouldBe expr("github.event.pull_request.number")
             expr { github.eventRelease.release.url } shouldBe expr("github.event.release.url")
             expr { github.eventWorkflowDispatch.workflow } shouldBe expr("github.event.workflow")
-            expr { github.eventPush.repository.length } shouldBe expr("github.event.repository.size")
+            expr { github.eventPush.repository.size } shouldBe expr("github.event.repository.size")
         }
     }
 })
