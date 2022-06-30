@@ -51,7 +51,6 @@ private val resourcesDir = File("wrapper-generator/src/main/resources/payloads")
 private val kotlinGenDir = File("library/src/gen/kotlin")
 
 // ClassNames
-private val expressionContext = ClassName(EXPRESSIONS, "ExpressionContext")
 private val fakeList = ClassName(EXPRESSIONS, "FakeList")
 private val listOfStrings = List::class.asClassName().parameterizedBy(String::class.asClassName())
 
@@ -77,14 +76,14 @@ fun PayloadEventParams.generateTypesafePayload(): FileSpec {
     println("Parsing ${jsonFile.canonicalPath}")
     val element: JsonObject = Json.parseToJsonElement(jsonFile.readText()) as JsonObject
     val objects: Map<String, JsonObject> = findAllObjects(element, "event")
-    val fileSpec = generateObjectTypes(objects, className + "Context", packageName = PACKAGE)
+    val fileSpec = generateObjectTypes(objects, className, packageName = PACKAGE)
     return fileSpec
 }
 
 fun PayloadEventParams.findAllObjects(element: JsonObject, path: String): Map<String, JsonObject> {
     val nothing = emptyMap<String, JsonObject>()
 
-    val result = element.flatMap { (subpath, entry)  ->
+    val result = element.flatMap { (subpath, entry) ->
         when (entry) {
             is JsonObject -> findAllObjects(entry, "$path.$subpath")
             is JsonArray -> {
@@ -127,9 +126,6 @@ fun PayloadEventParams.generateObjectType(
 ): TypeSpec {
     val builder = TypeSpec.objectBuilder(payloadClassName(key, filename))
     println("Generating class ${payloadClassName(key, filename)} : ExpressionContext(\"github.$key\")")
-    builder
-        .superclass(expressionContext)
-        .addSuperclassConstructorParameter("%S", "github.$key")
 
     val properties = value.mapNotNull { (child, element) ->
         when (element) {
@@ -153,7 +149,7 @@ fun PayloadEventParams.generateObjectType(
                     .build()
             }
             else -> {
-                println("Warning: unhandled $child");
+                println("Warning: unhandled $child")
                 null
             }
         }

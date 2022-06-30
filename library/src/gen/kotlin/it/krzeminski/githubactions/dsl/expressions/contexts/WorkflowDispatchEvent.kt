@@ -3,18 +3,16 @@
 
 package it.krzeminski.githubactions.dsl.expressions.contexts
 
-import it.krzeminski.githubactions.dsl.expressions.ExpressionContext
 import it.krzeminski.githubactions.dsl.expressions.FakeList
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 
-public object WorkflowDispatchEventContextInputs : ExpressionContext("github.event.inputs") {
+public object WorkflowDispatchEventInputs {
     public const val name: String = "github.event.inputs.name"
 }
 
-public object WorkflowDispatchEventContextOrganization :
-    ExpressionContext("github.event.organization") {
+public object WorkflowDispatchEventOrganization {
     public const val avatar_url: String = "github.event.organization.avatar_url"
 
     public const val description: String = "github.event.organization.description"
@@ -40,8 +38,7 @@ public object WorkflowDispatchEventContextOrganization :
     public const val url: String = "github.event.organization.url"
 }
 
-public object WorkflowDispatchEventContextRepositoryOwner :
-    ExpressionContext("github.event.repository.owner") {
+public object WorkflowDispatchEventRepositoryOwner {
     public const val avatar_url: String = "github.event.repository.owner.avatar_url"
 
     public const val events_url: String = "github.event.repository.owner.events_url"
@@ -79,7 +76,7 @@ public object WorkflowDispatchEventContextRepositoryOwner :
     public const val url: String = "github.event.repository.owner.url"
 }
 
-public object WorkflowDispatchEventContextRepository : ExpressionContext("github.event.repository") {
+public object WorkflowDispatchEventRepository {
     public const val allow_forking: String = "github.event.repository.allow_forking"
 
     public const val archive_url: String = "github.event.repository.archive_url"
@@ -190,8 +187,7 @@ public object WorkflowDispatchEventContextRepository : ExpressionContext("github
 
     public const val open_issues_count: String = "github.event.repository.open_issues_count"
 
-    public val owner: WorkflowDispatchEventContextRepositoryOwner =
-        WorkflowDispatchEventContextRepositoryOwner
+    public val owner: WorkflowDispatchEventRepositoryOwner = WorkflowDispatchEventRepositoryOwner
 
     public const val `private`: String = "github.event.repository.private"
 
@@ -236,7 +232,7 @@ public object WorkflowDispatchEventContextRepository : ExpressionContext("github
     public const val watchers_count: String = "github.event.repository.watchers_count"
 }
 
-public object WorkflowDispatchEventContextSender : ExpressionContext("github.event.sender") {
+public object WorkflowDispatchEventSender {
     public const val avatar_url: String = "github.event.sender.avatar_url"
 
     public const val events_url: String = "github.event.sender.events_url"
@@ -274,18 +270,16 @@ public object WorkflowDispatchEventContextSender : ExpressionContext("github.eve
     public const val url: String = "github.event.sender.url"
 }
 
-public object WorkflowDispatchEventContext : ExpressionContext("github.event") {
-    public val inputs: WorkflowDispatchEventContextInputs = WorkflowDispatchEventContextInputs
+public object WorkflowDispatchEvent {
+    public val inputs: WorkflowDispatchEventInputs = WorkflowDispatchEventInputs
 
-    public val organization: WorkflowDispatchEventContextOrganization =
-        WorkflowDispatchEventContextOrganization
+    public val organization: WorkflowDispatchEventOrganization = WorkflowDispatchEventOrganization
 
     public const val ref: String = "github.event.ref"
 
-    public val repository: WorkflowDispatchEventContextRepository =
-        WorkflowDispatchEventContextRepository
+    public val repository: WorkflowDispatchEventRepository = WorkflowDispatchEventRepository
 
-    public val sender: WorkflowDispatchEventContextSender = WorkflowDispatchEventContextSender
+    public val sender: WorkflowDispatchEventSender = WorkflowDispatchEventSender
 
     public const val workflow: String = "github.event.workflow"
 }

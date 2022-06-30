@@ -3,13 +3,12 @@
 
 package it.krzeminski.githubactions.dsl.expressions.contexts
 
-import it.krzeminski.githubactions.dsl.expressions.ExpressionContext
 import it.krzeminski.githubactions.dsl.expressions.FakeList
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 
-public object ReleaseEventContextReleaseAuthor : ExpressionContext("github.event.release.author") {
+public object ReleaseEventReleaseAuthor {
     public const val login: String = "github.event.release.author.login"
 
     public const val id: String = "github.event.release.author.id"
@@ -47,7 +46,7 @@ public object ReleaseEventContextReleaseAuthor : ExpressionContext("github.event
     public const val site_admin: String = "github.event.release.author.site_admin"
 }
 
-public object ReleaseEventContextRelease : ExpressionContext("github.event.release") {
+public object ReleaseEventRelease {
     public const val url: String = "github.event.release.url"
 
     public const val assets_url: String = "github.event.release.assets_url"
@@ -68,7 +67,7 @@ public object ReleaseEventContextRelease : ExpressionContext("github.event.relea
 
     public const val draft: String = "github.event.release.draft"
 
-    public val author: ReleaseEventContextReleaseAuthor = ReleaseEventContextReleaseAuthor
+    public val author: ReleaseEventReleaseAuthor = ReleaseEventReleaseAuthor
 
     public const val prerelease: String = "github.event.release.prerelease"
 
@@ -85,8 +84,7 @@ public object ReleaseEventContextRelease : ExpressionContext("github.event.relea
     public const val body: String = "github.event.release.body"
 }
 
-public object ReleaseEventContextRepositoryOwner :
-    ExpressionContext("github.event.repository.owner") {
+public object ReleaseEventRepositoryOwner {
     public const val login: String = "github.event.repository.owner.login"
 
     public const val id: String = "github.event.repository.owner.id"
@@ -124,7 +122,7 @@ public object ReleaseEventContextRepositoryOwner :
     public const val site_admin: String = "github.event.repository.owner.site_admin"
 }
 
-public object ReleaseEventContextRepository : ExpressionContext("github.event.repository") {
+public object ReleaseEventRepository {
     public const val id: String = "github.event.repository.id"
 
     public const val node_id: String = "github.event.repository.node_id"
@@ -135,7 +133,7 @@ public object ReleaseEventContextRepository : ExpressionContext("github.event.re
 
     public const val `private`: String = "github.event.repository.private"
 
-    public val owner: ReleaseEventContextRepositoryOwner = ReleaseEventContextRepositoryOwner
+    public val owner: ReleaseEventRepositoryOwner = ReleaseEventRepositoryOwner
 
     public const val html_url: String = "github.event.repository.html_url"
 
@@ -272,7 +270,7 @@ public object ReleaseEventContextRepository : ExpressionContext("github.event.re
     public const val default_branch: String = "github.event.repository.default_branch"
 }
 
-public object ReleaseEventContextSender : ExpressionContext("github.event.sender") {
+public object ReleaseEventSender {
     public const val login: String = "github.event.sender.login"
 
     public const val id: String = "github.event.sender.id"
@@ -310,12 +308,12 @@ public object ReleaseEventContextSender : ExpressionContext("github.event.sender
     public const val site_admin: String = "github.event.sender.site_admin"
 }
 
-public object ReleaseEventContext : ExpressionContext("github.event") {
+public object ReleaseEvent {
     public const val action: String = "github.event.action"
 
-    public val release: ReleaseEventContextRelease = ReleaseEventContextRelease
+    public val release: ReleaseEventRelease = ReleaseEventRelease
 
-    public val repository: ReleaseEventContextRepository = ReleaseEventContextRepository
+    public val repository: ReleaseEventRepository = ReleaseEventRepository
 
-    public val sender: ReleaseEventContextSender = ReleaseEventContextSender
+    public val sender: ReleaseEventSender = ReleaseEventSender
 }

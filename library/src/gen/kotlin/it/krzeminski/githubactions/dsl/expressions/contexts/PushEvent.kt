@@ -3,14 +3,12 @@
 
 package it.krzeminski.githubactions.dsl.expressions.contexts
 
-import it.krzeminski.githubactions.dsl.expressions.ExpressionContext
 import it.krzeminski.githubactions.dsl.expressions.FakeList
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 
-public object PushEventContextHeadCommitAuthor :
-    ExpressionContext("github.event.head_commit.author") {
+public object PushEventHeadCommitAuthor {
     public const val name: String = "github.event.head_commit.author.name"
 
     public const val email: String = "github.event.head_commit.author.email"
@@ -18,8 +16,7 @@ public object PushEventContextHeadCommitAuthor :
     public const val username: String = "github.event.head_commit.author.username"
 }
 
-public object PushEventContextHeadCommitCommitter :
-    ExpressionContext("github.event.head_commit.committer") {
+public object PushEventHeadCommitCommitter {
     public const val name: String = "github.event.head_commit.committer.name"
 
     public const val email: String = "github.event.head_commit.committer.email"
@@ -27,7 +24,7 @@ public object PushEventContextHeadCommitCommitter :
     public const val username: String = "github.event.head_commit.committer.username"
 }
 
-public object PushEventContextHeadCommit : ExpressionContext("github.event.head_commit") {
+public object PushEventHeadCommit {
     public const val id: String = "github.event.head_commit.id"
 
     public const val tree_id: String = "github.event.head_commit.tree_id"
@@ -40,9 +37,9 @@ public object PushEventContextHeadCommit : ExpressionContext("github.event.head_
 
     public const val url: String = "github.event.head_commit.url"
 
-    public val author: PushEventContextHeadCommitAuthor = PushEventContextHeadCommitAuthor
+    public val author: PushEventHeadCommitAuthor = PushEventHeadCommitAuthor
 
-    public val committer: PushEventContextHeadCommitCommitter = PushEventContextHeadCommitCommitter
+    public val committer: PushEventHeadCommitCommitter = PushEventHeadCommitCommitter
 
     public val added: List<String> = FakeList("github.event.head_commit.added")
 
@@ -51,7 +48,7 @@ public object PushEventContextHeadCommit : ExpressionContext("github.event.head_
     public val modified: List<String> = FakeList("github.event.head_commit.modified")
 }
 
-public object PushEventContextRepositoryOwner : ExpressionContext("github.event.repository.owner") {
+public object PushEventRepositoryOwner {
     public const val name: String = "github.event.repository.owner.name"
 
     public const val email: String = "github.event.repository.owner.email"
@@ -93,7 +90,7 @@ public object PushEventContextRepositoryOwner : ExpressionContext("github.event.
     public const val site_admin: String = "github.event.repository.owner.site_admin"
 }
 
-public object PushEventContextRepository : ExpressionContext("github.event.repository") {
+public object PushEventRepository {
     public const val id: String = "github.event.repository.id"
 
     public const val node_id: String = "github.event.repository.node_id"
@@ -104,7 +101,7 @@ public object PushEventContextRepository : ExpressionContext("github.event.repos
 
     public const val `private`: String = "github.event.repository.private"
 
-    public val owner: PushEventContextRepositoryOwner = PushEventContextRepositoryOwner
+    public val owner: PushEventRepositoryOwner = PushEventRepositoryOwner
 
     public const val html_url: String = "github.event.repository.html_url"
 
@@ -245,13 +242,13 @@ public object PushEventContextRepository : ExpressionContext("github.event.repos
     public const val master_branch: String = "github.event.repository.master_branch"
 }
 
-public object PushEventContextPusher : ExpressionContext("github.event.pusher") {
+public object PushEventPusher {
     public const val name: String = "github.event.pusher.name"
 
     public const val email: String = "github.event.pusher.email"
 }
 
-public object PushEventContextSender : ExpressionContext("github.event.sender") {
+public object PushEventSender {
     public const val login: String = "github.event.sender.login"
 
     public const val id: String = "github.event.sender.id"
@@ -289,7 +286,7 @@ public object PushEventContextSender : ExpressionContext("github.event.sender") 
     public const val site_admin: String = "github.event.sender.site_admin"
 }
 
-public object PushEventContext : ExpressionContext("github.event") {
+public object PushEvent {
     public const val ref: String = "github.event.ref"
 
     public const val before: String = "github.event.before"
@@ -308,11 +305,11 @@ public object PushEventContext : ExpressionContext("github.event") {
 
     public val commits: List<String> = FakeList("github.event.commits")
 
-    public val head_commit: PushEventContextHeadCommit = PushEventContextHeadCommit
+    public val head_commit: PushEventHeadCommit = PushEventHeadCommit
 
-    public val repository: PushEventContextRepository = PushEventContextRepository
+    public val repository: PushEventRepository = PushEventRepository
 
-    public val pusher: PushEventContextPusher = PushEventContextPusher
+    public val pusher: PushEventPusher = PushEventPusher
 
-    public val sender: PushEventContextSender = PushEventContextSender
+    public val sender: PushEventSender = PushEventSender
 }

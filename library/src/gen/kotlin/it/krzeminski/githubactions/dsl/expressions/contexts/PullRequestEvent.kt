@@ -3,14 +3,12 @@
 
 package it.krzeminski.githubactions.dsl.expressions.contexts
 
-import it.krzeminski.githubactions.dsl.expressions.ExpressionContext
 import it.krzeminski.githubactions.dsl.expressions.FakeList
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 
-public object PullRequestEventContextPullRequestUser :
-    ExpressionContext("github.event.pull_request.user") {
+public object PullRequestEventPullRequestUser {
     public const val login: String = "github.event.pull_request.user.login"
 
     public const val id: String = "github.event.pull_request.user.id"
@@ -49,8 +47,7 @@ public object PullRequestEventContextPullRequestUser :
     public const val site_admin: String = "github.event.pull_request.user.site_admin"
 }
 
-public object PullRequestEventContextPullRequestHeadUser :
-    ExpressionContext("github.event.pull_request.head.user") {
+public object PullRequestEventPullRequestHeadUser {
     public const val login: String = "github.event.pull_request.head.user.login"
 
     public const val id: String = "github.event.pull_request.head.user.id"
@@ -91,8 +88,7 @@ public object PullRequestEventContextPullRequestHeadUser :
     public const val site_admin: String = "github.event.pull_request.head.user.site_admin"
 }
 
-public object PullRequestEventContextPullRequestHeadRepoOwner :
-    ExpressionContext("github.event.pull_request.head.repo.owner") {
+public object PullRequestEventPullRequestHeadRepoOwner {
     public const val login: String = "github.event.pull_request.head.repo.owner.login"
 
     public const val id: String = "github.event.pull_request.head.repo.owner.id"
@@ -133,8 +129,7 @@ public object PullRequestEventContextPullRequestHeadRepoOwner :
     public const val site_admin: String = "github.event.pull_request.head.repo.owner.site_admin"
 }
 
-public object PullRequestEventContextPullRequestHeadRepo :
-    ExpressionContext("github.event.pull_request.head.repo") {
+public object PullRequestEventPullRequestHeadRepo {
     public const val id: String = "github.event.pull_request.head.repo.id"
 
     public const val node_id: String = "github.event.pull_request.head.repo.node_id"
@@ -145,8 +140,8 @@ public object PullRequestEventContextPullRequestHeadRepo :
 
     public const val `private`: String = "github.event.pull_request.head.repo.private"
 
-    public val owner: PullRequestEventContextPullRequestHeadRepoOwner =
-        PullRequestEventContextPullRequestHeadRepoOwner
+    public val owner: PullRequestEventPullRequestHeadRepoOwner =
+        PullRequestEventPullRequestHeadRepoOwner
 
     public const val html_url: String = "github.event.pull_request.head.repo.html_url"
 
@@ -299,23 +294,19 @@ public object PullRequestEventContextPullRequestHeadRepo :
         "github.event.pull_request.head.repo.delete_branch_on_merge"
 }
 
-public object PullRequestEventContextPullRequestHead :
-    ExpressionContext("github.event.pull_request.head") {
+public object PullRequestEventPullRequestHead {
     public const val label: String = "github.event.pull_request.head.label"
 
     public const val ref: String = "github.event.pull_request.head.ref"
 
     public const val sha: String = "github.event.pull_request.head.sha"
 
-    public val user: PullRequestEventContextPullRequestHeadUser =
-        PullRequestEventContextPullRequestHeadUser
+    public val user: PullRequestEventPullRequestHeadUser = PullRequestEventPullRequestHeadUser
 
-    public val repo: PullRequestEventContextPullRequestHeadRepo =
-        PullRequestEventContextPullRequestHeadRepo
+    public val repo: PullRequestEventPullRequestHeadRepo = PullRequestEventPullRequestHeadRepo
 }
 
-public object PullRequestEventContextPullRequestBaseUser :
-    ExpressionContext("github.event.pull_request.base.user") {
+public object PullRequestEventPullRequestBaseUser {
     public const val login: String = "github.event.pull_request.base.user.login"
 
     public const val id: String = "github.event.pull_request.base.user.id"
@@ -356,8 +347,7 @@ public object PullRequestEventContextPullRequestBaseUser :
     public const val site_admin: String = "github.event.pull_request.base.user.site_admin"
 }
 
-public object PullRequestEventContextPullRequestBaseRepoOwner :
-    ExpressionContext("github.event.pull_request.base.repo.owner") {
+public object PullRequestEventPullRequestBaseRepoOwner {
     public const val login: String = "github.event.pull_request.base.repo.owner.login"
 
     public const val id: String = "github.event.pull_request.base.repo.owner.id"
@@ -398,8 +388,7 @@ public object PullRequestEventContextPullRequestBaseRepoOwner :
     public const val site_admin: String = "github.event.pull_request.base.repo.owner.site_admin"
 }
 
-public object PullRequestEventContextPullRequestBaseRepo :
-    ExpressionContext("github.event.pull_request.base.repo") {
+public object PullRequestEventPullRequestBaseRepo {
     public const val id: String = "github.event.pull_request.base.repo.id"
 
     public const val node_id: String = "github.event.pull_request.base.repo.node_id"
@@ -410,8 +399,8 @@ public object PullRequestEventContextPullRequestBaseRepo :
 
     public const val `private`: String = "github.event.pull_request.base.repo.private"
 
-    public val owner: PullRequestEventContextPullRequestBaseRepoOwner =
-        PullRequestEventContextPullRequestBaseRepoOwner
+    public val owner: PullRequestEventPullRequestBaseRepoOwner =
+        PullRequestEventPullRequestBaseRepoOwner
 
     public const val html_url: String = "github.event.pull_request.base.repo.html_url"
 
@@ -564,89 +553,74 @@ public object PullRequestEventContextPullRequestBaseRepo :
         "github.event.pull_request.base.repo.delete_branch_on_merge"
 }
 
-public object PullRequestEventContextPullRequestBase :
-    ExpressionContext("github.event.pull_request.base") {
+public object PullRequestEventPullRequestBase {
     public const val label: String = "github.event.pull_request.base.label"
 
     public const val ref: String = "github.event.pull_request.base.ref"
 
     public const val sha: String = "github.event.pull_request.base.sha"
 
-    public val user: PullRequestEventContextPullRequestBaseUser =
-        PullRequestEventContextPullRequestBaseUser
+    public val user: PullRequestEventPullRequestBaseUser = PullRequestEventPullRequestBaseUser
 
-    public val repo: PullRequestEventContextPullRequestBaseRepo =
-        PullRequestEventContextPullRequestBaseRepo
+    public val repo: PullRequestEventPullRequestBaseRepo = PullRequestEventPullRequestBaseRepo
 }
 
-public object PullRequestEventContextPullRequestLinksSelf :
-    ExpressionContext("github.event.pull_request._links.self") {
+public object PullRequestEventPullRequestLinksSelf {
     public const val href: String = "github.event.pull_request._links.self.href"
 }
 
-public object PullRequestEventContextPullRequestLinksHtml :
-    ExpressionContext("github.event.pull_request._links.html") {
+public object PullRequestEventPullRequestLinksHtml {
     public const val href: String = "github.event.pull_request._links.html.href"
 }
 
-public object PullRequestEventContextPullRequestLinksIssue :
-    ExpressionContext("github.event.pull_request._links.issue") {
+public object PullRequestEventPullRequestLinksIssue {
     public const val href: String = "github.event.pull_request._links.issue.href"
 }
 
-public object PullRequestEventContextPullRequestLinksComments :
-    ExpressionContext("github.event.pull_request._links.comments") {
+public object PullRequestEventPullRequestLinksComments {
     public const val href: String = "github.event.pull_request._links.comments.href"
 }
 
-public object PullRequestEventContextPullRequestLinksReviewComments :
-    ExpressionContext("github.event.pull_request._links.review_comments") {
+public object PullRequestEventPullRequestLinksReviewComments {
     public const val href: String = "github.event.pull_request._links.review_comments.href"
 }
 
-public object PullRequestEventContextPullRequestLinksReviewComment :
-    ExpressionContext("github.event.pull_request._links.review_comment") {
+public object PullRequestEventPullRequestLinksReviewComment {
     public const val href: String = "github.event.pull_request._links.review_comment.href"
 }
 
-public object PullRequestEventContextPullRequestLinksCommits :
-    ExpressionContext("github.event.pull_request._links.commits") {
+public object PullRequestEventPullRequestLinksCommits {
     public const val href: String = "github.event.pull_request._links.commits.href"
 }
 
-public object PullRequestEventContextPullRequestLinksStatuses :
-    ExpressionContext("github.event.pull_request._links.statuses") {
+public object PullRequestEventPullRequestLinksStatuses {
     public const val href: String = "github.event.pull_request._links.statuses.href"
 }
 
-public object PullRequestEventContextPullRequestLinks :
-    ExpressionContext("github.event.pull_request._links") {
-    public val self: PullRequestEventContextPullRequestLinksSelf =
-        PullRequestEventContextPullRequestLinksSelf
+public object PullRequestEventPullRequestLinks {
+    public val self: PullRequestEventPullRequestLinksSelf = PullRequestEventPullRequestLinksSelf
 
-    public val html: PullRequestEventContextPullRequestLinksHtml =
-        PullRequestEventContextPullRequestLinksHtml
+    public val html: PullRequestEventPullRequestLinksHtml = PullRequestEventPullRequestLinksHtml
 
-    public val issue: PullRequestEventContextPullRequestLinksIssue =
-        PullRequestEventContextPullRequestLinksIssue
+    public val issue: PullRequestEventPullRequestLinksIssue = PullRequestEventPullRequestLinksIssue
 
-    public val comments: PullRequestEventContextPullRequestLinksComments =
-        PullRequestEventContextPullRequestLinksComments
+    public val comments: PullRequestEventPullRequestLinksComments =
+        PullRequestEventPullRequestLinksComments
 
-    public val review_comments: PullRequestEventContextPullRequestLinksReviewComments =
-        PullRequestEventContextPullRequestLinksReviewComments
+    public val review_comments: PullRequestEventPullRequestLinksReviewComments =
+        PullRequestEventPullRequestLinksReviewComments
 
-    public val review_comment: PullRequestEventContextPullRequestLinksReviewComment =
-        PullRequestEventContextPullRequestLinksReviewComment
+    public val review_comment: PullRequestEventPullRequestLinksReviewComment =
+        PullRequestEventPullRequestLinksReviewComment
 
-    public val commits: PullRequestEventContextPullRequestLinksCommits =
-        PullRequestEventContextPullRequestLinksCommits
+    public val commits: PullRequestEventPullRequestLinksCommits =
+        PullRequestEventPullRequestLinksCommits
 
-    public val statuses: PullRequestEventContextPullRequestLinksStatuses =
-        PullRequestEventContextPullRequestLinksStatuses
+    public val statuses: PullRequestEventPullRequestLinksStatuses =
+        PullRequestEventPullRequestLinksStatuses
 }
 
-public object PullRequestEventContextPullRequest : ExpressionContext("github.event.pull_request") {
+public object PullRequestEventPullRequest {
     public const val url: String = "github.event.pull_request.url"
 
     public const val id: String = "github.event.pull_request.id"
@@ -669,7 +643,7 @@ public object PullRequestEventContextPullRequest : ExpressionContext("github.eve
 
     public const val title: String = "github.event.pull_request.title"
 
-    public val user: PullRequestEventContextPullRequestUser = PullRequestEventContextPullRequestUser
+    public val user: PullRequestEventPullRequestUser = PullRequestEventPullRequestUser
 
     public const val body: String = "github.event.pull_request.body"
 
@@ -706,12 +680,11 @@ public object PullRequestEventContextPullRequest : ExpressionContext("github.eve
 
     public const val statuses_url: String = "github.event.pull_request.statuses_url"
 
-    public val head: PullRequestEventContextPullRequestHead = PullRequestEventContextPullRequestHead
+    public val head: PullRequestEventPullRequestHead = PullRequestEventPullRequestHead
 
-    public val base: PullRequestEventContextPullRequestBase = PullRequestEventContextPullRequestBase
+    public val base: PullRequestEventPullRequestBase = PullRequestEventPullRequestBase
 
-    public val _links: PullRequestEventContextPullRequestLinks =
-        PullRequestEventContextPullRequestLinks
+    public val _links: PullRequestEventPullRequestLinks = PullRequestEventPullRequestLinks
 
     public const val author_association: String = "github.event.pull_request.author_association"
 
@@ -742,8 +715,7 @@ public object PullRequestEventContextPullRequest : ExpressionContext("github.eve
     public const val changed_files: String = "github.event.pull_request.changed_files"
 }
 
-public object PullRequestEventContextRepositoryOwner :
-    ExpressionContext("github.event.repository.owner") {
+public object PullRequestEventRepositoryOwner {
     public const val login: String = "github.event.repository.owner.login"
 
     public const val id: String = "github.event.repository.owner.id"
@@ -781,7 +753,7 @@ public object PullRequestEventContextRepositoryOwner :
     public const val site_admin: String = "github.event.repository.owner.site_admin"
 }
 
-public object PullRequestEventContextRepository : ExpressionContext("github.event.repository") {
+public object PullRequestEventRepository {
     public const val id: String = "github.event.repository.id"
 
     public const val node_id: String = "github.event.repository.node_id"
@@ -792,7 +764,7 @@ public object PullRequestEventContextRepository : ExpressionContext("github.even
 
     public const val `private`: String = "github.event.repository.private"
 
-    public val owner: PullRequestEventContextRepositoryOwner = PullRequestEventContextRepositoryOwner
+    public val owner: PullRequestEventRepositoryOwner = PullRequestEventRepositoryOwner
 
     public const val html_url: String = "github.event.repository.html_url"
 
@@ -929,7 +901,7 @@ public object PullRequestEventContextRepository : ExpressionContext("github.even
     public const val default_branch: String = "github.event.repository.default_branch"
 }
 
-public object PullRequestEventContextSender : ExpressionContext("github.event.sender") {
+public object PullRequestEventSender {
     public const val login: String = "github.event.sender.login"
 
     public const val id: String = "github.event.sender.id"
@@ -967,14 +939,14 @@ public object PullRequestEventContextSender : ExpressionContext("github.event.se
     public const val site_admin: String = "github.event.sender.site_admin"
 }
 
-public object PullRequestEventContext : ExpressionContext("github.event") {
+public object PullRequestEvent {
     public const val action: String = "github.event.action"
 
     public const val number: String = "github.event.number"
 
-    public val pull_request: PullRequestEventContextPullRequest = PullRequestEventContextPullRequest
+    public val pull_request: PullRequestEventPullRequest = PullRequestEventPullRequest
 
-    public val repository: PullRequestEventContextRepository = PullRequestEventContextRepository
+    public val repository: PullRequestEventRepository = PullRequestEventRepository
 
-    public val sender: PullRequestEventContextSender = PullRequestEventContextSender
+    public val sender: PullRequestEventSender = PullRequestEventSender
 }

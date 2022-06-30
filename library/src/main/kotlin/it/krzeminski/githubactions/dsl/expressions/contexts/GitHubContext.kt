@@ -22,13 +22,13 @@ object GitHubContext : ExpressionContext("github") {
      * Feel free to add any payload you might need from that page
      * */
 
-    val eventWorkflowDispatch = WorkflowDispatchEventContext
+    val eventWorkflowDispatch = WorkflowDispatchEvent
 
-    val eventRelease = ReleaseEventContext
+    val eventRelease = ReleaseEvent
 
-    val eventPullRequest = PullRequestEventContext
+    val eventPullRequest = PullRequestEvent
 
-    val eventPush = PushEventContext
+    val eventPush = PushEvent
 
 /** Standard properties **/
     val token by propertyToExprPath
