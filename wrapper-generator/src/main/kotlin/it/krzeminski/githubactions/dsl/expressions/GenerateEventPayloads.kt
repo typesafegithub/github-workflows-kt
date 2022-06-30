@@ -44,7 +44,7 @@ private val EXPRESSIONS = "it.krzeminski.githubactions.dsl.expressions"
 private val PACKAGE = "$EXPRESSIONS.contexts"
 private val resourcesDir = File("wrapper-generator/src/main/resources/payloads")
 
-// TODO: doesn't work for library/src/main/kotlin ???
+// TODO: why doesn't it work for library/src/gen/kotlin ???
 private val kotlinGenDir = File("library/src/main/kotlin")
 
 // ClassNames
@@ -79,17 +79,20 @@ fun PayloadEventParams.generateTypesafePayload(): FileSpec {
 }
 
 fun PayloadEventParams.findAllObjects(element: JsonObject, path: String): Map<String, JsonObject> {
-    val result = mutableMapOf<String, JsonObject>()
-    for ((subpath, entry) in element) {
-        if (entry is JsonObject) {
-            result += findAllObjects(entry, "$path.$subpath")
-        } else if (entry is JsonArray) {
-            val firtSchild = entry.firstOrNull() as? JsonObject ?: continue
-            result += findAllObjects(firtSchild, "$path/$subpath")
-        }
-    }
-    result[path] = element
-    return result
+    val nothing = emptyMap<String, JsonObject>()
+
+    val result = element.flatMap { (subpath, entry)  ->
+        when (entry) {
+            is JsonObject -> findAllObjects(entry, "$path.$subpath")
+            is JsonArray -> {
+                (entry.firstOrNull() as? JsonObject)
+                    ?.let { firtSchild -> findAllObjects(firtSchild, "$path/$subpath") }
+                    ?: nothing
+            }
+            else -> nothing
+        }.toList()
+    }.toMap()
+    return result + Pair(path, element)
 }
 
 fun PayloadEventParams.generateObjectTypes(
@@ -125,17 +128,18 @@ fun PayloadEventParams.generateObjectType(
         .superclass(expressionContext)
         .addSuperclassConstructorParameter("%S", "github.$key")
 
-    value.forEach { child, element ->
-        val propertyName = when (child) {
-            "size" -> "length"
-            else -> child
-        }
-        val property = when (element) {
-            is JsonPrimitive ->
+    val properties = value.mapNotNull { (child, element) ->
+        when (element) {
+            is JsonPrimitive -> {
+                val propertyName = when (child) {
+                    "size" -> "length"
+                    else -> child
+                }
                 PropertySpec.builder(propertyName, String::class.asClassName())
                     .addModifiers(KModifier.CONST)
                     .initializer("%S", "github.$key.$child")
                     .build()
+            }
             is JsonObject ->
                 PropertySpec.builder(child, ClassName(packageName, payloadClassName("$key.$child", filename)))
                     .initializer("%L", payloadClassName("$key.$child", filename))
@@ -146,10 +150,11 @@ fun PayloadEventParams.generateObjectType(
                     .build()
             }
             else -> {
-                println("Warning: unhandled $child"); null
+                println("Warning: unhandled $child");
+                null
             }
         }
-        if (property != null) builder.addProperty(property)
     }
+    builder.addProperties(properties)
     return builder.build()
 }
