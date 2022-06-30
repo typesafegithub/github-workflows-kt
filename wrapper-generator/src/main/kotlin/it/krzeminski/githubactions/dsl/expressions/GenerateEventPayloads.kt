@@ -15,6 +15,10 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import java.io.File
 
+fun main() {
+    generateEventPayloads()
+    println("Remember to call ./gradlew ktlintFormat")
+}
 /*
  * Generate type-safe accessors for GitHub Event payloads
  * The payloads depend on the kind of the event: pull request, push, ...
@@ -44,8 +48,7 @@ private val EXPRESSIONS = "it.krzeminski.githubactions.dsl.expressions"
 private val PACKAGE = "$EXPRESSIONS.contexts"
 private val resourcesDir = File("wrapper-generator/src/main/resources/payloads")
 
-// TODO: why doesn't it work for library/src/gen/kotlin ???
-private val kotlinGenDir = File("library/src/main/kotlin")
+private val kotlinGenDir = File("library/src/gen/kotlin")
 
 // ClassNames
 private val expressionContext = ClassName(EXPRESSIONS, "ExpressionContext")
