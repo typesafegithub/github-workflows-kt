@@ -11,6 +11,7 @@ import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import java.io.File
@@ -76,7 +77,7 @@ fun PayloadEventParams.generateTypesafePayload(): FileSpec {
     println("Parsing ${jsonFile.canonicalPath}")
     val element: JsonObject = Json.parseToJsonElement(jsonFile.readText()) as JsonObject
     val objects: Map<String, JsonObject> = findAllObjects(element, "event")
-    val fileSpec = generateObjectTypes(objects, className, packageName = PACKAGE)
+    val fileSpec = generateObjectTypes(objects, className)
     return fileSpec
 }
 
@@ -97,19 +98,22 @@ fun PayloadEventParams.findAllObjects(element: JsonObject, path: String): Map<St
     return result + Pair(path, element)
 }
 
-fun PayloadEventParams.generateObjectTypes(
+fun generateObjectTypes(
     objects: Map<String, JsonObject>,
-    filename: String,
-    packageName: String
+    filename: String
 ): FileSpec {
-    val fileSpec = FileSpec.builder(packageName, filename)
+    val types: List<TypeSpec> = objects.map { (key, jsonObject) ->
+        jsonObject.generateObjectType(key, filename)
+    }
+    return FileSpec.builder(PACKAGE, filename)
         .addFileComment(fileComment)
         .addAnnotation(annotationFileSuppress)
+        .addTypes(types)
+        .build()
+}
 
-    for ((key, value) in objects) {
-        fileSpec.addType(generateObjectType(key, value, packageName, filename))
-    }
-    return fileSpec.build()
+fun FileSpec.Builder.addTypes(types: Iterable<TypeSpec>) = apply {
+    types.forEach { addType(it) }
 }
 
 fun payloadClassName(key: String, filename: String) =
@@ -118,42 +122,46 @@ fun payloadClassName(key: String, filename: String) =
         .replace(".", "_")
         .toPascalCase()
 
-fun PayloadEventParams.generateObjectType(
+fun JsonObject.generateObjectType(
     key: String,
-    value: JsonObject,
-    packageName: String,
     filename: String
 ): TypeSpec {
-    val builder = TypeSpec.objectBuilder(payloadClassName(key, filename))
     println("Generating class ${payloadClassName(key, filename)} : ExpressionContext(\"github.$key\")")
+    val properties = mapNotNull { it.generatePropertySpec(key, filename) }
+    return TypeSpec.objectBuilder(payloadClassName(key, filename))
+        .addProperties(properties)
+        .build()
+}
 
-    val properties = value.mapNotNull { (child, element) ->
-        when (element) {
-            is JsonPrimitive -> {
-                val propertyName = when (child) {
-                    "size" -> "length"
-                    else -> child
-                }
-                PropertySpec.builder(propertyName, String::class.asClassName())
-                    .addModifiers(KModifier.CONST)
-                    .initializer("%S", "github.$key.$child")
-                    .build()
-            }
-            is JsonObject ->
-                PropertySpec.builder(child, ClassName(packageName, payloadClassName("$key.$child", filename)))
-                    .initializer("%L", payloadClassName("$key.$child", filename))
-                    .build()
-            is JsonArray -> {
-                PropertySpec.builder(child, listOfStrings)
-                    .initializer("%T(%S)", fakeList, "github.$key.$child")
-                    .build()
-            }
-            else -> {
-                println("Warning: unhandled $child")
-                null
-            }
+fun Map.Entry<String, JsonElement>.generatePropertySpec(
+    key: String,
+    filename: String
+): PropertySpec? {
+    val (child, element) = this
+    val propertyName = when (child) {
+        "size" -> "length"
+        else -> child
+    }
+
+    return when (element) {
+        is JsonPrimitive -> {
+            PropertySpec.builder(propertyName, String::class.asClassName())
+                .addModifiers(KModifier.CONST)
+                .initializer("%S", "github.$key.$child")
+                .build()
+        }
+        is JsonObject ->
+            PropertySpec.builder(child, ClassName(PACKAGE, payloadClassName("$key.$child", filename)))
+                .initializer("%L", payloadClassName("$key.$child", filename))
+                .build()
+        is JsonArray -> {
+            PropertySpec.builder(child, listOfStrings)
+                .initializer("%T(%S)", fakeList, "github.$key.$child")
+                .build()
+        }
+        else -> {
+            println("Warning: unhandled $child")
+            null
         }
     }
-    builder.addProperties(properties)
-    return builder.build()
 }

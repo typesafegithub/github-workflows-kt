@@ -20,7 +20,6 @@ import java.nio.file.Paths
  *    ./gradlew :wrapper-generator:run
  */
 fun main() {
-    generateEventPayloads()
     checkDuplicateWrappers()
     checkWrappersOrder()
     println(wrappersToGenerate.suggestDeprecations())
@@ -30,7 +29,7 @@ fun main() {
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
     listOfWrappersInDocs.toFile().delete()
-
+    generateEventPayloads()
     generateWrappers()
     generateListOfWrappersForDocs(listOfWrappersInDocs)
 }
