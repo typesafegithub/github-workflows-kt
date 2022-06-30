@@ -75,4 +75,25 @@ class ContextsTest : FunSpec({
             } shouldBe expr("startsWith('Let\\'s dance', 'Let\\'s dance and be happy!')")
         }
     }
+
+    test("GitHub context") {
+        assertSoftly {
+            expr { github.token } shouldBe expr("github.token")
+            expr { github.job } shouldBe expr("github.job")
+            expr { github.sha } shouldBe expr("github.sha")
+            expr { github.repository_owner } shouldBe expr("github.repository_owner")
+            expr { github.repositoryUrl } shouldBe expr("github.repositoryUrl")
+            expr { github.action } shouldBe expr("github.action")
+        }
+    }
+
+    test("GitHub.event context") {
+        assertSoftly {
+            expr { github.eventPush.ref } shouldBe expr("github.event.ref")
+            expr { github.eventPullRequest.pull_request.number } shouldBe expr("github.event.pull_request.number")
+            expr { github.eventRelease.release.url } shouldBe expr("github.event.release.url")
+            expr { github.eventWorkflowDispatch.workflow } shouldBe expr("github.event.workflow")
+            expr { github.eventPush.repository.size } shouldBe expr("github.event.repository.size")
+        }
+    }
 })

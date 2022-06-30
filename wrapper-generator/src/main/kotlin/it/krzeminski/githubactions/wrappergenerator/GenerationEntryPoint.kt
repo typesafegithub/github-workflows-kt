@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator
 
+import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
@@ -28,7 +29,7 @@ fun main() {
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
     listOfWrappersInDocs.toFile().delete()
-
+    generateEventPayloads()
     generateWrappers()
     generateListOfWrappersForDocs(listOfWrappersInDocs)
 }
