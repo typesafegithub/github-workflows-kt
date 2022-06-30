@@ -126,6 +126,8 @@ public class SetupWslV1(
 
         public object OpenSUSELeap152 : SetupWslV1.Distribution("openSUSE-Leap-15.2")
 
+        public object Ubuntu2204 : SetupWslV1.Distribution("Ubuntu-22.04")
+
         public object Ubuntu2004 : SetupWslV1.Distribution("Ubuntu-20.04")
 
         public object Ubuntu1804 : SetupWslV1.Distribution("Ubuntu-18.04")
