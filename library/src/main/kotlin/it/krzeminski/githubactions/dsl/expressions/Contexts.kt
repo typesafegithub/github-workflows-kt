@@ -16,5 +16,5 @@ object Contexts : FunctionsContext() {
     val env = EnvContext
     val runner = RunnerContext
     val secrets = SecretsContext
-    val github: GitHubContext = GitHubContext
+    val github = GitHubContext
 }
