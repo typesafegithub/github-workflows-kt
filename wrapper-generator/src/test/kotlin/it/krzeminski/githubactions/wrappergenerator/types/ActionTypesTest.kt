@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.wrappergenerator.types
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
@@ -47,10 +48,12 @@ class ActionTypesTest : FunSpec({
 
         val request = WrapperRequest(
             ActionCoords("actions", "github-script", "v6"),
-            mapOf(
-                "debug" to BooleanTyping,
-                "previews" to ListOfTypings(","),
-                "result-encoding" to EnumTyping("Encoding", listOf("string", "json"))
+            TypingsSource.WrapperGenerator(
+                mapOf(
+                    "debug" to BooleanTyping,
+                    "previews" to ListOfTypings(","),
+                    "result-encoding" to EnumTyping("Encoding", listOf("string", "json"))
+                )
             )
         )
         val resources = File("src/test/resources")

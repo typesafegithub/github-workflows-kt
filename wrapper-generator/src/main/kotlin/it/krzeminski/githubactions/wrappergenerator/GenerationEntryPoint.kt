@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
@@ -36,8 +37,14 @@ fun main() {
 
 private fun generateWrappers() {
     deleteActionYamlCacheIfObsolete()
-    wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
+    wrappersToGenerate.forEach { (actionCoords, typingsSource) ->
         println("Generating ${actionCoords.prettyPrint}")
+
+        val inputTypings = when (typingsSource) {
+            is TypingsSource.WrapperGenerator -> typingsSource.inputTypings
+            // TODO add reading from action-types.yml
+        }
+
         val (code, path) = actionCoords.generateWrapper(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
@@ -47,7 +54,7 @@ private fun generateWrappers() {
     println(
         """Now reformat the code with the command:
         |./gradlew ktlintFormat
-    """.trimMargin()
+        """.trimMargin()
     )
 }
 
