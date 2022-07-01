@@ -7,12 +7,12 @@ theme:
   name: material
   features:
     - navigation.expand
-  palette: 
+  palette:
     - scheme: default
       toggle:
-        icon: material/toggle-switch-off-outline 
+        icon: material/toggle-switch-off-outline
         name: Switch to dark mode
-    - scheme: slate 
+    - scheme: slate
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
@@ -24,7 +24,11 @@ markdown_extensions:
   - admonition
 
 plugins:
-  - markdownextradata: {}
+  - markdownextradata:
+      jinja_options:
+        variable_start_string: '[['
+        variable_end_string: ']]'
+  - search
   - mkdocs-video
 
 nav:

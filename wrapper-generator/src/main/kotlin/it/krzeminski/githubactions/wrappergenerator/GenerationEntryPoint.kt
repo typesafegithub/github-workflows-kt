@@ -100,7 +100,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
 }
 
 private fun ActionCoords.toMarkdownLinkToKotlinCode() =
-    "$version: [`${buildActionClassName()}`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v{{ version }}/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
+    "$version: [`${buildActionClassName()}`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
 
 private fun ActionCoords.toMarkdownLinkGithub() =
     "[$name](https://github.com/$owner/$name)"

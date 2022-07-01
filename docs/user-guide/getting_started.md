@@ -26,7 +26,7 @@ names with your own.
    ```kotlin
    #!/usr/bin/env kotlin
 
-   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:{{ version }}")
+   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:[[ version ]]")
 
    import it.krzeminski.githubactions.actions.actions.CheckoutV2
    import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
