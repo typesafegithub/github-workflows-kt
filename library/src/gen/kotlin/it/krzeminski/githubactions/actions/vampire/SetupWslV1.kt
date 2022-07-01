@@ -22,8 +22,8 @@ import kotlin.collections.toTypedArray
 public class SetupWslV1(
     /**
      * The WSL distribution to install, update, or configure.
-     * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-20.04',
-     * 'Ubuntu-18.04', 'Ubuntu-16.04'
+     * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
+     * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
      */
     public val distribution: SetupWslV1.Distribution? = null,
     /**
