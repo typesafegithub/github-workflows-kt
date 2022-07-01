@@ -3,6 +3,7 @@ package it.krzeminski.githubactions.wrappergenerator.types
 import com.charleskorn.kaml.SingleLineStringStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlComment
+import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
@@ -86,6 +87,12 @@ fun ActionType.validateType() {
 fun WrapperRequest.toActionTypes(metadataFile: File): ActionTypes {
     check(metadataFile.canRead()) { "Can't read ${metadataFile.canonicalFile}" }
     val metadata: Metadata = myYaml.decodeFromString(metadataFile.readText())
+
+    val inputTypings = when (typingsSource) {
+        is TypingsSource.WrapperGenerator -> typingsSource.inputTypings
+        // TODO add reading from action-types.yml
+    }
+
     val inputs = metadata.inputs.mapValues { (key, _) ->
         inputTypings[key]?.type() ?: ActionType(ActionTypeEnum.String)
     }
