@@ -6,9 +6,9 @@ import it.krzeminski.githubactions.scriptmodel.YamlJob
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.runnerTypeBlockOf
-import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
+import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
 fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
@@ -43,12 +43,7 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
                     it.actionCoords.buildActionClassName() == coords.buildActionClassName()
                 } ?: availableWrappers.maxByOrNull { it.actionCoords.version }
                 val _customVersion = coords.version.takeIf { it != wrapper?.actionCoords?.version }
-                val inputTypings = wrapper?.typingsSource?.let {
-                    when (it) {
-                        is TypingsSource.WrapperGenerator -> it.inputTypings
-                        // TODO add reading from action-types.yml
-                    }
-                }
+                val inputTypings = wrapper?.provideTypes()
                 builder.add(step.generateAction(wrapper?.actionCoords ?: coords, inputTypings, _customVersion))
             } else {
                 builder.add(step.generateCommand())
