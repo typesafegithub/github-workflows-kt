@@ -91,5 +91,4 @@ See https://github.com/krzema12/github-actions-typing
 | [stefanzweifel/git-auto-commit-action@v4](stefanzweifel-git-auto-commit-action-v4.yml) | https://github.com/stefanzweifel/git-auto-commit-action|
 | [subosito/flutter-action@v2](subosito-flutter-action-v2.yml) | https://github.com/subosito/flutter-action|
 | [supercharge/mongodb-github-action@1.7.0](supercharge-mongodb-github-action-1.7.0.yml) | https://github.com/supercharge/mongodb-github-action|
-| [Vampire/setup-wsl@v1](Vampire-setup-wsl-v1.yml) | https://github.com/Vampire/setup-wsl|
 | [w9jds/firebase-action@v2.2.2](w9jds-firebase-action-v2.2.2.yml) | https://github.com/w9jds/firebase-action|
