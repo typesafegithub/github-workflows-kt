@@ -1028,32 +1028,6 @@ val wrappersToGenerate = listOf(
             )
         )
     ),
-    WrapperRequest(
-        ActionCoords("Vampire", "setup-wsl", "v1"),
-        TypingsSource.WrapperGenerator(
-            mapOf(
-                "distribution" to EnumTyping(
-                    "Distribution",
-                    listOf(
-                        "Alpine",
-                        "Debian",
-                        "kali-linux",
-                        "openSUSE-Leap-15.2",
-                        "Ubuntu-22.04",
-                        "Ubuntu-20.04",
-                        "Ubuntu-18.04",
-                        "Ubuntu-16.04"
-                    )
-                ),
-                "use-cache" to BooleanTyping,
-                "wsl-conf" to StringTyping,
-                "set-as-default" to BooleanTyping,
-                "update" to BooleanTyping,
-                "additional-packages" to ListOfTypings(" "),
-                "wsl-shell-user" to StringTyping,
-                "wsl-shell-command" to StringTyping,
-            )
-        )
-    ),
+    WrapperRequest(ActionCoords("Vampire", "setup-wsl", "v1"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("w9jds", "firebase-action", "v2.2.2")),
 )
