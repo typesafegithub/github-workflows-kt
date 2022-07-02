@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator.types
 
+import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYamlDir
 import it.krzeminski.githubactions.wrappergenerator.metadata.gitHubUrl
@@ -12,12 +13,15 @@ private val actionTypesDir = File("generated-action-types")
 fun main() {
     actionTypesDir.deleteRecursively()
     actionTypesDir.mkdir()
-    for (wrapper in wrappersToGenerate) {
-        wrapper.generateActionTypes()
-    }
+    val wrapperRequests = wrappersToGenerate
+        .filter { it.typingsSource is TypingsSource.WrapperGenerator }
+
+    wrapperRequests
+        .forEach { it.generateActionTypes() }
     println("All action types generated")
+
     val readme = actionTypesDir.resolve("README.md").canonicalFile
-    readme.writeText(generateReadme(wrappersToGenerate))
+    readme.writeText(generateReadme(wrapperRequests))
     println("See $readme")
 }
 
