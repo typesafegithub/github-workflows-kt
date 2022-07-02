@@ -2,7 +2,6 @@ package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
@@ -10,6 +9,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageNa
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
+import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -37,15 +37,10 @@ fun main() {
 
 private fun generateWrappers() {
     deleteActionYamlCacheIfObsolete()
-    wrappersToGenerate.forEach { (actionCoords, typingsSource) ->
-        println("Generating ${actionCoords.prettyPrint}")
-
-        val inputTypings = when (typingsSource) {
-            is TypingsSource.WrapperGenerator -> typingsSource.inputTypings
-            // TODO add reading from action-types.yml
-        }
-
-        val (code, path) = actionCoords.generateWrapper(inputTypings)
+    wrappersToGenerate.forEach { wrapperRequest ->
+        println("Generating ${wrapperRequest.actionCoords.prettyPrint}")
+        val inputTypings = wrapperRequest.provideTypes()
+        val (code, path) = wrapperRequest.actionCoords.generateWrapper(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
             writeText(code)
