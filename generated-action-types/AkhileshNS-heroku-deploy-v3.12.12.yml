@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   heroku_api_key:
     type: string
@@ -19,7 +18,7 @@ inputs:
     type: boolean
   docker_heroku_process_type:
     type: enum
-    allowedValues:
+    allowed-values:
     - web
     - worker
   docker_build_args:

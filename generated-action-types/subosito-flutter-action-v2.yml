@@ -1,11 +1,10 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   flutter-version:
     type: string
   channel:
     type: enum
-    allowedValues:
+    allowed-values:
     - stable
     - beta
     - master
@@ -19,6 +18,6 @@ inputs:
     type: string
   architecture:
     type: enum
-    allowedValues:
+    allowed-values:
     - x64
     - arm64

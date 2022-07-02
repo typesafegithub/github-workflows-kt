@@ -1,9 +1,8 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   command:
     type: enum
-    allowedValues:
+    allowed-values:
     - help
     - version
     - bench
@@ -41,7 +40,7 @@ inputs:
   args:
     type: list
     separator: ' '
-    listItem:
+    list-item:
       type: string
   use-cross:
     type: boolean

@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   token:
     type: string
@@ -8,7 +7,7 @@ inputs:
   add-paths:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   commit-message:
     type: string
@@ -35,22 +34,22 @@ inputs:
   labels:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   assignees:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   reviewers:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   team-reviewers:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   milestone:
     type: string

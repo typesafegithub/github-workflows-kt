@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   app-name:
     type: string
@@ -12,7 +11,7 @@ inputs:
   images:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   configuration-file:
     type: string

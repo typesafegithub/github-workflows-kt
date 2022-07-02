@@ -43,6 +43,7 @@ See https://github.com/krzema12/github-actions-typing
 | [aws-actions/amazon-ecs-deploy-task-definition@v1](aws-actions-amazon-ecs-deploy-task-definition-v1.yml) | https://github.com/aws-actions/amazon-ecs-deploy-task-definition|
 | [aws-actions/amazon-ecs-render-task-definition@v1](aws-actions-amazon-ecs-render-task-definition-v1.yml) | https://github.com/aws-actions/amazon-ecs-render-task-definition|
 | [aws-actions/configure-aws-credentials@v1](aws-actions-configure-aws-credentials-v1.yml) | https://github.com/aws-actions/configure-aws-credentials|
+| [axel-op/googlejavaformat-action@v3](axel-op-googlejavaformat-action-v3.yml) | https://github.com/axel-op/googlejavaformat-action|
 | [Azure/docker-login@v1](Azure-docker-login-v1.yml) | https://github.com/Azure/docker-login|
 | [Azure/login@v1](Azure-login-v1.yml) | https://github.com/Azure/login|
 | [Azure/webapps-deploy@v2](Azure-webapps-deploy-v2.yml) | https://github.com/Azure/webapps-deploy|

@@ -1,19 +1,18 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   token:
     type: string
   files:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   directory:
     type: string
   flags:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   commit_parent:
     type: string
@@ -22,7 +21,7 @@ inputs:
   env_vars:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   fail_ci_if_error:
     type: boolean
@@ -31,24 +30,24 @@ inputs:
   functionalities:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   gcov:
     type: boolean
   gcov_args:
     type: list
     separator: ' '
-    listItem:
+    list-item:
       type: string
   gcov_ignore:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   gcov_include:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   move_coverage_to_trash:
     type: boolean
@@ -66,7 +65,7 @@ inputs:
     type: string
   os:
     type: enum
-    allowedValues:
+    allowed-values:
     - alpine
     - linux
     - macos

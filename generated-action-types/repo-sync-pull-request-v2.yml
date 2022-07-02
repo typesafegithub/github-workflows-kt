@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   source_branch:
     type: string
@@ -14,17 +13,17 @@ inputs:
   pr_reviewer:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   pr_assignee:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   pr_label:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   pr_milestone:
     type: string

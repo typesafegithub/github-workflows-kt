@@ -1,17 +1,16 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   python-version:
     type: string
   cache:
     type: enum
-    allowedValues:
+    allowed-values:
     - pip
     - pipenv
     - poetry
   architecture:
     type: enum
-    allowedValues:
+    allowed-values:
     - x64
     - x86
   token:
@@ -19,7 +18,7 @@ inputs:
   cache-dependency-path:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:

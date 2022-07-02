@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   add:
     type: string
@@ -17,7 +16,7 @@ inputs:
     type: string
   default_author:
     type: enum
-    allowedValues:
+    allowed-values:
     - github_actor
     - user_info
     - github_actions
@@ -27,7 +26,7 @@ inputs:
     type: string
   pathspec_error_handling:
     type: enum
-    allowedValues:
+    allowed-values:
     - ignore
     - exitImmediately
     - exitAtEnd

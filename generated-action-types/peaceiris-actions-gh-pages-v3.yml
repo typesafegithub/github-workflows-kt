@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   deploy_key:
     type: string
@@ -42,5 +41,5 @@ inputs:
   exclude_assets:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string

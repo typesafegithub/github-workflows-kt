@@ -1,9 +1,8 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   status:
     type: enum
-    allowedValues:
+    allowed-values:
     - success
     - failure
     - cancelled
@@ -11,7 +10,7 @@ inputs:
   fields:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   custom_payload:
     type: string
@@ -20,9 +19,9 @@ inputs:
   if_mention:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: enum
-      allowedValues:
+      allowed-values:
       - success
       - failure
       - cancelled

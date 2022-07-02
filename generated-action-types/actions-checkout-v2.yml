@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   repository:
     type: string
@@ -21,7 +20,7 @@ inputs:
     type: boolean
   fetch-depth:
     type: integer
-    namedValues:
+    named-values:
       Infinite: 0
   lfs:
     type: boolean

@@ -60,7 +60,6 @@ class ActionTypesTest : FunSpec({
         val actionYml = resources.resolve("types/action.yml")
         val actionTypesYml = resources.resolve("types/action-types.yml")
             .readText()
-            .replace("TYPING_SPEC", TYPING_SPEC)
             .noWindowsEnding()
 
         request.toYaml(actionYml) shouldBe actionTypesYml

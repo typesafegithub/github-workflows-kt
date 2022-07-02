@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   min-wrapper-count:
     type: integer
@@ -8,5 +7,5 @@ inputs:
   allow-checksums:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string

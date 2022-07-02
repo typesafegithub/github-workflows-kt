@@ -1,10 +1,9 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   assignees:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   milestone:
     type: string
@@ -15,7 +14,7 @@ inputs:
   search_existing:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:

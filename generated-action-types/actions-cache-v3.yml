@@ -1,17 +1,16 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   path:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   key:
     type: string
   restore-keys:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   upload-chunk-size:
     type: integer
