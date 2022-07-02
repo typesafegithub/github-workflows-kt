@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   githubToken:
     type: string
@@ -12,5 +11,5 @@ inputs:
   ignorePaths:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string

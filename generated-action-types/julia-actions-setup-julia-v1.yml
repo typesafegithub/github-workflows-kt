@@ -1,11 +1,10 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   version:
     type: string
   arch:
     type: enum
-    allowedValues:
+    allowed-values:
     - x64
     - x86
     - aarch64

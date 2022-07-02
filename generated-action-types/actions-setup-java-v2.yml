@@ -1,11 +1,10 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   java-version:
     type: string
   distribution:
     type: enum
-    allowedValues:
+    allowed-values:
     - adopt
     - adopt-hotspot
     - adopt-openj9
@@ -15,7 +14,7 @@ inputs:
     - zulu
   java-package:
     type: enum
-    allowedValues:
+    allowed-values:
     - jdk
     - jre
     - jdk+fx
@@ -42,7 +41,7 @@ inputs:
     type: string
   cache:
     type: enum
-    allowedValues:
+    allowed-values:
     - maven
     - gradle
   job-status:

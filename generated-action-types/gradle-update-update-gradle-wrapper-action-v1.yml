@@ -1,22 +1,21 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   repo-token:
     type: string
   reviewers:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   team-reviewers:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   base-branch:
     type: string
@@ -27,15 +26,15 @@ inputs:
   paths:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   paths-ignore:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   release-channel:
     type: enum
-    allowedValues:
+    allowed-values:
     - stable
     - release-candidate

@@ -1,12 +1,11 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   install_url:
     type: string
   install_options:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   nix_path:
     type: string

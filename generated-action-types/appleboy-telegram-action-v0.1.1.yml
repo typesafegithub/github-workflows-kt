@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   to:
     type: string
@@ -31,7 +30,7 @@ inputs:
     type: boolean
   format:
     type: enum
-    allowedValues:
+    allowed-values:
     - markdown
     - html
   disable_web_page_preview:

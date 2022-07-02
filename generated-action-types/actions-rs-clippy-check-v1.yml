@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   token:
     type: string
@@ -8,7 +7,7 @@ inputs:
   args:
     type: list
     separator: ' '
-    listItem:
+    list-item:
       type: string
   use-cross:
     type: boolean

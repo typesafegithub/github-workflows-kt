@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: TYPING_SPEC
 inputs:
   script:
     type: string
@@ -12,11 +11,11 @@ inputs:
   previews:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   result-encoding:
     type: enum
-    allowedValues:
+    allowed-values:
     - string
     - json
 # Please check those outputs's description and set a proper type. 'string' is just set by default

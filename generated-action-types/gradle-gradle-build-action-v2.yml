@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   gradle-version:
     type: string
@@ -12,12 +11,12 @@ inputs:
   gradle-home-cache-includes:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   gradle-home-cache-excludes:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   arguments:
     type: string

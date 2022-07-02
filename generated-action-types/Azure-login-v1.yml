@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   creds:
     type: string
@@ -13,7 +12,7 @@ inputs:
     type: boolean
   environment:
     type: enum
-    allowedValues:
+    allowed-values:
     - azurecloud
     - azurestack
     - azureusgovernment

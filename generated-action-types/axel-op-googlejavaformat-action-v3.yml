@@ -1,14 +1,16 @@
 # See https://github.com/krzema12/github-actions-typing
 inputs:
-  mongodb-version:
+  args:
     type: string
-  mongodb-replica-set:
+  files:
     type: string
-  mongodb-port:
-    type: integer
-  mongodb-db:
+  files-excluded:
     type: string
-  mongodb-username:
+  skipCommit:
+    type: boolean
+  version:
     type: string
-  mongodb-password:
+  githubToken:
+    type: string
+  commitMessage:
     type: string

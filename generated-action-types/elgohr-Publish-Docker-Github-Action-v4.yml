@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   name:
     type: string
@@ -22,7 +21,7 @@ inputs:
   buildargs:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   buildoptions:
     type: string
@@ -31,7 +30,7 @@ inputs:
   tags:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   tag_names:
     type: boolean

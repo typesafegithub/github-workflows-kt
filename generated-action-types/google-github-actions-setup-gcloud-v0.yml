@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   version:
     type: string
@@ -12,9 +11,9 @@ inputs:
   install_components:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: enum
-      allowedValues:
+      allowed-values:
       - alpha
       - anthos-auth
       - appctl

@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   repo-token:
     type: string
@@ -17,17 +16,17 @@ inputs:
     type: string
   days-before-pr-stale:
     type: integer
-    namedValues:
+    named-values:
       Never: -1
   days-before-close:
     type: integer
   days-before-issue-close:
     type: integer
-    namedValues:
+    named-values:
       Never: -1
   days-before-pr-close:
     type: integer
-    namedValues:
+    named-values:
       Never: -1
   stale-issue-label:
     type: string
@@ -36,7 +35,7 @@ inputs:
   exempt-issue-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   stale-pr-label:
     type: string
@@ -45,22 +44,22 @@ inputs:
   exempt-pr-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-milestones:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-issue-milestones:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-pr-milestones:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-all-milestones:
     type: boolean
@@ -71,32 +70,32 @@ inputs:
   only-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   any-of-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   any-of-issue-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   any-of-pr-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   only-issue-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   only-pr-labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   operations-per-run:
     type: integer
@@ -117,17 +116,17 @@ inputs:
   exempt-assignees:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-issue-assignees:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-pr-assignees:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   exempt-all-assignees:
     type: boolean
@@ -142,12 +141,12 @@ inputs:
   labels-to-add-when-unstale:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   labels-to-remove-when-unstale:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   ignore-updates:
     type: boolean

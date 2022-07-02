@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   ssh-key:
     type: string
@@ -18,7 +17,7 @@ inputs:
   clean-exclude:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   dry-run:
     type: boolean

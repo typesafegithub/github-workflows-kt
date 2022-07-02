@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   version:
     type: string
@@ -8,7 +7,7 @@ inputs:
   driver-opts:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   buildkitd-flags:
     type: string

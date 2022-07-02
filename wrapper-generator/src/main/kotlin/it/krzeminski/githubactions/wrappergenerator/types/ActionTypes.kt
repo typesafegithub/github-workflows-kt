@@ -20,13 +20,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import java.io.File
 
-// See https://github.com/krzema12/github-actions-typing
-const val TYPING_SPEC = "krzema12/github-actions-typing@v0.3"
-
 @Serializable
 data class ActionTypes(
     @YamlComment("See https://github.com/krzema12/github-actions-typing")
-    val typingSpec: String,
     val inputs: Map<String, ActionType> = emptyMap(),
     @YamlComment("Please check those outputs's description and set a proper type. 'string' is just set by default")
     val outputs: Map<String, ActionType> = emptyMap(),
@@ -35,9 +31,12 @@ data class ActionTypes(
 @Serializable
 data class ActionType(
     val type: ActionTypeEnum,
+    @SerialName("named-values")
     val namedValues: Map<String, Int> = emptyMap(),
     val separator: String = "",
+    @SerialName("allowed-values")
     val allowedValues: List<String> = emptyList(),
+    @SerialName("list-item")
     val listItem: ActionType? = null,
 ) {
     init { validateType() }
@@ -100,7 +99,7 @@ fun WrapperRequest.toActionTypes(metadataFile: File): ActionTypes {
         key to ActionType(ActionTypeEnum.String)
     }.toMap()
 
-    return ActionTypes(TYPING_SPEC, inputs, outputs)
+    return ActionTypes(inputs, outputs)
 }
 
 fun WrapperRequest.toYaml(metadataFile: File): String {

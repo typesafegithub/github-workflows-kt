@@ -1,13 +1,13 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   distribution:
     type: enum
-    allowedValues:
+    allowed-values:
     - Alpine
     - Debian
     - kali-linux
     - openSUSE-Leap-15.2
+    - Ubuntu-22.04
     - Ubuntu-20.04
     - Ubuntu-18.04
     - Ubuntu-16.04
@@ -22,7 +22,7 @@ inputs:
   additional-packages:
     type: list
     separator: ' '
-    listItem:
+    list-item:
       type: string
   wsl-shell-user:
     type: string

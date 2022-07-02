@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   project_id:
     type: string
@@ -17,13 +16,13 @@ inputs:
     type: boolean
   token_format:
     type: enum
-    allowedValues:
+    allowed-values:
     - access_token
     - id_token
   delegates:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   cleanup_credentials:
     type: boolean
@@ -32,7 +31,7 @@ inputs:
   access_token_scopes:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   access_token_subject:
     type: string

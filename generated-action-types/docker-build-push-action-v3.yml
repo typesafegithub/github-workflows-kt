@@ -1,37 +1,36 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   add-hosts:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   allow:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   build-args:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   build-contexts:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   builder:
     type: string
   cache-from:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   cache-to:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   cgroup-parent:
     type: string
@@ -42,7 +41,7 @@ inputs:
   labels:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   load:
     type: boolean
@@ -53,12 +52,12 @@ inputs:
   outputs:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   platforms:
     type: list
     separator: ','
-    listItem:
+    list-item:
       type: string
   pull:
     type: boolean
@@ -67,24 +66,24 @@ inputs:
   secrets:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   secret-files:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   shm-size:
     type: string
   ssh:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   tags:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   target:
     type: string

@@ -1,5 +1,4 @@
 # See https://github.com/krzema12/github-actions-typing
-typingSpec: krzema12/github-actions-typing@v0.3
 inputs:
   server:
     type: string
@@ -11,7 +10,7 @@ inputs:
     type: integer
   protocol:
     type: enum
-    allowedValues:
+    allowed-values:
     - ftp
     - ftps
     - ftps-legacy
@@ -28,16 +27,16 @@ inputs:
   exclude:
     type: list
     separator: "\n"
-    listItem:
+    list-item:
       type: string
   log-level:
     type: enum
-    allowedValues:
+    allowed-values:
     - minimal
     - standard
     - verbose
   security:
     type: enum
-    allowedValues:
+    allowed-values:
     - strict
     - loose
