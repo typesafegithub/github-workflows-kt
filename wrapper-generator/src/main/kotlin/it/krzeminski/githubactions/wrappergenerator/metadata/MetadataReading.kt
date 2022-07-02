@@ -71,7 +71,7 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
     return myYaml.decodeFromString(metadataYaml)
 }
 
-private fun fetchUri(uri: URI) = uri.toURL().readText()
+fun fetchUri(uri: URI) = uri.toURL().readText()
 
 val myYaml = Yaml(
     configuration = Yaml.default.configuration.copy(
