@@ -531,8 +531,8 @@ val wrappersToGenerate = listOf(
             )
         )
     ),
-    WrapperRequest(ActionCoords("Borales", "actions-yarn", "v2.3.0", deprecatedByVersion = "v3.0.0")),
-    WrapperRequest(ActionCoords("Borales", "actions-yarn", "v3.0.0")),
+    WrapperRequest(ActionCoords("Borales", "actions-yarn", "v2.3.0", deprecatedByVersion = "v3")),
+    WrapperRequest(ActionCoords("Borales", "actions-yarn", "v3")),
     WrapperRequest(
         ActionCoords("cachix", "install-nix-action", "v17"),
         TypingsSource.WrapperGenerator(
