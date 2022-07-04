@@ -39,7 +39,7 @@ public class ActionsYarnV3(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("Borales", "actions-yarn", _customVersion ?: "v3.0.0") {
+) : Action("Borales", "actions-yarn", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
