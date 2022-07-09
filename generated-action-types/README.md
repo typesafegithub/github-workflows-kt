@@ -74,9 +74,6 @@ See https://github.com/krzema12/github-actions-typing
 | [JasonEtco/create-an-issue@v2](JasonEtco-create-an-issue-v2.yml) | https://github.com/JasonEtco/create-an-issue|
 | [julia-actions/setup-julia@v1](julia-actions-setup-julia-v1.yml) | https://github.com/julia-actions/setup-julia|
 | [krzema12/github-actions-typing@v0](krzema12-github-actions-typing-v0.yml) | https://github.com/krzema12/github-actions-typing|
-| [madhead/check-gradle-version@v1](madhead-check-gradle-version-v1.yml) | https://github.com/madhead/check-gradle-version|
-| [madhead/read-java-properties@latest](madhead-read-java-properties-latest.yml) | https://github.com/madhead/read-java-properties|
-| [madhead/semver-utils@v2](madhead-semver-utils-v2.yml) | https://github.com/madhead/semver-utils|
 | [microsoft/setup-msbuild@v1](microsoft-setup-msbuild-v1.yml) | https://github.com/microsoft/setup-msbuild|
 | [nobrayner/discord-webhook@v1](nobrayner-discord-webhook-v1.yml) | https://github.com/nobrayner/discord-webhook|
 | [peaceiris/actions-gh-pages@v3](peaceiris-actions-gh-pages-v3.yml) | https://github.com/peaceiris/actions-gh-pages|
