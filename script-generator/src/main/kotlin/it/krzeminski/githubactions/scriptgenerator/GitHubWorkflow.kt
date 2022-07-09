@@ -12,7 +12,7 @@ import java.nio.file.Paths
 
 fun YamlWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
     .addImport("$PACKAGE.yaml", "toYaml", "writeToFile")
-    .addImport("$PACKAGE.dsl", "expr")
+    .addImport("$PACKAGE.dsl.expressions", "expr")
     .addProperty(workFlowProperty(filenameFromUrl))
     .build()
 
