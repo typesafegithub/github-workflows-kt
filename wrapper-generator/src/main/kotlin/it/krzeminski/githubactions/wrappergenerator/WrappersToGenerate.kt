@@ -887,12 +887,9 @@ val wrappersToGenerate = listOf(
             )
         )
     ),
-    WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1")),
-    WrapperRequest(
-        ActionCoords("madhead", "read-java-properties", "latest"),
-        TypingsSource.WrapperGenerator(mapOf("all" to BooleanTyping))
-    ),
-    WrapperRequest(ActionCoords("madhead", "semver-utils", "v2")),
+    WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1"), TypingsSource.ActionTypes),
+    WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), TypingsSource.ActionTypes),
+    WrapperRequest(ActionCoords("madhead", "semver-utils", "v2"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("microsoft", "setup-msbuild", "v1")),
 
     WrapperRequest(
