@@ -89,6 +89,16 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
         appendLine(workflow.on.triggersToYaml().prependIndent("  "))
         appendLine()
 
+        if (defaults != null) {
+            appendLine("defaults:")
+            if (defaults.run.shell != null || defaults.run.workingDirectory != null) {
+                appendLine("  run:")
+                defaults.run.shell?.let { appendLine("    shell: $it") }
+                defaults.run.workingDirectory?.let { appendLine("    working-directory: \"$it\"") }
+                appendLine()
+            }
+        }
+
         if (concurrency != null) {
             appendLine("concurrency:")
             appendLine("  group: ${concurrency.group}")

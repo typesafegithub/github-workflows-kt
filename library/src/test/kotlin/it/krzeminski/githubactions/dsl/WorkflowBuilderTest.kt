@@ -4,7 +4,11 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
+import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.Defaults
+import it.krzeminski.githubactions.domain.Run
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expressions.expr
@@ -147,7 +151,7 @@ class WorkflowBuilderTest : FunSpec({
             ) {
                 job(
                     id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
+                    runsOn = UbuntuLatest,
                 ) {
                     run(
                         name = "Hello world!",
@@ -181,6 +185,35 @@ class WorkflowBuilderTest : FunSpec({
                   cancel-in-progress: true
 
             """.trimIndent()
+        }
+
+        test("defaults defined with no parameters") {
+            val exception = shouldThrow<IllegalArgumentException> {
+                workflow(
+                    name = "Test Workflow",
+                    on = listOf(Push()),
+                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                    defaults = Defaults(run = Run())
+                ) {
+                    job(
+                        id = "test_job",
+                        runsOn = UbuntuLatest,
+                        concurrency = Concurrency("job_staging_environment"),
+                    ) {
+                        val addAndCommit = uses(AddAndCommitV9())
+
+                        uses(
+                            name = "Some step consuming other step's output",
+                            action = CheckoutV3(
+                                repository = expr(addAndCommit.id),
+                                ref = expr(addAndCommit.outputs.commitSha),
+                                token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                            )
+                        )
+                    }
+                }
+            }
+            exception.message shouldBe "At least one of shell or working-directory must be defined!"
         }
     }
 })

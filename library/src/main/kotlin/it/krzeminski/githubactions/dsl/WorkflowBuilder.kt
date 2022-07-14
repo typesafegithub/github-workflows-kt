@@ -1,9 +1,6 @@
 package it.krzeminski.githubactions.dsl
 
-import it.krzeminski.githubactions.domain.Concurrency
-import it.krzeminski.githubactions.domain.Job
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.Workflow
+import it.krzeminski.githubactions.domain.*
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import java.nio.file.Path
 
@@ -15,6 +12,7 @@ class WorkflowBuilder(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFileName: String,
+    defaults: Defaults? = null,
     concurrency: Concurrency? = null,
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, CustomValue>,
@@ -26,6 +24,7 @@ class WorkflowBuilder(
         sourceFile = sourceFile,
         targetFileName = targetFileName,
         jobs = jobs,
+        defaults = defaults,
         concurrency = concurrency,
         _customArguments = _customArguments,
     )
@@ -87,6 +86,7 @@ fun workflow(
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
     targetFileName: String = sourceFile.fileName.toString().substringBeforeLast(".main.kts") + ".yaml",
+    defaults: Defaults? = null,
     concurrency: Concurrency? = null,
     _customArguments: Map<String, CustomValue> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
@@ -95,12 +95,17 @@ fun workflow(
         "There are no triggers defined!"
     }
 
+    defaults?.let {
+        defaults.run.requireAtLeastOneInput()
+    }
+
     val workflowBuilder = WorkflowBuilder(
         name = name,
         on = on,
         env = env,
         sourceFile = sourceFile,
         targetFileName = targetFileName,
+        defaults = defaults,
         concurrency = concurrency,
         _customArguments = _customArguments,
     )
@@ -112,6 +117,12 @@ fun workflow(
     workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
     return workflowBuilder.build()
+}
+
+private fun Run.requireAtLeastOneInput() {
+    require(this.shell != null || this.workingDirectory != null) {
+        "At least one of shell or working-directory must be defined!"
+    }
 }
 
 private fun List<Job>.requireUniqueJobIds() {

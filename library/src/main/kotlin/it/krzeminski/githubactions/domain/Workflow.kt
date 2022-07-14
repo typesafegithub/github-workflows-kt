@@ -11,6 +11,7 @@ data class Workflow(
     val env: LinkedHashMap<String, String>,
     val sourceFile: Path,
     val targetFileName: String,
+    val defaults: Defaults? = null,
     val concurrency: Concurrency? = null,
     val jobs: List<Job>,
     override val _customArguments: Map<String, CustomValue> = mapOf(),
