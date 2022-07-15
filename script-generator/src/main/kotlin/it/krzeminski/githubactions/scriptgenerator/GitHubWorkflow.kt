@@ -5,6 +5,8 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.Defaults
+import it.krzeminski.githubactions.domain.Run
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
@@ -28,6 +30,7 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
                     .add("on = %L", on.toKotlin())
                     .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get(".github/workflows/$filename.main.kts"))
                     .add(workflowEnv())
+                    .add(defaultsOf(defaults))
                     .add(concurrencyOf(concurrency))
                     .unindent()
                     .add(") {\n")
@@ -38,6 +41,17 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
             }
         )
         .build()
+}
+
+fun defaultsOf(defaults: Defaults?): CodeBlock = when (defaults) {
+    null -> CodeBlock.EMPTY
+    else -> CodeBlock.of(
+        "defaults = %T(run = %T(shell = %S, workingDirectory = %S),\n",
+        Defaults::class.asClassName(),
+        Run::class.asClassName(),
+        defaults.run.shell,
+        defaults.run.workingDirectory,
+    )
 }
 
 fun concurrencyOf(concurrency: Concurrency?): CodeBlock = when (concurrency) {

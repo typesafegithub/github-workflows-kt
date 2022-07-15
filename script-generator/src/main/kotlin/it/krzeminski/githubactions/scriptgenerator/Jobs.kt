@@ -19,6 +19,7 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
         if (job.name != null) builder.add("name = %S,\n", job.name)
         builder.add(runnerTypeBlockOf(job.runsOn))
         builder.add(concurrencyOf(job.concurrency))
+        builder.add(defaultsOf(job.defaults))
         builder.add(
             job.env.joinToCode(
                 ifEmpty = CodeBlock.EMPTY,
