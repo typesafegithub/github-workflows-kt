@@ -736,6 +736,181 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    test("toYaml() - job with defaults, shell provided") {
+        val actualYaml = workflow(
+            name = "Test Workflow",
+            on = listOf(Push()),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                defaults = Defaults(run = Run(shell = "bash")),
+                concurrency = Concurrency("job_staging_environment"),
+            ) {
+                val addAndCommit = uses(AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    )
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test Workflow
+
+            on:
+              push:
+
+            jobs:
+              "test_job":
+                defaults:
+                  run:
+                    shell: bash
+                runs-on: "ubuntu-latest"
+                concurrency:
+                  group: job_staging_environment
+                  cancel-in-progress: false
+                steps:
+                  - id: step-0
+                    uses: EndBug/add-and-commit@v9
+                  - id: step-1
+                    name: Some step consuming other step's output
+                    uses: actions/checkout@v3
+                    with:
+                      repository: ${'$'}{{ step-0 }}
+                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - job with defaults, working-directory provided") {
+        val actualYaml = workflow(
+            name = "Test Workflow",
+            on = listOf(Push()),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                defaults = Defaults(run = Run(workingDirectory = "some/directory")),
+                concurrency = Concurrency("job_staging_environment"),
+            ) {
+                val addAndCommit = uses(AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    )
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test Workflow
+
+            on:
+              push:
+
+            jobs:
+              "test_job":
+                defaults:
+                  run:
+                    working-directory: "some/directory"
+                runs-on: "ubuntu-latest"
+                concurrency:
+                  group: job_staging_environment
+                  cancel-in-progress: false
+                steps:
+                  - id: step-0
+                    uses: EndBug/add-and-commit@v9
+                  - id: step-1
+                    name: Some step consuming other step's output
+                    uses: actions/checkout@v3
+                    with:
+                      repository: ${'$'}{{ step-0 }}
+                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - job with defaults, working-directory and shell provided") {
+        val actualYaml = workflow(
+            name = "Test Workflow",
+            on = listOf(Push()),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                concurrency = Concurrency("job_staging_environment"),
+                defaults = Defaults(run = Run(shell= "bash", workingDirectory = "some/directory"))
+            ) {
+                val addAndCommit = uses(AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    )
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test Workflow
+
+            on:
+              push:
+
+            jobs:
+              "test_job":
+                defaults:
+                  run:
+                    shell: bash
+                    working-directory: "some/directory"
+                runs-on: "ubuntu-latest"
+                concurrency:
+                  group: job_staging_environment
+                  cancel-in-progress: false
+                steps:
+                  - id: step-0
+                    uses: EndBug/add-and-commit@v9
+                  - id: step-1
+                    name: Some step consuming other step's output
+                    uses: actions/checkout@v3
+                    with:
+                      repository: ${'$'}{{ step-0 }}
+                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+
+        """.trimIndent()
+    }
+
     test("toYaml() - with concurrency, default behavior") {
         // when
         val actualYaml = workflow(

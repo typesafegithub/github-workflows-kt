@@ -25,6 +25,14 @@ private fun Job.toYaml() = buildString {
     job.name?.let {
         appendLine("  name: $it")
     }
+    job.defaults?.let { defaults ->
+        appendLine("  defaults:")
+        if (defaults.run.shell != null || defaults.run.workingDirectory != null) {
+            appendLine("    run:")
+            defaults.run.shell?.let { appendLine("      shell: $it") }
+            defaults.run.workingDirectory?.let { appendLine("      working-directory: \"$it\"") }
+        }
+    }
     appendLine("  runs-on: \"${runsOn.toYaml()}\"")
     if (concurrency != null) {
         appendLine("  concurrency:")

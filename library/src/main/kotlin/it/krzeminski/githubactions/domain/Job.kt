@@ -8,6 +8,7 @@ data class Job(
     val id: String,
     val name: String? = null,
     val runsOn: RunnerType,
+    val defaults: Defaults? = null,
     val steps: List<Step>,
     val needs: List<Job> = emptyList(),
     val env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -24,6 +25,9 @@ data class Job(
             regex = Regex("[a-zA-Z_][a-zA-Z0-9_-]*"),
             url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job"
         )
+        defaults?.let {
+            defaults.run.requireAtLeastOneInput()
+        }
         timeoutMinutes?.let { value ->
             require(value > 0) { "timeout should be positive" }
         }

@@ -34,6 +34,7 @@ class WorkflowBuilder(
         id: String,
         name: String? = null,
         runsOn: RunnerType,
+        defaults: Defaults? = null,
         needs: List<Job> = emptyList(),
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -47,6 +48,7 @@ class WorkflowBuilder(
             id = id,
             name = name,
             runsOn = runsOn,
+            defaults = defaults,
             needs = needs,
             condition = condition,
             env = env,
@@ -117,12 +119,6 @@ fun workflow(
     workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
     return workflowBuilder.build()
-}
-
-private fun Run.requireAtLeastOneInput() {
-    require(this.shell != null || this.workingDirectory != null) {
-        "At least one of shell or working-directory must be defined!"
-    }
 }
 
 private fun List<Job>.requireUniqueJobIds() {

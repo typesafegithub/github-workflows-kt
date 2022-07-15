@@ -2,12 +2,7 @@ package it.krzeminski.githubactions.dsl
 
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.ActionWithOutputs
-import it.krzeminski.githubactions.domain.CommandStep
-import it.krzeminski.githubactions.domain.Concurrency
-import it.krzeminski.githubactions.domain.ExternalActionStep
-import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
-import it.krzeminski.githubactions.domain.Job
-import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.*
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
@@ -15,6 +10,7 @@ class JobBuilder(
     val id: String,
     val name: String?,
     val runsOn: RunnerType,
+    val defaults: Defaults? = null,
     val needs: List<Job>,
     val env: LinkedHashMap<String, String>,
     val condition: String?,
@@ -27,6 +23,7 @@ class JobBuilder(
         id = id,
         name = name,
         runsOn = runsOn,
+        defaults = defaults,
         needs = needs,
         condition = condition,
         env = env,

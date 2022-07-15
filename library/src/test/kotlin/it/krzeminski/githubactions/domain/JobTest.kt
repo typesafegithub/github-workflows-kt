@@ -17,7 +17,7 @@ class JobTest : FunSpec({
             "job()"
         ).forAll { jobId ->
             shouldThrowAny {
-                Job(jobId, null, RunnerType.UbuntuLatest, emptyList())
+                Job(jobId, null, RunnerType.UbuntuLatest, null, emptyList())
             }.shouldHaveMessage(
                 """
                 Invalid field Job(id="$jobId") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
@@ -36,7 +36,7 @@ class JobTest : FunSpec({
             "JOB_JOB",
             "_--4",
         ).forAll { jobName ->
-            Job(jobName, null, RunnerType.UbuntuLatest, emptyList())
+            Job(jobName, null, RunnerType.UbuntuLatest, null, emptyList())
         }
     }
 
@@ -55,5 +55,22 @@ class JobTest : FunSpec({
                 ),
             )
         } shouldHaveMessage "timeout should be positive"
+    }
+
+    test("should reject defaults with no run parameters") {
+        shouldThrowAny {
+            Job(
+                id = "Job-1",
+                runsOn = RunnerType.UbuntuLatest,
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+                defaults = Defaults(run = Run()),
+            )
+        } shouldHaveMessage "Run should at least have one of shell or working-directory defined!"
     }
 })

@@ -213,7 +213,7 @@ class WorkflowBuilderTest : FunSpec({
                     }
                 }
             }
-            exception.message shouldBe "At least one of shell or working-directory must be defined!"
+            exception.message shouldBe "Run should at least have one of shell or working-directory defined!"
         }
     }
 })
