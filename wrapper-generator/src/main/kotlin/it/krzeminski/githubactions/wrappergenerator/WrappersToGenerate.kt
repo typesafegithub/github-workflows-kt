@@ -949,7 +949,7 @@ val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.2.0")),
 
     WrapperRequest(
-        ActionCoords("ReactiveCircus", "android-emulator-runner", "v2.25.0")
+        ActionCoords("ReactiveCircus", "android-emulator-runner", "v2")
     ),
 
     WrapperRequest(
