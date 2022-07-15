@@ -109,7 +109,7 @@ Click on a version to see the wrapper's code.
 * peterjgrainger
     * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.2.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
 * ReactiveCircus
-    * [android-emulator-runner](https://github.com/ReactiveCircus/android-emulator-runner) - v2.25.0: [`AndroidEmulatorRunnerV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reactivecircus/AndroidEmulatorRunnerV2.kt)
+    * [android-emulator-runner](https://github.com/ReactiveCircus/android-emulator-runner) - v2: [`AndroidEmulatorRunnerV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reactivecircus/AndroidEmulatorRunnerV2.kt)
 * repo-sync
     * [pull-request](https://github.com/repo-sync/pull-request) - v2: [`PullRequestV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reposync/PullRequestV2.kt)
 * ruby

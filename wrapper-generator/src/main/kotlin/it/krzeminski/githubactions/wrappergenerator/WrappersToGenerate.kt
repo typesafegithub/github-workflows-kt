@@ -949,7 +949,37 @@ val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("peterjgrainger", "action-create-branch", "v2.2.0")),
 
     WrapperRequest(
-        ActionCoords("ReactiveCircus", "android-emulator-runner", "v2")
+        ActionCoords("ReactiveCircus", "android-emulator-runner", "v2"),
+        TypingsSource.WrapperGenerator(
+            mapOf(
+                "api-level" to IntegerTyping,
+                "target" to EnumTyping("Target", listOf(
+                    "default", "google_apis", "google_apis_playstore", "aosp_atd",
+                    "google_atd", "android-wear", "android-wear-cn", "android-tv",
+                    "google-tv"
+                )),
+                "arch" to EnumTyping("Arch", listOf("x86", "x86_64", "arm64-v8a")),
+                "profile" to StringTyping,
+                "cores" to IntegerTyping,
+                "ram-size" to StringTyping,
+                "heap-size" to StringTyping,
+                "sdcard-path-or-size" to StringTyping,
+                "disk-size" to StringTyping,
+                "avd-name" to StringTyping,
+                "force-avd-creation" to BooleanTyping,
+                "emulator-options" to StringTyping,
+                "disable-animations" to BooleanTyping,
+                "disable-spellchecker" to BooleanTyping,
+                "disable-linux-hw-accel" to BooleanTyping,
+                "enable-hw-keyboard" to BooleanTyping,
+                "emulator-build" to StringTyping,
+                "working-directory" to StringTyping,
+                "ndk" to StringTyping,
+                "cmake" to StringTyping,
+                "channel" to EnumTyping("Channel", listOf("stable", "beta", "dev", "canary")),
+                "script" to StringTyping,
+            )
+        )
     ),
 
     WrapperRequest(

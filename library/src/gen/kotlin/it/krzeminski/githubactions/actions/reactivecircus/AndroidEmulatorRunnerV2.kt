@@ -4,6 +4,8 @@
 package it.krzeminski.githubactions.actions.reactivecircus
 
 import it.krzeminski.githubactions.actions.Action
+import kotlin.Boolean
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -22,16 +24,16 @@ public class AndroidEmulatorRunnerV2(
      * API level of the platform and system image - e.g. 23 for Android Marshmallow, 29 for Android
      * 10
      */
-    public val apiLevel: String,
+    public val apiLevel: Int,
     /**
      * target of the system image - default, google_apis, google_apis_playstore, aosp_atd,
      * google_atd, android-wear, android-wear-cn, android-tv or google-tv
      */
-    public val target: String? = null,
+    public val target: AndroidEmulatorRunnerV2.Target? = null,
     /**
      * CPU architecture of the system image - x86, x86_64 or arm64-v8a
      */
-    public val arch: String? = null,
+    public val arch: AndroidEmulatorRunnerV2.Arch? = null,
     /**
      * hardware profile used for creating the AVD - e.g. `Nexus 6`
      */
@@ -39,7 +41,7 @@ public class AndroidEmulatorRunnerV2(
     /**
      * the number of cores to use for the emulator
      */
-    public val cores: String? = null,
+    public val cores: Int? = null,
     /**
      * size of RAM to use for this AVD, in KB or MB, denoted with K or M. - e.g. `2048M`
      */
@@ -65,7 +67,7 @@ public class AndroidEmulatorRunnerV2(
      * whether to force create the AVD by overwriting an existing AVD with the same name as
      * `avd-name` - `true` or `false`
      */
-    public val forceAvdCreation: String? = null,
+    public val forceAvdCreation: Boolean? = null,
     /**
      * command-line options used when launching the emulator - e.g.
      * `-no-window -no-snapshot -camera-back emulated`
@@ -74,19 +76,19 @@ public class AndroidEmulatorRunnerV2(
     /**
      * whether to disable animations - true or false
      */
-    public val disableAnimations: String? = null,
+    public val disableAnimations: Boolean? = null,
     /**
      * whether to disable spellchecker - `true` or `false`
      */
-    public val disableSpellchecker: String? = null,
+    public val disableSpellchecker: Boolean? = null,
     /**
      * whether to disable hardware acceleration on Linux machines - `true` or `false` or `auto`
      */
-    public val disableLinuxHwAccel: String? = null,
+    public val disableLinuxHwAccel: Boolean? = null,
     /**
      * whether to enable hardware keyboard - `true` or `false`.
      */
-    public val enableHwKeyboard: String? = null,
+    public val enableHwKeyboard: Boolean? = null,
     /**
      * build number of a specific version of the emulator binary to use - e.g. `6061023` for
      * emulator v29.3.0.0
@@ -108,7 +110,7 @@ public class AndroidEmulatorRunnerV2(
     /**
      * Channel to download the SDK components from - `stable`, `beta`, `dev`, `canary`
      */
-    public val channel: String? = null,
+    public val channel: AndroidEmulatorRunnerV2.Channel? = null,
     /**
      * custom script to run - e.g. `./gradlew connectedCheck`
      */
@@ -122,33 +124,89 @@ public class AndroidEmulatorRunnerV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2.25.0") {
+) : Action("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
-            "api-level" to apiLevel,
-            target?.let { "target" to it },
-            arch?.let { "arch" to it },
+            "api-level" to apiLevel.toString(),
+            target?.let { "target" to it.stringValue },
+            arch?.let { "arch" to it.stringValue },
             profile?.let { "profile" to it },
-            cores?.let { "cores" to it },
+            cores?.let { "cores" to it.toString() },
             ramSize?.let { "ram-size" to it },
             heapSize?.let { "heap-size" to it },
             sdcardPathOrSize?.let { "sdcard-path-or-size" to it },
             diskSize?.let { "disk-size" to it },
             avdName?.let { "avd-name" to it },
-            forceAvdCreation?.let { "force-avd-creation" to it },
+            forceAvdCreation?.let { "force-avd-creation" to it.toString() },
             emulatorOptions?.let { "emulator-options" to it },
-            disableAnimations?.let { "disable-animations" to it },
-            disableSpellchecker?.let { "disable-spellchecker" to it },
-            disableLinuxHwAccel?.let { "disable-linux-hw-accel" to it },
-            enableHwKeyboard?.let { "enable-hw-keyboard" to it },
+            disableAnimations?.let { "disable-animations" to it.toString() },
+            disableSpellchecker?.let { "disable-spellchecker" to it.toString() },
+            disableLinuxHwAccel?.let { "disable-linux-hw-accel" to it.toString() },
+            enableHwKeyboard?.let { "enable-hw-keyboard" to it.toString() },
             emulatorBuild?.let { "emulator-build" to it },
             workingDirectory?.let { "working-directory" to it },
             ndk?.let { "ndk" to it },
             cmake?.let { "cmake" to it },
-            channel?.let { "channel" to it },
+            channel?.let { "channel" to it.stringValue },
             "script" to script,
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public sealed class Target(
+        public val stringValue: String,
+    ) {
+        public object Default : AndroidEmulatorRunnerV2.Target("default")
+
+        public object GoogleApis : AndroidEmulatorRunnerV2.Target("google_apis")
+
+        public object GoogleApisPlaystore : AndroidEmulatorRunnerV2.Target("google_apis_playstore")
+
+        public object AospAtd : AndroidEmulatorRunnerV2.Target("aosp_atd")
+
+        public object GoogleAtd : AndroidEmulatorRunnerV2.Target("google_atd")
+
+        public object AndroidWear : AndroidEmulatorRunnerV2.Target("android-wear")
+
+        public object AndroidWearCn : AndroidEmulatorRunnerV2.Target("android-wear-cn")
+
+        public object AndroidTv : AndroidEmulatorRunnerV2.Target("android-tv")
+
+        public object GoogleTv : AndroidEmulatorRunnerV2.Target("google-tv")
+
+        public class Custom(
+            customStringValue: String,
+        ) : AndroidEmulatorRunnerV2.Target(customStringValue)
+    }
+
+    public sealed class Arch(
+        public val stringValue: String,
+    ) {
+        public object X86 : AndroidEmulatorRunnerV2.Arch("x86")
+
+        public object X8664 : AndroidEmulatorRunnerV2.Arch("x86_64")
+
+        public object Arm64V8a : AndroidEmulatorRunnerV2.Arch("arm64-v8a")
+
+        public class Custom(
+            customStringValue: String,
+        ) : AndroidEmulatorRunnerV2.Arch(customStringValue)
+    }
+
+    public sealed class Channel(
+        public val stringValue: String,
+    ) {
+        public object Stable : AndroidEmulatorRunnerV2.Channel("stable")
+
+        public object Beta : AndroidEmulatorRunnerV2.Channel("beta")
+
+        public object Dev : AndroidEmulatorRunnerV2.Channel("dev")
+
+        public object Canary : AndroidEmulatorRunnerV2.Channel("canary")
+
+        public class Custom(
+            customStringValue: String,
+        ) : AndroidEmulatorRunnerV2.Channel(customStringValue)
+    }
 }
