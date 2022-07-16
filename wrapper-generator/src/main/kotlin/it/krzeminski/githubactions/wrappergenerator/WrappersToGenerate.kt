@@ -953,11 +953,14 @@ val wrappersToGenerate = listOf(
         TypingsSource.WrapperGenerator(
             mapOf(
                 "api-level" to IntegerTyping,
-                "target" to EnumTyping("Target", listOf(
-                    "default", "google_apis", "google_apis_playstore", "aosp_atd",
-                    "google_atd", "android-wear", "android-wear-cn", "android-tv",
-                    "google-tv"
-                )),
+                "target" to EnumTyping(
+                    "Target",
+                    listOf(
+                        "default", "google_apis", "google_apis_playstore", "aosp_atd",
+                        "google_atd", "android-wear", "android-wear-cn", "android-tv",
+                        "google-tv"
+                    )
+                ),
                 "arch" to EnumTyping("Arch", listOf("x86", "x86_64", "arm64-v8a")),
                 "profile" to StringTyping,
                 "cores" to IntegerTyping,
