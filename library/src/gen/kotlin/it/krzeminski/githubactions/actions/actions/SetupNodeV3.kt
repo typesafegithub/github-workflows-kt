@@ -30,7 +30,8 @@ public class SetupNodeV3(
      */
     public val nodeVersion: String? = null,
     /**
-     * File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version.
+     * File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version,
+     * .tool-versions.
      */
     public val nodeVersionFile: String? = null,
     /**
@@ -118,6 +119,11 @@ public class SetupNodeV3(
          * A boolean value to indicate if a cache was hit.
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
+        /**
+         * The installed node version.
+         */
+        public val nodeVersion: String = "steps.$stepId.outputs.node-version"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
