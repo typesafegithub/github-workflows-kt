@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -48,6 +49,10 @@ public class SetupPythonV4(
      */
     public val cacheDependencyPath: List<String>? = null,
     /**
+     * Set this option if you want the action to update environment variables.
+     */
+    public val updateEnvironment: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -66,6 +71,7 @@ public class SetupPythonV4(
             architecture?.let { "architecture" to it.stringValue },
             token?.let { "token" to it },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
+            updateEnvironment?.let { "update-environment" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

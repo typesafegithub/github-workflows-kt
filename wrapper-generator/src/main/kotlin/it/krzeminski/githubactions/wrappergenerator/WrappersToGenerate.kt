@@ -284,6 +284,7 @@ val wrappersToGenerate = listOf(
                 "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
                 "architecture" to EnumTyping("Architecture", listOf("x64", "x86")),
                 "cache-dependency-path" to ListOfTypings("\\n"),
+                "update-environment" to BooleanTyping,
             )
         )
     ),
