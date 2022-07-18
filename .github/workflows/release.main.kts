@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.20.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.22.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
@@ -8,7 +8,7 @@ import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.writeToFile
 
