@@ -41,6 +41,7 @@ class JobBuilder(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, CustomValue> = mapOf(),
     ): CommandStep = run(
@@ -48,6 +49,7 @@ class JobBuilder(
         command = command,
         env = env,
         condition = condition,
+        continueOnError = continueOnError,
         _customArguments = _customArguments,
     )
 
@@ -56,6 +58,7 @@ class JobBuilder(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, CustomValue> = mapOf(),
     ): CommandStep {
@@ -65,6 +68,7 @@ class JobBuilder(
             command = command,
             env = env,
             condition = condition,
+            continueOnError = continueOnError,
             _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
@@ -75,6 +79,7 @@ class JobBuilder(
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStep = uses(
@@ -82,6 +87,7 @@ class JobBuilder(
         action = action,
         env = env,
         condition = condition,
+        continueOnError = continueOnError,
         _customArguments = _customArguments,
     )
 
@@ -90,6 +96,7 @@ class JobBuilder(
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStep {
@@ -99,6 +106,7 @@ class JobBuilder(
             action = action,
             env = env,
             condition = condition,
+            continueOnError = continueOnError,
             _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
@@ -109,6 +117,7 @@ class JobBuilder(
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStepWithOutputs<T> = uses(
@@ -116,6 +125,7 @@ class JobBuilder(
         action = action,
         env = env,
         condition = condition,
+        continueOnError = continueOnError,
         _customArguments = _customArguments,
     )
 
@@ -124,6 +134,7 @@ class JobBuilder(
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
+        continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, CustomValue> = mapOf(),
     ): ExternalActionStepWithOutputs<T> {
@@ -134,6 +145,7 @@ class JobBuilder(
             action = action,
             env = env,
             condition = condition,
+            continueOnError = continueOnError,
             outputs = action.buildOutputObject(stepId),
             _customArguments = _customArguments,
         )

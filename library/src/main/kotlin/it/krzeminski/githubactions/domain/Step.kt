@@ -9,6 +9,7 @@ sealed class Step(
     open val id: String,
     open val env: LinkedHashMap<String, String> = linkedMapOf(),
     open val condition: String? = null,
+    open val continueOnError: Boolean? = null,
     override val _customArguments: Map<String, CustomValue> = emptyMap(),
 ) : HasCustomArguments
 
@@ -22,24 +23,29 @@ data class CommandStep(
     val command: String,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
+    override val continueOnError: Boolean? = null,
     override val _customArguments: Map<String, CustomValue> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
+    continueOnError = continueOnError,
     env = env,
     _customArguments = _customArguments,
 )
 
+@Suppress("LongParameterList")
 open class ExternalActionStep(
     override val id: String,
     open val name: String? = null,
     open val action: Action,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
+    override val continueOnError: Boolean? = null,
     override val _customArguments: Map<String, CustomValue> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
+    continueOnError = continueOnError,
     env = env,
     _customArguments = _customArguments,
 )
@@ -50,6 +56,7 @@ data class ExternalActionStepWithOutputs<T>(
     override val action: ActionWithOutputs<T>,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
+    override val continueOnError: Boolean? = null,
     override val outputs: T,
     override val _customArguments: Map<String, CustomValue> = emptyMap(),
 ) : ExternalActionStep(
@@ -57,6 +64,7 @@ data class ExternalActionStepWithOutputs<T>(
     action = action,
     id = id,
     condition = condition,
+    continueOnError = continueOnError,
     env = env,
     _customArguments = _customArguments,
 ),
