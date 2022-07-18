@@ -880,14 +880,7 @@ val wrappersToGenerate = listOf(
             )
         ),
     ),
-    WrapperRequest(
-        ActionCoords("krzema12", "github-actions-typing", "v0"),
-        TypingsSource.WrapperGenerator(
-            mapOf(
-                "verbose" to BooleanTyping,
-            )
-        )
-    ),
+    WrapperRequest(ActionCoords("krzema12", "github-actions-typing", "v0"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("madhead", "semver-utils", "v2"), TypingsSource.ActionTypes),
