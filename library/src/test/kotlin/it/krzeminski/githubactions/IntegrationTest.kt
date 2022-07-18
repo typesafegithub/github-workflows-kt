@@ -397,7 +397,7 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("toYaml() - environment variables") {
+    test("toYaml() - environment variables and continueOnError") {
         // when
         val actualYaml = workflow(
             name = "Test workflow",
@@ -436,6 +436,7 @@ class IntegrationTest : FunSpec({
                             hello! uses
                         """.trimIndent()
                     ),
+                    continueOnError = true,
                 )
 
                 run(
@@ -449,6 +450,7 @@ class IntegrationTest : FunSpec({
                             hello! run
                         """.trimIndent()
                     ),
+                    continueOnError = true,
                 )
             }
         }.toYaml(addConsistencyCheck = false)
@@ -484,6 +486,7 @@ class IntegrationTest : FunSpec({
                 steps:
                   - id: step-0
                     name: Check out
+                    continue-on-error: true
                     uses: actions/checkout@v3
                     env:
                       SIMPLE_VAR: simple-value-uses
@@ -499,6 +502,7 @@ class IntegrationTest : FunSpec({
                         hey,
                         hi,
                         hello! run
+                    continue-on-error: true
                     run: echo 'hello!'
 
         """.trimIndent()

@@ -21,6 +21,9 @@ private fun ExternalActionStep.toYaml(): String = buildString {
     name?.let {
         appendLine("  name: $it")
     }
+    continueOnError?.let {
+        appendLine("  continue-on-error: $it")
+    }
     appendLine("  uses: ${action.fullName}")
 
     val allArguments = action.toYamlArguments()
@@ -52,6 +55,10 @@ private fun CommandStep.toYaml() = buildString {
     if (this@toYaml.env.isNotEmpty()) {
         appendLine("  env:")
         appendLine(this@toYaml.env.toYaml().prependIndent("    "))
+    }
+
+    continueOnError?.let {
+        appendLine("  continue-on-error: $it")
     }
 
     customArgumentsToYaml().takeIf { it.isNotBlank() }

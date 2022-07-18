@@ -162,6 +162,26 @@ class StepsToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
+        it("renders with 'continue on error'") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    command = "echo 'test!'",
+                    continueOnError = true,
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  continue-on-error: true
+                             |  run: echo 'test!'
+            """.trimMargin()
+        }
+
         it("renders with custom arguments") {
             // given
             val steps = listOf(
@@ -349,6 +369,26 @@ class StepsToYamlTest : DescribeSpec({
                              |    path: |
                              |      path1
                              |      path2
+            """.trimMargin()
+        }
+
+        it("renders with 'continue on error'") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    continueOnError = true,
+                    action = CheckoutV3(),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  continue-on-error: true
+                             |  uses: actions/checkout@v3
             """.trimMargin()
         }
 
