@@ -78,6 +78,10 @@ public class BuildPushActionV3(
      */
     public val noCache: Boolean? = null,
     /**
+     * Do not cache specified stages
+     */
+    public val noCacheFilters: List<String>? = null,
+    /**
      * List of output destinations (format: type=local,dest=path)
      */
     public val outputs: List<String>? = null,
@@ -156,6 +160,7 @@ public class BuildPushActionV3(
             load?.let { "load" to it.toString() },
             network?.let { "network" to it },
             noCache?.let { "no-cache" to it.toString() },
+            noCacheFilters?.let { "no-cache-filters" to it.joinToString(",") },
             outputs?.let { "outputs" to it.joinToString(",") },
             platforms?.let { "platforms" to it.joinToString(",") },
             pull?.let { "pull" to it.toString() },

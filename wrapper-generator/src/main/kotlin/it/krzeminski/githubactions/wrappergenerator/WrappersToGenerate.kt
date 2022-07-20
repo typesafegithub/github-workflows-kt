@@ -623,6 +623,7 @@ val wrappersToGenerate = listOf(
                 "labels" to ListOfTypings(","),
                 "load" to BooleanTyping,
                 "no-cache" to BooleanTyping,
+                "no-cache-filters" to ListOfTypings(","),
                 "outputs" to ListOfTypings(","),
                 "platforms" to ListOfTypings(","),
                 "pull" to BooleanTyping,
