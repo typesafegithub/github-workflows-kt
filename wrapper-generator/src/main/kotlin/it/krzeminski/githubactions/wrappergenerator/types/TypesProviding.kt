@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator.types
 
+import com.charleskorn.kaml.Yaml
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
@@ -53,7 +54,7 @@ private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetch
     val cacheFile = actionTypesYamlDir.resolve("$owner-$name-$version.yml")
     if (cacheFile.canRead()) {
         println("  ... types from cache: $cacheFile")
-        return myYaml.decodeFromString(cacheFile.readText())
+        return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
     }
 
     val list = listOf(actionTypesYmlUrl, actionTypesYamlUrl, actionTypesYmlNoVUrl, actionTypesYamlNoVUrl)
@@ -68,7 +69,7 @@ private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetch
 
     cacheFile.parentFile.mkdirs()
     cacheFile.writeText(typesMetadataYaml)
-    return myYaml.decodeFromString(typesMetadataYaml)
+    return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
 
 private fun ActionTypes.toTypesMap(): Map<String, Typing> {
@@ -100,4 +101,11 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             items = allowedValues,
             typeName = fieldName.toPascalCase(),
         )
+    }
+
+private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(text: String, default: T): T =
+    if (text.isNotBlank()) {
+        decodeFromString(text)
+    } else {
+        default
     }
