@@ -36,16 +36,16 @@ class CustomArgumentsToYamlTest : DescribeSpec({
             val asYaml = customArguments.customArgumentsToYaml()
 
             asYaml shouldBe """
-              |  some-string: hello world!
-              |  some-list-of-integers:
-              |    - '1'
-              |    - '2'
-              |    - '3'
-              |  some-list-of-strings:
-              |    - 'foo'
-              |    - 'bar'
-              |    - 'baz'
-            """.trimMargin()
+                 some-string: hello world!
+                 some-list-of-integers:
+                   - '1'
+                   - '2'
+                   - '3'
+                 some-list-of-strings:
+                   - 'foo'
+                   - 'bar'
+                   - 'baz'
+            """.trimIndent()
         }
 
         it("works for objects with basic values") {
@@ -60,10 +60,10 @@ class CustomArgumentsToYamlTest : DescribeSpec({
             val asYaml = customArguments.customArgumentsToYaml()
 
             asYaml shouldBe """
-              |  some-object:
-              |    foo: 1
-              |    bar: 2
-            """.trimMargin()
+                some-object:
+                  foo: 1
+                  bar: 2
+            """.trimIndent()
         }
     }
 })
