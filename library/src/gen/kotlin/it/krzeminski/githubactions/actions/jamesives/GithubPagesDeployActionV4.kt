@@ -104,6 +104,11 @@ public class GithubPagesDeployActionV4(
      */
     public val workspace: String? = null,
     /**
+     * Add a tag to the commit, this can be used like so: 'v0.1'. Only works when 'dry-run' is not
+     * used.
+     */
+    public val tag: String? = null,
+    /**
      * This option can be used if you'd prefer to have a single commit on the deployment branch
      * instead of maintaining the full history.
      */
@@ -142,6 +147,7 @@ public class GithubPagesDeployActionV4(
             gitConfigEmail?.let { "git-config-email" to it },
             repositoryName?.let { "repository-name" to it },
             workspace?.let { "workspace" to it },
+            tag?.let { "tag" to it },
             singleCommit?.let { "single-commit" to it.toString() },
             silent?.let { "silent" to it.toString() },
             *_customInputs.toList().toTypedArray(),
