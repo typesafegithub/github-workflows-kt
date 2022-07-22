@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
 @GithubActionsDsl
@@ -17,7 +18,7 @@ class WorkflowBuilder(
     targetFileName: String,
     concurrency: Concurrency? = null,
     jobs: List<Job> = emptyList(),
-    _customArguments: Map<String, CustomValue>,
+    _customArguments: Map<String, @Contextual Any>,
 ) {
     internal var workflow = Workflow(
         name = name,
@@ -39,7 +40,7 @@ class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
         block: JobBuilder.() -> Unit,
@@ -88,7 +89,7 @@ fun workflow(
     sourceFile: Path,
     targetFileName: String = sourceFile.fileName.toString().substringBeforeLast(".main.kts") + ".yaml",
     concurrency: Concurrency? = null,
-    _customArguments: Map<String, CustomValue> = mapOf(),
+    _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
     require(on.isNotEmpty()) {

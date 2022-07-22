@@ -39,7 +39,6 @@ import it.krzeminski.githubactions.domain.triggers.Watch
 import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.scriptmodel.ScheduleValue
 import it.krzeminski.githubactions.scriptmodel.YamlTrigger
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflowTriggers
@@ -106,7 +105,7 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
                 .add("\n").indent()
                 .add("_customArguments = %M(\n", Members.mapOf)
                 .indent()
-                .add("%S to %T", "types", ListCustomValue::class.asClassName())
+                .add("%S to %T", "types", Any::class.asClassName())
                 .add(types.joinToCode(separator = ", ", transform = { CodeBlock.of("%S", it) }))
                 .unindent()
                 .add("),\n")

@@ -6,7 +6,6 @@ import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
@@ -43,7 +42,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
         id = "generate-wrappers",
         runsOn = RunnerType.UbuntuLatest,
         _customArguments = mapOf(
-        "needs" to ListCustomValue("check_yaml_consistency"),
+        "needs" to listOf("check_yaml_consistency"),
         )
       ) {
         uses(

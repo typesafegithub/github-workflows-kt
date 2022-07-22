@@ -8,7 +8,6 @@ import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
@@ -47,7 +46,7 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         id = "update-gradle-wrapper",
         runsOn = RunnerType.UbuntuLatest,
         _customArguments = mapOf(
-        "needs" to ListCustomValue("check_yaml_consistency"),
+        "needs" to listOf("check_yaml_consistency"),
         )
       ) {
         uses(

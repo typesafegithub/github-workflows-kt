@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
@@ -14,7 +14,7 @@ data class Push(
     val paths: List<String>? = null,
     @SerialName("paths-ignore")
     val pathsIgnore: List<String>? = null,
-    override val _customArguments: Map<String, CustomValue> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
 
     init {
