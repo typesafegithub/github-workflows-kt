@@ -6,7 +6,6 @@ import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Release
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
@@ -16,7 +15,7 @@ public val workflowNodejsPackage: Workflow = workflow(
       on = listOf(
         Release(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created")
+            "types" to listOf("created")
           ),
         ),
         ),

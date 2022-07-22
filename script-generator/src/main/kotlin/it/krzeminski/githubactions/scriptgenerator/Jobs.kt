@@ -1,7 +1,6 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.CodeBlock
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.scriptmodel.YamlJob
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
@@ -65,7 +64,7 @@ private fun YamlJob.customArguments(): CodeBlock {
         postfix = ")",
         transform = { key, list ->
             list.joinToCode(
-                prefix = CodeBlock.of("%S to %T(", key, ListCustomValue::class),
+                prefix = CodeBlock.of("%S to listOf(", key),
                 separator = ", ",
                 postfix = "),\n",
                 newLineAtEnd = false,

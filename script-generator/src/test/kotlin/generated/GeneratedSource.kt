@@ -13,7 +13,6 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Choice
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.`file`.Paths
@@ -86,7 +85,7 @@ public val workflowGenerated: Workflow = workflow(
         ),
 
         _customArguments = mapOf(
-        "needs" to ListCustomValue("check_yaml_consistency"),
+        "needs" to listOf("check_yaml_consistency"),
         )
       ) {
         uses(

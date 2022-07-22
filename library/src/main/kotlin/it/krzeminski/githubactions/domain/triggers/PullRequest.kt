@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import it.krzeminski.githubactions.dsl.CustomValue
 import it.krzeminski.githubactions.internal.CaseEnumSerializer
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
@@ -12,7 +12,7 @@ data class PullRequest(
     val branchesIgnore: List<String>? = null,
     val paths: List<String>? = null,
     val pathsIgnore: List<String>? = null,
-    override val _customArguments: Map<String, CustomValue> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
 
     init {

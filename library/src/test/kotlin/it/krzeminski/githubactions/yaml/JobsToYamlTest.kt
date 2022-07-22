@@ -7,8 +7,6 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
-import it.krzeminski.githubactions.dsl.BooleanCustomValue
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.dsl.expressions.expr
 
 class JobsToYamlTest : DescribeSpec({
@@ -274,8 +272,8 @@ class JobsToYamlTest : DescribeSpec({
                 id = "Job-1",
                 runsOn = RunnerType.UbuntuLatest,
                 _customArguments = mapOf(
-                    "distribute-job" to BooleanCustomValue(true),
-                    "servers" to ListCustomValue("server-1", "server-2")
+                    "distribute-job" to true,
+                    "servers" to listOf("server-1", "server-2")
                 ),
                 steps = listOf(
                     CommandStep(
@@ -299,8 +297,8 @@ class JobsToYamlTest : DescribeSpec({
                          |      run: echo 'test!'
                          |  distribute-job: true
                          |  servers:
-                         |    - 'server-1'
-                         |    - 'server-2'
+                         |  - server-1
+                         |  - server-2
                          """.trimMargin()
     }
 

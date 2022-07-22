@@ -25,29 +25,29 @@ class JobBuilderTest : FunSpec({
                     run(
                         name = "Hello world!",
                         command = "echo 'hello!'",
-                        _customArguments = mapOf("foo0" to BooleanCustomValue(true)),
+                        _customArguments = mapOf("foo0" to true),
                     )
                     run(
                         command = "echo 'hello!'",
-                        _customArguments = mapOf("foo1" to BooleanCustomValue(true)),
+                        _customArguments = mapOf("foo1" to true),
                     )
                     uses(
                         name = "Check out",
                         action = CheckoutV3(),
-                        _customArguments = mapOf("foo2" to BooleanCustomValue(true)),
+                        _customArguments = mapOf("foo2" to true),
                     )
                     uses(
                         action = CheckoutV3(),
-                        _customArguments = mapOf("foo3" to BooleanCustomValue(true)),
+                        _customArguments = mapOf("foo3" to true),
                     )
                     uses(
                         name = "Set up Java",
                         action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
-                        _customArguments = mapOf("foo4" to BooleanCustomValue(true)),
+                        _customArguments = mapOf("foo4" to true),
                     )
                     uses(
                         action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
-                        _customArguments = mapOf("foo5" to BooleanCustomValue(true)),
+                        _customArguments = mapOf("foo5" to true),
                     )
                 }
             }
@@ -57,7 +57,7 @@ class JobBuilderTest : FunSpec({
 
             // Then
             job.steps.forEachIndexed { index, step ->
-                step._customArguments shouldBe mapOf("foo$index" to BooleanCustomValue(true))
+                step._customArguments shouldBe mapOf("foo$index" to true)
             }
         }
     }

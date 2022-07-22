@@ -1,8 +1,8 @@
 package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.domain.triggers.Trigger
-import it.krzeminski.githubactions.dsl.CustomValue
 import it.krzeminski.githubactions.dsl.HasCustomArguments
+import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
 data class Workflow(
@@ -13,5 +13,5 @@ data class Workflow(
     val targetFileName: String,
     val concurrency: Concurrency? = null,
     val jobs: List<Job>,
-    override val _customArguments: Map<String, CustomValue> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments

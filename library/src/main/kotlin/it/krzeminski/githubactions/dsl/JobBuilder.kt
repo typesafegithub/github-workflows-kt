@@ -8,6 +8,7 @@ import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
+import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
@@ -21,7 +22,7 @@ class JobBuilder(
     val strategyMatrix: Map<String, List<String>>?,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
-    override val _customArguments: Map<String, CustomValue>,
+    override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
     private var job = Job(
         id = id,
@@ -43,7 +44,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep = run(
         name = null,
         command = command,
@@ -60,7 +61,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep {
         val newStep = CommandStep(
             id = "step-${job.steps.size}",
@@ -81,7 +82,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStep = uses(
         name = null,
         action = action,
@@ -98,7 +99,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStep {
         val newStep = ExternalActionStep(
             id = "step-${job.steps.size}",
@@ -119,7 +120,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStepWithOutputs<T> = uses(
         name = null,
         action = action,
@@ -136,7 +137,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStepWithOutputs<T> {
         val stepId = "step-${job.steps.size}"
         val newStep = ExternalActionStepWithOutputs(

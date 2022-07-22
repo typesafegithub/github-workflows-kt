@@ -9,7 +9,6 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV3
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
-import it.krzeminski.githubactions.dsl.BooleanCustomValue
 
 class StepsToYamlTest : DescribeSpec({
     it("renders multiple steps") {
@@ -189,7 +188,7 @@ class StepsToYamlTest : DescribeSpec({
                     id = "someId",
                     name = "Some command",
                     command = "echo 'hello!'",
-                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                    _customArguments = mapOf("foo" to true),
                 )
             )
 
@@ -399,7 +398,7 @@ class StepsToYamlTest : DescribeSpec({
                     id = "someId",
                     name = "Some external action",
                     action = CheckoutV3(),
-                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                    _customArguments = mapOf("foo" to true),
                 ),
             )
 
