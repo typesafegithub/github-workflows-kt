@@ -4,12 +4,10 @@
 package it.krzeminski.githubactions.actions.krzema12
 
 import it.krzeminski.githubactions.actions.Action
-import kotlin.Boolean
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
-import kotlin.collections.toList
-import kotlin.collections.toTypedArray
 
 /**
  * Action: GitHub Actions Typing
@@ -19,11 +17,6 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/krzema12/github-actions-typing)
  */
 public class GithubActionsTypingV0(
-    /**
-     * Set to true to display debug information helpful when troubleshooting issues with this
-     * action.
-     */
-    public val verbose: Boolean? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -35,10 +28,5 @@ public class GithubActionsTypingV0(
     _customVersion: String? = null,
 ) : Action("krzema12", "github-actions-typing", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
-        *listOfNotNull(
-            verbose?.let { "verbose" to it.toString() },
-            *_customInputs.toList().toTypedArray(),
-        ).toTypedArray()
-    )
+    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 }
