@@ -722,6 +722,7 @@ val wrappersToGenerate = listOf(
                 "max_post_count" to IntegerTyping,
                 "output_only" to BooleanTyping,
                 "readme_path" to ListOfTypings(","),
+                "remove_duplicates" to BooleanTyping,
                 "retry_count" to IntegerTyping,
                 "retry_wait_time" to IntegerTyping,
                 "tag_post_pre_newline" to BooleanTyping,
