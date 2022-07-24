@@ -143,6 +143,10 @@ public class BlogPostWorkflowV1(
      */
     public val randSeed: String? = null,
     /**
+     * Allows you to remove duplicate blog posts from multiple sources
+     */
+    public val removeDuplicates: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -187,6 +191,7 @@ public class BlogPostWorkflowV1(
             disableItemValidation?.let { "disable_item_validation" to it.toString() },
             filterDates?.let { "filter_dates" to it },
             randSeed?.let { "rand_seed" to it },
+            removeDuplicates?.let { "remove_duplicates" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
