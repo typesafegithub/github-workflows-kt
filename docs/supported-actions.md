@@ -108,6 +108,8 @@ Click on a version to see the wrapper's code.
     * [create-pull-request](https://github.com/peter-evans/create-pull-request) - v4: [`CreatePullRequestV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterevans/CreatePullRequestV4.kt)
 * peterjgrainger
     * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.2.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
+* ReactiveCircus
+    * [android-emulator-runner](https://github.com/ReactiveCircus/android-emulator-runner) - v2: [`AndroidEmulatorRunnerV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reactivecircus/AndroidEmulatorRunnerV2.kt)
 * repo-sync
     * [pull-request](https://github.com/repo-sync/pull-request) - v2: [`PullRequestV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reposync/PullRequestV2.kt)
 * ruby
@@ -131,5 +133,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 76
-* counting each version separately: 89
+* counting by actions: 77
+* counting each version separately: 90
