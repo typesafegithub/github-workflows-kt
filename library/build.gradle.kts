@@ -49,16 +49,15 @@ sourceSets {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_11.toString()
         allWarningsAsErrors = true
         freeCompilerArgs += listOf(
-            "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )
     }
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }
 

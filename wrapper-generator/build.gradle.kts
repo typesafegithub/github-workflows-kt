@@ -25,7 +25,7 @@ dependencies {
     testImplementation(projects.library)
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }
 
@@ -52,7 +52,7 @@ ktlint {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_11.toString()
         allWarningsAsErrors = true
     }
 }

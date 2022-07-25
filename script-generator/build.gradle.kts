@@ -25,7 +25,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5")
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }
 
@@ -42,10 +42,9 @@ ktlint {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_11.toString()
         allWarningsAsErrors = true
         freeCompilerArgs += listOf(
-            "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )
     }
