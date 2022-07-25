@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: adopt
+          distribution: zulu
       - name: create-branch
         uses: peterjgrainger/action-create-branch@v2.1.0
         with:

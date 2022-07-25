@@ -91,7 +91,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: adopt
+          distribution: zulu
       - id: step-3
         name: Check plugins and publish them to MavenLocal
         uses: gradle/gradle-build-action@v2

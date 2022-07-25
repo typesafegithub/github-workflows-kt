@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: adopt
+          distribution: zulu
       - id: step-2
         name: Generate wrappers
         uses: gradle/gradle-build-action@v2
