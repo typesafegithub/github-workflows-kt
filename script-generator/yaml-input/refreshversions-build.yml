@@ -86,8 +86,8 @@ jobs:
       - name: "Configure JDK"
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: zulu
+          java-version: 11
       - name: "Check plugins and publish them to MavenLocal"
         uses: gradle/gradle-build-action@v2
         with:
