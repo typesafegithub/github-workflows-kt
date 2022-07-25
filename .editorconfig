@@ -7,8 +7,5 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{kt,kts}]
-end_of_line = lf
-
 [*.{yml,yaml}]
 indent_size = 2
