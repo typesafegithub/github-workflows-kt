@@ -90,7 +90,7 @@ jobs:
         name: Configure JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: zulu
       - id: step-3
         name: Check plugins and publish them to MavenLocal
