@@ -46,6 +46,7 @@ class JobBuilder(
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
         shell: Shell? = null,
+        workingDirectory: String? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep = run(
@@ -56,6 +57,7 @@ class JobBuilder(
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         shell = shell,
+        workingDirectory = workingDirectory,
         _customArguments = _customArguments,
     )
 
@@ -67,6 +69,7 @@ class JobBuilder(
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
         shell: Shell? = null,
+        workingDirectory: String? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep {
@@ -79,6 +82,7 @@ class JobBuilder(
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             shell = shell,
+            workingDirectory = workingDirectory,
             _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)

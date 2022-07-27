@@ -77,6 +77,9 @@ private fun CommandStep.toYaml() = buildString {
     shell?.let {
         appendLine("  shell: ${it.toYaml()}")
     }
+    workingDirectory?.let {
+        appendLine("  working-directory: $it")
+    }
 
     customArgumentsToYaml().takeIf { it.isNotBlank() }
         ?.let { freeargs ->

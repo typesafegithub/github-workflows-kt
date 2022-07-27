@@ -27,6 +27,7 @@ data class CommandStep(
     override val continueOnError: Boolean? = null,
     override val timeoutMinutes: Int? = null,
     val shell: Shell? = null,
+    val workingDirectory: String? = null,
     override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : Step(
     id = id,

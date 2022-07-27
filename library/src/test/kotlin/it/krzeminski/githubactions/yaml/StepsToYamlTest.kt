@@ -230,6 +230,26 @@ class StepsToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
+        it("renders with working directory") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    command = "echo 'test!'",
+                    workingDirectory = "/home/me",
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  working-directory: /home/me
+                             |  run: echo 'test!'
+            """.trimMargin()
+        }
+
         it("renders with custom arguments") {
             // given
             val steps = listOf(
