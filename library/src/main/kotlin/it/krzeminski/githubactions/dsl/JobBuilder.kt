@@ -8,6 +8,7 @@ import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.Shell
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -44,6 +45,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
+        shell: Shell? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep = run(
@@ -53,6 +55,7 @@ class JobBuilder(
         condition = condition,
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
+        shell = shell,
         _customArguments = _customArguments,
     )
 
@@ -63,6 +66,7 @@ class JobBuilder(
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
+        shell: Shell? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep {
@@ -74,6 +78,7 @@ class JobBuilder(
             condition = condition,
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
+            shell = shell,
             _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
