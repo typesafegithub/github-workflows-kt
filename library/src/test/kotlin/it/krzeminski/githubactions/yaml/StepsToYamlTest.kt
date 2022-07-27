@@ -9,7 +9,7 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV3
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
-import it.krzeminski.githubactions.dsl.BooleanCustomValue
+import it.krzeminski.githubactions.domain.Shell
 
 class StepsToYamlTest : DescribeSpec({
     it("renders multiple steps") {
@@ -157,7 +157,7 @@ class StepsToYamlTest : DescribeSpec({
                              |  run: |
                              |    echo 'first line'
                              |    echo 'second line'
-                             |    
+                             |
                              |    echo 'third line'
             """.trimMargin()
         }
@@ -182,6 +182,74 @@ class StepsToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
+        it("renders with timeout") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    command = "echo 'test!'",
+                    timeoutMinutes = 123,
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  timeout-minutes: 123
+                             |  run: echo 'test!'
+            """.trimMargin()
+        }
+
+        it("renders with shell") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    command = "echo 'with predefined shell!'",
+                    shell = Shell.PowerShell,
+                ),
+                CommandStep(
+                    id = "someId-2",
+                    command = "echo 'with custom shell!'",
+                    shell = Shell.Custom("myCoolShell {0}"),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  shell: powershell
+                             |  run: echo 'with predefined shell!'
+                             |- id: someId-2
+                             |  shell: myCoolShell {0}
+                             |  run: echo 'with custom shell!'
+            """.trimMargin()
+        }
+
+        it("renders with working directory") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    command = "echo 'test!'",
+                    workingDirectory = "/home/me",
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  working-directory: /home/me
+                             |  run: echo 'test!'
+            """.trimMargin()
+        }
+
         it("renders with custom arguments") {
             // given
             val steps = listOf(
@@ -189,7 +257,7 @@ class StepsToYamlTest : DescribeSpec({
                     id = "someId",
                     name = "Some command",
                     command = "echo 'hello!'",
-                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                    _customArguments = mapOf("foo" to true),
                 )
             )
 
@@ -392,6 +460,26 @@ class StepsToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
+        it("renders with timeout") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    timeoutMinutes = 123,
+                    action = CheckoutV3(),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  timeout-minutes: 123
+                             |  uses: actions/checkout@v3
+            """.trimMargin()
+        }
+
         it("renders with custom arguments") {
             // given
             val steps = listOf(
@@ -399,7 +487,7 @@ class StepsToYamlTest : DescribeSpec({
                     id = "someId",
                     name = "Some external action",
                     action = CheckoutV3(),
-                    _customArguments = mapOf("foo" to BooleanCustomValue(true)),
+                    _customArguments = mapOf("foo" to true),
                 ),
             )
 

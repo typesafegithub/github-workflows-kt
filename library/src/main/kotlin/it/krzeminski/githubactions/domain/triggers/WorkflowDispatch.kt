@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
-    override val _customArguments: Map<String, CustomValue> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
 
     @Serializable

@@ -1,8 +1,8 @@
 package it.krzeminski.githubactions.domain
 
-import it.krzeminski.githubactions.dsl.CustomValue
 import it.krzeminski.githubactions.dsl.HasCustomArguments
 import it.krzeminski.githubactions.validation.requireMatchesRegex
+import kotlinx.serialization.Contextual
 
 data class Job(
     val id: String,
@@ -15,7 +15,7 @@ data class Job(
     val strategyMatrix: Map<String, List<String>>? = null,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
-    override val _customArguments: Map<String, CustomValue> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments {
     init {
         requireMatchesRegex(

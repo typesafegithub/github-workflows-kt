@@ -2,7 +2,6 @@ package it.krzeminski.githubactions.domain.triggers
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.yaml.triggersToYaml
 
 class OtherTriggersTest : FunSpec({
@@ -85,7 +84,7 @@ class OtherTriggersTest : FunSpec({
 
     test("Creating all triggers with free arguments") {
         fun types(vararg types: String) = mapOf(
-            "types" to ListCustomValue(types.toList())
+            "types" to types.toList()
         )
 
         val triggers: List<Trigger> = listOf(
@@ -128,12 +127,12 @@ class OtherTriggersTest : FunSpec({
         triggers.triggersToYaml() shouldBe """
             branch_protection_rule:
               types:
-                - 'created'
-                - 'deleted'
+              - created
+              - deleted
             check_run:
               types:
-                - 'completed'
-                - 'rerequested'
+              - completed
+              - rerequested
             check_suite:
             create:
             delete:
@@ -141,71 +140,71 @@ class OtherTriggersTest : FunSpec({
             deployment_status:
             discussion:
               types:
-                - 'created'
-                - 'edited'
-                - 'answered'
+              - created
+              - edited
+              - answered
             discussion_comment:
             fork:
             gollum:
             issue_comment:
               types:
-                - 'created'
-                - 'edited'
-                - 'deleted'
+              - created
+              - edited
+              - deleted
             issues:
               types:
-                - 'opened'
-                - 'edited'
+              - opened
+              - edited
             label:
               types:
-                - 'commented'
-                - 'deleted'
-                - 'edited'
+              - commented
+              - deleted
+              - edited
             milestone:
               types:
-                - 'created'
-                - 'closed'
+              - created
+              - closed
             page_build:
             project:
               types:
-                - 'created'
-                - 'deleted'
+              - created
+              - deleted
             project_card:
               types:
-                - 'created'
-                - 'moved'
+              - created
+              - moved
             project_column:
               types:
-                - 'moved'
+              - moved
             public:
             pull_request:
             pull_request_review:
             pull_request_review_comment:
               types:
-                - 'created'
-                - 'edited'
+              - created
+              - edited
             pull_request_target:
             push:
             registry_package:
               types:
-                - 'published'
-                - 'updated'
+              - published
+              - updated
             release:
               types:
-                - 'published'
-                - 'unpublished'
+              - published
+              - unpublished
             repository_dispatch:
             schedule:
             status:
               types:
-                - 'started'
+              - started
             watch:
             workflow_call:
             workflow_dispatch:
             workflow_run:
               types:
-                - 'completed'
-                - 'requested'
+              - completed
+              - requested
         """.trimIndent()
     }
 })

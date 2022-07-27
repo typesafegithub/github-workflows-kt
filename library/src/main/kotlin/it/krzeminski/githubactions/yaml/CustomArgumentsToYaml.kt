@@ -1,21 +1,19 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.dsl.HasCustomArguments
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.ObjectCustomValue
-import it.krzeminski.githubactions.dsl.StringCustomValue
+import org.yaml.snakeyaml.DumperOptions
+import org.yaml.snakeyaml.Yaml
+import java.io.StringWriter
 
-internal fun HasCustomArguments.customArgumentsToYaml(): String = buildString {
-    for ((key, customValue) in _customArguments) {
-        when (customValue) {
-            is ListCustomValue -> printIfHasElements(customValue.value, key, space = "")
-            is StringCustomValue -> appendLine("$key: ${customValue.value}")
-            is ObjectCustomValue -> {
-                appendLine("$key:")
-                for ((subkey, subvalue) in customValue.value) {
-                    appendLine("  $subkey: $subvalue")
-                }
-            }
+internal fun HasCustomArguments.customArgumentsToYaml(): String {
+    val yaml = Yaml(
+        DumperOptions().apply {
+            defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
         }
-    }
-}.removeSuffix("\n")
+    )
+    val stringWriter = StringWriter()
+    yaml.dump(this._customArguments, stringWriter)
+    val asString = stringWriter.toString().removeSuffix("\n")
+
+    return if (asString == "{}") "" else asString
+}

@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.22.0"
+version = "0.23.0"
 
 repositories {
     mavenCentral()
@@ -30,6 +30,7 @@ repositories {
 
 dependencies {
     implementation("com.charleskorn.kaml:kaml:0.46.0")
+    implementation("org.yaml:snakeyaml:1.30")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
 
     testImplementation(platform("io.kotest:kotest-bom:5.4.0"))

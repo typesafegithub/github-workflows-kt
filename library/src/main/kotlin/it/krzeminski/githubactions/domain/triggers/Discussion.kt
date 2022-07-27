@@ -1,9 +1,9 @@
 package it.krzeminski.githubactions.domain.triggers
 
-import it.krzeminski.githubactions.dsl.CustomValue
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Discussion(
-    override val _customArguments: Map<String, CustomValue> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

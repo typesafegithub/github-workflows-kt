@@ -135,14 +135,13 @@ class WorkflowBuilderTest : FunSpec({
                 on = listOf(Push()),
                 sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
                 _customArguments = mapOf(
-                    "dry-run" to BooleanCustomValue(true),
-                    "written-by" to ListCustomValue("Alice", "Bob"),
-                    "concurrency" to ObjectCustomValue(
+                    "dry-run" to true,
+                    "written-by" to listOf("Alice", "Bob"),
+                    "concurrency" to
                         mapOf(
                             "group" to expr("github.ref"),
                             "cancel-in-progress" to "true",
                         )
-                    )
                 ),
             ) {
                 job(
@@ -174,11 +173,11 @@ class WorkflowBuilderTest : FunSpec({
                         run: echo 'hello!'
                 dry-run: true
                 written-by:
-                  - 'Alice'
-                  - 'Bob'
+                - Alice
+                - Bob
                 concurrency:
                   group: ${'$'}{{ github.ref }}
-                  cancel-in-progress: true
+                  cancel-in-progress: 'true'
 
             """.trimIndent()
         }

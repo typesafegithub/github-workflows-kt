@@ -2,15 +2,16 @@ package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.ActionWithOutputs
-import it.krzeminski.githubactions.dsl.CustomValue
 import it.krzeminski.githubactions.dsl.HasCustomArguments
+import kotlinx.serialization.Contextual
 
 sealed class Step(
     open val id: String,
     open val env: LinkedHashMap<String, String> = linkedMapOf(),
     open val condition: String? = null,
     open val continueOnError: Boolean? = null,
-    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+    open val timeoutMinutes: Int? = null,
+    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : HasCustomArguments
 
 interface WithOutputs<T> {
@@ -24,11 +25,15 @@ data class CommandStep(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
-    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+    override val timeoutMinutes: Int? = null,
+    val shell: Shell? = null,
+    val workingDirectory: String? = null,
+    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
     continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
 )
@@ -41,11 +46,13 @@ open class ExternalActionStep(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
-    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+    override val timeoutMinutes: Int? = null,
+    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
     continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
 )
@@ -57,14 +64,16 @@ data class ExternalActionStepWithOutputs<T>(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
+    override val timeoutMinutes: Int? = null,
     override val outputs: T,
-    override val _customArguments: Map<String, CustomValue> = emptyMap(),
+    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : ExternalActionStep(
     name = name,
     action = action,
     id = id,
     condition = condition,
     continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
 ),

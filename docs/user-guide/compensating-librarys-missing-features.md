@@ -10,21 +10,21 @@ built-in arguments.
 
 ## Workflows, jobs and steps
 
-They have an extra argument - `_customArguments` - which is a map from `String` to various subtypes of `CustomValue`.
+They have an extra argument - `_customArguments` - which is a map from `String` to whatever values or collections are
+needed, especially using basic types like booleans, strings or integers, and further nesting of maps and lists.
+
 For example:
 
 ```kotlin
 workflow(
     //...
     _customArguments = mapOf(
-        "dry-run" to BooleanCustomValue(true),
-        "some-string-value" to StringCustomValue("foobar"),
-        "written-by" to ListCustomValue("Alice", "Bob"),
-        "concurrency" to ObjectCustomValue(
-            mapOf(
-                "group" to expr("github.ref"),
-                "cancel-in-progress" to "true",
-            )
+        "dry-run" to true,
+        "some-string-value" to "foobar",
+        "written-by" to listOf("Alice", "Bob"),
+        "concurrency" to mapOf(
+            "group" to expr("github.ref"),
+            "cancel-in-progress" to "true",
         )
     ),
 )

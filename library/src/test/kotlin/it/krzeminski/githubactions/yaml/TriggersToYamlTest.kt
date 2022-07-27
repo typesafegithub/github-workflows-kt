@@ -9,11 +9,6 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.BooleanCustomValue
-import it.krzeminski.githubactions.dsl.IntCustomValue
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.ObjectCustomValue
-import it.krzeminski.githubactions.dsl.StringCustomValue
 
 class TriggersToYamlTest : DescribeSpec({
     it("renders multiple triggers") {
@@ -368,41 +363,40 @@ class TriggersToYamlTest : DescribeSpec({
         val triggers: List<Trigger> = listOf(
             PullRequest(
                 _customArguments = mapOf(
-                    "types" to ListCustomValue("ignored"),
-                    "lang" to StringCustomValue("french"),
-                    "fast" to BooleanCustomValue(true),
-                    "answer" to IntCustomValue(42),
-                    "list" to ListCustomValue(1, 2, 3),
+                    "types" to listOf("ignored"),
+                    "lang" to "french",
+                    "fast" to true,
+                    "answer" to 42,
+                    "list" to listOf(1, 2, 3),
                 ),
             ),
             WorkflowDispatch(
                 _customArguments = mapOf(
-                    "lang" to StringCustomValue("french"),
-                    "list" to ListCustomValue(1, 2, 3),
+                    "lang" to "french",
+                    "list" to listOf(1, 2, 3),
                 ),
             ),
             Push(
                 _customArguments = mapOf(
-                    "branches" to ListCustomValue("main", "master"),
-                    "tags" to ListCustomValue("tag1", "tag2"),
+                    "branches" to listOf("main", "master"),
+                    "tags" to listOf("tag1", "tag2"),
                 ),
             ),
             Schedule(
                 triggers = emptyList(),
                 _customArguments = mapOf(
-                    "cron" to StringCustomValue("0 7 * * *"),
-                    "object" to ObjectCustomValue(
+                    "cron" to "0 7 * * *",
+                    "object" to
                         mapOf(
                             "some-property" to "good",
                             "other-property" to "better",
                         ),
-                    )
                 ),
             ),
             PullRequestTarget(
                 _customArguments = mapOf(
-                    "branches" to ListCustomValue("main", "master"),
-                    "tags" to ListCustomValue("tag1", "tag2"),
+                    "branches" to listOf("main", "master"),
+                    "tags" to listOf("tag1", "tag2"),
                 ),
             ),
         )
@@ -410,27 +404,27 @@ class TriggersToYamlTest : DescribeSpec({
         triggers.triggersToYaml() shouldBe """
             pull_request:
               types:
-                - 'ignored'
+              - ignored
               lang: french
               fast: true
               answer: 42
               list:
-                - '1'
-                - '2'
-                - '3'
+              - 1
+              - 2
+              - 3
             workflow_dispatch:
               lang: french
               list:
-                - '1'
-                - '2'
-                - '3'
+              - 1
+              - 2
+              - 3
             push:
               branches:
-                - 'main'
-                - 'master'
+              - main
+              - master
               tags:
-                - 'tag1'
-                - 'tag2'
+              - tag1
+              - tag2
             schedule:
               cron: 0 7 * * *
               object:
@@ -438,11 +432,11 @@ class TriggersToYamlTest : DescribeSpec({
                 other-property: better
             pull_request_target:
               branches:
-                - 'main'
-                - 'master'
+              - main
+              - master
               tags:
-                - 'tag1'
-                - 'tag2'
+              - tag1
+              - tag2
         """.trimIndent()
     }
 })
