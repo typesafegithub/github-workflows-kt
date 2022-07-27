@@ -24,6 +24,9 @@ private fun ExternalActionStep.toYaml(): String = buildString {
     continueOnError?.let {
         appendLine("  continue-on-error: $it")
     }
+    timeoutMinutes?.let {
+        appendLine("  timeout-minutes: $it")
+    }
     appendLine("  uses: ${action.fullName}")
 
     val allArguments = action.toYamlArguments()
@@ -59,6 +62,9 @@ private fun CommandStep.toYaml() = buildString {
 
     continueOnError?.let {
         appendLine("  continue-on-error: $it")
+    }
+    timeoutMinutes?.let {
+        appendLine("  timeout-minutes: $it")
     }
 
     customArgumentsToYaml().takeIf { it.isNotBlank() }

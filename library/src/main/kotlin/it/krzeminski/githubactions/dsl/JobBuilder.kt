@@ -43,6 +43,7 @@ class JobBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep = run(
@@ -51,6 +52,7 @@ class JobBuilder(
         env = env,
         condition = condition,
         continueOnError = continueOnError,
+        timeoutMinutes = timeoutMinutes,
         _customArguments = _customArguments,
     )
 
@@ -60,6 +62,7 @@ class JobBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep {
@@ -70,6 +73,7 @@ class JobBuilder(
             env = env,
             condition = condition,
             continueOnError = continueOnError,
+            timeoutMinutes = timeoutMinutes,
             _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
@@ -81,6 +85,7 @@ class JobBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStep = uses(
@@ -89,6 +94,7 @@ class JobBuilder(
         env = env,
         condition = condition,
         continueOnError = continueOnError,
+        timeoutMinutes = timeoutMinutes,
         _customArguments = _customArguments,
     )
 
@@ -98,6 +104,7 @@ class JobBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStep {
@@ -108,6 +115,7 @@ class JobBuilder(
             env = env,
             condition = condition,
             continueOnError = continueOnError,
+            timeoutMinutes = timeoutMinutes,
             _customArguments = _customArguments,
         )
         job = job.copy(steps = job.steps + newStep)
@@ -119,6 +127,7 @@ class JobBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStepWithOutputs<T> = uses(
@@ -127,6 +136,7 @@ class JobBuilder(
         env = env,
         condition = condition,
         continueOnError = continueOnError,
+        timeoutMinutes = timeoutMinutes,
         _customArguments = _customArguments,
     )
 
@@ -136,6 +146,7 @@ class JobBuilder(
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ExternalActionStepWithOutputs<T> {
@@ -147,6 +158,7 @@ class JobBuilder(
             env = env,
             condition = condition,
             continueOnError = continueOnError,
+            timeoutMinutes = timeoutMinutes,
             outputs = action.buildOutputObject(stepId),
             _customArguments = _customArguments,
         )
