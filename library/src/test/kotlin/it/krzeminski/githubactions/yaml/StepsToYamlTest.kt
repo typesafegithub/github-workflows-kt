@@ -157,7 +157,7 @@ class StepsToYamlTest : DescribeSpec({
                              |  run: |
                              |    echo 'first line'
                              |    echo 'second line'
-                             |    
+                             |
                              |    echo 'third line'
             """.trimMargin()
         }

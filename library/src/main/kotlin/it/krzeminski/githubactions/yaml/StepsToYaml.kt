@@ -89,7 +89,7 @@ private fun CommandStep.toYaml() = buildString {
     } else {
         appendLine("  run: |")
         command.lines().forEach {
-            appendLine(it.prependIndent("    "))
+            appendLine(it.prependIndent("    ").ifBlank { "" })
         }
     }
 
