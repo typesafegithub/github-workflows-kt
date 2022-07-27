@@ -181,6 +181,26 @@ class StepsToYamlTest : DescribeSpec({
             """.trimMargin()
         }
 
+        it("renders with timeout") {
+            // given
+            val steps = listOf(
+                CommandStep(
+                    id = "someId",
+                    command = "echo 'test!'",
+                    timeoutMinutes = 123,
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  timeout-minutes: 123
+                             |  run: echo 'test!'
+            """.trimMargin()
+        }
+
         it("renders with custom arguments") {
             // given
             val steps = listOf(
@@ -387,6 +407,26 @@ class StepsToYamlTest : DescribeSpec({
             // then
             yaml shouldBe """|- id: someId
                              |  continue-on-error: true
+                             |  uses: actions/checkout@v3
+            """.trimMargin()
+        }
+
+        it("renders with timeout") {
+            // given
+            val steps = listOf(
+                ExternalActionStep(
+                    id = "someId",
+                    timeoutMinutes = 123,
+                    action = CheckoutV3(),
+                ),
+            )
+
+            // when
+            val yaml = steps.stepsToYaml()
+
+            // then
+            yaml shouldBe """|- id: someId
+                             |  timeout-minutes: 123
                              |  uses: actions/checkout@v3
             """.trimMargin()
         }

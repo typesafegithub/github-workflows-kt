@@ -10,6 +10,7 @@ sealed class Step(
     open val env: LinkedHashMap<String, String> = linkedMapOf(),
     open val condition: String? = null,
     open val continueOnError: Boolean? = null,
+    open val timeoutMinutes: Int? = null,
     override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : HasCustomArguments
 
@@ -24,11 +25,13 @@ data class CommandStep(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
+    override val timeoutMinutes: Int? = null,
     override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
     continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
 )
@@ -41,11 +44,13 @@ open class ExternalActionStep(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
+    override val timeoutMinutes: Int? = null,
     override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
     continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
 )
@@ -57,6 +62,7 @@ data class ExternalActionStepWithOutputs<T>(
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
+    override val timeoutMinutes: Int? = null,
     override val outputs: T,
     override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : ExternalActionStep(
@@ -65,6 +71,7 @@ data class ExternalActionStepWithOutputs<T>(
     id = id,
     condition = condition,
     continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
 ),
