@@ -296,6 +296,7 @@ val wrappersToGenerate = listOf(
                 "any-of-labels" to ListOfTypings(","),
                 "any-of-pr-labels" to ListOfTypings(","),
                 "ascending" to BooleanTyping,
+                "close-issue-reason" to EnumTyping("CloseIssueReason", listOf("completed", "not_planned")),
                 "days-before-close" to IntegerTyping,
                 "days-before-issue-close" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),
                 "days-before-pr-close" to IntegerWithSpecialValueTyping("Days", mapOf("Never" to -1)),

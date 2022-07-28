@@ -91,6 +91,10 @@ public class StaleV5(
      */
     public val exemptIssueLabels: List<String>? = null,
     /**
+     * The reason to use when closing an issue.
+     */
+    public val closeIssueReason: StaleV5.CloseIssueReason? = null,
+    /**
      * The label to apply when a pull request is stale.
      */
     public val stalePrLabel: String? = null,
@@ -296,6 +300,7 @@ public class StaleV5(
             staleIssueLabel?.let { "stale-issue-label" to it },
             closeIssueLabel?.let { "close-issue-label" to it },
             exemptIssueLabels?.let { "exempt-issue-labels" to it.joinToString(",") },
+            closeIssueReason?.let { "close-issue-reason" to it.stringValue },
             stalePrLabel?.let { "stale-pr-label" to it },
             closePrLabel?.let { "close-pr-label" to it },
             exemptPrLabels?.let { "exempt-pr-labels" to it.joinToString(",") },
@@ -339,6 +344,18 @@ public class StaleV5(
     )
 
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+
+    public sealed class CloseIssueReason(
+        public val stringValue: String,
+    ) {
+        public object Completed : StaleV5.CloseIssueReason("completed")
+
+        public object NotPlanned : StaleV5.CloseIssueReason("not_planned")
+
+        public class Custom(
+            customStringValue: String,
+        ) : StaleV5.CloseIssueReason(customStringValue)
+    }
 
     public sealed class Days(
         public val integerValue: Int,
