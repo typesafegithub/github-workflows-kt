@@ -48,3 +48,6 @@ nav:
 
 extra:
   version: 0.23.0
+
+  # branch or tag name - the script-generator may have not yet updated to a breaking change in the library
+  scriptGenerator: 0.22.0
