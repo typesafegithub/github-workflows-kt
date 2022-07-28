@@ -20,7 +20,7 @@ dependencies {
     implementation("com.squareup:kotlinpoet:1.12.0")
     implementation(kotlin("reflect"))
 
-    testImplementation(platform("io.kotest:kotest-bom:5.4.0"))
+    testImplementation(platform("io.kotest:kotest-bom:5.4.1"))
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest:kotest-runner-junit5")
 }
