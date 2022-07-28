@@ -33,7 +33,7 @@ dependencies {
     implementation("org.yaml:snakeyaml:1.30")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
 
-    testImplementation(platform("io.kotest:kotest-bom:5.4.0"))
+    testImplementation(platform("io.kotest:kotest-bom:5.4.1"))
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
