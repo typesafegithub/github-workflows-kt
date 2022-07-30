@@ -709,6 +709,15 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("entrostat", "git-secret-action", "v3.3.0"),
+        TypingsSource.WrapperGenerator(
+            mapOf(
+                "gpg-private-key" to StringTyping,
+                "gpg-private-key-passphrase" to StringTyping
+            )
+        )
+    ),
+    WrapperRequest(
         ActionCoords("gautamkrishnar", "blog-post-workflow", "v1"),
         TypingsSource.WrapperGenerator(
             mapOf(

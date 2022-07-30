@@ -72,6 +72,8 @@ Click on a version to see the wrapper's code.
     * [Publish-Docker-Github-Action](https://github.com/elgohr/Publish-Docker-Github-Action) - v4: [`PublishDockerGithubActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV4.kt)
 * EndBug
     * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV9.kt)
+* entrostat
+    * [git-secret-action](https://github.com/entrostat/git-secret-action) - v3.3.0: [`GitSecretActionV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/entrostat/GitSecretActionV3.kt)
 * gautamkrishnar
     * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - v1: [`BlogPostWorkflowV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
 * google-github-actions
@@ -133,5 +135,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 77
-* counting each version separately: 90
+* counting by actions: 78
+* counting each version separately: 91
