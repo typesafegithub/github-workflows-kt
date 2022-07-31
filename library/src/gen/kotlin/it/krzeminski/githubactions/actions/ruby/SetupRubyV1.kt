@@ -39,10 +39,10 @@ public class SetupRubyV1(
      * 'none', or a version number (e.g., 1, 2, 2.1, 2.1.4).
      * For 'Gemfile.lock', the version of the BUNDLED WITH section from the Gemfile.lock if it
      * exists. If the file or section does not exist then the same as 'default'.
-     * For 'default', the version of Bundler that comes with that Ruby by default is used, or if
-     * that Ruby comes without Bundler then the same as 'latest'.
-     * For 'latest', the latest compatible Bundler version is installed (Bundler 2 on Ruby >= 2.4,
-     * Bundler 1 on Ruby < 2.4).
+     * For 'default', if the Ruby ships with Bundler 2.2+ as a default gem, that version is used,
+     * otherwise the same as 'latest'.
+     * For 'latest', the latest compatible Bundler version is installed (Bundler 2 on Ruby >= 2.3,
+     * Bundler 1 on Ruby < 2.3).
      * For 'none', nothing is done.
      */
     public val bundler: String? = null,
