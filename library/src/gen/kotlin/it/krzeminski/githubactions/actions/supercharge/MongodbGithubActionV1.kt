@@ -52,7 +52,7 @@ public class MongodbGithubActionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("supercharge", "mongodb-github-action", _customVersion ?: "1.7.0") {
+) : Action("supercharge", "mongodb-github-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
