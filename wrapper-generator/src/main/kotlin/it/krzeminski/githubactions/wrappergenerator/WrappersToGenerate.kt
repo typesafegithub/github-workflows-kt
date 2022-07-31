@@ -1060,7 +1060,7 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("supercharge", "mongodb-github-action", "1.7.0"),
+        ActionCoords("supercharge", "mongodb-github-action", "v1"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "mongodb-port" to IntegerTyping,
