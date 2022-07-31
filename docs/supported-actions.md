@@ -39,7 +39,7 @@ Click on a version to see the wrapper's code.
     * [github-tag-action](https://github.com/anothrNick/github-tag-action) - v1.38.0: [`GithubTagActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/anothrnick/GithubTagActionV1.kt)
 * appleboy
     * [scp-action](https://github.com/appleboy/scp-action) - v0.1.3: [`ScpActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/appleboy/ScpActionV0.kt)
-    * [ssh-action](https://github.com/appleboy/ssh-action) - v0.1.4: [`SshActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/appleboy/SshActionV0.kt)
+    * [ssh-action](https://github.com/appleboy/ssh-action) - v0.1.5: [`SshActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/appleboy/SshActionV0.kt)
     * [telegram-action](https://github.com/appleboy/telegram-action) - v0.1.1: [`TelegramActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/appleboy/TelegramActionV0.kt)
 * aws-actions
     * [amazon-ecr-login](https://github.com/aws-actions/amazon-ecr-login) - v1: [`AmazonEcrLoginV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/AmazonEcrLoginV1.kt)

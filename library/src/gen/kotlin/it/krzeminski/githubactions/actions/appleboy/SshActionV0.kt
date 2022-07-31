@@ -142,7 +142,7 @@ public class SshActionV0(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("appleboy", "ssh-action", _customVersion ?: "v0.1.4") {
+) : Action("appleboy", "ssh-action", _customVersion ?: "v0.1.5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

@@ -428,7 +428,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("appleboy", "ssh-action", "v0.1.4"),
+        ActionCoords("appleboy", "ssh-action", "v0.1.5"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "port" to IntegerTyping,
