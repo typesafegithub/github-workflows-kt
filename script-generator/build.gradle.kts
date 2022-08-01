@@ -45,7 +45,6 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
         allWarningsAsErrors = true
         freeCompilerArgs += listOf(
-            "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )
     }
