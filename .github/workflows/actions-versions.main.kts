@@ -32,7 +32,7 @@ workflow(
             name = "Set up JDK",
             action = SetupJavaV3(
                 javaVersion = "11",
-                distribution = SetupJavaV3.Distribution.Adopt,
+                distribution = SetupJavaV3.Distribution.Zulu,
             )
         )
         uses(

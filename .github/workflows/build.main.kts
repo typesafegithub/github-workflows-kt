@@ -3,7 +3,7 @@
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Adopt
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Zulu
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -32,7 +32,7 @@ workflow(
                 name = "Set up JDK",
                 action = SetupJavaV3(
                     javaVersion = "11",
-                    distribution = Adopt,
+                    distribution = Zulu,
                 )
             )
             uses(
