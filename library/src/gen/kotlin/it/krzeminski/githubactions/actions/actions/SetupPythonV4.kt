@@ -21,8 +21,8 @@ import kotlin.collections.toTypedArray
  */
 public class SetupPythonV4(
     /**
-     * Version range or exact version of Python to use, using SemVer's version range syntax. Reads
-     * from .python-version if unset.
+     * Version range or exact version of Python or PyPy to use, using SemVer's version range syntax.
+     * Reads from .python-version if unset.
      */
     public val pythonVersion: String? = null,
     /**
@@ -35,9 +35,14 @@ public class SetupPythonV4(
      */
     public val cache: SetupPythonV4.PackageManager? = null,
     /**
-     * The target architecture (x86, x64) of the Python interpreter.
+     * The target architecture (x86, x64) of the Python or PyPy interpreter.
      */
     public val architecture: SetupPythonV4.Architecture? = null,
+    /**
+     * Set this option if you want the action to check for the latest available version that
+     * satisfies the version spec.
+     */
+    public val checkLatest: String? = null,
     /**
      * Used to pull python distributions from actions/python-versions. Since there's a default, this
      * is typically not supplied by the user.
@@ -69,6 +74,7 @@ public class SetupPythonV4(
             pythonVersionFile?.let { "python-version-file" to it },
             cache?.let { "cache" to it.stringValue },
             architecture?.let { "architecture" to it.stringValue },
+            checkLatest?.let { "check-latest" to it },
             token?.let { "token" to it },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
             updateEnvironment?.let { "update-environment" to it.toString() },
@@ -108,7 +114,7 @@ public class SetupPythonV4(
         private val stepId: String,
     ) {
         /**
-         * The installed python version. Useful when given a version range as input.
+         * The installed Python or PyPy version. Useful when given a version range as input.
          */
         public val pythonVersion: String = "steps.$stepId.outputs.python-version"
 
@@ -118,7 +124,7 @@ public class SetupPythonV4(
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
         /**
-         * The absolute path to the Python executable.
+         * The absolute path to the Python or PyPy executable.
          */
         public val pythonPath: String = "steps.$stepId.outputs.python-path"
 
