@@ -3,18 +3,20 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.asClassName
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.nio.file.Paths
 
-fun YamlWorkflow.toFileSpec(filenameFromUrl: String?, outputFolder: String?) = FileSpec.builder("", "$name.main.kts")
+fun YamlWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
     .addImport("$PACKAGE.yaml", "toYaml", "writeToFile")
-    .addImport("$PACKAGE.dsl", "expr")
-    .addProperty(workFlowProperty(filenameFromUrl, outputFolder))
+    .addImport("$PACKAGE.dsl.expressions", "expr")
+    .addProperty(workFlowProperty(filenameFromUrl))
     .build()
 
-fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String?): PropertySpec {
+fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
     val filename = (filenameFromUrl ?: name).lowercase().replace(" ", "-")
 
     return PropertySpec.builder("workflow${filename.toPascalCase()}", Workflow::class)
@@ -24,15 +26,9 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
                     .indent()
                     .add("name = %S,\n", name)
                     .add("on = %L", on.toKotlin())
-                    .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get("$filename.main.kts"))
-                    .add(
-                        "targetFile = %T.get(%S),\n", Paths::class,
-                        when (outputFolder) {
-                            null -> "$filename.yml"
-                            else -> "$outputFolder/$filename.yml"
-                        }
-                    )
+                    .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get(".github/workflows/$filename.main.kts"))
                     .add(workflowEnv())
+                    .add(concurrencyOf(concurrency))
                     .unindent()
                     .add(") {\n")
                     .indent()
@@ -42,6 +38,16 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?, outputFolder: String
             }
         )
         .build()
+}
+
+fun concurrencyOf(concurrency: Concurrency?): CodeBlock = when (concurrency) {
+    null -> CodeBlock.EMPTY
+    else -> CodeBlock.of(
+        "concurrency = %T(group = %S, cancelInProgress = %L),\n",
+        Concurrency::class.asClassName(),
+        concurrency.group,
+        concurrency.cancelInProgress
+    )
 }
 
 private fun YamlWorkflow.workflowEnv(): CodeBlock {
@@ -63,6 +69,6 @@ fun YamlWorkflow.toKotlin(filename: String): String = """
         |
         |@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
         |
-        |${toFileSpec(filename, null)}
+        |${toFileSpec(filename)}
         |workflow${filename.toPascalCase()}.writeToFile()
 """.trimMargin()

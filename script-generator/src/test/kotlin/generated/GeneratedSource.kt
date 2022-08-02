@@ -1,11 +1,10 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
-import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
+import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -14,11 +13,8 @@ import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Choice
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.linkedMapOf
 import kotlin.collections.listOf
@@ -51,8 +47,7 @@ public val workflowGenerated: Workflow = workflow(
           ),
         ))
         ),
-      sourceFile = Paths.get("generated.main.kts"),
-      targetFile = Paths.get("yaml-output/generated.yml"),
+      sourceFile = Paths.get(".github/workflows/generated.main.kts"),
       env = linkedMapOf(
         "GRADLE_ENTERPRISE_ACCESS_KEY" to expr("secrets.GRADLE_ENTERPRISE_ACCESS_KEY"),
         "GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED" to "true",
@@ -60,11 +55,11 @@ public val workflowGenerated: Workflow = workflow(
     ) {
       job(
         id = "check_yaml_consistency",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         run(
           name = "Install Kotlin",
@@ -83,19 +78,19 @@ public val workflowGenerated: Workflow = workflow(
 
       job(
         id = "build_for_UbuntuLatest",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
         env = linkedMapOf(
           "COLOR" to "blue",
           "SIZE" to "XXL",
         ),
 
         _customArguments = mapOf(
-        "needs" to ListCustomValue("check_yaml_consistency"),
+        "needs" to listOf("check_yaml_consistency"),
         )
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
           env = linkedMapOf(
             "HELLO" to "ok",
             "PAT" to "rick",
@@ -103,9 +98,9 @@ public val workflowGenerated: Workflow = workflow(
         )
         uses(
           name = "Set up JDK",
-          action = SetupJavaV2(
+          action = SetupJavaV3(
             javaVersion = "11",
-            distribution = SetupJavaV2.Distribution.Adopt,
+            distribution = SetupJavaV3.Distribution.Adopt,
           ),
           env = linkedMapOf(
             "HELLO" to "ok",
@@ -120,7 +115,7 @@ public val workflowGenerated: Workflow = workflow(
         )
         uses(
           name = "setup",
-          action = SetupBuildxActionV1(
+          action = SetupBuildxActionV2(
             driverOpts = listOf(
               "hello",
               "world",

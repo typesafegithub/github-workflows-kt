@@ -32,6 +32,7 @@ fun main() {
 
     val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
         .map { it.actionCoords }
+        .filter { it.deprecatedByVersion == null }
         .groupBy { ActionCoords(it.owner, it.name, version = "*") }
         .mapKeys { it.key.copy(version = it.value.last().version) }
         .mapValues { (_, value) -> value.map { Version(it.version) } }

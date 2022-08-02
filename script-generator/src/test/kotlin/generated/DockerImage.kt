@@ -1,17 +1,15 @@
 package generated
 
 import it.krzeminski.githubactions.actions.CustomAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.docker.BuildPushActionV2
-import it.krzeminski.githubactions.actions.docker.LoginActionV1
-import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV1
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.docker.BuildPushActionV3
+import it.krzeminski.githubactions.actions.docker.LoginActionV2
+import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
+import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowDockerImage: Workflow = workflow(
@@ -21,16 +19,17 @@ public val workflowDockerImage: Workflow = workflow(
           branches = listOf("main", "feature/dockerfile"),
         ),
         ),
-      sourceFile = Paths.get("docker-image.main.kts"),
-      targetFile = Paths.get("yaml-output/docker-image.yml"),
+      sourceFile = Paths.get(".github/workflows/docker-image.main.kts"),
+      concurrency = Concurrency(group = "workflow_staging_environment", cancelInProgress = true),
     ) {
       job(
         id = "push_image",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
+        concurrency = Concurrency(group = "job_staging_environment", cancelInProgress = true),
       ) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         uses(
           name = "Set up QEMU",
@@ -42,11 +41,11 @@ public val workflowDockerImage: Workflow = workflow(
         )
         uses(
           name = "Set up Docker Buildx",
-          action = SetupBuildxActionV1(),
+          action = SetupBuildxActionV2(),
         )
         uses(
           name = "Log in to the Container registry",
-          action = LoginActionV1(
+          action = LoginActionV2(
             registry = "ghcr.io",
             username = "${'$'}{{ github.actor }}",
             password = "${'$'}{{ secrets.GITHUB_TOKEN }}",
@@ -58,7 +57,7 @@ public val workflowDockerImage: Workflow = workflow(
         )
         uses(
           name = "Build and push Docker image",
-          action = BuildPushActionV2(
+          action = BuildPushActionV3(
             context = ".",
             push = true,
             tags = listOf(

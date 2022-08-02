@@ -1,0 +1,11 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  min-wrapper-count:
+    type: integer
+  allow-snapshots:
+    type: boolean
+  allow-checksums:
+    type: list
+    separator: ','
+    list-item:
+      type: string

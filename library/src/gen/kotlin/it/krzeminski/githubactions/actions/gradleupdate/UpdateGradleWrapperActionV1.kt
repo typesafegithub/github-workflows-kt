@@ -58,6 +58,10 @@ public class UpdateGradleWrapperActionV1(
      */
     public val pathsIgnore: List<String>? = null,
     /**
+     * Gradle release channel to be used (either `stable` or `release-candidate`).
+     */
+    public val releaseChannel: UpdateGradleWrapperActionV1.ReleaseChannel? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -79,7 +83,21 @@ public class UpdateGradleWrapperActionV1(
             setDistributionChecksum?.let { "set-distribution-checksum" to it.toString() },
             paths?.let { "paths" to it.joinToString(",") },
             pathsIgnore?.let { "paths-ignore" to it.joinToString(",") },
+            releaseChannel?.let { "release-channel" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public sealed class ReleaseChannel(
+        public val stringValue: String,
+    ) {
+        public object Stable : UpdateGradleWrapperActionV1.ReleaseChannel("stable")
+
+        public object ReleaseCandidate :
+            UpdateGradleWrapperActionV1.ReleaseChannel("release-candidate")
+
+        public class Custom(
+            customStringValue: String,
+        ) : UpdateGradleWrapperActionV1.ReleaseChannel(customStringValue)
+    }
 }

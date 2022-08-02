@@ -1,5 +1,7 @@
 name: NodeJs Package
 
+concurrency: workflow_staging_environment
+
 on:
     release:
         types: [ created ]
@@ -7,9 +9,10 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        concurrency: job_staging_environment
 
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
 
             # Set up .npmrc file to publish to GitHub Packages
             -   uses: actions/setup-node@v3

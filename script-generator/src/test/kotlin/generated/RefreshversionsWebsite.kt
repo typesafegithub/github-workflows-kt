@@ -1,15 +1,12 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupPythonV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupPythonV4
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowRefreshversionsWebsite: Workflow = workflow(
@@ -20,24 +17,23 @@ public val workflowRefreshversionsWebsite: Workflow = workflow(
         ),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("refreshversions-website.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-website.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-website.main.kts"),
     ) {
       job(
         id = "deploy",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         run(
           name = "./docs/DocsCopier.main.kts",
           command = "./docs/DocsCopier.main.kts",
         )
         uses(
-          name = "SetupPythonV2",
-          action = SetupPythonV2(
+          name = "SetupPythonV4",
+          action = SetupPythonV4(
             pythonVersion = "3.x",
           ),
         )

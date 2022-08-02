@@ -10,11 +10,13 @@ plugins {
 dependencies {
     implementation(projects.wrapperGenerator)
     implementation(projects.library)
-    implementation("com.charleskorn.kaml:kaml:0.43.0")
-    implementation("com.squareup:kotlinpoet:1.11.0")
+    implementation("com.charleskorn.kaml:kaml:0.46.0")
+    implementation("com.squareup:kotlinpoet:1.12.0")
+    implementation(kotlin("reflect"))
 
-    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
-    testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
+    testImplementation(platform("io.kotest:kotest-bom:5.4.1"))
+    testImplementation("io.kotest:kotest-assertions-core")
+    testImplementation("io.kotest:kotest-runner-junit5")
 }
 
 application {
@@ -33,6 +35,8 @@ ktlint {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
+        jvmTarget = "11"
+        allWarningsAsErrors = true
         freeCompilerArgs += listOf(
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )

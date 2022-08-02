@@ -1,0 +1,22 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  github-token:
+    type: string
+  discord-webhook:
+    type: string
+  username:
+    type: string
+  avatar-url:
+    type: string
+  title:
+    type: string
+  description:
+    type: string
+  include-details:
+    type: boolean
+  color-success:
+    type: string
+  color-failure:
+    type: string
+  color-cancelled:
+    type: string

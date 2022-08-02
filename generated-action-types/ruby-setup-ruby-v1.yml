@@ -1,0 +1,18 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  ruby-version:
+    type: string
+  rubygems:
+    type: string
+  bundler:
+    type: string
+  bundler-cache:
+    type: boolean
+  working-directory:
+    type: string
+  cache-version:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  ruby-prefix:
+    type: string

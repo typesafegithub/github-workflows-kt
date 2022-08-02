@@ -22,6 +22,7 @@ class TextTransformationTest : FunSpec({
             "SOME_PROPERTY" to "SomeProperty",
             "some+name" to "SomePlusName",
             "some name with spaces" to "SomeNameWithSpaces",
+            "some.name.with.dots" to "SomeNameWithDots",
         ).forEach { (input, output) ->
             test("should convert '$input' to '$output'") {
                 input.toPascalCase() shouldBe output

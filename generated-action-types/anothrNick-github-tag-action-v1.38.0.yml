@@ -1,0 +1,8 @@
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  new_tag:
+    type: string
+  tag:
+    type: string
+  part:
+    type: string

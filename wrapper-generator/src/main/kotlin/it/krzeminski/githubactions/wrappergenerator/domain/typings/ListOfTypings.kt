@@ -6,7 +6,7 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 
-class ListOfTypings(
+data class ListOfTypings(
     val delimiter: String,
     val typing: Typing = StringTyping,
 ) : Typing {

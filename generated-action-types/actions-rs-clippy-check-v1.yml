@@ -1,0 +1,15 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  token:
+    type: string
+  toolchain:
+    type: string
+  args:
+    type: list
+    separator: ' '
+    list-item:
+      type: string
+  use-cross:
+    type: boolean
+  name:
+    type: string

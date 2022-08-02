@@ -1,0 +1,38 @@
+# This file was generated using Kotlin DSL (library/ExprIntegrationTest.kt).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+name: workflow-expr-typesafe
+
+on:
+  push:
+
+jobs:
+  "job1":
+    runs-on: "ubuntu-latest"
+    env:
+      GREETING: World
+    steps:
+      - id: step-0
+        uses: actions/checkout@v3
+      - id: step-1
+        name: Default environment variable
+        run: action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY
+        if: ${{ always() }}
+      - id: step-2
+        name: Custom environment variable
+        env:
+          FIRST_NAME: Patrick
+        run: echo ${{ $GREETING }} ${{ $FIRST_NAME }}
+      - id: step-3
+        name: Encrypted secret
+        env:
+          SECRET: ${{ secrets.SUPER_SECRET }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo secret=$SECRET token=$TOKEN
+      - id: step-4
+        name: RunnerContext create temp directory
+        run: mkdir ${{ runner.temp }}/build_logs
+      - id: step-5
+        name: GitHubContext echo sha
+        run: echo ${{ github.sha }} event ${{ github.event.release.url }}

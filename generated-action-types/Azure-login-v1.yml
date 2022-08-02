@@ -1,0 +1,24 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  creds:
+    type: string
+  client-id:
+    type: string
+  tenant-id:
+    type: string
+  subscription-id:
+    type: string
+  enable-AzPSSession:
+    type: boolean
+  environment:
+    type: enum
+    allowed-values:
+    - azurecloud
+    - azurestack
+    - azureusgovernment
+    - azurechinacloud
+    - azuregermancloud
+  allow-no-subscriptions:
+    type: boolean
+  audience:
+    type: string

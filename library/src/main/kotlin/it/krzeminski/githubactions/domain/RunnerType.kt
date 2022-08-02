@@ -4,22 +4,25 @@ package it.krzeminski.githubactions.domain
  * Types of GitHub-hosted runners available. Should be kept in sync with the official list at
  * https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners
  */
-enum class RunnerType {
+sealed interface RunnerType {
+    // Custom runner. Could be an expression `runsOn = expr("github.event.inputs.run-on")`
+    data class Custom(val runsOn: String) : RunnerType
+
     // "Latest" labels
-    UbuntuLatest,
-    WindowsLatest,
-    MacOSLatest,
+    object UbuntuLatest : RunnerType
+    object WindowsLatest : RunnerType
+    object MacOSLatest : RunnerType
 
     // Windows runners
-    Windows2022,
-    Windows2019,
-    Windows2016,
+    object Windows2022 : RunnerType
+    object Windows2019 : RunnerType
+    object Windows2016 : RunnerType
 
     // Ubuntu runners
-    Ubuntu2004,
-    Ubuntu1804,
+    object Ubuntu2004 : RunnerType
+    object Ubuntu1804 : RunnerType
 
     // macOS runners
-    MacOS11,
-    MacOS1015,
+    object MacOS11 : RunnerType
+    object MacOS1015 : RunnerType
 }

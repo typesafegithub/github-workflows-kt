@@ -1,19 +1,14 @@
 package generated
 
 import it.krzeminski.githubactions.actions.CustomAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
 
@@ -25,16 +20,15 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
         )),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("update-gradle-wrapper.main.kts"),
-      targetFile = Paths.get("yaml-output/update-gradle-wrapper.yml"),
+      sourceFile = Paths.get(".github/workflows/update-gradle-wrapper.main.kts"),
     ) {
       job(
         id = "check_yaml_consistency",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
           condition = "true",
         )
         run(
@@ -50,14 +44,14 @@ public val workflowUpdateGradleWrapper: Workflow = workflow(
 
       job(
         id = "update-gradle-wrapper",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
         _customArguments = mapOf(
-        "needs" to ListCustomValue("check_yaml_consistency"),
+        "needs" to listOf("check_yaml_consistency"),
         )
       ) {
         uses(
           name = "Checkout",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
         uses(
           name = "Update Gradle Wrapper",

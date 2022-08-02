@@ -27,3 +27,5 @@ gradleEnterprise {
         publishOnFailure()
     }
 }
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

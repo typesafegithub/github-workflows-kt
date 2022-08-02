@@ -1,0 +1,8 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  cmd:
+    type: string
+  auth-token:
+    type: string
+  registry-url:
+    type: string

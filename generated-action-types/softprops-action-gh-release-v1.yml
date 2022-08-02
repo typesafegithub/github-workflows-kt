@@ -1,0 +1,39 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  body:
+    type: string
+  body_path:
+    type: string
+  name:
+    type: string
+  tag_name:
+    type: string
+  draft:
+    type: boolean
+  prerelease:
+    type: boolean
+  files:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  fail_on_unmatched_files:
+    type: boolean
+  repository:
+    type: string
+  token:
+    type: string
+  target_commitish:
+    type: string
+  discussion_category_name:
+    type: string
+  generate_release_notes:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  url:
+    type: string
+  id:
+    type: string
+  upload_url:
+    type: string

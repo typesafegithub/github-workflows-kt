@@ -15,14 +15,16 @@ import kotlin.collections.toTypedArray
 /**
  * Action: Amazon ECR "Login" Action for GitHub Actions
  *
- * Logs in the local Docker client to one or more ECR registries
+ * Logs in the local Docker client to one or more Amazon ECR Private registries or an Amazon ECR
+ * Public registry
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecr-login)
  */
 public class AmazonEcrLoginV1(
     /**
-     * A comma-delimited list of AWS account IDs that are associated with the ECR registries. If you
-     * do not specify a registry, the default ECR registry is assumed.
+     * A comma-delimited list of AWS account IDs that are associated with the ECR Private
+     * registries. If you do not specify a registry, the default ECR Private registry is assumed. If
+     * 'public' is given as input to 'registry-type', this input is ignored.
      */
     public val registries: List<String>? = null,
     /**
@@ -30,6 +32,10 @@ public class AmazonEcrLoginV1(
      * backward compatibility on self-hosted runners. Not recommended.
      */
     public val skipLogout: Boolean? = null,
+    /**
+     * Which ECR registry type to log into. Options: 'private', 'public'
+     */
+    public val registryType: AmazonEcrLoginV1.RegistryType? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -49,18 +55,31 @@ public class AmazonEcrLoginV1(
         *listOfNotNull(
             registries?.let { "registries" to it.joinToString(",") },
             skipLogout?.let { "skip-logout" to it.toString() },
+            registryType?.let { "registry-type" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
+    public sealed class RegistryType(
+        public val stringValue: String,
+    ) {
+        public object Private : AmazonEcrLoginV1.RegistryType("private")
+
+        public object Public : AmazonEcrLoginV1.RegistryType("public")
+
+        public class Custom(
+            customStringValue: String,
+        ) : AmazonEcrLoginV1.RegistryType(customStringValue)
+    }
+
     public class Outputs(
         private val stepId: String,
     ) {
         /**
-         * The URI of the ECR registry i.e. aws_account_id.dkr.ecr.region.amazonaws.com. If multiple
-         * registries are provided as inputs, this output will not be set.
+         * The URI of the ECR Private or ECR Public registry. If logging into multiple registries on
+         * ECR Private, this output will not be set.
          */
         public val registry: String = "steps.$stepId.outputs.registry"
 

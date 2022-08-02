@@ -1,0 +1,40 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  repo-token:
+    type: string
+  reviewers:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  team-reviewers:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  labels:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  base-branch:
+    type: string
+  target-branch:
+    type: string
+  set-distribution-checksum:
+    type: boolean
+  paths:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  paths-ignore:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  release-channel:
+    type: enum
+    allowed-values:
+    - stable
+    - release-candidate

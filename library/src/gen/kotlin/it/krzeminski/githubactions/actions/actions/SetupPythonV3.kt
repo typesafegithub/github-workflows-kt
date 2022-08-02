@@ -1,9 +1,12 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -18,6 +21,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-python)
  */
+@Deprecated(
+    message = "This action has a newer major version: SetupPythonV4",
+    replaceWith = ReplaceWith("SetupPythonV4"),
+)
 public class SetupPythonV3(
     /**
      * Version range or exact version of a Python version to use, using SemVer's version range

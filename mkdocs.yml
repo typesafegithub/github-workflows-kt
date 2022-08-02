@@ -1,3 +1,6 @@
+# pip install -r docs/requirements.txt
+# mkdocs serve
+
 site_name: GitHub Actions Kotlin DSL
 site_author: Piotr Krzemiński
 repo_url: https://github.com/krzema12/github-actions-kotlin-dsl/
@@ -7,6 +10,15 @@ theme:
   name: material
   features:
     - navigation.expand
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
 
 markdown_extensions:
   - pymdownx.magiclink
@@ -15,7 +27,12 @@ markdown_extensions:
   - admonition
 
 plugins:
-  - markdownextradata: {}
+  - markdownextradata:
+      jinja_options:
+        variable_start_string: '[['
+        variable_end_string: ']]'
+  - search
+  - mkdocs-video
 
 nav:
   - Introduction: 'index.md'
@@ -23,10 +40,14 @@ nav:
       - Getting started: 'user-guide/getting_started.md'
       - Script generator: 'user-guide/script-generator.md'
       - Using actions: 'user-guide/using-actions.md'
+      - Type-safe expressions: 'user-guide/type-safe-expressions.md'
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Supported actions: 'supported-actions.md'
   - Projects using this library: 'projects-using-this-library.md'
 
 extra:
-  version: 0.13.0
+  version: 0.23.0
+
+  # branch or tag name - the script-generator may have not yet updated to a breaking change in the library
+  scriptGeneratorVersion: 0.22.0

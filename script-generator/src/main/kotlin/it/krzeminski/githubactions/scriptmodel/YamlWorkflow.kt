@@ -1,11 +1,13 @@
 package it.krzeminski.githubactions.scriptmodel
 
+import it.krzeminski.githubactions.domain.Concurrency
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class YamlWorkflow(
     val name: String,
     val on: YamlWorkflowTriggers,
+    val concurrency: Concurrency? = null,
     val jobs: Map<String, YamlJob> = emptyMap(),
     val env: Map<String, String> = emptyMap(),
 ) {

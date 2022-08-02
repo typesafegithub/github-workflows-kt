@@ -1,7 +1,7 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.BranchProtectionRule
 import it.krzeminski.githubactions.domain.triggers.CheckRun
@@ -38,11 +38,7 @@ import it.krzeminski.githubactions.domain.triggers.Watch
 import it.krzeminski.githubactions.domain.triggers.WorkflowCall
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
 
@@ -58,12 +54,12 @@ public val workflowAllTriggers: Workflow = workflow(
         WorkflowDispatch(),
         BranchProtectionRule(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "deleted")
+            "types" to listOf("created", "deleted")
           ),
         ),
         CheckRun(
           _customArguments = mapOf(
-            "types" to ListCustomValue("completed", "rerequested")
+            "types" to listOf("completed", "rerequested")
           ),
         ),
         CheckSuite(),
@@ -73,7 +69,7 @@ public val workflowAllTriggers: Workflow = workflow(
         DeploymentStatus(),
         Discussion(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "edited", "answered")
+            "types" to listOf("created", "edited", "answered")
           ),
         ),
         DiscussionComment(),
@@ -81,81 +77,80 @@ public val workflowAllTriggers: Workflow = workflow(
         Gollum(),
         IssueComment(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "edited", "deleted")
+            "types" to listOf("created", "edited", "deleted")
           ),
         ),
         Issues(
           _customArguments = mapOf(
-            "types" to ListCustomValue("opened", "edited")
+            "types" to listOf("opened", "edited")
           ),
         ),
         Label(
           _customArguments = mapOf(
-            "types" to ListCustomValue("crDiscussionCommenteated", "deleted", "edited")
+            "types" to listOf("crDiscussionCommenteated", "deleted", "edited")
           ),
         ),
         Milestone(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "closed")
+            "types" to listOf("created", "closed")
           ),
         ),
         PageBuild(),
         PublicWorkflow(),
         Project(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "deleted")
+            "types" to listOf("created", "deleted")
           ),
         ),
         ProjectCard(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "moved")
+            "types" to listOf("created", "moved")
           ),
         ),
         ProjectColumn(
           _customArguments = mapOf(
-            "types" to ListCustomValue("moved")
+            "types" to listOf("moved")
           ),
         ),
         PullRequestReview(),
         PullRequestReviewComment(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created", "edited")
+            "types" to listOf("created", "edited")
           ),
         ),
         RegistryPackage(
           _customArguments = mapOf(
-            "types" to ListCustomValue("published", "updated")
+            "types" to listOf("published", "updated")
           ),
         ),
         RepositoryDispatch(),
         Release(
           _customArguments = mapOf(
-            "types" to ListCustomValue("published", "unpublished")
+            "types" to listOf("published", "unpublished")
           ),
         ),
         Status(
           _customArguments = mapOf(
-            "types" to ListCustomValue("started")
+            "types" to listOf("started")
           ),
         ),
         Watch(),
         WorkflowCall(),
         WorkflowRun(
           _customArguments = mapOf(
-            "types" to ListCustomValue("completed", "requested")
+            "types" to listOf("completed", "requested")
           ),
         ),
         ),
-      sourceFile = Paths.get("all-triggers.main.kts"),
-      targetFile = Paths.get("yaml-output/all-triggers.yml"),
+      sourceFile = Paths.get(".github/workflows/all-triggers.main.kts"),
     ) {
       job(
         id = "job-0",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "Check out",
-          action = CheckoutV2(),
+          action = CheckoutV3(),
         )
       }
 

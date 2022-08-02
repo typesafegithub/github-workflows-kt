@@ -1,20 +1,18 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.peterjgrainger.ActionCreateBranchV2
 import it.krzeminski.githubactions.actions.reposync.PullRequestV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowRefreshversionsPr: Workflow = workflow(
@@ -25,24 +23,23 @@ public val workflowRefreshversionsPr: Workflow = workflow(
         )),
         WorkflowDispatch(),
         ),
-      sourceFile = Paths.get("refreshversions-pr.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-pr.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-pr.main.kts"),
     ) {
       job(
         id = "Refresh-Versions",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(
           name = "check-out",
-          action = CheckoutV2(
+          action = CheckoutV3(
             ref = "main",
           ),
         )
         uses(
           name = "setup-java",
-          action = SetupJavaV2(
+          action = SetupJavaV3(
             javaVersion = "11",
-            distribution = SetupJavaV2.Distribution.Adopt,
+            distribution = SetupJavaV3.Distribution.Adopt,
           ),
         )
         uses(

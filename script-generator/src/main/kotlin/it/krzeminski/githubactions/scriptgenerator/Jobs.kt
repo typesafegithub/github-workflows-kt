@@ -1,13 +1,13 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.CodeBlock
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.dsl.ListCustomValue
 import it.krzeminski.githubactions.scriptmodel.YamlJob
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
+import it.krzeminski.githubactions.scriptmodel.runnerTypeBlockOf
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
+import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
 fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
@@ -16,7 +16,8 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
             .indent()
             .add("id = %S,\n", jobId)
         if (job.name != null) builder.add("name = %S,\n", job.name)
-        builder.add("runsOn = %M,\n", enumMemberName<RunnerType>(job.runsOn) ?: enumMemberName(RunnerType.UbuntuLatest))
+        builder.add(runnerTypeBlockOf(job.runsOn))
+        builder.add(concurrencyOf(job.concurrency))
         builder.add(
             job.env.joinToCode(
                 ifEmpty = CodeBlock.EMPTY,
@@ -41,7 +42,8 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
                     it.actionCoords.buildActionClassName() == coords.buildActionClassName()
                 } ?: availableWrappers.maxByOrNull { it.actionCoords.version }
                 val _customVersion = coords.version.takeIf { it != wrapper?.actionCoords?.version }
-                builder.add(step.generateAction(wrapper?.actionCoords ?: coords, wrapper?.inputTypings, _customVersion))
+                val inputTypings = wrapper?.provideTypes()
+                builder.add(step.generateAction(wrapper?.actionCoords ?: coords, inputTypings, _customVersion))
             } else {
                 builder.add(step.generateCommand())
             }
@@ -62,7 +64,7 @@ private fun YamlJob.customArguments(): CodeBlock {
         postfix = ")",
         transform = { key, list ->
             list.joinToCode(
-                prefix = CodeBlock.of("%S to %T(", key, ListCustomValue::class),
+                prefix = CodeBlock.of("%S to listOf(", key),
                 separator = ", ",
                 postfix = "),\n",
                 newLineAtEnd = false,

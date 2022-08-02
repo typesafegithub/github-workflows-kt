@@ -1,0 +1,4 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  token:
+    type: string

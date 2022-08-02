@@ -1,14 +1,16 @@
 ---
-name: Action wrapper request
-about: Request adding a wrapper for an action
-title: "[Action wrapper request] <enter action name here>"
+name: Action wrapper(s) request
+about: Request adding wrapper(s) for action(s)
+title: "[Action wrapper(s) request] <enter action name(s) here>"
 labels: enhancement
 assignees: ''
 
 ---
 
-**What action do you need?**
-_URL to GitHub, e.g.: https://github.com/actions/upload-artifact_
+### Are you sure the action(s) you want aren't already supported?
+_Please check https://krzema12.github.io/github-actions-kotlin-dsl/supported-actions/_
 
-**Do you have a wrapper working for you locally?**
-_Sharing any working code will speed up implementing the proper wrapper._
+Yes/no
+
+### What action(s) do you need?
+_URL to GitHub, e.g.: https://github.com/actions/upload-artifact_

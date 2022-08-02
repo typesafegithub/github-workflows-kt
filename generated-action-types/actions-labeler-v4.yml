@@ -1,0 +1,8 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  repo-token:
+    type: string
+  configuration-path:
+    type: string
+  sync-labels:
+    type: boolean

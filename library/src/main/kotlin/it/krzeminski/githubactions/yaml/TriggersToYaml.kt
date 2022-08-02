@@ -43,7 +43,11 @@ fun List<Trigger>.triggersToYaml(): String =
     joinToString(separator = "\n") { it.toYaml() }
 
 fun Trigger.toYaml(): String =
-    (toYamlFromMap() + toAdditionalYaml() + customArgumentsToYaml()).removeSuffix("\n")
+    (
+        toYamlFromMap() +
+            toAdditionalYaml() +
+            customArgumentsToYaml().let { if (it.isNotEmpty()) it.prependIndent("  ") else it }
+        ).removeSuffix("\n")
 
 private typealias MapOfYaml = LinkedHashMap<String, List<String>?>
 

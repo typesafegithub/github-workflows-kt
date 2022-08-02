@@ -9,13 +9,20 @@ on:
     types:
       - 'created'
 
+concurrency:
+  group: workflow_staging_environment
+  cancel-in-progress: false
+
 jobs:
   "build":
     runs-on: "ubuntu-latest"
+    concurrency:
+      group: job_staging_environment
+      cancel-in-progress: false
     steps:
       - id: step-0
-        name: CheckoutV2
-        uses: actions/checkout@v2
+        name: CheckoutV3
+        uses: actions/checkout@v3
       - id: step-1
         name: SetupNodeV3
         uses: actions/setup-node@v3

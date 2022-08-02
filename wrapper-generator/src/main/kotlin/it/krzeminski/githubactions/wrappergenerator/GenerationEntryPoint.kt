@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator
 
+import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
@@ -8,6 +9,8 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageNa
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
+import it.krzeminski.githubactions.wrappergenerator.types.deleteActionTypesYamlCacheIfObsolete
+import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -28,16 +31,19 @@ fun main() {
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
     listOfWrappersInDocs.toFile().delete()
-
+    generateEventPayloads()
     generateWrappers()
     generateListOfWrappersForDocs(listOfWrappersInDocs)
 }
 
 private fun generateWrappers() {
     deleteActionYamlCacheIfObsolete()
-    wrappersToGenerate.forEach { (actionCoords, inputTypings) ->
-        println("Generating ${actionCoords.prettyPrint}")
-        val (code, path) = actionCoords.generateWrapper(inputTypings)
+    deleteActionTypesYamlCacheIfObsolete()
+
+    wrappersToGenerate.forEach { wrapperRequest ->
+        println("Generating ${wrapperRequest.actionCoords.prettyPrint}")
+        val inputTypings = wrapperRequest.provideTypes()
+        val (code, path) = wrapperRequest.actionCoords.generateWrapper(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
             writeText(code)
@@ -93,7 +99,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
 }
 
 private fun ActionCoords.toMarkdownLinkToKotlinCode() =
-    "$version: [`${buildActionClassName()}`](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
+    "$version: [`${buildActionClassName()}`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
 
 private fun ActionCoords.toMarkdownLinkGithub() =
     "[$name](https://github.com/$owner/$name)"

@@ -1,0 +1,14 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  dotnet-version:
+    type: string
+  global-json-file:
+    type: string
+  source-url:
+    type: string
+  owner:
+    type: string
+  config-file:
+    type: string
+  include-prerelease:
+    type: boolean

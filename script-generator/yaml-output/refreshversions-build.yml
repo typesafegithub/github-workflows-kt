@@ -77,18 +77,18 @@ on:
 
 jobs:
   "check-all":
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ github.event.inputs.run-on || 'ubuntu-latest' }}"
     steps:
       - id: step-0
         name: Enable long paths for git Windows
         run: git config --global core.longpaths true
         if: ${{ runner.os == 'Windows' }}
       - id: step-1
-        name: CheckoutV2
-        uses: actions/checkout@v2
+        name: CheckoutV3
+        uses: actions/checkout@v3
       - id: step-2
         name: Configure JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: 11
           distribution: adopt

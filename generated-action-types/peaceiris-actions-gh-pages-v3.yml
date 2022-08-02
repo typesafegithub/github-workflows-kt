@@ -1,0 +1,45 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  deploy_key:
+    type: string
+  github_token:
+    type: string
+  personal_token:
+    type: string
+  publish_branch:
+    type: string
+  publish_dir:
+    type: string
+  destination_dir:
+    type: string
+  external_repository:
+    type: string
+  allow_empty_commit:
+    type: boolean
+  keep_files:
+    type: boolean
+  force_orphan:
+    type: boolean
+  user_name:
+    type: string
+  user_email:
+    type: string
+  commit_message:
+    type: string
+  full_commit_message:
+    type: string
+  tag_name:
+    type: string
+  tag_message:
+    type: string
+  enable_jekyll:
+    type: boolean
+  disable_nojekyll:
+    type: boolean
+  cname:
+    type: string
+  exclude_assets:
+    type: list
+    separator: ','
+    list-item:
+      type: string

@@ -23,6 +23,12 @@ inline fun <reified T : Enum<T>> enumMemberName(input: String): MemberName? {
         }
 }
 
+inline fun <reified T> objectsOfSealedClass(): List<T> {
+    require(T::class.isSealed) { "Expected sealed class, got ${T::class}" }
+    return T::class.sealedSubclasses
+        .mapNotNull { it.objectInstance }
+}
+
 fun normalizeEnum(s: String): String =
     s.replace("[ _+-]".toRegex(), "").lowercase()
 
@@ -35,7 +41,7 @@ public fun <K : Any, V : Any?> Map<K, V>.joinToCode(
     transform: ((K, V) -> CodeBlock?),
 ): CodeBlock =
     entries
-        .filterNot { (key, value) ->
+        .filterNot { (_, value) ->
             value == null || (value is List<*> && value.isEmpty())
         }
         .joinToCode(prefix, separator, postfix, ifEmpty, newLineAtEnd) { (key, value) ->

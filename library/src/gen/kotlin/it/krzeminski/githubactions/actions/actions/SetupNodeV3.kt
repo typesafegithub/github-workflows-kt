@@ -16,21 +16,22 @@ import kotlin.collections.toTypedArray
  * Action: Setup Node.js environment
  *
  * Setup a Node.js environment by adding problem matchers and optionally downloading and adding it
- * to the PATH
+ * to the PATH.
  *
  * [Action on GitHub](https://github.com/actions/setup-node)
  */
 public class SetupNodeV3(
     /**
-     * Set always-auth in npmrc
+     * Set always-auth in npmrc.
      */
     public val alwaysAuth: Boolean? = null,
     /**
-     * Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+     * Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
      */
     public val nodeVersion: String? = null,
     /**
-     * File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version
+     * File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version,
+     * .tool-versions.
      */
     public val nodeVersionFile: String? = null,
     /**
@@ -40,16 +41,17 @@ public class SetupNodeV3(
     public val architecture: String? = null,
     /**
      * Set this option if you want the action to check for the latest available version that
-     * satisfies the version spec
+     * satisfies the version spec.
      */
     public val checkLatest: Boolean? = null,
     /**
      * Optional registry to set up for auth. Will set the registry in a project level .npmrc and
-     * .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
+     * .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
      */
     public val registryUrl: String? = null,
     /**
-     * Optional scope for authenticating against scoped registries
+     * Optional scope for authenticating against scoped registries. Will fall back to the repository
+     * owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
      */
     public val scope: String? = null,
     /**
@@ -59,7 +61,7 @@ public class SetupNodeV3(
     public val token: String? = null,
     /**
      * Used to specify a package manager for caching in the default directory. Supported values:
-     * npm, yarn, pnpm
+     * npm, yarn, pnpm.
      */
     public val cache: SetupNodeV3.PackageManager? = null,
     /**
@@ -114,9 +116,14 @@ public class SetupNodeV3(
         private val stepId: String,
     ) {
         /**
-         * A boolean value to indicate if a cache was hit
+         * A boolean value to indicate if a cache was hit.
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
+        /**
+         * The installed node version.
+         */
+        public val nodeVersion: String = "steps.$stepId.outputs.node-version"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }

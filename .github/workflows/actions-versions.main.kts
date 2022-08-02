@@ -1,27 +1,27 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.12.0")
+#!/usr/bin/env kotlin
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.23.0")
 
-import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
+import it.krzeminski.githubactions.actions.peterevans.CreateIssueFromFileV4
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import java.nio.file.Paths
+import it.krzeminski.githubactions.yaml.writeToFile
 
-val checkIfNewActionVersionsWorkflow = workflow(
+workflow(
     name = "Updates available",
     on = listOf(
         Schedule(listOf(
-            Cron(dayWeek = "4", hour = "7", minute = "0")
+            Cron(hour = "7", minute = "0")
         )),
         WorkflowDispatch(),
     ),
-    sourceFile = Paths.get(".github/workflows/_GenerateWorkflows.main.kts"),
-    targetFile = Paths.get(".github/workflows/actions-versions.yml"),
+    sourceFile = __FILE__.toPath(),
 ) {
     job(
         id = "updates-available",
@@ -30,9 +30,9 @@ val checkIfNewActionVersionsWorkflow = workflow(
         uses(CheckoutV3())
         uses(
             name = "Set up JDK",
-            action = SetupJavaV2(
+            action = SetupJavaV3(
                 javaVersion = "11",
-                distribution = SetupJavaV2.Distribution.Adopt,
+                distribution = SetupJavaV3.Distribution.Zulu,
             )
         )
         uses(
@@ -44,12 +44,10 @@ val checkIfNewActionVersionsWorkflow = workflow(
         )
         uses(
             name = "Create issue",
-            action = CustomAction(
-                "peter-evans", "create-issue-from-file", "v4",
-                inputs = mapOf(
-                    "title" to "Updates available",
-                    "content-filepath" to "wrapper-generator/build/suggestVersions.md",
-                ))
+            action = CreateIssueFromFileV4(
+                title = "Updates available",
+                contentFilepath = "wrapper-generator/build/suggestVersions.md",
+            )
         )
     }
-}
+}.writeToFile()

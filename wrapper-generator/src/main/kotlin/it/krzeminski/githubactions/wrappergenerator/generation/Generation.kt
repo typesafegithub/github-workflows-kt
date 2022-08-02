@@ -147,7 +147,8 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
     val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
         PropertySpec.builder(key.toCamelCase(), String::class)
             .initializer("\"steps.\$stepId.outputs.$key\"")
-            .addKdoc(value.description)
+            // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-52940
+            .addKdoc(value.description.replace("/*", "/ *"))
             .build()
     }
     addType(
@@ -278,7 +279,8 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
             inputs.map { (key, input) ->
                 ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                     .defaultValueIfNullable(input)
-                    .addKdoc(input.description)
+                    // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-52940
+                    .addKdoc(input.description.replace("/*", "/ *"))
                     .build()
             }.plus(
                 ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)

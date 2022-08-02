@@ -1,0 +1,28 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  task-definition:
+    type: string
+  service:
+    type: string
+  cluster:
+    type: string
+  wait-for-service-stability:
+    type: boolean
+  wait-for-minutes:
+    type: integer
+  codedeploy-appspec:
+    type: string
+  codedeploy-application:
+    type: string
+  codedeploy-deployment-group:
+    type: string
+  codedeploy-deployment-description:
+    type: string
+  force-new-deployment:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  task-definition-arn:
+    type: string
+  codedeploy-deployment-id:
+    type: string

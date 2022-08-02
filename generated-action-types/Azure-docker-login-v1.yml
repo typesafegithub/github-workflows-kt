@@ -1,0 +1,8 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  username:
+    type: string
+  password:
+    type: string
+  login-server:
+    type: string

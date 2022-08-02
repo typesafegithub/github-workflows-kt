@@ -10,6 +10,7 @@ import generated.workflowRefreshversionsPr
 import generated.workflowRefreshversionsWebsite
 import generated.workflowUpdateGradleWrapper
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 import it.krzeminski.githubactions.yaml.writeToFile
 
 class RunKotlinScripts : FunSpec({
@@ -26,6 +27,12 @@ class RunKotlinScripts : FunSpec({
     )
 
     test("Execute Kotlin Scripts") {
-        allWorkflows.forEach { it.writeToFile(addConsistencyCheck = false) }
+        val gitRootDir = tempdir().also {
+            it.resolve(".git").mkdirs()
+        }.toPath()
+        allWorkflows.forEach {
+            it.copy(sourceFile = gitRootDir.resolve(it.sourceFile))
+                .writeToFile(addConsistencyCheck = false)
+        }
     }
 })

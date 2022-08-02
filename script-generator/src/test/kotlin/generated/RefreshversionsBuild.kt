@@ -1,19 +1,17 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
-import it.krzeminski.githubactions.actions.actions.SetupJavaV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Boolean
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch.Type.Choice
-import it.krzeminski.githubactions.dsl.expr
+import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.listOf
 
@@ -76,12 +74,11 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
           ),
         ))
         ),
-      sourceFile = Paths.get("refreshversions-build.main.kts"),
-      targetFile = Paths.get("yaml-output/refreshversions-build.yml"),
+      sourceFile = Paths.get(".github/workflows/refreshversions-build.main.kts"),
     ) {
       job(
         id = "check-all",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.Custom(expr("github.event.inputs.run-on || 'ubuntu-latest'")),
       ) {
         run(
           name = "Enable long paths for git Windows",
@@ -89,13 +86,13 @@ public val workflowRefreshversionsBuild: Workflow = workflow(
           condition = expr("runner.os == 'Windows'"),
         )
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         uses(
           name = "Configure JDK",
-          action = SetupJavaV2(
-            distribution = SetupJavaV2.Distribution.Adopt,
+          action = SetupJavaV3(
+            distribution = SetupJavaV3.Distribution.Adopt,
             javaVersion = "11",
           ),
         )

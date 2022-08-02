@@ -1,10 +1,13 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -19,6 +22,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/build-push-action)
  */
+@Deprecated(
+    message = "This action has a newer major version: BuildPushActionV3",
+    replaceWith = ReplaceWith("BuildPushActionV3"),
+)
 public class BuildPushActionV2(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)

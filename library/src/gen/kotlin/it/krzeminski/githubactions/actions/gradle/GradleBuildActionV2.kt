@@ -30,8 +30,16 @@ public class GradleBuildActionV2(
     public val cacheDisabled: Boolean? = null,
     /**
      * When 'true', existing entries will be read from the cache but no entries will be written.
+     * By default this value is 'false' for workflows on the GitHub default branch and 'true' for
+     * workflows on other branches.
      */
     public val cacheReadOnly: Boolean? = null,
+    /**
+     * When 'true', entries will not be restored from the cache but will be saved at the end of the
+     * Job.
+     * Setting this to 'true' implies cache-read-only will be 'false'.
+     */
+    public val cacheWriteOnly: Boolean? = null,
     /**
      * Paths within Gradle User Home to cache.
      */
@@ -53,10 +61,9 @@ public class GradleBuildActionV2(
      */
     public val gradleExecutable: String? = null,
     /**
-     * When 'true', entries will not be restored from the cache but will be saved at the end of the
-     * Job. This allows a 'clean' cache entry to be written.
+     * When 'false', no Job Summary will be generated for the Job.
      */
-    public val cacheWriteOnly: String? = null,
+    public val generateJobSummary: Boolean? = null,
     /**
      * When 'true', the action will not attempt to restore the Gradle User Home entries from other
      * Jobs.
@@ -87,12 +94,13 @@ public class GradleBuildActionV2(
             gradleVersion?.let { "gradle-version" to it },
             cacheDisabled?.let { "cache-disabled" to it.toString() },
             cacheReadOnly?.let { "cache-read-only" to it.toString() },
+            cacheWriteOnly?.let { "cache-write-only" to it.toString() },
             gradleHomeCacheIncludes?.let { "gradle-home-cache-includes" to it.joinToString("\n") },
             gradleHomeCacheExcludes?.let { "gradle-home-cache-excludes" to it.joinToString("\n") },
             arguments?.let { "arguments" to it },
             buildRootDirectory?.let { "build-root-directory" to it },
             gradleExecutable?.let { "gradle-executable" to it },
-            cacheWriteOnly?.let { "cache-write-only" to it },
+            generateJobSummary?.let { "generate-job-summary" to it.toString() },
             gradleHomeCacheStrictMatch?.let { "gradle-home-cache-strict-match" to it },
             workflowJobContext?.let { "workflow-job-context" to it },
             *_customInputs.toList().toTypedArray(),

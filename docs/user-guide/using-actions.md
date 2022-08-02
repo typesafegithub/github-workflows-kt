@@ -22,7 +22,7 @@ you have two ways to proceed.
 ### Typed wrapper
 
 !!! info "When to use this approach"
-    It lets you create an action wrapper in a similar manner that is provided by the build-in action wrappers in this
+    It lets you create an action wrapper in a similar manner that is provided by the built-in action wrappers in this
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
@@ -90,7 +90,7 @@ val customAction = CustomAction(
 If your custom action has outputs, you can access them, albeit in a type-unsafe manner:
 
 ```kotlin
-job("test_job", RunnerType.UbuntuLatest) {
+job("test_job", runsOn = RunnerType.UbuntuLatest) {
     val customActionStep = uses(
         name = "Some step with output",
         action = customAction,

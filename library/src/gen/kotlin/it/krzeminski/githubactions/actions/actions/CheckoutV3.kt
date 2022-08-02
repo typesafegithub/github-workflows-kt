@@ -94,6 +94,11 @@ public class CheckoutV3(
      */
     public val submodules: Boolean? = null,
     /**
+     * Add repository path as safe.directory for Git global config by running `git
+     * config --global --add safe.directory <path>`
+     */
+    public val setSafeDirectory: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -118,6 +123,7 @@ public class CheckoutV3(
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
+            setSafeDirectory?.let { "set-safe-directory" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

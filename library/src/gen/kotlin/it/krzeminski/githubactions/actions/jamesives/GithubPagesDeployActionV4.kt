@@ -43,7 +43,7 @@ public class GithubPagesDeployActionV4(
     /**
      * This is the branch you wish to deploy to, for example gh-pages or docs.
      */
-    public val branch: String,
+    public val branch: String? = null,
     /**
      * The folder in your repository that you want to deploy. If your build script compiles into a
      * directory named build you would put it here. Folder paths cannot have a leading / or ./. If you
@@ -104,6 +104,11 @@ public class GithubPagesDeployActionV4(
      */
     public val workspace: String? = null,
     /**
+     * Add a tag to the commit, this can be used like so: 'v0.1'. Only works when 'dry-run' is not
+     * used.
+     */
+    public val tag: String? = null,
+    /**
      * This option can be used if you'd prefer to have a single commit on the deployment branch
      * instead of maintaining the full history.
      */
@@ -130,7 +135,7 @@ public class GithubPagesDeployActionV4(
         *listOfNotNull(
             sshKey?.let { "ssh-key" to it },
             token?.let { "token" to it },
-            "branch" to branch,
+            branch?.let { "branch" to it },
             "folder" to folder,
             targetFolder?.let { "target-folder" to it },
             commitMessage?.let { "commit-message" to it },
@@ -142,6 +147,7 @@ public class GithubPagesDeployActionV4(
             gitConfigEmail?.let { "git-config-email" to it },
             repositoryName?.let { "repository-name" to it },
             workspace?.let { "workspace" to it },
+            tag?.let { "tag" to it },
             singleCommit?.let { "single-commit" to it.toString() },
             silent?.let { "silent" to it.toString() },
             *_customInputs.toList().toTypedArray(),

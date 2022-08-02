@@ -1,9 +1,11 @@
 package it.krzeminski.githubactions.dsl
 
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
+import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
 @GithubActionsDsl
@@ -13,17 +15,19 @@ class WorkflowBuilder(
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
-    targetFile: Path,
+    targetFileName: String,
+    concurrency: Concurrency? = null,
     jobs: List<Job> = emptyList(),
-    _customArguments: Map<String, CustomValue>,
+    _customArguments: Map<String, @Contextual Any>,
 ) {
     internal var workflow = Workflow(
         name = name,
         on = on,
         env = env,
         sourceFile = sourceFile,
-        targetFile = targetFile,
+        targetFileName = targetFileName,
         jobs = jobs,
+        concurrency = concurrency,
         _customArguments = _customArguments,
     )
 
@@ -36,8 +40,9 @@ class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
-        _customArguments: Map<String, CustomValue> = mapOf(),
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
         timeoutMinutes: Int? = null,
+        concurrency: Concurrency? = null,
         block: JobBuilder.() -> Unit,
     ): Job {
         val jobBuilder = JobBuilder(
@@ -49,6 +54,7 @@ class WorkflowBuilder(
             env = env,
             strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
             _customArguments = _customArguments,
         )
         jobBuilder.block()
@@ -70,7 +76,7 @@ fun Workflow.toBuilder() =
         name = name,
         on = on,
         sourceFile = sourceFile,
-        targetFile = targetFile,
+        targetFileName = targetFileName,
         jobs = jobs,
         _customArguments = _customArguments,
     )
@@ -81,8 +87,9 @@ fun workflow(
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path,
-    targetFile: Path,
-    _customArguments: Map<String, CustomValue> = mapOf(),
+    targetFileName: String = sourceFile.fileName.toString().substringBeforeLast(".main.kts") + ".yaml",
+    concurrency: Concurrency? = null,
+    _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
     require(on.isNotEmpty()) {
@@ -94,7 +101,8 @@ fun workflow(
         on = on,
         env = env,
         sourceFile = sourceFile,
-        targetFile = targetFile,
+        targetFileName = targetFileName,
+        concurrency = concurrency,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()

@@ -1,15 +1,12 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV2
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupNodeV3
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Release
-import it.krzeminski.githubactions.dsl.ListCustomValue
-import it.krzeminski.githubactions.dsl.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
-import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
 
@@ -18,20 +15,21 @@ public val workflowNodejsPackage: Workflow = workflow(
       on = listOf(
         Release(
           _customArguments = mapOf(
-            "types" to ListCustomValue("created")
+            "types" to listOf("created")
           ),
         ),
         ),
-      sourceFile = Paths.get("nodejs-package.main.kts"),
-      targetFile = Paths.get("yaml-output/nodejs-package.yml"),
+      sourceFile = Paths.get(".github/workflows/nodejs-package.main.kts"),
+      concurrency = Concurrency(group = "workflow_staging_environment", cancelInProgress = false),
     ) {
       job(
         id = "build",
-        runsOn = UbuntuLatest,
+        runsOn = RunnerType.UbuntuLatest,
+        concurrency = Concurrency(group = "job_staging_environment", cancelInProgress = false),
       ) {
         uses(
-          name = "CheckoutV2",
-          action = CheckoutV2(),
+          name = "CheckoutV3",
+          action = CheckoutV3(),
         )
         uses(
           name = "SetupNodeV3",
