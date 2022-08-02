@@ -1,7 +1,9 @@
 plugins {
     base
     // Publishing.
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // Needs to be applied to the root project.
+    id("io.github.gradle-nexus.publish-plugin") // Needs to be applied to the root project.
+
+    // note: plugin versions are defined in ./buildSrc/build.gradle.kts
 }
 
 group = "it.krzeminski"

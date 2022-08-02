@@ -7,6 +7,7 @@ object Versions {
     const val kotlin = "1.7.10"
     const val detekt = "1.21.0"
     const val ktlint = "10.3.0"
+    const val nexusPublishPlugin = "1.1.0"
 }
 
 dependencies {
@@ -16,6 +17,7 @@ dependencies {
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}")
     implementation("org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlint}")
+    implementation("io.github.gradle-nexus:publish-plugin:${Versions.nexusPublishPlugin}")
 
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.6.4"))
     implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
