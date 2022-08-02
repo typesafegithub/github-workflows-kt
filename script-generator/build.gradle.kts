@@ -4,6 +4,7 @@ plugins {
     buildsrc.convention.`kotlin-jvm`
 
     kotlin("plugin.serialization")
+
     application
 }
 
@@ -33,10 +34,8 @@ ktlint {
     }
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
-        jvmTarget = "11"
-        allWarningsAsErrors = true
         freeCompilerArgs += listOf(
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )

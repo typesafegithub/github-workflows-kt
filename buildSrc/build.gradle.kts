@@ -1,17 +1,12 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "1.6.20"
+    kotlin("jvm") version embeddedKotlinVersion
 }
 
 object Versions {
-    const val jvmTarget = "11"
-    const val kotlinTarget = "1.6"
-
-    const val kotlin = "1.6.20"
-    const val detekt = "1.20.0"
-    const val ktlint = "10.2.1"
+    const val kotlin = "1.7.10"
+    const val detekt = "1.21.0"
+    const val ktlint = "10.3.0"
 }
 
 dependencies {
@@ -21,22 +16,16 @@ dependencies {
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}")
     implementation("org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlint}")
+
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.6.4"))
+    implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
 }
 
-tasks.withType<KotlinCompile>().configureEach {
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
-        jvmTarget = Versions.jvmTarget
-        apiVersion = Versions.kotlinTarget
-        languageVersion = Versions.kotlinTarget
-    }
-}
-
-kotlin {
-    jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(Versions.jvmTarget))
-    }
-
-    kotlinDslPluginOptions {
-        jvmTarget.set(Versions.jvmTarget)
+        freeCompilerArgs += listOf(
+            "-opt-in=kotlin.OptIn",
+            "-opt-in=kotlin.time.ExperimentalTime",
+        )
     }
 }

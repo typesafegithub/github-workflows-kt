@@ -1,5 +1,8 @@
 plugins {
     buildsrc.convention.`kotlin-jvm`
+
+    kotlin("plugin.serialization")
+
     application
 }
 
@@ -24,7 +27,7 @@ tasks.run.configure {
     workingDir(rootProject.layout.projectDirectory)
 }
 
-tasks.register<JavaExec>("suggestVersions") {
+val suggestVersions by tasks.registering(JavaExec::class) {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.versions.SuggestVersionsKt")
     dependsOn(tasks.compileKotlin)

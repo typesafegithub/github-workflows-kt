@@ -1,13 +1,6 @@
 package buildsrc.convention
 
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.`maven-publish`
-import org.gradle.kotlin.dsl.provideDelegate
-import org.gradle.kotlin.dsl.repositories
-import org.gradle.kotlin.dsl.signing
+import buildsrc.config.createGitHubActionsKotlinDslPom
 
 plugins {
     `maven-publish`
@@ -23,32 +16,10 @@ publishing {
             artifactId = libraryName
             from(components["java"])
 
-            pom {
-                name.set(libraryName)
-                description.set("Authoring GitHub Actions workflows in Kotlin.")
-                url.set("https://github.com/$githubUser/$libraryName")
-
-                licenses {
-                    license {
-                        name.set("Apache License, version 2.0")
-                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:git://github.com/$githubUser/$libraryName.git/")
-                    developerConnection.set("scm:git:ssh://github.com:$githubUser/$libraryName.git")
-                    url.set("https://github.com/$githubUser/$libraryName.git")
-                }
-
-                developers {
-                    developer {
-                        id.set("krzema12")
-                        name.set("Piotr Krzemiński")
-                        email.set("git@krzeminski.it")
-                    }
-                }
-            }
+            createGitHubActionsKotlinDslPom(
+                githubUser = githubUser,
+                libraryName = libraryName,
+            )
         }
     }
 
@@ -65,8 +36,13 @@ publishing {
     }
 }
 
-tasks {
-    signing {
-        sign(publishing.publications["mavenJava"])
+signing {
+    val signingKey = providers.environmentVariable("SIGNING_KEY")
+    val signingPassword = providers.environmentVariable("SIGNING_PASSWORD")
+
+    if (signingKey.isPresent() && signingPassword.isPresent()) {
+        useInMemoryPgpKeys(signingKey.get(), signingPassword.get())
     }
+
+    sign(publishing.publications["mavenJava"])
 }
