@@ -21,6 +21,10 @@ import kotlin.collections.toTypedArray
  */
 public class ConfigureAwsCredentialsV1(
     /**
+     * The audience to use for the OIDC provider
+     */
+    public val audience: String? = null,
+    /**
      * AWS Access Key ID. This input is required if running in the GitHub hosted environment. It is
      * optional if running in a self-hosted environment that already has AWS credentials, for example
      * on an EC2 instance.
@@ -87,6 +91,7 @@ public class ConfigureAwsCredentialsV1(
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
+            audience?.let { "audience" to it },
             awsAccessKeyId?.let { "aws-access-key-id" to it },
             awsSecretAccessKey?.let { "aws-secret-access-key" to it },
             awsSessionToken?.let { "aws-session-token" to it },
