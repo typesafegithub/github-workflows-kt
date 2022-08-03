@@ -15,7 +15,3 @@ nexusPublishing {
     }
     packageGroup.set("it.krzeminski")
 }
-
-tasks.wrapper {
-    gradleVersion = "7.5"
-}
