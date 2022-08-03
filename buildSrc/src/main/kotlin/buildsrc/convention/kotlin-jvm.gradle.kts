@@ -30,7 +30,6 @@ tasks.withType<KotlinCompile> {
         allWarningsAsErrors = true
 
         freeCompilerArgs += listOf(
-            "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=kotlin.ExperimentalStdlibApi",
             "-opt-in=kotlin.time.ExperimentalTime",
         )
