@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `kotlin-dsl`
     kotlin("jvm") version embeddedKotlinVersion
@@ -16,7 +18,7 @@ dependencies {
     implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         this.freeCompilerArgs += listOf(
             "-opt-in=kotlin.time.ExperimentalTime",
