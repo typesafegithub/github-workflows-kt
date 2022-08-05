@@ -69,7 +69,7 @@ java {
 
 ktlint {
     filter {
-        exclude { it.file.path.contains("/gen/") }
+        exclude { it.file.invariantSeparatorsPath.contains("/gen/") }
     }
 }
 
