@@ -35,7 +35,8 @@ public class SetupMsbuildV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupMsbuildV1.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v1") {
+) : ActionWithOutputs<SetupMsbuildV1.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v1")
+        {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

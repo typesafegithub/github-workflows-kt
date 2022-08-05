@@ -158,7 +158,7 @@ public class SetupWslV1(
          * be set.
          */
         public val wslShellDistributionWrapperPath: String =
-            "steps.$stepId.outputs.wsl-shell-distribution-wrapper-path"
+                "steps.$stepId.outputs.wsl-shell-distribution-wrapper-path"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }

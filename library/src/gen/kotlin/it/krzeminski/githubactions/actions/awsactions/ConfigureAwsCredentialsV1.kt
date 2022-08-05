@@ -84,10 +84,8 @@ public class ConfigureAwsCredentialsV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<ConfigureAwsCredentialsV1.Outputs>(
-    "aws-actions", "configure-aws-credentials",
-    _customVersion ?: "v1"
-) {
+) : ActionWithOutputs<ConfigureAwsCredentialsV1.Outputs>("aws-actions", "configure-aws-credentials",
+        _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

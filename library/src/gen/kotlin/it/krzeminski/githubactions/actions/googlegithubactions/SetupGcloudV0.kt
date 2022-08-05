@@ -86,9 +86,8 @@ public class SetupGcloudV0(
             serviceAccountEmail?.let { "service_account_email" to it },
             serviceAccountKey?.let { "service_account_key" to it },
             projectId?.let { "project_id" to it },
-            installComponents?.let {
-                "install_components" to it.joinToString(",") { it.stringValue }
-            },
+            installComponents?.let { "install_components" to it.joinToString(",") { it.stringValue }
+                    },
             exportDefaultCredentials?.let { "export_default_credentials" to it.toString() },
             credentialsFilePath?.let { "credentials_file_path" to it },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },

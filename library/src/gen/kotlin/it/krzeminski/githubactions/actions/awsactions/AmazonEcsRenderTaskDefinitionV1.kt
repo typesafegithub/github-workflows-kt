@@ -47,10 +47,8 @@ public class AmazonEcsRenderTaskDefinitionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<AmazonEcsRenderTaskDefinitionV1.Outputs>(
-    "aws-actions",
-    "amazon-ecs-render-task-definition", _customVersion ?: "v1"
-) {
+) : ActionWithOutputs<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
+        "amazon-ecs-render-task-definition", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

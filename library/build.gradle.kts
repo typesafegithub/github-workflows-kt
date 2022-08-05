@@ -67,6 +67,12 @@ java {
     withSourcesJar()
 }
 
+ktlint {
+    filter {
+        exclude { it.file.path.contains("/gen/") }
+    }
+}
+
 val githubUser = "krzema12"
 val libraryName = "github-actions-kotlin-dsl"
 

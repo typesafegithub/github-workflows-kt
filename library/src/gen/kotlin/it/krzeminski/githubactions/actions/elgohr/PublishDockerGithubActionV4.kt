@@ -94,10 +94,8 @@ public class PublishDockerGithubActionV4(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<PublishDockerGithubActionV4.Outputs>(
-    "elgohr", "Publish-Docker-Github-Action",
-    _customVersion ?: "v4"
-) {
+) : ActionWithOutputs<PublishDockerGithubActionV4.Outputs>("elgohr", "Publish-Docker-Github-Action",
+        _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

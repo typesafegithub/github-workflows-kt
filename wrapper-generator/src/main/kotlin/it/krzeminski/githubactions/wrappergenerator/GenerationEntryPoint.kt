@@ -15,11 +15,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /***
- * Either run this main() function and then manually call
- *    ./gradlew ktlintFormat
- *
- * Or do both using this command
- *    ./gradlew :wrapper-generator:run
+ * Either run this main() function or run this command: ./gradlew :wrapper-generator:run
  */
 fun main() {
     checkDuplicateWrappers()
@@ -49,11 +45,6 @@ private fun generateWrappers() {
             writeText(code)
         }
     }
-    println(
-        """Now reformat the code with the command:
-        |./gradlew ktlintFormat
-        """.trimMargin()
-    )
 }
 
 private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
