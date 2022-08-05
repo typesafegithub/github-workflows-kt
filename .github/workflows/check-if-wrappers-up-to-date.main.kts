@@ -19,7 +19,7 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
-        Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
+        Schedule(triggers = listOf(Cron(minute = "0"))),
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
