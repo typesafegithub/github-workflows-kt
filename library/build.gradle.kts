@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.23.0"
+version = "0.24.0"
 
 dependencies {
     implementation("com.charleskorn.kaml:kaml:0.46.0")
