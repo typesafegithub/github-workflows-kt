@@ -1,10 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.10" apply false
-    kotlin("plugin.serialization") version "1.7.10" apply false
-
-    // Code quality.
-    id("io.gitlab.arturbosch.detekt") version "1.21.0" apply false
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0" apply false
+    base
 
     // Publishing.
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // Needs to be applied to the root project.
