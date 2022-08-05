@@ -86,6 +86,10 @@ public class PublishDockerGithubActionV4(
      */
     public val noPush: Boolean? = null,
     /**
+     * Use platforms for building multi-arch images
+     */
+    public val platforms: List<String>? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -115,6 +119,7 @@ public class PublishDockerGithubActionV4(
             tagNames?.let { "tag_names" to it.toString() },
             tagSemver?.let { "tag_semver" to it.toString() },
             noPush?.let { "no_push" to it.toString() },
+            platforms?.let { "platforms" to it.joinToString(",") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

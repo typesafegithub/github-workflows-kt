@@ -686,6 +686,7 @@ val wrappersToGenerate = listOf(
                 "tag_names" to BooleanTyping,
                 "tag_semver" to BooleanTyping,
                 "snapshot" to BooleanTyping,
+                "platforms" to ListOfTypings(","),
             )
         )
     ),
