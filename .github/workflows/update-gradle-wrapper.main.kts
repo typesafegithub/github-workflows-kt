@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.23.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.24.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradleupdate.UpdateGradleWrapperActionV1
