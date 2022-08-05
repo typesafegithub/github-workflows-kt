@@ -94,7 +94,7 @@ public class UpdateGradleWrapperActionV1(
         public object Stable : UpdateGradleWrapperActionV1.ReleaseChannel("stable")
 
         public object ReleaseCandidate :
-            UpdateGradleWrapperActionV1.ReleaseChannel("release-candidate")
+                UpdateGradleWrapperActionV1.ReleaseChannel("release-candidate")
 
         public class Custom(
             customStringValue: String,

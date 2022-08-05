@@ -29,11 +29,11 @@ public class AmazonEcrLoginV1(
     public val registries: List<String>? = null,
     /**
      * Whether to skip explicit logout of the registries during post-job cleanup. Exists for
-     * backward compatibility on self-hosted runners. Not recommended.
+     * backward compatibility on self-hosted runners. Not recommended. Options: ['true', 'false']
      */
     public val skipLogout: Boolean? = null,
     /**
-     * Which ECR registry type to log into. Options: 'private', 'public'
+     * Which ECR registry type to log into. Options: [private, public]
      */
     public val registryType: AmazonEcrLoginV1.RegistryType? = null,
     /**
@@ -45,11 +45,8 @@ public class AmazonEcrLoginV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>(
-    "aws-actions", "amazon-ecr-login",
-    _customVersion
-        ?: "v1"
-) {
+) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
+        "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

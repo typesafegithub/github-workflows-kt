@@ -57,10 +57,8 @@ public class CreateIssueFromFileV4(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<CreateIssueFromFileV4.Outputs>(
-    "peter-evans", "create-issue-from-file",
-    _customVersion ?: "v4"
-) {
+) : ActionWithOutputs<CreateIssueFromFileV4.Outputs>("peter-evans", "create-issue-from-file",
+        _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

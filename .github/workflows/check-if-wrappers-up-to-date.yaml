@@ -11,6 +11,7 @@ on:
   pull_request:
   schedule:
    - cron: '0 1 * * *'
+  workflow_dispatch:
 
 jobs:
   "check_yaml_consistency":

@@ -88,7 +88,7 @@ fun deleteActionYamlCacheIfObsolete() {
 
     if (!cacheUpToDate) {
         actionYamlDir.deleteRecursively()
-        actionYamlDir.mkdir()
+        actionYamlDir.mkdirs()
         dateTxt.writeText(today)
     }
 }

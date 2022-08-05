@@ -102,10 +102,8 @@ public class GitAutoCommitActionV4(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<GitAutoCommitActionV4.Outputs>(
-    "stefanzweifel", "git-auto-commit-action",
-    _customVersion ?: "v4"
-) {
+) : ActionWithOutputs<GitAutoCommitActionV4.Outputs>("stefanzweifel", "git-auto-commit-action",
+        _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

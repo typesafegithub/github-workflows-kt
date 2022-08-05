@@ -41,7 +41,8 @@ public class SetupJuliaV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1") {
+) : ActionWithOutputs<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1")
+        {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

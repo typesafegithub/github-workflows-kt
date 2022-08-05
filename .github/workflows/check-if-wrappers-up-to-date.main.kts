@@ -10,6 +10,7 @@ import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
+import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.writeToFile
 
@@ -19,6 +20,7 @@ workflow(
         Push(branches = listOf("main")),
         PullRequest(),
         Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
+        WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
 ) {

@@ -155,10 +155,8 @@ public class BlogPostWorkflowV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<BlogPostWorkflowV1.Outputs>(
-    "gautamkrishnar", "blog-post-workflow",
-    _customVersion ?: "v1"
-) {
+) : ActionWithOutputs<BlogPostWorkflowV1.Outputs>("gautamkrishnar", "blog-post-workflow",
+        _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

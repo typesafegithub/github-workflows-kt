@@ -44,6 +44,12 @@ val waitUntilLibraryPresentInMavenCentral by tasks.registering(AwaitMavenCentral
     queriedUrl.set("https://repo1.maven.org/maven2/it/krzeminski/github-actions-kotlin-dsl/$version/")
 }
 
+ktlint {
+    filter {
+        exclude { it.file.path.contains("/gen/") }
+    }
+}
+
 val validateDuplicatedVersion by tasks.registering {
     val mkdocsYml = rootProject.layout.projectDirectory.file("mkdocs.yml")
     val versionKt = rootProject.layout.projectDirectory.file(

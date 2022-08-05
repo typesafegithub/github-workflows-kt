@@ -18,7 +18,6 @@ import java.io.File
 
 fun main() {
     generateEventPayloads()
-    println("Remember to call ./gradlew ktlintFormat")
 }
 /*
  * Generate type-safe accessors for GitHub Event payloads
