@@ -1,16 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
+    buildsrc.convention.`kotlin-jvm`
+
     kotlin("plugin.serialization")
+
     application
-
-    // Code quality.
-    id("org.jlleitschuh.gradle.ktlint")
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -19,14 +14,6 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("com.squareup:kotlinpoet:1.12.0")
     implementation(kotlin("reflect"))
-
-    testImplementation(platform("io.kotest:kotest-bom:5.4.1"))
-    testImplementation("io.kotest:kotest-assertions-core")
-    testImplementation("io.kotest:kotest-runner-junit5")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }
 
 application {
@@ -42,8 +29,6 @@ ktlint {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
-        allWarningsAsErrors = true
         freeCompilerArgs += listOf(
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )

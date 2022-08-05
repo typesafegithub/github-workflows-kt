@@ -9,12 +9,12 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
 
 plugins {
-    kotlin("jvm")
+    buildsrc.convention.`kotlin-jvm`
+
     kotlin("plugin.serialization")
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
-    id("org.jlleitschuh.gradle.ktlint")
 
     // Publishing.
     `maven-publish`
@@ -24,18 +24,11 @@ plugins {
 group = "it.krzeminski"
 version = "0.23.0"
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("org.yaml:snakeyaml:1.30")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
 
-    testImplementation(platform("io.kotest:kotest-bom:5.4.1"))
-    testImplementation("io.kotest:kotest-assertions-core")
-    testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     testImplementation(kotlin("reflect"))
 }
@@ -50,21 +43,10 @@ sourceSets {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
-        allWarningsAsErrors = true
         freeCompilerArgs += listOf(
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )
     }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
 }
 
 ktlint {

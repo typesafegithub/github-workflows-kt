@@ -1,5 +1,7 @@
 rootProject.name = "github-actions-kotlin-dsl"
 
+apply(from = "./buildSrc/repositories.settings.gradle.kts")
+
 include(
     "library",
     "wrapper-generator",
@@ -8,6 +10,11 @@ include(
 
 plugins {
     id("com.gradle.enterprise").version("3.8.1")
+}
+
+dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage") // Central declaration of repositories is an incubating feature
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
 }
 
 gradleEnterprise {
