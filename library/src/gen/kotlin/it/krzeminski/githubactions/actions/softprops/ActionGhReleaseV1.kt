@@ -86,11 +86,8 @@ public class ActionGhReleaseV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<ActionGhReleaseV1.Outputs>(
-    "softprops", "action-gh-release",
-    _customVersion
-        ?: "v1"
-) {
+) : ActionWithOutputs<ActionGhReleaseV1.Outputs>("softprops", "action-gh-release", _customVersion ?:
+        "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

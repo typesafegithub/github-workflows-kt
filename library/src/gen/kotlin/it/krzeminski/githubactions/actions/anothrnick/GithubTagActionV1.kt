@@ -26,11 +26,8 @@ public class GithubTagActionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<GithubTagActionV1.Outputs>(
-    "anothrNick", "github-tag-action",
-    _customVersion
-        ?: "v1.38.0"
-) {
+) : ActionWithOutputs<GithubTagActionV1.Outputs>("anothrNick", "github-tag-action", _customVersion
+        ?: "v1.38.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 

@@ -36,7 +36,7 @@ public class GradleBuildActionV2(
     public val cacheReadOnly: Boolean? = null,
     /**
      * When 'true', entries will not be restored from the cache but will be saved at the end of the
-     * Job.
+     * Job. 
      * Setting this to 'true' implies cache-read-only will be 'false'.
      */
     public val cacheWriteOnly: Boolean? = null,
@@ -83,11 +83,8 @@ public class GradleBuildActionV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<GradleBuildActionV2.Outputs>(
-    "gradle", "gradle-build-action",
-    _customVersion
-        ?: "v2"
-) {
+) : ActionWithOutputs<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", _customVersion
+        ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

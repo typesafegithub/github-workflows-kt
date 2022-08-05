@@ -34,7 +34,6 @@ application {
 }
 
 tasks.run.configure {
-    finalizedBy(":library:ktlintFormat")
     workingDir(rootProject.layout.projectDirectory)
 }
 

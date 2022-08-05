@@ -35,10 +35,8 @@ public class ActionCreateBranchV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<ActionCreateBranchV2.Outputs>(
-    "peterjgrainger", "action-create-branch",
-    _customVersion ?: "v2.2.0"
-) {
+) : ActionWithOutputs<ActionCreateBranchV2.Outputs>("peterjgrainger", "action-create-branch",
+        _customVersion ?: "v2.2.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

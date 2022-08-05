@@ -333,9 +333,8 @@ public class StaleV5(
             exemptDraftPr?.let { "exempt-draft-pr" to it.toString() },
             enableStatistics?.let { "enable-statistics" to it.toString() },
             labelsToAddWhenUnstale?.let { "labels-to-add-when-unstale" to it.joinToString(",") },
-            labelsToRemoveWhenUnstale?.let {
-                "labels-to-remove-when-unstale" to it.joinToString(",")
-            },
+            labelsToRemoveWhenUnstale?.let { "labels-to-remove-when-unstale" to it.joinToString(",")
+                    },
             ignoreUpdates?.let { "ignore-updates" to it.toString() },
             ignoreIssueUpdates?.let { "ignore-issue-updates" to it.toString() },
             ignorePrUpdates?.let { "ignore-pr-updates" to it.toString() },

@@ -117,10 +117,8 @@ public class CreatePullRequestV4(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<CreatePullRequestV4.Outputs>(
-    "peter-evans", "create-pull-request",
-    _customVersion ?: "v4"
-) {
+) : ActionWithOutputs<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request",
+        _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

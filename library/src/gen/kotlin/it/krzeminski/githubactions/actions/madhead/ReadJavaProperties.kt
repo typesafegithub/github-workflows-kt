@@ -44,11 +44,8 @@ public class ReadJavaProperties(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<ReadJavaProperties.Outputs>(
-    "madhead", "read-java-properties",
-    _customVersion
-        ?: "latest"
-) {
+) : ActionWithOutputs<ReadJavaProperties.Outputs>("madhead", "read-java-properties", _customVersion
+        ?: "latest") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

@@ -31,10 +31,8 @@ public class CheckGradleVersionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<CheckGradleVersionV1.Outputs>(
-    "madhead", "check-gradle-version",
-    _customVersion ?: "v1"
-) {
+) : ActionWithOutputs<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version",
+        _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

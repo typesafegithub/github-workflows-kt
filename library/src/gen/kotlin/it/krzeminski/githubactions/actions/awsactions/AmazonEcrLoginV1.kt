@@ -45,11 +45,8 @@ public class AmazonEcrLoginV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>(
-    "aws-actions", "amazon-ecr-login",
-    _customVersion
-        ?: "v1"
-) {
+) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
+        "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

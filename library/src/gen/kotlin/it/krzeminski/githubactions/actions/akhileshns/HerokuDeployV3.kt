@@ -117,11 +117,8 @@ public class HerokuDeployV3(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<HerokuDeployV3.Outputs>(
-    "AkhileshNS", "heroku-deploy",
-    _customVersion
-        ?: "v3.12.12"
-) {
+) : ActionWithOutputs<HerokuDeployV3.Outputs>("AkhileshNS", "heroku-deploy", _customVersion ?:
+        "v3.12.12") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

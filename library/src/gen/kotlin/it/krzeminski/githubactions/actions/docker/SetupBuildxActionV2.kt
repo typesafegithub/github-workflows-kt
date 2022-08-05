@@ -65,11 +65,8 @@ public class SetupBuildxActionV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SetupBuildxActionV2.Outputs>(
-    "docker", "setup-buildx-action",
-    _customVersion
-        ?: "v2"
-) {
+) : ActionWithOutputs<SetupBuildxActionV2.Outputs>("docker", "setup-buildx-action", _customVersion
+        ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

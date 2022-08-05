@@ -138,11 +138,8 @@ public class BuildPushActionV3(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<BuildPushActionV3.Outputs>(
-    "docker", "build-push-action",
-    _customVersion
-        ?: "v3"
-) {
+) : ActionWithOutputs<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?:
+        "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

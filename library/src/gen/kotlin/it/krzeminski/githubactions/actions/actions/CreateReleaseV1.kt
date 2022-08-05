@@ -68,7 +68,8 @@ public class CreateReleaseV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1") {
+) : ActionWithOutputs<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1")
+        {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

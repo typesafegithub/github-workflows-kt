@@ -126,10 +126,8 @@ public class GithubPagesDeployActionV4(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>(
-    "JamesIves", "github-pages-deploy-action",
-    _customVersion ?: "v4"
-) {
+) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
+        _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

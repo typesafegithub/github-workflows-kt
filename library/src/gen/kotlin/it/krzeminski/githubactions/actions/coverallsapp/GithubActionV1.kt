@@ -63,11 +63,8 @@ public class GithubActionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<GithubActionV1.Outputs>(
-    "coverallsapp", "github-action",
-    _customVersion
-        ?: "1.1.3"
-) {
+) : ActionWithOutputs<GithubActionV1.Outputs>("coverallsapp", "github-action", _customVersion ?:
+        "1.1.3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

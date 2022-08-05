@@ -32,10 +32,8 @@ public class ActionWordpressPluginDeployV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<ActionWordpressPluginDeployV2.Outputs>(
-    "10up",
-    "action-wordpress-plugin-deploy", _customVersion ?: "v2.0.0"
-) {
+) : ActionWithOutputs<ActionWordpressPluginDeployV2.Outputs>("10up",
+        "action-wordpress-plugin-deploy", _customVersion ?: "v2.0.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
