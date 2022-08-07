@@ -237,12 +237,10 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - 'hello world' workflow") {
         // given
-        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
-        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
-        val workflowWithTempTargetFile = workflow(
-            name = "Test workflow",
+        val trivialWorkflow = workflow(
+            name = "Integration tests - trivial workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = Path.of("../.github/workflows/integration_tests_trivial_workflow.main.kts"),
         ) {
             job(
                 id = "test_job",
@@ -259,33 +257,15 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
+        val targetPath = Path.of("../.github/workflows/integration_tests_trivial_workflow.yaml")
+        val expectedYaml = targetPath.toFile().readText()
 
         // when
-        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = false, gitRootDir = gitRootDir)
+        trivialWorkflow.writeToFile(addConsistencyCheck = false)
 
         // then
-        targetTempFile.readText() shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: Test workflow
-
-            on:
-              push:
-
-            jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
-                steps:
-                  - id: step-0
-                    name: Check out
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    name: Hello world!
-                    run: echo 'hello!'
-
-        """.trimIndent()
+        val actualYaml = targetPath.toFile().readText()
+        actualYaml shouldBe expectedYaml
     }
 
     test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
