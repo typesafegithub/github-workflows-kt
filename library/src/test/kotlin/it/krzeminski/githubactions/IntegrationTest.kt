@@ -10,6 +10,7 @@ import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
@@ -235,13 +236,8 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("writeToFile() - 'hello world' workflow") {
-        // given
-        val trivialWorkflow = workflow(
-            name = "Integration tests - trivial workflow",
-            on = listOf(Push()),
-            sourceFile = Path.of("../.github/workflows/integration_tests_trivial_workflow.main.kts"),
-        ) {
+    test("writeToFile() - trivial workflow") {
+        testRanWithGitHub("trivial workflow") {
             job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
@@ -257,15 +253,6 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
-        val targetPath = Path.of("../.github/workflows/integration_tests_trivial_workflow.yaml")
-        val expectedYaml = targetPath.toFile().readText()
-
-        // when
-        trivialWorkflow.writeToFile(addConsistencyCheck = false)
-
-        // then
-        val actualYaml = targetPath.toFile().readText()
-        actualYaml shouldBe expectedYaml
     }
 
     test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
@@ -737,3 +724,27 @@ class IntegrationTest : FunSpec({
         workflowWithTypeSafeExpressions.toYaml(addConsistencyCheck = false) shouldMatchFile "workflow-expr-typesafe.yml"
     }
 })
+
+private fun testRanWithGitHub(
+    name: String,
+    workflow: WorkflowBuilder.() -> Unit,
+) {
+    // given
+    val fileName = "Integration tests - $name"
+    val trivialWorkflow = workflow(
+        name = "Integration tests - $name",
+        on = listOf(Push()),
+        sourceFile = Path.of("../.github/workflows/$fileName.main.kts"),
+    ) {
+        workflow()
+    }
+    val targetPath = Path.of("../.github/workflows/$fileName.yaml")
+    val expectedYaml = targetPath.toFile().readText()
+
+    // when
+    trivialWorkflow.writeToFile(addConsistencyCheck = false)
+
+    // then
+    val actualYaml = targetPath.toFile().readText()
+    actualYaml shouldBe expectedYaml
+}
