@@ -129,11 +129,11 @@ Click on a version to see the wrapper's code.
 * Vampire
     * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1: [`SetupWslV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV1.kt)
 * w9jds
-    * [firebase-action](https://github.com/w9jds/firebase-action) - v2.2.2: [`FirebaseActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/w9jds/FirebaseActionV2.kt)
+    * [firebase-action](https://github.com/w9jds/firebase-action) - v11.5.0: [`FirebaseActionV11`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/w9jds/FirebaseActionV11.kt), v2.2.2: [`FirebaseActionV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/w9jds/FirebaseActionV2.kt)
 
 ## Statistics
 
 Number of wrappers available:
 
 * counting by actions: 78
-* counting each version separately: 91
+* counting each version separately: 92
