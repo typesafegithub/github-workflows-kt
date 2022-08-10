@@ -14,7 +14,6 @@ import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.testutils.shouldMatchFile
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Path
@@ -81,14 +80,8 @@ class IntegrationTest : FunSpec({
     }
 
     @Suppress("MaxLineLength")
-    test("toYaml() - workflow with one job depending on another") {
-        // given
-        val workflowWithDependency = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-            targetFileName = "some_workflow_with_dependency.yaml"
-        ) {
+    test("writeToFile() - workflow with one job depending on another") {
+        testRanWithGitHub("one job depending on another") {
             val testJob1 = job(
                 id = "test_job_1",
                 runsOn = RunnerType.UbuntuLatest,
@@ -110,50 +103,6 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
-
-        // when
-        val actualYaml = workflowWithDependency.toYaml()
-
-        // then
-        actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: Test workflow
-
-            on:
-              push:
-
-            jobs:
-              "check_yaml_consistency":
-                runs-on: "ubuntu-latest"
-                steps:
-                  - id: step-0
-                    name: Check out
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow_with_dependency.yaml' <('.github/workflows/some_workflow.main.kts')
-              "test_job_1":
-                runs-on: "ubuntu-latest"
-                needs:
-                  - "check_yaml_consistency"
-                steps:
-                  - id: step-0
-                    name: Hello world!
-                    run: echo 'hello!'
-              "test_job_2":
-                runs-on: "ubuntu-latest"
-                needs:
-                  - "test_job_1"
-                  - "check_yaml_consistency"
-                steps:
-                  - id: step-0
-                    name: Hello world, again!
-                    run: echo 'hello again!'
-
-        """.trimIndent()
     }
 
     test("toYaml() - 'hello world' workflow without consistency check") {
@@ -184,13 +133,8 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("toYaml() - multiline command with pipes") {
-        // given
-        val workflowWithMultilineCommand = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-        ) {
+    test("writeToFile() - multiline command with pipes") {
+        testRanWithGitHub("multiline command with pipes") {
             job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
@@ -206,34 +150,6 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
-
-        // when
-        val actualYaml = workflowWithMultilineCommand.toYaml(addConsistencyCheck = false)
-
-        // then
-        actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: Test workflow
-
-            on:
-              push:
-
-            jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
-                steps:
-                  - id: step-0
-                    name: Hello world!
-                    run: |
-                      less test.txt \
-                      | grep -P "foobar" \
-                      | sort \
-                      > result.txt
-
-        """.trimIndent()
     }
 
     test("writeToFile() - trivial workflow") {
@@ -322,13 +238,8 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("toYaml() - job condition") {
-        // when
-        val actualYaml = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-        ) {
+    test("writeToYaml() - job condition") {
+        testRanWithGitHub("job condition") {
             job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
@@ -339,29 +250,7 @@ class IntegrationTest : FunSpec({
                     action = CheckoutV3(),
                 )
             }
-        }.toYaml(addConsistencyCheck = false)
-
-        // then
-        actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: Test workflow
-
-            on:
-              push:
-
-            jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
-                if: ${'$'}{{ always() }}
-                steps:
-                  - id: step-0
-                    name: Check out
-                    uses: actions/checkout@v3
-
-        """.trimIndent()
+        }
     }
 
     test("toYaml() - environment variables and continueOnError") {
@@ -475,13 +364,8 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("toYaml() - step with outputs") {
-        // when
-        val actualYaml = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-        ) {
+    test("writeToFile() - step with outputs") {
+        testRanWithGitHub("step with outputs") {
             job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
@@ -497,34 +381,7 @@ class IntegrationTest : FunSpec({
                     )
                 )
             }
-        }.toYaml(addConsistencyCheck = false)
-
-        // then
-        actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: Test workflow
-
-            on:
-              push:
-
-            jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
-                steps:
-                  - id: step-0
-                    uses: EndBug/add-and-commit@v9
-                  - id: step-1
-                    name: Some step consuming other step's output
-                    uses: actions/checkout@v3
-                    with:
-                      repository: ${'$'}{{ step-0 }}
-                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
-                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
-
-        """.trimIndent()
+        }
     }
 
     test("toYaml() - with concurrency, default behavior") {
@@ -649,33 +506,8 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("Malformed YAML") {
-
-        val invalidWorkflow = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
-        ) {
-            job("test_job", runsOn = RunnerType.UbuntuLatest) {
-                run(name = "property: something", command = "echo hello")
-            }
-        }
-        shouldThrow<MalformedYamlException> {
-            invalidWorkflow.toYaml()
-        }.message shouldBe """
-            |mapping values are not allowed here (is the indentation level of this line or a line nearby incorrect?)
-            | at line 26, column 23:
-            |            name: property: something
-            |                          ^
-        """.trimMargin()
-    }
-
-    test("Executing workflow with type-safe expressions") {
-        val workflowWithTypeSafeExpressions = workflow(
-            name = "workflow-expr-typesafe",
-            on = listOf(Push()),
-            sourceFile = Path.of("ExprIntegrationTest.kt"),
-        ) {
+    test("writeToFile() - type-safe expressions") {
+        testRanWithGitHub("type-safe expressions") {
             val GREETING by Contexts.env
             val FIRST_NAME by Contexts.env
             val SECRET by Contexts.env
@@ -720,8 +552,26 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
+    }
 
-        workflowWithTypeSafeExpressions.toYaml(addConsistencyCheck = false) shouldMatchFile "workflow-expr-typesafe.yml"
+    test("malformed YAML") {
+        val invalidWorkflow = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
+        ) {
+            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+                run(name = "property: something", command = "echo hello")
+            }
+        }
+        shouldThrow<MalformedYamlException> {
+            invalidWorkflow.toYaml()
+        }.message shouldBe """
+            |mapping values are not allowed here (is the indentation level of this line or a line nearby incorrect?)
+            | at line 26, column 23:
+            |            name: property: something
+            |                          ^
+        """.trimMargin()
     }
 })
 
