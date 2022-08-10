@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.w9jds
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -19,11 +16,7 @@ import kotlin.collections.Map
  *
  * [Action on GitHub](https://github.com/w9jds/firebase-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: FirebaseActionV11",
-    replaceWith = ReplaceWith("FirebaseActionV11"),
-)
-public class FirebaseActionV2(
+public class FirebaseActionV11(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -33,8 +26,8 @@ public class FirebaseActionV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<FirebaseActionV2.Outputs>("w9jds", "firebase-action", _customVersion ?:
-        "v2.2.2") {
+) : ActionWithOutputs<FirebaseActionV11.Outputs>("w9jds", "firebase-action", _customVersion ?:
+        "v11.5.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 
