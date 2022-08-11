@@ -532,7 +532,7 @@ class IntegrationTest : FunSpec({
                     env = linkedMapOf(
                         FIRST_NAME to "Patrick",
                     ),
-                    command = "echo " + expr { GREETING } + " " + expr { FIRST_NAME }
+                    command = "echo $GREETING $FIRST_NAME"
                 )
                 run(
                     name = "Encrypted secret",
