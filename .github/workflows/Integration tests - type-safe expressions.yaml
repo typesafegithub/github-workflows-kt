@@ -23,7 +23,7 @@ jobs:
         name: Custom environment variable
         env:
           FIRST_NAME: Patrick
-        run: echo ${{ $GREETING }} ${{ $FIRST_NAME }}
+        run: echo $GREETING $FIRST_NAME
       - id: step-3
         name: Encrypted secret
         env:
