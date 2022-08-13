@@ -13,10 +13,8 @@ import it.krzeminski.githubactions.domain.Shell.Python
 import it.krzeminski.githubactions.domain.Shell.Sh
 import it.krzeminski.githubactions.domain.Step
 
-fun List<Step>.stepsToYaml(): String =
-    this.joinToString(separator = "\n") {
-        it.toYaml()
-    }
+fun List<Step>.stepsToYaml(): List<Map<String, Any>> =
+    this.map { it.toYaml() }
 
 private fun Step.toYaml() =
     when (this) {
@@ -24,85 +22,34 @@ private fun Step.toYaml() =
         is CommandStep -> toYaml()
     }
 
-private fun ExternalActionStep.toYaml(): String = buildString {
-    appendLine("- id: $id")
-    name?.let {
-        appendLine("  name: $it")
-    }
-    continueOnError?.let {
-        appendLine("  continue-on-error: $it")
-    }
-    timeoutMinutes?.let {
-        appendLine("  timeout-minutes: $it")
-    }
-    appendLine("  uses: ${action.fullName}")
+@Suppress("SpreadOperator")
+private fun ExternalActionStep.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "id" to id,
+        "name" to name,
+        "continue-on-error" to continueOnError,
+        "timeout-minutes" to timeoutMinutes,
+        "uses" to action.fullName,
+        "with" to action.toYamlArguments().ifEmpty { null },
+        "env" to env.ifEmpty { null },
+        "if" to condition,
+        *_customArguments.toList().toTypedArray(),
+    )
 
-    val allArguments = action.toYamlArguments()
-    if (allArguments.isNotEmpty()) {
-        val arguments = allArguments.toYaml()
-        appendLine("  with:")
-        appendLine(arguments.prependIndent("    "))
-    }
-    if (this@toYaml.env.isNotEmpty()) {
-        appendLine("  env:")
-        appendLine(this@toYaml.env.toYaml().prependIndent("    "))
-    }
-    customArgumentsToYaml().takeIf { it.isNotBlank() }
-        ?.let { freeargs ->
-            append(freeargs.replaceIndent("  "))
-            appendLine()
-        }
-    this@toYaml.condition?.let {
-        appendLine(it.conditionToYaml())
-    }
-}.removeSuffix("\n")
-
-private fun CommandStep.toYaml() = buildString {
-    appendLine("- id: $id")
-    name?.let {
-        appendLine("  name: $it")
-    }
-
-    if (this@toYaml.env.isNotEmpty()) {
-        appendLine("  env:")
-        appendLine(this@toYaml.env.toYaml().prependIndent("    "))
-    }
-
-    continueOnError?.let {
-        appendLine("  continue-on-error: $it")
-    }
-    timeoutMinutes?.let {
-        appendLine("  timeout-minutes: $it")
-    }
-    shell?.let {
-        appendLine("  shell: ${it.toYaml()}")
-    }
-    workingDirectory?.let {
-        appendLine("  working-directory: $it")
-    }
-
-    customArgumentsToYaml().takeIf { it.isNotBlank() }
-        ?.let { freeargs ->
-            append(freeargs.replaceIndent("  "))
-            appendLine()
-        }
-
-    if (command.lines().size == 1) {
-        appendLine("  run: $command")
-    } else {
-        appendLine("  run: |")
-        command.lines().forEach {
-            appendLine(it.prependIndent("    ").ifBlank { "" })
-        }
-    }
-
-    this@toYaml.condition?.let {
-        appendLine(it.conditionToYaml())
-    }
-}.removeSuffix("\n")
-
-private fun String.conditionToYaml() =
-    "  if: $this"
+@Suppress("SpreadOperator")
+private fun CommandStep.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "id" to id,
+        "name" to name,
+        "env" to env.ifEmpty { null },
+        "continue-on-error" to continueOnError,
+        "timeout-minutes" to timeoutMinutes,
+        "shell" to shell?.toYaml(),
+        "working-directory" to workingDirectory,
+        "run" to command,
+        "if" to condition,
+        *_customArguments.toList().toTypedArray(),
+    )
 
 private fun Shell.toYaml() =
     when (this) {

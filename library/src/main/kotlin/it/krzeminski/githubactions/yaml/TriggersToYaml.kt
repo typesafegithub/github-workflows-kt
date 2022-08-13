@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions")
+@file:Suppress("TooManyFunctions", "SpreadOperator")
 
 package it.krzeminski.githubactions.yaml
 
@@ -39,60 +39,53 @@ import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.internal.InternalGithubActionsApi
 
-fun List<Trigger>.triggersToYaml(): String =
-    joinToString(separator = "\n") { it.toYaml() }
-
-fun Trigger.toYaml(): String =
-    (
-        toYamlFromMap() +
-            toAdditionalYaml() +
-            customArgumentsToYaml().let { if (it.isNotEmpty()) it.prependIndent("  ") else it }
-        ).removeSuffix("\n")
-
-private typealias MapOfYaml = LinkedHashMap<String, List<String>?>
-
-private fun Trigger.toYamlFromMap() = buildString {
-    val trigger = this@toYamlFromMap
-    appendLine("${trigger.triggerName()}:")
-    for ((property, items) in trigger.toMap()) {
-        printIfHasElements(items, property)
-    }
-}
+fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
+    this.associateBy(
+        keySelector = { it.triggerName() },
+        valueTransform = {
+            val coreArguments = it.toMap()
+            (coreArguments + it._customArguments)
+                .ifEmpty { it.toAdditionalYaml() ?: emptyMap<Any, Any>() }
+        }
+    )
 
 @InternalGithubActionsApi
-fun Trigger.toMap(): MapOfYaml {
+fun Trigger.toMap(): Map<String, List<String>> {
     return when (this) {
         is Push -> toMap()
         is PullRequest -> toMap()
         is PullRequestTarget -> toMap()
-        else -> LinkedHashMap()
+        else -> emptyMap()
     }
 }
 
-private fun Push.toMap(): MapOfYaml = linkedMapOf(
-    "branches" to branches,
-    "tags" to tags,
-    "branches-ignore" to branchesIgnore,
-    "tags-ignore" to tagsIgnore,
-    "paths" to paths,
-    "paths-ignore" to pathsIgnore,
-)
+private fun Push.toMap() =
+    mapOfNotNullValues(
+        "branches" to branches,
+        "branches-ignore" to branchesIgnore,
+        "paths" to paths,
+        "paths-ignore" to pathsIgnore,
+        "tags" to tags,
+        "tags-ignore" to tagsIgnore,
+    )
 
-private fun PullRequest.toMap(): MapOfYaml = linkedMapOf(
-    "types" to types.toSnakeCase(),
-    "branches" to branches,
-    "branches-ignore" to branchesIgnore,
-    "paths" to paths,
-    "paths-ignore" to pathsIgnore,
-)
+private fun PullRequest.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.toSnakeCase() },
+        "branches" to branches,
+        "branches-ignore" to branchesIgnore,
+        "paths" to paths,
+        "paths-ignore" to pathsIgnore,
+    )
 
-private fun PullRequestTarget.toMap(): MapOfYaml = linkedMapOf(
-    "types" to types.toSnakeCase(),
-    "branches" to branches,
-    "branches-ignore" to branchesIgnore,
-    "paths" to paths,
-    "paths-ignore" to pathsIgnore,
-)
+private fun PullRequestTarget.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.toSnakeCase() },
+        "branches" to branches,
+        "branches-ignore" to branchesIgnore,
+        "paths" to paths,
+        "paths-ignore" to pathsIgnore,
+    )
 
 @Suppress("ComplexMethod")
 @InternalGithubActionsApi
@@ -133,34 +126,27 @@ fun Trigger.triggerName() = when (this) {
     is WorkflowRun -> "workflow_run"
 }
 
-private fun Trigger.toAdditionalYaml(): String = when (this) {
+private fun Trigger.toAdditionalYaml(): Any? = when (this) {
     is Schedule -> toAdditionalYaml()
     is WorkflowDispatch -> toAdditionalYaml()
-    else -> ""
+    else -> null
 }
 
-private fun Schedule.toAdditionalYaml() =
-    triggers.joinToString("\n") { cron ->
-        " - cron: '${cron.expression}'"
-    }
+private fun Schedule.toAdditionalYaml(): List<Map<String, String>> =
+    triggers.map { mapOf("cron" to it.expression) }
 
-private fun WorkflowDispatch.toAdditionalYaml(): String = when {
-    inputs.isEmpty() -> ""
-    else -> {
-        val inputsToYaml = inputs
-            .entries
-            .joinToString("\n") { (key, input) ->
-                "    $key:\n${input.toYaml()}"
-            }
-        "  inputs:\n$inputsToYaml"
-    }
+private fun WorkflowDispatch.toAdditionalYaml(): Map<String, Any?> = when {
+    inputs.isEmpty() -> emptyMap()
+    else -> mapOf(
+        "inputs" to inputs.mapValues { (_, value) -> value.toYaml() }
+    )
 }
 
-private fun WorkflowDispatch.Input.toYaml(): String = buildString {
-    val space = "      "
-    appendLine("${space}description: '$description'")
-    appendLine("${space}type: ${type.toSnakeCase()}")
-    appendLine("${space}required: $required")
-    if (default != null) appendLine("${space}default: '$default'")
-    printIfHasElements(options, "options", space = "      ")
-}.removeSuffix("\n")
+private fun WorkflowDispatch.Input.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "description" to description,
+        "type" to type.toSnakeCase(),
+        "required" to required,
+        "default" to default,
+        "options" to options.ifEmpty { null },
+    )

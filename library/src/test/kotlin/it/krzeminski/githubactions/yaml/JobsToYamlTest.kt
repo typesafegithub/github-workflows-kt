@@ -3,10 +3,10 @@ package it.krzeminski.githubactions.yaml
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.domain.CommandStep
+import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.dsl.expressions.expr
 
 class JobsToYamlTest : DescribeSpec({
@@ -41,18 +41,28 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command 1
-                         |      run: echo 'test 1!'
-                         |"Job-2":
-                         |  runs-on: "ubuntu-latest"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command 2
-                         |      run: echo 'test 2!'""".trimMargin()
+        yaml shouldBe mapOf(
+            "Job-1" to mapOf(
+                "runs-on" to "ubuntu-latest",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command 1",
+                        "run" to "echo 'test 1!'",
+                    ),
+                ),
+            ),
+            "Job-2" to mapOf(
+                "runs-on" to "ubuntu-latest",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command 2",
+                        "run" to "echo 'test 2!'",
+                    ),
+                ),
+            ),
+        )
     }
 
     it("renders with required arguments") {
@@ -75,26 +85,54 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command
-                         |      run: echo 'test!'""".trimMargin()
+        yaml shouldBe mapOf(
+            "Job-1" to mapOf(
+                "runs-on" to "ubuntu-latest",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command",
+                        "run" to "echo 'test!'",
+                    ),
+                ),
+            ),
+        )
     }
 
-    it("renders with custom runner") {
+    it("renders with all arguments") {
         // given
         val jobs = listOf(
             Job(
                 id = "Job-1",
-                runsOn = Windows2022,
+                name = "Some name",
+                runsOn = UbuntuLatest,
+                env = linkedMapOf(
+                    "FOO" to "bar",
+                    "BAZ" to """
+                        goo,
+                        zoo
+                    """.trimIndent()
+                ),
+                strategyMatrix = mapOf(
+                    "strategyParam1" to listOf("foo", "bar"),
+                    "strategyParam2" to listOf("baz", "goo"),
+                ),
+                concurrency = Concurrency(
+                    group = "group-name",
+                    cancelInProgress = true,
+                ),
+                timeoutMinutes = 30,
+                condition = "\${{ always() }}",
                 steps = listOf(
                     CommandStep(
                         id = "someId",
                         name = "Some command",
                         command = "echo 'test!'",
                     ),
+                ),
+                _customArguments = mapOf(
+                    "distribute-job" to true,
+                    "servers" to listOf("server-1", "server-2")
                 ),
             ),
         )
@@ -103,12 +141,40 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "windows-2022"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command
-                         |      run: echo 'test!'""".trimMargin()
+        yaml shouldBe mapOf(
+            "Job-1" to mapOf(
+                "name" to "Some name",
+                "runs-on" to "ubuntu-latest",
+                "env" to mapOf(
+                    "FOO" to "bar",
+                    "BAZ" to """
+                        goo,
+                        zoo
+                    """.trimIndent()
+                ),
+                "strategy" to mapOf(
+                    "matrix" to mapOf(
+                        "strategyParam1" to listOf("foo", "bar"),
+                        "strategyParam2" to listOf("baz", "goo"),
+                    ),
+                ),
+                "concurrency" to mapOf(
+                    "group" to "group-name",
+                    "cancel-in-progress" to true,
+                ),
+                "timeout-minutes" to 30,
+                "if" to "\${{ always() }}",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command",
+                        "run" to "echo 'test!'",
+                    ),
+                ),
+                "distribute-job" to true,
+                "servers" to listOf("server-1", "server-2"),
+            ),
+        )
     }
 
     it("renders with dependencies on other jobs") {
@@ -142,196 +208,19 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  needs:
-                         |    - "Another-job-1"
-                         |    - "Another-job-2"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command
-                         |      run: echo 'test!'""".trimMargin()
-    }
-
-    it("renders with environment variables") {
-        // given
-        val jobs = listOf(
-            Job(
-                id = "Job-1",
-                runsOn = UbuntuLatest,
-                env = linkedMapOf(
-                    "FOO" to "bar",
-                    "BAZ" to """
-                        goo,
-                        zoo
-                    """.trimIndent()
-                ),
-                condition = "\${{ always() }}",
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command 1",
-                        command = "echo 'test 1!'",
+        yaml shouldBe mapOf(
+            "Job-1" to mapOf(
+                "runs-on" to "ubuntu-latest",
+                "needs" to listOf("Another-job-1", "Another-job-2"),
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command",
+                        "run" to "echo 'test!'",
                     ),
                 ),
             ),
         )
-
-        // when
-        val yaml = jobs.jobsToYaml()
-
-        // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  env:
-                         |    FOO: bar
-                         |    BAZ: |
-                         |      goo,
-                         |      zoo
-                         |  if: ${'$'}{{ always() }}
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command 1
-                         |      run: echo 'test 1!'""".trimMargin()
-    }
-
-    it("renders with condition") {
-        // given
-        val jobs = listOf(
-            Job(
-                id = "Job-1",
-                runsOn = UbuntuLatest,
-                condition = "\${{ always() }}",
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command 1",
-                        command = "echo 'test 1!'",
-                    ),
-                ),
-            ),
-        )
-
-        // when
-        val yaml = jobs.jobsToYaml()
-
-        // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  if: ${'$'}{{ always() }}
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command 1
-                         |      run: echo 'test 1!'""".trimMargin()
-    }
-
-    it("renders with strategy matrix") {
-        // given
-        val jobs = listOf(
-            Job(
-                id = "Job-1",
-                runsOn = UbuntuLatest,
-                strategyMatrix = mapOf(
-                    "strategyParam1" to listOf("foo", "bar"),
-                    "strategyParam2" to listOf("baz", "goo"),
-                ),
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command",
-                        command = "echo 'test!'",
-                    ),
-                ),
-            ),
-        )
-
-        // when
-        val yaml = jobs.jobsToYaml()
-
-        // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  strategy:
-                         |    matrix:
-                         |      strategyParam1:
-                         |        - foo
-                         |        - bar
-                         |      strategyParam2:
-                         |        - baz
-                         |        - goo
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command
-                         |      run: echo 'test!'""".trimMargin()
-    }
-
-    it("should accept custom arguments") {
-        // given
-        val jobs = listOf(
-            Job(
-                id = "Job-1",
-                runsOn = RunnerType.UbuntuLatest,
-                _customArguments = mapOf(
-                    "distribute-job" to true,
-                    "servers" to listOf("server-1", "server-2")
-                ),
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command",
-                        command = "echo 'test!'",
-                    ),
-                ),
-            ),
-        )
-
-        // when
-        val yaml = jobs.jobsToYaml()
-
-        // then
-        yaml shouldBe """|"Job-1":
-                         |  runs-on: "ubuntu-latest"
-                         |  steps:
-                         |    - id: someId
-                         |      name: Some command
-                         |      run: echo 'test!'
-                         |  distribute-job: true
-                         |  servers:
-                         |  - server-1
-                         |  - server-2
-                         """.trimMargin()
-    }
-
-    it("renders timeout-minutes") {
-        // given
-        val jobs = listOf(
-            Job(
-                id = "Job-1",
-                runsOn = RunnerType.UbuntuLatest,
-                timeoutMinutes = 30,
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command",
-                        command = "echo 'test!'",
-                    ),
-                ),
-            ),
-        )
-
-        // when
-        val yaml = jobs.jobsToYaml()
-
-        // then
-        yaml shouldBe """
-             |"Job-1":
-             |  runs-on: "ubuntu-latest"
-             |  timeout-minutes: 30
-             |  steps:
-             |    - id: someId
-             |      name: Some command
-             |      run: echo 'test!'
-             """.trimMargin()
     }
 
     it("renders a custom RunnerType - hardcoded or from an expression") {
@@ -357,19 +246,64 @@ class JobsToYamlTest : DescribeSpec({
         val yaml = jobs.jobsToYaml()
 
         // then
-        yaml shouldBe """
-             |"Job-1":
-             |  runs-on: "windows-3.0"
-             |  steps:
-             |    - id: someId
-             |      name: Some command
-             |      run: echo 'test!'
-             |"Job-2":
-             |  runs-on: "${'$'}{{ github.event.inputs.run-on }}"
-             |  steps:
-             |    - id: someId
-             |      name: Some command
-             |      run: echo 'test!'
-             """.trimMargin()
+        yaml shouldBe mapOf(
+            "Job-1" to mapOf(
+                "runs-on" to "windows-3.0",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command",
+                        "run" to "echo 'test!'",
+                    ),
+                ),
+            ),
+            "Job-2" to mapOf(
+                "runs-on" to "\${{ github.event.inputs.run-on }}",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command",
+                        "run" to "echo 'test!'",
+                    ),
+                ),
+            ),
+        )
+    }
+
+    it("renders with custom argument overriding built-in argument") {
+        // given
+        val jobs = listOf(
+            Job(
+                id = "Job-1",
+                runsOn = UbuntuLatest,
+                steps = listOf(
+                    CommandStep(
+                        id = "someId",
+                        name = "Some command",
+                        command = "echo 'test!'",
+                    ),
+                ),
+                _customArguments = mapOf(
+                    "runs-on" to "overridden!",
+                )
+            ),
+        )
+
+        // when
+        val yaml = jobs.jobsToYaml()
+
+        // then
+        yaml shouldBe mapOf(
+            "Job-1" to mapOf(
+                "runs-on" to "overridden!",
+                "steps" to listOf(
+                    mapOf(
+                        "id" to "someId",
+                        "name" to "Some command",
+                        "run" to "echo 'test!'",
+                    ),
+                ),
+            ),
+        )
     }
 })

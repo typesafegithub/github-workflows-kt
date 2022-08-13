@@ -1,7 +1,5 @@
 package it.krzeminski.githubactions
 
-import com.charleskorn.kaml.MalformedYamlException
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
@@ -18,7 +16,6 @@ import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Path
-import java.nio.file.Paths
 
 @Suppress("LargeClass", "VariableNaming")
 class IntegrationTest : FunSpec({
@@ -52,30 +49,28 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-
-            on:
-              push:
-
+            'on':
+              push: {}
             jobs:
-              "check_yaml_consistency":
-                runs-on: "ubuntu-latest"
+              check_yaml_consistency:
+                runs-on: ubuntu-latest
                 steps:
-                  - id: step-0
-                    name: Check out
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    name: Consistency check
-                    run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
-              "test_job":
+                - id: step-0
+                  name: Check out
+                  uses: actions/checkout@v3
+                - id: step-1
+                  name: Consistency check
+                  run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+              test_job:
                 name: Test Job
-                runs-on: "ubuntu-latest"
+                runs-on: ubuntu-latest
                 needs:
-                  - "check_yaml_consistency"
+                - check_yaml_consistency
                 steps:
-                  - id: step-0
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    run: echo 'hello!'
+                - id: step-0
+                  uses: actions/checkout@v3
+                - id: step-1
+                  run: echo 'hello!'
 
         """.trimIndent()
     }
@@ -117,19 +112,17 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-
-            on:
-              push:
-
+            'on':
+              push: {}
             jobs:
-              "test_job":
+              test_job:
                 name: Test Job
-                runs-on: "ubuntu-latest"
+                runs-on: ubuntu-latest
                 steps:
-                  - id: step-0
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    run: echo 'hello!'
+                - id: step-0
+                  uses: actions/checkout@v3
+                - id: step-1
+                  run: echo 'hello!'
 
         """.trimIndent()
     }
@@ -207,34 +200,32 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-
-            on:
-              push:
-
+            'on':
+              push: {}
             jobs:
-              "check_yaml_consistency":
-                runs-on: "ubuntu-latest"
+              check_yaml_consistency:
+                runs-on: ubuntu-latest
                 steps:
-                  - id: step-0
-                    name: Check out
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    name: Execute script
-                    run: rm '.github/workflows/some_workflow.yaml' && '.github/workflows/some_workflow.main.kts'
-                  - id: step-2
-                    name: Consistency check
-                    run: git diff --exit-code '.github/workflows/some_workflow.yaml'
-              "test_job":
-                runs-on: "ubuntu-latest"
+                - id: step-0
+                  name: Check out
+                  uses: actions/checkout@v3
+                - id: step-1
+                  name: Execute script
+                  run: rm '.github/workflows/some_workflow.yaml' && '.github/workflows/some_workflow.main.kts'
+                - id: step-2
+                  name: Consistency check
+                  run: git diff --exit-code '.github/workflows/some_workflow.yaml'
+              test_job:
+                runs-on: ubuntu-latest
                 needs:
-                  - "check_yaml_consistency"
+                - check_yaml_consistency
                 steps:
-                  - id: step-0
-                    name: Check out
-                    uses: actions/checkout@v3
-                  - id: step-1
-                    name: Hello world!
-                    run: echo 'hello!'
+                - id: step-0
+                  name: Check out
+                  uses: actions/checkout@v3
+                - id: step-1
+                  name: Hello world!
+                  run: echo 'hello!'
 
         """.trimIndent()
     }
@@ -268,6 +259,10 @@ class IntegrationTest : FunSpec({
                 """.trimIndent()
             ),
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            _customArguments = mapOf(
+                "name" to "Overridden name!",
+                "foo-bar" to "baz",
+            )
         ) {
             job(
                 id = "test_job",
@@ -318,49 +313,47 @@ class IntegrationTest : FunSpec({
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
-            name: Test workflow
-
-            on:
-              push:
-
+            name: Overridden name!
+            'on':
+              push: {}
             env:
               SIMPLE_VAR: simple-value-workflow
-              MULTILINE_VAR: |
+              MULTILINE_VAR: |-
                 hey,
                 hi,
                 hello! workflow
-
             jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
+              test_job:
+                runs-on: ubuntu-latest
                 env:
                   SIMPLE_VAR: simple-value-job
-                  MULTILINE_VAR: |
+                  MULTILINE_VAR: |-
                     hey,
                     hi,
                     hello! job
                 if: ${'$'}{{ always() }}
                 steps:
-                  - id: step-0
-                    name: Check out
-                    continue-on-error: true
-                    uses: actions/checkout@v3
-                    env:
-                      SIMPLE_VAR: simple-value-uses
-                      MULTILINE_VAR: |
-                        hey,
-                        hi,
-                        hello! uses
-                  - id: step-1
-                    name: Hello world!
-                    env:
-                      SIMPLE_VAR: simple-value-run
-                      MULTILINE_VAR: |
-                        hey,
-                        hi,
-                        hello! run
-                    continue-on-error: true
-                    run: echo 'hello!'
+                - id: step-0
+                  name: Check out
+                  continue-on-error: true
+                  uses: actions/checkout@v3
+                  env:
+                    SIMPLE_VAR: simple-value-uses
+                    MULTILINE_VAR: |-
+                      hey,
+                      hi,
+                      hello! uses
+                - id: step-1
+                  name: Hello world!
+                  env:
+                    SIMPLE_VAR: simple-value-run
+                    MULTILINE_VAR: |-
+                      hey,
+                      hi,
+                      hello! run
+                  continue-on-error: true
+                  run: echo 'hello!'
+            foo-bar: baz
 
         """.trimIndent()
     }
@@ -417,30 +410,27 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-
-            on:
-              push:
-
+            'on':
+              push: {}
             concurrency:
               group: workflow_staging_environment
               cancel-in-progress: false
-
             jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
+              test_job:
+                runs-on: ubuntu-latest
                 concurrency:
                   group: job_staging_environment
                   cancel-in-progress: false
                 steps:
-                  - id: step-0
-                    uses: EndBug/add-and-commit@v9
-                  - id: step-1
-                    name: Some step consuming other step's output
-                    uses: actions/checkout@v3
-                    with:
-                      repository: ${'$'}{{ step-0 }}
-                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
-                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+                - id: step-0
+                  uses: EndBug/add-and-commit@v9
+                - id: step-1
+                  name: Some step consuming other step's output
+                  uses: actions/checkout@v3
+                  with:
+                    repository: ${'$'}{{ step-0 }}
+                    ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                    token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
 
         """.trimIndent()
     }
@@ -478,30 +468,27 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-
-            on:
-              push:
-
+            'on':
+              push: {}
             concurrency:
               group: workflow_staging_environment
               cancel-in-progress: true
-
             jobs:
-              "test_job":
-                runs-on: "ubuntu-latest"
+              test_job:
+                runs-on: ubuntu-latest
                 concurrency:
                   group: job_staging_environment
                   cancel-in-progress: true
                 steps:
-                  - id: step-0
-                    uses: EndBug/add-and-commit@v9
-                  - id: step-1
-                    name: Some step consuming other step's output
-                    uses: actions/checkout@v3
-                    with:
-                      repository: ${'$'}{{ step-0 }}
-                      ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
-                      token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+                - id: step-0
+                  uses: EndBug/add-and-commit@v9
+                - id: step-1
+                  name: Some step consuming other step's output
+                  uses: actions/checkout@v3
+                  with:
+                    repository: ${'$'}{{ step-0 }}
+                    ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
+                    token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
 
         """.trimIndent()
     }
@@ -552,26 +539,6 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
-    }
-
-    test("malformed YAML") {
-        val invalidWorkflow = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = Paths.get("../.github/workflows/invalid_workflow.main.kts"),
-        ) {
-            job("test_job", runsOn = RunnerType.UbuntuLatest) {
-                run(name = "property: something", command = "echo hello")
-            }
-        }
-        shouldThrow<MalformedYamlException> {
-            invalidWorkflow.toYaml()
-        }.message shouldBe """
-            |mapping values are not allowed here (is the indentation level of this line or a line nearby incorrect?)
-            | at line 26, column 23:
-            |            name: property: something
-            |                          ^
-        """.trimMargin()
     }
 })
 

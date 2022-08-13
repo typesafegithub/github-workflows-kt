@@ -1,11 +1,14 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
 import it.krzeminski.githubactions.internal.findGitRoot
 import it.krzeminski.githubactions.internal.relativeToAbsolute
+import org.yaml.snakeyaml.DumperOptions
+import org.yaml.snakeyaml.Yaml
 import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
@@ -35,7 +38,6 @@ fun Workflow.writeToFile(addConsistencyCheck: Boolean = true, gitRootDir: Path =
 
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean, gitRootDir: Path): String {
-    val workflow = this
     val sourceFilePath = sourceFile.relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
     val targetFilePath = gitRootDir.resolve(".github").resolve("workflows").resolve(this.targetFileName)
         .relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
@@ -70,57 +72,36 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
         jobs
     }
 
-    return buildString {
-        appendLine(
-            """
-            # This file was generated using Kotlin DSL ($sourceFilePath).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-            """.trimIndent()
-        )
-        appendLine()
-        appendLine("name: $name")
-        appendLine()
-        appendLine("on:")
-        appendLine(workflow.on.triggersToYaml().prependIndent("  "))
-        appendLine()
+    val preamble = """
+        # This file was generated using Kotlin DSL ($sourceFilePath).
+        # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+        # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+    """.trimIndent()
 
-        if (concurrency != null) {
-            appendLine("concurrency:")
-            appendLine("  group: ${concurrency.group}")
-            appendLine("  cancel-in-progress: ${concurrency.cancelInProgress}")
-            appendLine()
-        }
+    val workflowToBeSerialized = this.toYamlInternal(jobsWithConsistencyCheck)
+    val workflowAsYaml = yaml.dump(workflowToBeSerialized)
 
-        if (workflow.env.isNotEmpty()) {
-            appendLine("env:")
-            appendLine(workflow.env.toYaml().prependIndent("  "))
-            appendLine()
-        }
-
-        appendLine("jobs:")
-        append(jobsWithConsistencyCheck.jobsToYaml().prependIndent("  "))
-        customArgumentsToYaml().takeIf { it.isNotBlank() }
-            ?.let { freeargs ->
-                append("\n")
-                append(freeargs.replaceIndent(""))
-            }
-
-        appendLine()
-    }.also { yamlContent ->
-        failIfMalformedYml(yamlContent)
-    }
+    return preamble + "\n\n" + workflowAsYaml
 }
 
-internal fun StringBuilder.printIfHasElements(
-    items: List<String>?,
-    name: String,
-    space: String = "  ",
-) {
-    if (!items.isNullOrEmpty()) {
-        appendLine("$name:".prependIndent(space))
-        items.forEach {
-            appendLine("  - '$it'".prependIndent(space))
-        }
+private val yaml = Yaml(
+    DumperOptions().apply {
+        defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
     }
-}
+)
+
+@Suppress("SpreadOperator")
+private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job>): Map<String, Any> =
+    mapOfNotNullValues(
+        "name" to name,
+        "on" to on.triggersToYaml(),
+        "concurrency" to concurrency?.let {
+            mapOf(
+                "group" to it.group,
+                "cancel-in-progress" to it.cancelInProgress,
+            )
+        },
+        "env" to env.ifEmpty { null },
+        "jobs" to jobsWithConsistencyCheck.jobsToYaml(),
+        *_customArguments.toList().toTypedArray(),
+    )
