@@ -3,19 +3,17 @@
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
 name: Integration tests - step with outputs
-
-on:
-  push:
-
+'on':
+  push: {}
 jobs:
-  "test_job":
-    runs-on: "ubuntu-latest"
+  test_job:
+    runs-on: ubuntu-latest
     steps:
-      - id: step-0
-        uses: actions/setup-python@v4
-      - id: step-1
-        name: Some step consuming other step's output
-        uses: actions/checkout@v3
-        with:
-          ssh-key: ${{ steps.step-0.outputs.python-version }}
-          path: ${{ steps.step-0.outputs.my-unsafe-output }}
+    - id: step-0
+      uses: actions/setup-python@v4
+    - id: step-1
+      name: Some step consuming other step's output
+      uses: actions/checkout@v3
+      with:
+        ssh-key: ${{ steps.step-0.outputs.python-version }}
+        path: ${{ steps.step-0.outputs.my-unsafe-output }}

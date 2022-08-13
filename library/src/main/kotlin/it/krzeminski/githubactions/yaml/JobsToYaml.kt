@@ -14,60 +14,35 @@ import it.krzeminski.githubactions.domain.RunnerType.Windows2019
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.RunnerType.WindowsLatest
 
-fun List<Job>.jobsToYaml(): String =
-    this.joinToString(separator = "\n") {
-        it.toYaml()
-    }
+fun List<Job>.jobsToYaml(): Map<String, Map<String, Any>> =
+    this.associateBy(
+        keySelector = { it.id },
+        valueTransform = { it.toYaml() },
+    )
 
-private fun Job.toYaml() = buildString {
-    val job = this@toYaml
-    appendLine("\"${job.id}\":")
-    job.name?.let {
-        appendLine("  name: $it")
-    }
-    appendLine("  runs-on: \"${runsOn.toYaml()}\"")
-    if (concurrency != null) {
-        appendLine("  concurrency:")
-        appendLine("    group: ${concurrency.group}")
-        appendLine("    cancel-in-progress: ${concurrency.cancelInProgress}")
-    }
-
-    if (job.needs.isNotEmpty()) {
-        appendLine("  needs:")
-        job.needs.forEach {
-            appendLine("    - \"${it.id}\"")
-        }
-    }
-
-    if (job.env.isNotEmpty()) {
-        appendLine("  env:")
-        appendLine(job.env.toYaml().prependIndent("    "))
-    }
-
-    job.condition?.let {
-        appendLine("  if: $it")
-    }
-
-    job.strategyMatrix?.let {
-        appendLine("  strategy:")
-        appendLine("    matrix:")
-        it.forEach { (strategyParam, values) ->
-            appendLine("      $strategyParam:")
-            values.forEach { value ->
-                appendLine("        - $value")
-            }
-        }
-    }
-
-    job.timeoutMinutes?.let { value ->
-        appendLine("  timeout-minutes: $value")
-    }
-
-    appendLine("  steps:")
-    append(steps.stepsToYaml().prependIndent("    "))
-    if (_customArguments.isNotEmpty()) appendLine()
-    append(customArgumentsToYaml().let { if (it.isNotEmpty()) it.prependIndent("  ") else it })
-}
+@Suppress("SpreadOperator")
+private fun Job.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "name" to name,
+        "runs-on" to runsOn.toYaml(),
+        "concurrency" to concurrency?.let {
+            mapOf(
+                "group" to it.group,
+                "cancel-in-progress" to it.cancelInProgress,
+            )
+        },
+        "needs" to needs.ifEmpty { null }?.map { it.id },
+        "env" to env.ifEmpty { null },
+        "if" to condition,
+        "strategy" to strategyMatrix?.let {
+            mapOf(
+                "matrix" to it,
+            )
+        },
+        "timeout-minutes" to timeoutMinutes,
+        "steps" to steps.stepsToYaml(),
+        *_customArguments.toList().toTypedArray(),
+    )
 
 fun RunnerType.toYaml() =
     when (this) {

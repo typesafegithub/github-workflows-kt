@@ -44,42 +44,42 @@ class OtherTriggersTest : FunSpec({
             WorkflowRun(),
         )
 
-        triggers.triggersToYaml() shouldBe """
-            branch_protection_rule:
-            check_run:
-            check_suite:
-            create:
-            delete:
-            deployment:
-            deployment_status:
-            discussion:
-            discussion_comment:
-            fork:
-            gollum:
-            issue_comment:
-            issues:
-            label:
-            milestone:
-            page_build:
-            project:
-            project_card:
-            project_column:
-            public:
-            pull_request:
-            pull_request_review:
-            pull_request_review_comment:
-            pull_request_target:
-            push:
-            registry_package:
-            release:
-            repository_dispatch:
-            schedule:
-            status:
-            watch:
-            workflow_call:
-            workflow_dispatch:
-            workflow_run:
-        """.trimIndent()
+        triggers.triggersToYaml() shouldBe mapOf(
+            "branch_protection_rule" to emptyMap<Any, Any>(),
+            "check_run" to emptyMap<Any, Any>(),
+            "check_suite" to emptyMap<Any, Any>(),
+            "create" to emptyMap<Any, Any>(),
+            "delete" to emptyMap<Any, Any>(),
+            "deployment" to emptyMap<Any, Any>(),
+            "deployment_status" to emptyMap<Any, Any>(),
+            "discussion" to emptyMap<Any, Any>(),
+            "discussion_comment" to emptyMap<Any, Any>(),
+            "fork" to emptyMap<Any, Any>(),
+            "gollum" to emptyMap<Any, Any>(),
+            "issue_comment" to emptyMap<Any, Any>(),
+            "issues" to emptyMap<Any, Any>(),
+            "label" to emptyMap<Any, Any>(),
+            "milestone" to emptyMap<Any, Any>(),
+            "page_build" to emptyMap<Any, Any>(),
+            "project" to emptyMap<Any, Any>(),
+            "project_card" to emptyMap<Any, Any>(),
+            "project_column" to emptyMap<Any, Any>(),
+            "public" to emptyMap<Any, Any>(),
+            "pull_request" to emptyMap<Any, Any>(),
+            "pull_request_review" to emptyMap<Any, Any>(),
+            "pull_request_review_comment" to emptyMap<Any, Any>(),
+            "pull_request_target" to emptyMap<Any, Any>(),
+            "push" to emptyMap<Any, Any>(),
+            "registry_package" to emptyMap<Any, Any>(),
+            "release" to emptyMap<Any, Any>(),
+            "repository_dispatch" to emptyMap<Any, Any>(),
+            "schedule" to emptyList<String>(),
+            "status" to emptyMap<Any, Any>(),
+            "watch" to emptyMap<Any, Any>(),
+            "workflow_call" to emptyMap<Any, Any>(),
+            "workflow_dispatch" to emptyMap<Any, Any>(),
+            "workflow_run" to emptyMap<Any, Any>(),
+        )
     }
 
     test("Creating all triggers with free arguments") {
@@ -124,87 +124,41 @@ class OtherTriggersTest : FunSpec({
             WorkflowRun(types("completed", "requested")),
         )
 
-        triggers.triggersToYaml() shouldBe """
-            branch_protection_rule:
-              types:
-              - created
-              - deleted
-            check_run:
-              types:
-              - completed
-              - rerequested
-            check_suite:
-            create:
-            delete:
-            deployment:
-            deployment_status:
-            discussion:
-              types:
-              - created
-              - edited
-              - answered
-            discussion_comment:
-            fork:
-            gollum:
-            issue_comment:
-              types:
-              - created
-              - edited
-              - deleted
-            issues:
-              types:
-              - opened
-              - edited
-            label:
-              types:
-              - commented
-              - deleted
-              - edited
-            milestone:
-              types:
-              - created
-              - closed
-            page_build:
-            project:
-              types:
-              - created
-              - deleted
-            project_card:
-              types:
-              - created
-              - moved
-            project_column:
-              types:
-              - moved
-            public:
-            pull_request:
-            pull_request_review:
-            pull_request_review_comment:
-              types:
-              - created
-              - edited
-            pull_request_target:
-            push:
-            registry_package:
-              types:
-              - published
-              - updated
-            release:
-              types:
-              - published
-              - unpublished
-            repository_dispatch:
-            schedule:
-            status:
-              types:
-              - started
-            watch:
-            workflow_call:
-            workflow_dispatch:
-            workflow_run:
-              types:
-              - completed
-              - requested
-        """.trimIndent()
+        triggers.triggersToYaml() shouldBe mapOf(
+            "branch_protection_rule" to mapOf("types" to listOf("created", "deleted")),
+            "check_run" to mapOf("types" to listOf("completed", "rerequested")),
+            "check_suite" to emptyMap<Any, Any>(),
+            "create" to emptyMap<Any, Any>(),
+            "delete" to emptyMap<Any, Any>(),
+            "deployment" to emptyMap<Any, Any>(),
+            "deployment_status" to emptyMap<Any, Any>(),
+            "discussion" to mapOf("types" to listOf("created", "edited", "answered")),
+            "discussion_comment" to emptyMap<Any, Any>(),
+            "fork" to emptyMap<Any, Any>(),
+            "gollum" to emptyMap<Any, Any>(),
+            "issue_comment" to mapOf("types" to listOf("created", "edited", "deleted")),
+            "issues" to mapOf("types" to listOf("opened", "edited")),
+            "label" to mapOf("types" to listOf("commented", "deleted", "edited")),
+            "milestone" to mapOf("types" to listOf("created", "closed")),
+            "page_build" to emptyMap<Any, Any>(),
+            "project" to mapOf("types" to listOf("created", "deleted")),
+            "project_card" to mapOf("types" to listOf("created", "moved")),
+            "project_column" to mapOf("types" to listOf("moved")),
+            "public" to emptyMap<Any, Any>(),
+            "pull_request" to emptyMap<Any, Any>(),
+            "pull_request_review" to emptyMap<Any, Any>(),
+            "pull_request_review_comment" to mapOf("types" to listOf("created", "edited")),
+            "pull_request_target" to emptyMap<Any, Any>(),
+            "push" to emptyMap<Any, Any>(),
+            "registry_package" to mapOf("types" to listOf("published", "updated")),
+            "release" to mapOf("types" to listOf("published", "unpublished")),
+            "repository_dispatch" to emptyMap<Any, Any>(),
+            "schedule" to emptyList<String>(),
+            "status" to mapOf("types" to listOf("started")),
+            "watch" to emptyMap<Any, Any>(),
+            "workflow_call" to emptyMap<Any, Any>(),
+            "workflow_dispatch" to emptyMap<Any, Any>(),
+            "workflow_run" to mapOf("types" to listOf("completed", "requested")),
+        )
     }
 })

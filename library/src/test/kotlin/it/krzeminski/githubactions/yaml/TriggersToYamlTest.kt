@@ -22,10 +22,10 @@ class TriggersToYamlTest : DescribeSpec({
         val yaml = triggers.triggersToYaml()
 
         // then
-        yaml shouldBe """
-            |workflow_dispatch:
-            |push:
-        """.trimMargin()
+        yaml shouldBe mapOf(
+            "workflow_dispatch" to emptyMap<Any, Any>(),
+            "push" to emptyMap(),
+        )
     }
 
     describe("workflow dispatch") {
@@ -37,13 +37,12 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |workflow_dispatch:
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "workflow_dispatch" to emptyMap<Any, Any>(),
+            )
         }
 
         it("renders with all parameters") {
-
             // given
             val triggers = listOf(
                 WorkflowDispatch(
@@ -78,31 +77,34 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-              |workflow_dispatch:
-              |  inputs:
-              |    logLevel:
-              |      description: 'Log level'
-              |      type: choice
-              |      required: true
-              |      default: 'warning'
-              |      options:
-              |        - 'info'
-              |        - 'warning'
-              |        - 'debug'
-              |    tags:
-              |      description: 'Test scenario tags'
-              |      type: boolean
-              |      required: false
-              |    environment:
-              |      description: 'Environment to run tests against'
-              |      type: environment
-              |      required: true
-              |    greeting:
-              |      description: 'Hello {greeting}'
-              |      type: string
-              |      required: true
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "workflow_dispatch" to mapOf(
+                    "inputs" to mapOf(
+                        "logLevel" to mapOf(
+                            "description" to "Log level",
+                            "type" to "choice",
+                            "required" to true,
+                            "default" to "warning",
+                            "options" to listOf("info", "warning", "debug"),
+                        ),
+                        "tags" to mapOf(
+                            "description" to "Test scenario tags",
+                            "type" to "boolean",
+                            "required" to false,
+                        ),
+                        "environment" to mapOf(
+                            "description" to "Environment to run tests against",
+                            "type" to "environment",
+                            "required" to true,
+                        ),
+                        "greeting" to mapOf(
+                            "description" to "Hello {greeting}",
+                            "type" to "string",
+                            "required" to true,
+                        ),
+                    )
+                )
+            )
         }
     }
 
@@ -115,9 +117,9 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |push:
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "push" to emptyMap<Any, Any>(),
+            )
         }
 
         it("renders with all parameters valid to put together - first part") {
@@ -134,18 +136,13 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |push:
-                |  branches:
-                |    - 'branch1'
-                |    - 'branch2'
-                |  tags:
-                |    - 'tag1'
-                |    - 'tag2'
-                |  paths:
-                |    - 'path1'
-                |    - 'path2'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "push" to mapOf(
+                    "branches" to listOf("branch1", "branch2"),
+                    "tags" to listOf("tag1", "tag2"),
+                    "paths" to listOf("path1", "path2"),
+                )
+            )
         }
 
         it("renders with all parameters valid to put together - second part") {
@@ -162,18 +159,13 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |push:
-                |  branches-ignore:
-                |    - 'branchIgnore1'
-                |    - 'branchIgnore2'
-                |  tags-ignore:
-                |    - 'tagIgnore1'
-                |    - 'tagIgnore2'
-                |  paths-ignore:
-                |    - 'pathIgnore1'
-                |    - 'pathIgnore2'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "push" to mapOf(
+                    "branches-ignore" to listOf("branchIgnore1", "branchIgnore2"),
+                    "tags-ignore" to listOf("tagIgnore1", "tagIgnore2"),
+                    "paths-ignore" to listOf("pathIgnore1", "pathIgnore2"),
+                )
+            )
         }
     }
 
@@ -186,9 +178,9 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |pull_request:
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "pull_request" to emptyMap<Any, Any>(),
+            )
         }
 
         it("renders with all parameters valid to put together - first part") {
@@ -205,18 +197,13 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |pull_request:
-                |  types:
-                |    - 'auto_merge_disabled'
-                |    - 'opened'
-                |  branches:
-                |    - 'branch1'
-                |    - 'branch2'
-                |  paths:
-                |    - 'path1'
-                |    - 'path2'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "pull_request" to mapOf(
+                    "types" to listOf("auto_merge_disabled", "opened"),
+                    "branches" to listOf("branch1", "branch2"),
+                    "paths" to listOf("path1", "path2"),
+                )
+            )
         }
 
         it("renders with all parameters valid to put together - second part") {
@@ -232,15 +219,12 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |pull_request:
-                |  branches-ignore:
-                |    - 'branchIgnore1'
-                |    - 'branchIgnore2'
-                |  paths-ignore:
-                |    - 'pathIgnore1'
-                |    - 'pathIgnore2'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "pull_request" to mapOf(
+                    "branches-ignore" to listOf("branchIgnore1", "branchIgnore2"),
+                    "paths-ignore" to listOf("pathIgnore1", "pathIgnore2"),
+                )
+            )
         }
     }
 
@@ -253,9 +237,9 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |pull_request_target:
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "pull_request_target" to emptyMap<Any, Any>()
+            )
         }
 
         it("renders with all parameters valid to put together - first part") {
@@ -272,18 +256,13 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |pull_request_target:
-                |  types:
-                |    - 'assigned'
-                |    - 'closed'
-                |  branches:
-                |    - 'branch1'
-                |    - 'branch2'
-                |  paths:
-                |    - 'path1'
-                |    - 'path2'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "pull_request_target" to mapOf(
+                    "types" to listOf("assigned", "closed"),
+                    "branches" to listOf("branch1", "branch2"),
+                    "paths" to listOf("path1", "path2"),
+                )
+            )
         }
 
         it("renders with all parameters valid to put together - second part") {
@@ -300,18 +279,13 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |pull_request_target:
-                |  types:
-                |    - 'assigned'
-                |    - 'closed'
-                |  branches-ignore:
-                |    - 'branchIgnore1'
-                |    - 'branchIgnore2'
-                |  paths-ignore:
-                |    - 'pathIgnore1'
-                |    - 'pathIgnore2'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "pull_request_target" to mapOf(
+                    "types" to listOf("assigned", "closed"),
+                    "branches-ignore" to listOf("branchIgnore1", "branchIgnore2"),
+                    "paths-ignore" to listOf("pathIgnore1", "pathIgnore2"),
+                )
+            )
         }
     }
 
@@ -330,10 +304,11 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |schedule:
-                | - cron: '30 5,17 * * *'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "schedule" to listOf(
+                    mapOf("cron" to "30 5,17 * * *"),
+                ),
+            )
         }
 
         it("renders with multiple cron triggers") {
@@ -351,11 +326,12 @@ class TriggersToYamlTest : DescribeSpec({
             val yaml = triggers.triggersToYaml()
 
             // then
-            yaml shouldBe """
-                |schedule:
-                | - cron: '30 5,17 * * *'
-                | - cron: '0 0 * * *'
-            """.trimMargin()
+            yaml shouldBe mapOf(
+                "schedule" to listOf(
+                    mapOf("cron" to "30 5,17 * * *"),
+                    mapOf("cron" to "0 0 * * *"),
+                ),
+            )
         }
     }
 
@@ -401,42 +377,34 @@ class TriggersToYamlTest : DescribeSpec({
             ),
         )
 
-        triggers.triggersToYaml() shouldBe """
-            pull_request:
-              types:
-              - ignored
-              lang: french
-              fast: true
-              answer: 42
-              list:
-              - 1
-              - 2
-              - 3
-            workflow_dispatch:
-              lang: french
-              list:
-              - 1
-              - 2
-              - 3
-            push:
-              branches:
-              - main
-              - master
-              tags:
-              - tag1
-              - tag2
-            schedule:
-              cron: 0 7 * * *
-              object:
-                some-property: good
-                other-property: better
-            pull_request_target:
-              branches:
-              - main
-              - master
-              tags:
-              - tag1
-              - tag2
-        """.trimIndent()
+        triggers.triggersToYaml() shouldBe mapOf(
+            "pull_request" to mapOf(
+                "types" to listOf("ignored"),
+                "lang" to "french",
+                "fast" to true,
+                "answer" to 42,
+                "list" to listOf(1, 2, 3),
+            ),
+            "workflow_dispatch" to mapOf(
+                "lang" to "french",
+                "list" to listOf(1, 2, 3),
+            ),
+            "push" to mapOf(
+                "branches" to listOf("main", "master"),
+                "tags" to listOf("tag1", "tag2"),
+            ),
+            "schedule" to mapOf(
+                "cron" to "0 7 * * *",
+                "object" to
+                    mapOf(
+                        "some-property" to "good",
+                        "other-property" to "better",
+                    ),
+            ),
+            "pull_request_target" to mapOf(
+                "branches" to listOf("main", "master"),
+                "tags" to listOf("tag1", "tag2"),
+            ),
+        )
     }
 })

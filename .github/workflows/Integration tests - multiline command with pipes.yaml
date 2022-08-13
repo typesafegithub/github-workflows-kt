@@ -3,18 +3,16 @@
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
 name: Integration tests - multiline command with pipes
-
-on:
-  push:
-
+'on':
+  push: {}
 jobs:
-  "test_job":
-    runs-on: "ubuntu-latest"
+  test_job:
+    runs-on: ubuntu-latest
     steps:
-      - id: step-0
-        name: Hello world!
-        run: |
-          less test.txt \
-          | grep -P "foobar" \
-          | sort \
-          > result.txt
+    - id: step-0
+      name: Hello world!
+      run: |-
+        less test.txt \
+        | grep -P "foobar" \
+        | sort \
+        > result.txt

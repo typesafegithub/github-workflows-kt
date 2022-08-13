@@ -47,7 +47,6 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import it.krzeminski.githubactions.yaml.toMap
 import it.krzeminski.githubactions.yaml.triggerName
 import java.io.File
-import java.util.LinkedHashMap
 
 fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
     builder.add("listOf(\n").indent()
@@ -123,7 +122,7 @@ fun Trigger?.toKotlin(): CodeBlock {
     if (this == null) {
         return CodeBlock.of("")
     }
-    val map: LinkedHashMap<String, List<String>?> = this.toMap()
+    val map: Map<String, List<String>?> = this.toMap()
     return map.joinToCode(
         prefix = CodeBlock.of("%T(", classname()),
         postfix = "),",
