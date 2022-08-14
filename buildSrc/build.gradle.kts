@@ -12,4 +12,15 @@ dependencies {
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.21.0")
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.3.0")
+
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.6.4"))
+    implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        this.freeCompilerArgs += listOf(
+            "-opt-in=kotlin.time.ExperimentalTime",
+        )
+    }
 }

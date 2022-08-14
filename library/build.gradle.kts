@@ -1,12 +1,5 @@
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import buildsrc.tasks.AwaitMavenCentralDeployTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse.BodyHandlers
-import kotlin.time.ExperimentalTime
-import kotlin.time.minutes
 
 plugins {
     buildsrc.convention.`kotlin-jvm`
@@ -116,34 +109,10 @@ tasks {
     }
 }
 
-@OptIn(ExperimentalTime::class)
-val waitUntilLibraryPresentInMavenCentral by tasks.creating<Task> {
-    group = "publishing"
-    doLast {
-        val queriedUrl = "https://repo1.maven.org/maven2/it/krzeminski/github-actions-kotlin-dsl/$version/"
-        println("Querying URL: $queriedUrl")
-
-        fun isPresent(): Boolean {
-            val request = HttpRequest.newBuilder()
-                .uri(URI(queriedUrl))
-                .GET()
-                .build()
-            val response = HttpClient.newHttpClient()
-                .send(request, BodyHandlers.ofString())
-            return response.statusCode() != 404
-        }
-
-        runBlocking {
-            while (!isPresent()) {
-                println("Library still not present...")
-                delay(1.minutes)
-            }
-
-            if (isPresent()) {
-                println("Library present!")
-            }
-        }
-    }
+val waitUntilLibraryPresentInMavenCentral by tasks.registering(AwaitMavenCentralDeployTask::class) {
+    this.groupId.set(project.group.toString())
+    this.artifactId.set(libraryName)
+    this.version.set(project.version.toString())
 }
 
 val validateDuplicatedVersion by tasks.creating<Task> {
