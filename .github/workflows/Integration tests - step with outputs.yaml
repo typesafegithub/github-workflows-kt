@@ -12,11 +12,10 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - id: step-0
-        uses: EndBug/add-and-commit@v9
+        uses: actions/setup-python@v4
       - id: step-1
         name: Some step consuming other step's output
         uses: actions/checkout@v3
         with:
-          repository: ${{ step-0 }}
-          ref: ${{ steps.step-0.outputs.commit_sha }}
-          token: ${{ steps.step-0.outputs.my-unsafe-output }}
+          ssh-key: ${{ steps.step-0.outputs.python-version }}
+          path: ${{ steps.step-0.outputs.my-unsafe-output }}

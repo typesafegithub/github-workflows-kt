@@ -6,6 +6,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
@@ -370,14 +371,13 @@ class IntegrationTest : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                val addAndCommit = uses(AddAndCommitV9())
+                val addAndCommit = uses(SetupPythonV4())
 
                 uses(
                     name = "Some step consuming other step's output",
                     action = CheckoutV3(
-                        repository = expr(addAndCommit.id),
-                        ref = expr(addAndCommit.outputs.commitSha),
-                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                        sshKey = expr(addAndCommit.outputs.pythonVersion),
+                        path = expr(addAndCommit.outputs["my-unsafe-output"]),
                     )
                 )
             }
