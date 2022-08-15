@@ -14,7 +14,6 @@ group = "it.krzeminski"
 version = "0.24.0"
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.46.0")
     implementation("org.yaml:snakeyaml:1.30")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
 
