@@ -1040,6 +1040,15 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
+        ActionCoords("SonarSource", "sonarcloud-github-action", "v1.6"),
+        TypingsSource.WrapperGenerator(
+            mapOf(
+                "args" to StringTyping,
+                "projectBaseDir" to StringTyping,
+            ),
+        ),
+    ),
+    WrapperRequest(
         ActionCoords("stefanzweifel", "git-auto-commit-action", "v4"),
         TypingsSource.WrapperGenerator(
             mapOf(
