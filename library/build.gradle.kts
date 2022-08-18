@@ -15,7 +15,7 @@ version = "0.25.0"
 
 dependencies {
     implementation("org.yaml:snakeyaml:1.30")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.0")
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     testImplementation(kotlin("reflect"))
