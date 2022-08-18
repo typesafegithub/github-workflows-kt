@@ -846,6 +846,7 @@ val wrappersToGenerate = listOf(
                 "gradle-home-cache-includes" to ListOfTypings("\\n"),
                 "gradle-home-cache-excludes" to ListOfTypings("\\n"),
                 "cache-write-only" to BooleanTyping,
+                "cache-read-timeout" to IntegerTyping,
                 "gradle-home-cache-strict-match" to StringTyping,
             )
         ),
