@@ -7,10 +7,12 @@ name: Check if wrappers up to date
   push:
     branches:
     - main
-  pull_request: &id001 {}
+  pull_request:
+    branches-ignore:
+    - some-non-existent-branch
   schedule:
   - cron: 0 1 * * *
-  workflow_dispatch: *id001
+  workflow_dispatch: {}
 jobs:
   check_yaml_consistency:
     runs-on: ubuntu-latest

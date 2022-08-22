@@ -18,7 +18,11 @@ workflow(
     name = "Check if wrappers up to date",
     on = listOf(
         Push(branches = listOf("main")),
-        PullRequest(),
+        PullRequest(
+            // A workaround for https://github.com/krzema12/github-actions-kotlin-dsl/issues/416
+            // Otherwise, a YAML anchor/alias is used here and GitHub cannot parse the YAML.
+            branchesIgnore = listOf("some-non-existent-branch"),
+        ),
         Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
         WorkflowDispatch(),
     ),
