@@ -49,7 +49,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             jobs:
               check_yaml_consistency:
@@ -112,7 +112,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             jobs:
               test_job:
@@ -200,7 +200,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             jobs:
               check_yaml_consistency:
@@ -314,7 +314,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Overridden name!
-            'on':
+            on:
               push: {}
             env:
               SIMPLE_VAR: simple-value-workflow
@@ -410,7 +410,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             concurrency:
               group: workflow_staging_environment
@@ -468,7 +468,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             concurrency:
               group: workflow_staging_environment
