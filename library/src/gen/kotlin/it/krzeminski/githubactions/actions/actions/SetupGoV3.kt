@@ -46,6 +46,11 @@ public class SetupGoV3(
      */
     public val cacheDependencyPath: String? = null,
     /**
+     * Target architecture for Go to use. Examples: x86, x64. Will use system architecture by
+     * default.
+     */
+    public val architecture: SetupGoV3.Architecture? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -64,11 +69,24 @@ public class SetupGoV3(
             token?.let { "token" to it },
             cache?.let { "cache" to it.toString() },
             cacheDependencyPath?.let { "cache-dependency-path" to it },
+            architecture?.let { "architecture" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
     public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+
+    public sealed class Architecture(
+        public val stringValue: String,
+    ) {
+        public object X86 : SetupGoV3.Architecture("x86")
+
+        public object X64 : SetupGoV3.Architecture("x64")
+
+        public class Custom(
+            customStringValue: String,
+        ) : SetupGoV3.Architecture(customStringValue)
+    }
 
     public class Outputs(
         private val stepId: String,
