@@ -52,6 +52,10 @@ public class AddAndCommitV9(
      */
     public val defaultAuthor: AddAndCommitV9.DefaultActor? = null,
     /**
+     * Arguments for the git fetch command (if 'false', the action won't fetch the repo)
+     */
+    public val fetch: String? = null,
+    /**
      * The message for the commit
      */
     public val message: String? = null,
@@ -112,6 +116,7 @@ public class AddAndCommitV9(
             committerEmail?.let { "committer_email" to it },
             cwd?.let { "cwd" to it },
             defaultAuthor?.let { "default_author" to it.stringValue },
+            fetch?.let { "fetch" to it },
             message?.let { "message" to it },
             newBranch?.let { "new_branch" to it },
             pathspecErrorHandling?.let { "pathspec_error_handling" to it.stringValue },
