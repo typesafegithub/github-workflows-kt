@@ -179,6 +179,13 @@ val wrappersToGenerate = listOf(
             mapOf(
                 "check-latest" to BooleanTyping,
                 "cache" to BooleanTyping,
+                "architecture" to EnumTyping(
+                    "Architecture",
+                    listOf(
+                        "x86",
+                        "x64",
+                    ),
+                )
             )
         )
     ),
