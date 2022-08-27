@@ -7,8 +7,6 @@ import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
 import it.krzeminski.githubactions.internal.findGitRoot
 import it.krzeminski.githubactions.internal.relativeToAbsolute
-import org.yaml.snakeyaml.DumperOptions
-import org.yaml.snakeyaml.Yaml
 import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
@@ -79,16 +77,10 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
     """.trimIndent()
 
     val workflowToBeSerialized = this.toYamlInternal(jobsWithConsistencyCheck)
-    val workflowAsYaml = yaml.dump(workflowToBeSerialized)
+    val workflowAsYaml = workflowToBeSerialized.toYaml()
 
     return preamble + "\n\n" + workflowAsYaml
 }
-
-private val yaml = Yaml(
-    DumperOptions().apply {
-        defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
-    }
-)
 
 @Suppress("SpreadOperator")
 private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job>): Map<String, Any> =
