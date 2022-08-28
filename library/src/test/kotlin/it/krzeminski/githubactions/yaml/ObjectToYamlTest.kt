@@ -82,4 +82,29 @@ class ObjectToYamlTest : DescribeSpec({
 
         """.trimIndent()
     }
+
+    it("correctly serializes multiline strings") {
+        // given
+        val objectToSerialize = mapOf(
+            "foo" to """
+                hey
+                hi
+                hello
+            """.trimIndent(),
+            "bar" to "baz",
+        )
+
+        // when
+        val yaml = objectToSerialize.toYaml()
+
+        // then
+        yaml shouldBe """
+            foo: |-
+              hey
+              hi
+              hello
+            bar: baz
+
+        """.trimIndent()
+    }
 })
