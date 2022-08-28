@@ -32,7 +32,7 @@ jobs:
       name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: zulu
     - id: step-2
       name: Build
@@ -50,7 +50,7 @@ jobs:
       name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: zulu
     - id: step-2
       name: Build
