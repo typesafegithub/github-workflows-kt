@@ -26,7 +26,7 @@ workflow(
     job(
         id = "updates-available",
         runsOn = UbuntuLatest,
-        condition = "github.repository == 'krzema12/github-actions-kotlin-dsl'",
+        condition = "env.ENABLE_PERIODIC_JOBS == 'true'",
     ) {
         uses(CheckoutV3())
         uses(
