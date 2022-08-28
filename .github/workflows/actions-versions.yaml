@@ -10,6 +10,7 @@ name: Updates available
 jobs:
   check_yaml_consistency:
     runs-on: ubuntu-latest
+    if: github.repository == 'krzema12/github-actions-kotlin-dsl'
     steps:
     - id: step-0
       name: Check out
@@ -22,6 +23,7 @@ jobs:
       run: git diff --exit-code '.github/workflows/actions-versions.yaml'
   updates-available:
     runs-on: ubuntu-latest
+    if: github.repository == 'krzema12/github-actions-kotlin-dsl'
     needs:
     - check_yaml_consistency
     steps:
