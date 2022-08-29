@@ -17,6 +17,7 @@ class WorkflowBuilder(
     sourceFile: Path,
     targetFileName: String,
     concurrency: Concurrency? = null,
+    yamlConsistencyJobCondition: String? = null,
     jobs: List<Job> = emptyList(),
     _customArguments: Map<String, @Contextual Any>,
 ) {
@@ -28,6 +29,7 @@ class WorkflowBuilder(
         targetFileName = targetFileName,
         jobs = jobs,
         concurrency = concurrency,
+        yamlConsistencyJobCondition = yamlConsistencyJobCondition,
         _customArguments = _customArguments,
     )
 
@@ -89,6 +91,7 @@ fun workflow(
     sourceFile: Path,
     targetFileName: String = sourceFile.fileName.toString().substringBeforeLast(".main.kts") + ".yaml",
     concurrency: Concurrency? = null,
+    yamlConsistencyJobCondition: String? = null,
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -103,6 +106,7 @@ fun workflow(
         sourceFile = sourceFile,
         targetFileName = targetFileName,
         concurrency = concurrency,
+        yamlConsistencyJobCondition = yamlConsistencyJobCondition,
         _customArguments = _customArguments,
     )
     workflowBuilder.block()
