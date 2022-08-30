@@ -14,7 +14,10 @@ class JobOutputContext(val job: Job) : ExpressionContext(
         "needs.${job.id}.outputs.$propertyName"
     }
 ) {
-    override operator fun get(key: String): String {
+    fun output(key: String): String {
         return "needs.${job.id}.outputs.$key"
+    }
+    fun outputExpr(key: String): String {
+        return expr { "needs.${job.id}.outputs.$key" }
     }
 }
