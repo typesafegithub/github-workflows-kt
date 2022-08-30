@@ -626,11 +626,11 @@ class IntegrationTest : FunSpec({
 
                 run(
                     name = "use output test",
-                    command = """echo $test""",
+                    command = """echo ${expr { test }}""",
                 )
                 run(
                     name = "use output pythonversion",
-                    command = """echo $pythonVersion""",
+                    command = """echo ${expr {pythonVersion}}""",
                 )
             }
         }.toYaml(addConsistencyCheck = false)
@@ -663,10 +663,10 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: step-0
                   name: use output test
-                  run: echo needs.set_output.outputs.test
+                  run: echo ${'$'}{{ needs.set_output.outputs.test }}
                 - id: step-1
                   name: use output pythonversion
-                  run: echo needs.set_output.outputs.pythonVersion
+                  run: echo ${'$'}{{ needs.set_output.outputs.pythonVersion }}
 
         """.trimIndent()
     }
