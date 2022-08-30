@@ -593,6 +593,83 @@ class IntegrationTest : FunSpec({
 
         """.trimIndent()
     }
+
+
+    test("outputs - access outputs across job") {
+
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+        ) {
+            val setOutputJob = job(
+                id = "set_output",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                run(
+                    name = "set output",
+                    command = """echo "::set-output name=test::value"""",
+                )
+                    .withOutputMapping("test", "test")
+
+                uses(SetupPythonV4())
+                    .withOutputMapping("pythonVersion") { pythonVersion }
+            }
+
+            job(
+                id = "use_output",
+                runsOn = RunnerType.UbuntuLatest,
+                needs = listOf(setOutputJob),
+            ) {
+                val test by Contexts.outputs(setOutputJob)
+                val pythonVersion by Contexts.outputs(setOutputJob)
+
+                run(
+                    name = "use output test",
+                    command = """echo $test""",
+                )
+                run(
+                    name = "use output pythonversion",
+                    command = """echo $pythonVersion""",
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+            on:
+              push: {}
+            jobs:
+              set_output:
+                runs-on: ubuntu-latest
+                outputs:
+                  test: ${'$'}{{ steps.step-0.outputs.test }}
+                  pythonVersion: ${'$'}{{ steps.step-1.outputs.python-version }}
+                steps:
+                - id: step-0
+                  name: set output
+                  run: echo "::set-output name=test::value"
+                - id: step-1
+                  uses: actions/setup-python@v4
+              use_output:
+                runs-on: ubuntu-latest
+                needs:
+                - set_output
+                steps:
+                - id: step-0
+                  name: use output test
+                  run: echo needs.set_output.outputs.test
+                - id: step-1
+                  name: use output pythonversion
+                  run: echo needs.set_output.outputs.pythonVersion
+
+        """.trimIndent()
+    }
 })
 
 private fun testRanWithGitHub(

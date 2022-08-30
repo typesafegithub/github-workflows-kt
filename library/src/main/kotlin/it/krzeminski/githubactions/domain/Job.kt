@@ -15,6 +15,7 @@ data class Job(
     val strategyMatrix: Map<String, List<String>>? = null,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
+    val outputsMapping: LinkedHashMap<String, String> = linkedMapOf(),
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments {
     init {

@@ -1,10 +1,7 @@
 package it.krzeminski.githubactions.dsl.expressions
 
-import it.krzeminski.githubactions.dsl.expressions.contexts.EnvContext
-import it.krzeminski.githubactions.dsl.expressions.contexts.FunctionsContext
-import it.krzeminski.githubactions.dsl.expressions.contexts.GitHubContext
-import it.krzeminski.githubactions.dsl.expressions.contexts.RunnerContext
-import it.krzeminski.githubactions.dsl.expressions.contexts.SecretsContext
+import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.dsl.expressions.contexts.*
 
 /**
  * Root elements of GitHub expressions.
@@ -17,4 +14,5 @@ object Contexts : FunctionsContext() {
     val github = GitHubContext
     val runner = RunnerContext
     val secrets = SecretsContext
+    fun outputs(job: Job) = JobOutputContext(job)
 }

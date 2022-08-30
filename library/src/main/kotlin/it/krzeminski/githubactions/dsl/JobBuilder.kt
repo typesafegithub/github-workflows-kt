@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
+import it.krzeminski.githubactions.dsl.expressions.expr
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -23,6 +24,7 @@ class JobBuilder(
     val strategyMatrix: Map<String, List<String>>?,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
+    val outputsMapping: LinkedHashMap<String,String> = linkedMapOf(),
     override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
     private var job = Job(
@@ -36,6 +38,7 @@ class JobBuilder(
         strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
+        outputsMapping = outputsMapping,
         _customArguments = _customArguments,
     )
 
@@ -173,6 +176,35 @@ class JobBuilder(
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep
+    }
+
+    fun outputMapping(
+        key: String,
+        step: CommandStep,
+        output: String,
+    ) {
+        outputsMapping[key] = expr("steps.${step.id}.outputs.$output")
+    }
+    fun CommandStep.withOutputMapping(
+        key: String,
+        output: String,
+    ): CommandStep {
+        outputsMapping[key] = expr("steps.${id}.outputs.$output")
+        return this
+    }
+    fun <T> outputMapping(
+        key: String,
+        step: ExternalActionStepWithOutputs<T>,
+        block: T.() -> String,
+    ) {
+        outputsMapping[key] = expr(step.outputs.block())
+    }
+    fun <O, S: ExternalActionStepWithOutputs<O>> S.withOutputMapping(
+        key: String,
+        block: O.() -> String,
+    ): S {
+        outputsMapping[key] = expr(outputs.block())
+        return this
     }
 
     fun build() = job
