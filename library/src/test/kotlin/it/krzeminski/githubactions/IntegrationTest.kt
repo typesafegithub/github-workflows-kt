@@ -617,14 +617,12 @@ class IntegrationTest : FunSpec({
                     val foo by property()
                 }).also { step ->
                     outputs.bar = step.outputs.foo
-//                    outputs.test.setOutput(step, "test")
                 }
 
                 uses(
                     SetupPythonV4()
                 ).also { step ->
                     outputs.pythonVersion = step.outputs.pythonVersion
-//                    outputs.pythonVersion.setOutput(step) { stepOutputs -> stepOutputs.pythonVersion }
                 }
             }
 
