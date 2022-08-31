@@ -602,8 +602,8 @@ class IntegrationTest : FunSpec({
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
             class SetOutputJobOutputs: JobOutputs() {
-                val pythonVersion: Ref by createOutput()
-                val bar: Ref by createOutput()
+                var pythonVersion: String by createOutput()
+                var bar: String by createOutput()
             }
             val setOutputJob = job(
                 id = "set_output",
@@ -616,14 +616,14 @@ class IntegrationTest : FunSpec({
                 ).withOutputs(object : StepOutputs() {
                     val foo by property()
                 }).also { step ->
-                    outputs.bar += step.outputs.foo
+                    outputs.bar = step.outputs.foo
 //                    outputs.test.setOutput(step, "test")
                 }
 
                 uses(
                     SetupPythonV4()
                 ).also { step ->
-                    outputs.pythonVersion += step.outputs.pythonVersion
+                    outputs.pythonVersion = step.outputs.pythonVersion
 //                    outputs.pythonVersion.setOutput(step) { stepOutputs -> stepOutputs.pythonVersion }
                 }
             }
@@ -635,11 +635,11 @@ class IntegrationTest : FunSpec({
             ) {
                 run(
                     name = "use output test",
-                    command = """echo ${expr { setOutputJob.outputs.bar.reference }}""",
+                    command = """echo ${expr { setOutputJob.outputs.bar }}""",
                 )
                 run(
                     name = "use output pythonversion",
-                    command = """echo ${expr { setOutputJob.outputs.pythonVersion.reference }}""",
+                    command = """echo ${expr { setOutputJob.outputs.pythonVersion }}""",
                 )
             }
         }.toYaml(addConsistencyCheck = false)
