@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
+import it.krzeminski.githubactions.dsl.JobOutputRef
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
@@ -602,6 +603,8 @@ class IntegrationTest : FunSpec({
             on = listOf(Push()),
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
+            val pythonVersion by JobOutputRef
+            val test by JobOutputRef
             val setOutputJob = job(
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
@@ -610,10 +613,10 @@ class IntegrationTest : FunSpec({
                     name = "set output",
                     command = """echo "::set-output name=test::value"""",
                 )
-                    .withOutputMapping("test", "test")
+                    .withOutputMapping(test, "test")
 
                 uses(SetupPythonV4())
-                    .withOutputMapping("pythonVersion") { pythonVersion }
+                    .withOutputMapping(pythonVersion) { it.pythonVersion }
             }
 
             job(
@@ -621,8 +624,8 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 needs = listOf(setOutputJob),
             ) {
-                val test by Contexts.outputs(setOutputJob)
-                val pythonVersion by Contexts.outputs(setOutputJob)
+                val test = expr { setOutputJob.output(pythonVersion) }
+                val pythonVersion = expr { setOutputJob.output(pythonVersion) }
 
                 run(
                     name = "use output test",

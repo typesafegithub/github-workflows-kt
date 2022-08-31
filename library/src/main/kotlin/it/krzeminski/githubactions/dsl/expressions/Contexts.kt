@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.dsl.expressions
 
 import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.dsl.JobOutputRef
 import it.krzeminski.githubactions.dsl.expressions.contexts.*
 
 /**
@@ -15,4 +16,5 @@ object Contexts : FunctionsContext() {
     val runner = RunnerContext
     val secrets = SecretsContext
     fun outputs(job: Job) = JobOutputContext(job)
+    fun Job.output(ref: JobOutputRef) = JobOutputContext(this).output(ref.key)
 }

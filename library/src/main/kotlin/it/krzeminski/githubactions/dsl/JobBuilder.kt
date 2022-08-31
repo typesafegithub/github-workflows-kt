@@ -178,32 +178,46 @@ class JobBuilder(
         return newStep
     }
 
-    fun outputMapping(
-        key: String,
-        step: CommandStep,
-        output: String,
-    ) {
-        outputsMapping[key] = expr("steps.${step.id}.outputs.$output")
-    }
+//    fun outputMapping(
+//        key: String,
+//        step: CommandStep,
+//        output: String,
+//    ) {
+//        outputsMapping[key] = expr("steps.${step.id}.outputs.$output")
+//    }
+//    fun CommandStep.withOutputMapping(
+//        key: String,
+//        output: String,
+//    ): CommandStep {
+//        outputsMapping[key] = expr("steps.${id}.outputs.$output")
+//        return this
+//    }
     fun CommandStep.withOutputMapping(
-        key: String,
+        key: JobOutputRef,
         output: String,
     ): CommandStep {
-        outputsMapping[key] = expr("steps.${id}.outputs.$output")
+        outputsMapping[key.key] = expr("steps.${id}.outputs.$output")
         return this
     }
-    fun <T> outputMapping(
-        key: String,
-        step: ExternalActionStepWithOutputs<T>,
-        block: T.() -> String,
-    ) {
-        outputsMapping[key] = expr(step.outputs.block())
-    }
+//    fun <O> outputMapping(
+//        key: String,
+//        step: ExternalActionStepWithOutputs<O>,
+//        block: (O) -> String,
+//    ) {
+//        outputsMapping[key] = expr(block(step.outputs))
+//    }
+//    fun <O, S: ExternalActionStepWithOutputs<O>> S.withOutputMapping(
+//        key: String,
+//        block: (O) -> String,
+//    ): S {
+//        outputsMapping[key] = expr(outputs.block())
+//        return this
+//    }
     fun <O, S: ExternalActionStepWithOutputs<O>> S.withOutputMapping(
-        key: String,
-        block: O.() -> String,
+        key: JobOutputRef,
+        block: (O) -> String,
     ): S {
-        outputsMapping[key] = expr(outputs.block())
+        outputsMapping[key.key] = expr(block(outputs))
         return this
     }
 
