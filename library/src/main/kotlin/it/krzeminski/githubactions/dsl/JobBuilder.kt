@@ -2,32 +2,25 @@ package it.krzeminski.githubactions.dsl
 
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.ActionWithOutputs
-import it.krzeminski.githubactions.domain.CommandStep
-import it.krzeminski.githubactions.domain.Concurrency
-import it.krzeminski.githubactions.domain.ExternalActionStep
-import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
-import it.krzeminski.githubactions.domain.Job
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.Shell
-import it.krzeminski.githubactions.dsl.expressions.expr
+import it.krzeminski.githubactions.domain.*
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
-class JobBuilder(
+class JobBuilder<OUTPUT: JobOutputs>(
     val id: String,
     val name: String?,
     val runsOn: RunnerType,
-    val needs: List<Job>,
+    val needs: List<Job<*>>,
     val env: LinkedHashMap<String, String>,
     val condition: String?,
     val strategyMatrix: Map<String, List<String>>?,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
-    val outputsMapping: LinkedHashMap<String,String> = linkedMapOf(),
+    val outputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
-    private var job = Job(
+    private var job = Job<OUTPUT>(
         id = id,
         name = name,
         runsOn = runsOn,
@@ -38,7 +31,7 @@ class JobBuilder(
         strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
-        outputsMapping = outputsMapping,
+        outputs = outputs,
         _customArguments = _customArguments,
     )
 
@@ -178,47 +171,23 @@ class JobBuilder(
         return newStep
     }
 
-//    fun outputMapping(
-//        key: String,
-//        step: CommandStep,
-//        output: String,
-//    ) {
-//        outputsMapping[key] = expr("steps.${step.id}.outputs.$output")
-//    }
-//    fun CommandStep.withOutputMapping(
-//        key: String,
-//        output: String,
-//    ): CommandStep {
-//        outputsMapping[key] = expr("steps.${id}.outputs.$output")
-//        return this
-//    }
-    fun CommandStep.withOutputMapping(
-        key: JobOutputRef,
-        output: String,
-    ): CommandStep {
-        outputsMapping[key.key] = expr("steps.${id}.outputs.$output")
-        return this
-    }
-//    fun <O> outputMapping(
-//        key: String,
-//        step: ExternalActionStepWithOutputs<O>,
-//        block: (O) -> String,
-//    ) {
-//        outputsMapping[key] = expr(block(step.outputs))
-//    }
-//    fun <O, S: ExternalActionStepWithOutputs<O>> S.withOutputMapping(
-//        key: String,
-//        block: (O) -> String,
-//    ): S {
-//        outputsMapping[key] = expr(outputs.block())
-//        return this
-//    }
-    fun <O, S: ExternalActionStepWithOutputs<O>> S.withOutputMapping(
-        key: JobOutputRef,
-        block: (O) -> String,
-    ): S {
-        outputsMapping[key.key] = expr(block(outputs))
-        return this
+    fun <T: StepOutputs> CommandStep.withOutputs(
+        outputs: T
+    ) : CommandStepWithOutput<T> {
+        outputs.stepId = id
+        return CommandStepWithOutput(
+            id = id,
+            name = name,
+            command = command,
+            env = env,
+            condition = condition,
+            continueOnError = continueOnError,
+            timeoutMinutes = timeoutMinutes,
+            shell = shell,
+            workingDirectory = workingDirectory,
+            outputs = outputs,
+            _customArguments = _customArguments,
+        )
     }
 
     fun build() = job

@@ -4,20 +4,49 @@ import it.krzeminski.githubactions.dsl.HasCustomArguments
 import it.krzeminski.githubactions.validation.requireMatchesRegex
 import kotlinx.serialization.Contextual
 
-data class Job(
+data class Job<OUTPUT: JobOutputs>(
     val id: String,
     val name: String? = null,
     val runsOn: RunnerType,
     val steps: List<Step>,
-    val needs: List<Job> = emptyList(),
+    val outputs: OUTPUT,
+    val needs: List<Job<*>> = emptyList(),
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
-    val outputsMapping: LinkedHashMap<String, String> = linkedMapOf(),
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments {
+    companion object {
+        operator fun invoke(
+            id: String,
+            name: String? = null,
+            runsOn: RunnerType,
+            steps: List<Step>,
+            needs: List<Job<*>> = emptyList(),
+            env: LinkedHashMap<String, String> = linkedMapOf(),
+            condition: String? = null,
+            strategyMatrix: Map<String, List<String>>? = null,
+            timeoutMinutes: Int? = null,
+            concurrency: Concurrency? = null,
+            _customArguments: Map<String, @Contextual Any> = mapOf(),
+        ) = Job(
+            id = id,
+            name = name,
+            runsOn = runsOn,
+            steps = steps,
+            outputs = JobOutputs.EMPTY,
+            needs = needs,
+            env = env,
+            condition = condition,
+            strategyMatrix = strategyMatrix,
+            timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
+            _customArguments = _customArguments
+        )
+    }
+
     init {
         requireMatchesRegex(
             field = "Job.id",
@@ -28,5 +57,6 @@ data class Job(
         timeoutMinutes?.let { value ->
             require(value > 0) { "timeout should be positive" }
         }
+        outputs.job = this
     }
 }

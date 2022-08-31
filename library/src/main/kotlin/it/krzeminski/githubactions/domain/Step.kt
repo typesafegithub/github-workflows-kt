@@ -38,6 +38,27 @@ data class CommandStep(
     _customArguments = _customArguments,
 )
 
+data class CommandStepWithOutput<T>(
+    override val id: String,
+    val name: String? = null,
+    val command: String,
+    override val env: LinkedHashMap<String, String> = linkedMapOf(),
+    override val condition: String? = null,
+    override val continueOnError: Boolean? = null,
+    override val timeoutMinutes: Int? = null,
+    val shell: Shell? = null,
+    val workingDirectory: String? = null,
+    override val outputs: T,
+    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
+) : Step(
+    id = id,
+    condition = condition,
+    continueOnError = continueOnError,
+    timeoutMinutes = timeoutMinutes,
+    env = env,
+    _customArguments = _customArguments,
+), WithOutputs<T>
+
 @Suppress("LongParameterList")
 open class ExternalActionStep(
     override val id: String,

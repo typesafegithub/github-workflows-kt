@@ -6,10 +6,8 @@ import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
-import it.krzeminski.githubactions.domain.Concurrency
-import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.*
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.JobOutputRef
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
@@ -597,26 +595,37 @@ class IntegrationTest : FunSpec({
 
 
     test("outputs - access outputs across job") {
-
+        // when
         val actualYaml = workflow(
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
-            val pythonVersion by JobOutputRef
-            val test by JobOutputRef
+            class SetOutputJobOutputs: JobOutputs() {
+                val pythonVersion: Ref by createOutput()
+                val bar: Ref by createOutput()
+            }
             val setOutputJob = job(
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
+                outputs = SetOutputJobOutputs()
             ) {
                 run(
                     name = "set output",
-                    command = """echo "::set-output name=test::value"""",
-                )
-                    .withOutputMapping(test, "test")
+                    command = """echo "::set-output name=foo::baz"""",
+                ).withOutputs(object : StepOutputs() {
+                    val foo by property()
+                }).also { step ->
+                    outputs.bar += step.outputs.foo
+//                    outputs.test.setOutput(step, "test")
+                }
 
-                uses(SetupPythonV4())
-                    .withOutputMapping(pythonVersion) { it.pythonVersion }
+                uses(
+                    SetupPythonV4()
+                ).also { step ->
+                    outputs.pythonVersion += step.outputs.pythonVersion
+//                    outputs.pythonVersion.setOutput(step) { stepOutputs -> stepOutputs.pythonVersion }
+                }
             }
 
             job(
@@ -626,16 +635,16 @@ class IntegrationTest : FunSpec({
             ) {
                 run(
                     name = "use output test",
-                    command = """echo ${expr { setOutputJob.output(test) }}""",
+                    command = """echo ${expr { setOutputJob.outputs.bar.reference }}""",
                 )
                 run(
                     name = "use output pythonversion",
-                    command = """echo ${expr { setOutputJob.output(pythonVersion) }}""",
+                    command = """echo ${expr { setOutputJob.outputs.pythonVersion.reference }}""",
                 )
             }
         }.toYaml(addConsistencyCheck = false)
 
-
+        // then
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -648,12 +657,12 @@ class IntegrationTest : FunSpec({
               set_output:
                 runs-on: ubuntu-latest
                 outputs:
-                  test: ${'$'}{{ steps.step-0.outputs.test }}
+                  bar: ${'$'}{{ steps.step-0.outputs.foo }}
                   pythonVersion: ${'$'}{{ steps.step-1.outputs.python-version }}
                 steps:
                 - id: step-0
                   name: set output
-                  run: echo "::set-output name=test::value"
+                  run: echo "::set-output name=foo::baz"
                 - id: step-1
                   uses: actions/setup-python@v4
               use_output:
@@ -663,7 +672,7 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: step-0
                   name: use output test
-                  run: echo ${'$'}{{ needs.set_output.outputs.test }}
+                  run: echo ${'$'}{{ needs.set_output.outputs.bar }}
                 - id: step-1
                   name: use output pythonversion
                   run: echo ${'$'}{{ needs.set_output.outputs.pythonVersion }}
