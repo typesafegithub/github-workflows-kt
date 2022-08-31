@@ -624,16 +624,13 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 needs = listOf(setOutputJob),
             ) {
-                val test = expr { setOutputJob.output(pythonVersion) }
-                val pythonVersion = expr { setOutputJob.output(pythonVersion) }
-
                 run(
                     name = "use output test",
-                    command = """echo ${expr { test }}""",
+                    command = """echo ${expr { setOutputJob.output(test) }}""",
                 )
                 run(
                     name = "use output pythonversion",
-                    command = """echo ${expr {pythonVersion}}""",
+                    command = """echo ${expr { setOutputJob.output(pythonVersion) }}""",
                 )
             }
         }.toYaml(addConsistencyCheck = false)
