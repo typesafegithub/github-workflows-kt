@@ -55,7 +55,7 @@ class WorkflowBuilder(
             strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
-            outputs = outputs,
+            jobOutputs = outputs,
             _customArguments = _customArguments,
         )
         jobBuilder.block()

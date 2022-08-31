@@ -17,7 +17,7 @@ class JobBuilder<OUTPUT: JobOutputs>(
     val strategyMatrix: Map<String, List<String>>?,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
-    val outputs: OUTPUT,
+    val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
     private var job = Job<OUTPUT>(
@@ -31,7 +31,7 @@ class JobBuilder<OUTPUT: JobOutputs>(
         strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
-        outputs = outputs,
+        jobOutputs = jobOutputs,
         _customArguments = _customArguments,
     )
 

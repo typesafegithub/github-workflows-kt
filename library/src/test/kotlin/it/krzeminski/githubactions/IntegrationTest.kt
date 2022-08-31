@@ -616,13 +616,13 @@ class IntegrationTest : FunSpec({
                 ).withOutputs(object : StepOutputs() {
                     val foo by property()
                 }).also { step ->
-                    outputs.bar = step.outputs.foo
+                    jobOutputs.bar = step.outputs.foo
                 }
 
                 uses(
                     SetupPythonV4()
                 ).also { step ->
-                    outputs.pythonVersion = step.outputs.pythonVersion
+                    jobOutputs.pythonVersion = step.outputs.pythonVersion
                 }
             }
 
@@ -633,11 +633,11 @@ class IntegrationTest : FunSpec({
             ) {
                 run(
                     name = "use output test",
-                    command = """echo ${expr { setOutputJob.outputs.bar }}""",
+                    command = """echo ${expr { setOutputJob.jobOutputs.bar }}""",
                 )
                 run(
                     name = "use output pythonversion",
-                    command = """echo ${expr { setOutputJob.outputs.pythonVersion }}""",
+                    command = """echo ${expr { setOutputJob.jobOutputs.pythonVersion }}""",
                 )
             }
         }.toYaml(addConsistencyCheck = false)

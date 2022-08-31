@@ -53,7 +53,7 @@ class JobTest : FunSpec({
                         command = "echo 'test!'",
                     ),
                 ),
-                outputs = JobOutputs.EMPTY
+                jobOutputs = JobOutputs.EMPTY
             )
         } shouldHaveMessage "timeout should be positive"
     }
