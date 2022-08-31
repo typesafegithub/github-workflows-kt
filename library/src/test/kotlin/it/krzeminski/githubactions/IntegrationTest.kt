@@ -601,29 +601,24 @@ class IntegrationTest : FunSpec({
             on = listOf(Push()),
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
-            class SetOutputJobOutputs: JobOutputs() {
-                var pythonVersion: String by createOutput()
-                var bar: String by createOutput()
-            }
             val setOutputJob = job(
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
-                outputs = SetOutputJobOutputs()
+                outputs = object: JobOutputs() {
+                    var pythonVersion: String by createOutput()
+                    var bar: String by createOutput()
+                }
             ) {
-                run(
+                val commandStepWithOutput = run(
                     name = "set output",
                     command = """echo "::set-output name=foo::baz"""",
                 ).withOutputs(object : StepOutputs() {
                     val foo by property()
-                }).also { step ->
-                    jobOutputs.bar = step.outputs.foo
-                }
+                } )
+                jobOutputs.bar = commandStepWithOutput.outputs.foo
 
-                uses(
-                    SetupPythonV4()
-                ).also { step ->
-                    jobOutputs.pythonVersion = step.outputs.pythonVersion
-                }
+                val setupPython = uses(SetupPythonV4())
+                jobOutputs.pythonVersion = setupPython.outputs.pythonVersion
             }
 
             job(

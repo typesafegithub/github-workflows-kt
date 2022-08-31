@@ -19,6 +19,7 @@ data class Job<OUTPUT: JobOutputs>(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments {
     companion object {
+        @Suppress("LongParameterList")
         operator fun invoke(
             id: String,
             name: String? = null,
@@ -30,6 +31,7 @@ data class Job<OUTPUT: JobOutputs>(
             strategyMatrix: Map<String, List<String>>? = null,
             timeoutMinutes: Int? = null,
             concurrency: Concurrency? = null,
+            @Suppress("FunctionParameterNaming")
             _customArguments: Map<String, @Contextual Any> = mapOf(),
         ) = Job(
             id = id,

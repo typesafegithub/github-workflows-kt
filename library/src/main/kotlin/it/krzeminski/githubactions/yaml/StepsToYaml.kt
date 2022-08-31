@@ -1,7 +1,10 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.actions.fullName
-import it.krzeminski.githubactions.domain.*
+import it.krzeminski.githubactions.domain.CommandStep
+import it.krzeminski.githubactions.domain.CommandStepWithOutput
+import it.krzeminski.githubactions.domain.ExternalActionStep
+import it.krzeminski.githubactions.domain.Shell
 import it.krzeminski.githubactions.domain.Shell.Bash
 import it.krzeminski.githubactions.domain.Shell.Cmd
 import it.krzeminski.githubactions.domain.Shell.Custom
@@ -9,6 +12,7 @@ import it.krzeminski.githubactions.domain.Shell.PowerShell
 import it.krzeminski.githubactions.domain.Shell.Pwsh
 import it.krzeminski.githubactions.domain.Shell.Python
 import it.krzeminski.githubactions.domain.Shell.Sh
+import it.krzeminski.githubactions.domain.Step
 
 fun List<Step>.stepsToYaml(): List<Map<String, Any>> =
     this.map { it.toYaml() }

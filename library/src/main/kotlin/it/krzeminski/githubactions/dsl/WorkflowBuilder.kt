@@ -1,6 +1,10 @@
 package it.krzeminski.githubactions.dsl
 
-import it.krzeminski.githubactions.domain.*
+import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.domain.JobOutputs
+import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
@@ -31,7 +35,7 @@ class WorkflowBuilder(
     )
 
     @Suppress("LongParameterList")
-    fun <OUTPUT: JobOutputs> job(
+    fun <OUTPUT : JobOutputs> job(
         id: String,
         name: String? = null,
         runsOn: RunnerType,
