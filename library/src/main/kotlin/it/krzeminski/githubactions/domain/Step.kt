@@ -57,7 +57,8 @@ data class CommandStepWithOutput<T>(
     timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
-), WithOutputs<T>
+),
+    WithOutputs<T>
 
 @Suppress("LongParameterList")
 open class ExternalActionStep(

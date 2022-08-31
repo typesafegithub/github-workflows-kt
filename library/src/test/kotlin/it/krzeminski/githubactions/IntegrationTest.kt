@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
-import it.krzeminski.githubactions.domain.*
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
@@ -593,7 +592,6 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-
     test("outputs - access outputs across job") {
         // when
         val actualYaml = workflow(
@@ -604,7 +602,7 @@ class IntegrationTest : FunSpec({
             val setOutputJob = job(
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
-                outputs = object: JobOutputs() {
+                outputs = object : JobOutputs() {
                     var pythonVersion: String by createOutput()
                     var bar: String by createOutput()
                 }
@@ -614,7 +612,7 @@ class IntegrationTest : FunSpec({
                     command = """echo "::set-output name=foo::baz"""",
                 ).withOutputs(object : StepOutputs() {
                     val foo by property()
-                } )
+                })
                 jobOutputs.bar = commandStepWithOutput.outputs.foo
 
                 val setupPython = uses(SetupPythonV4())
