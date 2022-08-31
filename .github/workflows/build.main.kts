@@ -61,6 +61,14 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(CheckoutV3())
-        run("find -name '*.main.kts' | xargs kotlinc")
+        run(
+            """
+            find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
+            do
+                echo "Compiling ${'$'}file..."
+                kotlinc "${'$'}file"
+            done
+            """.trimIndent()
+        )
     }
 }.writeToFile()
