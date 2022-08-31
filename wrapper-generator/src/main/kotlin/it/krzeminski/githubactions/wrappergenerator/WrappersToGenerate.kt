@@ -727,6 +727,10 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("ericcornelissen", "git-tag-annotation-action", "v2"),
+        TypingsSource.ActionTypes,
+    ),
+    WrapperRequest(
         ActionCoords("gautamkrishnar", "blog-post-workflow", "v1"),
         TypingsSource.WrapperGenerator(
             mapOf(
