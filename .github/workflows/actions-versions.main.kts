@@ -1,8 +1,8 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.25.0")
+@file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.peterevans.CreateIssueFromFileV4
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
@@ -29,13 +29,7 @@ workflow(
         condition = "github.repository_owner == 'krzema12'",
     ) {
         uses(CheckoutV3())
-        uses(
-            name = "Set up JDK",
-            action = SetupJavaV3(
-                javaVersion = "11",
-                distribution = SetupJavaV3.Distribution.Zulu,
-            )
-        )
+        setupJava()
         uses(
             name = "Run suggestVersions",
             env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
