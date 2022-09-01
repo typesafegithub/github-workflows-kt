@@ -6,6 +6,10 @@ import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
+import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.JobOutputs
+import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.StepOutputs
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
