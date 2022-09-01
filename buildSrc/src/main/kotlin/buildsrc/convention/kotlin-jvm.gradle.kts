@@ -16,15 +16,24 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5")
 }
 
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}
-
 java {
     withJavadocJar()
     withSourcesJar()
+
+    toolchain {
+        requiredJdkVersion()
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        requiredJdkVersion()
+    }
+}
+
+fun JavaToolchainSpec.requiredJdkVersion() {
+    languageVersion.set(JavaLanguageVersion.of(11))
+    vendor.set(JvmVendorSpec.AZUL)
 }
 
 tasks.withType<KotlinCompile> {

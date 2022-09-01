@@ -727,6 +727,10 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
+        ActionCoords("ericcornelissen", "git-tag-annotation-action", "v2"),
+        TypingsSource.ActionTypes,
+    ),
+    WrapperRequest(
         ActionCoords("gautamkrishnar", "blog-post-workflow", "v1"),
         TypingsSource.WrapperGenerator(
             mapOf(
@@ -850,10 +854,10 @@ val wrappersToGenerate = listOf(
                 "cache-disabled" to BooleanTyping,
                 "cache-read-only" to BooleanTyping,
                 "generate-job-summary" to BooleanTyping,
+                "gradle-home-cache-cleanup" to BooleanTyping,
                 "gradle-home-cache-includes" to ListOfTypings("\\n"),
                 "gradle-home-cache-excludes" to ListOfTypings("\\n"),
                 "cache-write-only" to BooleanTyping,
-                "cache-read-timeout" to IntegerTyping,
                 "gradle-home-cache-strict-match" to StringTyping,
             )
         ),
