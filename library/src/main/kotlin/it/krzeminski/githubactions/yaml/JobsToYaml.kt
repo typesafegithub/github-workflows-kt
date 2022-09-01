@@ -40,7 +40,7 @@ private fun Job<*>.toYaml(): Map<String, Any> =
             )
         },
         "timeout-minutes" to timeoutMinutes,
-        "outputs" to jobOutputs.outputMapping.ifEmpty { null },
+        "outputs" to outputs.outputMapping.ifEmpty { null },
         "steps" to steps.stepsToYaml(),
         *_customArguments.toList().toTypedArray(),
     )

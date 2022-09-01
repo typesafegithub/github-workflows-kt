@@ -630,11 +630,11 @@ class IntegrationTest : FunSpec({
             ) {
                 run(
                     name = "use output test",
-                    command = """echo ${expr { setOutputJob.jobOutputs.bar }}""",
+                    command = """echo ${expr { setOutputJob.outputs.bar }}""",
                 )
                 run(
                     name = "use output pythonversion",
-                    command = """echo ${expr { setOutputJob.jobOutputs.pythonVersion }}""",
+                    command = """echo ${expr { setOutputJob.outputs.pythonVersion }}""",
                 )
             }
         }.toYaml(addConsistencyCheck = false)

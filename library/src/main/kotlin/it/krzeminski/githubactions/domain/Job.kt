@@ -9,7 +9,7 @@ data class Job<OUTPUT : JobOutputs>(
     val name: String? = null,
     val runsOn: RunnerType,
     val steps: List<Step>,
-    val jobOutputs: OUTPUT,
+    val outputs: OUTPUT,
     val needs: List<Job<*>> = emptyList(),
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
@@ -38,7 +38,7 @@ data class Job<OUTPUT : JobOutputs>(
             name = name,
             runsOn = runsOn,
             steps = steps,
-            jobOutputs = JobOutputs.EMPTY,
+            outputs = JobOutputs.EMPTY,
             needs = needs,
             env = env,
             condition = condition,
@@ -59,6 +59,6 @@ data class Job<OUTPUT : JobOutputs>(
         timeoutMinutes?.let { value ->
             require(value > 0) { "timeout should be positive" }
         }
-        jobOutputs.job = this
+        outputs.job = this
     }
 }

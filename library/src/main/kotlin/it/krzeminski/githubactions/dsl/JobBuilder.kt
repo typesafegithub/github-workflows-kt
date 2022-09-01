@@ -40,7 +40,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
-        jobOutputs = jobOutputs,
+        outputs = jobOutputs,
         _customArguments = _customArguments,
     )
 
