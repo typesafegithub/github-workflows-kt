@@ -82,4 +82,9 @@ jobs:
     - id: step-0
       uses: actions/checkout@v3
     - id: step-1
-      run: find -name '*.main.kts' | xargs kotlinc
+      run: |-
+        find -name *.main.kts -print0 | while read -d $'\0' file
+        do
+            echo "Compiling $file..."
+            kotlinc "$file"
+        done

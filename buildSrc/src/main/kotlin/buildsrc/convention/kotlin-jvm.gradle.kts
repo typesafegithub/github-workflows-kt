@@ -25,6 +25,21 @@ kotlin {
 java {
     withJavadocJar()
     withSourcesJar()
+
+    toolchain {
+        requiredJdkVersion()
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        requiredJdkVersion()
+    }
+}
+
+fun JavaToolchainSpec.requiredJdkVersion() {
+    languageVersion.set(JavaLanguageVersion.of(11))
+    vendor.set(JvmVendorSpec.AZUL)
 }
 
 tasks.withType<KotlinCompile> {

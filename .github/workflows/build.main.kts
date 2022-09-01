@@ -1,10 +1,8 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.25.0")
+@file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Zulu
-import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
@@ -28,13 +26,7 @@ workflow(
             runsOn = runnerType,
         ) {
             uses(CheckoutV3())
-            uses(
-                name = "Set up JDK",
-                action = SetupJavaV3(
-                    javaVersion = "17",
-                    distribution = Zulu,
-                )
-            )
+            setupJava()
             uses(
                 name = "Build",
                 action = GradleBuildActionV2(
@@ -50,7 +42,7 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(CheckoutV3())
-        uses(SetupPythonV4(pythonVersion = "3.8"))
+        setupPython()
         run("pip install -r docs/requirements.txt")
         run("mkdocs build --site-dir public")
     }
@@ -61,6 +53,14 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(CheckoutV3())
-        run("find -name '*.main.kts' | xargs kotlinc")
+        run(
+            """
+            find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
+            do
+                echo "Compiling ${'$'}file..."
+                kotlinc "${'$'}file"
+            done
+            """.trimIndent()
+        )
     }
 }.writeToFile()

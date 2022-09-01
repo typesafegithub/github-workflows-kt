@@ -49,7 +49,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             jobs:
               check_yaml_consistency:
@@ -112,7 +112,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             jobs:
               test_job:
@@ -200,7 +200,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             jobs:
               check_yaml_consistency:
@@ -314,7 +314,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Overridden name!
-            'on':
+            on:
               push: {}
             env:
               SIMPLE_VAR: simple-value-workflow
@@ -410,7 +410,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             concurrency:
               group: workflow_staging_environment
@@ -468,7 +468,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
             name: Test workflow
-            'on':
+            on:
               push: {}
             concurrency:
               group: workflow_staging_environment
@@ -539,6 +539,59 @@ class IntegrationTest : FunSpec({
                 )
             }
         }
+    }
+
+    test("toYaml() - YAML consistency job condition") {
+        // when
+        val actualYaml =
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                yamlConsistencyJobCondition = "\${{ always() }}",
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(
+                    id = "test_job",
+                    name = "Test Job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    uses(CheckoutV3())
+                    run("echo 'hello!'")
+                }
+            }.toYaml()
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+            name: Test workflow
+            on:
+              push: {}
+            jobs:
+              check_yaml_consistency:
+                runs-on: ubuntu-latest
+                if: ${'$'}{{ always() }}
+                steps:
+                - id: step-0
+                  name: Check out
+                  uses: actions/checkout@v3
+                - id: step-1
+                  name: Consistency check
+                  run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+              test_job:
+                name: Test Job
+                runs-on: ubuntu-latest
+                needs:
+                - check_yaml_consistency
+                steps:
+                - id: step-0
+                  uses: actions/checkout@v3
+                - id: step-1
+                  run: echo 'hello!'
+
+        """.trimIndent()
     }
 })
 

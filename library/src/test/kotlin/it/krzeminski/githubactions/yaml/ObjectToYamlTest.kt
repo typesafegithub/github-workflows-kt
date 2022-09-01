@@ -73,12 +73,35 @@ class ObjectToYamlTest : DescribeSpec({
         val yaml = objectToSerialize.toYaml()
 
         // then
-        // Using anchors is not desired. This test presents the current undesired behavior.
-        // To be fixed in scope of https://github.com/krzema12/github-actions-kotlin-dsl/issues/416
         yaml shouldBe """
-            foo: &id001 {}
-            bar: *id001
-            baz: *id001
+            foo: {}
+            bar: {}
+            baz: {}
+
+        """.trimIndent()
+    }
+
+    it("correctly serializes multiline strings") {
+        // given
+        val objectToSerialize = mapOf(
+            "foo" to """
+                hey
+                hi
+                hello
+            """.trimIndent(),
+            "bar" to "baz",
+        )
+
+        // when
+        val yaml = objectToSerialize.toYaml()
+
+        // then
+        yaml shouldBe """
+            foo: |-
+              hey
+              hi
+              hello
+            bar: baz
 
         """.trimIndent()
     }

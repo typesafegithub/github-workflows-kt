@@ -1,9 +1,8 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.25.0")
+@file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Zulu
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Cron
@@ -33,13 +32,7 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(CheckoutV3())
-        uses(
-            name = "Set up JDK",
-            action = SetupJavaV3(
-                javaVersion = "17",
-                distribution = Zulu,
-            )
-        )
+        setupJava()
         uses(
             name = "Generate wrappers",
             action = GradleBuildActionV2(

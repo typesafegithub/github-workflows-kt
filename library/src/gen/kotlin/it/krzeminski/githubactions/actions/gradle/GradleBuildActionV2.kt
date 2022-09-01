@@ -5,7 +5,6 @@ package it.krzeminski.githubactions.actions.gradle
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
-import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -71,14 +70,15 @@ public class GradleBuildActionV2(
      */
     public val gradleHomeCacheStrictMatch: String? = null,
     /**
-     * A timeout value in seconds for cache reads. Requests taking longer that this will be aborted.
-     */
-    public val cacheReadTimeout: Int? = null,
-    /**
      * Used to uniquely identify the current job invocation. Defaults to the matrix values for this
      * job; this should not be overridden by users (INTERNAL).
      */
     public val workflowJobContext: String? = null,
+    /**
+     * When 'true', the action will attempt to remove any stale/unused entries from the Gradle User
+     * Home prior to saving to the GitHub Actions cache.
+     */
+    public val gradleHomeCacheCleanup: Boolean? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -104,8 +104,8 @@ public class GradleBuildActionV2(
             gradleExecutable?.let { "gradle-executable" to it },
             generateJobSummary?.let { "generate-job-summary" to it.toString() },
             gradleHomeCacheStrictMatch?.let { "gradle-home-cache-strict-match" to it },
-            cacheReadTimeout?.let { "cache-read-timeout" to it.toString() },
             workflowJobContext?.let { "workflow-job-context" to it },
+            gradleHomeCacheCleanup?.let { "gradle-home-cache-cleanup" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
