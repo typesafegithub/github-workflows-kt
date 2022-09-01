@@ -31,7 +31,7 @@ workflow(
     job(
         id = "check",
         runsOn = UbuntuLatest,
-        condition = "github.repository == 'krzema12/github-actions-kotlin-dsl'",
+        condition = "github.repository_owner == 'krzema12'",
     ) {
         uses(CheckoutV3())
         uses(

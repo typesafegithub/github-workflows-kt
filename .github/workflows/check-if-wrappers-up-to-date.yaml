@@ -16,7 +16,7 @@ name: Check if wrappers up to date
 jobs:
   check_yaml_consistency:
     runs-on: ubuntu-latest
-    if: github.repository == 'krzema12/github-actions-kotlin-dsl'
+    if: github.repository_owner == 'krzema12l'
     steps:
     - id: step-0
       name: Check out
@@ -29,7 +29,7 @@ jobs:
       run: git diff --exit-code '.github/workflows/check-if-wrappers-up-to-date.yaml'
   check:
     runs-on: ubuntu-latest
-    if: github.repository == 'krzema12/github-actions-kotlin-dsl'
+    if: github.repository_owner == 'krzema12l'
     needs:
     - check_yaml_consistency
     steps:
