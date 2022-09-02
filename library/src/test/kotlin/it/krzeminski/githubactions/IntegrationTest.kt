@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.GithubScriptV6
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
@@ -596,19 +597,15 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    test("outputs - access outputs across job") {
-        // when
-        val actualYaml = workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-        ) {
+    test("writeToFile() - job outputs mapping") {
+        testRanWithGitHub("job outputs mapping") {
             val setOutputJob = job(
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
                 outputs = object : JobOutputs() {
                     var pythonVersion: String by createOutput()
                     var bar: String by createOutput()
+                    var scriptKey by createOutput()
                 }
             ) {
                 val commandStepWithOutput = run(
@@ -621,6 +618,14 @@ class IntegrationTest : FunSpec({
 
                 val setupPython = uses(SetupPythonV4())
                 jobOutputs.pythonVersion = setupPython.outputs.pythonVersion
+
+                val script = uses(GithubScriptV6(
+                    script = """
+                        core.setOutput("key", "value")
+                        return "return"
+                    """.trimIndent()
+                ))
+                jobOutputs.scriptKey = script.outputs.get("key")
             }
 
             job(
@@ -636,43 +641,12 @@ class IntegrationTest : FunSpec({
                     name = "use output pythonversion",
                     command = """echo ${expr { setOutputJob.outputs.pythonVersion }}""",
                 )
+                run(
+                    name = "use output scriptKey",
+                    command = """echo ${expr { setOutputJob.outputs.scriptKey }}""",
+                )
             }
-        }.toYaml(addConsistencyCheck = false)
-
-        // then
-        actualYaml shouldBe """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
-
-            name: Test workflow
-            on:
-              push: {}
-            jobs:
-              set_output:
-                runs-on: ubuntu-latest
-                outputs:
-                  bar: ${'$'}{{ steps.step-0.outputs.foo }}
-                  pythonVersion: ${'$'}{{ steps.step-1.outputs.python-version }}
-                steps:
-                - id: step-0
-                  name: set output
-                  run: echo "::set-output name=foo::baz"
-                - id: step-1
-                  uses: actions/setup-python@v4
-              use_output:
-                runs-on: ubuntu-latest
-                needs:
-                - set_output
-                steps:
-                - id: step-0
-                  name: use output test
-                  run: echo ${'$'}{{ needs.set_output.outputs.bar }}
-                - id: step-1
-                  name: use output pythonversion
-                  run: echo ${'$'}{{ needs.set_output.outputs.pythonVersion }}
-
-        """.trimIndent()
+        }
     }
 })
 
