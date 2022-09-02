@@ -3,7 +3,7 @@
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
 name: Build
-'on':
+on:
   push:
     branches:
     - main
