@@ -3,7 +3,7 @@
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
 name: Release
-'on':
+on:
   push:
     tags:
     - v*.*.*
@@ -38,7 +38,7 @@ jobs:
       name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: 11
         distribution: zulu
     - id: step-2
       name: Build
@@ -48,7 +48,7 @@ jobs:
     - id: step-3
       uses: actions/setup-python@v4
       with:
-        python-version: '3.8'
+        python-version: 3.8
     - id: step-4
       run: pip install -r docs/requirements.txt
     - id: step-5
