@@ -606,6 +606,8 @@ class IntegrationTest : FunSpec({
                     var pythonVersion: String by createOutput()
                     var bar: String by createOutput()
                     var scriptKey by createOutput()
+                    var scriptKey2 by createOutput()
+                    var scriptResult by createOutput()
                 }
             ) {
                 val commandStepWithOutput = run(
@@ -616,16 +618,21 @@ class IntegrationTest : FunSpec({
                 })
                 jobOutputs.bar = commandStepWithOutput.outputs.foo
 
-                val setupPython = uses(SetupPythonV4())
+                val setupPython = uses(SetupPythonV4(
+                    pythonVersion = "3.10"
+                ))
                 jobOutputs.pythonVersion = setupPython.outputs.pythonVersion
 
                 val script = uses(GithubScriptV6(
                     script = """
                         core.setOutput("key", "value")
+                        core.setOutput("key2", "value2")
                         return "return"
                     """.trimIndent()
                 ))
-                jobOutputs.scriptKey = script.outputs.get("key")
+                jobOutputs.scriptKey = script.outputs["key"]
+                jobOutputs.scriptKey2 = script.outputs["key2"]
+                jobOutputs.scriptResult = script.outputs.result
             }
 
             job(
@@ -634,16 +641,20 @@ class IntegrationTest : FunSpec({
                 needs = listOf(setOutputJob),
             ) {
                 run(
-                    name = "use output test",
+                    name = "use output ${setOutputJob.outputs.bar}",
                     command = """echo ${expr { setOutputJob.outputs.bar }}""",
                 )
                 run(
-                    name = "use output pythonversion",
+                    name = "use output ${setOutputJob.outputs.pythonVersion}",
                     command = """echo ${expr { setOutputJob.outputs.pythonVersion }}""",
                 )
                 run(
-                    name = "use output scriptKey",
-                    command = """echo ${expr { setOutputJob.outputs.scriptKey }}""",
+                    name = "use output of script",
+                    command = """
+                        echo ${expr { setOutputJob.outputs.scriptKey }}
+                        echo ${expr { setOutputJob.outputs.scriptKey2 }}
+                        echo ${expr { setOutputJob.outputs.scriptResult }}
+                        """.trimIndent(),
                 )
             }
         }
