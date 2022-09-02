@@ -88,3 +88,24 @@ jobs:
             echo "Compiling $file..."
             kotlinc "$file"
         done
+  workflows_consistency_check:
+    name: Run consistency check on all GitHub workflows
+    runs-on: ubuntu-latest
+    needs:
+    - check_yaml_consistency
+    steps:
+    - id: step-0
+      uses: actions/checkout@v3
+    - id: step-1
+      run: cd .github/workflows
+    - id: step-2
+      name: Regenerate all workflow YAMLs
+      run: |-
+        find -name "*.main.kts" -print0 | while read -d $'\0' file
+        do
+            echo "Regenerating $file..."
+            ($file)
+        done
+    - id: step-3
+      name: Check if some file is different after regeneration
+      run: git diff --exit-code .

@@ -63,4 +63,27 @@ workflow(
             """.trimIndent()
         )
     }
+
+    job(
+        id = "workflows_consistency_check",
+        name = "Run consistency check on all GitHub workflows",
+        runsOn = UbuntuLatest,
+    ) {
+        uses(CheckoutV3())
+        run("cd .github/workflows")
+        run(
+            name = "Regenerate all workflow YAMLs",
+            command = """
+            find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
+            do
+                echo "Regenerating ${'$'}file..."
+                (${'$'}file)
+            done
+            """.trimIndent(),
+        )
+        run(
+            name = "Check if some file is different after regeneration",
+            command = "git diff --exit-code .",
+        )
+    }
 }.writeToFile()
