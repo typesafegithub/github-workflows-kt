@@ -10,19 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       bar: ${{ steps.step-0.outputs.foo }}
-      pythonVersion: ${{ steps.step-1.outputs.python-version }}
-      scriptKey: ${{ steps.step-2.outputs.key }}
-      scriptKey2: ${{ steps.step-2.outputs.key2 }}
-      scriptResult: ${{ steps.step-2.outputs.result }}
+      scriptKey: ${{ steps.step-1.outputs.key }}
+      scriptKey2: ${{ steps.step-1.outputs.key2 }}
+      scriptResult: ${{ steps.step-1.outputs.result }}
     steps:
     - id: step-0
       name: set output
       run: echo "::set-output name=foo::baz"
     - id: step-1
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.10
-    - id: step-2
       uses: actions/github-script@v6
       with:
         script: |-
@@ -38,9 +33,6 @@ jobs:
       name: use output needs.set_output.outputs.bar
       run: echo ${{ needs.set_output.outputs.bar }}
     - id: step-1
-      name: use output needs.set_output.outputs.pythonVersion
-      run: echo ${{ needs.set_output.outputs.pythonVersion }}
-    - id: step-2
       name: use output of script
       run: |-
         echo ${{ needs.set_output.outputs.scriptKey }}

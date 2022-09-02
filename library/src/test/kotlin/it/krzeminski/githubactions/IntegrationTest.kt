@@ -603,7 +603,6 @@ class IntegrationTest : FunSpec({
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
                 outputs = object : JobOutputs() {
-                    var pythonVersion: String by createOutput()
                     var bar: String by createOutput()
                     var scriptKey by createOutput()
                     var scriptKey2 by createOutput()
@@ -617,11 +616,6 @@ class IntegrationTest : FunSpec({
                     val foo by property()
                 })
                 jobOutputs.bar = commandStepWithOutput.outputs.foo
-
-                val setupPython = uses(SetupPythonV4(
-                    pythonVersion = "3.10"
-                ))
-                jobOutputs.pythonVersion = setupPython.outputs.pythonVersion
 
                 val script = uses(GithubScriptV6(
                     script = """
@@ -643,10 +637,6 @@ class IntegrationTest : FunSpec({
                 run(
                     name = "use output ${setOutputJob.outputs.bar}",
                     command = """echo ${expr { setOutputJob.outputs.bar }}""",
-                )
-                run(
-                    name = "use output ${setOutputJob.outputs.pythonVersion}",
-                    command = """echo ${expr { setOutputJob.outputs.pythonVersion }}""",
                 )
                 run(
                     name = "use output of script",
