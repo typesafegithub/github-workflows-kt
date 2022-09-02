@@ -26,7 +26,7 @@ workflow(
     job(
         id = "updates-available",
         runsOn = UbuntuLatest,
-        condition = "github.repository_owner == 'krzema12'",
+        condition = "\${{ github.repository_owner == 'krzema12' }}",
     ) {
         uses(CheckoutV3())
         setupJava()
