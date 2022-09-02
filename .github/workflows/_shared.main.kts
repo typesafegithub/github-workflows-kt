@@ -1,4 +1,5 @@
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.25.0")
+#!/usr/bin/env kotlin
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.26.0")
 
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
@@ -8,7 +9,7 @@ fun JobBuilder.setupJava() =
     uses(
         name = "Set up JDK",
         action = SetupJavaV3(
-            javaVersion = "11",
+            javaVersion = "17",
             distribution = SetupJavaV3.Distribution.Zulu,
         )
     )

@@ -3,7 +3,7 @@
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
 name: Updates available
-'on':
+on:
   schedule:
   - cron: 0 7 * * *
   workflow_dispatch: {}
@@ -33,7 +33,7 @@ jobs:
       name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: 17
         distribution: zulu
     - id: step-2
       name: Run suggestVersions

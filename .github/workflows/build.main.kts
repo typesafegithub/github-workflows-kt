@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.25.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.26.0")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
@@ -61,6 +61,29 @@ workflow(
                 kotlinc "${'$'}file"
             done
             """.trimIndent()
+        )
+    }
+
+    job(
+        id = "workflows_consistency_check",
+        name = "Run consistency check on all GitHub workflows",
+        runsOn = UbuntuLatest,
+    ) {
+        uses(CheckoutV3())
+        run("cd .github/workflows")
+        run(
+            name = "Regenerate all workflow YAMLs",
+            command = """
+            find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
+            do
+                echo "Regenerating ${'$'}file..."
+                (${'$'}file)
+            done
+            """.trimIndent(),
+        )
+        run(
+            name = "Check if some file is different after regeneration",
+            command = "git diff --exit-code .",
         )
     }
 }.writeToFile()
