@@ -3,7 +3,7 @@
 # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
 
 name: Updates available
-'on':
+on:
   schedule:
   - cron: 0 7 * * *
   workflow_dispatch: {}
