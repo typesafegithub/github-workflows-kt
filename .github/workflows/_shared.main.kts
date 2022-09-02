@@ -9,7 +9,7 @@ fun JobBuilder.setupJava() =
     uses(
         name = "Set up JDK",
         action = SetupJavaV3(
-            javaVersion = "11",
+            javaVersion = "17",
             distribution = SetupJavaV3.Distribution.Zulu,
         )
     )
