@@ -617,13 +617,15 @@ class IntegrationTest : FunSpec({
                 })
                 jobOutputs.bar = commandStepWithOutput.outputs.foo
 
-                val script = uses(GithubScriptV6(
-                    script = """
+                val script = uses(
+                    GithubScriptV6(
+                        script = """
                         core.setOutput("key", "value")
                         core.setOutput("key2", "value2")
                         return "return"
-                    """.trimIndent()
-                ))
+                        """.trimIndent()
+                    )
+                )
                 jobOutputs.scriptKey = script.outputs["key"]
                 jobOutputs.scriptKey2 = script.outputs["key2"]
                 jobOutputs.scriptResult = script.outputs.result
@@ -644,7 +646,7 @@ class IntegrationTest : FunSpec({
                         echo ${expr { setOutputJob.outputs.scriptKey }}
                         echo ${expr { setOutputJob.outputs.scriptKey2 }}
                         echo ${expr { setOutputJob.outputs.scriptResult }}
-                        """.trimIndent(),
+                    """.trimIndent(),
                 )
             }
         }
