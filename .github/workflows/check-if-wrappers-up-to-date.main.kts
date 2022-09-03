@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.25.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.26.0")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
@@ -17,11 +17,7 @@ workflow(
     name = "Check if wrappers up to date",
     on = listOf(
         Push(branches = listOf("main")),
-        PullRequest(
-            // A workaround for https://github.com/krzema12/github-actions-kotlin-dsl/issues/416
-            // Otherwise, a YAML anchor/alias is used here and GitHub cannot parse the YAML.
-            branchesIgnore = listOf("some-non-existent-branch"),
-        ),
+        PullRequest(),
         Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
         WorkflowDispatch(),
     ),

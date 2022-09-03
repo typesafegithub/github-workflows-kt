@@ -32,7 +32,7 @@ kotlin {
 }
 
 fun JavaToolchainSpec.requiredJdkVersion() {
-    languageVersion.set(JavaLanguageVersion.of(11))
+    languageVersion.set(JavaLanguageVersion.of(17))
     vendor.set(JvmVendorSpec.AZUL)
 }
 
