@@ -3,7 +3,6 @@ package it.krzeminski.githubactions.dsl
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import it.krzeminski.githubactions.domain.CommandStep
-import it.krzeminski.githubactions.domain.CommandStepWithOutput
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
@@ -11,7 +10,6 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
-import it.krzeminski.githubactions.domain.StepOutputs
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -178,25 +176,6 @@ class JobBuilder<OUTPUT : JobOutputs>(
         )
         job = job.copy(steps = job.steps + newStep)
         return newStep
-    }
-
-    fun <T : StepOutputs> CommandStep.withOutputs(
-        outputs: T
-    ): CommandStepWithOutput<T> {
-        outputs.stepId = id
-        return CommandStepWithOutput(
-            id = id,
-            name = name,
-            command = command,
-            env = env,
-            condition = condition,
-            continueOnError = continueOnError,
-            timeoutMinutes = timeoutMinutes,
-            shell = shell,
-            workingDirectory = workingDirectory,
-            outputs = outputs,
-            _customArguments = _customArguments,
-        )
     }
 
     fun build() = job

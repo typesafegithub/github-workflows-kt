@@ -2,7 +2,6 @@ package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.actions.fullName
 import it.krzeminski.githubactions.domain.CommandStep
-import it.krzeminski.githubactions.domain.CommandStepWithOutput
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Shell
 import it.krzeminski.githubactions.domain.Shell.Bash
@@ -21,7 +20,6 @@ private fun Step.toYaml() =
     when (this) {
         is ExternalActionStep -> toYaml()
         is CommandStep -> toYaml()
-        is CommandStepWithOutput<*> -> toYaml()
     }
 
 @Suppress("SpreadOperator")
@@ -40,21 +38,6 @@ private fun ExternalActionStep.toYaml(): Map<String, Any> =
 
 @Suppress("SpreadOperator")
 private fun CommandStep.toYaml(): Map<String, Any> =
-    mapOfNotNullValues(
-        "id" to id,
-        "name" to name,
-        "env" to env.ifEmpty { null },
-        "continue-on-error" to continueOnError,
-        "timeout-minutes" to timeoutMinutes,
-        "shell" to shell?.toYaml(),
-        "working-directory" to workingDirectory,
-        "run" to command,
-        "if" to condition,
-        *_customArguments.toList().toTypedArray(),
-    )
-
-@Suppress("SpreadOperator")
-private fun CommandStepWithOutput<*>.toYaml(): Map<String, Any> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,

@@ -10,7 +10,6 @@ import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.StepOutputs
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
@@ -603,21 +602,12 @@ class IntegrationTest : FunSpec({
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
                 outputs = object : JobOutputs() {
-                    var bar: String by createOutput()
                     var scriptKey by createOutput()
                     var scriptKey2 by createOutput()
                     var scriptResult by createOutput()
                 }
             ) {
-                val commandStepWithOutput = run(
-                    name = "set output",
-                    command = """echo "::set-output name=foo::baz"""",
-                ).withOutputs(object : StepOutputs() {
-                    val foo by property()
-                })
-                jobOutputs.bar = commandStepWithOutput.outputs.foo
-
-                val script = uses(
+                val scriptStep = uses(
                     GithubScriptV6(
                         script = """
                         core.setOutput("key", "value")
@@ -626,9 +616,9 @@ class IntegrationTest : FunSpec({
                         """.trimIndent()
                     )
                 )
-                jobOutputs.scriptKey = script.outputs["key"]
-                jobOutputs.scriptKey2 = script.outputs["key2"]
-                jobOutputs.scriptResult = script.outputs.result
+                jobOutputs.scriptKey = scriptStep.outputs["key"]
+                jobOutputs.scriptKey2 = scriptStep.outputs["key2"]
+                jobOutputs.scriptResult = scriptStep.outputs.result
             }
 
             job(
@@ -636,10 +626,6 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 needs = listOf(setOutputJob),
             ) {
-                run(
-                    name = "use output ${setOutputJob.outputs.bar}",
-                    command = """echo ${expr { setOutputJob.outputs.bar }}""",
-                )
                 run(
                     name = "use output of script",
                     command = """
