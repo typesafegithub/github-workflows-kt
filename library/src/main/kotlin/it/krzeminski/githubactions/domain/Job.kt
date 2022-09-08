@@ -18,37 +18,6 @@ data class Job<OUTPUT : JobOutputs>(
     val concurrency: Concurrency? = null,
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments {
-    companion object {
-        @Suppress("LongParameterList")
-        operator fun invoke(
-            id: String,
-            name: String? = null,
-            runsOn: RunnerType,
-            steps: List<Step>,
-            needs: List<Job<*>> = emptyList(),
-            env: LinkedHashMap<String, String> = linkedMapOf(),
-            condition: String? = null,
-            strategyMatrix: Map<String, List<String>>? = null,
-            timeoutMinutes: Int? = null,
-            concurrency: Concurrency? = null,
-            @Suppress("FunctionParameterNaming")
-            _customArguments: Map<String, @Contextual Any> = mapOf(),
-        ) = Job(
-            id = id,
-            name = name,
-            runsOn = runsOn,
-            steps = steps,
-            outputs = JobOutputs.EMPTY,
-            needs = needs,
-            env = env,
-            condition = condition,
-            strategyMatrix = strategyMatrix,
-            timeoutMinutes = timeoutMinutes,
-            concurrency = concurrency,
-            _customArguments = _customArguments
-        )
-    }
-
     init {
         requireMatchesRegex(
             field = "Job.id",
