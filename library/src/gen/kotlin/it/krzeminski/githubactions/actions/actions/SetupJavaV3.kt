@@ -190,6 +190,11 @@ public class SetupJavaV3(
          */
         public val path: String = "steps.$stepId.outputs.path"
 
+        /**
+         * A boolean value to indicate an exact match was found for the primary key
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
 }
