@@ -22,10 +22,12 @@ workflow(
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
+    yamlConsistencyJobCondition = expr { "${github.repository_owner} == 'krzema12' || ${github.event_name} != 'schedule'" },
 ) {
     job(
         id = "updates-available",
         runsOn = UbuntuLatest,
+        condition = expr { "${github.repository_owner} == 'krzema12' || ${github.event_name} != 'schedule'" },
     ) {
         uses(CheckoutV3())
         setupJava()
