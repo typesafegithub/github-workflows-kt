@@ -10,7 +10,6 @@ import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.writeToFile
 
@@ -23,12 +22,12 @@ workflow(
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
-    yamlConsistencyJobCondition = expr { "${github.repository_owner} == 'krzema12' || ${github.event_name} != 'schedule'" },
+    yamlConsistencyJobCondition = disableScheduledJobInForks,
 ) {
     job(
         id = "check",
         runsOn = UbuntuLatest,
-        condition = expr { "${github.repository_owner} == 'krzema12' || ${github.event_name} != 'schedule'" },
+        condition = disableScheduledJobInForks,
     ) {
         uses(CheckoutV3())
         setupJava()
