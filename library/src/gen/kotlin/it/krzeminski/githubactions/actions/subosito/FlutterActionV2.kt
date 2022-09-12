@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.subosito
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -52,7 +52,8 @@ public class FlutterActionV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("subosito", "flutter-action", _customVersion ?: "v2") {
+) : ActionWithOutputs<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2")
+        {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -65,6 +66,8 @@ public class FlutterActionV2(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
     public sealed class Channel(
         public val stringValue: String,
@@ -94,5 +97,21 @@ public class FlutterActionV2(
         public class Custom(
             customStringValue: String,
         ) : FlutterActionV2.Architecture(customStringValue)
+    }
+
+    public class Outputs(
+        private val stepId: String,
+    ) {
+        public val cachePath: String = "steps.$stepId.outputs.cache-path"
+
+        public val cacheKey: String = "steps.$stepId.outputs.cache-key"
+
+        public val channel: String = "steps.$stepId.outputs.channel"
+
+        public val version: String = "steps.$stepId.outputs.version"
+
+        public val architecture: String = "steps.$stepId.outputs.architecture"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
 }

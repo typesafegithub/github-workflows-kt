@@ -31,7 +31,7 @@ data class Input(
 
 @Serializable
 data class Output(
-    val description: String,
+    val description: String = "",
 )
 
 val ActionCoords.actionYmlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action.yml"

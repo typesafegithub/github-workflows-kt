@@ -22,10 +22,12 @@ workflow(
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
+    yamlConsistencyJobCondition = disableScheduledJobInForks,
 ) {
     job(
         id = "check",
         runsOn = UbuntuLatest,
+        condition = disableScheduledJobInForks,
     ) {
         uses(CheckoutV3())
         setupJava()
