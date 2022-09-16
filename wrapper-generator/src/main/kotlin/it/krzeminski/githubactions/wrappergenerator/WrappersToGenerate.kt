@@ -330,6 +330,7 @@ val wrappersToGenerate = listOf(
                 "ignore-issue-updates" to BooleanTyping,
                 "ignore-pr-updates" to BooleanTyping,
                 "ignore-updates" to BooleanTyping,
+                "include-only-assigned" to BooleanTyping,
                 "labels-to-add-when-unstale" to ListOfTypings(","),
                 "labels-to-remove-when-unstale" to ListOfTypings(","),
                 "only-issue-labels" to ListOfTypings(","),
