@@ -41,6 +41,7 @@ jobs:
       with:
         java-version: 17
         distribution: zulu
+        cache: gradle
     - id: step-2
       name: Generate wrappers
       uses: gradle/gradle-build-action@v2
