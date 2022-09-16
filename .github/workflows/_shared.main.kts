@@ -12,6 +12,7 @@ fun JobBuilder.setupJava() =
         action = SetupJavaV3(
             javaVersion = "17",
             distribution = SetupJavaV3.Distribution.Zulu,
+            cache = SetupJavaV3.BuildPlatform.Gradle,
         )
     )
 
