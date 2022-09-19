@@ -17,7 +17,7 @@ class JobTest : FunSpec({
             "job()"
         ).forAll { jobId ->
             shouldThrowAny {
-                Job(jobId, null, RunnerType.UbuntuLatest, emptyList(), JobOutputs.EMPTY)
+                Job(jobId, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY)
             }.shouldHaveMessage(
                 """
                 Invalid field Job(id="$jobId") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
@@ -36,7 +36,7 @@ class JobTest : FunSpec({
             "JOB_JOB",
             "_--4",
         ).forAll { jobName ->
-            Job(jobName, null, RunnerType.UbuntuLatest, emptyList(), JobOutputs.EMPTY)
+            Job(jobName, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY)
         }
     }
 
