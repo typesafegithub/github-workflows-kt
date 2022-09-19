@@ -12,16 +12,12 @@ open class JobOutputs {
 
     val outputMapping: Map<String, String> get() = _outputMapping.toMap()
 
-    fun createOutput() = Ref(null)
+    fun createOutput() = Ref()
 
-    inner class Ref(
-        key: String? = null
-    ) : ReadWriteProperty<JobOutputs, String> {
-        var key: String? = key
-            private set
+    inner class Ref : ReadWriteProperty<JobOutputs, String> {
         private var initialized: Boolean = false
         override fun getValue(thisRef: JobOutputs, property: KProperty<*>): String {
-            val key = key ?: property.name
+            val key = property.name
             require(initialized) {
                 "output '$key' must be initialized"
             }
@@ -29,7 +25,7 @@ open class JobOutputs {
         }
 
         override fun setValue(thisRef: JobOutputs, property: KProperty<*>, value: String) {
-            val key = key ?: property.name
+            val key = property.name
             require(!initialized) {
                 "output '$key' must not be initialized"
             }
