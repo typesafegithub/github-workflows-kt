@@ -12,7 +12,7 @@ open class JobOutputs {
 
     val outputMapping: Map<String, String> get() = _outputMapping.toMap()
 
-    fun createOutput() = Ref()
+    fun output() = Ref()
 
     inner class Ref : ReadWriteProperty<JobOutputs, String> {
         private var initialized: Boolean = false

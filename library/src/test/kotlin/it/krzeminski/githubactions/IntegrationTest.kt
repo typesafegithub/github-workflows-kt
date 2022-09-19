@@ -602,9 +602,9 @@ class IntegrationTest : FunSpec({
                 id = "set_output",
                 runsOn = RunnerType.UbuntuLatest,
                 outputs = object : JobOutputs() {
-                    var scriptKey by createOutput()
-                    var scriptKey2 by createOutput()
-                    var scriptResult by createOutput()
+                    var scriptKey by output()
+                    var scriptKey2 by output()
+                    var scriptResult by output()
                 }
             ) {
                 val scriptStep = uses(
