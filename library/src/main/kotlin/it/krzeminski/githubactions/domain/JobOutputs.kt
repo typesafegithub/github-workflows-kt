@@ -12,8 +12,6 @@ open class JobOutputs {
 
     val outputMapping: Map<String, String> get() = _outputMapping.toMap()
 
-    fun createOutput(key: String): Ref = Ref(key)
-
     fun createOutput() = Ref(null)
 
     inner class Ref(
