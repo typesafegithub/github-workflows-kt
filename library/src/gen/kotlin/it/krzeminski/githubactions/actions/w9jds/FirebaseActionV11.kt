@@ -27,7 +27,7 @@ public class FirebaseActionV11(
      */
     _customVersion: String? = null,
 ) : ActionWithOutputs<FirebaseActionV11.Outputs>("w9jds", "firebase-action", _customVersion ?:
-        "v11.5.0") {
+        "v11.9.0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 

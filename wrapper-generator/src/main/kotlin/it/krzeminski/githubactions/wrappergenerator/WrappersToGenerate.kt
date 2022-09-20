@@ -1092,6 +1092,6 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(ActionCoords("Vampire", "setup-wsl", "v1"), TypingsSource.ActionTypes),
-    WrapperRequest(ActionCoords("w9jds", "firebase-action", "v11.5.0")),
+    WrapperRequest(ActionCoords("w9jds", "firebase-action", "v11.9.0")),
     WrapperRequest(ActionCoords("w9jds", "firebase-action", "v2.2.2", deprecatedByVersion = "v11.5.0")),
 )
