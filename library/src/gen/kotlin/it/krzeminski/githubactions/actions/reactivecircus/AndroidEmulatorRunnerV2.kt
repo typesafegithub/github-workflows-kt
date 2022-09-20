@@ -84,7 +84,7 @@ public class AndroidEmulatorRunnerV2(
     /**
      * whether to disable hardware acceleration on Linux machines - `true` or `false` or `auto`
      */
-    public val disableLinuxHwAccel: Boolean? = null,
+    public val disableLinuxHwAccel: String? = null,
     /**
      * whether to enable hardware keyboard - `true` or `false`.
      */
@@ -142,7 +142,7 @@ public class AndroidEmulatorRunnerV2(
             emulatorOptions?.let { "emulator-options" to it },
             disableAnimations?.let { "disable-animations" to it.toString() },
             disableSpellchecker?.let { "disable-spellchecker" to it.toString() },
-            disableLinuxHwAccel?.let { "disable-linux-hw-accel" to it.toString() },
+            disableLinuxHwAccel?.let { "disable-linux-hw-accel" to it },
             enableHwKeyboard?.let { "enable-hw-keyboard" to it.toString() },
             emulatorBuild?.let { "emulator-build" to it },
             workingDirectory?.let { "working-directory" to it },

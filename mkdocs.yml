@@ -41,6 +41,7 @@ nav:
       - Script generator: 'user-guide/script-generator.md'
       - Using actions: 'user-guide/using-actions.md'
       - Type-safe expressions: 'user-guide/type-safe-expressions.md'
+      - Job outputs: 'user-guide/job-outputs.md'
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Supported actions: 'supported-actions.md'

@@ -4,12 +4,13 @@ import it.krzeminski.githubactions.dsl.HasCustomArguments
 import it.krzeminski.githubactions.validation.requireMatchesRegex
 import kotlinx.serialization.Contextual
 
-data class Job(
+data class Job<OUTPUT : JobOutputs>(
     val id: String,
     val name: String? = null,
     val runsOn: RunnerType,
     val steps: List<Step>,
-    val needs: List<Job> = emptyList(),
+    val needs: List<Job<*>> = emptyList(),
+    val outputs: OUTPUT,
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
@@ -27,5 +28,6 @@ data class Job(
         timeoutMinutes?.let { value ->
             require(value > 0) { "timeout should be positive" }
         }
+        outputs.job = this
     }
 }
