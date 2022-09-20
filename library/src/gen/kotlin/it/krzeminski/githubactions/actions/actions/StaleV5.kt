@@ -274,6 +274,10 @@ public class StaleV5(
      */
     public val ignorePrUpdates: Boolean? = null,
     /**
+     * Only the issues or the pull requests with an assignee will be marked as stale automatically.
+     */
+    public val includeOnlyAssigned: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -338,6 +342,7 @@ public class StaleV5(
             ignoreUpdates?.let { "ignore-updates" to it.toString() },
             ignoreIssueUpdates?.let { "ignore-issue-updates" to it.toString() },
             ignorePrUpdates?.let { "ignore-pr-updates" to it.toString() },
+            includeOnlyAssigned?.let { "include-only-assigned" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

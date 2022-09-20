@@ -34,6 +34,7 @@ jobs:
       with:
         java-version: 17
         distribution: zulu
+        cache: gradle
     - id: step-2
       name: Build
       uses: gradle/gradle-build-action@v2
@@ -52,6 +53,7 @@ jobs:
       with:
         java-version: 17
         distribution: zulu
+        cache: gradle
     - id: step-2
       name: Build
       uses: gradle/gradle-build-action@v2
