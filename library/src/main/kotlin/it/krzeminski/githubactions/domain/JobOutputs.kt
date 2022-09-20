@@ -18,7 +18,7 @@ open class JobOutputs {
         private var initialized: Boolean = false
         override fun getValue(thisRef: JobOutputs, property: KProperty<*>): String {
             val key = property.name
-            require(initialized) {
+            check(initialized) {
                 "output '$key' must be initialized"
             }
             return "needs.${job.id}.outputs.$key"
@@ -26,7 +26,7 @@ open class JobOutputs {
 
         override fun setValue(thisRef: JobOutputs, property: KProperty<*>, value: String) {
             val key = property.name
-            require(!initialized) {
+            check(!initialized) {
                 "Value for output '$key' can be assigned only once!"
             }
             _outputMapping[key] = expr(value)
