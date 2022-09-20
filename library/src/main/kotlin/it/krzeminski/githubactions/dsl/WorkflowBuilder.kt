@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.dsl
 
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
@@ -18,7 +19,7 @@ class WorkflowBuilder(
     targetFileName: String,
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
-    jobs: List<Job> = emptyList(),
+    jobs: List<Job<*>> = emptyList(),
     _customArguments: Map<String, @Contextual Any>,
 ) {
     internal var workflow = Workflow(
@@ -34,19 +35,20 @@ class WorkflowBuilder(
     )
 
     @Suppress("LongParameterList")
-    fun job(
+    fun <OUTPUT : JobOutputs> job(
         id: String,
         name: String? = null,
         runsOn: RunnerType,
-        needs: List<Job> = emptyList(),
+        needs: List<Job<*>> = emptyList(),
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
         _customArguments: Map<String, @Contextual Any> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
-        block: JobBuilder.() -> Unit,
-    ): Job {
+        outputs: OUTPUT,
+        block: JobBuilder<OUTPUT>.() -> Unit,
+    ): Job<OUTPUT> {
         val jobBuilder = JobBuilder(
             id = id,
             name = name,
@@ -57,6 +59,7 @@ class WorkflowBuilder(
             strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
+            jobOutputs = outputs,
             _customArguments = _customArguments,
         )
         jobBuilder.block()
@@ -69,6 +72,33 @@ class WorkflowBuilder(
         workflow = workflow.copy(jobs = workflow.jobs + newJob)
         return newJob
     }
+
+    fun job(
+        id: String,
+        name: String? = null,
+        runsOn: RunnerType,
+        needs: List<Job<*>> = emptyList(),
+        condition: String? = null,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        strategyMatrix: Map<String, List<String>>? = null,
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
+        timeoutMinutes: Int? = null,
+        concurrency: Concurrency? = null,
+        block: JobBuilder<JobOutputs.EMPTY>.() -> Unit,
+    ): Job<JobOutputs.EMPTY> = job(
+        id = id,
+        name = name,
+        runsOn = runsOn,
+        needs = needs,
+        condition = condition,
+        env = env,
+        strategyMatrix = strategyMatrix,
+        _customArguments = _customArguments,
+        timeoutMinutes = timeoutMinutes,
+        concurrency = concurrency,
+        outputs = JobOutputs.EMPTY,
+        block = block
+    )
 
     fun build() = workflow
 }
@@ -119,7 +149,7 @@ fun workflow(
     return workflowBuilder.build()
 }
 
-private fun List<Job>.requireUniqueJobIds() {
+private fun List<Job<*>>.requireUniqueJobIds() {
     val countPerJobName = this
         .map { it.id }
         .groupBy { it }

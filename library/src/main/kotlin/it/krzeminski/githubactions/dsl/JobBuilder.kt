@@ -7,25 +7,27 @@ import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
-class JobBuilder(
+class JobBuilder<OUTPUT : JobOutputs>(
     val id: String,
     val name: String?,
     val runsOn: RunnerType,
-    val needs: List<Job>,
+    val needs: List<Job<*>>,
     val env: LinkedHashMap<String, String>,
     val condition: String?,
     val strategyMatrix: Map<String, List<String>>?,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
+    val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
-    private var job = Job(
+    private var job = Job<OUTPUT>(
         id = id,
         name = name,
         runsOn = runsOn,
@@ -36,6 +38,7 @@ class JobBuilder(
         strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
+        outputs = jobOutputs,
         _customArguments = _customArguments,
     )
 

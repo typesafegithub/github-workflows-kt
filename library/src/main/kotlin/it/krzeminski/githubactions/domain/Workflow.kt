@@ -13,6 +13,6 @@ data class Workflow(
     val targetFileName: String,
     val concurrency: Concurrency? = null,
     val yamlConsistencyJobCondition: String? = null,
-    val jobs: List<Job>,
+    val jobs: List<Job<*>>,
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : HasCustomArguments

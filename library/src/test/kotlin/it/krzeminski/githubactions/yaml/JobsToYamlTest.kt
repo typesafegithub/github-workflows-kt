@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.dsl.expressions.expr
@@ -23,6 +24,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test 1!'",
                     ),
                 ),
+                outputs = JobOutputs.EMPTY
             ),
             Job(
                 id = "Job-2",
@@ -34,6 +36,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test 2!'",
                     ),
                 ),
+                outputs = JobOutputs.EMPTY
             ),
         )
 
@@ -78,6 +81,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test!'",
                     ),
                 ),
+                outputs = JobOutputs.EMPTY
             ),
         )
 
@@ -106,6 +110,7 @@ class JobsToYamlTest : DescribeSpec({
                 id = "Job-1",
                 name = "Some name",
                 runsOn = UbuntuLatest,
+                outputs = JobOutputs.EMPTY,
                 env = linkedMapOf(
                     "FOO" to "bar",
                     "BAZ" to """
@@ -183,11 +188,13 @@ class JobsToYamlTest : DescribeSpec({
             id = "Another-job-1",
             runsOn = UbuntuLatest,
             steps = listOf(),
+            outputs = JobOutputs.EMPTY
         )
         val anotherJob2 = Job(
             id = "Another-job-2",
             runsOn = UbuntuLatest,
             steps = listOf(),
+            outputs = JobOutputs.EMPTY
         )
         val jobs = listOf(
             Job(
@@ -201,6 +208,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test!'",
                     ),
                 ),
+                outputs = JobOutputs.EMPTY,
             ),
         )
 
@@ -234,6 +242,7 @@ class JobsToYamlTest : DescribeSpec({
                     command = "echo 'test!'",
                 ),
             ),
+            outputs = JobOutputs.EMPTY
         )
 
         // given
@@ -283,6 +292,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test!'",
                     ),
                 ),
+                outputs = JobOutputs.EMPTY,
                 _customArguments = mapOf(
                     "runs-on" to "overridden!",
                 )

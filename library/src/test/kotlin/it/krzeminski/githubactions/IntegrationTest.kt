@@ -4,9 +4,11 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.GithubScriptV6
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
+import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
@@ -592,6 +594,48 @@ class IntegrationTest : FunSpec({
                   run: echo 'hello!'
 
         """.trimIndent()
+    }
+
+    test("writeToFile() - job outputs mapping") {
+        testRanWithGitHub("job outputs mapping") {
+            val setOutputJob = job(
+                id = "set_output",
+                runsOn = RunnerType.UbuntuLatest,
+                outputs = object : JobOutputs() {
+                    var scriptKey by output()
+                    var scriptKey2 by output()
+                    var scriptResult by output()
+                }
+            ) {
+                val scriptStep = uses(
+                    GithubScriptV6(
+                        script = """
+                        core.setOutput("key", "value")
+                        core.setOutput("key2", "value2")
+                        return "return"
+                        """.trimIndent()
+                    )
+                )
+                jobOutputs.scriptKey = scriptStep.outputs["key"]
+                jobOutputs.scriptKey2 = scriptStep.outputs["key2"]
+                jobOutputs.scriptResult = scriptStep.outputs.result
+            }
+
+            job(
+                id = "use_output",
+                runsOn = RunnerType.UbuntuLatest,
+                needs = listOf(setOutputJob),
+            ) {
+                run(
+                    name = "use output of script",
+                    command = """
+                        echo ${expr { setOutputJob.outputs.scriptKey }}
+                        echo ${expr { setOutputJob.outputs.scriptKey2 }}
+                        echo ${expr { setOutputJob.outputs.scriptResult }}
+                    """.trimIndent(),
+                )
+            }
+        }
     }
 })
 
