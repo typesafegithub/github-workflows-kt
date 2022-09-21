@@ -20,10 +20,8 @@ class ContextsTest : FunSpec({
     }
 
     test("Environment variables from expressions") {
-        // See https://github.com/krzema12/github-actions-kotlin-dsl/issues/400
         val GREETING by Contexts.env
         expr { GREETING } shouldBe "$dollar{{ GREETING }}"
-
         expr { env.GITHUB_ACTIONS } shouldBe "$dollar{{ GITHUB_ACTIONS }}"
     }
 
