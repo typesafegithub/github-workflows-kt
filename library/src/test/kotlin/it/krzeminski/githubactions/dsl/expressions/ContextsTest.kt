@@ -19,6 +19,12 @@ class ContextsTest : FunSpec({
         }
     }
 
+    test("Environment variables from expressions") {
+        val GREETING by Contexts.env
+        expr { GREETING } shouldBe "$dollar{{ GREETING }}"
+        expr { env.GITHUB_ACTIONS } shouldBe "$dollar{{ GITHUB_ACTIONS }}"
+    }
+
     test("Secrets") {
         assertSoftly {
             expr { secrets.GITHUB_TOKEN } shouldBe expr("secrets.GITHUB_TOKEN")
