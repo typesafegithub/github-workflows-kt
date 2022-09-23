@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -35,6 +36,10 @@ public class SemverUtilsV2(
      */
     public val identifier: String? = null,
     /**
+     * Do not fail on incorrect input
+     */
+    public val lenient: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -51,6 +56,7 @@ public class SemverUtilsV2(
             compareTo?.let { "compare-to" to it },
             satisfies?.let { "satisfies" to it },
             identifier?.let { "identifier" to it },
+            lenient?.let { "lenient" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -60,6 +66,11 @@ public class SemverUtilsV2(
     public class Outputs(
         private val stepId: String,
     ) {
+        /**
+         * Version's release (major.minor.patch)
+         */
+        public val release: String = "steps.$stepId.outputs.release"
+
         /**
          * Version's major number
          */
