@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -23,11 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/stale)
  */
-@Deprecated(
-    message = "This action has a newer major version: StaleV6",
-    replaceWith = ReplaceWith("StaleV6"),
-)
-public class StaleV5(
+public class StaleV6(
     /**
      * Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -67,7 +60,7 @@ public class StaleV5(
      * pull requests as stale automatically. Override "days-before-stale" option regarding only the
      * pull requests.
      */
-    public val daysBeforePrStale: StaleV5.Days? = null,
+    public val daysBeforePrStale: StaleV6.Days? = null,
     /**
      * The number of days to wait to close an issue or a pull request after it being marked stale.
      * Set to -1 to never close stale issues or pull requests.
@@ -77,13 +70,13 @@ public class StaleV5(
      * The number of days to wait to close an issue after it being marked stale. Set to -1 to never
      * close stale issues. Override "days-before-close" option regarding only the issues.
      */
-    public val daysBeforeIssueClose: StaleV5.Days? = null,
+    public val daysBeforeIssueClose: StaleV6.Days? = null,
     /**
      * The number of days to wait to close a pull request after it being marked stale. Set to -1 to
      * never close stale pull requests. Override "days-before-close" option regarding only the pull
      * requests.
      */
-    public val daysBeforePrClose: StaleV5.Days? = null,
+    public val daysBeforePrClose: StaleV6.Days? = null,
     /**
      * The label to apply when an issue is stale.
      */
@@ -100,7 +93,7 @@ public class StaleV5(
     /**
      * The reason to use when closing an issue.
      */
-    public val closeIssueReason: StaleV5.CloseIssueReason? = null,
+    public val closeIssueReason: StaleV6.CloseIssueReason? = null,
     /**
      * The label to apply when a pull request is stale.
      */
@@ -293,7 +286,7 @@ public class StaleV5(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", _customVersion ?: "v5") {
+) : ActionWithOutputs<StaleV6.Outputs>("actions", "stale", _customVersion ?: "v6") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
@@ -359,13 +352,13 @@ public class StaleV5(
     public sealed class CloseIssueReason(
         public val stringValue: String,
     ) {
-        public object Completed : StaleV5.CloseIssueReason("completed")
+        public object Completed : StaleV6.CloseIssueReason("completed")
 
-        public object NotPlanned : StaleV5.CloseIssueReason("not_planned")
+        public object NotPlanned : StaleV6.CloseIssueReason("not_planned")
 
         public class Custom(
             customStringValue: String,
-        ) : StaleV5.CloseIssueReason(customStringValue)
+        ) : StaleV6.CloseIssueReason(customStringValue)
     }
 
     public sealed class Days(
@@ -373,9 +366,9 @@ public class StaleV5(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : StaleV5.Days(requestedValue)
+        ) : StaleV6.Days(requestedValue)
 
-        public object Never : StaleV5.Days(-1)
+        public object Never : StaleV6.Days(-1)
     }
 
     public class Outputs(
