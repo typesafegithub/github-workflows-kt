@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.7.10"))
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.7.20"))
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     implementation("org.jetbrains.kotlin:kotlin-serialization")
 
