@@ -153,7 +153,9 @@ val wrappersToGenerate = listOf(
             mapOf(
                 "debug" to BooleanTyping,
                 "previews" to ListOfTypings(","),
-                "result-encoding" to EnumTyping("Encoding", listOf("string", "json"))
+                "result-encoding" to EnumTyping("Encoding", listOf("string", "json")),
+                "retries" to IntegerTyping,
+                "retry-exempt-status-codes" to ListOfTypings(",", IntegerTyping),
             )
         )
     ),
