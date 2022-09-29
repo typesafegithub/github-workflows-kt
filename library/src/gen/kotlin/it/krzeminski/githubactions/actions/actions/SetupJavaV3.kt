@@ -85,6 +85,11 @@ public class SetupJavaV3(
      */
     public val jobStatus: String? = null,
     /**
+     * Used to pull java versions from setup-java. Since there is a default value, token is
+     * typically not supplied by the user.
+     */
+    public val token: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -112,6 +117,7 @@ public class SetupJavaV3(
             gpgPassphrase?.let { "gpg-passphrase" to it },
             cache?.let { "cache" to it.stringValue },
             jobStatus?.let { "job-status" to it },
+            token?.let { "token" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
