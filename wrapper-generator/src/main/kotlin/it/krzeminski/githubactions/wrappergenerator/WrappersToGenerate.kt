@@ -469,7 +469,7 @@ val wrappersToGenerate = listOf(
             )
         )
     ),
-    WrapperRequest(ActionCoords("anothrNick", "github-tag-action", "v1.38.0")),
+    WrapperRequest(ActionCoords("anothrNick", "github-tag-action", "v1")),
     WrapperRequest(
         ActionCoords("appleboy", "scp-action", "v0.1.3"),
         TypingsSource.WrapperGenerator(
