@@ -27,7 +27,7 @@ public class GithubTagActionV1(
      */
     _customVersion: String? = null,
 ) : ActionWithOutputs<GithubTagActionV1.Outputs>("anothrNick", "github-tag-action", _customVersion
-        ?: "v1.38.0") {
+        ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = LinkedHashMap(_customInputs)
 

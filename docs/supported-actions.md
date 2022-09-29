@@ -36,7 +36,7 @@ Click on a version to see the wrapper's code.
 * anmol098
     * [waka-readme-stats](https://github.com/anmol098/waka-readme-stats) - v4: [`WakaReadmeStatsV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/anmol098/WakaReadmeStatsV4.kt)
 * anothrNick
-    * [github-tag-action](https://github.com/anothrNick/github-tag-action) - v1.38.0: [`GithubTagActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/anothrnick/GithubTagActionV1.kt)
+    * [github-tag-action](https://github.com/anothrNick/github-tag-action) - v1: [`GithubTagActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/anothrnick/GithubTagActionV1.kt)
 * appleboy
     * [scp-action](https://github.com/appleboy/scp-action) - v0.1.3: [`ScpActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/appleboy/ScpActionV0.kt)
     * [ssh-action](https://github.com/appleboy/ssh-action) - v0.1.5: [`SshActionV0`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/appleboy/SshActionV0.kt)
