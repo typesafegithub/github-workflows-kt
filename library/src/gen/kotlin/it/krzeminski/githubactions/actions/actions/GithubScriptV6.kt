@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.Boolean
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -45,6 +46,15 @@ public class GithubScriptV6(
      */
     public val resultEncoding: GithubScriptV6.Encoding? = null,
     /**
+     * The number of times to retry a request
+     */
+    public val retries: Int? = null,
+    /**
+     * A comma separated list of status codes that will NOT be retried e.g. "400,500". No effect
+     * unless `retries` is set
+     */
+    public val retryExemptStatusCodes: List<Int>? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -63,6 +73,9 @@ public class GithubScriptV6(
             userAgent?.let { "user-agent" to it },
             previews?.let { "previews" to it.joinToString(",") },
             resultEncoding?.let { "result-encoding" to it.stringValue },
+            retries?.let { "retries" to it.toString() },
+            retryExemptStatusCodes?.let { "retry-exempt-status-codes" to it.joinToString(",") {
+                    it.toString() } },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
