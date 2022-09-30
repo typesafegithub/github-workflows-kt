@@ -1,12 +1,12 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.27.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.28.0")
 
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.JobBuilder
 
-fun JobBuilder.setupJava() =
+fun JobBuilder<*>.setupJava() =
     uses(
         name = "Set up JDK",
         action = SetupJavaV3(
@@ -16,7 +16,7 @@ fun JobBuilder.setupJava() =
         )
     )
 
-fun JobBuilder.setupPython() =
+fun JobBuilder<*>.setupPython() =
     uses(SetupPythonV4(pythonVersion = "3.8"))
 
 val disableScheduledJobInForks =
