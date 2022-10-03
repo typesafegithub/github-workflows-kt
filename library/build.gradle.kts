@@ -14,7 +14,7 @@ group = "it.krzeminski"
 version = "0.28.0"
 
 dependencies {
-    implementation("org.snakeyaml:snakeyaml-engine:2.4")
+    implementation("org.snakeyaml:snakeyaml-engine:2.5")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.0")
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
