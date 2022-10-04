@@ -1,13 +1,9 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.actions.Action
-import kotlin.Boolean
-import kotlin.Deprecated
+import it.krzeminski.githubactions.actions.ActionWithOutputs
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -22,16 +18,17 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-dotnet)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupDotnetV3",
-    replaceWith = ReplaceWith("SetupDotnetV3"),
-)
-public class SetupDotnetV2(
+public class SetupDotnetV3(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
-     * available. Examples: 2.2.104, 3.1, 3.1.x
+     * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x
      */
     public val dotnetVersion: String? = null,
+    /**
+     * Optional quality of the build. The possible values are: daily, signed, validated, preview,
+     * ga.
+     */
+    public val dotnetQuality: SetupDotnetV3.DotNetQuality? = null,
     /**
      * Optional global.json location, if your global.json isn't located in the root of the repo.
      */
@@ -52,11 +49,6 @@ public class SetupDotnetV2(
      */
     public val configFile: String? = null,
     /**
-     * Whether prerelease versions should be matched with non-exact versions (for example
-     * 5.0.0-preview.6 being matched by 5, 5.0, 5.x or 5.0.x). Defaults to false if not provided.
-     */
-    public val includePrerelease: Boolean? = null,
-    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -65,17 +57,48 @@ public class SetupDotnetV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("actions", "setup-dotnet", _customVersion ?: "v2") {
+) : ActionWithOutputs<SetupDotnetV3.Outputs>("actions", "setup-dotnet", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(
             dotnetVersion?.let { "dotnet-version" to it },
+            dotnetQuality?.let { "dotnet-quality" to it.stringValue },
             globalJsonFile?.let { "global-json-file" to it },
             sourceUrl?.let { "source-url" to it },
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
-            includePrerelease?.let { "include-prerelease" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+
+    public sealed class DotNetQuality(
+        public val stringValue: String,
+    ) {
+        public object Daily : SetupDotnetV3.DotNetQuality("daily")
+
+        public object Signed : SetupDotnetV3.DotNetQuality("signed")
+
+        public object Validated : SetupDotnetV3.DotNetQuality("validated")
+
+        public object Preview : SetupDotnetV3.DotNetQuality("preview")
+
+        public object Ga : SetupDotnetV3.DotNetQuality("ga")
+
+        public class Custom(
+            customStringValue: String,
+        ) : SetupDotnetV3.DotNetQuality(customStringValue)
+    }
+
+    public class Outputs(
+        private val stepId: String,
+    ) {
+        /**
+         * Contains the installed by action .NET SDK version for reuse.
+         */
+        public val dotnetVersion: String = "steps.$stepId.outputs.dotnet-version"
+
+        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+    }
 }
