@@ -22,7 +22,7 @@ Click on a version to see the wrapper's code.
     * [first-interaction](https://github.com/actions/first-interaction) - v1: [`FirstInteractionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/FirstInteractionV1.kt)
     * [github-script](https://github.com/actions/github-script) - v6: [`GithubScriptV6`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/GithubScriptV6.kt)
     * [labeler](https://github.com/actions/labeler) - v4: [`LabelerV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/LabelerV4.kt)
-    * [setup-dotnet](https://github.com/actions/setup-dotnet) - v2: [`SetupDotnetV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupDotnetV2.kt)
+    * [setup-dotnet](https://github.com/actions/setup-dotnet) - v2: [`SetupDotnetV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupDotnetV2.kt), v3: [`SetupDotnetV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupDotnetV3.kt)
     * [setup-go](https://github.com/actions/setup-go) - v3: [`SetupGoV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupGoV3.kt)
     * [setup-java](https://github.com/actions/setup-java) - v2: [`SetupJavaV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV2.kt), v3: [`SetupJavaV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV3.kt)
     * [setup-node](https://github.com/actions/setup-node) - v2: [`SetupNodeV2`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV2.kt), v3: [`SetupNodeV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV3.kt)
@@ -140,4 +140,4 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 80
-* counting each version separately: 95
+* counting each version separately: 96

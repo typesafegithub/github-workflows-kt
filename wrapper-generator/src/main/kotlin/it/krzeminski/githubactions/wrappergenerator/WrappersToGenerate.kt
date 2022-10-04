@@ -168,10 +168,18 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-dotnet", "v2"),
+        ActionCoords("actions", "setup-dotnet", "v2", deprecatedByVersion = "v3"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "include-prerelease" to BooleanTyping,
+            )
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("actions", "setup-dotnet", "v3"),
+        TypingsSource.WrapperGenerator(
+            mapOf(
+                "dotnet-quality" to EnumTyping("DotNetQuality", listOf("daily", "signed", "validated", "preview", "ga")),
             )
         )
     ),
