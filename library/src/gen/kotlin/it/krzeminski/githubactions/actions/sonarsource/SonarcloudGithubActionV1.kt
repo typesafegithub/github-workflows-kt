@@ -37,7 +37,7 @@ public class SonarcloudGithubActionV1(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : Action("SonarSource", "sonarcloud-github-action", _customVersion ?: "v1.6") {
+) : Action("SonarSource", "sonarcloud-github-action", _customVersion ?: "v1.7") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments() = linkedMapOf(
         *listOfNotNull(

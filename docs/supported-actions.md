@@ -123,7 +123,7 @@ Click on a version to see the wrapper's code.
 * softprops
     * [action-gh-release](https://github.com/softprops/action-gh-release) - v1: [`ActionGhReleaseV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/softprops/ActionGhReleaseV1.kt)
 * SonarSource
-    * [sonarcloud-github-action](https://github.com/SonarSource/sonarcloud-github-action) - v1.6: [`SonarcloudGithubActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/sonarsource/SonarcloudGithubActionV1.kt)
+    * [sonarcloud-github-action](https://github.com/SonarSource/sonarcloud-github-action) - v1.7: [`SonarcloudGithubActionV1`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/sonarsource/SonarcloudGithubActionV1.kt)
 * stefanzweifel
     * [git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action) - v4: [`GitAutoCommitActionV4`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/stefanzweifel/GitAutoCommitActionV4.kt)
 * subosito
