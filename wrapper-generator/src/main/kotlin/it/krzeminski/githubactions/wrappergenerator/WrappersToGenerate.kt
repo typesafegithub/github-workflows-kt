@@ -1075,7 +1075,7 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("SonarSource", "sonarcloud-github-action", "v1.6"),
+        ActionCoords("SonarSource", "sonarcloud-github-action", "v1.7"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "args" to StringTyping,
