@@ -37,7 +37,7 @@ public class SetupBuildxActionV2(
      */
     public val buildkitdFlags: String? = null,
     /**
-     * Sets up docker build command as an alias to docker buildx
+     * Sets up docker build command as an alias to docker buildx build
      */
     public val install: Boolean? = null,
     /**
@@ -99,24 +99,29 @@ public class SetupBuildxActionV2(
         public val driver: String = "steps.$stepId.outputs.driver"
 
         /**
-         * Builder node endpoint
+         * Builder node platforms (preferred or available)
+         */
+        public val platforms: String = "steps.$stepId.outputs.platforms"
+
+        /**
+         * Builder nodes metadata
+         */
+        public val nodes: String = "steps.$stepId.outputs.nodes"
+
+        /**
+         * Builder node endpoint (deprecated, use nodes output instead)
          */
         public val endpoint: String = "steps.$stepId.outputs.endpoint"
 
         /**
-         * Builder node status
+         * Builder node status (deprecated, use nodes output instead)
          */
         public val status: String = "steps.$stepId.outputs.status"
 
         /**
-         * Builder node flags (if applicable)
+         * Builder node flags (deprecated, use nodes output instead)
          */
         public val flags: String = "steps.$stepId.outputs.flags"
-
-        /**
-         * Builder node platforms available (comma separated)
-         */
-        public val platforms: String = "steps.$stepId.outputs.platforms"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
