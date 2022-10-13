@@ -37,7 +37,7 @@ publishing {
 
                 developers {
                     developer {
-                        id.set("krzema12")
+                        id.set(githubUser)
                         name.set("Piotr Krzemiński")
                         email.set("git@krzeminski.it")
                     }
