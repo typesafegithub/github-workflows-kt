@@ -602,7 +602,15 @@ val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("Borales", "actions-yarn", "v2.3.0", deprecatedByVersion = "v3")),
     WrapperRequest(ActionCoords("Borales", "actions-yarn", "v3")),
     WrapperRequest(
-        ActionCoords("cachix", "install-nix-action", "v17"),
+        ActionCoords("cachix", "install-nix-action", "v17", deprecatedByVersion = "v18"),
+        TypingsSource.WrapperGenerator(
+            mapOf(
+                "install_options" to ListOfTypings("\\n")
+            )
+        )
+    ),
+    WrapperRequest(
+        ActionCoords("cachix", "install-nix-action", "v18"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "install_options" to ListOfTypings("\\n")

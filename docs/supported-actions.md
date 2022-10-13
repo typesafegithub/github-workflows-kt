@@ -57,7 +57,7 @@ Click on a version to see the wrapper's code.
 * Borales
     * [actions-yarn](https://github.com/Borales/actions-yarn) - v2.3.0: [`ActionsYarnV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV2.kt), v3: [`ActionsYarnV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV3.kt)
 * cachix
-    * [install-nix-action](https://github.com/cachix/install-nix-action) - v17: [`InstallNixActionV17`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV17.kt)
+    * [install-nix-action](https://github.com/cachix/install-nix-action) - v17: [`InstallNixActionV17`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV17.kt), v18: [`InstallNixActionV18`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV18.kt)
 * calibreapp
     * [image-actions](https://github.com/calibreapp/image-actions) - v1.1.0: [`ImageActionsV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/calibreapp/ImageActionsV1.kt)
 * codecov
@@ -140,4 +140,4 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 80
-* counting each version separately: 96
+* counting each version separately: 97
