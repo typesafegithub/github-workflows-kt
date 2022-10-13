@@ -14,4 +14,4 @@ _Please add a link to GitHub docs (https://docs.github.com/en/actions/using-work
 _Best if a YAML snippet is pasted here, or if your project is open-source, an URL to your workflow._
 
 **Is there a workaround for not having this feature? If yes, please describe it.**
-_Please take a look at https://krzema12.github.io/github-actions-kotlin-dsl/user-guide/compensating-librarys-missing-features/ as a mechanism designed to work around most missing features, and let us know here if it works for you short-term._
+_Please take a look at https://krzema12.github.io/github-workflows-kt/user-guide/compensating-librarys-missing-features/ as a mechanism designed to work around most missing features, and let us know here if it works for you short-term._

@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ### Are you sure the action(s) you want aren't already supported?
-_Please check https://krzema12.github.io/github-actions-kotlin-dsl/supported-actions/_
+_Please check https://krzema12.github.io/github-workflows-kt/supported-actions/_
 
 Yes/no
 

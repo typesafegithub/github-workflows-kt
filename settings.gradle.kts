@@ -1,4 +1,4 @@
-rootProject.name = "github-actions-kotlin-dsl"
+rootProject.name = "github-workflows-kt"
 
 apply(from = "./buildSrc/repositories.settings.gradle.kts")
 

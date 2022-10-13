@@ -7,7 +7,7 @@ your possibilities.
 ## Built-in actions
 
 Take a look here: [Supported actions](../supported-actions.md).
-These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
+These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to
 version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management)
@@ -26,7 +26,7 @@ you have two ways to proceed.
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
-Inherit from [`Action`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
+Inherit from [`Action`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
 in case of actions without outputs:
 
 ```kotlin
@@ -39,7 +39,7 @@ class MyCoolActionV3(
 }
 ```
 
-or, in case actions with outputs, from [`ActionWithOutputs`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/ActionWithOutputs.kt):
+or, in case actions with outputs, from [`ActionWithOutputs`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/ActionWithOutputs.kt):
 
 ```kotlin
 class MyCoolActionV3(
@@ -73,7 +73,7 @@ uses(name = "FooBar",
     types because you're in the middle of experimenting. It's also more convenient to produce such code by a code
     generator.
 
-Use a [`CustomAction`](https://github.com/krzema12/github-actions-kotlin-dsl/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
+Use a [`CustomAction`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
 
 ```kotlin
 val customAction = CustomAction(

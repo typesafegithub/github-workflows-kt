@@ -7,8 +7,8 @@ when you want to save time on migrating your workflows to YAML.
 To use it, clone the repository locally, in a version corresponding to the latest released version of the library:
 
 ```bash
-git clone -b v[[ scriptGeneratorVersion ]] https://github.com/krzema12/github-actions-kotlin-dsl
-cd github-actions-kotlin-dsl
+git clone -b v[[ scriptGeneratorVersion ]] https://github.com/krzema12/github-workflows-kt
+cd github-workflows-kt
 ```
 
 If you have your workflow available in a local file, run:

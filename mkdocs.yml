@@ -3,8 +3,8 @@
 
 site_name: GitHub Actions Kotlin DSL
 site_author: Piotr Krzemiński
-repo_url: https://github.com/krzema12/github-actions-kotlin-dsl/
-edit_uri: https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/docs
+repo_url: https://github.com/krzema12/github-workflows-kt/
+edit_uri: https://github.com/krzema12/github-workflows-kt/tree/main/docs
 
 theme:
   name: material
