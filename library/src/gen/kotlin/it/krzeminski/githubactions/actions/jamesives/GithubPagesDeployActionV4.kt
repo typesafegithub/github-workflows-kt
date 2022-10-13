@@ -34,8 +34,8 @@ public class GithubPagesDeployActionV4(
      * This option defaults to the repository scoped GitHub Token.  However if you need more
      * permissions for things such as deploying to another repository, you can add a Personal Access
      * Token (PAT) here.  This should be stored in the `secrets / with` menu **as a secret**.
-     * We recommend using a service account with the least permissions neccersary and when
-     * generating a new PAT that you select the least permission scopes required.
+     * We recommend using a service account with the least permissions necessary and when generating
+     * a new PAT that you select the least permission scopes required.
      * [Learn more about creating and using encrypted secrets
      * here.](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
      */
@@ -71,7 +71,7 @@ public class GithubPagesDeployActionV4(
      */
     public val cleanExclude: List<String>? = null,
     /**
-     * Do not actually push back, but use `--dry-run` on `git push` invocations insead.
+     * Do not actually push back, but use `--dry-run` on `git push` invocations instead.
      */
     public val dryRun: Boolean? = null,
     /**
@@ -97,12 +97,6 @@ public class GithubPagesDeployActionV4(
      * it. This should be formatted like so: JamesIves/github-pages-deploy-action
      */
     public val repositoryName: String? = null,
-    /**
-     * This should point to where your project lives on the virtual machine. The GitHub Actions
-     * environment will set this for you. It is only neccersary to set this variable if you're using
-     * the node module.
-     */
-    public val workspace: String? = null,
     /**
      * Add a tag to the commit, this can be used like so: 'v0.1'. Only works when 'dry-run' is not
      * used.
@@ -144,7 +138,6 @@ public class GithubPagesDeployActionV4(
             gitConfigName?.let { "git-config-name" to it },
             gitConfigEmail?.let { "git-config-email" to it },
             repositoryName?.let { "repository-name" to it },
-            workspace?.let { "workspace" to it },
             tag?.let { "tag" to it },
             singleCommit?.let { "single-commit" to it.toString() },
             silent?.let { "silent" to it.toString() },
