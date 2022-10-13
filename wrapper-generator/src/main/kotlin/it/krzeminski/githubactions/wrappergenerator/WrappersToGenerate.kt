@@ -968,7 +968,15 @@ val wrappersToGenerate = listOf(
     WrapperRequest(ActionCoords("madhead", "check-gradle-version", "v1"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("madhead", "read-java-properties", "latest"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("madhead", "semver-utils", "v2"), TypingsSource.ActionTypes),
-    WrapperRequest(ActionCoords("microsoft", "setup-msbuild", "v1")),
+    WrapperRequest(
+        ActionCoords("microsoft", "setup-msbuild", "v1"),
+        TypingsSource.WrapperGenerator(
+            mapOf(
+                "vs-prerelease" to BooleanTyping,
+                "msbuild-architecture" to EnumTyping("Architecture", listOf("x86", "x64"))
+            )
+        )
+    ),
 
     WrapperRequest(
         ActionCoords("nobrayner", "discord-webhook", "v1"),
