@@ -102,15 +102,15 @@ public class FlutterActionV2(
     public class Outputs(
         private val stepId: String,
     ) {
-        public val cachePath: String = "steps.$stepId.outputs.cache-path"
+        public val cachePath: String = "steps.$stepId.outputs.CACHE-PATH"
 
-        public val cacheKey: String = "steps.$stepId.outputs.cache-key"
+        public val cacheKey: String = "steps.$stepId.outputs.CACHE-KEY"
 
-        public val channel: String = "steps.$stepId.outputs.channel"
+        public val channel: String = "steps.$stepId.outputs.CHANNEL"
 
-        public val version: String = "steps.$stepId.outputs.version"
+        public val version: String = "steps.$stepId.outputs.VERSION"
 
-        public val architecture: String = "steps.$stepId.outputs.architecture"
+        public val architecture: String = "steps.$stepId.outputs.ARCHITECTURE"
 
         public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
