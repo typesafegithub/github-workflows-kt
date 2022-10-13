@@ -99,6 +99,12 @@ public class CheckoutV3(
      */
     public val setSafeDirectory: Boolean? = null,
     /**
+     * The base URL for the GitHub instance that you are trying to clone from, will use environment
+     * defaults to fetch from the same instance that the workflow is running from unless specified.
+     * Example URLs are https://github.com or https://my-ghes-server.example.com
+     */
+    public val githubServerUrl: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -124,6 +130,7 @@ public class CheckoutV3(
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
             setSafeDirectory?.let { "set-safe-directory" to it.toString() },
+            githubServerUrl?.let { "github-server-url" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

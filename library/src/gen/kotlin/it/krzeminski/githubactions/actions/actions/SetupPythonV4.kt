@@ -44,8 +44,10 @@ public class SetupPythonV4(
      */
     public val checkLatest: Boolean? = null,
     /**
-     * Used to pull python distributions from actions/python-versions. Since there's a default, this
-     * is typically not supplied by the user.
+     * The token used to authenticate when fetching Python distributions from
+     * https://github.com/actions/python-versions. When running this action on github.com, the default
+     * value is sufficient. When running on GHES, you can pass a personal access token for github.com
+     * if you are experiencing rate limiting.
      */
     public val token: String? = null,
     /**
