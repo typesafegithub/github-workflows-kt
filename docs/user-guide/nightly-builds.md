@@ -3,7 +3,7 @@
 Sometimes you may want to test a change that has been already merged to `main` or other branch, but not yet officially
 released. In this case, you can use JitPack to request building the desired version of the library on demand:
 
-https://jitpack.io/#krzema12/github-actions-kotlin-dsl
+https://jitpack.io/#krzema12/github-workflows-kt
 
 To use the newest, bleeding-edge version from `main` branch, replace your scripts' preamble with:
 

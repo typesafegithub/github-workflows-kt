@@ -59,7 +59,7 @@ Goals:
 
 For example, you can use auto-completion to find out which functions are available:
 
-<img width="581" alt="github-actions-kotlin-dsl_–_IntegrationTest_kt__github-actions-kotlin-dsl_library_test_" src="https://user-images.githubusercontent.com/459464/176900956-74370289-79c4-488f-86a9-afb0c3ba1ba8.png">
+<img width="581" src="https://user-images.githubusercontent.com/459464/176900956-74370289-79c4-488f-86a9-afb0c3ba1ba8.png">
 
 Here we immediately see how to fix a first bug in our original snippet:
 
@@ -76,7 +76,7 @@ Reference: https://docs.github.com/en/actions/learn-github-actions/expressions#f
 The `runner` context contains information about the runner that is executing the current job.
 
 The possible properties are available via `expr { runner.xxx }`
-<img width="888" alt="github-actions-kotlin-dsl_–_IntegrationTest_kt__github-actions-kotlin-dsl_library_test_" src="https://user-images.githubusercontent.com/459464/176903756-52c102ce-aa60-4d36-865d-1b7545b05ddf.png">
+<img width="888" src="https://user-images.githubusercontent.com/459464/176903756-52c102ce-aa60-4d36-865d-1b7545b05ddf.png">
 
 https://docs.github.com/en/actions/learn-github-actions/contexts#example-contents-of-the-runner-context
 
@@ -86,7 +86,7 @@ The `github` context contains information about the workflow run and the event t
 
 The possible properties are available via `expr { github.xxx }`
 
-<img width="857" alt="github-actions-kotlin-dsl_–_IntegrationTest_kt__github-actions-kotlin-dsl_library_test_" src="https://user-images.githubusercontent.com/459464/176904326-4a7685cb-96d6-4ff2-a9b0-7a63f8bdb714.png">
+<img width="857" src="https://user-images.githubusercontent.com/459464/176904326-4a7685cb-96d6-4ff2-a9b0-7a63f8bdb714.png">
 Here we detect immediatly another bug in our original snippet
 
 ```diff
@@ -107,17 +107,17 @@ The `github.event` field is special because it depends on what kind of events tr
 - ...
 
 Since they have a different type, there is a diferent property `expr { github.eventXXX }`  per type:
-<img width="893" alt="github-actions-kotlin-dsl_–_IntegrationTest_kt__github-actions-kotlin-dsl_library_test_" src="https://user-images.githubusercontent.com/459464/176905276-a3dcfe23-0df9-4ba5-bf6a-bd519df4466e.png">
+<img width="893" src="https://user-images.githubusercontent.com/459464/176905276-a3dcfe23-0df9-4ba5-bf6a-bd519df4466e.png">
 
 By leveraging this feature, we quickly fix another bug in our original snippet:
 
-<img width="995" alt="github-actions-kotlin-dsl_–_IntegrationTest_kt__github-actions-kotlin-dsl_library_test_" src="https://user-images.githubusercontent.com/459464/176904991-12eb7d1e-cafe-4080-a668-608d4b682451.png">
+<img width="995" src="https://user-images.githubusercontent.com/459464/176904991-12eb7d1e-cafe-4080-a668-608d4b682451.png">
 
 ## Default environment variables
 GitHub supports a number of default environment variables.
 
 They are available directly in the IDE via the library's `Contexts.env`
-<img width="873" alt="github-actions-kotlin-dsl_–_IntegrationTest_kt__github-actions-kotlin-dsl_library_test_" src="https://user-images.githubusercontent.com/459464/176902143-454254d3-2bb7-4b93-91dd-64a589d980a8.png">
+<img width="873" src="https://user-images.githubusercontent.com/459464/176902143-454254d3-2bb7-4b93-91dd-64a589d980a8.png">
 By using this feature in our snippet we would have avoided escaping the dollar and the typo:
 
 ```diff
@@ -195,7 +195,7 @@ GitHub has more contexts that we don't support yet: https://docs.github.com/en/a
 
 There are more `github.event` payloads that we currently do not support: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
 
-We feel what we have is a pretty good start, but if you need an additional feature, you can [create an issue](https://github.com/krzema12/github-actions-kotlin-dsl/issues)
+We feel what we have is a pretty good start, but if you need an additional feature, you can [create an issue](https://github.com/krzema12/github-workflows-kt/issues)
 
-Or maybe have a look how this type-safe feature is implemented in [it.krzeminski.githubactions.dsl.expressions](https://github.com/krzema12/github-actions-kotlin-dsl/tree/main/library/src/main/kotlin/it/krzeminski/githubactions/dsl/expressions) and [submit a pull request 🙏🏻](https://github.com/krzema12/github-actions-kotlin-dsl/pulls)
+Or maybe have a look how this type-safe feature is implemented in [it.krzeminski.githubactions.dsl.expressions](https://github.com/krzema12/github-workflows-kt/tree/main/library/src/main/kotlin/it/krzeminski/githubactions/dsl/expressions) and [submit a pull request 🙏🏻](https://github.com/krzema12/github-workflows-kt/pulls)
 

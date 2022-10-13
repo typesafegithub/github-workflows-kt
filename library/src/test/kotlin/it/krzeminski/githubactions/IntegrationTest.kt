@@ -48,7 +48,7 @@ class IntegrationTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Test workflow
             on:
@@ -111,7 +111,7 @@ class IntegrationTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Test workflow
             on:
@@ -199,7 +199,7 @@ class IntegrationTest : FunSpec({
         targetTempFile.readText() shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Test workflow
             on:
@@ -313,7 +313,7 @@ class IntegrationTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Overridden name!
             on:
@@ -409,7 +409,7 @@ class IntegrationTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Test workflow
             on:
@@ -467,7 +467,7 @@ class IntegrationTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Test workflow
             on:
@@ -566,7 +566,7 @@ class IntegrationTest : FunSpec({
         actualYaml shouldBe """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+            # Generated with https://github.com/krzema12/github-workflows-kt
 
             name: Test workflow
             on:

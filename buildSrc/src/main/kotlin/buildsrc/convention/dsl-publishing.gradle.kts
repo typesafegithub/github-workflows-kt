@@ -8,7 +8,7 @@ plugins {
 }
 
 val githubUser = "krzema12"
-val libraryName = "github-actions-kotlin-dsl"
+val libraryName = "github-actions-kotlin-dsl" // maven coordinates
 
 publishing {
     publications {

@@ -249,7 +249,7 @@ val allTriggersMap: Map<String, Trigger> =
     allTriggersNames.zip(allTriggers).toMap()
 
 val rootProject = File(".").canonicalFile.let {
-    if (it.name == "github-actions-kotlin-dsl") it else it.parentFile
+    if (it.name == "github-workflows-kt") it else it.parentFile
 }
 
 const val PACKAGE = "it.krzeminski.githubactions"
