@@ -8,18 +8,19 @@ plugins {
 }
 
 val githubUser = "krzema12"
-val libraryName = "github-actions-kotlin-dsl" // maven coordinates
+val repositoryName = "github-workflows-kt"
+val mavenLibraryName = "github-actions-kotlin-dsl"
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = libraryName
+            artifactId = mavenLibraryName
             from(components["java"])
 
             pom {
-                name.set(libraryName)
+                name.set(mavenLibraryName)
                 description.set("Authoring GitHub Actions workflows in Kotlin.")
-                url.set("https://github.com/$githubUser/$libraryName")
+                url.set("https://github.com/$githubUser/$repositoryName")
 
                 licenses {
                     license {
@@ -29,14 +30,14 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/$githubUser/$libraryName.git/")
-                    developerConnection.set("scm:git:ssh://github.com:$githubUser/$libraryName.git")
-                    url.set("https://github.com/$githubUser/$libraryName.git")
+                    connection.set("scm:git:git://github.com/$githubUser/$repositoryName.git/")
+                    developerConnection.set("scm:git:ssh://github.com:$githubUser/$repositoryName.git")
+                    url.set("https://github.com/$githubUser/$repositoryName.git")
                 }
 
                 developers {
                     developer {
-                        id.set("krzema12")
+                        id.set(githubUser)
                         name.set("Piotr Krzemiński")
                         email.set("git@krzeminski.it")
                     }
@@ -68,6 +69,6 @@ signing {
 
 val waitUntilLibraryPresentInMavenCentral by tasks.registering(AwaitMavenCentralDeployTask::class) {
     this.groupId.set(project.group.toString())
-    this.artifactId.set(libraryName)
+    this.artifactId.set(mavenLibraryName)
     this.version.set(project.version.toString())
 }
