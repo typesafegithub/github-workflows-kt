@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.28.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.29.0")
 
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
