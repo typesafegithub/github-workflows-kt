@@ -31,6 +31,9 @@ public class SetupWslV1(
      * This saves time in subsequent runs, jobs, or workflows but consumes space from
      * the available cache space of the repository.
      * Refer to https://github.com/marketplace/actions/cache for current usage limits.
+     * Default is 'true' if the cache feature is available.
+     * Default is 'false' if the cache feature is not available, for example because it was disabled
+     * on a GitHub Enterprise instance.
      */
     public val useCache: Boolean? = null,
     /**
