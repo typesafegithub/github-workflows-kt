@@ -3,17 +3,17 @@ package it.krzeminski.githubactions.domain.triggers
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
-data class Schedule(
+public data class Schedule(
     val triggers: List<Cron>,
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()
 
 /** See https://crontab.guru **/
 @Serializable
-data class Cron(val expression: String)
+public data class Cron(val expression: String)
 
 /** See https://crontab.guru **/
-fun Cron(
+public fun Cron(
     minute: String = "*",
     hour: String = "*",
     dayMonth: String = "*",

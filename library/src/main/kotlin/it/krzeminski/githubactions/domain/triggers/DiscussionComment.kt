@@ -4,6 +4,6 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiscussionComment(
+public data class DiscussionComment(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

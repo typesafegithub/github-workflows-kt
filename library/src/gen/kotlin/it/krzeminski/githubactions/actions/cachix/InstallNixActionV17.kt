@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.cachix
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
@@ -53,7 +54,7 @@ public class InstallNixActionV17(
     _customVersion: String? = null,
 ) : Action("cachix", "install-nix-action", _customVersion ?: "v17") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             installUrl?.let { "install_url" to it },
             installOptions?.let { "install_options" to it.joinToString("\n") },

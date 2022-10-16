@@ -1,12 +1,12 @@
 package it.krzeminski.githubactions.actions
 
-abstract class Action(
-    open val actionOwner: String,
-    open val actionName: String,
-    open val actionVersion: String,
+public abstract class Action(
+    public open val actionOwner: String,
+    public open val actionName: String,
+    public open val actionVersion: String,
 ) {
-    abstract fun toYamlArguments(): LinkedHashMap<String, String>
+    public abstract fun toYamlArguments(): LinkedHashMap<String, String>
 }
 
-val Action.fullName: String
+internal val Action.fullName: String
     get() = "$actionOwner/$actionName@$actionVersion"

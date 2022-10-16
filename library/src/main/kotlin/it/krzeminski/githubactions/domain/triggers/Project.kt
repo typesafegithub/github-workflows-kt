@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
  * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#project
  */
 @Serializable
-data class Project(
+public data class Project(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -70,7 +71,7 @@ public class SetupPythonV4(
     _customVersion: String? = null,
 ) : ActionWithOutputs<SetupPythonV4.Outputs>("actions", "setup-python", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             pythonVersion?.let { "python-version" to it },
             pythonVersionFile?.let { "python-version-file" to it },
@@ -84,7 +85,7 @@ public class SetupPythonV4(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class PackageManager(
         public val stringValue: String,
@@ -130,6 +131,6 @@ public class SetupPythonV4(
          */
         public val pythonPath: String = "steps.$stepId.outputs.python-path"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

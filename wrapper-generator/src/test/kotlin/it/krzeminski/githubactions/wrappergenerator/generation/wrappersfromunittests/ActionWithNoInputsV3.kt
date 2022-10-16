@@ -28,5 +28,6 @@ public class ActionWithNoInputsV3(
     _customVersion: String? = null,
 ) : Action("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
+    public override fun toYamlArguments(): LinkedHashMap<String, String> =
+            LinkedHashMap(_customInputs)
 }

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -80,7 +81,7 @@ public class SetupGcloudV0(
     _customVersion: String? = null,
 ) : Action("google-github-actions", "setup-gcloud", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             version?.let { "version" to it },
             serviceAccountEmail?.let { "service_account_email" to it },

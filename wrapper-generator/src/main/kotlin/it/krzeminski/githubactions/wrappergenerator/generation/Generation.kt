@@ -162,6 +162,7 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
             .addFunction(
                 FunSpec.builder("get")
                     .addModifiers(KModifier.OPERATOR)
+                    .returns(String::class)
                     .addParameter("outputName", String::class)
                     .addCode(
                         CodeBlock.Builder().apply {
@@ -183,6 +184,7 @@ private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: M
 
     addFunction(
         FunSpec.builder("buildOutputObject")
+            .returns(ClassName("", "Outputs"))
             .addModifiers(KModifier.OVERRIDE)
             .addParameter("stepId", String::class)
             .addCode(CodeBlock.of("return Outputs(stepId)"))
@@ -205,6 +207,7 @@ private fun PropertySpec.Builder.annotateDeprecated(input: Input) = apply {
 private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typing>) =
     FunSpec.builder("toYamlArguments")
         .addModifiers(KModifier.OVERRIDE)
+        .returns(LinkedHashMap::class.parameterizedBy(String::class, String::class))
         .addAnnotation(
             AnnotationSpec.builder(Suppress::class)
                 .addMember("\"SpreadOperator\"")

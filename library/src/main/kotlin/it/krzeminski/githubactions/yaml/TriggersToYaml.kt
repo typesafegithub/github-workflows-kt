@@ -39,7 +39,7 @@ import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.domain.triggers.WorkflowRun
 import it.krzeminski.githubactions.internal.InternalGithubActionsApi
 
-fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
+internal fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
     this.associateBy(
         keySelector = { it.triggerName() },
         valueTransform = {
@@ -50,7 +50,7 @@ fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
     )
 
 @InternalGithubActionsApi
-fun Trigger.toMap(): Map<String, List<String>> {
+public fun Trigger.toMap(): Map<String, List<String>> {
     return when (this) {
         is Push -> toMap()
         is PullRequest -> toMap()
@@ -89,7 +89,7 @@ private fun PullRequestTarget.toMap() =
 
 @Suppress("ComplexMethod")
 @InternalGithubActionsApi
-fun Trigger.triggerName() = when (this) {
+public fun Trigger.triggerName(): String = when (this) {
     is PullRequest -> "pull_request"
     is PullRequestTarget -> "pull_request_target"
     is Push -> "push"

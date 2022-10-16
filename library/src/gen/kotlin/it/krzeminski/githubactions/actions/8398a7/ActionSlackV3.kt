@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.`8398a7`
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -93,7 +94,7 @@ public class ActionSlackV3(
     _customVersion: String? = null,
 ) : Action("8398a7", "action-slack", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "status" to status.stringValue,
             fields?.let { "fields" to it.joinToString(",") },

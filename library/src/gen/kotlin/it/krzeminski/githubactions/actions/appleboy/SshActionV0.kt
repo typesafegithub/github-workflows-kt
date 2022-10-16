@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.appleboy
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -144,7 +145,7 @@ public class SshActionV0(
     _customVersion: String? = null,
 ) : Action("appleboy", "ssh-action", _customVersion ?: "v0.1.5") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             host?.let { "host" to it },
             port?.let { "port" to it.toString() },

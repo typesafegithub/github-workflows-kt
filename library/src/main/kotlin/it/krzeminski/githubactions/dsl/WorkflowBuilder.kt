@@ -11,7 +11,7 @@ import java.nio.file.Path
 
 @GithubActionsDsl
 @Suppress("LongParameterList", "FunctionParameterNaming", "ConstructorParameterNaming")
-class WorkflowBuilder(
+public class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -35,7 +35,7 @@ class WorkflowBuilder(
     )
 
     @Suppress("LongParameterList")
-    fun <OUTPUT : JobOutputs> job(
+    public fun <OUTPUT : JobOutputs> job(
         id: String,
         name: String? = null,
         runsOn: RunnerType,
@@ -73,7 +73,7 @@ class WorkflowBuilder(
         return newJob
     }
 
-    fun job(
+    public fun job(
         id: String,
         name: String? = null,
         runsOn: RunnerType,
@@ -100,10 +100,10 @@ class WorkflowBuilder(
         block = block
     )
 
-    fun build() = workflow
+    public fun build(): Workflow = workflow
 }
 
-fun Workflow.toBuilder() =
+public fun Workflow.toBuilder(): WorkflowBuilder =
     WorkflowBuilder(
         name = name,
         on = on,
@@ -114,7 +114,7 @@ fun Workflow.toBuilder() =
     )
 
 @Suppress("LongParameterList", "FunctionParameterNaming")
-fun workflow(
+public fun workflow(
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),

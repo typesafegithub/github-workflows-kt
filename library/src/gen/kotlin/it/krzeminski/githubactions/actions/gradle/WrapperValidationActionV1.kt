@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.gradle
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -44,7 +45,7 @@ public class WrapperValidationActionV1(
     _customVersion: String? = null,
 ) : Action("gradle", "wrapper-validation-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             minWrapperCount?.let { "min-wrapper-count" to it.toString() },
             allowSnapshots?.let { "allow-snapshots" to it.toString() },

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.appleboy
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -98,7 +99,7 @@ public class TelegramActionV0(
     _customVersion: String? = null,
 ) : Action("appleboy", "telegram-action", _customVersion ?: "v0.1.1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             to?.let { "to" to it },
             token?.let { "token" to it },

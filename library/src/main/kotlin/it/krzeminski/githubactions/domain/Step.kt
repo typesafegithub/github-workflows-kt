@@ -5,20 +5,20 @@ import it.krzeminski.githubactions.actions.ActionWithOutputs
 import it.krzeminski.githubactions.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 
-sealed class Step(
-    open val id: String,
-    open val env: LinkedHashMap<String, String> = linkedMapOf(),
-    open val condition: String? = null,
-    open val continueOnError: Boolean? = null,
-    open val timeoutMinutes: Int? = null,
+public sealed class Step(
+    public open val id: String,
+    public open val env: LinkedHashMap<String, String> = linkedMapOf(),
+    public open val condition: String? = null,
+    public open val continueOnError: Boolean? = null,
+    public open val timeoutMinutes: Int? = null,
     override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
 ) : HasCustomArguments
 
-interface WithOutputs<T> {
-    val outputs: T
+public interface WithOutputs<T> {
+    public val outputs: T
 }
 
-data class CommandStep(
+public data class CommandStep(
     override val id: String,
     val name: String? = null,
     val command: String,
@@ -39,10 +39,10 @@ data class CommandStep(
 )
 
 @Suppress("LongParameterList")
-open class ExternalActionStep(
+public open class ExternalActionStep(
     override val id: String,
-    open val name: String? = null,
-    open val action: Action,
+    public open val name: String? = null,
+    public open val action: Action,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
@@ -57,7 +57,7 @@ open class ExternalActionStep(
     _customArguments = _customArguments,
 )
 
-data class ExternalActionStepWithOutputs<T>(
+public data class ExternalActionStepWithOutputs<T>(
     override val id: String,
     override val name: String? = null,
     override val action: ActionWithOutputs<T>,

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.entrostat
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -38,7 +39,7 @@ public class GitSecretActionV3(
     _customVersion: String? = null,
 ) : Action("entrostat", "git-secret-action", _customVersion ?: "v3.3.0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "gpg-private-key" to gpgPrivateKey,
             gpgPrivateKeyPassphrase?.let { "gpg-private-key-passphrase" to it },

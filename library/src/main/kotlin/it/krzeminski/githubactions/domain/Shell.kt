@@ -1,12 +1,12 @@
 package it.krzeminski.githubactions.domain
 
-sealed interface Shell {
-    data class Custom(val value: String) : Shell
+public sealed interface Shell {
+    public data class Custom(val value: String) : Shell
 
-    object Bash : Shell
-    object Cmd : Shell
-    object Pwsh : Shell
-    object PowerShell : Shell
-    object Python : Shell
-    object Sh : Shell
+    public object Bash : Shell
+    public object Cmd : Shell
+    public object Pwsh : Shell
+    public object PowerShell : Shell
+    public object Python : Shell
+    public object Sh : Shell
 }

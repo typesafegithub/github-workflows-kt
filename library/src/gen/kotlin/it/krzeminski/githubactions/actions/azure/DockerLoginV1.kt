@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.azure
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -41,7 +42,7 @@ public class DockerLoginV1(
     _customVersion: String? = null,
 ) : Action("Azure", "docker-login", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             username?.let { "username" to it },
             password?.let { "password" to it },

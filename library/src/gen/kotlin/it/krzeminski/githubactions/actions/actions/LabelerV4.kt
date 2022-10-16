@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -42,7 +43,7 @@ public class LabelerV4(
     _customVersion: String? = null,
 ) : Action("actions", "labeler", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             repoToken?.let { "repo-token" to it },
             configurationPath?.let { "configuration-path" to it },

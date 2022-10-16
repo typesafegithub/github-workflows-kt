@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.gradle
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -91,7 +92,7 @@ public class GradleBuildActionV2(
 ) : ActionWithOutputs<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", _customVersion
         ?: "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             gradleVersion?.let { "gradle-version" to it },
             cacheDisabled?.let { "cache-disabled" to it.toString() },
@@ -110,7 +111,7 @@ public class GradleBuildActionV2(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -120,6 +121,6 @@ public class GradleBuildActionV2(
          */
         public val buildScanUrl: String = "steps.$stepId.outputs.build-scan-url"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -80,7 +81,7 @@ public class SetupNodeV3(
     _customVersion: String? = null,
 ) : ActionWithOutputs<SetupNodeV3.Outputs>("actions", "setup-node", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             alwaysAuth?.let { "always-auth" to it.toString() },
             nodeVersion?.let { "node-version" to it },
@@ -96,7 +97,7 @@ public class SetupNodeV3(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class PackageManager(
         public val stringValue: String,
@@ -125,6 +126,6 @@ public class SetupNodeV3(
          */
         public val nodeVersion: String = "steps.$stepId.outputs.node-version"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

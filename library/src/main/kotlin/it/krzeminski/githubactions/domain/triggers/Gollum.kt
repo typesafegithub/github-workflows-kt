@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
  * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#gollum
  */
 @Serializable
-data class Gollum(
+public data class Gollum(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

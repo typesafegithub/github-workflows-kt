@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.azure
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -63,7 +64,7 @@ public class LoginV1(
     _customVersion: String? = null,
 ) : Action("Azure", "login", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             creds?.let { "creds" to it },
             clientId?.let { "client-id" to it },

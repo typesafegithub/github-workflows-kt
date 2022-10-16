@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actionsrs
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -52,7 +53,7 @@ public class ClippyCheckV1(
     _customVersion: String? = null,
 ) : Action("actions-rs", "clippy-check", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "token" to token,
             toolchain?.let { "toolchain" to it },

@@ -14,17 +14,17 @@ import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
-class JobBuilder<OUTPUT : JobOutputs>(
-    val id: String,
-    val name: String?,
-    val runsOn: RunnerType,
-    val needs: List<Job<*>>,
-    val env: LinkedHashMap<String, String>,
-    val condition: String?,
-    val strategyMatrix: Map<String, List<String>>?,
-    val timeoutMinutes: Int? = null,
-    val concurrency: Concurrency? = null,
-    val jobOutputs: OUTPUT,
+public class JobBuilder<OUTPUT : JobOutputs>(
+    public val id: String,
+    public val name: String?,
+    public val runsOn: RunnerType,
+    public val needs: List<Job<*>>,
+    public val env: LinkedHashMap<String, String>,
+    public val condition: String?,
+    public val strategyMatrix: Map<String, List<String>>?,
+    public val timeoutMinutes: Int? = null,
+    public val concurrency: Concurrency? = null,
+    public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
     private var job = Job<OUTPUT>(
@@ -42,7 +42,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments = _customArguments,
     )
 
-    fun run(
+    public fun run(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
@@ -64,7 +64,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments = _customArguments,
     )
 
-    fun run(
+    public fun run(
         name: String? = null,
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -92,7 +92,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
-    fun uses(
+    public fun uses(
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
@@ -110,7 +110,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments = _customArguments,
     )
 
-    fun uses(
+    public fun uses(
         name: String? = null,
         action: Action,
         env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -134,7 +134,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
-    fun <T> uses(
+    public fun <T> uses(
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
@@ -152,7 +152,7 @@ class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments = _customArguments,
     )
 
-    fun <T> uses(
+    public fun <T> uses(
         name: String? = null,
         action: ActionWithOutputs<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -178,5 +178,5 @@ class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
-    fun build() = job
+    public fun build(): Job<OUTPUT> = job
 }

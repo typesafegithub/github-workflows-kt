@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.awsactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -50,7 +51,7 @@ public class AmazonEcsRenderTaskDefinitionV1(
 ) : ActionWithOutputs<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-render-task-definition", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "task-definition" to taskDefinition,
             "container-name" to containerName,
@@ -60,7 +61,7 @@ public class AmazonEcsRenderTaskDefinitionV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -70,6 +71,6 @@ public class AmazonEcsRenderTaskDefinitionV1(
          */
         public val taskDefinition: String = "steps.$stepId.outputs.task-definition"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

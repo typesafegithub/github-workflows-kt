@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.anmol098
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -97,7 +98,7 @@ public class WakaReadmeStatsV4(
     _customVersion: String? = null,
 ) : Action("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             ghToken?.let { "GH_TOKEN" to it },
             "WAKATIME_API_KEY" to wakatimeApiKey,

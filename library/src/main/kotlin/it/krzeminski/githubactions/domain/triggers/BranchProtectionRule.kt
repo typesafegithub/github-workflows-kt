@@ -4,6 +4,6 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BranchProtectionRule(
+public data class BranchProtectionRule(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

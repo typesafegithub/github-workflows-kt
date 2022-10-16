@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.elgohr
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -101,7 +102,7 @@ public class PublishDockerGithubActionV4(
 ) : ActionWithOutputs<PublishDockerGithubActionV4.Outputs>("elgohr", "Publish-Docker-Github-Action",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "name" to name,
             "username" to username,
@@ -124,7 +125,7 @@ public class PublishDockerGithubActionV4(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -144,6 +145,6 @@ public class PublishDockerGithubActionV4(
          */
         public val digest: String = "steps.$stepId.outputs.digest"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

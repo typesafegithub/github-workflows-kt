@@ -28,5 +28,6 @@ public class GithubActionsTypingV0(
     _customVersion: String? = null,
 ) : Action("krzema12", "github-actions-typing", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
+    public override fun toYamlArguments(): LinkedHashMap<String, String> =
+            LinkedHashMap(_customInputs)
 }

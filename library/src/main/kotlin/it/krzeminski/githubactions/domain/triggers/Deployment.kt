@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
  * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#deployment
  */
 @Serializable
-data class Deployment(
+public data class Deployment(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

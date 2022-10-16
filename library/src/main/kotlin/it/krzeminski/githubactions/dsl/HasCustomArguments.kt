@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.dsl
 
 import kotlinx.serialization.Contextual
 
-interface HasCustomArguments {
+public interface HasCustomArguments {
     @Suppress("VariableNaming")
-    val _customArguments: Map<String, @Contextual Any>
+    public val _customArguments: Map<String, @Contextual Any>
 }

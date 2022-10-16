@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.vampire
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -102,7 +103,7 @@ public class SetupWslV1(
     _customVersion: String? = null,
 ) : ActionWithOutputs<SetupWslV1.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             distribution?.let { "distribution" to it.stringValue },
             useCache?.let { "use-cache" to it.toString() },
@@ -116,7 +117,7 @@ public class SetupWslV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Distribution(
         public val stringValue: String,
@@ -163,6 +164,6 @@ public class SetupWslV1(
         public val wslShellDistributionWrapperPath: String =
                 "steps.$stepId.outputs.wsl-shell-distribution-wrapper-path"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

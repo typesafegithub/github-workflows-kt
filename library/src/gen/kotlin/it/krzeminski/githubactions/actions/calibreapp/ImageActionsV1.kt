@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.calibreapp
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -51,7 +52,7 @@ public class ImageActionsV1(
     _customVersion: String? = null,
 ) : Action("calibreapp", "image-actions", _customVersion ?: "v1.1.0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "githubToken" to githubToken,
             jpegQuality?.let { "jpegQuality" to it.toString() },

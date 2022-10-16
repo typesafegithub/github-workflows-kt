@@ -7,4 +7,4 @@ package it.krzeminski.githubactions.internal
  * without any warnings and without providing any migration aids.
  */
 @RequiresOptIn
-annotation class InternalGithubActionsApi
+public annotation class InternalGithubActionsApi

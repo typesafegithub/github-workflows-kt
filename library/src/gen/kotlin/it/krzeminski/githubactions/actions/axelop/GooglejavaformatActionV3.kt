@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.axelop
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -58,7 +59,7 @@ public class GooglejavaformatActionV3(
     _customVersion: String? = null,
 ) : Action("axel-op", "googlejavaformat-action", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             args?.let { "args" to it },
             files?.let { "files" to it },

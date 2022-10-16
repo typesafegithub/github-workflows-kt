@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.reactivecircus
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -126,7 +127,7 @@ public class AndroidEmulatorRunnerV2(
     _customVersion: String? = null,
 ) : Action("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "api-level" to apiLevel.toString(),
             target?.let { "target" to it.stringValue },

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.adm
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -55,7 +56,7 @@ public class GithubPushActionV0(
     _customVersion: String? = null,
 ) : Action("ad-m", "github-push-action", _customVersion ?: "v0.6.0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "github_token" to githubToken,
             repository?.let { "repository" to it },

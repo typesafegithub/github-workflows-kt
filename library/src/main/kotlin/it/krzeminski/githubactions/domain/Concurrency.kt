@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  * See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idconcurrency
  */
 @Serializable
-data class Concurrency(
+public data class Concurrency(
     val group: String,
     @SerialName("cancel-in-progress")
     val cancelInProgress: Boolean = false,

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.samkirkland
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -85,7 +86,7 @@ public class FTPDeployActionV4(
     _customVersion: String? = null,
 ) : Action("SamKirkland", "FTP-Deploy-Action", _customVersion ?: "v4.3.0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "server" to server,
             "username" to username,

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -106,7 +107,7 @@ public class AddAndCommitV9(
     _customVersion: String? = null,
 ) : ActionWithOutputs<AddAndCommitV9.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v9") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             add?.let { "add" to it },
             authorName?.let { "author_name" to it },
@@ -130,7 +131,7 @@ public class AddAndCommitV9(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class DefaultActor(
         public val stringValue: String,
@@ -193,6 +194,6 @@ public class AddAndCommitV9(
          */
         public val tagPushed: String = "steps.$stepId.outputs.tag_pushed"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

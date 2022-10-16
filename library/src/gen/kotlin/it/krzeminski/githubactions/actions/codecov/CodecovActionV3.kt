@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.codecov
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -155,7 +156,7 @@ public class CodecovActionV3(
     _customVersion: String? = null,
 ) : Action("codecov", "codecov-action", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             token?.let { "token" to it },
             files?.let { "files" to it.joinToString(",") },

@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
  * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review
  */
 @Serializable
-data class PullRequestReview(
+public data class PullRequestReview(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

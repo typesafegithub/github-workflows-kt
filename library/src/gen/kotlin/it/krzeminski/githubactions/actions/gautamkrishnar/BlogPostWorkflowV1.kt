@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.gautamkrishnar
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -158,7 +159,7 @@ public class BlogPostWorkflowV1(
 ) : ActionWithOutputs<BlogPostWorkflowV1.Outputs>("gautamkrishnar", "blog-post-workflow",
         _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             ghToken?.let { "gh_token" to it },
             readmePath?.let { "readme_path" to it.joinToString(",") },
@@ -194,7 +195,7 @@ public class BlogPostWorkflowV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -204,6 +205,6 @@ public class BlogPostWorkflowV1(
          */
         public val results: String = "steps.$stepId.outputs.results"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

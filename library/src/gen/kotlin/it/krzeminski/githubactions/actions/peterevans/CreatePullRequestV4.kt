@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.peterevans
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -120,7 +121,7 @@ public class CreatePullRequestV4(
 ) : ActionWithOutputs<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             token?.let { "token" to it },
             path?.let { "path" to it },
@@ -146,7 +147,7 @@ public class CreatePullRequestV4(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -171,6 +172,6 @@ public class CreatePullRequestV4(
          */
         public val pullRequestHeadSha: String = "steps.$stepId.outputs.pull-request-head-sha"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

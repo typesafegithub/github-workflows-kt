@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.peaceiris
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -112,7 +113,7 @@ public class ActionsGhPagesV3(
     _customVersion: String? = null,
 ) : Action("peaceiris", "actions-gh-pages", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             deployKey?.let { "deploy_key" to it },
             githubToken?.let { "github_token" to it },

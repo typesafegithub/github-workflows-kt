@@ -13,8 +13,9 @@ import it.krzeminski.githubactions.domain.RunnerType.Windows2016
 import it.krzeminski.githubactions.domain.RunnerType.Windows2019
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.RunnerType.WindowsLatest
+import it.krzeminski.githubactions.internal.InternalGithubActionsApi
 
-fun List<Job<*>>.jobsToYaml(): Map<String, Map<String, Any>> =
+internal fun List<Job<*>>.jobsToYaml(): Map<String, Map<String, Any>> =
     this.associateBy(
         keySelector = { it.id },
         valueTransform = { it.toYaml() },
@@ -45,7 +46,8 @@ private fun Job<*>.toYaml(): Map<String, Any> =
         *_customArguments.toList().toTypedArray(),
     )
 
-fun RunnerType.toYaml() =
+@InternalGithubActionsApi
+public fun RunnerType.toYaml(): String =
     when (this) {
         is Custom -> runsOn
         UbuntuLatest -> "ubuntu-latest"

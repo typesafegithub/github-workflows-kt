@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.awsactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -48,7 +49,7 @@ public class AmazonEcrLoginV1(
 ) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
         "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             registries?.let { "registries" to it.joinToString(",") },
             skipLogout?.let { "skip-logout" to it.toString() },
@@ -57,7 +58,7 @@ public class AmazonEcrLoginV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class RegistryType(
         public val stringValue: String,
@@ -80,6 +81,6 @@ public class AmazonEcrLoginV1(
          */
         public val registry: String = "steps.$stepId.outputs.registry"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

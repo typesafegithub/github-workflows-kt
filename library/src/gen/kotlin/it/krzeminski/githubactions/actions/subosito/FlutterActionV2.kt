@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.subosito
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -55,7 +56,7 @@ public class FlutterActionV2(
 ) : ActionWithOutputs<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2")
         {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             flutterVersion?.let { "flutter-version" to it },
             channel?.let { "channel" to it.stringValue },
@@ -67,7 +68,7 @@ public class FlutterActionV2(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Channel(
         public val stringValue: String,
@@ -112,6 +113,6 @@ public class FlutterActionV2(
 
         public val architecture: String = "steps.$stepId.outputs.ARCHITECTURE"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

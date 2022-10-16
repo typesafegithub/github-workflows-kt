@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.ruby
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -72,7 +73,7 @@ public class SetupRubyV1(
     _customVersion: String? = null,
 ) : ActionWithOutputs<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             rubyVersion?.let { "ruby-version" to it },
             rubygems?.let { "rubygems" to it },
@@ -84,7 +85,7 @@ public class SetupRubyV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -94,6 +95,6 @@ public class SetupRubyV1(
          */
         public val rubyPrefix: String = "steps.$stepId.outputs.ruby-prefix"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }
