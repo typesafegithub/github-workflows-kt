@@ -8,6 +8,7 @@ plugins {
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.11.1"
 }
 
 group = "it.krzeminski"
@@ -35,6 +36,10 @@ tasks.withType<KotlinCompile> {
             "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
         )
     }
+}
+
+apiValidation {
+    ignoredPackages.add("it.krzeminski.githubactions.actions")
 }
 
 ktlint {
