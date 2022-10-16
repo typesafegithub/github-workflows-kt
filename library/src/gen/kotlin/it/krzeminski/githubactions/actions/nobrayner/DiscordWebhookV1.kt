@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.nobrayner
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -73,7 +74,7 @@ public class DiscordWebhookV1(
     _customVersion: String? = null,
 ) : Action("nobrayner", "discord-webhook", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "github-token" to githubToken,
             "discord-webhook" to discordWebhook,

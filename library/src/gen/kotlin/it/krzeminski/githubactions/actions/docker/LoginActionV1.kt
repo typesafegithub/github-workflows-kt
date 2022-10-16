@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
@@ -57,7 +58,7 @@ public class LoginActionV1(
     _customVersion: String? = null,
 ) : Action("docker", "login-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             registry?.let { "registry" to it },
             username?.let { "username" to it },

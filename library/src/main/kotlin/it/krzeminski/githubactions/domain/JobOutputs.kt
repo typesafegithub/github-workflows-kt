@@ -4,17 +4,17 @@ import it.krzeminski.githubactions.dsl.expressions.expr
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-open class JobOutputs {
+public open class JobOutputs {
     internal lateinit var job: Job<*>
     private val _outputMapping: MutableMap<String, String> = mutableMapOf()
 
-    object EMPTY : JobOutputs()
+    public object EMPTY : JobOutputs()
 
-    val outputMapping: Map<String, String> get() = _outputMapping.toMap()
+    public val outputMapping: Map<String, String> get() = _outputMapping.toMap()
 
-    fun output() = Ref()
+    public fun output(): Ref = Ref()
 
-    inner class Ref : ReadWriteProperty<JobOutputs, String> {
+    public inner class Ref : ReadWriteProperty<JobOutputs, String> {
         private var initialized: Boolean = false
         override fun getValue(thisRef: JobOutputs, property: KProperty<*>): String {
             val key = property.name

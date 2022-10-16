@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 
 // https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs
 @Serializable
-data class WorkflowDispatch(
+public data class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
 
     @Serializable
-    enum class Type {
+    public enum class Type {
         @SerialName("choice")
         Choice,
         @SerialName("environment")
@@ -24,11 +24,11 @@ data class WorkflowDispatch(
     }
 
     @Serializable
-    class Input(
-        val description: String,
-        val required: Boolean,
-        val type: Type,
-        val options: List<String> = emptyList(),
-        val default: String? = null,
+    public class Input(
+        public val description: String,
+        public val required: Boolean,
+        public val type: Type,
+        public val options: List<String> = emptyList(),
+        public val default: String? = null,
     )
 }

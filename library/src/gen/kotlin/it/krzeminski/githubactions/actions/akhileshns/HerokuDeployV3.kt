@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.akhileshns
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -120,7 +121,7 @@ public class HerokuDeployV3(
 ) : ActionWithOutputs<HerokuDeployV3.Outputs>("AkhileshNS", "heroku-deploy", _customVersion ?:
         "v3.12.12") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "heroku_api_key" to herokuApiKey,
             "heroku_email" to herokuEmail,
@@ -147,7 +148,7 @@ public class HerokuDeployV3(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class HerokuProcessType(
         public val stringValue: String,
@@ -169,6 +170,6 @@ public class HerokuDeployV3(
          */
         public val status: String = "steps.$stepId.outputs.status"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

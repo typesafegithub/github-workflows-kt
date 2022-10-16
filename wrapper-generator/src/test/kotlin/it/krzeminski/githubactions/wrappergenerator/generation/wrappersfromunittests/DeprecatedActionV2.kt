@@ -35,5 +35,6 @@ public class DeprecatedActionV2(
     _customVersion: String? = null,
 ) : Action("john-smith", "deprecated-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
+    public override fun toYamlArguments(): LinkedHashMap<String, String> =
+            LinkedHashMap(_customInputs)
 }

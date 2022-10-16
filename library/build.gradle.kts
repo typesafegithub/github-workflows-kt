@@ -38,6 +38,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+kotlin {
+    explicitApi()
+}
+
 apiValidation {
     ignoredPackages.add("it.krzeminski.githubactions.actions")
 }

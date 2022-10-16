@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -100,7 +101,7 @@ public class SetupJavaV3(
     _customVersion: String? = null,
 ) : ActionWithOutputs<SetupJavaV3.Outputs>("actions", "setup-java", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "java-version" to javaVersion,
             "distribution" to distribution.stringValue,
@@ -122,7 +123,7 @@ public class SetupJavaV3(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Distribution(
         public val stringValue: String,
@@ -201,6 +202,6 @@ public class SetupJavaV3(
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -47,7 +48,7 @@ public class SimpleActionWithListsV3(
     _customVersion: String? = null,
 ) : Action("john-smith", "simple-action-with-lists", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             listStrings?.let { "list-strings" to it.joinToString(",") },
             listInts?.let { "list-ints" to it.joinToString(",") { it.toString() } },

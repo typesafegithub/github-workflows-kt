@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -52,7 +53,7 @@ public class UploadArtifactV3(
     _customVersion: String? = null,
 ) : Action("actions", "upload-artifact", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             name?.let { "name" to it },
             "path" to path.joinToString("\n"),

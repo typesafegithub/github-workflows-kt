@@ -13,7 +13,7 @@ import it.krzeminski.githubactions.domain.Shell.Python
 import it.krzeminski.githubactions.domain.Shell.Sh
 import it.krzeminski.githubactions.domain.Step
 
-fun List<Step>.stepsToYaml(): List<Map<String, Any>> =
+internal fun List<Step>.stepsToYaml(): List<Map<String, Any>> =
     this.map { it.toYaml() }
 
 private fun Step.toYaml() =

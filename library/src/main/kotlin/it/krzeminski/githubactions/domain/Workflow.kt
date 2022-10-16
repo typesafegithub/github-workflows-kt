@@ -5,7 +5,7 @@ import it.krzeminski.githubactions.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
-data class Workflow(
+public data class Workflow(
     val name: String,
     val on: List<Trigger>,
     val env: LinkedHashMap<String, String>,

@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
@@ -67,7 +68,7 @@ public class SetupDotnetV2(
     _customVersion: String? = null,
 ) : Action("actions", "setup-dotnet", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             dotnetVersion?.let { "dotnet-version" to it },
             globalJsonFile?.let { "global-json-file" to it },

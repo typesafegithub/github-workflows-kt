@@ -1,4 +1,4 @@
 package it.krzeminski.githubactions.dsl
 
 @DslMarker
-annotation class GithubActionsDsl
+internal annotation class GithubActionsDsl

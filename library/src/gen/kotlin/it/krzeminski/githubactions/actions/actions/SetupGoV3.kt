@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -61,7 +62,7 @@ public class SetupGoV3(
     _customVersion: String? = null,
 ) : ActionWithOutputs<SetupGoV3.Outputs>("actions", "setup-go", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             goVersion?.let { "go-version" to it },
             goVersionFile?.let { "go-version-file" to it },
@@ -74,7 +75,7 @@ public class SetupGoV3(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Architecture(
         public val stringValue: String,
@@ -101,6 +102,6 @@ public class SetupGoV3(
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

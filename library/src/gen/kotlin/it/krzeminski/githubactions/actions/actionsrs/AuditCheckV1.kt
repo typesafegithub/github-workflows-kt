@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actionsrs
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -33,7 +34,7 @@ public class AuditCheckV1(
     _customVersion: String? = null,
 ) : Action("actions-rs", "audit-check", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "token" to token,
             *_customInputs.toList().toTypedArray(),

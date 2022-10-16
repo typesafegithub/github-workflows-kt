@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.gradleupdate
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -72,7 +73,7 @@ public class UpdateGradleWrapperActionV1(
     _customVersion: String? = null,
 ) : Action("gradle-update", "update-gradle-wrapper-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             repoToken?.let { "repo-token" to it },
             reviewers?.let { "reviewers" to it.joinToString(",") },

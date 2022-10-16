@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.appleboy
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -143,7 +144,7 @@ public class ScpActionV0(
     _customVersion: String? = null,
 ) : Action("appleboy", "scp-action", _customVersion ?: "v0.1.3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             host?.let { "host" to it },
             port?.let { "port" to it.toString() },

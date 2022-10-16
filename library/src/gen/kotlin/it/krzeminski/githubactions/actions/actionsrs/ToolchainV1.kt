@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actionsrs
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -60,7 +61,7 @@ public class ToolchainV1(
     _customVersion: String? = null,
 ) : ActionWithOutputs<ToolchainV1.Outputs>("actions-rs", "toolchain", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             toolchain?.let { "toolchain" to it },
             target?.let { "target" to it },
@@ -72,7 +73,7 @@ public class ToolchainV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -97,6 +98,6 @@ public class ToolchainV1(
          */
         public val rustup: String = "steps.$stepId.outputs.rustup"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

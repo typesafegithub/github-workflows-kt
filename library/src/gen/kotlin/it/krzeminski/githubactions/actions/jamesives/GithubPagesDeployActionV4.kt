@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.jamesives
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -123,7 +124,7 @@ public class GithubPagesDeployActionV4(
 ) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             sshKey?.let { "ssh-key" to it },
             token?.let { "token" to it },
@@ -145,7 +146,7 @@ public class GithubPagesDeployActionV4(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -156,6 +157,6 @@ public class GithubPagesDeployActionV4(
          */
         public val deploymentStatus: String = "steps.$stepId.outputs.deployment-status"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

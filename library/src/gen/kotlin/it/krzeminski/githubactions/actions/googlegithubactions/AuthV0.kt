@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -153,7 +154,7 @@ public class AuthV0(
     _customVersion: String? = null,
 ) : ActionWithOutputs<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             projectId?.let { "project_id" to it },
             workloadIdentityProvider?.let { "workload_identity_provider" to it },
@@ -177,7 +178,7 @@ public class AuthV0(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class TokenFormat(
         public val stringValue: String,
@@ -223,6 +224,6 @@ public class AuthV0(
          */
         public val idToken: String = "steps.$stepId.outputs.id_token"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

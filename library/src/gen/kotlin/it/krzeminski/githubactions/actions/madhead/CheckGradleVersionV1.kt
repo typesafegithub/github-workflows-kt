@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -34,14 +35,14 @@ public class CheckGradleVersionV1(
 ) : ActionWithOutputs<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version",
         _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             gradlew?.let { "gradlew" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -56,6 +57,6 @@ public class CheckGradleVersionV1(
          */
         public val current: String = "steps.$stepId.outputs.current"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
@@ -54,7 +55,7 @@ public class CacheV2(
     _customVersion: String? = null,
 ) : ActionWithOutputs<CacheV2.Outputs>("actions", "cache", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "path" to path.joinToString("\n"),
             "key" to key,
@@ -64,7 +65,7 @@ public class CacheV2(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -74,6 +75,6 @@ public class CacheV2(
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

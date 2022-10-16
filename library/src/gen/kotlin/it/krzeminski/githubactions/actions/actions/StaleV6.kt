@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -288,7 +289,7 @@ public class StaleV6(
     _customVersion: String? = null,
 ) : ActionWithOutputs<StaleV6.Outputs>("actions", "stale", _customVersion ?: "v6") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             repoToken?.let { "repo-token" to it },
             staleIssueMessage?.let { "stale-issue-message" to it },
@@ -347,7 +348,7 @@ public class StaleV6(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class CloseIssueReason(
         public val stringValue: String,
@@ -384,6 +385,6 @@ public class StaleV6(
          */
         public val staledIssuesPrs: String = "steps.$stepId.outputs.staled-issues-prs"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

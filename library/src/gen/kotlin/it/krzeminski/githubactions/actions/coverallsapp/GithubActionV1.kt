@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.coverallsapp
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
@@ -66,7 +67,7 @@ public class GithubActionV1(
 ) : ActionWithOutputs<GithubActionV1.Outputs>("coverallsapp", "github-action", _customVersion ?:
         "1.1.3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "github-token" to githubToken,
             pathToLcov?.let { "path-to-lcov" to it },
@@ -81,7 +82,7 @@ public class GithubActionV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -91,6 +92,6 @@ public class GithubActionV1(
          */
         public val coverallsApiResult: String = "steps.$stepId.outputs.coveralls-api-result"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

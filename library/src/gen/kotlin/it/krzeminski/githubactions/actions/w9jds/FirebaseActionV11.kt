@@ -29,9 +29,10 @@ public class FirebaseActionV11(
 ) : ActionWithOutputs<FirebaseActionV11.Outputs>("w9jds", "firebase-action", _customVersion ?:
         "v11.9.0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = LinkedHashMap(_customInputs)
+    public override fun toYamlArguments(): LinkedHashMap<String, String> =
+            LinkedHashMap(_customInputs)
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -41,6 +42,6 @@ public class FirebaseActionV11(
          */
         public val response: String = "steps.$stepId.outputs.response"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

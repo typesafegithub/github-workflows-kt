@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -34,14 +35,14 @@ public class ActionWithOutputsV3(
 ) : ActionWithOutputs<ActionWithOutputsV3.Outputs>("john-smith", "action-with-outputs",
         _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -56,6 +57,6 @@ public class ActionWithOutputsV3(
          */
         public val looWoz: String = "steps.$stepId.outputs.loo-woz"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

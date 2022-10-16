@@ -4,7 +4,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
-data class Push(
+public data class Push(
     val branches: List<String>? = null,
     @SerialName("branches-ignore")
     val branchesIgnore: List<String>? = null,

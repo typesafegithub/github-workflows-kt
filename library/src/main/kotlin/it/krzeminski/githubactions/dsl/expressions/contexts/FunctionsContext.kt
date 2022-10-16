@@ -10,7 +10,7 @@ import kotlin.text.Typography.quote
  * https://docs.github.com/en/actions/learn-github-actions/expressions#functions
  */
 @Suppress("FunctionOnlyReturningConstant", "TooManyFunctions")
-open class FunctionsContext {
+public open class FunctionsContext {
     private fun formatArgs(vararg args: String, quote: Boolean): String {
         fun String.maybeQuote(): String {
             val escaped = replace("'", "\\'")
@@ -19,37 +19,37 @@ open class FunctionsContext {
         return args.joinToString(prefix = "(", postfix = ")", transform = String::maybeQuote)
     }
 
-    fun always() = "always()"
+    public fun always(): String = "always()"
 
-    fun success() = "success()"
+    public fun success(): String = "success()"
 
-    fun cancelled() = "cancelled()"
+    public fun cancelled(): String = "cancelled()"
 
-    fun failure() = "failure()"
+    public fun failure(): String = "failure()"
 
-    fun contains(search: String, item: String, quote: Boolean = false) =
+    public fun contains(search: String, item: String, quote: Boolean = false): String =
         "contains" + formatArgs(search, item, quote = quote)
 
-    fun startsWith(searchString: String, searchValue: String, quote: Boolean = false) =
+    public fun startsWith(searchString: String, searchValue: String, quote: Boolean = false): String =
         "startsWith" + formatArgs(searchString, searchValue, quote = quote)
 
-    fun endsWith(searchString: String, searchValue: String, quote: Boolean = false) =
+    public fun endsWith(searchString: String, searchValue: String, quote: Boolean = false): String =
         "endsWith" + formatArgs(searchString, searchValue, quote = quote)
 
-    fun format(vararg args: String, quote: Boolean = false): String {
+    public fun format(vararg args: String, quote: Boolean = false): String {
         require(args.isNotEmpty()) { "Expected first arg like : format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')" }
         return "format" + formatArgs(*args, quote = quote)
     }
 
-    fun join(array: String, separator: String = ",", quote: Boolean = false) =
+    public fun join(array: String, separator: String = ",", quote: Boolean = false): String =
         "join" + formatArgs(array, separator, quote = quote)
 
-    fun toJSON(value: String, quote: Boolean = false) =
+    public fun toJSON(value: String, quote: Boolean = false): String =
         "toJSON" + formatArgs(value, quote = quote)
 
-    fun fromJSON(value: String, quote: Boolean = false) =
+    public fun fromJSON(value: String, quote: Boolean = false): String =
         "fromJSON" + formatArgs(value, quote = quote)
 
-    fun hashFiles(vararg paths: String, quote: Boolean = false) =
+    public fun hashFiles(vararg paths: String, quote: Boolean = false): String =
         "hashFiles" + formatArgs(*paths, quote = quote)
 }

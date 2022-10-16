@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -65,7 +66,7 @@ public class GithubScriptV6(
     _customVersion: String? = null,
 ) : ActionWithOutputs<GithubScriptV6.Outputs>("actions", "github-script", _customVersion ?: "v6") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "script" to script,
             githubToken?.let { "github-token" to it },
@@ -80,7 +81,7 @@ public class GithubScriptV6(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Encoding(
         public val stringValue: kotlin.String,
@@ -102,6 +103,6 @@ public class GithubScriptV6(
          */
         public val result: String = "steps.$stepId.outputs.result"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.awsactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
@@ -81,7 +82,7 @@ public class AmazonEcsDeployTaskDefinitionV1(
 ) : ActionWithOutputs<AmazonEcsDeployTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-deploy-task-definition", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "task-definition" to taskDefinition,
             service?.let { "service" to it },
@@ -97,7 +98,7 @@ public class AmazonEcsDeployTaskDefinitionV1(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -113,6 +114,6 @@ public class AmazonEcsDeployTaskDefinitionV1(
          */
         public val codedeployDeploymentId: String = "steps.$stepId.outputs.codedeploy-deployment-id"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

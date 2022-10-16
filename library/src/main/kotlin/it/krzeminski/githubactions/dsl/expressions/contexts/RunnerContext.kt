@@ -6,11 +6,11 @@ import it.krzeminski.githubactions.dsl.expressions.ExpressionContext
  * The runner context contains information about the runner that is executing the current job.
  * https://docs.github.com/en/actions/learn-github-actions/contexts#example-contents-of-the-runner-context
  */
-object RunnerContext : ExpressionContext("runner") {
-    val name by propertyToExprPath
-    val os by propertyToExprPath
-    val arch by propertyToExprPath
-    val temp by propertyToExprPath
-    val tool_cache by propertyToExprPath
-    val workspace by propertyToExprPath
+public object RunnerContext : ExpressionContext("runner") {
+    public val name: String by propertyToExprPath
+    public val os: String by propertyToExprPath
+    public val arch: String by propertyToExprPath
+    public val temp: String by propertyToExprPath
+    public val tool_cache: String by propertyToExprPath
+    public val workspace: String by propertyToExprPath
 }

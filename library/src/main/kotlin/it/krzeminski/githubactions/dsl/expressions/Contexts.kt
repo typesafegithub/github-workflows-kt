@@ -12,9 +12,9 @@ import it.krzeminski.githubactions.dsl.expressions.contexts.SecretsContext
  * https://docs.github.com/en/actions/learn-github-actions/expressions#about-expressions
  * https://docs.github.com/en/actions/learn-github-actions/contexts
  */
-object Contexts : FunctionsContext() {
-    val env = EnvContext
-    val github = GitHubContext
-    val runner = RunnerContext
-    val secrets = SecretsContext
+public object Contexts : FunctionsContext() {
+    public val env: EnvContext = EnvContext
+    public val github: GitHubContext = GitHubContext
+    public val runner: RunnerContext = RunnerContext
+    public val secrets: SecretsContext = SecretsContext
 }

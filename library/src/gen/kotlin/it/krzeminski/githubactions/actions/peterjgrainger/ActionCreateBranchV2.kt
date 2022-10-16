@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.peterjgrainger
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -38,7 +39,7 @@ public class ActionCreateBranchV2(
 ) : ActionWithOutputs<ActionCreateBranchV2.Outputs>("peterjgrainger", "action-create-branch",
         _customVersion ?: "v2.2.0") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             branch?.let { "branch" to it },
             sha?.let { "sha" to it },
@@ -46,7 +47,7 @@ public class ActionCreateBranchV2(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -56,6 +57,6 @@ public class ActionCreateBranchV2(
          */
         public val created: String = "steps.$stepId.outputs.created"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

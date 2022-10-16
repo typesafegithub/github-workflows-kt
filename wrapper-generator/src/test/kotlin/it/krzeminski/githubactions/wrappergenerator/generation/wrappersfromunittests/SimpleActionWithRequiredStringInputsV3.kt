@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
@@ -43,7 +44,7 @@ public class SimpleActionWithRequiredStringInputsV3(
     _customVersion: String? = null,
 ) : Action("john-smith", "simple-action-with-required-string-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
             "baz-goo" to bazGoo,

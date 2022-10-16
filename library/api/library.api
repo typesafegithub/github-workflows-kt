@@ -1002,10 +1002,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequest$Compa
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class it/krzeminski/githubactions/domain/triggers/PullRequest$Serializer : it/krzeminski/githubactions/internal/CaseEnumSerializer {
-	public fun <init> ()V
-}
-
 public final class it/krzeminski/githubactions/domain/triggers/PullRequest$Type : java/lang/Enum {
 	public static final field Assigned Lit/krzeminski/githubactions/domain/triggers/PullRequest$Type;
 	public static final field AutoMergeDisabled Lit/krzeminski/githubactions/domain/triggers/PullRequest$Type;
@@ -1137,10 +1133,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget$Serializer : it/krzeminski/githubactions/internal/CaseEnumSerializer {
-	public fun <init> ()V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget$Type : java/lang/Enum {
@@ -1535,9 +1527,6 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowRun$$seri
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowRun$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public abstract interface annotation class it/krzeminski/githubactions/dsl/GithubActionsDsl : java/lang/annotation/Annotation {
 }
 
 public abstract interface class it/krzeminski/githubactions/dsl/HasCustomArguments {
@@ -2794,31 +2783,15 @@ public final class it/krzeminski/githubactions/dsl/expressions/contexts/Workflow
 	public static final field url Ljava/lang/String;
 }
 
-public class it/krzeminski/githubactions/internal/CaseEnumSerializer : kotlinx/serialization/KSerializer {
-	public fun <init> (Ljava/lang/String;[Ljava/lang/Enum;)V
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Enum;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Enum;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun toString ()Ljava/lang/String;
-}
-
 public abstract interface annotation class it/krzeminski/githubactions/internal/InternalGithubActionsApi : java/lang/annotation/Annotation {
 }
 
 public final class it/krzeminski/githubactions/yaml/CaseKt {
-	public static final fun getPascalCaseRegex ()Lkotlin/text/Regex;
 	public static final fun snakeCaseOf (Ljava/lang/String;)Ljava/lang/String;
 }
 
 public final class it/krzeminski/githubactions/yaml/JobsToYamlKt {
-	public static final fun jobsToYaml (Ljava/util/List;)Ljava/util/Map;
 	public static final fun toYaml (Lit/krzeminski/githubactions/domain/RunnerType;)Ljava/lang/String;
-}
-
-public final class it/krzeminski/githubactions/yaml/StepsToYamlKt {
-	public static final fun stepsToYaml (Ljava/util/List;)Ljava/util/List;
 }
 
 public final class it/krzeminski/githubactions/yaml/ToYamlKt {
@@ -2831,6 +2804,5 @@ public final class it/krzeminski/githubactions/yaml/ToYamlKt {
 public final class it/krzeminski/githubactions/yaml/TriggersToYamlKt {
 	public static final fun toMap (Lit/krzeminski/githubactions/domain/triggers/Trigger;)Ljava/util/Map;
 	public static final fun triggerName (Lit/krzeminski/githubactions/domain/triggers/Trigger;)Ljava/lang/String;
-	public static final fun triggersToYaml (Ljava/util/List;)Ljava/util/Map;
 }
 

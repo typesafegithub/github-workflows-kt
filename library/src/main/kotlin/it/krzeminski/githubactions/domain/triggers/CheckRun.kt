@@ -4,6 +4,6 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CheckRun(
+public data class CheckRun(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()

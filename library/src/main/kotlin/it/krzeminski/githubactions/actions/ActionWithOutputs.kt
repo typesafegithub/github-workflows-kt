@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.actions
 
-abstract class ActionWithOutputs<T>(
+public abstract class ActionWithOutputs<T>(
     override val actionOwner: String,
     override val actionName: String,
     override val actionVersion: String,
@@ -9,5 +9,5 @@ abstract class ActionWithOutputs<T>(
     actionName = actionName,
     actionVersion = actionVersion,
 ) {
-    abstract fun buildOutputObject(stepId: String): T
+    public abstract fun buildOutputObject(stepId: String): T
 }

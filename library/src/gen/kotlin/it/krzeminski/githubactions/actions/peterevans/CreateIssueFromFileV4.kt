@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.peterevans
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
+import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -60,7 +61,7 @@ public class CreateIssueFromFileV4(
 ) : ActionWithOutputs<CreateIssueFromFileV4.Outputs>("peter-evans", "create-issue-from-file",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             token?.let { "token" to it },
             repository?.let { "repository" to it },
@@ -73,7 +74,7 @@ public class CreateIssueFromFileV4(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String) = Outputs(stepId)
+    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         private val stepId: String,
@@ -83,6 +84,6 @@ public class CreateIssueFromFileV4(
          */
         public val issueNumber: String = "steps.$stepId.outputs.issue-number"
 
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
+        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

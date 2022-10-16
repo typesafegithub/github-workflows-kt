@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.sonarsource
 
 import it.krzeminski.githubactions.actions.Action
+import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -39,7 +40,7 @@ public class SonarcloudGithubActionV1(
     _customVersion: String? = null,
 ) : Action("SonarSource", "sonarcloud-github-action", _customVersion ?: "v1.7") {
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments() = linkedMapOf(
+    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             args?.let { "args" to it },
             projectBaseDir?.let { "projectBaseDir" to it },
