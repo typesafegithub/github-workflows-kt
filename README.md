@@ -1,9 +1,11 @@
-# github-workflows-kt 
-
 <!-- maven coordinates -->
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/it.krzeminski/github-actions-kotlin-dsl/badge.svg)](https://maven-badges.herokuapp.com/maven-central/it.krzeminski/github-actions-kotlin-dsl)
 [![Slack channel](https://img.shields.io/badge/chat-slack-blue.svg?logo=slack)](https://kotlinlang.slack.com/messages/github-actions/)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
+
+> [github-workflows-kt](https://github.com/krzema12/github-workflows-kt)
+helps programmers to write Workflows for [GitHub Actions](https://docs.github.com/en/actions)
+using instead of YAML a typesafe language: [Kotlin](https://kotlinlang.org/).
 
 YAMLs and JSONs surround us more and more frequently. While their syntax is simple and they allow defining hierarchical
 data easily, the tendency is also to overuse them for more complicated scenarios where a power of a regular programming

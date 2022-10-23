@@ -1,10 +1,10 @@
 # GitHub Actions Kotlin DSL
 
-## 🧪 Work in progress - "moving fast" phase
+[github-workflows-kt](https://github.com/krzema12/github-workflows-kt) 
+helps programmers to write Workflows for [GitHub Actions](https://docs.github.com/en/actions) 
+using instead of YAML a typesafe language: [Kotlin](https://kotlinlang.org/).
 
-Please expect breaking API changes (they're documented in release notes) and missing features.
-
----
+![carbon(12)](https://user-images.githubusercontent.com/459464/174335482-9e2744e4-332d-490d-9427-6b5ee7d66100.png)
 
 ## 💡 Idea
 
@@ -28,3 +28,7 @@ language with good internal DSL support.
 Here's a detailed presentation of the library by Piotr Krzemiński, along with simple demos:
 
 ![type:video](https://www.youtube.com/embed/jrDQXqQicek)
+
+## 🧪 Work in progress - "moving fast" phase
+
+Please expect breaking API changes (they're documented in release notes) and missing features.
