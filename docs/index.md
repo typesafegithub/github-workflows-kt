@@ -1,4 +1,4 @@
-# GitHub Actions Kotlin DSL
+# Authoring GitHub Actions Workflows in Kotlin instead of YAML
 
 ## 🧪 Work in progress - "moving fast" phase
 
