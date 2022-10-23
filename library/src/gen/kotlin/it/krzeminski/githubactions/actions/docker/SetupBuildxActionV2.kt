@@ -50,6 +50,10 @@ public class SetupBuildxActionV2(
      */
     public val endpoint: String? = null,
     /**
+     * Fixed platforms for current node. If not empty, values take priority over the detected ones
+     */
+    public val platforms: String? = null,
+    /**
      * BuildKit config file
      */
     public val config: String? = null,
@@ -57,6 +61,10 @@ public class SetupBuildxActionV2(
      * Inline BuildKit config
      */
     public val configInline: String? = null,
+    /**
+     * Append additional nodes to the builder
+     */
+    public val append: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -78,8 +86,10 @@ public class SetupBuildxActionV2(
             install?.let { "install" to it.toString() },
             use?.let { "use" to it.toString() },
             endpoint?.let { "endpoint" to it },
+            platforms?.let { "platforms" to it },
             config?.let { "config" to it },
             configInline?.let { "config-inline" to it },
+            append?.let { "append" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
