@@ -82,7 +82,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "cache", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "cache", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "path" to ListOfTypings("\\n"),
@@ -102,7 +102,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "checkout", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "checkout", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "ssh-strict" to BooleanTyping,
@@ -139,7 +139,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "download-artifact", "v2", deprecatedByVersion = "v3")
+        ActionCoords("actions", "download-artifact", "v2")
     ),
     WrapperRequest(
         ActionCoords("actions", "download-artifact", "v3")
@@ -168,7 +168,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-dotnet", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "setup-dotnet", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "include-prerelease" to BooleanTyping,
@@ -200,7 +200,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-java", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "setup-java", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "distribution" to EnumTyping(
@@ -253,7 +253,7 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-node", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "setup-node", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "always-auth" to BooleanTyping,
@@ -275,7 +275,7 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-python", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "setup-python", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv")),
@@ -285,7 +285,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "setup-python", "v3", deprecatedByVersion = "v4"),
+        ActionCoords("actions", "setup-python", "v3"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "cache" to EnumTyping("PackageManager", listOf("pip", "pipenv", "poetry")),
@@ -307,7 +307,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "stale", "v5", deprecatedByVersion = "v6"),
+        ActionCoords("actions", "stale", "v5"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "any-of-issue-labels" to ListOfTypings(","),
@@ -401,7 +401,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("actions", "upload-artifact", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("actions", "upload-artifact", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "path" to ListOfTypings("\\n"),
@@ -599,10 +599,10 @@ val wrappersToGenerate = listOf(
             )
         )
     ),
-    WrapperRequest(ActionCoords("Borales", "actions-yarn", "v2.3.0", deprecatedByVersion = "v3")),
+    WrapperRequest(ActionCoords("Borales", "actions-yarn", "v2.3.0")),
     WrapperRequest(ActionCoords("Borales", "actions-yarn", "v3")),
     WrapperRequest(
-        ActionCoords("cachix", "install-nix-action", "v17", deprecatedByVersion = "v18"),
+        ActionCoords("cachix", "install-nix-action", "v17"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "install_options" to ListOfTypings("\\n")
@@ -662,7 +662,7 @@ val wrappersToGenerate = listOf(
         ),
     ),
     WrapperRequest(
-        ActionCoords("docker", "build-push-action", "v2", deprecatedByVersion = "v3"),
+        ActionCoords("docker", "build-push-action", "v2"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "add-hosts" to ListOfTypings("\\n"),
@@ -711,7 +711,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "login-action", "v1", deprecatedByVersion = "v2"),
+        ActionCoords("docker", "login-action", "v1"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "ecr" to BooleanTyping,
@@ -729,7 +729,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("docker", "setup-buildx-action", "v1", deprecatedByVersion = "v2"),
+        ActionCoords("docker", "setup-buildx-action", "v1"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "driver-opts" to ListOfTypings("\\n"),
@@ -765,7 +765,7 @@ val wrappersToGenerate = listOf(
         )
     ),
     WrapperRequest(
-        ActionCoords("EndBug", "add-and-commit", "v8", deprecatedByVersion = "v9"),
+        ActionCoords("EndBug", "add-and-commit", "v8"),
         TypingsSource.WrapperGenerator(
             mapOf(
                 "default_author" to EnumTyping("DefaultActor", listOf("github_actor", "user_info", "github_actions")),
@@ -1132,5 +1132,5 @@ val wrappersToGenerate = listOf(
     ),
     WrapperRequest(ActionCoords("Vampire", "setup-wsl", "v1"), TypingsSource.ActionTypes),
     WrapperRequest(ActionCoords("w9jds", "firebase-action", "v11.9.0")),
-    WrapperRequest(ActionCoords("w9jds", "firebase-action", "v2.2.2", deprecatedByVersion = "v11.5.0")),
-)
+    WrapperRequest(ActionCoords("w9jds", "firebase-action", "v2.2.2")),
+).addDeprecationInfo()
