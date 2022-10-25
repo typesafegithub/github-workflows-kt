@@ -745,6 +745,7 @@ val wrappersToGenerate = listOf(
                 "driver-opts" to ListOfTypings("\\n"),
                 "install" to BooleanTyping,
                 "use" to BooleanTyping,
+                "platforms" to ListOfTypings(","),
             )
         )
     ),
