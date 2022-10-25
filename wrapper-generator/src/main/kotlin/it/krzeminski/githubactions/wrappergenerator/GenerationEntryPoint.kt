@@ -4,7 +4,6 @@ import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
-import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCacheIfObsolete
@@ -20,7 +19,6 @@ import java.nio.file.Paths
 fun main() {
     checkDuplicateWrappers()
     checkWrappersOrder()
-    println(wrappersToGenerate.suggestDeprecations())
 
     val listOfWrappersInDocs = Paths.get("docs/supported-actions.md")
 
