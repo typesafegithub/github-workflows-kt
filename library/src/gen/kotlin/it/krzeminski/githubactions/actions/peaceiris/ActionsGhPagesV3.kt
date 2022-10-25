@@ -91,7 +91,7 @@ public class ActionsGhPagesV3(
      */
     public val enableJekyll: Boolean? = null,
     /**
-     * An alias for enable_jekyll to disable adding .nojekyll file to master or gh-pages branches
+     * An alias for enable_jekyll to disable adding .nojekyll file to a publishing branch
      */
     public val disableNojekyll: Boolean? = null,
     /**
