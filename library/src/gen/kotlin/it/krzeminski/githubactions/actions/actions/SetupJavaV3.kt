@@ -34,7 +34,7 @@ public class SetupJavaV3(
      */
     public val javaPackage: SetupJavaV3.JavaPackage? = null,
     /**
-     * The architecture of the package
+     * The architecture of the package (defaults to the action runner's architecture)
      */
     public val architecture: String? = null,
     /**
@@ -91,6 +91,16 @@ public class SetupJavaV3(
      */
     public val token: String? = null,
     /**
+     * Name of Maven Toolchain ID if the default name of "${distribution}_${java-version}" is not
+     * wanted. See examples of supported syntax in Advanced Usage file
+     */
+    public val mvnToolchainId: String? = null,
+    /**
+     * Name of Maven Toolchain Vendor if the default name of "${distribution}" is not wanted. See
+     * examples of supported syntax in Advanced Usage file
+     */
+    public val mvnToolchainVendor: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -119,6 +129,8 @@ public class SetupJavaV3(
             cache?.let { "cache" to it.stringValue },
             jobStatus?.let { "job-status" to it },
             token?.let { "token" to it },
+            mvnToolchainId?.let { "mvn-toolchain-id" to it },
+            mvnToolchainVendor?.let { "mvn-toolchain-vendor" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
