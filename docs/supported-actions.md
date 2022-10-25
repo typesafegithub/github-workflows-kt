@@ -100,6 +100,8 @@ Click on a version to see the wrapper's code.
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1: [`CheckGradleVersionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
     * [read-java-properties](https://github.com/madhead/read-java-properties) - latest: [`ReadJavaProperties`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/ReadJavaProperties.kt)
     * [semver-utils](https://github.com/madhead/semver-utils) - v2: [`SemverUtilsV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt)
+* mi-kas
+    * [kover-report](https://github.com/mi-kas/kover-report) - v1: [`KoverReportV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/mikas/KoverReportV1.kt)
 * microsoft
     * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1: [`SetupMsbuildV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/microsoft/SetupMsbuildV1.kt)
 * nobrayner
@@ -139,5 +141,5 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 80
-* counting each version separately: 97
+* counting by actions: 81
+* counting each version separately: 98
