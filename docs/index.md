@@ -1,4 +1,4 @@
-# GitHub Actions Kotlin DSL
+# GitHub Workflows Kt
 
 ## 🧪 Work in progress - "moving fast" phase
 
