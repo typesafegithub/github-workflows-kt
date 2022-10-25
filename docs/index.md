@@ -1,4 +1,4 @@
-# Authoring GitHub Actions Workflows in Kotlin instead of YAML
+# GitHub Workflows Kt
 
 ## 🧪 Work in progress - "moving fast" phase
 
