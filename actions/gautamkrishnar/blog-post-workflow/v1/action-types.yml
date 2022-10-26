@@ -1,0 +1,81 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  gh_token:
+    type: string
+  readme_path:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  max_post_count:
+    type: integer
+  feed_list:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  disable_sort:
+    type: boolean
+  filter_comments:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  tag_post_pre_newline:
+    type: boolean
+  template:
+    type: string
+  date_format:
+    type: string
+  comment_tag_name:
+    type: string
+  user_agent:
+    type: string
+  accept_header:
+    type: string
+  custom_tags:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  title_max_length:
+    type: integer
+  description_max_length:
+    type: integer
+  item_exec:
+    type: string
+  commit_message:
+    type: string
+  committer_username:
+    type: string
+  committer_email:
+    type: string
+  output_only:
+    type: boolean
+  enable_keepalive:
+    type: boolean
+  retry_count:
+    type: integer
+  retry_wait_time:
+    type: integer
+  feed_names:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  disable_html_encoding:
+    type: boolean
+  categories_template:
+    type: string
+  disable_item_validation:
+    type: boolean
+  filter_dates:
+    type: string
+  rand_seed:
+    type: string
+  remove_duplicates:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  results:
+    type: string

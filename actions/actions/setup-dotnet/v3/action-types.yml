@@ -1,0 +1,24 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  dotnet-version:
+    type: string
+  dotnet-quality:
+    type: enum
+    allowed-values:
+    - daily
+    - signed
+    - validated
+    - preview
+    - ga
+  global-json-file:
+    type: string
+  source-url:
+    type: string
+  owner:
+    type: string
+  config-file:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  dotnet-version:
+    type: string
