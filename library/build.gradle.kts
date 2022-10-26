@@ -8,7 +8,7 @@ plugins {
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.12.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.12.1"
 }
 
 group = "it.krzeminski"
