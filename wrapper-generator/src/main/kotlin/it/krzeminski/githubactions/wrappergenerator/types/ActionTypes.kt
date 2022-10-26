@@ -82,7 +82,7 @@ fun ActionType.validateType() {
     }
 }
 
-fun WrapperRequest.toActionTypes(metadataFile: File): ActionTypes {
+private fun WrapperRequest.toActionTypes(metadataFile: File): ActionTypes {
     check(metadataFile.canRead()) { "Can't read ${metadataFile.canonicalFile}" }
     val metadata: Metadata = myYaml.decodeFromString(metadataFile.readText())
     val inputTypings = this.provideTypes()

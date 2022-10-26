@@ -2,51 +2,33 @@ package it.krzeminski.githubactions.wrappergenerator.types
 
 import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
-import it.krzeminski.githubactions.wrappergenerator.metadata.actionYamlDir
-import it.krzeminski.githubactions.wrappergenerator.metadata.gitHubUrl
-import it.krzeminski.githubactions.wrappergenerator.metadata.yamlName
 import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
-import java.io.File
+import java.nio.file.Path
 
-private val actionTypesDir = File("generated-action-types")
+private val actionsDir = Path.of("actions")
 
 fun main() {
-    actionTypesDir.deleteRecursively()
-    actionTypesDir.mkdir()
-    val wrapperRequests = wrappersToGenerate
-        .filter { it.typingsSource is TypingsSource.WrapperGenerator }
+    actionsDir.toFile().deleteRecursively()
 
-    wrapperRequests
-        .forEach { it.generateActionTypes() }
+    wrappersToGenerate
+        .forEach { it.generateActionTypesYaml() }
+
     println("All action types generated")
-
-    val readme = actionTypesDir.resolve("README.md").canonicalFile
-    readme.writeText(generateReadme(wrapperRequests))
-    println("See $readme")
 }
 
-fun WrapperRequest.generateActionTypes() {
-    println("Generating ${actionTypesDir.resolve(fileName())} from ${actionYamlDir.resolve(fileName())}")
-    val metadataFile = actionYamlDir.resolve(fileName())
-    actionTypesDir.resolve(fileName()).writeText(toYaml(metadataFile))
-}
-
-fun generateReadme(wrappersToGenerate: List<WrapperRequest>): String {
-    val lines = wrappersToGenerate.joinToString(separator = "") {
-        val yamlName = it.actionCoords.yamlName
-        "| [$yamlName](${it.fileName()}) | ${it.actionCoords.gitHubUrl}|\n"
+fun WrapperRequest.generateActionTypesYaml() {
+    println("Generating for ${this.actionCoords}")
+    val baseDir = this.pathToActionDataDir()
+    baseDir.toFile().mkdirs()
+    if (typingsSource == TypingsSource.ActionTypes) {
+        baseDir.resolve("typings-hosted-by-action").toFile().createNewFile()
+    } else {
+        val metadataFile = Path.of("build").resolve("action-yaml")
+            .resolve("${this.actionCoords.owner}-${this.actionCoords.name}-${this.actionCoords.version}.yml").toFile()
+        baseDir.resolve("action-types.yml").toFile().writeText(toYaml(metadataFile))
     }
-
-    return """
-        # Types for GitHub Actions
-
-        See https://github.com/krzema12/github-actions-typing
-
-        | File         | Repository|
-        |--------------|-----------|
-    """.trimIndent() + "\n" + lines
 }
 
-private fun WrapperRequest.fileName(): String = with(actionCoords) {
-    "$owner-$name-$version.yml"
+private fun WrapperRequest.pathToActionDataDir(): Path = with(actionCoords) {
+    actionsDir.resolve(owner).resolve(name).resolve(version)
 }

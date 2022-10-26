@@ -1,0 +1,17 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  vswhere-path:
+    type: string
+  vs-version:
+    type: string
+  vs-prerelease:
+    type: boolean
+  msbuild-architecture:
+    type: enum
+    allowed-values:
+    - x86
+    - x64
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  msbuildPath:
+    type: string
