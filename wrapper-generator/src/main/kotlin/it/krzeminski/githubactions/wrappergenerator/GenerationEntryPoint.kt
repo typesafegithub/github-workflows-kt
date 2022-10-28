@@ -5,7 +5,6 @@ import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
-import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.types.deleteActionTypesYamlCacheIfObsolete
@@ -17,8 +16,6 @@ import java.nio.file.Paths
  * Either run this main() function or run this command: ./gradlew :wrapper-generator:run
  */
 fun main() {
-    checkDuplicateWrappers()
-
     val listOfWrappersInDocs = Paths.get("docs/supported-actions.md")
 
     // To ensure there are no leftovers from previous generations.
@@ -90,11 +87,3 @@ private fun ActionCoords.toMarkdownLinkToKotlinCode() =
 
 private fun ActionCoords.toMarkdownLinkGithub() =
     "[$name](https://github.com/$owner/$name)"
-
-private fun checkDuplicateWrappers() {
-    val duplicateWrappers =
-        wrappersToGenerate.groupBy { it.actionCoords.actionYmlUrl }
-            .filterValues { it.size != 1 }
-            .keys
-    require(duplicateWrappers.isEmpty()) { "Duplicate wrappers requests: $duplicateWrappers" }
-}
