@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.29.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.30.0")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
@@ -9,7 +9,6 @@ import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 
 workflow(
@@ -22,7 +21,7 @@ workflow(
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
-            id = "build-for-${runnerType.toYaml()}",
+            id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
             uses(CheckoutV3())
