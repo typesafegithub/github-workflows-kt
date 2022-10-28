@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCac
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.types.deleteActionTypesYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
+import it.krzeminski.githubactions.wrappergenerator.versions.Version
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -63,7 +64,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
                 ownedActions
                     .groupBy { it.name }
                     .forEach { (_, versions) ->
-                        val kotlinClasses = versions.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
+                        val kotlinClasses = versions.sortedBy { Version(it.version) }.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
                         writer.println("    * ${versions.first().toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
