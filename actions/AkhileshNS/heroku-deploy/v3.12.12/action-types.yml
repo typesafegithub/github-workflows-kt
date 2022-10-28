@@ -18,6 +18,7 @@ inputs:
     type: boolean
   docker_heroku_process_type:
     type: enum
+    name: HerokuProcessType
     allowed-values:
     - web
     - worker

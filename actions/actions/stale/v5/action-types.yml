@@ -16,16 +16,19 @@ inputs:
     type: string
   days-before-pr-stale:
     type: integer
+    name: Days
     named-values:
       Never: -1
   days-before-close:
     type: integer
   days-before-issue-close:
     type: integer
+    name: Days
     named-values:
       Never: -1
   days-before-pr-close:
     type: integer
+    name: Days
     named-values:
       Never: -1
   stale-issue-label:

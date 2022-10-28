@@ -30,6 +30,7 @@ data class ActionTypes(
 @Serializable
 data class ActionType(
     val type: ActionTypeEnum,
+    val name: String? = null,
     @SerialName("named-values")
     val namedValues: Map<String, Int> = emptyMap(),
     val separator: String = "",

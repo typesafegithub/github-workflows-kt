@@ -8,6 +8,7 @@ inputs:
     type: boolean
   msbuild-architecture:
     type: enum
+    name: Architecture
     allowed-values:
     - x86
     - x64

@@ -47,7 +47,10 @@ data class EnumTyping(
             .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
             .addTypes(
                 this.items.map {
-                    TypeSpec.objectBuilder(itemsNameMap[it] ?: error("FIXME: key=$it absent from $itemsNameMap"))
+                    val itemName = itemsNameMap[it]?.let {
+                        if (it == "Custom") "CustomEnum" else it
+                    } ?: error("FIXME: key=$it absent from $itemsNameMap")
+                    TypeSpec.objectBuilder(itemName)
                         .superclass(sealedClassName)
                         .addSuperclassConstructorParameter("%S", it)
                         .build()

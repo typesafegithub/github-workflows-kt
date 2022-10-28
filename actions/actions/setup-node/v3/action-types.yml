@@ -18,6 +18,7 @@ inputs:
     type: string
   cache:
     type: enum
+    name: PackageManager
     allowed-values:
     - npm
     - yarn

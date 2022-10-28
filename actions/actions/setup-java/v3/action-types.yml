@@ -42,6 +42,7 @@ inputs:
     type: string
   cache:
     type: enum
+    name: BuildPlatform
     allowed-values:
     - maven
     - gradle

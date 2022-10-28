@@ -4,6 +4,7 @@ inputs:
     type: string
   dotnet-quality:
     type: enum
+    name: DotNetQuality
     allowed-values:
     - daily
     - signed
