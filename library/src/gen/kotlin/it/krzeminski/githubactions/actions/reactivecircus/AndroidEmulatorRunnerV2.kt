@@ -79,7 +79,8 @@ public class AndroidEmulatorRunnerV2(
      */
     public val disableAnimations: Boolean? = null,
     /**
-     * whether to disable spellchecker - `true` or `false`
+     * whether to disable the Android spell checker framework, a common source of flakiness in text
+     * fields - `true` or `false`
      */
     public val disableSpellchecker: Boolean? = null,
     /**
@@ -117,6 +118,11 @@ public class AndroidEmulatorRunnerV2(
      */
     public val script: String,
     /**
+     * custom script to run after creating the AVD and before launching the emulator - e.g.
+     * `./adjust-emulator-configs.sh`
+     */
+    public val preEmulatorLaunchScript: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -151,6 +157,7 @@ public class AndroidEmulatorRunnerV2(
             cmake?.let { "cmake" to it },
             channel?.let { "channel" to it.stringValue },
             "script" to script,
+            preEmulatorLaunchScript?.let { "pre-emulator-launch-script" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
