@@ -75,7 +75,7 @@ Click on a version to see the wrapper's code.
 * entrostat
     * [git-secret-action](https://github.com/entrostat/git-secret-action) - v3.3.0: [`GitSecretActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/entrostat/GitSecretActionV3.kt)
 * ericcornelissen
-    * [git-tag-annotation-action](https://github.com/ericcornelissen/git-tag-annotation-action) - v2: [`GitTagAnnotationActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/ericcornelissen/GitTagAnnotationActionV2.kt)
+    * [git-tag-annotation-action](https://github.com/ericcornelissen/git-tag-annotation-action) - v2 ✅: [`GitTagAnnotationActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/ericcornelissen/GitTagAnnotationActionV2.kt)
 * gautamkrishnar
     * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - v1: [`BlogPostWorkflowV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
 * google-github-actions
@@ -95,13 +95,13 @@ Click on a version to see the wrapper's code.
 * julia-actions
     * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/juliaactions/SetupJuliaV1.kt)
 * krzema12
-    * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt)
+    * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt)
 * madhead
-    * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1: [`CheckGradleVersionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
-    * [read-java-properties](https://github.com/madhead/read-java-properties) - latest: [`ReadJavaProperties`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/ReadJavaProperties.kt)
-    * [semver-utils](https://github.com/madhead/semver-utils) - v2: [`SemverUtilsV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt)
+    * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1 ✅: [`CheckGradleVersionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
+    * [read-java-properties](https://github.com/madhead/read-java-properties) - latest ✅: [`ReadJavaProperties`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/ReadJavaProperties.kt)
+    * [semver-utils](https://github.com/madhead/semver-utils) - v2 ✅: [`SemverUtilsV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt)
 * mi-kas
-    * [kover-report](https://github.com/mi-kas/kover-report) - v1: [`KoverReportV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/mikas/KoverReportV1.kt)
+    * [kover-report](https://github.com/mi-kas/kover-report) - v1 ✅: [`KoverReportV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/mikas/KoverReportV1.kt)
 * microsoft
     * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1: [`SetupMsbuildV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/microsoft/SetupMsbuildV1.kt)
 * nobrayner
@@ -115,7 +115,7 @@ Click on a version to see the wrapper's code.
 * peterjgrainger
     * [action-create-branch](https://github.com/peterjgrainger/action-create-branch) - v2.2.0: [`ActionCreateBranchV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/peterjgrainger/ActionCreateBranchV2.kt)
 * ReactiveCircus
-    * [android-emulator-runner](https://github.com/ReactiveCircus/android-emulator-runner) - v2: [`AndroidEmulatorRunnerV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reactivecircus/AndroidEmulatorRunnerV2.kt)
+    * [android-emulator-runner](https://github.com/ReactiveCircus/android-emulator-runner) - v2 ✅: [`AndroidEmulatorRunnerV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reactivecircus/AndroidEmulatorRunnerV2.kt)
 * repo-sync
     * [pull-request](https://github.com/repo-sync/pull-request) - v2: [`PullRequestV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/reposync/PullRequestV2.kt)
 * ruby
@@ -133,7 +133,7 @@ Click on a version to see the wrapper's code.
 * supercharge
     * [mongodb-github-action](https://github.com/supercharge/mongodb-github-action) - v1: [`MongodbGithubActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/supercharge/MongodbGithubActionV1.kt)
 * Vampire
-    * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1: [`SetupWslV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV1.kt)
+    * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1 ✅: [`SetupWslV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV1.kt)
 * w9jds
     * [firebase-action](https://github.com/w9jds/firebase-action) - v2.2.2: [`FirebaseActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/w9jds/FirebaseActionV2.kt), v11.9.0: [`FirebaseActionV11`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/w9jds/FirebaseActionV11.kt)
 
@@ -143,3 +143,5 @@ Number of wrappers available:
 
 * counting by actions: 81
 * counting each version separately: 98
+
+Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 8
