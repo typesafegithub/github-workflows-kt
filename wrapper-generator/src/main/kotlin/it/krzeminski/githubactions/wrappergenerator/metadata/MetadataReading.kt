@@ -48,8 +48,6 @@ val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
 val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
 
-val ActionCoords.yamlName: String get() = "$owner/$name@$version"
-
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
     val cacheFile = actionYamlDir.resolve("$owner-$name-$version.yml")
     if (cacheFile.canRead()) {
