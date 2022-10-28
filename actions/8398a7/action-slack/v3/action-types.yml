@@ -21,6 +21,7 @@ inputs:
     separator: ','
     list-item:
       type: enum
+      name: MentionStatus
       allowed-values:
       - success
       - failure

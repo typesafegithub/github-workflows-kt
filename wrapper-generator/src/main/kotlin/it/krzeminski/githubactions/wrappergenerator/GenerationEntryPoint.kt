@@ -18,7 +18,6 @@ import java.nio.file.Paths
  */
 fun main() {
     checkDuplicateWrappers()
-    checkWrappersOrder()
 
     val listOfWrappersInDocs = Paths.get("docs/supported-actions.md")
 
@@ -98,16 +97,4 @@ private fun checkDuplicateWrappers() {
             .filterValues { it.size != 1 }
             .keys
     require(duplicateWrappers.isEmpty()) { "Duplicate wrappers requests: $duplicateWrappers" }
-}
-
-private fun checkWrappersOrder() {
-    val sortedWrappers = wrappersToGenerate.sortedBy { it.actionCoords.actionYmlUrl.lowercase() }
-    require(wrappersToGenerate == sortedWrappers) {
-        val firstNonMatchingRequest = (wrappersToGenerate zip sortedWrappers).first { it.first != it.second }
-        """Please sort the wrappers according to their owner, name and version.
-           First non-matching request:
-           - in current: ${firstNonMatchingRequest.first.actionCoords}
-           - in desired: ${firstNonMatchingRequest.second.actionCoords}
-        """
-    }
 }

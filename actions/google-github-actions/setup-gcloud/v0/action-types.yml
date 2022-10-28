@@ -13,6 +13,7 @@ inputs:
     separator: ','
     list-item:
       type: enum
+      name: Component
       allowed-values:
       - alpha
       - anthos-auth

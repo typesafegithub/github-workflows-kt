@@ -72,7 +72,7 @@ private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetch
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
 
-private fun ActionTypes.toTypesMap(): Map<String, Typing> {
+internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
     return inputs.mapValues { (key, value) ->
         value.toTyping(key)
     }
@@ -87,7 +87,7 @@ private fun ActionType.toTyping(fieldName: String): Typing =
                 IntegerTyping
             } else {
                 IntegerWithSpecialValueTyping(
-                    fieldName.toPascalCase(),
+                    typeName = name?.toPascalCase() ?: fieldName.toPascalCase(),
                     this.namedValues.mapKeys { (key, _) -> key.toPascalCase() }
                 )
             }
@@ -99,7 +99,7 @@ private fun ActionType.toTyping(fieldName: String): Typing =
         )
         ActionTypeEnum.Enum -> EnumTyping(
             items = allowedValues,
-            typeName = fieldName.toPascalCase(),
+            typeName = name?.toPascalCase() ?: fieldName.toPascalCase(),
         )
     }
 

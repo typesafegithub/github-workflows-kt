@@ -15,6 +15,7 @@ inputs:
       type: string
   result-encoding:
     type: enum
+    name: Encoding
     allowed-values:
     - string
     - json

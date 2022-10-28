@@ -4,6 +4,7 @@ inputs:
     type: string
   arch:
     type: enum
+    name: Architecture
     allowed-values:
     - x64
     - x86

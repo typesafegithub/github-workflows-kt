@@ -65,6 +65,7 @@ inputs:
     type: string
   os:
     type: enum
+    name: OperatingSystem
     allowed-values:
     - alpine
     - linux
