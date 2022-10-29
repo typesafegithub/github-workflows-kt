@@ -42,7 +42,7 @@ workflow(
             name = "Create issue",
             action = CreateIssueFromFileV4(
                 title = "Updates available",
-                contentFilepath = "wrapper-generator/build/suggestVersions.md",
+                contentFilepath = "build/suggestVersions.md",
             )
         )
     }
