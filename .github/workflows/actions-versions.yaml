@@ -50,4 +50,4 @@ jobs:
       uses: peter-evans/create-issue-from-file@v4
       with:
         title: Updates available
-        content-filepath: wrapper-generator/build/suggestVersions.md
+        content-filepath: build/suggestVersions.md
