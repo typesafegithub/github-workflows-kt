@@ -16,7 +16,7 @@ There's also a designated template for it, and the rule of checking if the reque
 
 Apart from filing an issue using the template, we strongly encourage you to:
 * ask the owner to provide the typings using https://github.com/krzema12/github-actions-typing - it greatly limits the amount of work needed in this DSL library, both when adding and maintaining support for actions. For inspiration how such request could look, see https://github.com/madhead/read-java-properties/issues/36
-* create a PR that adds support for the action. Start by modifying [wrapper-generator/.../WrappersToGenerate.kt](https://github.com/krzema12/github-workflows-kt/blob/main/wrapper-generator/src/main/kotlin/it/krzeminski/githubactions/wrappergenerator/WrappersToGenerate.kt) and then running `./gradlew :wrapper-generator:run` to (re)generate various files
+* create a PR that adds support for the action. Start by adding an appropriate file to the [actions](actions) directory and then running `./gradlew :wrapper-generator:run` to (re)generate various files
 
 ## Contributing a feature
 
