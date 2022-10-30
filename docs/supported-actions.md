@@ -56,6 +56,8 @@ Click on a version to see the wrapper's code.
     * [npm-install](https://github.com/bahmutov/npm-install) - v1: [`NpmInstallV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/bahmutov/NpmInstallV1.kt)
 * Borales
     * [actions-yarn](https://github.com/Borales/actions-yarn) - v2.3.0: [`ActionsYarnV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV2.kt), v3: [`ActionsYarnV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV3.kt)
+* c2corg
+    * [browserslist-update-action](https://github.com/c2corg/browserslist-update-action) - v2 ✅: [`BrowserslistUpdateActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/c2corg/BrowserslistUpdateActionV2.kt)
 * cachix
     * [install-nix-action](https://github.com/cachix/install-nix-action) - v17: [`InstallNixActionV17`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV17.kt), v18: [`InstallNixActionV18`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV18.kt)
 * calibreapp
@@ -141,7 +143,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 81
-* counting each version separately: 98
+* counting by actions: 82
+* counting each version separately: 99
 
-Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 8
+Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 9
