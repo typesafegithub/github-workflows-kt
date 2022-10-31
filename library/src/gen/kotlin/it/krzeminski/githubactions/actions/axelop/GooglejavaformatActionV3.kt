@@ -33,7 +33,8 @@ public class GooglejavaformatActionV3(
      */
     public val filesExcluded: String? = null,
     /**
-     * Set to true to not commit the changes
+     * By default, this action commits any change made to the files. Set to "true" to skip this
+     * commit.
      */
     public val skipCommit: Boolean? = null,
     /**
@@ -41,11 +42,11 @@ public class GooglejavaformatActionV3(
      */
     public val version: String? = null,
     /**
-     * Recommended on MacOS machines
+     * If provided, will be used to authenticate the calls to the GitHub API.
      */
     public val githubToken: String? = null,
     /**
-     * Commit message
+     * This message will be used for commits made by this action
      */
     public val commitMessage: String? = null,
     /**
@@ -64,10 +65,10 @@ public class GooglejavaformatActionV3(
             args?.let { "args" to it },
             files?.let { "files" to it },
             filesExcluded?.let { "files-excluded" to it },
-            skipCommit?.let { "skipCommit" to it.toString() },
+            skipCommit?.let { "skip-commit" to it.toString() },
             version?.let { "version" to it },
-            githubToken?.let { "githubToken" to it },
-            commitMessage?.let { "commitMessage" to it },
+            githubToken?.let { "github-token" to it },
+            commitMessage?.let { "commit-message" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

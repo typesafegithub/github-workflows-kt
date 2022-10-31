@@ -6,11 +6,11 @@ inputs:
     type: string
   files-excluded:
     type: string
-  skipCommit:
+  skip-commit:
     type: boolean
   version:
     type: string
-  githubToken:
+  github-token:
     type: string
-  commitMessage:
+  commit-message:
     type: string
