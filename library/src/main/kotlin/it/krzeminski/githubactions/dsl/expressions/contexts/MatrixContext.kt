@@ -4,17 +4,32 @@ import it.krzeminski.githubactions.dsl.expressions.expr
 import kotlin.reflect.KProperty
 
 
-public open class StrategyMatrix(
-    private val map: MutableMap<String, List<String>> = mutableMapOf()
-): Map<String, List<String>> by map {
+public open class StrategyMatrix {
+    public val stringsMap: MutableMap<String, List<String>> = mutableMapOf()
+    public val objectsMap: MutableMap<String, List<Map<String, String>>> = mutableMapOf()
 
-    public fun iterate(vararg value: String): Property {
+    // TODO: include, exclude https://github.com/krzema12/github-workflows-kt/issues/297
+
+    public fun strings(vararg value: String): Property {
         return Property(value.toList())
     }
 
-    public inner class Property(public val values: List<String>) {
+    public fun integers(vararg value: Int): Property {
+        return Property(value.map { it.toString() })
+    }
+
+    public fun objects(vararg value: Map<String, String>): Property {
+        return Property(emptyList(), value.toList())
+    }
+
+    public inner class Property(public val strings: List<String>, public val objects: List<Map<String, String>> = emptyList()) {
         public operator fun getValue(strategyMatrixContext: StrategyMatrix, property: KProperty<*>): String {
-            map[property.name] = values
+            if (strings.isNotEmpty()) {
+                stringsMap[property.name] = strings
+            }
+            if (objects.isNotEmpty()) {
+                objectsMap[property.name] = objects
+            }
             return expr("matrix.${property.name}")
         }
     }
