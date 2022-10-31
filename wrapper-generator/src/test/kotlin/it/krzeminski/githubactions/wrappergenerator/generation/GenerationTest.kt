@@ -248,6 +248,35 @@ class GenerationTest : FunSpec({
         wrapper.shouldMatchFile("DeprecatedActionV2.kt")
     }
 
+    test("action with deprecated input resolving to the same Kotlin field name") {
+        // given
+        val actionManifest = Metadata(
+            inputs = mapOf(
+                "foo-bar" to Input(
+                    description = "Foo bar - old",
+                    required = true,
+                    default = null,
+                    deprecationMessage = "Use 'fooBar'!"
+                ),
+                "fooBar" to Input(
+                    description = "Foo bar - new",
+                    required = true,
+                    default = null,
+                ),
+            ),
+            name = "Some Action",
+            description = "Description",
+        )
+
+        val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
+
+        // when
+        val wrapper = coords.generateWrapper { actionManifest }
+
+        // then
+        wrapper.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
+    }
+
     test("action with ListOfTypings") {
         // given
         val actionManifest = Metadata(
