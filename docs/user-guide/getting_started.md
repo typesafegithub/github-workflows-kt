@@ -28,12 +28,11 @@ names with your own.
 
    @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:[[ version ]]")
 
-   import it.krzeminski.githubactions.actions.actions.CheckoutV2
+   import it.krzeminski.githubactions.actions.actions.CheckoutV3
    import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
    import it.krzeminski.githubactions.domain.triggers.Push
    import it.krzeminski.githubactions.dsl.workflow
    import it.krzeminski.githubactions.yaml.toYaml
-   import java.nio.file.Paths
 
    val workflow = workflow(
        name = "Test workflow",
@@ -41,7 +40,7 @@ names with your own.
        sourceFile = __FILE__.toPath(),
    ) {
        job(id = "test_job", runsOn = UbuntuLatest) {
-           uses(name = "Check out", action = CheckoutV2())
+           uses(name = "Check out", action = CheckoutV3())
            run(name = "Print greeting", command = "echo 'Hello world!'")
        }
    }
