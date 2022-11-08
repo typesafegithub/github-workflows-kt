@@ -6,8 +6,8 @@ plugins {
 }
 
 dependencies {
-    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.7.20"))
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.7.21"))
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21")
     implementation("org.jetbrains.kotlin:kotlin-serialization")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.21.0")
