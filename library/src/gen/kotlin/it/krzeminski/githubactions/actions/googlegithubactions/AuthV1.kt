@@ -1,14 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -25,11 +22,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/google-github-actions/auth)
  */
-@Deprecated(
-    message = "This action has a newer major version: AuthV1",
-    replaceWith = ReplaceWith("AuthV1"),
-)
-public class AuthV0(
+public class AuthV1(
     /**
      * ID of the default project to use for future API calls and invocations. If
      * unspecified, this action will attempt to extract the value from other
@@ -94,7 +87,7 @@ public class AuthV0(
      * tokens, specify "access_token". For OIDC tokens, specify "id_token". To
      * skip token generation, leave this value empty.
      */
-    public val tokenFormat: AuthV0.TokenFormat? = null,
+    public val tokenFormat: AuthV1.TokenFormat? = null,
     /**
      * List of additional service account emails or unique identities to use for
      * impersonation in the chain.
@@ -159,7 +152,7 @@ public class AuthV0(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
+) : ActionWithOutputs<AuthV1.Outputs>("google-github-actions", "auth", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -190,13 +183,13 @@ public class AuthV0(
     public sealed class TokenFormat(
         public val stringValue: String,
     ) {
-        public object AccessToken : AuthV0.TokenFormat("access_token")
+        public object AccessToken : AuthV1.TokenFormat("access_token")
 
-        public object IdToken : AuthV0.TokenFormat("id_token")
+        public object IdToken : AuthV1.TokenFormat("id_token")
 
         public class Custom(
             customStringValue: String,
-        ) : AuthV0.TokenFormat(customStringValue)
+        ) : AuthV1.TokenFormat(customStringValue)
     }
 
     public class Outputs(
