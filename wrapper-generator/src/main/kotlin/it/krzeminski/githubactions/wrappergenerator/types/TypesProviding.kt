@@ -23,10 +23,15 @@ import java.net.URI
 import java.nio.file.Path
 import java.time.LocalDate
 
-fun WrapperRequest.provideTypes(fetchUri: (URI) -> String = ::fetchUri): Map<String, Typing> =
+fun WrapperRequest.provideTypes(
+    fetchUri: (URI) -> String = ::fetchUri,
+    getCommitHash: (ActionCoords) -> String = ::getCommitHash,
+): Map<String, Typing> =
     when (typingsSource) {
         is TypingsSource.WrapperGenerator -> typingsSource.inputTypings
-        TypingsSource.ActionTypes -> this@provideTypes.actionCoords.fetchTypingMetadata(fetchUri).toTypesMap()
+        TypingsSource.ActionTypes ->
+            this@provideTypes.actionCoords
+                .fetchTypingMetadata(fetchUri, getCommitHash).toTypesMap()
     }
 
 val actionTypesYamlDir = File("build/action-types-yaml")
@@ -47,14 +52,17 @@ private fun ActionCoords.actionTypesYmlUrl(gitRef: String) = "https://raw.github
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yaml"
 
-private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetchUri): ActionTypes {
+private fun ActionCoords.fetchTypingMetadata(
+    fetchUri: (URI) -> String = ::fetchUri,
+    getCommitHash: (ActionCoords) -> String = ::getCommitHash,
+): ActionTypes {
     val cacheFile = actionTypesYamlDir.resolve("$owner-$name-$version.yml")
     if (cacheFile.canRead()) {
         println("  ... types from cache: $cacheFile")
         return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
     }
 
-    val commitHash = Path.of("actions", owner, name, version, "commit-hash.txt").toFile().readText()
+    val commitHash = getCommitHash(this)
     val list = listOf(actionTypesYmlUrl(commitHash), actionTypesYamlUrl(commitHash))
     val typesMetadataYaml = list.firstNotNullOfOrNull { url ->
         try {
@@ -69,6 +77,10 @@ private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetch
     cacheFile.writeText(typesMetadataYaml)
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
+
+internal fun getCommitHash(actionCoords: ActionCoords) =
+    Path.of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "commit-hash.txt")
+        .toFile().readText()
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
     return inputs.mapValues { (key, value) ->
