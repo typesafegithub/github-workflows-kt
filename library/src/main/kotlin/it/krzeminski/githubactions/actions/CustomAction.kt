@@ -4,7 +4,7 @@ package it.krzeminski.githubactions.actions
  * CustomAction can be used when there is no type-safe wrapper action
  * and a quickly untyped wrapper is needed to fill the blank.
  *
- * Consider contributing a proper wrapper to the library, see WrappersToGenerate.kt in wrapper-generator module.
+ * Consider adding first-class support for your action! See CONTRIBUTING.md.
  */
 public class CustomAction(
     override val actionOwner: String,

@@ -1,11 +1,14 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -22,6 +25,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/google-github-actions/auth)
  */
+@Deprecated(
+    message = "This action has a newer major version: AuthV1",
+    replaceWith = ReplaceWith("AuthV1"),
+)
 public class AuthV0(
     /**
      * ID of the default project to use for future API calls and invocations. If

@@ -26,6 +26,14 @@ tasks.run.configure {
 tasks.register<JavaExec>("suggestVersions") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("it.krzeminski.githubactions.wrappergenerator.versions.SuggestVersionsKt")
+    workingDir = rootDir
+    dependsOn(tasks.compileKotlin)
+}
+
+tasks.register<JavaExec>("updateCommitHashes") {
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("it.krzeminski.githubactions.wrappergenerator.updating.UpdateCommitHashesKt")
+    workingDir = rootDir
     dependsOn(tasks.compileKotlin)
 }
 

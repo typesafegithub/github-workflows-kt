@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.29.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.30.0")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
@@ -42,7 +42,7 @@ workflow(
             name = "Create issue",
             action = CreateIssueFromFileV4(
                 title = "Updates available",
-                contentFilepath = "wrapper-generator/build/suggestVersions.md",
+                contentFilepath = "build/suggestVersions.md",
             )
         )
     }

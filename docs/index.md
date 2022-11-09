@@ -1,4 +1,4 @@
-# GitHub Actions Kotlin DSL
+# GitHub Workflows Kt
 
 [github-workflows-kt](https://github.com/krzema12/github-workflows-kt) 
 helps programmers to write Workflows for [GitHub Actions](https://docs.github.com/en/actions) 

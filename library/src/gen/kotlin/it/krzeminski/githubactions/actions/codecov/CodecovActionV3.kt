@@ -199,7 +199,7 @@ public class CodecovActionV3(
 
         public object Linux : CodecovActionV3.OperatingSystem("linux")
 
-        public object MacOs : CodecovActionV3.OperatingSystem("macos")
+        public object Macos : CodecovActionV3.OperatingSystem("macos")
 
         public object Windows : CodecovActionV3.OperatingSystem("windows")
 

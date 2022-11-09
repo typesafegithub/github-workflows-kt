@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.29.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.30.0")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
@@ -18,7 +18,6 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
-        Schedule(triggers = listOf(Cron(hour = "1", minute = "0"))),
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),

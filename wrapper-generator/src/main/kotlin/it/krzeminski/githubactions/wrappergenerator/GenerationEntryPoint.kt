@@ -2,15 +2,16 @@ package it.krzeminski.githubactions.wrappergenerator
 
 import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
+import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
-import it.krzeminski.githubactions.wrappergenerator.generation.suggestDeprecations
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
-import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.types.deleteActionTypesYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
+import it.krzeminski.githubactions.wrappergenerator.versions.Version
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -18,10 +19,6 @@ import java.nio.file.Paths
  * Either run this main() function or run this command: ./gradlew :wrapper-generator:run
  */
 fun main() {
-    checkDuplicateWrappers()
-    checkWrappersOrder()
-    println(wrappersToGenerate.suggestDeprecations())
-
     val listOfWrappersInDocs = Paths.get("docs/supported-actions.md")
 
     // To ensure there are no leftovers from previous generations.
@@ -62,17 +59,24 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
         )
 
         wrappersToGenerate
-            .map { it.actionCoords }
-            .groupBy { it.owner }
+            .groupBy { it.actionCoords.owner }
             .forEach { (owner, ownedActions) ->
                 writer.println("* $owner")
                 ownedActions
-                    .groupBy { it.name }
+                    .groupBy { it.actionCoords.name }
                     .forEach { (_, versions) ->
-                        val kotlinClasses = versions.joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
-                        writer.println("    * ${versions.first().toMarkdownLinkGithub()} - $kotlinClasses")
+                        val kotlinClasses = versions
+                            .sortedBy { Version(it.actionCoords.version) }
+                            .joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
+                        writer.println("    * ${versions.first().actionCoords.toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
+
+        val uniqueActionsCount = wrappersToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
+        val uniqueActionsProvidingTypingsCount = wrappersToGenerate
+            .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
+            .mapValues { (_, versions) -> versions.maxByOrNull { Version(it.actionCoords.version) } }
+            .count { (_, wrapperRequest) -> wrapperRequest?.typingsSource == TypingsSource.ActionTypes }
 
         writer.println(
             """
@@ -81,35 +85,19 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
 
             Number of wrappers available:
 
-            * counting by actions: ${wrappersToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size}
+            * counting by actions: $uniqueActionsCount
             * counting each version separately: ${wrappersToGenerate.size}
+
+            Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): $uniqueActionsProvidingTypingsCount
             """.trimIndent()
         )
     }
 }
 
-private fun ActionCoords.toMarkdownLinkToKotlinCode() =
-    "$version: [`${buildActionClassName()}`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt)"
+private fun WrapperRequest.toMarkdownLinkToKotlinCode(): String {
+    val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
+    return "${actionCoords.version}$typingsMarker: [`${actionCoords.buildActionClassName()}`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${actionCoords.owner.toKotlinPackageName()}/${this.actionCoords.buildActionClassName()}.kt)"
+}
 
 private fun ActionCoords.toMarkdownLinkGithub() =
     "[$name](https://github.com/$owner/$name)"
-
-private fun checkDuplicateWrappers() {
-    val duplicateWrappers =
-        wrappersToGenerate.groupBy { it.actionCoords.actionYmlUrl }
-            .filterValues { it.size != 1 }
-            .keys
-    require(duplicateWrappers.isEmpty()) { "Duplicate wrappers requests: $duplicateWrappers" }
-}
-
-private fun checkWrappersOrder() {
-    val sortedWrappers = wrappersToGenerate.sortedBy { it.actionCoords.actionYmlUrl.lowercase() }
-    require(wrappersToGenerate == sortedWrappers) {
-        val firstNonMatchingRequest = (wrappersToGenerate zip sortedWrappers).first { it.first != it.second }
-        """Please sort the wrappers according to their owner, name and version.
-           First non-matching request:
-           - in current: ${firstNonMatchingRequest.first.actionCoords}
-           - in desired: ${firstNonMatchingRequest.second.actionCoords}
-        """
-    }
-}

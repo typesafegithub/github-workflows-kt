@@ -1,0 +1,67 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  java-version:
+    type: string
+  distribution:
+    type: enum
+    allowed-values:
+    - adopt
+    - adopt-hotspot
+    - adopt-openj9
+    - corretto
+    - liberica
+    - microsoft
+    - temurin
+    - zulu
+  java-package:
+    type: enum
+    allowed-values:
+    - jdk
+    - jre
+    - jdk+fx
+    - jre+fx
+  architecture:
+    type: string
+  jdkFile:
+    type: string
+  check-latest:
+    type: boolean
+  server-id:
+    type: string
+  server-username:
+    type: string
+  server-password:
+    type: string
+  settings-path:
+    type: string
+  overwrite-settings:
+    type: boolean
+  gpg-private-key:
+    type: string
+  gpg-passphrase:
+    type: string
+  cache:
+    type: enum
+    name: BuildPlatform
+    allowed-values:
+    - maven
+    - gradle
+    - sbt
+  job-status:
+    type: string
+  token:
+    type: string
+  mvn-toolchain-id:
+    type: string
+  mvn-toolchain-vendor:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  distribution:
+    type: string
+  version:
+    type: string
+  path:
+    type: string
+  cache-hit:
+    type: string

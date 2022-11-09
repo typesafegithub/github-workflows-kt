@@ -58,7 +58,7 @@ public class AddAndCommitV8(
     /**
      * How the action should fill missing author name or email.
      */
-    public val defaultAuthor: AddAndCommitV8.DefaultActor? = null,
+    public val defaultAuthor: AddAndCommitV8.DefaultAuthor? = null,
     /**
      * The message for the commit
      */
@@ -70,7 +70,7 @@ public class AddAndCommitV8(
     /**
      * The way the action should handle pathspec errors from the add and remove commands.
      */
-    public val pathspecErrorHandling: AddAndCommitV8.PathSpecErrorHandling? = null,
+    public val pathspecErrorHandling: AddAndCommitV8.PathspecErrorHandling? = null,
     /**
      * Arguments for the git pull command. By default, the action does not pull.
      */
@@ -129,32 +129,32 @@ public class AddAndCommitV8(
 
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
-    public sealed class DefaultActor(
+    public sealed class DefaultAuthor(
         public val stringValue: String,
     ) {
-        public object GithubActor : AddAndCommitV8.DefaultActor("github_actor")
+        public object GithubActor : AddAndCommitV8.DefaultAuthor("github_actor")
 
-        public object UserInfo : AddAndCommitV8.DefaultActor("user_info")
+        public object UserInfo : AddAndCommitV8.DefaultAuthor("user_info")
 
-        public object GithubActions : AddAndCommitV8.DefaultActor("github_actions")
+        public object GithubActions : AddAndCommitV8.DefaultAuthor("github_actions")
 
         public class Custom(
             customStringValue: String,
-        ) : AddAndCommitV8.DefaultActor(customStringValue)
+        ) : AddAndCommitV8.DefaultAuthor(customStringValue)
     }
 
-    public sealed class PathSpecErrorHandling(
+    public sealed class PathspecErrorHandling(
         public val stringValue: String,
     ) {
-        public object Ignore : AddAndCommitV8.PathSpecErrorHandling("ignore")
+        public object Ignore : AddAndCommitV8.PathspecErrorHandling("ignore")
 
-        public object ExitImmediately : AddAndCommitV8.PathSpecErrorHandling("exitImmediately")
+        public object ExitImmediately : AddAndCommitV8.PathspecErrorHandling("exitImmediately")
 
-        public object ExitAtEnd : AddAndCommitV8.PathSpecErrorHandling("exitAtEnd")
+        public object ExitAtEnd : AddAndCommitV8.PathspecErrorHandling("exitAtEnd")
 
         public class Custom(
             customStringValue: String,
-        ) : AddAndCommitV8.PathSpecErrorHandling(customStringValue)
+        ) : AddAndCommitV8.PathspecErrorHandling(customStringValue)
     }
 
     public class Outputs(

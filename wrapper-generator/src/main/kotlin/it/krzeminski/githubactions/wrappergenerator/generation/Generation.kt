@@ -45,7 +45,7 @@ fun ActionCoords.generateWrapper(
     inputTypings: Map<String, Typing> = emptyMap(),
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): Wrapper {
-    val metadata = fetchMetadataImpl()
+    val metadata = fetchMetadataImpl().removeDeprecatedInputsIfNameClash()
     checkPropertiesAreValid(metadata, inputTypings)
     metadata.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
@@ -56,6 +56,17 @@ fun ActionCoords.generateWrapper(
         kotlinCode = actionWrapperSourceCode,
         filePath = "library/src/gen/kotlin/it/krzeminski/githubactions/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
+}
+
+private fun Metadata.removeDeprecatedInputsIfNameClash(): Metadata {
+    val newInputs = this.inputs.entries
+        .groupBy { (originalKey, _) -> originalKey.toCamelCase() }
+        .mapValues { (_, clashingInputs) ->
+            clashingInputs
+                .find { it.value.deprecationMessage == null }
+                ?: clashingInputs.first()
+        }.values.associateBy({ it.key }, { it.value })
+    return this.copy(inputs = newInputs)
 }
 
 private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {

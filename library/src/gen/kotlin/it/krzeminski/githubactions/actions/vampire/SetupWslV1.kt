@@ -23,6 +23,9 @@ import kotlin.collections.toTypedArray
 public class SetupWslV1(
     /**
      * The WSL distribution to install, update, or configure.
+     * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
+     * They use the same WSL distribution ID, so the second that is used will not be installed
+     * as the first one will be found as already installed by WSL distribution ID.
      * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
      * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
      */

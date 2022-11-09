@@ -7,6 +7,7 @@ import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException
 import java.net.URI
+import java.nio.file.Path
 import java.time.LocalDate
 
 /**
@@ -34,21 +35,15 @@ data class Output(
     val description: String = "",
 )
 
-val ActionCoords.actionYmlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action.yml"
+fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action.yml"
 
-val ActionCoords.actionYamlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action.yaml"
-
-val ActionCoords.actionYmlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
-
-val ActionCoords.actionYamlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action.yml"
+fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action.yaml"
 
 val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
 val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
-val ActionCoords.prettyPrint: String get() = """ActionCoords("$owner", "$name", "$version")"""
-
-val ActionCoords.yamlName: String get() = "$owner/$name@$version"
+val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
     val cacheFile = actionYamlDir.resolve("$owner-$name-$version.yml")
@@ -57,7 +52,8 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
         return myYaml.decodeFromString(cacheFile.readText())
     }
 
-    val list = listOf(actionYmlUrl, actionYamlUrl, actionYmlNoVUrl, actionYamlNoVUrl)
+    val commitHash = Path.of("actions", owner, name, version, "commit-hash.txt").toFile().readText()
+    val list = listOf(actionYmlUrl(commitHash), actionYamlUrl(commitHash))
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {
             println("  ... from $url")

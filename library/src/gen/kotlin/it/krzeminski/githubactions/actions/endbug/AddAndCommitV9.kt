@@ -51,7 +51,7 @@ public class AddAndCommitV9(
     /**
      * How the action should fill missing author name or email.
      */
-    public val defaultAuthor: AddAndCommitV9.DefaultActor? = null,
+    public val defaultAuthor: AddAndCommitV9.DefaultAuthor? = null,
     /**
      * Arguments for the git fetch command (if 'false', the action won't fetch the repo)
      */
@@ -67,7 +67,7 @@ public class AddAndCommitV9(
     /**
      * The way the action should handle pathspec errors from the add and remove commands.
      */
-    public val pathspecErrorHandling: AddAndCommitV9.PathSpecErrorHandling? = null,
+    public val pathspecErrorHandling: AddAndCommitV9.PathspecErrorHandling? = null,
     /**
      * Arguments for the git pull command. By default, the action does not pull.
      */
@@ -133,32 +133,32 @@ public class AddAndCommitV9(
 
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
-    public sealed class DefaultActor(
+    public sealed class DefaultAuthor(
         public val stringValue: String,
     ) {
-        public object GithubActor : AddAndCommitV9.DefaultActor("github_actor")
+        public object GithubActor : AddAndCommitV9.DefaultAuthor("github_actor")
 
-        public object UserInfo : AddAndCommitV9.DefaultActor("user_info")
+        public object UserInfo : AddAndCommitV9.DefaultAuthor("user_info")
 
-        public object GithubActions : AddAndCommitV9.DefaultActor("github_actions")
+        public object GithubActions : AddAndCommitV9.DefaultAuthor("github_actions")
 
         public class Custom(
             customStringValue: String,
-        ) : AddAndCommitV9.DefaultActor(customStringValue)
+        ) : AddAndCommitV9.DefaultAuthor(customStringValue)
     }
 
-    public sealed class PathSpecErrorHandling(
+    public sealed class PathspecErrorHandling(
         public val stringValue: String,
     ) {
-        public object Ignore : AddAndCommitV9.PathSpecErrorHandling("ignore")
+        public object Ignore : AddAndCommitV9.PathspecErrorHandling("ignore")
 
-        public object ExitImmediately : AddAndCommitV9.PathSpecErrorHandling("exitImmediately")
+        public object ExitImmediately : AddAndCommitV9.PathspecErrorHandling("exitImmediately")
 
-        public object ExitAtEnd : AddAndCommitV9.PathSpecErrorHandling("exitAtEnd")
+        public object ExitAtEnd : AddAndCommitV9.PathspecErrorHandling("exitAtEnd")
 
         public class Custom(
             customStringValue: String,
-        ) : AddAndCommitV9.PathSpecErrorHandling(customStringValue)
+        ) : AddAndCommitV9.PathspecErrorHandling(customStringValue)
     }
 
     public class Outputs(

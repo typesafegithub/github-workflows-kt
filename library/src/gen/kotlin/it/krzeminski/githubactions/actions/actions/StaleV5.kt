@@ -357,6 +357,16 @@ public class StaleV5(
 
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
+    public sealed class Days(
+        public val integerValue: Int,
+    ) {
+        public class Value(
+            requestedValue: Int,
+        ) : StaleV5.Days(requestedValue)
+
+        public object Never : StaleV5.Days(-1)
+    }
+
     public sealed class CloseIssueReason(
         public val stringValue: String,
     ) {
@@ -367,16 +377,6 @@ public class StaleV5(
         public class Custom(
             customStringValue: String,
         ) : StaleV5.CloseIssueReason(customStringValue)
-    }
-
-    public sealed class Days(
-        public val integerValue: Int,
-    ) {
-        public class Value(
-            requestedValue: Int,
-        ) : StaleV5.Days(requestedValue)
-
-        public object Never : StaleV5.Days(-1)
     }
 
     public class Outputs(

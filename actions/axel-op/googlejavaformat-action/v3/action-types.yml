@@ -1,0 +1,16 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  args:
+    type: string
+  files:
+    type: string
+  files-excluded:
+    type: string
+  skip-commit:
+    type: boolean
+  version:
+    type: string
+  github-token:
+    type: string
+  commit-message:
+    type: string
