@@ -1,11 +1,14 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.googlecloudplatform
 
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -21,6 +24,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/GoogleCloudPlatform/github-actions)
  */
+@Deprecated(
+    message = "This action has a newer major version: GithubActionsV1",
+    replaceWith = ReplaceWith("GithubActionsV1"),
+)
 public class GithubActionsV0(
     /**
      * Version of the gcloud SDK to install. If unspecified or set to "latest",
