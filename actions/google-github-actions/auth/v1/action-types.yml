@@ -1,0 +1,59 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  project_id:
+    type: string
+  workload_identity_provider:
+    type: string
+  service_account:
+    type: string
+  audience:
+    type: string
+  credentials_json:
+    type: string
+  create_credentials_file:
+    type: boolean
+  export_environment_variables:
+    type: boolean
+  token_format:
+    type: enum
+    allowed-values:
+    - access_token
+    - id_token
+  delegates:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  cleanup_credentials:
+    type: boolean
+  access_token_lifetime:
+    type: string
+  access_token_scopes:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  access_token_subject:
+    type: string
+  retries:
+    type: integer
+  backoff:
+    type: integer
+  backoff_limit:
+    type: integer
+  id_token_audience:
+    type: string
+  id_token_include_email:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  project_id:
+    type: string
+  credentials_file_path:
+    type: string
+  access_token:
+    type: string
+  access_token_expiration:
+    type: string
+  id_token:
+    type: string

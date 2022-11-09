@@ -82,10 +82,10 @@ Click on a version to see the wrapper's code.
 * gautamkrishnar
     * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - v1: [`BlogPostWorkflowV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
 * google-github-actions
-    * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/AuthV0.kt)
-    * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/SetupGcloudV0.kt)
+    * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/AuthV0.kt), v1: [`AuthV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/AuthV1.kt)
+    * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/SetupGcloudV0.kt), v1: [`SetupGcloudV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlegithubactions/SetupGcloudV1.kt)
 * GoogleCloudPlatform
-    * [github-actions](https://github.com/GoogleCloudPlatform/github-actions) - v0: [`GithubActionsV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlecloudplatform/GithubActionsV0.kt)
+    * [github-actions](https://github.com/GoogleCloudPlatform/github-actions) - v0: [`GithubActionsV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlecloudplatform/GithubActionsV0.kt), v1: [`GithubActionsV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/googlecloudplatform/GithubActionsV1.kt)
 * gradle-update
     * [update-gradle-wrapper-action](https://github.com/gradle-update/update-gradle-wrapper-action) - v1: [`UpdateGradleWrapperActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/gradleupdate/UpdateGradleWrapperActionV1.kt)
 * gradle
@@ -145,6 +145,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 83
-* counting each version separately: 100
+* counting each version separately: 103
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 10
