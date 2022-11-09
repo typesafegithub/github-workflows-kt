@@ -20,6 +20,7 @@ import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException
 import java.net.URI
+import java.nio.file.Path
 import java.time.LocalDate
 
 fun WrapperRequest.provideTypes(fetchUri: (URI) -> String = ::fetchUri): Map<String, Typing> =
@@ -42,13 +43,9 @@ fun deleteActionTypesYamlCacheIfObsolete() {
     }
 }
 
-private val ActionCoords.actionTypesYmlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action-types.yml"
+private fun ActionCoords.actionTypesYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yml"
 
-private val ActionCoords.actionTypesYamlUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/$version/action-types.yaml"
-
-private val ActionCoords.actionTypesYmlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action-types.yml"
-
-private val ActionCoords.actionTypesYamlNoVUrl: String get() = "https://raw.githubusercontent.com/$owner/$name/${version.removePrefix("v")}/action-types.yml"
+private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yaml"
 
 private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetchUri): ActionTypes {
     val cacheFile = actionTypesYamlDir.resolve("$owner-$name-$version.yml")
@@ -57,7 +54,8 @@ private fun ActionCoords.fetchTypingMetadata(fetchUri: (URI) -> String = ::fetch
         return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
     }
 
-    val list = listOf(actionTypesYmlUrl, actionTypesYamlUrl, actionTypesYmlNoVUrl, actionTypesYamlNoVUrl)
+    val commitHash = Path.of("actions", owner, name, version, "commit-hash.txt").toFile().readText()
+    val list = listOf(actionTypesYmlUrl(commitHash), actionTypesYamlUrl(commitHash))
     val typesMetadataYaml = list.firstNotNullOfOrNull { url ->
         try {
             println("  ... types from $url")

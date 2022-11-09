@@ -21,14 +21,7 @@ import java.io.File
  */
 fun main() {
     var output: String = ""
-    val githubAuthorization = System.getenv("GITHUB_TOKEN")
-        ?: error(
-            """
-            |Missing environment variable export GITHUB_TOKEN=token
-            |Create a personal token at https://github.com/settings/tokens
-            |The token needs to have public_repo scope.
-           """.trimMargin()
-        )
+    val githubAuthorization = getGithubToken()
 
     val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
         .map { it.actionCoords }
@@ -55,7 +48,7 @@ fun main() {
     }
 }
 
-fun List<GithubTag>.versions(): List<Version> =
+fun List<GithubRef>.versions(): List<Version> =
     this.map { githubTag ->
         val version = githubTag.ref.substringAfterLast("/")
         Version(version)

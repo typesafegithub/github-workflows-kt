@@ -5,23 +5,26 @@ import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.myYaml
+import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.types.ActionTypes
 import it.krzeminski.githubactions.wrappergenerator.types.toTypesMap
 import kotlinx.serialization.decodeFromString
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.isRegularFile
+import kotlin.io.path.name
 import kotlin.io.path.readText
 
 val wrappersToGenerate = readLocalActionTypings()
     .addDeprecationInfo()
-    .sortedBy { it.actionCoords.actionYmlUrl.lowercase() }
+    .sortedBy { it.actionCoords.prettyPrint.lowercase() }
 
 private fun readLocalActionTypings(): List<WrapperRequest> {
     val actionTypingsDirectory = Path.of("actions")
 
     return Files.walk(actionTypingsDirectory)
         .filter { it.isRegularFile() }
+        .filter { it.name !in setOf("commit-hash.txt") }
         .map {
             val (_, owner, name, version, file) = it.toString().split("/")
             WrapperRequest(
