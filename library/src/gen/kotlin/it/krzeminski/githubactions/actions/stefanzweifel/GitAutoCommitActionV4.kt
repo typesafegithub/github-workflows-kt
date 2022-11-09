@@ -95,6 +95,10 @@ public class GitAutoCommitActionV4(
      */
     public val createBranch: Boolean? = null,
     /**
+     * Internal use only! Path to git binary used to check if git is available. (Don't change this!)
+     */
+    public val internalGitBinary: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -125,6 +129,7 @@ public class GitAutoCommitActionV4(
             skipCheckout?.let { "skip_checkout" to it.toString() },
             disableGlobbing?.let { "disable_globbing" to it.toString() },
             createBranch?.let { "create_branch" to it.toString() },
+            internalGitBinary?.let { "internal_git_binary" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
