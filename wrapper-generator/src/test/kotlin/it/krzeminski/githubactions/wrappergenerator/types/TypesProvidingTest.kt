@@ -53,7 +53,7 @@ class TypesProvidingTest : FunSpec({
         )
 
         // When
-        val types = wrapperRequest.provideTypes { actionTypesYml }
+        val types = wrapperRequest.provideTypes({ actionTypesYml }, { "some-hash" })
 
         // Then
         types shouldBe mapOf(
