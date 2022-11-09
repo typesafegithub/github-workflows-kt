@@ -3,7 +3,6 @@ package it.krzeminski.githubactions.wrappergenerator
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
-import it.krzeminski.githubactions.wrappergenerator.metadata.actionYmlUrl
 import it.krzeminski.githubactions.wrappergenerator.metadata.myYaml
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.types.ActionTypes
