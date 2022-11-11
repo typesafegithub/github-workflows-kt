@@ -68,7 +68,7 @@ public class PullRequestV2(
     /**
      * GitHub token secret
      */
-    public val githubToken: String,
+    public val githubToken: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -93,7 +93,7 @@ public class PullRequestV2(
             prMilestone?.let { "pr_milestone" to it },
             prDraft?.let { "pr_draft" to it.toString() },
             prAllowEmpty?.let { "pr_allow_empty" to it.toString() },
-            "github_token" to githubToken,
+            githubToken?.let { "github_token" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
