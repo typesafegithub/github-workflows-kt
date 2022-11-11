@@ -71,7 +71,8 @@ fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List
             val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
             "new major version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
         }
-        majorVersions.isNotEmpty() -> "major version(s) could be used: $majorVersions"
+        majorVersions.isNotEmpty() && majorVersions.maxOrNull()!!.major >= maxExisting.major ->
+            "major version(s) could be used: $majorVersions"
         else -> "new version available: $maxAvailableVersion".takeIf { maxAvailableVersion > maxExisting }
     }
 }
