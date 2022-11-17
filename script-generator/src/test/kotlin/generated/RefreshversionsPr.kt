@@ -4,14 +4,12 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.actions.peterjgrainger.ActionCreateBranchV2
 import it.krzeminski.githubactions.actions.reposync.PullRequestV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
-import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
 import java.nio.`file`.Paths
 
@@ -40,16 +38,6 @@ public val workflowRefreshversionsPr: Workflow = workflow(
           action = SetupJavaV3(
             javaVersion = "11",
             distribution = SetupJavaV3.Distribution.Adopt,
-          ),
-        )
-        uses(
-          name = "create-branch",
-          action = ActionCreateBranchV2(
-            branch = "dependency-update",
-            _customVersion = "v2.1.0",
-          ),
-          env = linkedMapOf(
-            "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN"),
           ),
         )
         uses(
