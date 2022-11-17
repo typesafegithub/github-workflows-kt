@@ -1,4 +1,0 @@
-# Please check those outputs's description and set a proper type. 'string' is just set by default
-outputs:
-  response:
-    type: string
