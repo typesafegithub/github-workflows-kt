@@ -1,6 +1,0 @@
-# See https://github.com/krzema12/github-actions-typing
-inputs:
-  args:
-    type: string
-  projectBaseDir:
-    type: string

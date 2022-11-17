@@ -1,8 +1,0 @@
-# See https://github.com/krzema12/github-actions-typing
-inputs:
-  generate-zip:
-    type: boolean
-# Please check those outputs's description and set a proper type. 'string' is just set by default
-outputs:
-  zip-path:
-    type: string

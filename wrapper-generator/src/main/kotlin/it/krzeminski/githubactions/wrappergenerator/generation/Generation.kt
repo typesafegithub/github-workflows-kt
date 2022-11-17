@@ -45,6 +45,10 @@ fun ActionCoords.generateWrapper(
     inputTypings: Map<String, Typing> = emptyMap(),
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): Wrapper {
+    require(this.version.removePrefix("v").toIntOrNull() != null) {
+        "Only major versions are supported, and '${this.version}' was given!"
+    }
+
     val metadata = fetchMetadataImpl().removeDeprecatedInputsIfNameClash()
     checkPropertiesAreValid(metadata, inputTypings)
     metadata.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
