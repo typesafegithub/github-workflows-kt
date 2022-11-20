@@ -10,9 +10,23 @@ Take a look here: [Supported actions](../supported-actions.md).
 These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to
-version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management)
-(in practice: there are exceptions). Each new major version means a breaking change, and it usually means that the
-Kotlin wrapper for the action needs a breaking change as well.
+version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
+Each new major version means a breaking change, and it usually means that the Kotlin wrapper for the action needs a
+breaking change as well.
+
+### Requirements for adding a new action
+
+An action is eligible to be added to this library (i.e. have its Kotlin wrapper generated and maintained by the library)
+if the following conditions are fulfilled:
+
+* follows [Semantic Versioning](https://semver.org/), with exceptions for pre-releases (like `v0.2`)
+* provides major version tags, as described [here](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
+  An example valid tag is `v2` that points to the newest release with major version number 2. Example invalid tags are
+  `v2.1.0`, `latest` or `main`
+
+Nice to have:
+
+* provides typings using [github-actions-typing](https://github.com/krzema12/github-actions-typing/)
 
 ## User-defined actions
 
