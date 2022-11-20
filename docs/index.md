@@ -1,5 +1,7 @@
 # GitHub Workflows Kt
 
+> _You won't get back to YAML!_
+
 ## 🧪 Work in progress - "moving fast" phase
 
 Please expect breaking API changes (they're documented in release notes) and missing features.
