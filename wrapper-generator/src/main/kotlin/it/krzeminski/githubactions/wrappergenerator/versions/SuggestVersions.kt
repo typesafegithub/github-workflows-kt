@@ -55,6 +55,10 @@ fun List<GithubRef>.versions(): List<Version> =
     }
 
 fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List<Version>): String? {
+    if (availableVersions.isEmpty()) {
+        return null
+    }
+
     val maxExisting = existingVersions.maxOrNull()
         ?: error("Invalid call existingVersions=$existingVersions availableVersions=$availableVersions")
 
@@ -62,17 +66,6 @@ fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List
         .filter { it.isMajorVersion() }
         .sorted()
 
-    val maxAvailableVersion = availableVersions.maxOrNull()
-    val coordsUseMajorVersion = existingVersions.all { it.isMajorVersion() }
-
-    return when {
-        maxAvailableVersion == null -> null
-        coordsUseMajorVersion -> {
-            val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
-            "new major version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
-        }
-        majorVersions.isNotEmpty() && majorVersions.maxOrNull()!!.major >= maxExisting.major ->
-            "major version(s) could be used: $majorVersions"
-        else -> "new version available: $maxAvailableVersion".takeIf { maxAvailableVersion > maxExisting }
-    }
+    val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
+    return "new version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
 }

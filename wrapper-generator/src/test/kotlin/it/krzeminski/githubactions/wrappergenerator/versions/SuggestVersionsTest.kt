@@ -54,15 +54,15 @@ class SuggestVersionsTest : FunSpec({
 
                 suggestNewerVersion(
                     "v1".versions(), "v1, v1.1.1, v2, v2.0.1, v3, v3.1.1".versions()
-                ) shouldBe "new major version(s) available: [v2, v3]"
+                ) shouldBe "new version(s) available: [v2, v3]"
 
                 suggestNewerVersion(
                     "v2".versions(), "v1.1.1, v2, v2.0.1, v3, v3.1.1".versions()
-                ) shouldBe "new major version(s) available: [v3]"
+                ) shouldBe "new version(s) available: [v3]"
 
                 suggestNewerVersion(
                     "v9".versions(), "v12, v12.0.1".versions()
-                ) shouldBe "new major version(s) available: [v12]"
+                ) shouldBe "new version(s) available: [v12]"
             }
         }
     }
@@ -80,46 +80,6 @@ class SuggestVersionsTest : FunSpec({
             testCases.forAll { available ->
                 suggestNewerVersion(listOf(currentVersion), available.versions()) shouldBe null
             }
-        }
-
-        test("Minor version available") {
-            assertSoftly {
-                suggestNewerVersion(
-                    "v2.1.0, v1.0.4".versions(),
-                    "v2.1.0, v1.0.4, v2.3.0, v1.0.5".versions(),
-                ) shouldBe "new version available: v2.3.0"
-
-                suggestNewerVersion(
-                    "v9.0.1".versions(),
-                    "v12.1.2".versions(),
-                ) shouldBe "new version available: v12.1.2"
-
-                suggestNewerVersion(
-                    "v9.0.9".versions(),
-                    "v9.0.12".versions(),
-                ) shouldBe "new version available: v9.0.12"
-            }
-        }
-
-        test("major version could be used") {
-            suggestNewerVersion(
-                "v2.1.0".versions(),
-                "v1, v2".versions(),
-            ) shouldBe "major version(s) could be used: [v1, v2]"
-        }
-
-        test("version=latest") {
-            suggestNewerVersion(
-                "latest".versions(),
-                "v1, v1.0, v2, v2.0".versions()
-            ) shouldBe "new major version(s) available: [v1, v2]"
-        }
-
-        test("major version available only for older version") {
-            suggestNewerVersion(
-                existingVersions = "v2.1".versions(),
-                availableVersions = "v1, v1.1, v2.1".versions()
-            ) shouldBe null
         }
     }
 })
