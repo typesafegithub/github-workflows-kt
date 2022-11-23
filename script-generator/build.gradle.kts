@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
 
 plugins {
     buildsrc.convention.`kotlin-jvm`
@@ -21,10 +22,15 @@ application {
     tasks.run.get().workingDir = rootProject.projectDir
 }
 
-ktlint {
-    filter {
-        exclude("**/generated/**", "**/actual/**")
-    }
+fun ConfigurableKtLintTask.kotlinterConfig() {
+    exclude("**/generated/**", "**/actual/**")
+}
+
+tasks.lintKotlinTest {
+    kotlinterConfig()
+}
+tasks.formatKotlinTest {
+    kotlinterConfig()
 }
 
 tasks.withType<KotlinCompile> {
