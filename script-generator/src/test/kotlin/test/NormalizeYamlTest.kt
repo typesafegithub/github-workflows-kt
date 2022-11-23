@@ -120,4 +120,4 @@ class NormalizeYamlTest : FunSpec({
                   cancel-in-progress: false
         """.trimIndent()
     }
-})
+},)

@@ -15,10 +15,13 @@ public data class WorkflowDispatch(
     public enum class Type {
         @SerialName("choice")
         Choice,
+
         @SerialName("environment")
         Environment,
+
         @SerialName("boolean")
         Boolean,
+
         @SerialName("string")
         String,
     }

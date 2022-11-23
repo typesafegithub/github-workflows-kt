@@ -23,7 +23,7 @@ public data class Job<OUTPUT : JobOutputs>(
             field = "Job.id",
             value = id,
             regex = Regex("[a-zA-Z_][a-zA-Z0-9_-]*"),
-            url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job"
+            url = "https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job",
         )
         timeoutMinutes?.let { value ->
             require(value > 0) { "timeout should be positive" }

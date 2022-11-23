@@ -18,7 +18,7 @@ class JobTest : FunSpec({
                 outputs = object : JobOutputs() {
                     var output1 by output()
                     var output2 by output()
-                }
+                },
             )
             job.outputs.output1 = "foo"
             job.outputs.output2 = "foo"
@@ -35,7 +35,7 @@ class JobTest : FunSpec({
                 steps = listOf(),
                 outputs = object : JobOutputs() {
                     var output1 by output()
-                }
+                },
             )
 
             shouldThrow<IllegalStateException> {
@@ -51,7 +51,7 @@ class JobTest : FunSpec({
                 steps = listOf(),
                 outputs = object : JobOutputs() {
                     var output1 by output()
-                }
+                },
             )
             job.outputs.output1 = "foo"
 
@@ -70,7 +70,7 @@ class JobTest : FunSpec({
             "",
             "-job",
             "4job",
-            "job()"
+            "job()",
         ).forAll { jobId ->
             shouldThrowAny {
                 Job(jobId, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY)
@@ -78,7 +78,7 @@ class JobTest : FunSpec({
                 """
                 Invalid field Job(id="$jobId") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
                 See: https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#setting-an-id-for-a-job
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -109,8 +109,8 @@ class JobTest : FunSpec({
                         command = "echo 'test!'",
                     ),
                 ),
-                outputs = JobOutputs.EMPTY
+                outputs = JobOutputs.EMPTY,
             )
         } shouldHaveMessage "timeout should be positive"
     }
-})
+},)

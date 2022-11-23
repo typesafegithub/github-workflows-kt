@@ -26,7 +26,7 @@ data class IntegerWithSpecialValueTyping(val typeName: String, val specialValues
             .primaryConstructor(
                 FunSpec.constructorBuilder()
                     .addParameter(ParameterSpec.builder("integerValue", Int::class).build())
-                    .build()
+                    .build(),
             )
             .addProperty(PropertySpec.builder("integerValue", Int::class).initializer("integerValue").build())
             .addType(
@@ -34,11 +34,11 @@ data class IntegerWithSpecialValueTyping(val typeName: String, val specialValues
                     .primaryConstructor(
                         FunSpec.constructorBuilder()
                             .addParameter(ParameterSpec.builder("requestedValue", Int::class).build())
-                            .build()
+                            .build(),
                     )
                     .superclass(sealedClassName)
                     .addSuperclassConstructorParameter("requestedValue")
-                    .build()
+                    .build(),
             )
             .addTypes(
                 this.specialValues.map { (name, value) ->
@@ -46,7 +46,7 @@ data class IntegerWithSpecialValueTyping(val typeName: String, val specialValues
                         .superclass(sealedClassName)
                         .addSuperclassConstructorParameter("%L", value)
                         .build()
-                }
+                },
             )
             .build()
     }

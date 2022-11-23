@@ -29,7 +29,7 @@ fun Wrapper.shouldMatchFile(path: String) {
     } else {
         actualFile.writeText(
             // change the package to avoid compilation errors because of duplicate classes / functions
-            actualContent.replace("package $packageName", "package $packageName.actual")
+            actualContent.replace("package $packageName", "package $packageName.actual"),
         )
         fail("The Wrapper's kotlin code in ${actualFile.name} doesn't match ${expectedFile.name}\nSee folder ${expectedFile.parentFile.canonicalPath}")
     }

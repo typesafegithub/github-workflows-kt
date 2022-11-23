@@ -91,7 +91,7 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
             This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
             be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
             generator itself.
-            """.trimIndent()
+            """.trimIndent(),
         )
         .addType(generateActionClass(metadata, coords, inputTypings))
         .annotateSuppressDeprecation(metadata, coords)
@@ -108,7 +108,7 @@ private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata, coo
         addAnnotation(
             AnnotationSpec.builder(Suppress::class.asClassName())
                 .addMember(CodeBlock.of("%S", "DEPRECATION"))
-                .build()
+                .build(),
         )
     }
 }
@@ -141,7 +141,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
             PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                 .initializer(key.toCamelCase())
                 .annotateDeprecated(input)
-                .build()
+                .build(),
         )
     }
     addProperty(PropertySpec.builder(CUSTOM_INPUTS, Types.mapStringString).initializer(CUSTOM_INPUTS).build())
@@ -171,7 +171,7 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
             .primaryConstructor(
                 FunSpec.constructorBuilder()
                     .addParameter(stepIdConstructorParameter)
-                    .build()
+                    .build(),
             )
             .addProperties(listOf(stepIdProperty) + propertiesFromOutputs)
             .addFunction(
@@ -182,11 +182,11 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
                     .addCode(
                         CodeBlock.Builder().apply {
                             add("return \"steps.\$stepId.outputs.\$outputName\"")
-                        }.build()
+                        }.build(),
                     )
-                    .build()
+                    .build(),
             )
-            .build()
+            .build(),
     )
 
     return this
@@ -203,7 +203,7 @@ private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: M
             .addModifiers(KModifier.OVERRIDE)
             .addParameter("stepId", String::class)
             .addCode(CodeBlock.of("return Outputs(stepId)"))
-            .build()
+            .build(),
     )
 
     return this
@@ -214,7 +214,7 @@ private fun PropertySpec.Builder.annotateDeprecated(input: Input) = apply {
         addAnnotation(
             AnnotationSpec.builder(Deprecated::class.asClassName())
                 .addMember(CodeBlock.of("%S", input.deprecationMessage))
-                .build()
+                .build(),
         )
     }
 }
@@ -226,7 +226,7 @@ private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typi
         .addAnnotation(
             AnnotationSpec.builder(Suppress::class)
                 .addMember("\"SpreadOperator\"")
-                .build()
+                .build(),
         )
         .addCode(linkedMapOfInputs(inputTypings))
         .build()
@@ -268,7 +268,7 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
         AnnotationSpec.builder(Deprecated::class)
             .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")
             .addMember("replaceWith = ReplaceWith(%S)", newerClass.buildActionClassName())
-            .build()
+            .build(),
     )
     return this
 }
@@ -280,8 +280,8 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: 
             .plusParameter(
                 ClassName(
                     "it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}",
-                    "${coords.buildActionClassName()}.Outputs"
-                )
+                    "${coords.buildActionClassName()}.Outputs",
+                ),
             )
     }
     return this
@@ -304,16 +304,16 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
                 ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
                     .defaultValue("mapOf()")
                     .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
-                    .build()
+                    .build(),
             ).plus(
                 ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
                     .defaultValue("null")
                     .addKdoc(
                         "Allows overriding action's version, for example to use a specific minor version, " +
-                            "or a newer version that the wrapper doesn't yet know about"
+                            "or a newer version that the wrapper doesn't yet know about",
                     )
-                    .build()
-            )
+                    .build(),
+            ),
         )
         .build()
 }

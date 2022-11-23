@@ -23,4 +23,4 @@ class AddDeprecationInfoTest : FunSpec({
             WrapperRequest(ActionCoords("owner", "other-name", "v3")),
         )
     }
-})
+},)

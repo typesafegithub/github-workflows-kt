@@ -55,7 +55,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
 
             ## Wrappers
 
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         wrappersToGenerate
@@ -89,7 +89,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
             * counting each version separately: ${wrappersToGenerate.size}
 
             Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): $uniqueActionsProvidingTypingsCount
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 }

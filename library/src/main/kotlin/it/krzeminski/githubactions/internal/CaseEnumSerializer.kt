@@ -37,7 +37,7 @@ internal open class CaseEnumSerializer<T : Enum<T>>(
         if (index == -1) {
             throw SerializationException(
                 "$value is not a valid enum ${descriptor.serialName}, " +
-                    "must be one of ${values.contentToString()}"
+                    "must be one of ${values.contentToString()}",
             )
         }
         encoder.encodeEnum(descriptor, index)
@@ -48,7 +48,7 @@ internal open class CaseEnumSerializer<T : Enum<T>>(
         if (index !in values.indices) {
             throw SerializationException(
                 "$index is not among valid ${descriptor.serialName} enum values, " +
-                    "values size is ${values.size}"
+                    "values size is ${values.size}",
             )
         }
         return values[index]

@@ -237,7 +237,7 @@ class IntegrationTest : FunSpec({
             job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
-                condition = "\${{ always() }}"
+                condition = "\${{ always() }}",
             ) {
                 uses(
                     name = "Check out",
@@ -258,13 +258,13 @@ class IntegrationTest : FunSpec({
                     hey,
                     hi,
                     hello! workflow
-                """.trimIndent()
+                """.trimIndent(),
             ),
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             _customArguments = mapOf(
                 "name" to "Overridden name!",
                 "foo-bar" to "baz",
-            )
+            ),
         ) {
             job(
                 id = "test_job",
@@ -276,7 +276,7 @@ class IntegrationTest : FunSpec({
                         hey,
                         hi,
                         hello! job
-                    """.trimIndent()
+                    """.trimIndent(),
                 ),
             ) {
                 uses(
@@ -288,7 +288,7 @@ class IntegrationTest : FunSpec({
                             hey,
                             hi,
                             hello! uses
-                        """.trimIndent()
+                        """.trimIndent(),
                     ),
                     continueOnError = true,
                 )
@@ -302,7 +302,7 @@ class IntegrationTest : FunSpec({
                             hey,
                             hi,
                             hello! run
-                        """.trimIndent()
+                        """.trimIndent(),
                     ),
                     continueOnError = true,
                 )
@@ -373,7 +373,7 @@ class IntegrationTest : FunSpec({
                     action = CheckoutV3(
                         sshKey = expr(addAndCommit.outputs.pythonVersion),
                         path = expr(addAndCommit.outputs["my-unsafe-output"]),
-                    )
+                    ),
                 )
             }
         }
@@ -400,7 +400,7 @@ class IntegrationTest : FunSpec({
                         repository = expr(addAndCommit.id),
                         ref = expr(addAndCommit.outputs.commitSha),
                         token = expr(addAndCommit.outputs["my-unsafe-output"]),
-                    )
+                    ),
                 )
             }
         }.toYaml(addConsistencyCheck = false)
@@ -458,7 +458,7 @@ class IntegrationTest : FunSpec({
                         repository = expr(addAndCommit.id),
                         ref = expr(addAndCommit.outputs.commitSha),
                         token = expr(addAndCommit.outputs["my-unsafe-output"]),
-                    )
+                    ),
                 )
             }
         }.toYaml(addConsistencyCheck = false)
@@ -508,7 +508,7 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 env = linkedMapOf(
                     GREETING to "World",
-                )
+                ),
             ) {
                 uses(CheckoutV3())
                 run(
@@ -521,23 +521,23 @@ class IntegrationTest : FunSpec({
                     env = linkedMapOf(
                         FIRST_NAME to "Patrick",
                     ),
-                    command = "echo $GREETING $FIRST_NAME"
+                    command = "echo $GREETING $FIRST_NAME",
                 )
                 run(
                     name = "Encrypted secret",
                     env = linkedMapOf(
                         SECRET to expr { SUPER_SECRET },
-                        TOKEN to expr { secrets.GITHUB_TOKEN }
+                        TOKEN to expr { secrets.GITHUB_TOKEN },
                     ),
-                    command = "echo secret=$SECRET token=$TOKEN"
+                    command = "echo secret=$SECRET token=$TOKEN",
                 )
                 run(
                     name = "RunnerContext create temp directory",
-                    command = "mkdir " + expr { runner.temp } + "/build_logs"
+                    command = "mkdir " + expr { runner.temp } + "/build_logs",
                 )
                 run(
                     name = "GitHubContext echo sha",
-                    command = "echo " + expr { github.sha } + " event " + expr { github.eventRelease.release.url }
+                    command = "echo " + expr { github.sha } + " event " + expr { github.eventRelease.release.url },
                 )
             }
         }
@@ -605,7 +605,7 @@ class IntegrationTest : FunSpec({
                     var scriptKey by output()
                     var scriptKey2 by output()
                     var scriptResult by output()
-                }
+                },
             ) {
                 val scriptStep = uses(
                     GithubScriptV6(
@@ -613,8 +613,8 @@ class IntegrationTest : FunSpec({
                         core.setOutput("key", "value")
                         core.setOutput("key2", "value2")
                         return "return"
-                        """.trimIndent()
-                    )
+                        """.trimIndent(),
+                    ),
                 )
                 jobOutputs.scriptKey = scriptStep.outputs["key"]
                 jobOutputs.scriptKey2 = scriptStep.outputs["key2"]
@@ -637,7 +637,7 @@ class IntegrationTest : FunSpec({
             }
         }
     }
-})
+},)
 
 private fun testRanWithGitHub(
     name: String,

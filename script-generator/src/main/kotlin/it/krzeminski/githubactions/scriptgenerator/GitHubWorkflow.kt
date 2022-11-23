@@ -35,7 +35,7 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
                     .add(generateJobs())
                     .unindent()
                     .add("}")
-            }
+            },
         )
         .build()
 }
@@ -46,14 +46,14 @@ fun concurrencyOf(concurrency: Concurrency?): CodeBlock = when (concurrency) {
         "concurrency = %T(group = %S, cancelInProgress = %L),\n",
         Concurrency::class.asClassName(),
         concurrency.group,
-        concurrency.cancelInProgress
+        concurrency.cancelInProgress,
     )
 }
 
 private fun YamlWorkflow.workflowEnv(): CodeBlock {
     return env.joinToCode(
         prefix = CodeBlock.of("env = %M(\n", Members.linkedMapOf),
-        postfix = "),"
+        postfix = "),",
     ) { key, value ->
         CodeBlock { builder ->
             builder

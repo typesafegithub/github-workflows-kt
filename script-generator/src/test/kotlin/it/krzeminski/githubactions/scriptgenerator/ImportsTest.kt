@@ -29,10 +29,10 @@ class ImportsTest : FunSpec({
             "job" to YamlJob(
                 runsOn = "Unbuntu-Latest",
                 steps = listOf(
-                    YamlStep(id = "step", run = "run it")
-                )
-            )
-        )
+                    YamlStep(id = "step", run = "run it"),
+                ),
+            ),
+        ),
     )
 
     test("Check for correct imports") {
@@ -42,4 +42,4 @@ class ImportsTest : FunSpec({
             content.contains(import).shouldBeTrue()
         }
     }
-})
+},)

@@ -102,4 +102,4 @@ class ContextsTest : FunSpec({
             expr { github.eventPush.repository.size } shouldBe expr("github.event.repository.size")
         }
     }
-})
+},)

@@ -122,4 +122,4 @@ class WorkflowBuilderTest : FunSpec({
             exception.message shouldBe "Duplicated job names: [Some-job-1, Some-job-3]"
         }
     }
-})
+},)

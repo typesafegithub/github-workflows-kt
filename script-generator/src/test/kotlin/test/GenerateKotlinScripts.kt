@@ -27,7 +27,7 @@ class GenerateKotlinScripts : FunSpec({
                 .removeWindowsEndings()
 
             input.actualFile.writeText(
-                "package actual\n" + newContent.removePrefix("package generated")
+                "package actual\n" + newContent.removePrefix("package generated"),
             )
             newContent shouldBe input.expected
 
@@ -40,7 +40,7 @@ class GenerateKotlinScripts : FunSpec({
             }
         }
     }
-})
+},)
 
 data class TestInput(val name: String) {
     val filename = name.removeSuffix(".yml")
@@ -52,10 +52,12 @@ data class TestInput(val name: String) {
     val actualDir = rootProject.resolve("script-generator/src/test/kotlin/actual")
         .also { it.mkdirs() }
     val actualFile = actualDir.resolve("${filename.toPascalCase()}.kt")
-    val expected = if (expectedFile.canRead())
+    val expected = if (expectedFile.canRead()) {
         expectedFile.readText()
             .removeWindowsEndings()
-    else ""
+    } else {
+        ""
+    }
 }
 
 fun String.removeWindowsEndings(): String =

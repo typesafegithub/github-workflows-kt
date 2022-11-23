@@ -66,4 +66,4 @@ class TypesProvidingTest : FunSpec({
             "permissions" to EnumTyping("Permissions", listOf("user", "admin", "guest")),
         )
     }
-})
+},)

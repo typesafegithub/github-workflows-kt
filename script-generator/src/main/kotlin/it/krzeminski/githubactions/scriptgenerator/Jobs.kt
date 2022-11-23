@@ -23,8 +23,8 @@ fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
                 ifEmpty = CodeBlock.EMPTY,
                 prefix = CodeBlock.of("env = %M(", Members.linkedMapOf),
                 postfix = "),\n",
-                transform = { key, value -> CodeBlock.of("%S to %S", key, value) }
-            )
+                transform = { key, value -> CodeBlock.of("%S to %S", key, value) },
+            ),
         )
         builder.add(job.customArguments())
         builder.unindent()
@@ -68,9 +68,9 @@ private fun YamlJob.customArguments(): CodeBlock {
                 separator = ", ",
                 postfix = "),\n",
                 newLineAtEnd = false,
-                transform = { CodeBlock.of("%S", it) }
+                transform = { CodeBlock.of("%S", it) },
             )
-        }
+        },
     )
 }
 
@@ -84,14 +84,14 @@ fun YamlStep.generateCommand() = CodeBlock { builder ->
             env.joinToCode(
                 prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
                 postfix = "),",
-                ifEmpty = CodeBlock.EMPTY
+                ifEmpty = CodeBlock.EMPTY,
             ) { key, value ->
                 value?.let {
                     CodeBlock { builder ->
                         builder.add("%S to ", key).add(value.orExpression())
                     }
                 }
-            }
+            },
         )
     if (condition != null) {
         builder.add("condition = ")

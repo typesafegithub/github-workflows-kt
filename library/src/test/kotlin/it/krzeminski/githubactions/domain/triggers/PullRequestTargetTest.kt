@@ -26,4 +26,4 @@ class PullRequestTargetTest : FunSpec({
             exception.message shouldBe "Cannot define both 'paths' and 'pathsIgnore'!"
         }
     }
-})
+},)

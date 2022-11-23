@@ -14,7 +14,7 @@ class CustomActionTest : FunSpec({
             inputs = linkedMapOf(
                 "root_file" to "report.tex",
                 "compiler" to "latexmk",
-            )
+            ),
         )
 
         // given
@@ -23,4 +23,4 @@ class CustomActionTest : FunSpec({
         // when & then
         outputs["custom-output"] shouldBe "steps.someStepId.outputs.custom-output"
     }
-})
+},)

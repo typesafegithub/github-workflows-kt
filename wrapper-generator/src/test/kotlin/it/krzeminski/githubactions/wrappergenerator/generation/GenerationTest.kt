@@ -38,7 +38,7 @@ class GenerationTest : FunSpec({
                     required = true,
                     default = null,
                 ),
-            )
+            ),
         )
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
 
@@ -76,7 +76,7 @@ class GenerationTest : FunSpec({
                     description = "Required is true, default is default",
                     required = true,
                 ),
-            )
+            ),
         )
         val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
 
@@ -133,7 +133,7 @@ class GenerationTest : FunSpec({
                     required = true,
                     default = null,
                 ),
-            )
+            ),
         )
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
 
@@ -170,7 +170,7 @@ class GenerationTest : FunSpec({
             outputs = mapOf(
                 "baz-goo" to Output(description = "Cool output!"),
                 "loo-woz" to Output(description = "Another output..."),
-            )
+            ),
         )
         val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
 
@@ -189,8 +189,8 @@ class GenerationTest : FunSpec({
             description = "This is a test description that should be put in the KDoc comment for a class",
             inputs = mapOf(
                 "foo-bar" to input,
-                "baz-goo" to input
-            )
+                "baz-goo" to input,
+            ),
         )
         val inputTypings = mapOf(
             "check-latest" to BooleanTyping,
@@ -208,7 +208,7 @@ class GenerationTest : FunSpec({
             Request contains invalid properties:
             Available: [foo-bar, baz-goo]
             Invalid:   [check-latest, bazGoo]
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -256,7 +256,7 @@ class GenerationTest : FunSpec({
                     description = "Foo bar - old",
                     required = true,
                     default = null,
-                    deprecationMessage = "Use 'fooBar'!"
+                    deprecationMessage = "Use 'fooBar'!",
                 ),
                 "fooBar" to Input(
                     description = "Foo bar - new",
@@ -287,19 +287,19 @@ class GenerationTest : FunSpec({
                 "list-ints" to Input("List of integers"),
                 "list-enums" to Input("List of enums"),
                 "list-int-special" to Input("List of integer with special values"),
-            )
+            ),
         )
         val inputTypings = mapOf(
             "list-strings" to ListOfTypings(",", StringTyping),
             "list-ints" to ListOfTypings(",", IntegerTyping),
             "list-enums" to ListOfTypings(
                 delimiter = ",",
-                typing = EnumTyping("MyEnum", listOf("one", "two", "three"))
+                typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
             ),
             "list-int-special" to ListOfTypings(
                 delimiter = ",",
-                typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42))
-            )
+                typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
+            ),
         )
         val coords = ActionCoords("john-smith", "simple-action-with-lists", "v3")
 
@@ -309,4 +309,4 @@ class GenerationTest : FunSpec({
         // then
         wrapper.shouldMatchFile("SimpleActionWithListsV3.kt")
     }
-})
+},)

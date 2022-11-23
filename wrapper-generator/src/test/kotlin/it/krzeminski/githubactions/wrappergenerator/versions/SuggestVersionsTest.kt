@@ -53,15 +53,18 @@ class SuggestVersionsTest : FunSpec({
             assertSoftly {
 
                 suggestNewerVersion(
-                    "v1".versions(), "v1, v1.1.1, v2, v2.0.1, v3, v3.1.1".versions()
+                    "v1".versions(),
+                    "v1, v1.1.1, v2, v2.0.1, v3, v3.1.1".versions(),
                 ) shouldBe "new version(s) available: [v2, v3]"
 
                 suggestNewerVersion(
-                    "v2".versions(), "v1.1.1, v2, v2.0.1, v3, v3.1.1".versions()
+                    "v2".versions(),
+                    "v1.1.1, v2, v2.0.1, v3, v3.1.1".versions(),
                 ) shouldBe "new version(s) available: [v3]"
 
                 suggestNewerVersion(
-                    "v9".versions(), "v12, v12.0.1".versions()
+                    "v9".versions(),
+                    "v12, v12.0.1".versions(),
                 ) shouldBe "new version(s) available: [v12]"
             }
         }
@@ -82,4 +85,4 @@ class SuggestVersionsTest : FunSpec({
             }
         }
     }
-})
+},)

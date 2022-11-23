@@ -39,4 +39,4 @@ class EnumTypingsTest : FunSpec({
             )
         }.shouldHaveMessage("EnumTyping(MyEnum): itemsNames should be in PascalCase, but got: [two, Enum-Four]")
     }
-})
+},)

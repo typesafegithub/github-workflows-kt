@@ -14,4 +14,4 @@ class ClassNamingTest : FunSpec({
             }
         }
     }
-})
+},)

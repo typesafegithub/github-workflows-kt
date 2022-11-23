@@ -37,7 +37,7 @@ private fun readLocalActionTypings(): List<WrapperRequest> {
                     path = it,
                     fileName = file,
                     actionTypingsDirectory = actionTypingsDirectory,
-                )
+                ),
             )
         }.toList()
 }

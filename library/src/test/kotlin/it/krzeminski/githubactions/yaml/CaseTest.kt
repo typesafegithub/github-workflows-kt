@@ -31,8 +31,8 @@ class CaseTest : DescribeSpec({
         PullRequestTarget.Type.values().forAll { it.toSnakeCase() }
         PullRequest.Type.values().forAll { it.toSnakeCase() }
     }
-})
+},)
 
 private enum class MyEnum {
-    In_valid,
+    In_valid, // ktlint-disable enum-entry-name-case
 }
