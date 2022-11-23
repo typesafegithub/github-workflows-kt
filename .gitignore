@@ -1,3 +1,6 @@
 .gradle
+
 .idea
+!.idea/externalDependencies.xml # Required IntelliJ plugins.
+
 build
