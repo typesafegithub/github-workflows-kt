@@ -7,7 +7,7 @@ plugins {
     `java-library`
 
     // Code quality.
-    id("org.jlleitschuh.gradle.ktlint")
+    id("org.jmailen.kotlinter")
 }
 
 dependencies {

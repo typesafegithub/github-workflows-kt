@@ -1,3 +1,5 @@
+import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
+
 plugins {
     buildsrc.convention.`kotlin-jvm`
 
@@ -37,8 +39,14 @@ tasks.register<JavaExec>("updateCommitHashes") {
     dependsOn(tasks.compileKotlin)
 }
 
-ktlint {
-    filter {
-        exclude("**/wrappersfromunittests/**")
-    }
+fun ConfigurableKtLintTask.kotlinterConfig() {
+    exclude("**/wrappersfromunittests/**")
+}
+
+tasks.lintKotlinTest {
+    kotlinterConfig()
+}
+
+tasks.formatKotlinTest {
+    kotlinterConfig()
 }
