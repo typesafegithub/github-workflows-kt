@@ -18,7 +18,7 @@ fun getGithubToken(): String =
             Missing environment variable export GITHUB_TOKEN=token
             Create a personal token at https://github.com/settings/tokens
             The token needs to have public_repo scope.
-            """.trimIndent()
+            """.trimIndent(),
         )
 
 @Serializable

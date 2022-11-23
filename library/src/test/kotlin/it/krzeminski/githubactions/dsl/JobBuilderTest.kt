@@ -61,4 +61,4 @@ class JobBuilderTest : FunSpec({
             }
         }
     }
-})
+},)

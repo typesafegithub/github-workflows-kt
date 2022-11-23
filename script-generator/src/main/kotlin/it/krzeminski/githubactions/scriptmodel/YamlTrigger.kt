@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class YamlTrigger(
-    val types: List<String>? = null
+    val types: List<String>? = null,
 )
 
 @Serializable

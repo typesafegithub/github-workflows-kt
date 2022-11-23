@@ -41,8 +41,9 @@ class TypingsTest : FunSpec({
               |  "field1",
               |  "field2",
               |)
-              |""".trimMargin(),
-            ListOfTypings(",")
+              |
+            """.trimMargin(),
+            ListOfTypings(","),
         ),
         row(
             "tag1\ntag2",
@@ -50,8 +51,9 @@ class TypingsTest : FunSpec({
               |  "tag1",
               |  "tag2",
               |)
-              |""".trimMargin(),
-            ListOfTypings("\\n")
+              |
+            """.trimMargin(),
+            ListOfTypings("\\n"),
         ),
         row(
             "success,custom",
@@ -59,8 +61,9 @@ class TypingsTest : FunSpec({
               |  ActionSlackV3.Status.Success,
               |  ActionSlackV3.Status.CustomEnum,
               |)
-              |""".trimMargin(),
-            ListOfTypings(",", enumTyping)
+              |
+            """.trimMargin(),
+            ListOfTypings(",", enumTyping),
         ),
     )
 
@@ -69,4 +72,4 @@ class TypingsTest : FunSpec({
             valueWithTyping(value, typing, coords).toString() shouldBe expected
         }
     }
-})
+},)

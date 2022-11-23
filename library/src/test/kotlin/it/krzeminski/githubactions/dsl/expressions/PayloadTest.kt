@@ -22,7 +22,7 @@ class PayloadTest : FunSpec({
 
         context.properties() shouldMatch jsonObject.keys.sorted()
     }
-})
+},)
 
 infix fun List<String>.shouldMatch(other: List<String>) {
     if (this.toSet() != other.toSet()) {
@@ -31,7 +31,7 @@ infix fun List<String>.shouldMatch(other: List<String>) {
                 |The lists don't match
                 |Missing:    ${(other - toSet()).distinct().sorted()}
                 |Unexpected: ${(this - other.toSet()).distinct().sorted()}
-            """.trimMargin()
+            """.trimMargin(),
         )
     }
 }

@@ -46,7 +46,7 @@ internal fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
             val coreArguments = it.toMap()
             (coreArguments + it._customArguments)
                 .ifEmpty { it.toAdditionalYaml() ?: emptyMap<Any, Any>() }
-        }
+        },
     )
 
 @InternalGithubActionsApi
@@ -138,7 +138,7 @@ private fun Schedule.toAdditionalYaml(): List<Map<String, String>> =
 private fun WorkflowDispatch.toAdditionalYaml(): Map<String, Any?> = when {
     inputs.isEmpty() -> emptyMap()
     else -> mapOf(
-        "inputs" to inputs.mapValues { (_, value) -> value.toYaml() }
+        "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
     )
 }
 

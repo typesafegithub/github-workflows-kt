@@ -30,4 +30,4 @@ class InputNullabilityTest : FunSpec({
             }
         }
     }
-})
+},)

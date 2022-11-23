@@ -19,6 +19,7 @@ import java.io.File
 fun main() {
     generateEventPayloads()
 }
+
 /*
  * Generate type-safe accessors for GitHub Event payloads
  * The payloads depend on the kind of the event: pull request, push, ...
@@ -99,7 +100,7 @@ fun PayloadEventParams.findAllObjects(element: JsonObject, path: String): Map<St
 
 fun generateObjectTypes(
     objects: Map<String, JsonObject>,
-    filename: String
+    filename: String,
 ): FileSpec {
     val types: List<TypeSpec> = objects.map { (key, jsonObject) ->
         jsonObject.generateObjectType(key, filename)
@@ -123,7 +124,7 @@ fun payloadClassName(key: String, filename: String) =
 
 fun JsonObject.generateObjectType(
     key: String,
-    filename: String
+    filename: String,
 ): TypeSpec {
     println("Generating class ${payloadClassName(key, filename)} : ExpressionContext(\"github.$key\")")
     val properties = mapNotNull { it.generatePropertySpec(key, filename) }
@@ -134,7 +135,7 @@ fun JsonObject.generateObjectType(
 
 fun Map.Entry<String, JsonElement>.generatePropertySpec(
     key: String,
-    filename: String
+    filename: String,
 ): PropertySpec? {
     val (child, element) = this
 

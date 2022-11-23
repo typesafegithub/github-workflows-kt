@@ -97,7 +97,7 @@ public class WorkflowBuilder(
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
         outputs = JobOutputs.EMPTY,
-        block = block
+        block = block,
     )
 
     public fun build(): Workflow = workflow

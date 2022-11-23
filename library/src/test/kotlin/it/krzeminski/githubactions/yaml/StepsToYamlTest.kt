@@ -40,7 +40,7 @@ class StepsToYamlTest : DescribeSpec({
                 "id" to "someId",
                 "name" to "Some external action",
                 "uses" to "actions/checkout@v3",
-            )
+            ),
         )
     }
 
@@ -77,7 +77,7 @@ class StepsToYamlTest : DescribeSpec({
                         "BAZ" to """
                             goo,
                             zoo
-                        """.trimIndent()
+                        """.trimIndent(),
                     ),
                     continueOnError = true,
                     timeoutMinutes = 123,
@@ -102,7 +102,7 @@ class StepsToYamlTest : DescribeSpec({
                         "BAZ" to """
                             goo,
                             zoo
-                        """.trimIndent()
+                        """.trimIndent(),
                     ),
                     "continue-on-error" to true,
                     "timeout-minutes" to 123,
@@ -180,7 +180,7 @@ class StepsToYamlTest : DescribeSpec({
                     command = "echo 'test!'",
                     _customArguments = mapOf(
                         "name" to "Overridden!",
-                    )
+                    ),
                 ),
             )
 
@@ -234,7 +234,7 @@ class StepsToYamlTest : DescribeSpec({
                         "BAZ" to """
                             goo,
                             zoo
-                        """.trimIndent()
+                        """.trimIndent(),
                     ),
                     condition = "\${{ matrix.foo == 'bar' }}",
                     _customArguments = mapOf("foo" to true),
@@ -260,7 +260,7 @@ class StepsToYamlTest : DescribeSpec({
                         "BAZ" to """
                             goo,
                             zoo
-                        """.trimIndent()
+                        """.trimIndent(),
                     ),
                     "if" to "\${{ matrix.foo == 'bar' }}",
                     "foo" to true,
@@ -281,9 +281,9 @@ class StepsToYamlTest : DescribeSpec({
                         inputs = linkedMapOf(
                             "root_file" to "report.tex",
                             "compiler" to "latexmk",
-                        )
-                    )
-                )
+                        ),
+                    ),
+                ),
             )
 
             // when
@@ -314,7 +314,7 @@ class StepsToYamlTest : DescribeSpec({
                         _customInputs = mapOf(
                             "path" to "override-path-value",
                             "answer" to "42",
-                        )
+                        ),
                     ),
                 ),
             )
@@ -344,7 +344,7 @@ class StepsToYamlTest : DescribeSpec({
                     action = UploadArtifactV3(
                         name = "artifact",
                         path = listOf("path1", "path2"),
-                        _customVersion = "v2.3.4"
+                        _customVersion = "v2.3.4",
                     ),
                 ),
             )
@@ -377,7 +377,7 @@ class StepsToYamlTest : DescribeSpec({
                     action = CheckoutV3(),
                     _customArguments = mapOf(
                         "name" to "Overridden!",
-                    )
+                    ),
                 ),
             )
 
@@ -394,4 +394,4 @@ class StepsToYamlTest : DescribeSpec({
             )
         }
     }
-})
+},)

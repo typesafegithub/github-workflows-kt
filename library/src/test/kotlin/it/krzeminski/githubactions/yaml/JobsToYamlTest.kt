@@ -24,7 +24,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test 1!'",
                     ),
                 ),
-                outputs = JobOutputs.EMPTY
+                outputs = JobOutputs.EMPTY,
             ),
             Job(
                 id = "Job-2",
@@ -36,7 +36,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test 2!'",
                     ),
                 ),
-                outputs = JobOutputs.EMPTY
+                outputs = JobOutputs.EMPTY,
             ),
         )
 
@@ -81,7 +81,7 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test!'",
                     ),
                 ),
-                outputs = JobOutputs.EMPTY
+                outputs = JobOutputs.EMPTY,
             ),
         )
 
@@ -116,7 +116,7 @@ class JobsToYamlTest : DescribeSpec({
                     "BAZ" to """
                         goo,
                         zoo
-                    """.trimIndent()
+                    """.trimIndent(),
                 ),
                 strategyMatrix = mapOf(
                     "strategyParam1" to listOf("foo", "bar"),
@@ -137,7 +137,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
                 _customArguments = mapOf(
                     "distribute-job" to true,
-                    "servers" to listOf("server-1", "server-2")
+                    "servers" to listOf("server-1", "server-2"),
                 ),
             ),
         )
@@ -155,7 +155,7 @@ class JobsToYamlTest : DescribeSpec({
                     "BAZ" to """
                         goo,
                         zoo
-                    """.trimIndent()
+                    """.trimIndent(),
                 ),
                 "strategy" to mapOf(
                     "matrix" to mapOf(
@@ -188,13 +188,13 @@ class JobsToYamlTest : DescribeSpec({
             id = "Another-job-1",
             runsOn = UbuntuLatest,
             steps = listOf(),
-            outputs = JobOutputs.EMPTY
+            outputs = JobOutputs.EMPTY,
         )
         val anotherJob2 = Job(
             id = "Another-job-2",
             runsOn = UbuntuLatest,
             steps = listOf(),
-            outputs = JobOutputs.EMPTY
+            outputs = JobOutputs.EMPTY,
         )
         val jobs = listOf(
             Job(
@@ -242,7 +242,7 @@ class JobsToYamlTest : DescribeSpec({
                     command = "echo 'test!'",
                 ),
             ),
-            outputs = JobOutputs.EMPTY
+            outputs = JobOutputs.EMPTY,
         )
 
         // given
@@ -295,7 +295,7 @@ class JobsToYamlTest : DescribeSpec({
                 outputs = JobOutputs.EMPTY,
                 _customArguments = mapOf(
                     "runs-on" to "overridden!",
-                )
+                ),
             ),
         )
 
@@ -316,4 +316,4 @@ class JobsToYamlTest : DescribeSpec({
             ),
         )
     }
-})
+},)

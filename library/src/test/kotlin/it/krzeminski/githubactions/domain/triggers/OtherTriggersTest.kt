@@ -84,7 +84,7 @@ class OtherTriggersTest : FunSpec({
 
     test("Creating all triggers with free arguments") {
         fun types(vararg types: String) = mapOf(
-            "types" to types.toList()
+            "types" to types.toList(),
         )
 
         val triggers: List<Trigger> = listOf(
@@ -161,4 +161,4 @@ class OtherTriggersTest : FunSpec({
             "workflow_run" to mapOf("types" to listOf("completed", "requested")),
         )
     }
-})
+},)

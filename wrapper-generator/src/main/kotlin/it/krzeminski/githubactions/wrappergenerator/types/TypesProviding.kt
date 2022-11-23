@@ -98,7 +98,7 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             } else {
                 IntegerWithSpecialValueTyping(
                     typeName = name?.toPascalCase() ?: fieldName.toPascalCase(),
-                    this.namedValues.mapKeys { (key, _) -> key.toPascalCase() }
+                    this.namedValues.mapKeys { (key, _) -> key.toPascalCase() },
                 )
             }
         }

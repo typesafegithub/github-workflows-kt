@@ -98,7 +98,9 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
     val classname: ClassName = allTriggersMap[triggerName]?.classname()
         ?: error("Couldn't find class for triggerName=$triggerName")
 
-    val typesCodeblock = if (types.isNullOrEmpty()) CodeBlock.of("") else
+    val typesCodeblock = if (types.isNullOrEmpty()) {
+        CodeBlock.of("")
+    } else {
         CodeBlock { builder ->
             builder
                 .add("\n").indent()
@@ -110,6 +112,7 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
                 .add("),\n")
                 .unindent()
         }
+    }
 
     return CodeBlock { builder ->
         builder.add("%T(", classname)
@@ -133,7 +136,7 @@ fun Trigger?.toKotlin(): CodeBlock {
             CodeBlock.of(
                 "%N = %L",
                 key.toCamelCase(),
-                list.joinToString(separator = ", ", prefix = "listOf(", postfix = ")")
+                list.joinToString(separator = ", ", prefix = "listOf(", postfix = ")"),
             )
         }
     }
@@ -164,7 +167,7 @@ private fun WorkflowDispatch?.toKotlin(): CodeBlock {
     val inputsBlock = inputs.joinToCode(
         prefix = CodeBlock.of("mapOf(\n"),
         ifEmpty = CodeBlock.of("),\n"),
-        postfix = "))"
+        postfix = "))",
     ) { name, input ->
         workflowDispatchInput(name, input)
     }
@@ -189,8 +192,8 @@ fun workflowDispatchInput(name: String, input: WorkflowDispatch.Input) = CodeBlo
                 prefix = CodeBlock.of("options = %M(", Members.listOf),
                 postfix = "),",
                 separator = ", ",
-                transform = { CodeBlock.of("%S", it) }
-            )
+                transform = { CodeBlock.of("%S", it) },
+            ),
         )
         .unindent()
         .add("),\n")
@@ -199,7 +202,7 @@ fun workflowDispatchInput(name: String, input: WorkflowDispatch.Input) = CodeBlo
 private fun List<ScheduleValue>?.toKotlin(): CodeBlock {
     return this?.joinToCode(
         prefix = CodeBlock.of("%T(listOf(\n", Schedule::class),
-        postfix = ")),"
+        postfix = ")),",
     ) {
         CodeBlock.of("%T(%S)", Cron::class, it.cron)
     } ?: CodeBlock.EMPTY

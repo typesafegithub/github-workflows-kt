@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
         Run it with:
           ./$buildFile
         The resulting YAML file will be available at $filename.yaml
-        """.trimIndent()
+        """.trimIndent(),
     )
 }
 
@@ -36,7 +36,7 @@ fun usage(): Nothing {
            |   ./gradlew :script-generator:run --args /path/to/.github/workflows/build.yml
            |   ./gradlew :script-generator:run --args https://raw.githubusercontent.com/krzema12/github-actions-kotlin-dsl/0f41e3322a3e7de4199000fae54b398380eace2f/.github/workflows/build.yaml
            |   ./gradlew :script-generator:run --args https://gist.githubusercontent.com/jmfayard/dba8b5195292cac0e5f83c42de7cc3c2/raw/ca6143d70a8a34eea5ea64871f87cfec69443ab1/build.yml
-            """.trimMargin()
+        """.trimMargin(),
     )
 }
 

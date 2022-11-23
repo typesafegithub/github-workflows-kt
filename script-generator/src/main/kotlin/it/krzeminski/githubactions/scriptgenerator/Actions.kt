@@ -33,7 +33,7 @@ fun YamlStep.generateAction(
         env.joinToCode(
             prefix = CodeBlock.of("%L = linkedMapOf(\n", "env"),
             postfix = "),",
-            ifEmpty = CodeBlock.EMPTY
+            ifEmpty = CodeBlock.EMPTY,
         ) { key, value ->
             value?.let {
                 CodeBlock { builder ->
@@ -41,7 +41,7 @@ fun YamlStep.generateAction(
                         .add(value.orExpression())
                 }
             }
-        }
+        },
     )
     if (condition != null) {
         builder
@@ -76,7 +76,7 @@ fun YamlStep.generateActionWithWrapper(
             ifEmpty = CodeBlock.EMPTY,
             prefix = CodeBlock.of("_customInputs = mapOf(\n"),
             newLineAtEnd = false,
-            postfix = "),\n"
+            postfix = "),\n",
         ) { key, value ->
             CodeBlock.of("%S to %S", key, value)
         }

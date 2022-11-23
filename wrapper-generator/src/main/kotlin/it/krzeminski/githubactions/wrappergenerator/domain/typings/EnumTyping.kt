@@ -15,7 +15,7 @@ import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 data class EnumTyping(
     val typeName: String,
     val items: List<String>,
-    val itemsNames: List<String> = items.map { it.toPascalCase() }
+    val itemsNames: List<String> = items.map { it.toPascalCase() },
 ) : Typing {
 
     init {
@@ -42,7 +42,7 @@ data class EnumTyping(
             .primaryConstructor(
                 FunSpec.constructorBuilder()
                     .addParameter(ParameterSpec.builder("stringValue", String::class).build())
-                    .build()
+                    .build(),
             )
             .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
             .addTypes(
@@ -54,18 +54,18 @@ data class EnumTyping(
                         .superclass(sealedClassName)
                         .addSuperclassConstructorParameter("%S", it)
                         .build()
-                }
+                },
             )
             .addType(
                 TypeSpec.classBuilder("Custom")
                     .primaryConstructor(
                         FunSpec.constructorBuilder()
                             .addParameter(ParameterSpec.builder("customStringValue", String::class).build())
-                            .build()
+                            .build(),
                     )
                     .superclass(sealedClassName)
                     .addSuperclassConstructorParameter("customStringValue")
-                    .build()
+                    .build(),
             )
             .build()
     }

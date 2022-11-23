@@ -35,7 +35,7 @@ class ObjectToYamlTest : DescribeSpec({
                     mapOf("key-with-null-map" to emptyMap<String, String>()),
                     listOf(1, 2, 3),
                     mapOf("yet" to "another-map"),
-                )
+                ),
             ),
             "bar" to 456,
         )
@@ -105,4 +105,4 @@ class ObjectToYamlTest : DescribeSpec({
 
         """.trimIndent()
     }
-})
+},)

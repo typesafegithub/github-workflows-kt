@@ -34,7 +34,7 @@ class ScheduleTest : FunSpec({
                 - Field 'dayMonth' with value [60] contains number(s) outside of range 0..59
                 - Field 'month' with value [0] contains number(s) outside of range 1..31
                 - Field 'dayWeek' with value [7] contains number(s) outside of range 0..6
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
 
@@ -49,7 +49,7 @@ class ScheduleTest : FunSpec({
                 - Field 'dayMonth' with value [] is blank
                 - Field 'month' with value [] is blank
                 - Field 'dayWeek' with value [] is blank
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
 
@@ -61,8 +61,8 @@ class ScheduleTest : FunSpec({
                 Your Cron syntax [= ; * * *] contains errors:
                 - Field 'minute' with value [=] contains invalid characters
                 - Field 'hour' with value [;] contains invalid characters
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
-})
+},)

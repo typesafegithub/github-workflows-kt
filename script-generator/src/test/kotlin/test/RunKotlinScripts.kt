@@ -35,4 +35,4 @@ class RunKotlinScripts : FunSpec({
                 .writeToFile(addConsistencyCheck = false)
         }
     }
-})
+},)

@@ -26,12 +26,23 @@ data class ActionType(
 
 @Serializable
 enum class ActionTypeEnum {
-    @SerialName("string") String,
-    @SerialName("boolean") Boolean,
-    @SerialName("integer") Integer,
-    @SerialName("float") Float,
-    @SerialName("list") List,
-    @SerialName("enum") Enum,
+    @SerialName("string")
+    String,
+
+    @SerialName("boolean")
+    Boolean,
+
+    @SerialName("integer")
+    Integer,
+
+    @SerialName("float")
+    Float,
+
+    @SerialName("list")
+    List,
+
+    @SerialName("enum")
+    Enum,
 }
 
 fun ActionType.validateType() {

@@ -53,17 +53,17 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
                 run(
                     "Execute script",
                     "rm '$targetFilePath' " +
-                        "&& '$sourceFilePath'"
+                        "&& '$sourceFilePath'",
                 )
                 run(
                     "Consistency check",
-                    "git diff --exit-code '$targetFilePath'"
+                    "git diff --exit-code '$targetFilePath'",
                 )
             } else {
                 run(
                     "Consistency check",
                     "diff -u '$targetFilePath' " +
-                        "<('$sourceFilePath')"
+                        "<('$sourceFilePath')",
                 )
             }
         }

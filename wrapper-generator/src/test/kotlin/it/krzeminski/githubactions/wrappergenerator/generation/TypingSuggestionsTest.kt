@@ -58,4 +58,4 @@ class TypingSuggestionsTest : FunSpec({
             |    )
         """.trimMargin()
     }
-})
+},)

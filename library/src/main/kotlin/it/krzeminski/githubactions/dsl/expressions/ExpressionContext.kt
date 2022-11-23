@@ -3,7 +3,7 @@ package it.krzeminski.githubactions.dsl.expressions
 @Suppress("ConstructorParameterNaming")
 public open class ExpressionContext(
     internal val _path: String,
-    public val propertyToExprPath: Map<String, String> = MapFromLambda { propertyName -> "$_path.$propertyName" }
+    public val propertyToExprPath: Map<String, String> = MapFromLambda { propertyName -> "$_path.$propertyName" },
 ) : Map<String, String> by propertyToExprPath
 
 internal class MapFromLambda<T>(val operation: (String) -> T) : Map<String, T> by emptyMap() {

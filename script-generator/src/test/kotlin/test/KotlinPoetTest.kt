@@ -37,7 +37,7 @@ class KotlinPoetTest : DescribeSpec({
             val codeBlock = listOf(1, 2, 3)
                 .joinToCode(
                     prefix = CodeBlock.of("listOf("),
-                    transform = { CodeBlock.of("%L", it * it) }
+                    transform = { CodeBlock.of("%L", it * it) },
                 )
 
             codeBlock.toString() shouldBe """
@@ -55,7 +55,7 @@ class KotlinPoetTest : DescribeSpec({
                 .joinToCode(
                     separator = ", ",
                     prefix = CodeBlock.of("%M(", Members.linkedMapOf),
-                    transform = { CodeBlock.of("%S", "$it$it") }
+                    transform = { CodeBlock.of("%S", "$it$it") },
                 )
 
             codeBlock.toString() shouldBe """
@@ -69,7 +69,7 @@ class KotlinPoetTest : DescribeSpec({
 
             val codeBlock = list.joinToCode(
                 ifEmpty = CodeBlock.of("emptyList<String>()"),
-                newLineAtEnd = false
+                newLineAtEnd = false,
             )
 
             codeBlock.toString() shouldBe "emptyList<String>()"
@@ -92,7 +92,7 @@ class KotlinPoetTest : DescribeSpec({
                     } else {
                         CodeBlock.of("%L = $template", key.toCamelCase(), value)
                     }
-                }
+                },
             )
 
             codeblock.toString() shouldBe """
@@ -107,11 +107,11 @@ class KotlinPoetTest : DescribeSpec({
 
         it("renders an empty map or empty list") {
             emptyMap<String, String>().joinToCode(
-                transform = { key, value -> CodeBlock.of("$key => $value") }
+                transform = { key, value -> CodeBlock.of("$key => $value") },
             ).toString() shouldBe ""
 
             emptyList<String>().joinToCode()
                 .toString() shouldBe ""
         }
     }
-})
+},)

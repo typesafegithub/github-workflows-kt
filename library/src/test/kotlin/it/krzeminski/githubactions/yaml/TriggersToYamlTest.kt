@@ -69,8 +69,8 @@ class TriggersToYamlTest : DescribeSpec({
                             type = WorkflowDispatch.Type.String,
                             required = true,
                         ),
-                    )
-                )
+                    ),
+                ),
             )
 
             // when
@@ -102,8 +102,8 @@ class TriggersToYamlTest : DescribeSpec({
                             "type" to "string",
                             "required" to true,
                         ),
-                    )
-                )
+                    ),
+                ),
             )
         }
     }
@@ -141,7 +141,7 @@ class TriggersToYamlTest : DescribeSpec({
                     "branches" to listOf("branch1", "branch2"),
                     "tags" to listOf("tag1", "tag2"),
                     "paths" to listOf("path1", "path2"),
-                )
+                ),
             )
         }
 
@@ -164,7 +164,7 @@ class TriggersToYamlTest : DescribeSpec({
                     "branches-ignore" to listOf("branchIgnore1", "branchIgnore2"),
                     "tags-ignore" to listOf("tagIgnore1", "tagIgnore2"),
                     "paths-ignore" to listOf("pathIgnore1", "pathIgnore2"),
-                )
+                ),
             )
         }
     }
@@ -190,7 +190,7 @@ class TriggersToYamlTest : DescribeSpec({
                     branches = listOf("branch1", "branch2"),
                     paths = listOf("path1", "path2"),
                     types = listOf(PullRequest.Type.AutoMergeDisabled, PullRequest.Type.Opened),
-                )
+                ),
             )
 
             // when
@@ -202,7 +202,7 @@ class TriggersToYamlTest : DescribeSpec({
                     "types" to listOf("auto_merge_disabled", "opened"),
                     "branches" to listOf("branch1", "branch2"),
                     "paths" to listOf("path1", "path2"),
-                )
+                ),
             )
         }
 
@@ -212,7 +212,7 @@ class TriggersToYamlTest : DescribeSpec({
                 PullRequest(
                     branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
                     pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
-                )
+                ),
             )
 
             // when
@@ -223,7 +223,7 @@ class TriggersToYamlTest : DescribeSpec({
                 "pull_request" to mapOf(
                     "branches-ignore" to listOf("branchIgnore1", "branchIgnore2"),
                     "paths-ignore" to listOf("pathIgnore1", "pathIgnore2"),
-                )
+                ),
             )
         }
     }
@@ -238,7 +238,7 @@ class TriggersToYamlTest : DescribeSpec({
 
             // then
             yaml shouldBe mapOf(
-                "pull_request_target" to emptyMap<Any, Any>()
+                "pull_request_target" to emptyMap<Any, Any>(),
             )
         }
 
@@ -249,7 +249,7 @@ class TriggersToYamlTest : DescribeSpec({
                     types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
                     branches = listOf("branch1", "branch2"),
                     paths = listOf("path1", "path2"),
-                )
+                ),
             )
 
             // when
@@ -261,7 +261,7 @@ class TriggersToYamlTest : DescribeSpec({
                     "types" to listOf("assigned", "closed"),
                     "branches" to listOf("branch1", "branch2"),
                     "paths" to listOf("path1", "path2"),
-                )
+                ),
             )
         }
 
@@ -272,7 +272,7 @@ class TriggersToYamlTest : DescribeSpec({
                     types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
                     branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
                     pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
-                )
+                ),
             )
 
             // when
@@ -284,7 +284,7 @@ class TriggersToYamlTest : DescribeSpec({
                     "types" to listOf("assigned", "closed"),
                     "branches-ignore" to listOf("branchIgnore1", "branchIgnore2"),
                     "paths-ignore" to listOf("pathIgnore1", "pathIgnore2"),
-                )
+                ),
             )
         }
     }
@@ -297,7 +297,7 @@ class TriggersToYamlTest : DescribeSpec({
                     triggers = listOf(
                         Cron("30 5,17 * * *"),
                     ),
-                )
+                ),
             )
 
             // when
@@ -319,7 +319,7 @@ class TriggersToYamlTest : DescribeSpec({
                         Cron("30 5,17 * * *"),
                         Cron("0 0 * * *"),
                     ),
-                )
+                ),
             )
 
             // when
@@ -407,4 +407,4 @@ class TriggersToYamlTest : DescribeSpec({
             ),
         )
     }
-})
+},)
