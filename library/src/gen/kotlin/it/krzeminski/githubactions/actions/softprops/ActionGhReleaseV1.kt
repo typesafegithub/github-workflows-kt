@@ -79,6 +79,10 @@ public class ActionGhReleaseV1(
      */
     public val generateReleaseNotes: Boolean? = null,
     /**
+     * Append to existing body instead of overwriting it. Default is false.
+     */
+    public val appendBody: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -105,6 +109,7 @@ public class ActionGhReleaseV1(
             targetCommitish?.let { "target_commitish" to it },
             discussionCategoryName?.let { "discussion_category_name" to it },
             generateReleaseNotes?.let { "generate_release_notes" to it.toString() },
+            appendBody?.let { "append_body" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -128,6 +133,13 @@ public class ActionGhReleaseV1(
          * URL for uploading assets to the release
          */
         public val uploadUrl: String = "steps.$stepId.outputs.upload_url"
+
+        /**
+         * JSON array containing information about each uploaded asset, in the format given
+         * [here](https://docs.github.com/en/rest/reference/repos#upload-a-release-asset--code-samples)
+         * (minus the `uploader` field)
+         */
+        public val assets: String = "steps.$stepId.outputs.assets"
 
         public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
