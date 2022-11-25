@@ -29,6 +29,8 @@ inputs:
     type: string
   generate_release_notes:
     type: boolean
+  append_body:
+    type: boolean
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:
   url:
