@@ -1,14 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -22,11 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/semver-utils)
  */
-@Deprecated(
-    message = "This action has a newer major version: SemverUtilsV3",
-    replaceWith = ReplaceWith("SemverUtilsV3"),
-)
-public class SemverUtilsV2(
+public class SemverUtilsV3(
     /**
      * A version to process
      */
@@ -35,6 +28,11 @@ public class SemverUtilsV2(
      * A version to compare with, if any
      */
     public val compareTo: String? = null,
+    /**
+     * A version to diff with. If not specified, the version will be diffed with the `compare-to`
+     * input. If `compare-to` is not specified either, nothing happens.
+     */
+    public val diffWith: String? = null,
     /**
      * A range to check against
      */
@@ -56,12 +54,13 @@ public class SemverUtilsV2(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<SemverUtilsV2.Outputs>("madhead", "semver-utils", _customVersion ?: "v2") {
+) : ActionWithOutputs<SemverUtilsV3.Outputs>("madhead", "semver-utils", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "version" to version,
             compareTo?.let { "compare-to" to it },
+            diffWith?.let { "diff-with" to it },
             satisfies?.let { "satisfies" to it },
             identifier?.let { "identifier" to it },
             lenient?.let { "lenient" to it.toString() },
@@ -121,6 +120,11 @@ public class SemverUtilsV2(
          * ">" if it preceeds it, and "=" if they are equal
          */
         public val comparisonResult: String = "steps.$stepId.outputs.comparison-result"
+
+        /**
+         * If the diff-to or compare-to were provided, this output will contain the diff result
+         */
+        public val diffResult: String = "steps.$stepId.outputs.diff-result"
 
         /**
          * true if the version satisfies the given range
