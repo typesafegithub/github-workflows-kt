@@ -58,7 +58,7 @@ Click on a version to see the wrapper's code.
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt), v2: [`LoginActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV2.kt)
     * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt), v2: [`SetupBuildxActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV2.kt)
 * elgohr
-    * [Publish-Docker-Github-Action](https://github.com/elgohr/Publish-Docker-Github-Action) - v4: [`PublishDockerGithubActionV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV4.kt)
+    * [Publish-Docker-Github-Action](https://github.com/elgohr/Publish-Docker-Github-Action) - v4: [`PublishDockerGithubActionV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV4.kt), v5: [`PublishDockerGithubActionV5`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV5.kt)
 * EndBug
     * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/endbug/AddAndCommitV9.kt)
 * ericcornelissen
@@ -120,6 +120,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 69
-* counting each version separately: 89
+* counting each version separately: 90
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 9
