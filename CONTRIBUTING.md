@@ -21,3 +21,5 @@ Apart from filing an issue using the template, we strongly encourage you to:
 ## Contributing a feature
 
 Each feature contribution must have an accompanying feature request issue, best if we discuss the approach in the issue first to avoid misunderstandings and wasted time. If the feature is simple, go ahead with creating the issue and the PR in parallel.
+
+If you're creating a new feature branch in this repository (doesn't count if it's your fork), it has to start with issue number, e.g. `123-new-steps-API`, and the issue has to be open. Otherwise, the branch is assumed to be safe to delete.
