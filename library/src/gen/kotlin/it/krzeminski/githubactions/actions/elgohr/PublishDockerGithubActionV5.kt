@@ -1,14 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.elgohr
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -23,11 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/elgohr/Publish-Docker-Github-Action)
  */
-@Deprecated(
-    message = "This action has a newer major version: PublishDockerGithubActionV5",
-    replaceWith = ReplaceWith("PublishDockerGithubActionV5"),
-)
-public class PublishDockerGithubActionV4(
+public class PublishDockerGithubActionV5(
     /**
      * The name of the image you would like to push
      */
@@ -106,8 +99,8 @@ public class PublishDockerGithubActionV4(
      * version that the wrapper doesn't yet know about
      */
     _customVersion: String? = null,
-) : ActionWithOutputs<PublishDockerGithubActionV4.Outputs>("elgohr", "Publish-Docker-Github-Action",
-        _customVersion ?: "v4") {
+) : ActionWithOutputs<PublishDockerGithubActionV5.Outputs>("elgohr", "Publish-Docker-Github-Action",
+        _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
