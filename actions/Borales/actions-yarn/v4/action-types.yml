@@ -1,0 +1,6 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  cmd:
+    type: string
+  dir:
+    type: string
