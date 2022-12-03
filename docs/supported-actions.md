@@ -45,7 +45,7 @@ Click on a version to see the wrapper's code.
 * bahmutov
     * [npm-install](https://github.com/bahmutov/npm-install) - v1: [`NpmInstallV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/bahmutov/NpmInstallV1.kt)
 * Borales
-    * [actions-yarn](https://github.com/Borales/actions-yarn) - v3: [`ActionsYarnV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV3.kt)
+    * [actions-yarn](https://github.com/Borales/actions-yarn) - v3: [`ActionsYarnV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV3.kt), v4: [`ActionsYarnV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/borales/ActionsYarnV4.kt)
 * c2corg
     * [browserslist-update-action](https://github.com/c2corg/browserslist-update-action) - v2 ✅: [`BrowserslistUpdateActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/c2corg/BrowserslistUpdateActionV2.kt)
     * [transifex-pull-request-action](https://github.com/c2corg/transifex-pull-request-action) - v5 ✅: [`TransifexPullRequestActionV5`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/c2corg/TransifexPullRequestActionV5.kt)
@@ -120,6 +120,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 69
-* counting each version separately: 88
+* counting each version separately: 89
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 9
