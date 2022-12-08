@@ -86,8 +86,10 @@ public class SetupJavaV3(
      */
     public val jobStatus: String? = null,
     /**
-     * Used to pull java versions from setup-java. Since there is a default value, token is
-     * typically not supplied by the user.
+     * The token used to authenticate when fetching version manifests hosted on github.com, such as
+     * for the Microsoft Build of OpenJDK. When running this action on github.com, the default value is
+     * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
+     * experiencing rate limiting.
      */
     public val token: String? = null,
     /**
