@@ -25,7 +25,7 @@ public class SetupGoV3(
      */
     public val goVersion: String? = null,
     /**
-     * Path to the go.mod file.
+     * Path to the go.mod or go.work file.
      */
     public val goVersionFile: String? = null,
     /**
@@ -34,8 +34,10 @@ public class SetupGoV3(
      */
     public val checkLatest: Boolean? = null,
     /**
-     * Used to pull node distributions from go-versions.  Since there's a default, this is typically
-     * not supplied by the user.
+     * Used to pull node distributions from go-versions. Since there's a default, this is typically
+     * not supplied by the user. When running this action on github.com, the default value is
+     * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
+     * experiencing rate limiting.
      */
     public val token: String? = null,
     /**
