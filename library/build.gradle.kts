@@ -9,6 +9,7 @@ plugins {
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
+    id("info.solidsoft.pitest") version "1.9.0"
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.12.0"
 }
 
@@ -73,4 +74,12 @@ val validateDuplicatedVersion by tasks.creating<Task> {
 
 tasks.check {
     dependsOn(validateDuplicatedVersion)
+}
+
+pitest {
+    junit5PluginVersion.set("1.1.0")
+    excludedClasses.set(
+        // Generated action wrappers.
+        listOf("it.krzeminski.githubactions.actions.*"),
+    )
 }
