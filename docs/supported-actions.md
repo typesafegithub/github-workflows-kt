@@ -85,6 +85,7 @@ Click on a version to see the wrapper's code.
     * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt)
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1 ✅: [`CheckGradleVersionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
+    * [intellij-http-client-action](https://github.com/madhead/intellij-http-client-action) - v0 ✅: [`IntellijHttpClientActionV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/IntellijHttpClientActionV0.kt)
     * [semver-utils](https://github.com/madhead/semver-utils) - v2 ✅: [`SemverUtilsV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV2.kt), v3 ✅: [`SemverUtilsV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/SemverUtilsV3.kt)
 * mi-kas
     * [kover-report](https://github.com/mi-kas/kover-report) - v1 ✅: [`KoverReportV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/mikas/KoverReportV1.kt)
@@ -119,7 +120,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 69
-* counting each version separately: 90
+* counting by actions: 70
+* counting each version separately: 91
 
-Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 9
+Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 10
