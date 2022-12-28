@@ -3,11 +3,5 @@
   "extends": [
     "config:base"
   ],
-  "automerge": true,
-  "major": {
-    "automerge": false
-  },
-  "schedule": [
-    "before 3am on Thursday"
-  ]
+  "automerge": true
 }
