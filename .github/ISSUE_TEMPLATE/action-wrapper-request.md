@@ -14,3 +14,7 @@ Yes/no
 
 ### What action(s) do you need?
 _URL to GitHub, e.g.: https://github.com/actions/upload-artifact_
+
+### Do the actions fulfill all [the requirements](https://krzema12.github.io/github-workflows-kt/user-guide/using-actions/#requirements-for-adding-a-new-action)?
+
+Yes/no
