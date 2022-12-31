@@ -47,7 +47,6 @@ public final class it/krzeminski/githubactions/domain/Concurrency {
 
 public final class it/krzeminski/githubactions/domain/Concurrency$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/Concurrency$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/Concurrency;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -308,7 +307,6 @@ public final class it/krzeminski/githubactions/domain/triggers/BranchProtectionR
 
 public final class it/krzeminski/githubactions/domain/triggers/BranchProtectionRule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/BranchProtectionRule$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/BranchProtectionRule;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -340,7 +338,6 @@ public final class it/krzeminski/githubactions/domain/triggers/CheckRun : it/krz
 
 public final class it/krzeminski/githubactions/domain/triggers/CheckRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/CheckRun$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/CheckRun;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -372,7 +369,6 @@ public final class it/krzeminski/githubactions/domain/triggers/CheckSuite : it/k
 
 public final class it/krzeminski/githubactions/domain/triggers/CheckSuite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/CheckSuite$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/CheckSuite;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -404,7 +400,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Create : it/krzem
 
 public final class it/krzeminski/githubactions/domain/triggers/Create$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Create$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Create;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -434,7 +429,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Cron {
 
 public final class it/krzeminski/githubactions/domain/triggers/Cron$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Cron$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Cron;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -466,7 +460,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Delete : it/krzem
 
 public final class it/krzeminski/githubactions/domain/triggers/Delete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Delete$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Delete;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -498,7 +491,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Deployment : it/k
 
 public final class it/krzeminski/githubactions/domain/triggers/Deployment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Deployment$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Deployment;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -530,7 +522,6 @@ public final class it/krzeminski/githubactions/domain/triggers/DeploymentStatus 
 
 public final class it/krzeminski/githubactions/domain/triggers/DeploymentStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/DeploymentStatus$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/DeploymentStatus;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -562,7 +553,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Discussion : it/k
 
 public final class it/krzeminski/githubactions/domain/triggers/Discussion$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Discussion$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Discussion;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -594,7 +584,6 @@ public final class it/krzeminski/githubactions/domain/triggers/DiscussionComment
 
 public final class it/krzeminski/githubactions/domain/triggers/DiscussionComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/DiscussionComment$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/DiscussionComment;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -626,7 +615,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Fork : it/krzemin
 
 public final class it/krzeminski/githubactions/domain/triggers/Fork$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Fork$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Fork;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -658,7 +646,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Gollum : it/krzem
 
 public final class it/krzeminski/githubactions/domain/triggers/Gollum$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Gollum$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Gollum;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -690,7 +677,6 @@ public final class it/krzeminski/githubactions/domain/triggers/IssueComment : it
 
 public final class it/krzeminski/githubactions/domain/triggers/IssueComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/IssueComment$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/IssueComment;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -722,7 +708,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Issues : it/krzem
 
 public final class it/krzeminski/githubactions/domain/triggers/Issues$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Issues$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Issues;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -754,7 +739,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Label : it/krzemi
 
 public final class it/krzeminski/githubactions/domain/triggers/Label$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Label$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Label;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -786,7 +770,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Milestone : it/kr
 
 public final class it/krzeminski/githubactions/domain/triggers/Milestone$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Milestone$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Milestone;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -818,7 +801,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PageBuild : it/kr
 
 public final class it/krzeminski/githubactions/domain/triggers/PageBuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/PageBuild$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/PageBuild;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -850,7 +832,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Project : it/krze
 
 public final class it/krzeminski/githubactions/domain/triggers/Project$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Project$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Project;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -882,7 +863,6 @@ public final class it/krzeminski/githubactions/domain/triggers/ProjectCard : it/
 
 public final class it/krzeminski/githubactions/domain/triggers/ProjectCard$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/ProjectCard$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/ProjectCard;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -914,7 +894,6 @@ public final class it/krzeminski/githubactions/domain/triggers/ProjectColumn : i
 
 public final class it/krzeminski/githubactions/domain/triggers/ProjectColumn$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/ProjectColumn$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/ProjectColumn;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -946,7 +925,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PublicWorkflow : 
 
 public final class it/krzeminski/githubactions/domain/triggers/PublicWorkflow$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/PublicWorkflow$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/PublicWorkflow;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -988,7 +966,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequest : it/
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/PullRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/PullRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1047,7 +1024,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestReview
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestReview$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/PullRequestReview$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/PullRequestReview;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1079,7 +1055,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestReview
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestReviewComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/PullRequestReviewComment$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/PullRequestReviewComment;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1121,7 +1096,6 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/PullRequestTarget$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/PullRequestTarget;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1192,7 +1166,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Push : it/krzemin
 
 public final class it/krzeminski/githubactions/domain/triggers/Push$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Push$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Push;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1224,7 +1197,6 @@ public final class it/krzeminski/githubactions/domain/triggers/RegistryPackage :
 
 public final class it/krzeminski/githubactions/domain/triggers/RegistryPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/RegistryPackage$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/RegistryPackage;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1256,7 +1228,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Release : it/krze
 
 public final class it/krzeminski/githubactions/domain/triggers/Release$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Release$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Release;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1288,7 +1259,6 @@ public final class it/krzeminski/githubactions/domain/triggers/RepositoryDispatc
 
 public final class it/krzeminski/githubactions/domain/triggers/RepositoryDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/RepositoryDispatch$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/RepositoryDispatch;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1339,7 +1309,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Status : it/krzem
 
 public final class it/krzeminski/githubactions/domain/triggers/Status$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Status$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Status;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1374,7 +1343,6 @@ public final class it/krzeminski/githubactions/domain/triggers/Watch : it/krzemi
 
 public final class it/krzeminski/githubactions/domain/triggers/Watch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/Watch$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/Watch;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1406,7 +1374,6 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowCall : it
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowCall$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/WorkflowCall$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/WorkflowCall;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1440,7 +1407,6 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch 
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1469,7 +1435,6 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch$
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Input$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Input;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1515,7 +1480,6 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowRun : it/
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lit/krzeminski/githubactions/domain/triggers/WorkflowRun$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lit/krzeminski/githubactions/domain/triggers/WorkflowRun;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
