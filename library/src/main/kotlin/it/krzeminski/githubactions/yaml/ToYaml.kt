@@ -51,9 +51,28 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             uses("Check out", CheckoutV3())
             if (useGitDiff) {
                 run(
+                    "Save file permission",
+                    """
+                        perNum=`stat -c '%a' $targetFilePath`
+                        echo permitNumber=${'$'}perNum >> ${'$'}GITHUB_OUTPUT
+                    """.trimIndent(),
+                )
+                run(
+                    "Fix file permission",
+                    "chmod 777 $targetFilePath",
+                )
+                run(
                     "Execute script",
                     "rm '$targetFilePath' " +
                         "&& '$sourceFilePath'",
+                )
+                run(
+                    "Restore file permission on PC",
+                    "chmod ${expr(" steps.step-1.outputs.permitNumber ")} $targetFilePath",
+                )
+                run(
+                    "Restore file permission on Git",
+                    "git update-index chmod=${expr(" steps.step-1.outputs.permitNumber ")} $targetFilePath",
                 )
                 run(
                     "Consistency check",
