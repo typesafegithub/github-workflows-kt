@@ -2,6 +2,8 @@
 inputs:
   version:
     type: string
+  include-all-prereleases:
+    type: boolean
   arch:
     type: enum
     name: Architecture
