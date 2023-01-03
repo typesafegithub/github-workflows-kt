@@ -25,6 +25,10 @@ public class SetupJuliaV1(
      */
     public val version: String? = null,
     /**
+     * Include prereleases when matching the Julia version to available versions.
+     */
+    public val includeAllPrereleases: Boolean? = null,
+    /**
      * Architecture of the Julia binaries. Defaults to the architecture of the runner executing the
      * job.
      */
@@ -48,6 +52,7 @@ public class SetupJuliaV1(
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             version?.let { "version" to it },
+            includeAllPrereleases?.let { "include-all-prereleases" to it.toString() },
             arch?.let { "arch" to it.stringValue },
             showVersioninfo?.let { "show-versioninfo" to it.toString() },
             *_customInputs.toList().toTypedArray(),
