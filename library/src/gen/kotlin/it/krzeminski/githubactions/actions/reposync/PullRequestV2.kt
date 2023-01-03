@@ -22,6 +22,11 @@ import kotlin.collections.toTypedArray
  */
 public class PullRequestV2(
     /**
+     * Repository (user/repo) to create the pull request in, falls back to checkout repository or
+     * triggered repository
+     */
+    public val destinationRepository: String? = null,
+    /**
      * Branch name to pull from, default is triggered branch
      */
     public val sourceBranch: String? = null,
@@ -70,6 +75,10 @@ public class PullRequestV2(
      */
     public val githubToken: String? = null,
     /**
+     * Bash set -x debugging mode
+     */
+    public val debug: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -82,6 +91,7 @@ public class PullRequestV2(
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
+            destinationRepository?.let { "destination_repository" to it },
             sourceBranch?.let { "source_branch" to it },
             destinationBranch?.let { "destination_branch" to it },
             prTitle?.let { "pr_title" to it },
@@ -94,6 +104,7 @@ public class PullRequestV2(
             prDraft?.let { "pr_draft" to it.toString() },
             prAllowEmpty?.let { "pr_allow_empty" to it.toString() },
             githubToken?.let { "github_token" to it },
+            debug?.let { "debug" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -112,6 +123,11 @@ public class PullRequestV2(
          * Pull request number
          */
         public val prNumber: String = "steps.$stepId.outputs.pr_number"
+
+        /**
+         * Boolean string indicating if a pull request was created from the action run
+         */
+        public val prCreated: String = "steps.$stepId.outputs.pr_created"
 
         /**
          * Boolean string indicating whether any file has been changed
