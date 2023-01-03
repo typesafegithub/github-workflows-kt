@@ -40,7 +40,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         apiVersion = "1.5"
         languageVersion = "1.7"
-        jvmTarget = "11"
+        jvmTarget = "17"
 
         allWarningsAsErrors = true
 
