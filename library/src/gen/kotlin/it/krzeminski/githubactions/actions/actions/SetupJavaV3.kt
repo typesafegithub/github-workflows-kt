@@ -24,7 +24,11 @@ public class SetupJavaV3(
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported
      * syntax in README file
      */
-    public val javaVersion: String,
+    public val javaVersion: String? = null,
+    /**
+     * The path to the `.java-version` file. See examples of supported syntax in README file
+     */
+    public val javaVersionFile: String? = null,
     /**
      * Java distribution. See the list of supported distributions in README file
      */
@@ -115,7 +119,8 @@ public class SetupJavaV3(
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "java-version" to javaVersion,
+            javaVersion?.let { "java-version" to it },
+            javaVersionFile?.let { "java-version-file" to it },
             "distribution" to distribution.stringValue,
             javaPackage?.let { "java-package" to it.stringValue },
             architecture?.let { "architecture" to it },
