@@ -6,6 +6,7 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.FloatTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
@@ -113,6 +114,11 @@ class GenerationTest : FunSpec({
                     required = true,
                     default = null,
                 ),
+                "flo-pint" to Input(
+                    description = "Float",
+                    required = true,
+                    default = null,
+                ),
                 "boo-zoo" to Input(
                     description = "List of strings",
                     required = true,
@@ -144,6 +150,7 @@ class GenerationTest : FunSpec({
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
+                "flo-pint" to FloatTyping,
                 "boo-zoo" to ListOfTypings(","),
                 "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
                 "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),

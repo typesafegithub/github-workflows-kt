@@ -6,6 +6,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.FloatTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
@@ -102,7 +103,7 @@ private fun ActionType.toTyping(fieldName: String): Typing =
                 )
             }
         }
-        ActionTypeEnum.Float -> error("Float typing not supported!")
+        ActionTypeEnum.Float -> FloatTyping
         ActionTypeEnum.List -> ListOfTypings(
             delimiter = separator,
             typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
