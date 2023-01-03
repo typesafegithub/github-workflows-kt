@@ -6,6 +6,7 @@ package it.krzeminski.githubactions.actions.johnsmith
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Float
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -39,6 +40,10 @@ public class ActionWithNonStringInputsV3(
      */
     public val intPint: Int,
     /**
+     * Float
+     */
+    public val floPint: Float,
+    /**
      * List of strings
      */
     public val booZoo: List<String>,
@@ -71,6 +76,7 @@ public class ActionWithNonStringInputsV3(
             "baz-goo" to bazGoo.toString(),
             binKin?.let { "bin-kin" to it.toString() },
             "int-pint" to intPint.toString(),
+            "flo-pint" to floPint.toString(),
             "boo-zoo" to booZoo.joinToString(","),
             "fin-bin" to finBin.stringValue,
             "goo-zen" to gooZen.integerValue.toString(),

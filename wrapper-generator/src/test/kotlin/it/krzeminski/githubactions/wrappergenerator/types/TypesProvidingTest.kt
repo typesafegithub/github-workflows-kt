@@ -7,6 +7,7 @@ import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
 import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
+import it.krzeminski.githubactions.wrappergenerator.domain.typings.FloatTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
 import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
@@ -23,6 +24,8 @@ class TypesProvidingTest : FunSpec({
                 type: boolean
               retries:
                 type: integer
+              some-float:
+                type: float
               fetch-depth:
                 type: integer
                 named-values:
@@ -60,6 +63,7 @@ class TypesProvidingTest : FunSpec({
             "name" to StringTyping,
             "verbose" to BooleanTyping,
             "retries" to IntegerTyping,
+            "some-float" to FloatTyping,
             "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
             "input-files" to ListOfTypings(","),
             "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
