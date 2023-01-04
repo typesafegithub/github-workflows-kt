@@ -24,7 +24,7 @@ jobs:
         cache: gradle
     - id: step-2
       name: Execute script
-      run: rm '.github/workflows/build.yaml' && '.github/workflows/.github/workflows/build.main.kts'
+      run: rm '.github/workflows/build.yaml' && '.github/workflows/build.main.kts'
     - id: step-3
       name: Consistency check
       run: git diff --exit-code '.github/workflows/build.yaml'
