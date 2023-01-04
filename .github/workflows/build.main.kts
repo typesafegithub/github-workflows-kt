@@ -1,8 +1,9 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.33.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.34.1")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.RunnerType.Windows2022
@@ -69,6 +70,14 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(CheckoutV3())
+        uses(
+            name = "Set up Java in proper version",
+            action = SetupJavaV3(
+                javaVersion = "17",
+                distribution = SetupJavaV3.Distribution.Zulu,
+                cache = SetupJavaV3.BuildPlatform.Gradle,
+            ),
+        )
         run("cd .github/workflows")
         run(
             name = "Regenerate all workflow YAMLs",
