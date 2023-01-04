@@ -17,9 +17,16 @@ jobs:
       name: Check out
       uses: actions/checkout@v3
     - id: step-1
+      name: Set up Java in proper version
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: zulu
+        cache: gradle
+    - id: step-2
       name: Execute script
       run: rm '.github/workflows/actions-versions.yaml' && '.github/workflows/actions-versions.main.kts'
-    - id: step-2
+    - id: step-3
       name: Consistency check
       run: git diff --exit-code '.github/workflows/actions-versions.yaml'
   updates-available:
