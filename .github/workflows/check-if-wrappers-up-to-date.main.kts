@@ -1,5 +1,6 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.34.0")
+@file:Repository("https://jitpack.io")
+@file:DependsOn("com.github.krzema12:github-actions-kotlin-dsl:install-jdk-17-in-consistency-check-SNAPSHOT")
 @file:Import("_shared.main.kts")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
