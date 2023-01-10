@@ -47,7 +47,7 @@ fun generateEventPayloads() {
 
 private val EXPRESSIONS = "it.krzeminski.githubactions.dsl.expressions"
 private val PACKAGE = "$EXPRESSIONS.contexts"
-private val resourcesDir = File("wrapper-generator/src/main/resources/payloads")
+private val resourcesDir = File("automation/wrapper-generator/src/main/resources/payloads")
 
 private val kotlinGenDir = File("library/src/gen/kotlin")
 
