@@ -10,7 +10,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.wrapperGenerator)
+    implementation(projects.automation.wrapperGenerator)
     implementation(projects.library)
     implementation("com.charleskorn.kaml:kaml:0.49.0")
     implementation("com.squareup:kotlinpoet:1.12.0")

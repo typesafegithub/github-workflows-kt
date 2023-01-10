@@ -51,7 +51,7 @@ jobs:
       name: Generate wrappers
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: :wrapper-generator:run
+        arguments: :automation:wrapper-generator:run
     - id: step-3
       name: Fail if there are any changes in the generated wrappers or their list
         in the docs
