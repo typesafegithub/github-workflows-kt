@@ -5,6 +5,7 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 include(
     "library",
     "script-generator",
+    ":automation:typings",
     ":automation:wrapper-generator",
 )
 
