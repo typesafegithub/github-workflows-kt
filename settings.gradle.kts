@@ -4,8 +4,8 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 
 include(
     "library",
-    "wrapper-generator",
-    "script-generator"
+    "script-generator",
+    ":automation:wrapper-generator",
 )
 
 plugins {
