@@ -2,6 +2,9 @@ package it.krzeminski.githubactions.wrappergenerator.types
 
 import com.charleskorn.kaml.Yaml
 import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.ActionType
+import it.krzeminski.githubactions.actionsmetadata.model.ActionTypeEnum
+import it.krzeminski.githubactions.actionsmetadata.model.ActionTypes
 import it.krzeminski.githubactions.actionsmetadata.model.BooleanTyping
 import it.krzeminski.githubactions.actionsmetadata.model.EnumTyping
 import it.krzeminski.githubactions.actionsmetadata.model.FloatTyping
