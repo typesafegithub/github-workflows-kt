@@ -1,8 +1,9 @@
 package it.krzeminski.githubactions.wrappergenerator.versions
 
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.Version
+import it.krzeminski.githubactions.actionsmetadata.wrappersToGenerate
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
-import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 import java.io.File
 
 /**

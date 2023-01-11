@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.wrappergenerator.generation
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
 
 class ClassNamingTest : FunSpec({
     context("buildActionClassName") {

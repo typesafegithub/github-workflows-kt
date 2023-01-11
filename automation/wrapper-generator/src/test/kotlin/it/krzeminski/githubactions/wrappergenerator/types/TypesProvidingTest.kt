@@ -2,16 +2,16 @@ package it.krzeminski.githubactions.wrappergenerator.types
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.FloatTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.BooleanTyping
+import it.krzeminski.githubactions.actionsmetadata.model.EnumTyping
+import it.krzeminski.githubactions.actionsmetadata.model.FloatTyping
+import it.krzeminski.githubactions.actionsmetadata.model.IntegerTyping
+import it.krzeminski.githubactions.actionsmetadata.model.IntegerWithSpecialValueTyping
+import it.krzeminski.githubactions.actionsmetadata.model.ListOfTypings
+import it.krzeminski.githubactions.actionsmetadata.model.StringTyping
+import it.krzeminski.githubactions.actionsmetadata.model.TypingsSource
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
 
 class TypesProvidingTest : FunSpec({
     test("valid typing provided by action") {

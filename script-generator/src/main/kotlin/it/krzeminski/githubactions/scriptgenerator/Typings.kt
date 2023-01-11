@@ -1,13 +1,13 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.CodeBlock
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.BooleanTyping
+import it.krzeminski.githubactions.actionsmetadata.model.EnumTyping
+import it.krzeminski.githubactions.actionsmetadata.model.IntegerTyping
+import it.krzeminski.githubactions.actionsmetadata.model.IntegerWithSpecialValueTyping
+import it.krzeminski.githubactions.actionsmetadata.model.ListOfTypings
+import it.krzeminski.githubactions.actionsmetadata.model.Typing
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 
@@ -28,7 +28,9 @@ fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): CodeBl
     val classname = coords.buildActionClassName()
     return when (typing) {
         is EnumTyping -> {
-            val enumName = typing.itemsNameMap[value]?.toPascalCase()
+            val itemsNames = typing.itemsNames ?: typing.items.map { it.toPascalCase() }
+            val itemsNameMap = typing.items.zip(itemsNames).toMap()
+            val enumName = itemsNameMap[value]?.toPascalCase()
             CodeBlock.of("%L", "$classname.${typing.typeName}.$enumName")
         }
 

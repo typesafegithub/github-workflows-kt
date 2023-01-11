@@ -13,7 +13,7 @@ import kotlin.io.path.isRegularFile
 import kotlin.io.path.name
 import kotlin.io.path.readText
 
-fun readActionsMetadata(): List<WrapperRequest> =
+internal fun readActionsMetadata(): List<WrapperRequest> =
     readLocalActionTypings()
         .addDeprecationInfo()
         .sortedBy { it.actionCoords.prettyPrint.lowercase() }

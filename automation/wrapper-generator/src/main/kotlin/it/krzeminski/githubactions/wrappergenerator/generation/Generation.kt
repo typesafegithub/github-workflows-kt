@@ -14,9 +14,9 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.StringTyping
+import it.krzeminski.githubactions.actionsmetadata.model.Typing
 import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_INPUTS
 import it.krzeminski.githubactions.wrappergenerator.generation.Properties.CUSTOM_VERSION
 import it.krzeminski.githubactions.wrappergenerator.metadata.Input
@@ -122,15 +122,15 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
         .properties(metadata, coords, inputTypings)
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
-        .addCustomTypes(inputTypings.values.toSet(), coords)
+        .addCustomTypes(inputTypings, coords)
         .addOutputClassIfNecessary(metadata)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
 }
 
-private fun TypeSpec.Builder.addCustomTypes(typings: Set<Typing>, coords: ActionCoords): TypeSpec.Builder {
+private fun TypeSpec.Builder.addCustomTypes(typings: Map<String, Typing>, coords: ActionCoords): TypeSpec.Builder {
     typings
-        .mapNotNull { it.buildCustomType(coords) }
+        .mapNotNull { (inputName, typing) -> typing.buildCustomType(coords, inputName) }
         .forEach { addType(it) }
     return this
 }
@@ -263,7 +263,7 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     if (coords.deprecatedByVersion == null) {
         return this
     }
-    val newerClass = coords.copy(version = coords.deprecatedByVersion)
+    val newerClass = coords.copy(version = coords.deprecatedByVersion!!)
     addAnnotation(
         AnnotationSpec.builder(Deprecated::class)
             .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")

@@ -1,17 +1,17 @@
 package it.krzeminski.githubactions.wrappergenerator.types
 
 import com.charleskorn.kaml.Yaml
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.BooleanTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.EnumTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.FloatTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.ListOfTypings
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.BooleanTyping
+import it.krzeminski.githubactions.actionsmetadata.model.EnumTyping
+import it.krzeminski.githubactions.actionsmetadata.model.FloatTyping
+import it.krzeminski.githubactions.actionsmetadata.model.IntegerTyping
+import it.krzeminski.githubactions.actionsmetadata.model.IntegerWithSpecialValueTyping
+import it.krzeminski.githubactions.actionsmetadata.model.ListOfTypings
+import it.krzeminski.githubactions.actionsmetadata.model.StringTyping
+import it.krzeminski.githubactions.actionsmetadata.model.Typing
+import it.krzeminski.githubactions.actionsmetadata.model.TypingsSource
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import it.krzeminski.githubactions.wrappergenerator.metadata.fetchUri
 import it.krzeminski.githubactions.wrappergenerator.metadata.myYaml
@@ -29,7 +29,7 @@ fun WrapperRequest.provideTypes(
     getCommitHash: (ActionCoords) -> String = ::getCommitHash,
 ): Map<String, Typing> =
     when (typingsSource) {
-        is TypingsSource.WrapperGenerator -> typingsSource.inputTypings
+        is TypingsSource.WrapperGenerator -> (typingsSource as TypingsSource.WrapperGenerator).inputTypings
         TypingsSource.ActionTypes ->
             this@provideTypes.actionCoords
                 .fetchTypingMetadata(fetchUri, getCommitHash).toTypesMap()

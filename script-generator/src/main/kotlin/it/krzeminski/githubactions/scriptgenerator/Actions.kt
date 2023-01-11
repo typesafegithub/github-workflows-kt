@@ -3,10 +3,10 @@ package it.krzeminski.githubactions.scriptgenerator
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import it.krzeminski.githubactions.actions.CustomAction
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.StringTyping
+import it.krzeminski.githubactions.actionsmetadata.model.Typing
 import it.krzeminski.githubactions.scriptmodel.YamlStep
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.StringTyping
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
