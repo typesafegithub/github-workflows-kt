@@ -452,6 +452,78 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    test("toYaml() - long strings with GitHub expressions in action arguments") {
+        // when
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+        ) {
+            job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
+                        awsRegion = "us-west-1",
+                    ),
+                )
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
+                        awsRegion = "us-west-1",
+                    ),
+                )
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
+                        awsRegion = "us-west-1",
+                    ),
+                )
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
+                        awsRegion = "us-west-1",
+                    ),
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+
+        // then
+        actualYaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            name: Test workflow
+            on:
+              push: {}
+            jobs:
+              deploy-dev:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  uses: aws-actions/configure-aws-credentials@v1
+                  with:
+                    aws-region: us-west-1
+                    role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/123456789012345678901234567890
+                - id: step-1
+                  uses: aws-actions/configure-aws-credentials@v1
+                  with:
+                    aws-region: us-west-1
+                    role-to-assume: arn:aws:iam:::role/github-actions-role/${'$'}{{ github.token }}
+                - id: step-2
+                  uses: aws-actions/configure-aws-credentials@v1
+                  with:
+                    aws-region: us-west-1
+                    role-to-assume: arn:aws:iam::1234567890:role/github-actions-role/${'$'}{{ github.token }}
+                - id: step-3
+                  uses: aws-actions/configure-aws-credentials@v1
+                  with:
+                    aws-region: us-west-1
+                    role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/${'$'}{{ github.token }}
+
+        """.trimIndent()
+    }
+
     test("toYaml() - with concurrency, cancel in progress") {
         // when
         val actualYaml = workflow(
@@ -655,38 +727,6 @@ class IntegrationTest : FunSpec({
                         echo ${expr { setOutputJob.outputs.scriptKey2 }}
                         echo ${expr { setOutputJob.outputs.scriptResult }}
                     """.trimIndent(),
-                )
-            }
-        }
-    }
-
-    @Suppress("MaxLineLength")
-    test("writeToYaml() - long strings in action arguments") {
-        testRanWithGitHub("long strings in action arguments") {
-            job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
-                uses(
-                    action = ConfigureAwsCredentialsV1(
-                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
-                        awsRegion = "us-east-1",
-                    ),
-                )
-                uses(
-                    action = ConfigureAwsCredentialsV1(
-                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
-                        awsRegion = "us-east-1",
-                    ),
-                )
-                uses(
-                    action = ConfigureAwsCredentialsV1(
-                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
-                        awsRegion = "us-east-1",
-                    ),
-                )
-                uses(
-                    action = ConfigureAwsCredentialsV1(
-                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
-                        awsRegion = "us-east-1",
-                    ),
                 )
             }
         }
