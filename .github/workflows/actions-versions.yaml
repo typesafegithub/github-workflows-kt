@@ -10,8 +10,7 @@ on:
 jobs:
   check_yaml_consistency:
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'krzema12' || github.event_name != 'schedule'
-      }}
+    if: ${{ github.repository_owner == 'krzema12' || github.event_name != 'schedule' }}
     steps:
     - id: step-0
       name: Check out
@@ -33,8 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
     - check_yaml_consistency
-    if: ${{ github.repository_owner == 'krzema12' || github.event_name != 'schedule'
-      }}
+    if: ${{ github.repository_owner == 'krzema12' || github.event_name != 'schedule' }}
     steps:
     - id: step-0
       uses: actions/checkout@v3
