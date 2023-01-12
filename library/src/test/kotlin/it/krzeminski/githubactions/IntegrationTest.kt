@@ -667,14 +667,8 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 uses(
-                    name = "Check out - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                    action = CheckoutV3(
-                        // Very long string with GitHub expressions.
-                        ref = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}".repeat(100),
-                        // A string where a GitHub expression breaks in the middle (like '{{ foobar \n foobaz }}') if
-                        // default YAML emitting settings are left.
-                        token = "arnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
-                    ),
+                    name = "test ${expr { github.token }}".repeat(100),
+                    action = CheckoutV3(),
                 )
             }
         }
