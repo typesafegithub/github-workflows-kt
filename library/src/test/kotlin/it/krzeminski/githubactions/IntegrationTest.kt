@@ -663,31 +663,29 @@ class IntegrationTest : FunSpec({
     @Suppress("MaxLineLength")
     test("writeToYaml() - long strings in action arguments") {
         testRanWithGitHub("long strings in action arguments") {
-            val DEFAULT_AWS_REGION by Contexts.env
-
             job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
                 uses(
                     action = ConfigureAwsCredentialsV1(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
-                        awsRegion = expr { DEFAULT_AWS_REGION },
+                        awsRegion = "us-east-1",
                     ),
                 )
                 uses(
                     action = ConfigureAwsCredentialsV1(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
-                        awsRegion = expr { DEFAULT_AWS_REGION },
+                        awsRegion = "us-east-1",
                     ),
                 )
                 uses(
                     action = ConfigureAwsCredentialsV1(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
-                        awsRegion = expr { DEFAULT_AWS_REGION },
+                        awsRegion = "us-east-1",
                     ),
                 )
                 uses(
                     action = ConfigureAwsCredentialsV1(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
-                        awsRegion = expr { DEFAULT_AWS_REGION },
+                        awsRegion = "us-east-1",
                     ),
                 )
             }
