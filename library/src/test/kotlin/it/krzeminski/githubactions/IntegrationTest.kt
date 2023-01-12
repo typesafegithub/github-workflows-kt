@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.GithubScriptV6
 import it.krzeminski.githubactions.actions.actions.SetupPythonV4
+import it.krzeminski.githubactions.actions.awsactions.ConfigureAwsCredentialsV1
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.JobOutputs
@@ -662,13 +663,32 @@ class IntegrationTest : FunSpec({
     @Suppress("MaxLineLength")
     test("writeToYaml() - long strings with GitHub expressions") {
         testRanWithGitHub("long strings in parameters") {
-            job(
-                id = "test_job",
-                runsOn = RunnerType.UbuntuLatest,
-            ) {
+            val DEFAULT_AWS_REGION by Contexts.env
+
+            job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
                 uses(
-                    name = "test123 ${expr { github.sha }} ".repeat(100),
-                    action = CheckoutV3(),
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
+                        awsRegion = expr { DEFAULT_AWS_REGION },
+                    ),
+                )
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
+                        awsRegion = expr { DEFAULT_AWS_REGION },
+                    ),
+                )
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
+                        awsRegion = expr { DEFAULT_AWS_REGION },
+                    ),
+                )
+                uses(
+                    action = ConfigureAwsCredentialsV1(
+                        roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
+                        awsRegion = expr { DEFAULT_AWS_REGION },
+                    ),
                 )
             }
         }

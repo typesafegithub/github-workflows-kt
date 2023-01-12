@@ -6,42 +6,28 @@ name: Integration tests - long strings in parameters
 on:
   push: {}
 jobs:
-  test_job:
+  deploy-dev:
     runs-on: ubuntu-latest
     steps:
     - id: step-0
-      name: 'test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} test123 ${{ github.sha }} test123 ${{ github.sha
-        }} test123 ${{ github.sha }} '
-      uses: actions/checkout@v3
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ DEFAULT_AWS_REGION }}
+        role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/123456789012345678901234567890
+    - id: step-1
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ DEFAULT_AWS_REGION }}
+        role-to-assume: arn:aws:iam:::role/github-actions-role/${{ github.token }}
+    - id: step-2
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ DEFAULT_AWS_REGION }}
+        role-to-assume: arn:aws:iam::1234567890:role/github-actions-role/${{ github.token
+          }}
+    - id: step-3
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ DEFAULT_AWS_REGION }}
+        role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/${{
+          github.token }}
