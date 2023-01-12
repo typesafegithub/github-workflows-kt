@@ -10,35 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - id: step-0
-      name: test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token
-        }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test
-        ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{
-        github.token }}
+      name: test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}test ${{ github.token }}
       uses: actions/checkout@v3
