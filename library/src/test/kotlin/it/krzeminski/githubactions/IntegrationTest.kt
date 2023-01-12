@@ -452,6 +452,7 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    @Suppress("MaxLineLength")
     test("toYaml() - long strings with GitHub expressions in action arguments") {
         // when
         val actualYaml = workflow(
