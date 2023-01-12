@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "it.krzeminski"
-version = "0.34.1"
+version = "0.34.2"
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.5")
