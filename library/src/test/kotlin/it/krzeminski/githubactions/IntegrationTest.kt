@@ -667,7 +667,7 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
             ) {
                 uses(
-                    name = "test ${expr { github.sha }} ".repeat(100),
+                    name = "test123 ${expr { github.sha }} ".repeat(100),
                     action = CheckoutV3(),
                 )
             }
