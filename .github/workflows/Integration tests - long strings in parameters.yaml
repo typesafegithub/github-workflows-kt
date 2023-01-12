@@ -23,11 +23,9 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: ${{ DEFAULT_AWS_REGION }}
-        role-to-assume: arn:aws:iam::1234567890:role/github-actions-role/${{ github.token
-          }}
+        role-to-assume: arn:aws:iam::1234567890:role/github-actions-role/${{ github.token }}
     - id: step-3
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: ${{ DEFAULT_AWS_REGION }}
-        role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/${{
-          github.token }}
+        role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/${{ github.token }}
