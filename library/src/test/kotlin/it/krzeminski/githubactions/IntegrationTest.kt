@@ -661,8 +661,8 @@ class IntegrationTest : FunSpec({
     }
 
     @Suppress("MaxLineLength")
-    test("writeToYaml() - long strings with GitHub expressions") {
-        testRanWithGitHub("long strings in parameters") {
+    test("writeToYaml() - long strings in action arguments") {
+        testRanWithGitHub("long strings in action arguments") {
             val DEFAULT_AWS_REGION by Contexts.env
 
             job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
