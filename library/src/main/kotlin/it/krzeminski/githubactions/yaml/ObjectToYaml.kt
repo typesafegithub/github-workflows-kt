@@ -20,6 +20,7 @@ import java.util.Optional
 
 internal fun Any.toYaml(): String {
     val settings = DumpSettings.builder()
+        .setWidth(Int.MAX_VALUE)
         .build()
     val writer = object : StringWriter(), StreamDataWriter {
         override fun flush() {
