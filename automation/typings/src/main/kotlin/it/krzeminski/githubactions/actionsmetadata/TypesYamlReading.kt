@@ -26,7 +26,7 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             if (this.namedValues.isEmpty()) {
                 IntegerTyping
             } else {
-                IntegerWithSpecialValueTyping(specialValues = this.namedValues)
+                IntegerWithSpecialValueTyping(typeName = this.name, specialValues = this.namedValues)
             }
         }
         ActionTypeEnum.Float -> FloatTyping
@@ -34,5 +34,5 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             delimiter = separator,
             typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
         )
-        ActionTypeEnum.Enum -> EnumTyping(items = allowedValues)
+        ActionTypeEnum.Enum -> EnumTyping(typeName = this.name, items = allowedValues)
     }
