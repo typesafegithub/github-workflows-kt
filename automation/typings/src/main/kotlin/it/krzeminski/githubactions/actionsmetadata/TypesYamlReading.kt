@@ -26,7 +26,7 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             if (this.namedValues.isEmpty()) {
                 IntegerTyping
             } else {
-                IntegerWithSpecialValueTyping(typeName = name, specialValues = this.namedValues)
+                IntegerWithSpecialValueTyping(typeName = name, specialValues = namedValues)
             }
         }
         ActionTypeEnum.Float -> FloatTyping
