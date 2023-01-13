@@ -1,12 +1,12 @@
 package it.krzeminski.githubactions.wrappergenerator.updating
 
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.wrappersToGenerate
 import it.krzeminski.githubactions.wrappergenerator.versions.GithubRef
 import it.krzeminski.githubactions.wrappergenerator.versions.GithubTag
 import it.krzeminski.githubactions.wrappergenerator.versions.getGithubToken
 import it.krzeminski.githubactions.wrappergenerator.versions.json
 import it.krzeminski.githubactions.wrappergenerator.versions.okhttpClient
-import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 import kotlinx.serialization.decodeFromString
 import okhttp3.Request
 import java.nio.file.Path

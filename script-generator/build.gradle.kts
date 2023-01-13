@@ -10,6 +10,7 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.automation.typings)
     implementation(projects.automation.wrapperGenerator)
     implementation(projects.library)
     implementation("com.charleskorn.kaml:kaml:0.49.0")

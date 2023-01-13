@@ -1,14 +1,14 @@
 package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.CodeBlock
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
+import it.krzeminski.githubactions.actionsmetadata.wrappersToGenerate
 import it.krzeminski.githubactions.scriptmodel.YamlJob
 import it.krzeminski.githubactions.scriptmodel.YamlStep
 import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
 import it.krzeminski.githubactions.scriptmodel.runnerTypeBlockOf
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
-import it.krzeminski.githubactions.wrappergenerator.wrappersToGenerate
 
 fun YamlWorkflow.generateJobs() = CodeBlock { builder ->
     jobs.forEach { (jobId, job) ->

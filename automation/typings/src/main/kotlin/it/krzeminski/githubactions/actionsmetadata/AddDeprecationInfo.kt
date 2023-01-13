@@ -1,7 +1,7 @@
-package it.krzeminski.githubactions.wrappergenerator
+package it.krzeminski.githubactions.actionsmetadata
 
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
-import it.krzeminski.githubactions.wrappergenerator.versions.Version
+import it.krzeminski.githubactions.actionsmetadata.model.Version
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
 
 fun List<WrapperRequest>.addDeprecationInfo(): List<WrapperRequest> =
     this.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }

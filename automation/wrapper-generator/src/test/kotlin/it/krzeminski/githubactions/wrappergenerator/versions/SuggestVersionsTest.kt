@@ -9,6 +9,7 @@ import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.actionsmetadata.model.Version
 
 class SuggestVersionsTest : FunSpec({
     fun String.versions(): List<Version> =

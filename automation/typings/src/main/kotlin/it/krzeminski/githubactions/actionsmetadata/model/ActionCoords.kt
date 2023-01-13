@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.wrappergenerator.domain
+package it.krzeminski.githubactions.actionsmetadata.model
 
 data class ActionCoords(
     val owner: String,
@@ -6,3 +6,5 @@ data class ActionCoords(
     val version: String,
     val deprecatedByVersion: String? = null,
 )
+
+internal val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"

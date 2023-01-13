@@ -1,10 +1,9 @@
-package it.krzeminski.githubactions.wrappergenerator.generation
+package it.krzeminski.githubactions.actionsmetadata
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.wrappergenerator.addDeprecationInfo
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
 
 class AddDeprecationInfoTest : FunSpec({
 

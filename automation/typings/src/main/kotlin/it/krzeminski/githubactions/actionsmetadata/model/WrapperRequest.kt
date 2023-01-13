@@ -1,6 +1,4 @@
-package it.krzeminski.githubactions.wrappergenerator.domain
-
-import it.krzeminski.githubactions.wrappergenerator.domain.typings.Typing
+package it.krzeminski.githubactions.actionsmetadata.model
 
 sealed interface TypingsSource {
     data class WrapperGenerator(val inputTypings: Map<String, Typing> = emptyMap()) : TypingsSource

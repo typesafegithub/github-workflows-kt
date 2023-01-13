@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.wrappergenerator.versions
+package it.krzeminski.githubactions.actionsmetadata.model
 
 data class Version(val version: String) : Comparable<Version> {
     val input: String = version.removePrefix("v").removePrefix("V")

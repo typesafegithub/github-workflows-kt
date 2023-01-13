@@ -16,7 +16,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             booZoo = listOf("foo", "bar"),
             finBin = ActionWithNonStringInputsV3.Bin.BooBar,
             gooZen = ActionWithNonStringInputsV3.Zen.Special1,
-            bahEnum = ActionWithNonStringInputsV3.Bah.HelloWorld
+            bahEnum = ActionWithNonStringInputsV3.BahEnum.HelloWorld
         )
 
         // when
@@ -47,7 +47,7 @@ class ActionWithNonStringInputsV3Test : DescribeSpec({
             booZoo = listOf("foo", "bar"),
             finBin = ActionWithNonStringInputsV3.Bin.Custom("this-is-custom!"),
             gooZen = ActionWithNonStringInputsV3.Zen.Value(123),
-            bahEnum = ActionWithNonStringInputsV3.Bah.Custom("very-custom"),
+            bahEnum = ActionWithNonStringInputsV3.BahEnum.Custom("very-custom"),
         )
 
         // when

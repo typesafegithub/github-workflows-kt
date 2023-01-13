@@ -1,9 +1,11 @@
 package it.krzeminski.githubactions.wrappergenerator
 
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.TypingsSource
+import it.krzeminski.githubactions.actionsmetadata.model.Version
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
+import it.krzeminski.githubactions.actionsmetadata.wrappersToGenerate
 import it.krzeminski.githubactions.dsl.expressions.generateEventPayloads
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
 import it.krzeminski.githubactions.wrappergenerator.generation.buildActionClassName
 import it.krzeminski.githubactions.wrappergenerator.generation.generateWrapper
 import it.krzeminski.githubactions.wrappergenerator.generation.toKotlinPackageName
@@ -11,7 +13,6 @@ import it.krzeminski.githubactions.wrappergenerator.metadata.deleteActionYamlCac
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import it.krzeminski.githubactions.wrappergenerator.types.deleteActionTypesYamlCacheIfObsolete
 import it.krzeminski.githubactions.wrappergenerator.types.provideTypes
-import it.krzeminski.githubactions.wrappergenerator.versions.Version
 import java.nio.file.Path
 import java.nio.file.Paths
 

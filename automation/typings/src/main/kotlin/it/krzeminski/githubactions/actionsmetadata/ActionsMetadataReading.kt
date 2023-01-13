@@ -1,12 +1,11 @@
-package it.krzeminski.githubactions.wrappergenerator
+package it.krzeminski.githubactions.actionsmetadata
 
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
-import it.krzeminski.githubactions.wrappergenerator.domain.TypingsSource
-import it.krzeminski.githubactions.wrappergenerator.domain.WrapperRequest
-import it.krzeminski.githubactions.wrappergenerator.metadata.myYaml
-import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
-import it.krzeminski.githubactions.wrappergenerator.types.ActionTypes
-import it.krzeminski.githubactions.wrappergenerator.types.toTypesMap
+import com.charleskorn.kaml.Yaml
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.ActionTypes
+import it.krzeminski.githubactions.actionsmetadata.model.TypingsSource
+import it.krzeminski.githubactions.actionsmetadata.model.WrapperRequest
+import it.krzeminski.githubactions.actionsmetadata.model.prettyPrint
 import kotlinx.serialization.decodeFromString
 import java.nio.file.Files
 import java.nio.file.Path
@@ -14,9 +13,10 @@ import kotlin.io.path.isRegularFile
 import kotlin.io.path.name
 import kotlin.io.path.readText
 
-val wrappersToGenerate = readLocalActionTypings()
-    .addDeprecationInfo()
-    .sortedBy { it.actionCoords.prettyPrint.lowercase() }
+internal fun readActionsMetadata(): List<WrapperRequest> =
+    readLocalActionTypings()
+        .addDeprecationInfo()
+        .sortedBy { it.actionCoords.prettyPrint.lowercase() }
 
 private fun readLocalActionTypings(): List<WrapperRequest> {
     val actionTypingsDirectory = Path.of("actions")
@@ -59,3 +59,9 @@ private fun buildTypingsSource(
     "typings-hosted-by-action" -> TypingsSource.ActionTypes
     else -> error("An unexpected file found in $actionTypingsDirectory: '$fileName'")
 }
+
+private val myYaml = Yaml(
+    configuration = Yaml.default.configuration.copy(
+        strictMode = false,
+    ),
+)

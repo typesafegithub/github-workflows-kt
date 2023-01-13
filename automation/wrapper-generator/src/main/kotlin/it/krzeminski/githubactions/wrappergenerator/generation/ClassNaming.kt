@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.wrappergenerator.generation
 
-import it.krzeminski.githubactions.wrappergenerator.domain.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
 import java.util.Locale
 
 fun ActionCoords.buildActionClassName(): String {

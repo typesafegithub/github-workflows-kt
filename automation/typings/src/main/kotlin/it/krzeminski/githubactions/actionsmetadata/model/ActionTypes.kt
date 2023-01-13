@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.wrappergenerator.types
+package it.krzeminski.githubactions.actionsmetadata.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
