@@ -316,4 +316,40 @@ class GenerationTest : FunSpec({
         // then
         wrapper.shouldMatchFile("SimpleActionWithListsV3.kt")
     }
+
+    test("action with inputs sharing type") {
+        // given
+        val actionManifest = Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs = mapOf(
+                "foo-one" to Input(
+                    required = true,
+                    default = null,
+                ),
+                "foo-two" to Input(
+                    required = true,
+                    default = null,
+                ),
+                "foo-three" to Input(
+                    required = false,
+                    default = "test",
+                ),
+            ),
+        )
+        val coords = ActionCoords("john-smith", "action-with-inputs-sharing-type", "v3")
+
+        // when
+        val wrapper = coords.generateWrapper(
+            fetchMetadataImpl = { actionManifest },
+            inputTypings = mapOf(
+                "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+            ),
+        )
+
+        // then
+        wrapper.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
+    }
 },)

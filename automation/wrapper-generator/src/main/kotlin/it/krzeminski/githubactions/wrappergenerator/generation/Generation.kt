@@ -131,6 +131,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
 private fun TypeSpec.Builder.addCustomTypes(typings: Map<String, Typing>, coords: ActionCoords): TypeSpec.Builder {
     typings
         .mapNotNull { (inputName, typing) -> typing.buildCustomType(coords, inputName) }
+        .distinctBy { it.name }
         .forEach { addType(it) }
     return this
 }
