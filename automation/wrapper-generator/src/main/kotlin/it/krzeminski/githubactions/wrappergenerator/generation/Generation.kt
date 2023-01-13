@@ -338,5 +338,5 @@ private fun Map<String, Typing>.getInputTyping(key: String) =
     this[key] ?: StringTyping
 
 private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords) =
-    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName())
+    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName(), key)
         .copy(nullable = !input.shouldBeNonNullInWrapper())

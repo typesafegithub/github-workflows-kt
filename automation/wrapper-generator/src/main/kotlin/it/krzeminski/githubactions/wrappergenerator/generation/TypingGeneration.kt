@@ -20,17 +20,21 @@ import it.krzeminski.githubactions.actionsmetadata.model.ListOfTypings
 import it.krzeminski.githubactions.actionsmetadata.model.StringTyping
 import it.krzeminski.githubactions.actionsmetadata.model.Typing
 
-fun Typing.getClassName(actionPackageName: String, actionClassName: String): TypeName =
+fun Typing.getClassName(actionPackageName: String, actionClassName: String, fieldName: String): TypeName =
     when (this) {
         BooleanTyping -> Boolean::class.asTypeName()
-        is EnumTyping ->
+        is EnumTyping -> {
+            val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
             ClassName("it.krzeminski.githubactions.actions.$actionPackageName", "$actionClassName.$typeName")
+        }
         FloatTyping -> Float::class.asTypeName()
         IntegerTyping -> Integer::class.asTypeName()
-        is IntegerWithSpecialValueTyping ->
+        is IntegerWithSpecialValueTyping -> {
+            val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
             ClassName("it.krzeminski.githubactions.actions.$actionPackageName", "$actionClassName.$typeName")
+        }
         is ListOfTypings -> List::class.asClassName()
-            .parameterizedBy(typing.getClassName(actionPackageName, actionClassName))
+            .parameterizedBy(typing.getClassName(actionPackageName, actionClassName, fieldName))
         StringTyping -> String::class.asTypeName()
     }
 
@@ -68,7 +72,7 @@ private fun EnumTyping.buildEnumCustomType(coords: ActionCoords, fieldName: Stri
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
     val actionClassName = coords.buildActionClassName()
-    val sealedClassName = this.getClassName(actionPackageName, actionClassName)
+    val sealedClassName = this.getClassName(actionPackageName, actionClassName, fieldName)
 
     return TypeSpec.classBuilder(typeName)
         .addModifiers(KModifier.SEALED)
@@ -107,7 +111,7 @@ private fun IntegerWithSpecialValueTyping.buildIntegerWithSpecialValueCustomType
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
     val actionClassName = coords.buildActionClassName()
-    val sealedClassName = this.getClassName(actionPackageName, actionClassName)
+    val sealedClassName = this.getClassName(actionPackageName, actionClassName, fieldName)
     return TypeSpec.classBuilder(typeName)
         .addModifiers(KModifier.SEALED)
         .primaryConstructor(

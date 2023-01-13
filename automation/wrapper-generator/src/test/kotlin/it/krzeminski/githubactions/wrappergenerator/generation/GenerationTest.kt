@@ -154,7 +154,7 @@ class GenerationTest : FunSpec({
                 "boo-zoo" to ListOfTypings(","),
                 "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
                 "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
-                "bah-enum" to EnumTyping("Bah", listOf("helloworld"), listOf("HelloWorld")),
+                "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
             ),
         )
 

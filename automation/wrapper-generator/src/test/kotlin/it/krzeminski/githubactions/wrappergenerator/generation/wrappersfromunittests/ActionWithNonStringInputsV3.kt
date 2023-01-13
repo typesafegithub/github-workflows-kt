@@ -58,7 +58,7 @@ public class ActionWithNonStringInputsV3(
     /**
      * Enum with custom naming
      */
-    public val bahEnum: ActionWithNonStringInputsV3.Bah,
+    public val bahEnum: ActionWithNonStringInputsV3.BahEnum,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -111,13 +111,13 @@ public class ActionWithNonStringInputsV3(
         public object Special2 : ActionWithNonStringInputsV3.Zen(-1)
     }
 
-    public sealed class Bah(
+    public sealed class BahEnum(
         public val stringValue: String,
     ) {
-        public object HelloWorld : ActionWithNonStringInputsV3.Bah("helloworld")
+        public object HelloWorld : ActionWithNonStringInputsV3.BahEnum("helloworld")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionWithNonStringInputsV3.Bah(customStringValue)
+        ) : ActionWithNonStringInputsV3.BahEnum(customStringValue)
     }
 }
