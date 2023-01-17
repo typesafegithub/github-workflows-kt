@@ -293,6 +293,9 @@ class IntegrationTest : FunSpec({
                         hello! job
                     """.trimIndent(),
                 ),
+                _customArguments = mapOf(
+                    "baz-goo" to 123,
+                ),
             ) {
                 uses(
                     name = "Check out",
@@ -339,6 +342,7 @@ class IntegrationTest : FunSpec({
                 hey,
                 hi,
                 hello! workflow
+            foo-bar: baz
             jobs:
               test_job:
                 runs-on: ubuntu-latest
@@ -349,6 +353,7 @@ class IntegrationTest : FunSpec({
                     hi,
                     hello! job
                 if: ${'$'}{{ always() }}
+                baz-goo: 123
                 steps:
                 - id: step-0
                   name: Check out
@@ -370,7 +375,6 @@ class IntegrationTest : FunSpec({
                       hello! run
                   continue-on-error: true
                   run: echo 'hello!'
-            foo-bar: baz
 
         """.trimIndent()
     }
