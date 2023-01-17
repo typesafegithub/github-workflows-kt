@@ -110,6 +110,6 @@ private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map
             )
         },
         "env" to env.ifEmpty { null },
-        "jobs" to jobsWithConsistencyCheck.jobsToYaml(),
         *_customArguments.toList().toTypedArray(),
+        "jobs" to jobsWithConsistencyCheck.jobsToYaml(),
     )
