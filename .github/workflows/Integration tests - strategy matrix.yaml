@@ -1,0 +1,14 @@
+# This file was generated using Kotlin DSL (.github/workflows/Integration tests - strategy matrix.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-workflows-kt
+
+name: Integration tests - strategy matrix
+on:
+  push: {}
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    steps:
+    - id: step-0
+      name: use matrix values
+      run: echo TODO

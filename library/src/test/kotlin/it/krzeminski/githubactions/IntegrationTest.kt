@@ -736,6 +736,22 @@ class IntegrationTest : FunSpec({
             }
         }
     }
+
+    test("writeToFile() - strategy matrix") {
+        testRanWithGitHub("strategy matrix") {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                run(
+                    name = "use matrix values",
+                    command = """
+                        echo TODO
+                    """.trimIndent(),
+                )
+            }
+        }
+    }
 },)
 
 private fun testRanWithGitHub(
