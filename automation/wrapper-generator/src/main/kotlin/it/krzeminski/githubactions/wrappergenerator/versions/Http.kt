@@ -12,6 +12,9 @@ import okhttp3.Request
 val ActionCoords.apiTagsUrl: String
     get() = "https://api.github.com/repos/$owner/$name/git/matching-refs/tags/v"
 
+val ActionCoords.apiBranchesUrl: String
+    get() = "https://api.github.com/repos/$owner/$name/git/matching-refs/heads/v"
+
 fun getGithubToken(): String =
     System.getenv("GITHUB_TOKEN")
         ?: error(
@@ -55,10 +58,15 @@ val okhttpClient by lazy {
     OkHttpClient()
 }
 
-fun ActionCoords.fetchAvailableVersions(githubToken: String): List<Version> {
+fun ActionCoords.fetchAvailableVersions(githubToken: String): List<Version> =
+    listOf(apiTagsUrl, apiBranchesUrl)
+        .flatMap { url -> fetchGithubRefs(url, githubToken) }
+        .versions()
+
+private fun fetchGithubRefs(url: String, githubToken: String): List<GithubRef> {
     val request: Request = Request.Builder()
         .header("Authorization", "token $githubToken")
-        .url(apiTagsUrl)
+        .url(url)
         .build()
 
     val content = okhttpClient.newCall(request).execute().use { response ->
@@ -68,6 +76,5 @@ fun ActionCoords.fetchAvailableVersions(githubToken: String): List<Version> {
         }
         response.body!!.string()
     }
-    val data = json.decodeFromString<List<GithubRef>>(content)
-    return data.versions()
+    return json.decodeFromString(content)
 }
