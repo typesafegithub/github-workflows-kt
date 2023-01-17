@@ -34,10 +34,11 @@ fun main() {
     for ((coords, existingVersions) in actionsMap) {
         val available = coords.fetchAvailableVersions(githubAuthorization)
         suggestNewerVersion(existingVersions, available)?.let { message ->
-            output += "$message for ${coords.prettyPrint}\n"
+            val outputForAction = "$message for ${coords.prettyPrint}"
+            println(outputForAction)
+            output += "$outputForAction\n"
         }
     }
-    println(output)
     File("build/suggestVersions.md").let { file ->
         if (output.isNotEmpty()) {
             println("Updated ${file.absolutePath}")
@@ -50,8 +51,8 @@ fun main() {
 }
 
 fun List<GithubRef>.versions(): List<Version> =
-    this.map { githubTag ->
-        val version = githubTag.ref.substringAfterLast("/")
+    this.map { githubRef ->
+        val version = githubRef.ref.substringAfterLast("/")
         Version(version)
     }
 
