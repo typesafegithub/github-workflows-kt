@@ -19,6 +19,7 @@ class JobTest : FunSpec({
                     var output1 by output()
                     var output2 by output()
                 },
+                matrix = Matrix.EMPTY,
             )
             job.outputs.output1 = "foo"
             job.outputs.output2 = "foo"
@@ -36,6 +37,7 @@ class JobTest : FunSpec({
                 outputs = object : JobOutputs() {
                     var output1 by output()
                 },
+                matrix = Matrix.EMPTY,
             )
 
             shouldThrow<IllegalStateException> {
@@ -52,6 +54,7 @@ class JobTest : FunSpec({
                 outputs = object : JobOutputs() {
                     var output1 by output()
                 },
+                matrix = Matrix.EMPTY,
             )
             job.outputs.output1 = "foo"
 
@@ -73,7 +76,14 @@ class JobTest : FunSpec({
             "job()",
         ).forAll { jobId ->
             shouldThrowAny {
-                Job(jobId, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY)
+                Job(
+                    jobId,
+                    null,
+                    RunnerType.UbuntuLatest,
+                    emptyList(),
+                    outputs = JobOutputs.EMPTY,
+                    matrix = Matrix.EMPTY,
+                )
             }.shouldHaveMessage(
                 """
                 Invalid field Job(id="$jobId") does not match regex: [a-zA-Z_][a-zA-Z0-9_-]*
@@ -92,7 +102,7 @@ class JobTest : FunSpec({
             "JOB_JOB",
             "_--4",
         ).forAll { jobName ->
-            Job(jobName, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY)
+            Job(jobName, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY, matrix = Matrix.EMPTY)
         }
     }
 
@@ -110,6 +120,7 @@ class JobTest : FunSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
             )
         } shouldHaveMessage "timeout should be positive"
     }

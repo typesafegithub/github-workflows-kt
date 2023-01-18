@@ -8,26 +8,28 @@ import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.JobOutputs
+import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
-public class JobBuilder<OUTPUT : JobOutputs>(
+public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
     public val id: String,
     public val name: String?,
     public val runsOn: RunnerType,
-    public val needs: List<Job<*>>,
+    public val needs: List<Job<*, *>>,
     public val env: LinkedHashMap<String, String>,
     public val condition: String?,
     public val strategyMatrix: Map<String, List<String>>?,
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,
+    public val matrix: MATRIX,
     override val _customArguments: Map<String, @Contextual Any>,
 ) : HasCustomArguments {
-    private var job = Job<OUTPUT>(
+    private var job = Job(
         id = id,
         name = name,
         runsOn = runsOn,
@@ -39,6 +41,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
         outputs = jobOutputs,
+        matrix = matrix,
         _customArguments = _customArguments,
     )
 
@@ -178,5 +181,5 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
-    public fun build(): Job<OUTPUT> = job
+    public fun build(): Job<OUTPUT, MATRIX> = job
 }

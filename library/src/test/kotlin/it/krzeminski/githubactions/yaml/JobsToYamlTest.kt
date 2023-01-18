@@ -6,6 +6,7 @@ import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.JobOutputs
+import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.dsl.expressions.expr
@@ -25,6 +26,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
             ),
             Job(
                 id = "Job-2",
@@ -37,6 +39,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
             ),
         )
 
@@ -82,6 +85,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
             ),
         )
 
@@ -111,6 +115,7 @@ class JobsToYamlTest : DescribeSpec({
                 name = "Some name",
                 runsOn = UbuntuLatest,
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
                 env = linkedMapOf(
                     "FOO" to "bar",
                     "BAZ" to """
@@ -189,12 +194,14 @@ class JobsToYamlTest : DescribeSpec({
             runsOn = UbuntuLatest,
             steps = listOf(),
             outputs = JobOutputs.EMPTY,
+            matrix = Matrix.EMPTY,
         )
         val anotherJob2 = Job(
             id = "Another-job-2",
             runsOn = UbuntuLatest,
             steps = listOf(),
             outputs = JobOutputs.EMPTY,
+            matrix = Matrix.EMPTY,
         )
         val jobs = listOf(
             Job(
@@ -209,6 +216,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
             ),
         )
 
@@ -243,6 +251,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
             ),
             outputs = JobOutputs.EMPTY,
+            matrix = Matrix.EMPTY,
         )
 
         // given
@@ -293,6 +302,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
+                matrix = Matrix.EMPTY,
                 _customArguments = mapOf(
                     "runs-on" to "overridden!",
                 ),

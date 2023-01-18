@@ -10,6 +10,7 @@ import it.krzeminski.githubactions.actions.awsactions.ConfigureAwsCredentialsV1
 import it.krzeminski.githubactions.actions.endbug.AddAndCommitV9
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.JobOutputs
+import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
@@ -739,14 +740,19 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - strategy matrix") {
         testRanWithGitHub("strategy matrix") {
-            job(
+            jobWithMatrix(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
+                matrix = object : Matrix() {
+                    var version by matrixItem()
+                    var os by matrixItem()
+                },
             ) {
                 run(
                     name = "use matrix values",
                     command = """
-                        echo TODO
+                        echo Version: ${matrix.version}
+                        echo Version: ${matrix.os}
                     """.trimIndent(),
                 )
             }

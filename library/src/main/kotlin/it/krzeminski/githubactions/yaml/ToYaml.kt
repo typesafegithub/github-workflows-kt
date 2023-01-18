@@ -99,7 +99,7 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
 }
 
 @Suppress("SpreadOperator")
-private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map<String, Any> =
+private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*, *>>): Map<String, Any> =
     mapOfNotNullValues(
         "name" to name,
         "on" to on.triggersToYaml(),
