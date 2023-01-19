@@ -4,6 +4,7 @@ import org.snakeyaml.engine.v2.api.DumpSettings
 import org.snakeyaml.engine.v2.api.StreamDataWriter
 import org.snakeyaml.engine.v2.common.FlowStyle
 import org.snakeyaml.engine.v2.common.ScalarStyle
+import org.snakeyaml.engine.v2.common.ScalarStyle.SINGLE_QUOTED
 import org.snakeyaml.engine.v2.emitter.Emitter
 import org.snakeyaml.engine.v2.events.DocumentEndEvent
 import org.snakeyaml.engine.v2.events.DocumentStartEvent
@@ -81,8 +82,14 @@ private fun List<*>.listToYaml(emitter: Emitter) {
 }
 
 private fun Any?.scalarToYaml(emitter: Emitter) {
-    val scalarStyle = if (this is String && this.lines().size > 1) {
-        ScalarStyle.LITERAL
+    val scalarStyle = if (this is String) {
+        if (lines().size > 1) {
+            ScalarStyle.LITERAL
+        } else if (isEmpty() || (this == "null")) {
+            ScalarStyle.SINGLE_QUOTED
+        } else {
+            ScalarStyle.PLAIN
+        }
     } else {
         ScalarStyle.PLAIN
     }
