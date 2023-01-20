@@ -56,8 +56,10 @@ public class SetupNodeV3(
      */
     public val scope: String? = null,
     /**
-     * Used to pull node distributions from node-versions.  Since there's a default, this is
-     * typically not supplied by the user.
+     * Used to pull node distributions from node-versions. Since there's a default, this is
+     * typically not supplied by the user. When running this action on github.com, the default value is
+     * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
+     * experiencing rate limiting.
      */
     public val token: String? = null,
     /**
