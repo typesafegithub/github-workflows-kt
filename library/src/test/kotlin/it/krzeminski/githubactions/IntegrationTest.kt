@@ -295,6 +295,9 @@ class IntegrationTest : FunSpec({
                 ),
                 _customArguments = mapOf(
                     "baz-goo" to 123,
+                    "null-string" to "null",
+                    "null-value" to null,
+                    "empty-string" to "",
                 ),
             ) {
                 uses(
@@ -354,6 +357,9 @@ class IntegrationTest : FunSpec({
                     hello! job
                 if: ${'$'}{{ always() }}
                 baz-goo: 123
+                null-string: 'null'
+                null-value: null
+                empty-string: ''
                 steps:
                 - id: step-0
                   name: Check out

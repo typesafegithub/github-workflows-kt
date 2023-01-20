@@ -20,7 +20,7 @@ public class WorkflowBuilder(
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
     jobs: List<Job<*>> = emptyList(),
-    _customArguments: Map<String, @Contextual Any>,
+    _customArguments: Map<String, @Contextual Any?>,
 ) {
     internal var workflow = Workflow(
         name = name,
@@ -43,7 +43,7 @@ public class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
-        _customArguments: Map<String, @Contextual Any> = mapOf(),
+        _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
         outputs: OUTPUT,
@@ -81,7 +81,7 @@ public class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
-        _customArguments: Map<String, @Contextual Any> = mapOf(),
+        _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
         block: JobBuilder<JobOutputs.EMPTY>.() -> Unit,

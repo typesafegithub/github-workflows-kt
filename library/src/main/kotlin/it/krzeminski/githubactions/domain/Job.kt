@@ -16,7 +16,7 @@ public data class Job<OUTPUT : JobOutputs>(
     val strategyMatrix: Map<String, List<String>>? = null,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
-    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any?> = mapOf(),
 ) : HasCustomArguments {
     init {
         requireMatchesRegex(

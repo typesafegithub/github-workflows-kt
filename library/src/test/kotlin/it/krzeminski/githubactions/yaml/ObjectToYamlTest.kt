@@ -105,4 +105,24 @@ class ObjectToYamlTest : DescribeSpec({
 
         """.trimIndent()
     }
+
+    it("correctly serializes empty strings and null strings") {
+        // given
+        val objectToSerialize = mapOf(
+            "foo" to "",
+            "bar" to null,
+            "baz" to "null",
+        )
+
+        // when
+        val yaml = objectToSerialize.toYaml()
+
+        // then
+        yaml shouldBe """
+            foo: ''
+            bar: null
+            baz: 'null'
+
+        """.trimIndent()
+    }
 },)
