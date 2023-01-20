@@ -15,14 +15,14 @@ import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.RunnerType.WindowsLatest
 import it.krzeminski.githubactions.internal.InternalGithubActionsApi
 
-internal fun List<Job<*>>.jobsToYaml(): Map<String, Map<String, Any>> =
+internal fun List<Job<*>>.jobsToYaml(): Map<String, Map<String, Any?>> =
     this.associateBy(
         keySelector = { it.id },
         valueTransform = { it.toYaml() },
     )
 
 @Suppress("SpreadOperator")
-private fun Job<*>.toYaml(): Map<String, Any> =
+private fun Job<*>.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "name" to name,
         "runs-on" to runsOn.toYaml(),
@@ -42,9 +42,8 @@ private fun Job<*>.toYaml(): Map<String, Any> =
         },
         "timeout-minutes" to timeoutMinutes,
         "outputs" to outputs.outputMapping.ifEmpty { null },
-        *_customArguments.toList().toTypedArray(),
-        "steps" to steps.stepsToYaml(),
-    )
+    ) + _customArguments +
+        mapOf("steps" to steps.stepsToYaml())
 
 @InternalGithubActionsApi
 public fun RunnerType.toYaml(): String =

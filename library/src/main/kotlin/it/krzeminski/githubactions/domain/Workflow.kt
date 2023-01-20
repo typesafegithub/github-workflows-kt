@@ -14,5 +14,5 @@ public data class Workflow(
     val concurrency: Concurrency? = null,
     val yamlConsistencyJobCondition: String? = null,
     val jobs: List<Job<*>>,
-    override val _customArguments: Map<String, @Contextual Any> = mapOf(),
+    override val _customArguments: Map<String, @Contextual Any?> = mapOf(),
 ) : HasCustomArguments

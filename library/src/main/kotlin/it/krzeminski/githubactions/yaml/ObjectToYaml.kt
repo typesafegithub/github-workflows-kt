@@ -4,7 +4,6 @@ import org.snakeyaml.engine.v2.api.DumpSettings
 import org.snakeyaml.engine.v2.api.StreamDataWriter
 import org.snakeyaml.engine.v2.common.FlowStyle
 import org.snakeyaml.engine.v2.common.ScalarStyle
-import org.snakeyaml.engine.v2.common.ScalarStyle.SINGLE_QUOTED
 import org.snakeyaml.engine.v2.emitter.Emitter
 import org.snakeyaml.engine.v2.events.DocumentEndEvent
 import org.snakeyaml.engine.v2.events.DocumentStartEvent

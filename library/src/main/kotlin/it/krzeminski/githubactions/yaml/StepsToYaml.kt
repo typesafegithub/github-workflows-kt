@@ -13,7 +13,7 @@ import it.krzeminski.githubactions.domain.Shell.Python
 import it.krzeminski.githubactions.domain.Shell.Sh
 import it.krzeminski.githubactions.domain.Step
 
-internal fun List<Step>.stepsToYaml(): List<Map<String, Any>> =
+internal fun List<Step>.stepsToYaml(): List<Map<String, Any?>> =
     this.map { it.toYaml() }
 
 private fun Step.toYaml() =
@@ -23,7 +23,7 @@ private fun Step.toYaml() =
     }
 
 @Suppress("SpreadOperator")
-private fun ExternalActionStep.toYaml(): Map<String, Any> =
+private fun ExternalActionStep.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,
@@ -33,11 +33,10 @@ private fun ExternalActionStep.toYaml(): Map<String, Any> =
         "with" to action.toYamlArguments().ifEmpty { null },
         "env" to env.ifEmpty { null },
         "if" to condition,
-        *_customArguments.toList().toTypedArray(),
-    )
+    ) + _customArguments
 
 @Suppress("SpreadOperator")
-private fun CommandStep.toYaml(): Map<String, Any> =
+private fun CommandStep.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,
@@ -48,8 +47,7 @@ private fun CommandStep.toYaml(): Map<String, Any> =
         "working-directory" to workingDirectory,
         "run" to command,
         "if" to condition,
-        *_customArguments.toList().toTypedArray(),
-    )
+    ) + _customArguments
 
 private fun Shell.toYaml() =
     when (this) {

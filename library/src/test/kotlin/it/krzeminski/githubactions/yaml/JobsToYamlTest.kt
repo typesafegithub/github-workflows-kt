@@ -138,6 +138,9 @@ class JobsToYamlTest : DescribeSpec({
                 _customArguments = mapOf(
                     "distribute-job" to true,
                     "servers" to listOf("server-1", "server-2"),
+                    "null-string" to "null",
+                    "null-value" to null,
+                    "empty-string" to "",
                 ),
             ),
         )
@@ -178,6 +181,9 @@ class JobsToYamlTest : DescribeSpec({
                 ),
                 "distribute-job" to true,
                 "servers" to listOf("server-1", "server-2"),
+                "null-string" to "null",
+                "null-value" to null,
+                "empty-string" to "",
             ),
         )
     }

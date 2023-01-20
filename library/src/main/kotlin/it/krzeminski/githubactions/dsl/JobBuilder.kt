@@ -25,7 +25,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,
-    override val _customArguments: Map<String, @Contextual Any>,
+    override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
     private var job = Job<OUTPUT>(
         id = id,
