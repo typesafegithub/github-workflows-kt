@@ -30,6 +30,10 @@ public class BuildPushActionV3(
      */
     public val allow: List<String>? = null,
     /**
+     * List of attestation parameters (e.g., type=sbom,generator=image)
+     */
+    public val attests: List<String>? = null,
+    /**
      * List of build-time variables
      */
     public val buildArgs: List<String>? = null,
@@ -91,6 +95,10 @@ public class BuildPushActionV3(
      */
     public val platforms: List<String>? = null,
     /**
+     * Generate provenance attestation for the build (shorthand for --attest=type=provenance)
+     */
+    public val provenance: Boolean? = null,
+    /**
      * Always attempt to pull all referenced images
      */
     public val pull: Boolean? = null,
@@ -98,6 +106,10 @@ public class BuildPushActionV3(
      * Push is a shorthand for --output=type=registry
      */
     public val push: Boolean? = null,
+    /**
+     * Generate SBOM attestation for the build (shorthand for --attest=type=sbom)
+     */
+    public val sbom: Boolean? = null,
     /**
      * List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
      */
@@ -146,6 +158,7 @@ public class BuildPushActionV3(
         *listOfNotNull(
             addHosts?.let { "add-hosts" to it.joinToString("\n") },
             allow?.let { "allow" to it.joinToString("\n") },
+            attests?.let { "attests" to it.joinToString(",") },
             buildArgs?.let { "build-args" to it.joinToString("\n") },
             buildContexts?.let { "build-contexts" to it.joinToString("\n") },
             builder?.let { "builder" to it },
@@ -161,8 +174,10 @@ public class BuildPushActionV3(
             noCacheFilters?.let { "no-cache-filters" to it.joinToString(",") },
             outputs?.let { "outputs" to it.joinToString(",") },
             platforms?.let { "platforms" to it.joinToString(",") },
+            provenance?.let { "provenance" to it.toString() },
             pull?.let { "pull" to it.toString() },
             push?.let { "push" to it.toString() },
+            sbom?.let { "sbom" to it.toString() },
             secrets?.let { "secrets" to it.joinToString("\n") },
             secretFiles?.let { "secret-files" to it.joinToString("\n") },
             shmSize?.let { "shm-size" to it },
