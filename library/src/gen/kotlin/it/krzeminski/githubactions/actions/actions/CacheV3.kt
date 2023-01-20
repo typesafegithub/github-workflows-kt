@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
+import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -39,6 +40,11 @@ public class CacheV3(
      */
     public val uploadChunkSize: Int? = null,
     /**
+     * An optional boolean when enabled, allows windows runners to save or restore caches that can
+     * be restored or saved respectively on other platforms
+     */
+    public val enableCrossOsArchive: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -55,6 +61,7 @@ public class CacheV3(
             "key" to key,
             restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
             uploadChunkSize?.let { "upload-chunk-size" to it.toString() },
+            enableCrossOsArchive?.let { "enableCrossOsArchive" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
