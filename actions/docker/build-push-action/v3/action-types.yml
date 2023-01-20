@@ -10,6 +10,11 @@ inputs:
     separator: "\n"
     list-item:
       type: string
+  attests:
+    type: list
+    separator: ','
+    list-item:
+      type: string
   build-args:
     type: list
     separator: "\n"
@@ -64,9 +69,13 @@ inputs:
     separator: ','
     list-item:
       type: string
+  provenance:
+    type: boolean
   pull:
     type: boolean
   push:
+    type: boolean
+  sbom:
     type: boolean
   secrets:
     type: list
