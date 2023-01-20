@@ -33,7 +33,6 @@ kotlin {
 
 fun JavaToolchainSpec.requiredJdkVersion() {
     languageVersion.set(JavaLanguageVersion.of(17))
-    vendor.set(JvmVendorSpec.AZUL)
 }
 
 tasks.withType<KotlinCompile> {
