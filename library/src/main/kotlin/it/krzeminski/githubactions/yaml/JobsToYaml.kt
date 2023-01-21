@@ -40,7 +40,7 @@ private fun Job<*, *>.toYaml(): Map<String, Any?> =
             mapOf(
                 "matrix" to matrix.strategyMatrix,
             )
-        } else null,
+        } else { null },
         "timeout-minutes" to timeoutMinutes,
         "outputs" to outputs.outputMapping.ifEmpty { null },
     ) + _customArguments +
