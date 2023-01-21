@@ -11,7 +11,7 @@ public sealed class Step(
     public open val condition: String? = null,
     public open val continueOnError: Boolean? = null,
     public open val timeoutMinutes: Int? = null,
-    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
+    override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : HasCustomArguments
 
 public interface WithOutputs<T> {
@@ -28,7 +28,7 @@ public data class CommandStep(
     override val timeoutMinutes: Int? = null,
     val shell: Shell? = null,
     val workingDirectory: String? = null,
-    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
+    override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
@@ -47,7 +47,7 @@ public open class ExternalActionStep(
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
     override val timeoutMinutes: Int? = null,
-    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
+    override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : Step(
     id = id,
     condition = condition,
@@ -66,7 +66,7 @@ public data class ExternalActionStepWithOutputs<T>(
     override val continueOnError: Boolean? = null,
     override val timeoutMinutes: Int? = null,
     override val outputs: T,
-    override val _customArguments: Map<String, @Contextual Any> = emptyMap(),
+    override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : ExternalActionStep(
     name = name,
     action = action,

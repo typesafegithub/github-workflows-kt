@@ -81,8 +81,14 @@ private fun List<*>.listToYaml(emitter: Emitter) {
 }
 
 private fun Any?.scalarToYaml(emitter: Emitter) {
-    val scalarStyle = if (this is String && this.lines().size > 1) {
-        ScalarStyle.LITERAL
+    val scalarStyle = if (this is String) {
+        if (lines().size > 1) {
+            ScalarStyle.LITERAL
+        } else if (isEmpty() || (this == "null")) {
+            ScalarStyle.SINGLE_QUOTED
+        } else {
+            ScalarStyle.PLAIN
+        }
     } else {
         ScalarStyle.PLAIN
     }

@@ -27,7 +27,7 @@ public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,
     public val matrix: MATRIX,
-    override val _customArguments: Map<String, @Contextual Any>,
+    override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
     private var job = Job(
         id = id,

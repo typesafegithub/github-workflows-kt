@@ -4,5 +4,5 @@ import kotlinx.serialization.Contextual
 
 public interface HasCustomArguments {
     @Suppress("VariableNaming")
-    public val _customArguments: Map<String, @Contextual Any>
+    public val _customArguments: Map<String, @Contextual Any?>
 }

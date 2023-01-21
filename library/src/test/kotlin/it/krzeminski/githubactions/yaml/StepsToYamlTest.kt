@@ -85,7 +85,12 @@ class StepsToYamlTest : DescribeSpec({
                     workingDirectory = "/home/me",
                     command = "echo 'test!'",
                     condition = "\${{ matrix.foo == 'bar' }}",
-                    _customArguments = mapOf("foo" to true),
+                    _customArguments = mapOf(
+                        "foo" to true,
+                        "null-string" to "null",
+                        "null-value" to null,
+                        "empty-string" to "",
+                    ),
                 ),
             )
 
@@ -111,6 +116,9 @@ class StepsToYamlTest : DescribeSpec({
                     "run" to "echo 'test!'",
                     "if" to "\${{ matrix.foo == 'bar' }}",
                     "foo" to true,
+                    "null-string" to "null",
+                    "null-value" to null,
+                    "empty-string" to "",
                 ),
             )
         }
@@ -237,7 +245,12 @@ class StepsToYamlTest : DescribeSpec({
                         """.trimIndent(),
                     ),
                     condition = "\${{ matrix.foo == 'bar' }}",
-                    _customArguments = mapOf("foo" to true),
+                    _customArguments = mapOf(
+                        "foo" to true,
+                        "null-string" to "null",
+                        "null-value" to null,
+                        "empty-string" to "",
+                    ),
                 ),
             )
 
@@ -264,6 +277,9 @@ class StepsToYamlTest : DescribeSpec({
                     ),
                     "if" to "\${{ matrix.foo == 'bar' }}",
                     "foo" to true,
+                    "null-string" to "null",
+                    "null-value" to null,
+                    "empty-string" to "",
                 ),
             )
         }
