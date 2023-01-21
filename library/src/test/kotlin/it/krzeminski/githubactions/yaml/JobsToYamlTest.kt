@@ -115,7 +115,6 @@ class JobsToYamlTest : DescribeSpec({
                 name = "Some name",
                 runsOn = UbuntuLatest,
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
                 env = linkedMapOf(
                     "FOO" to "bar",
                     "BAZ" to """
@@ -123,10 +122,16 @@ class JobsToYamlTest : DescribeSpec({
                         zoo
                     """.trimIndent(),
                 ),
-                strategyMatrix = mapOf(
-                    "strategyParam1" to listOf("foo", "bar"),
-                    "strategyParam2" to listOf("baz", "goo"),
-                ),
+                matrix = object : Matrix() {
+                    val strategyParam1 by matrixItem(
+                        variableName = "strategyParam1",
+                        values = listOf("foo", "bar"),
+                    )
+                    val strategyParam2 by matrixItem(
+                        variableName = "strategyParam2",
+                        values = listOf("baz", "goo"),
+                    )
+                },
                 concurrency = Concurrency(
                     group = "group-name",
                     cancelInProgress = true,

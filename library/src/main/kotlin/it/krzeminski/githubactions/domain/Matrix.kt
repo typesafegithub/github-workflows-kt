@@ -5,18 +5,20 @@ import kotlin.reflect.KProperty
 
 public open class Matrix {
     internal lateinit var job: Job<*, *>
-    private val _outputMapping: MutableMap<String, String> = mutableMapOf()
+    private val _strategyMatrix: MutableMap<String, Any?> = mutableMapOf()
 
     public object EMPTY : Matrix()
 
-    public val outputMapping: Map<String, String> get() = _outputMapping.toMap()
+    public val strategyMatrix: Map<String, Any?> get() = _strategyMatrix.toMap()
 
-    public fun matrixItem(variableName: String, values: List<Any?>): Ref =
-        Ref(variableName = variableName, values = values)
+    public fun matrixItem(variableName: String, values: List<Any?>): Ref {
+        // TODO handle defining variableName multiple times
+        _strategyMatrix[variableName] = values
+        return Ref(variableName = variableName)
+    }
 
     public inner class Ref(
         public val variableName: String,
-        public val values: List<Any?>,
     ) : ReadOnlyProperty<Matrix, String> {
         override fun getValue(thisRef: Matrix, property: KProperty<*>): String {
             return "matrix.$variableName"

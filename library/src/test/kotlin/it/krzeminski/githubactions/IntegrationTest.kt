@@ -757,8 +757,8 @@ class IntegrationTest : FunSpec({
                 run(
                     name = "use matrix values",
                     command = """
-                        echo Version: ${matrix.version}
-                        echo Version: ${matrix.operatingSystem}
+                        echo Version: ${expr { matrix.version } }
+                        echo Version: ${expr { matrix.operatingSystem } }
                     """.trimIndent(),
                 )
             }

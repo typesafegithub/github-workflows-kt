@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.domain.Job
+import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.Custom
 import it.krzeminski.githubactions.domain.RunnerType.MacOS1015
@@ -35,11 +36,11 @@ private fun Job<*, *>.toYaml(): Map<String, Any> =
         "needs" to needs.ifEmpty { null }?.map { it.id },
         "env" to env.ifEmpty { null },
         "if" to condition,
-        "strategy" to strategyMatrix?.let {
+        "strategy" to if (matrix != Matrix.EMPTY) {
             mapOf(
-                "matrix" to it,
+                "matrix" to matrix.strategyMatrix,
             )
-        },
+        } else null,
         "timeout-minutes" to timeoutMinutes,
         "outputs" to outputs.outputMapping.ifEmpty { null },
         *_customArguments.toList().toTypedArray(),
