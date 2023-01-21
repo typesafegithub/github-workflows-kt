@@ -37,7 +37,6 @@ public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
         condition = condition,
         env = env,
         steps = emptyList(),
-        strategyMatrix = strategyMatrix,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
         outputs = jobOutputs,
