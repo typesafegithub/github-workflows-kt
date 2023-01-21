@@ -744,15 +744,21 @@ class IntegrationTest : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
                 matrix = object : Matrix() {
-                    var version by matrixItem()
-                    var os by matrixItem()
+                    val version by matrixItem(
+                        variableName = "version",
+                        values = listOf(4, 5, 6),
+                    )
+                    val operatingSystem by matrixItem(
+                        variableName = "os",
+                        values = listOf("windows", "linux", "macos"),
+                    )
                 },
             ) {
                 run(
                     name = "use matrix values",
                     command = """
                         echo Version: ${matrix.version}
-                        echo Version: ${matrix.os}
+                        echo Version: ${matrix.operatingSystem}
                     """.trimIndent(),
                 )
             }

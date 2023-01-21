@@ -87,19 +87,31 @@ public class WorkflowBuilder(
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
         block: JobBuilder<JobOutputs.EMPTY, Matrix.EMPTY>.() -> Unit,
-    ): Job<JobOutputs.EMPTY, Matrix.EMPTY> = job(
-        id = id,
-        name = name,
-        runsOn = runsOn,
-        needs = needs,
-        condition = condition,
-        env = env,
-        strategyMatrix = strategyMatrix,
-        _customArguments = _customArguments,
-        timeoutMinutes = timeoutMinutes,
-        concurrency = concurrency,
-        block = block,
-    )
+    ): Job<JobOutputs.EMPTY, Matrix.EMPTY> {
+        val jobBuilder = JobBuilder(
+            id = id,
+            name = name,
+            runsOn = runsOn,
+            needs = needs,
+            condition = condition,
+            env = env,
+            strategyMatrix = strategyMatrix,
+            timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
+            jobOutputs = JobOutputs.EMPTY,
+            matrix = Matrix.EMPTY,
+            _customArguments = _customArguments,
+        )
+        jobBuilder.block()
+        val newJob = jobBuilder.build()
+
+        require(newJob.steps.isNotEmpty()) {
+            "There are no steps defined!"
+        }
+
+        workflow = workflow.copy(jobs = workflow.jobs + newJob)
+        return newJob
+    }
 
     public fun <MATRIX : Matrix> jobWithMatrix(
         id: String,

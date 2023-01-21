@@ -11,4 +11,6 @@ jobs:
     steps:
     - id: step-0
       name: use matrix values
-      run: echo TODO
+      run: |-
+        echo Version: matrix.version
+        echo Version: matrix.os
