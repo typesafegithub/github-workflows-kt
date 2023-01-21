@@ -113,7 +113,7 @@ public class WorkflowBuilder(
         return newJob
     }
 
-    public fun <MATRIX : Matrix> jobWithMatrix(
+    public fun <MATRIX : Matrix> job(
         id: String,
         name: String? = null,
         runsOn: RunnerType,

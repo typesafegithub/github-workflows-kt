@@ -740,7 +740,7 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - strategy matrix") {
         testRanWithGitHub("strategy matrix") {
-            jobWithMatrix(
+            job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
                 matrix = object : Matrix() {
