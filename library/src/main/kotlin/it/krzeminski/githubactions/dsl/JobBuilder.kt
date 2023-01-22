@@ -24,6 +24,11 @@ public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
     public val env: LinkedHashMap<String, String>,
     public val condition: String?,
     public val strategy: Strategy<MATRIX>,
+    /**
+     * Convenience accessor to mimic YAML's approach of referring to matrix values (`matrix.foobar` instead of
+     * `strategy.matrix.foobar`).
+     */
+    public val matrix: MATRIX = strategy.matrix,
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,

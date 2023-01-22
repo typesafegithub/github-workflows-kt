@@ -1524,14 +1524,15 @@ public abstract interface class it/krzeminski/githubactions/dsl/HasCustomArgumen
 }
 
 public final class it/krzeminski/githubactions/dsl/JobBuilder : it/krzeminski/githubactions/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Strategy;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Strategy;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Strategy;Lit/krzeminski/githubactions/domain/Matrix;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Strategy;Lit/krzeminski/githubactions/domain/Matrix;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lit/krzeminski/githubactions/domain/Job;
 	public final fun getConcurrency ()Lit/krzeminski/githubactions/domain/Concurrency;
 	public final fun getCondition ()Ljava/lang/String;
 	public final fun getEnv ()Ljava/util/LinkedHashMap;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getJobOutputs ()Lit/krzeminski/githubactions/domain/JobOutputs;
+	public final fun getMatrix ()Lit/krzeminski/githubactions/domain/Matrix;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNeeds ()Ljava/util/List;
 	public final fun getRunsOn ()Lit/krzeminski/githubactions/domain/RunnerType;
