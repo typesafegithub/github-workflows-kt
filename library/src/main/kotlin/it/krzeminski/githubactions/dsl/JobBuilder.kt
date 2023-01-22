@@ -23,7 +23,7 @@ public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
     public val needs: List<Job<*, *>>,
     public val env: LinkedHashMap<String, String>,
     public val condition: String?,
-    public val strategy: Strategy<MATRIX>? = null,
+    public val strategy: Strategy<MATRIX>,
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,

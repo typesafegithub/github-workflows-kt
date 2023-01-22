@@ -120,7 +120,7 @@ public class WorkflowBuilder(
         _customArguments: Map<String, @Contextual Any> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
-        strategy: Strategy<MATRIX>? = null,
+        strategy: Strategy<MATRIX>,
         block: JobBuilder<JobOutputs.EMPTY, MATRIX>.() -> Unit,
     ): Job<JobOutputs.EMPTY, MATRIX> {
         val jobBuilder = JobBuilder(

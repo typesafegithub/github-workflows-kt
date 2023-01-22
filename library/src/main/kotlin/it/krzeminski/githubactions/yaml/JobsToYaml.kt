@@ -38,7 +38,7 @@ private fun Job<*, *>.toYaml(): Map<String, Any?> =
         "if" to condition,
         "strategy" to if (strategy != Strategy.EMPTY) {
             mapOf(
-                "matrix" to strategy?.matrix?.strategyMatrix,
+                "matrix" to strategy.matrix.strategyMatrix,
             )
         } else { null },
         "timeout-minutes" to timeoutMinutes,
