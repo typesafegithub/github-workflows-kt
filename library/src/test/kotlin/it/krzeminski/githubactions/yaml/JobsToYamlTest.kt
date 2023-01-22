@@ -9,6 +9,7 @@ import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.Strategy
 import it.krzeminski.githubactions.dsl.expressions.expr
 
 class JobsToYamlTest : DescribeSpec({
@@ -26,7 +27,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             ),
             Job(
                 id = "Job-2",
@@ -39,7 +40,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             ),
         )
 
@@ -85,7 +86,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             ),
         )
 
@@ -122,16 +123,18 @@ class JobsToYamlTest : DescribeSpec({
                         zoo
                     """.trimIndent(),
                 ),
-                matrix = object : Matrix() {
-                    val strategyParam1 by matrixItem(
-                        variableName = "strategyParam1",
-                        values = listOf("foo", "bar"),
-                    )
-                    val strategyParam2 by matrixItem(
-                        variableName = "strategyParam2",
-                        values = listOf("baz", "goo"),
-                    )
-                },
+                strategy = Strategy(
+                    matrix = object : Matrix() {
+                        val strategyParam1 by matrixItem(
+                            variableName = "strategyParam1",
+                            values = listOf("foo", "bar"),
+                        )
+                        val strategyParam2 by matrixItem(
+                            variableName = "strategyParam2",
+                            values = listOf("baz", "goo"),
+                        )
+                    },
+                ),
                 concurrency = Concurrency(
                     group = "group-name",
                     cancelInProgress = true,
@@ -205,14 +208,14 @@ class JobsToYamlTest : DescribeSpec({
             runsOn = UbuntuLatest,
             steps = listOf(),
             outputs = JobOutputs.EMPTY,
-            matrix = Matrix.EMPTY,
+            strategy = Strategy.EMPTY,
         )
         val anotherJob2 = Job(
             id = "Another-job-2",
             runsOn = UbuntuLatest,
             steps = listOf(),
             outputs = JobOutputs.EMPTY,
-            matrix = Matrix.EMPTY,
+            strategy = Strategy.EMPTY,
         )
         val jobs = listOf(
             Job(
@@ -227,7 +230,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             ),
         )
 
@@ -262,7 +265,7 @@ class JobsToYamlTest : DescribeSpec({
                 ),
             ),
             outputs = JobOutputs.EMPTY,
-            matrix = Matrix.EMPTY,
+            strategy = Strategy.EMPTY,
         )
 
         // given
@@ -313,7 +316,7 @@ class JobsToYamlTest : DescribeSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
                 _customArguments = mapOf(
                     "runs-on" to "overridden!",
                 ),

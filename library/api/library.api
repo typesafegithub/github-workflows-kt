@@ -103,8 +103,8 @@ public final class it/krzeminski/githubactions/domain/ExternalActionStepWithOutp
 }
 
 public final class it/krzeminski/githubactions/domain/Job : it/krzeminski/githubactions/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Matrix;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Matrix;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Strategy;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Strategy;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/Integer;
 	public final fun component11 ()Lit/krzeminski/githubactions/domain/Concurrency;
@@ -114,22 +114,22 @@ public final class it/krzeminski/githubactions/domain/Job : it/krzeminski/github
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/util/List;
 	public final fun component6 ()Lit/krzeminski/githubactions/domain/JobOutputs;
-	public final fun component7 ()Lit/krzeminski/githubactions/domain/Matrix;
+	public final fun component7 ()Lit/krzeminski/githubactions/domain/Strategy;
 	public final fun component8 ()Ljava/util/LinkedHashMap;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Matrix;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;)Lit/krzeminski/githubactions/domain/Job;
-	public static synthetic fun copy$default (Lit/krzeminski/githubactions/domain/Job;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Matrix;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Strategy;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;)Lit/krzeminski/githubactions/domain/Job;
+	public static synthetic fun copy$default (Lit/krzeminski/githubactions/domain/Job;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Strategy;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/util/Map;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getConcurrency ()Lit/krzeminski/githubactions/domain/Concurrency;
 	public final fun getCondition ()Ljava/lang/String;
 	public final fun getEnv ()Ljava/util/LinkedHashMap;
 	public final fun getId ()Ljava/lang/String;
-	public final fun getMatrix ()Lit/krzeminski/githubactions/domain/Matrix;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNeeds ()Ljava/util/List;
 	public final fun getOutputs ()Lit/krzeminski/githubactions/domain/JobOutputs;
 	public final fun getRunsOn ()Lit/krzeminski/githubactions/domain/RunnerType;
 	public final fun getSteps ()Ljava/util/List;
+	public final fun getStrategy ()Lit/krzeminski/githubactions/domain/Strategy;
 	public final fun getTimeoutMinutes ()Ljava/lang/Integer;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
@@ -272,6 +272,15 @@ public abstract class it/krzeminski/githubactions/domain/Step : it/krzeminski/gi
 	public fun getId ()Ljava/lang/String;
 	public fun getTimeoutMinutes ()Ljava/lang/Integer;
 	public fun get_customArguments ()Ljava/util/Map;
+}
+
+public class it/krzeminski/githubactions/domain/Strategy {
+	public fun <init> (Lit/krzeminski/githubactions/domain/Matrix;)V
+	public final fun getMatrix ()Lit/krzeminski/githubactions/domain/Matrix;
+}
+
+public final class it/krzeminski/githubactions/domain/Strategy$EMPTY : it/krzeminski/githubactions/domain/Strategy {
+	public static final field INSTANCE Lit/krzeminski/githubactions/domain/Strategy$EMPTY;
 }
 
 public abstract interface class it/krzeminski/githubactions/domain/WithOutputs {
@@ -1515,19 +1524,18 @@ public abstract interface class it/krzeminski/githubactions/dsl/HasCustomArgumen
 }
 
 public final class it/krzeminski/githubactions/dsl/JobBuilder : it/krzeminski/githubactions/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Matrix;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Lit/krzeminski/githubactions/domain/Matrix;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Strategy;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Strategy;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lit/krzeminski/githubactions/domain/Job;
 	public final fun getConcurrency ()Lit/krzeminski/githubactions/domain/Concurrency;
 	public final fun getCondition ()Ljava/lang/String;
 	public final fun getEnv ()Ljava/util/LinkedHashMap;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getJobOutputs ()Lit/krzeminski/githubactions/domain/JobOutputs;
-	public final fun getMatrix ()Lit/krzeminski/githubactions/domain/Matrix;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNeeds ()Ljava/util/List;
 	public final fun getRunsOn ()Lit/krzeminski/githubactions/domain/RunnerType;
-	public final fun getStrategyMatrix ()Ljava/util/Map;
+	public final fun getStrategy ()Lit/krzeminski/githubactions/domain/Strategy;
 	public final fun getTimeoutMinutes ()Ljava/lang/Integer;
 	public fun get_customArguments ()Ljava/util/Map;
 	public final fun run (Ljava/lang/String;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Shell;Ljava/lang/String;Ljava/util/Map;)Lit/krzeminski/githubactions/domain/CommandStep;
@@ -1548,12 +1556,12 @@ public final class it/krzeminski/githubactions/dsl/WorkflowBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lit/krzeminski/githubactions/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lit/krzeminski/githubactions/domain/Workflow;
-	public final fun job (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Lkotlin/jvm/functions/Function1;)Lit/krzeminski/githubactions/domain/Job;
-	public final fun job (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/Matrix;Lkotlin/jvm/functions/Function1;)Lit/krzeminski/githubactions/domain/Job;
-	public final fun job (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lkotlin/jvm/functions/Function1;)Lit/krzeminski/githubactions/domain/Job;
-	public static synthetic fun job$default (Lit/krzeminski/githubactions/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
-	public static synthetic fun job$default (Lit/krzeminski/githubactions/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/Matrix;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
-	public static synthetic fun job$default (Lit/krzeminski/githubactions/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
+	public final fun job (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Lkotlin/jvm/functions/Function1;)Lit/krzeminski/githubactions/domain/Job;
+	public final fun job (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/Strategy;Lkotlin/jvm/functions/Function1;)Lit/krzeminski/githubactions/domain/Job;
+	public final fun job (Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lkotlin/jvm/functions/Function1;)Lit/krzeminski/githubactions/domain/Job;
+	public static synthetic fun job$default (Lit/krzeminski/githubactions/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/JobOutputs;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
+	public static synthetic fun job$default (Lit/krzeminski/githubactions/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lit/krzeminski/githubactions/domain/Strategy;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
+	public static synthetic fun job$default (Lit/krzeminski/githubactions/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lit/krzeminski/githubactions/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/lang/Integer;Lit/krzeminski/githubactions/domain/Concurrency;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lit/krzeminski/githubactions/domain/Job;
 }
 
 public final class it/krzeminski/githubactions/dsl/WorkflowBuilderKt {

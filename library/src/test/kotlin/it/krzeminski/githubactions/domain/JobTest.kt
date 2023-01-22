@@ -19,7 +19,7 @@ class JobTest : FunSpec({
                     var output1 by output()
                     var output2 by output()
                 },
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             )
             job.outputs.output1 = "foo"
             job.outputs.output2 = "foo"
@@ -37,7 +37,7 @@ class JobTest : FunSpec({
                 outputs = object : JobOutputs() {
                     var output1 by output()
                 },
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             )
 
             shouldThrow<IllegalStateException> {
@@ -54,7 +54,7 @@ class JobTest : FunSpec({
                 outputs = object : JobOutputs() {
                     var output1 by output()
                 },
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             )
             job.outputs.output1 = "foo"
 
@@ -82,7 +82,7 @@ class JobTest : FunSpec({
                     RunnerType.UbuntuLatest,
                     emptyList(),
                     outputs = JobOutputs.EMPTY,
-                    matrix = Matrix.EMPTY,
+                    strategy = Strategy.EMPTY,
                 )
             }.shouldHaveMessage(
                 """
@@ -102,7 +102,14 @@ class JobTest : FunSpec({
             "JOB_JOB",
             "_--4",
         ).forAll { jobName ->
-            Job(jobName, null, RunnerType.UbuntuLatest, emptyList(), outputs = JobOutputs.EMPTY, matrix = Matrix.EMPTY)
+            Job(
+                jobName,
+                null,
+                RunnerType.UbuntuLatest,
+                emptyList(),
+                outputs = JobOutputs.EMPTY,
+                strategy = Strategy.EMPTY,
+            )
         }
     }
 
@@ -120,7 +127,7 @@ class JobTest : FunSpec({
                     ),
                 ),
                 outputs = JobOutputs.EMPTY,
-                matrix = Matrix.EMPTY,
+                strategy = Strategy.EMPTY,
             )
         } shouldHaveMessage "timeout should be positive"
     }

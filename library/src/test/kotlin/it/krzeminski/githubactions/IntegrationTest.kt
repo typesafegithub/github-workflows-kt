@@ -12,6 +12,7 @@ import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.Strategy
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
@@ -749,22 +750,24 @@ class IntegrationTest : FunSpec({
             job(
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
-                matrix = object : Matrix() {
-                    val version by matrixItem(
-                        variableName = "version",
-                        values = listOf(4, 5, 6),
-                    )
-                    val operatingSystem by matrixItem(
-                        variableName = "os",
-                        values = listOf("windows", "linux", "macos"),
-                    )
-                },
+                strategy = Strategy(
+                    matrix = object : Matrix() {
+                        val version by matrixItem(
+                            variableName = "version",
+                            values = listOf(4, 5, 6),
+                        )
+                        val operatingSystem by matrixItem(
+                            variableName = "os",
+                            values = listOf("windows", "linux", "macos"),
+                        )
+                    },
+                ),
             ) {
                 run(
                     name = "use matrix values",
                     command = """
-                        echo Version: ${expr { matrix.version } }
-                        echo Version: ${expr { matrix.operatingSystem } }
+                        echo Version: ${expr { strategy?.matrix?.version!! } }
+                        echo Version: ${expr { strategy?.matrix?.operatingSystem!! } }
                     """.trimIndent(),
                 )
             }

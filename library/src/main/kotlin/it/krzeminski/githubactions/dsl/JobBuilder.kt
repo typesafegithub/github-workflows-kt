@@ -11,6 +11,7 @@ import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
+import it.krzeminski.githubactions.domain.Strategy
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -22,11 +23,10 @@ public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
     public val needs: List<Job<*, *>>,
     public val env: LinkedHashMap<String, String>,
     public val condition: String?,
-    public val strategyMatrix: Map<String, List<String>>?,
+    public val strategy: Strategy<MATRIX>? = null,
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,
-    public val matrix: MATRIX,
     override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
     private var job = Job(
@@ -40,7 +40,7 @@ public class JobBuilder<OUTPUT : JobOutputs, MATRIX : Matrix>(
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
         outputs = jobOutputs,
-        matrix = matrix,
+        strategy = strategy,
         _customArguments = _customArguments,
     )
 

@@ -11,7 +11,7 @@ public data class Job<OUTPUT : JobOutputs, MATRIX : Matrix>(
     val steps: List<Step>,
     val needs: List<Job<*, *>> = emptyList(),
     val outputs: OUTPUT,
-    val matrix: MATRIX,
+    val strategy: Strategy<MATRIX>?,
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val timeoutMinutes: Int? = null,
@@ -29,6 +29,6 @@ public data class Job<OUTPUT : JobOutputs, MATRIX : Matrix>(
             require(value > 0) { "timeout should be positive" }
         }
         outputs.job = this
-        matrix.job = this // Not yet sure if needed
+        strategy?.matrix?.job = this // Not yet sure if needed
     }
 }

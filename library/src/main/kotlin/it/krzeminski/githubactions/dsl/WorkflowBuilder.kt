@@ -5,6 +5,7 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.Matrix
 import it.krzeminski.githubactions.domain.RunnerType
+import it.krzeminski.githubactions.domain.Strategy
 import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.domain.triggers.Trigger
 import kotlinx.serialization.Contextual
@@ -43,7 +44,6 @@ public class WorkflowBuilder(
         needs: List<Job<*, *>> = emptyList(),
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
-        strategyMatrix: Map<String, List<String>>? = null,
         _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
@@ -57,11 +57,10 @@ public class WorkflowBuilder(
             needs = needs,
             condition = condition,
             env = env,
-            strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
             jobOutputs = outputs,
-            matrix = Matrix.EMPTY,
+            strategy = Strategy.EMPTY,
             _customArguments = _customArguments,
         )
         jobBuilder.block()
@@ -82,7 +81,6 @@ public class WorkflowBuilder(
         needs: List<Job<*, *>> = emptyList(),
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
-        strategyMatrix: Map<String, List<String>>? = null,
         _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
@@ -95,11 +93,10 @@ public class WorkflowBuilder(
             needs = needs,
             condition = condition,
             env = env,
-            strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
             jobOutputs = JobOutputs.EMPTY,
-            matrix = Matrix.EMPTY,
+            strategy = Strategy.EMPTY,
             _customArguments = _customArguments,
         )
         jobBuilder.block()
@@ -120,11 +117,10 @@ public class WorkflowBuilder(
         needs: List<Job<*, *>> = emptyList(),
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
-        strategyMatrix: Map<String, List<String>>? = null,
         _customArguments: Map<String, @Contextual Any> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
-        matrix: MATRIX,
+        strategy: Strategy<MATRIX>? = null,
         block: JobBuilder<JobOutputs.EMPTY, MATRIX>.() -> Unit,
     ): Job<JobOutputs.EMPTY, MATRIX> {
         val jobBuilder = JobBuilder(
@@ -134,11 +130,10 @@ public class WorkflowBuilder(
             needs = needs,
             condition = condition,
             env = env,
-            strategyMatrix = strategyMatrix,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
             jobOutputs = JobOutputs.EMPTY,
-            matrix = matrix,
+            strategy = strategy,
             _customArguments = _customArguments,
         )
         jobBuilder.block()
