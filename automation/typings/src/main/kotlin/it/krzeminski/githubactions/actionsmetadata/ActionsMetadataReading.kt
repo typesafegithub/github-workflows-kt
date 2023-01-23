@@ -25,7 +25,7 @@ private fun readLocalActionTypings(): List<WrapperRequest> {
         .filter { it.isRegularFile() }
         .filter { it.name !in setOf("commit-hash.txt") }
         .map {
-            val (_, owner, name, version, file) = it.toString().split("/")
+            val (_, owner, name, version, file) = it.toFile().invariantSeparatorsPath.split("/")
             WrapperRequest(
                 actionCoords = ActionCoords(
                     owner = owner,
