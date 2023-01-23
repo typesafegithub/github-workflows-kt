@@ -1,7 +1,6 @@
 package it.krzeminski.githubactions.yaml
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
@@ -50,17 +49,6 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
             condition = yamlConsistencyJobCondition,
         ) {
             uses("Check out", CheckoutV3())
-            // GitHub Actions runner come preinstalled with some Java versions, but isn't guaranteed to fit the bytecode
-            // version used to compile the library that is used in the consistency check. Hence we install the required
-            // version explicitly.
-            uses(
-                name = "Set up Java in proper version",
-                action = SetupJavaV3(
-                    javaVersion = "17",
-                    distribution = SetupJavaV3.Distribution.Zulu,
-                    cache = SetupJavaV3.BuildPlatform.Gradle,
-                ),
-            )
             if (useGitDiff) {
                 run(
                     "Execute script",

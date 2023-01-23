@@ -62,13 +62,6 @@ class IntegrationTest : FunSpec({
                   name: Check out
                   uses: actions/checkout@v3
                 - id: step-1
-                  name: Set up Java in proper version
-                  uses: actions/setup-java@v3
-                  with:
-                    java-version: 17
-                    distribution: zulu
-                    cache: gradle
-                - id: step-2
                   name: Consistency check
                   run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               test_job:
@@ -220,16 +213,9 @@ class IntegrationTest : FunSpec({
                   name: Check out
                   uses: actions/checkout@v3
                 - id: step-1
-                  name: Set up Java in proper version
-                  uses: actions/setup-java@v3
-                  with:
-                    java-version: 17
-                    distribution: zulu
-                    cache: gradle
-                - id: step-2
                   name: Execute script
                   run: rm '.github/workflows/some_workflow.yaml' && '.github/workflows/some_workflow.main.kts'
-                - id: step-3
+                - id: step-2
                   name: Consistency check
                   run: git diff --exit-code '.github/workflows/some_workflow.yaml'
               test_job:
@@ -678,13 +664,6 @@ class IntegrationTest : FunSpec({
                   name: Check out
                   uses: actions/checkout@v3
                 - id: step-1
-                  name: Set up Java in proper version
-                  uses: actions/setup-java@v3
-                  with:
-                    java-version: 17
-                    distribution: zulu
-                    cache: gradle
-                - id: step-2
                   name: Consistency check
                   run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
               test_job:
