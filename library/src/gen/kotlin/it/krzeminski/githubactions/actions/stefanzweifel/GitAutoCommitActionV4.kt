@@ -43,7 +43,7 @@ public class GitAutoCommitActionV4(
      */
     public val statusOptions: String? = null,
     /**
-     * File pattern used for `git add`. For example `src/ *.js`
+     * File pattern used for `git add`. For example `src/`&#42;`.js`
      */
     public val filePattern: String? = null,
     /**

@@ -163,8 +163,7 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
     val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
         PropertySpec.builder(key.toCamelCase(), String::class)
             .initializer("\"steps.\$stepId.outputs.$key\"")
-            // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-52940
-            .addKdoc(value.description.replace("/*", "/ *"))
+            .addKdoc(value.description.nestedCommentsSanitized)
             .build()
     }
     addType(
@@ -273,6 +272,7 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     )
     return this
 }
+
 private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
     val superclass = if (metadata.outputs.isEmpty()) {
         ClassName("it.krzeminski.githubactions.actions", "Action")
@@ -298,8 +298,7 @@ private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coord
             inputs.map { (key, input) ->
                 ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
                     .defaultValueIfNullable(input)
-                    // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-52940
-                    .addKdoc(input.description.replace("/*", "/ *"))
+                    .addKdoc(input.description.nestedCommentsSanitized)
                     .build()
             }.plus(
                 ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
@@ -328,9 +327,9 @@ private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): Paramete
 
 private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
     """
-       |Action: ${metadata.name}
+       |Action: ${metadata.name.nestedCommentsSanitized}
        |
-       |${metadata.description}
+       |${metadata.description.nestedCommentsSanitized}
        |
        |[Action on GitHub](https://github.com/${coords.owner}/${coords.name})
     """.trimMargin()
@@ -341,3 +340,12 @@ private fun Map<String, Typing>.getInputTyping(key: String) =
 private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords) =
     getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName(), key)
         .copy(nullable = !input.shouldBeNonNullInWrapper())
+
+// Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
+//            and a shortcoming in KotlinPoet: https://github.com/square/kotlinpoet/issues/887
+private val String.nestedCommentsSanitized
+    get() = replace("/*", "/&#42;")
+        .replace("*/", "&#42;/")
+        .replace("`[^`]++`".toRegex()) {
+            it.value.replace("&#42;", "`&#42;`")
+        }
