@@ -52,7 +52,7 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
         return myYaml.decodeFromString(cacheFile.readText())
     }
 
-    val commitHash = Path.of("actions", owner, name, version, "commit-hash.txt").toFile().readText()
+    val commitHash = Path.of("actions", owner, name, version, "commit-hash.txt").toFile().readText().trim()
     val list = listOf(actionYmlUrl(commitHash), actionYamlUrl(commitHash))
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {

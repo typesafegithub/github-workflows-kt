@@ -84,7 +84,7 @@ private fun ActionCoords.fetchTypingMetadata(
 
 internal fun getCommitHash(actionCoords: ActionCoords) =
     Path.of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "commit-hash.txt")
-        .toFile().readText()
+        .toFile().readText().trim()
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
     return inputs.mapValues { (key, value) ->
