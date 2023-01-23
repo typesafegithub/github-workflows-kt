@@ -21,6 +21,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
     ) {
       job(
         id = "check_yaml_consistency",
+        name = "Check YAML consistency",
         runsOn = RunnerType.UbuntuLatest,
       ) {
         uses(

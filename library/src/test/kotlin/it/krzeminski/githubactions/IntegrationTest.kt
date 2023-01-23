@@ -56,6 +56,7 @@ class IntegrationTest : FunSpec({
               push: {}
             jobs:
               check_yaml_consistency:
+                name: Check YAML consistency
                 runs-on: ubuntu-latest
                 steps:
                 - id: step-0
@@ -207,6 +208,7 @@ class IntegrationTest : FunSpec({
               push: {}
             jobs:
               check_yaml_consistency:
+                name: Check YAML consistency
                 runs-on: ubuntu-latest
                 steps:
                 - id: step-0
@@ -657,6 +659,7 @@ class IntegrationTest : FunSpec({
               push: {}
             jobs:
               check_yaml_consistency:
+                name: Check YAML consistency
                 runs-on: ubuntu-latest
                 if: ${'$'}{{ always() }}
                 steps:

@@ -45,6 +45,7 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
         val consistencyCheckJob = this.toBuilder().job(
             id = "check_yaml_consistency",
+            name = "Check YAML consistency",
             runsOn = UbuntuLatest,
             condition = yamlConsistencyJobCondition,
         ) {
