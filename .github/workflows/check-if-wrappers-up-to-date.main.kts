@@ -5,6 +5,7 @@
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.RunnerType.Windows2022
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
@@ -20,21 +21,23 @@ workflow(
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    job(
-        id = "check",
-        runsOn = UbuntuLatest,
-    ) {
-        uses(CheckoutV3())
-        setupJava()
-        uses(
-            name = "Generate wrappers",
-            action = GradleBuildActionV2(
-                arguments = ":automation:wrapper-generator:run",
+    listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
+        job(
+            id = "check-on-${runnerType::class.simpleName}",
+            runsOn = runnerType,
+        ) {
+            uses(CheckoutV3())
+            setupJava()
+            uses(
+                name = "Generate wrappers",
+                action = GradleBuildActionV2(
+                    arguments = ":automation:wrapper-generator:run",
+                )
             )
-        )
-        run(
-            name = "Fail if there are any changes in the generated wrappers or their list in the docs",
-            command = "git diff --exit-code library/src/gen/ docs/supported-actions.md"
-        )
+            run(
+                name = "Fail if there are any changes in the generated wrappers or their list in the docs",
+                command = "git diff --exit-code library/src/gen/ docs/supported-actions.md"
+            )
+        }
     }
 }.writeToFile()
