@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peter-evans/create-pull-request)
  */
-public class CreatePullRequestV4(
+public data class CreatePullRequestV4(
     /**
      * GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
      */
@@ -117,7 +117,7 @@ public class CreatePullRequestV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")

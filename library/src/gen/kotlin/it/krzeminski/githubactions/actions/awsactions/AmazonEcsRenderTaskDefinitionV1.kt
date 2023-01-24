@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecs-render-task-definition)
  */
-public class AmazonEcsRenderTaskDefinitionV1(
+public data class AmazonEcsRenderTaskDefinitionV1(
     /**
      * The path to the ECS task definition JSON file
      */
@@ -47,7 +47,7 @@ public class AmazonEcsRenderTaskDefinitionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-render-task-definition", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")

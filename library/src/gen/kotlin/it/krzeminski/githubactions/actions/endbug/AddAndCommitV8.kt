@@ -25,7 +25,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: AddAndCommitV9",
     replaceWith = ReplaceWith("AddAndCommitV9"),
 )
-public class AddAndCommitV8(
+public data class AddAndCommitV8(
     /**
      * Arguments for the git add command
      */
@@ -102,7 +102,7 @@ public class AddAndCommitV8(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v8") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

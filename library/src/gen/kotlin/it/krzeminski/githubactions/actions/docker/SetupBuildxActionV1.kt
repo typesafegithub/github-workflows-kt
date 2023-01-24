@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupBuildxActionV2",
     replaceWith = ReplaceWith("SetupBuildxActionV2"),
 )
-public class SetupBuildxActionV1(
+public data class SetupBuildxActionV1(
     /**
      * Buildx version. (eg. v0.3.0)
      */
@@ -72,7 +72,7 @@ public class SetupBuildxActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupBuildxActionV1.Outputs>("docker", "setup-buildx-action", _customVersion
         ?: "v1") {
     @Suppress("SpreadOperator")

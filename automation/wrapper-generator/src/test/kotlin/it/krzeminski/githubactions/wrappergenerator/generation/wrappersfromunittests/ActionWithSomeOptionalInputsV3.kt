@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-some-optional-inputs)
  */
-public class ActionWithSomeOptionalInputsV3(
+public data class ActionWithSomeOptionalInputsV3(
     /**
      * Required is default, default is set
      */
@@ -47,7 +47,7 @@ public class ActionWithSomeOptionalInputsV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("john-smith", "action-with-some-optional-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

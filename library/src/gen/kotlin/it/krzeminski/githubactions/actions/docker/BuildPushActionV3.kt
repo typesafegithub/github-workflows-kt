@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/build-push-action)
  */
-public class BuildPushActionV3(
+public data class BuildPushActionV3(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
      */
@@ -150,7 +150,7 @@ public class BuildPushActionV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?:
         "v3") {
     @Suppress("SpreadOperator")

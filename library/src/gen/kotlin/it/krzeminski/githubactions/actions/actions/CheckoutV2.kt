@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: CheckoutV3",
     replaceWith = ReplaceWith("CheckoutV3"),
 )
-public class CheckoutV2(
+public data class CheckoutV2(
     /**
      * Repository name with owner. For example, actions/checkout
      */
@@ -114,7 +114,7 @@ public class CheckoutV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("actions", "checkout", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

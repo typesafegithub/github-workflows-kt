@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/setup-buildx-action)
  */
-public class SetupBuildxActionV2(
+public data class SetupBuildxActionV2(
     /**
      * Buildx version. (eg. v0.3.0)
      */
@@ -73,7 +73,7 @@ public class SetupBuildxActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupBuildxActionV2.Outputs>("docker", "setup-buildx-action", _customVersion
         ?: "v2") {
     @Suppress("SpreadOperator")

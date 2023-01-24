@@ -16,7 +16,7 @@ import kotlin.collections.Map
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs)
  */
-public class ActionWithNoInputsV3(
+public data class ActionWithNoInputsV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -25,7 +25,7 @@ public class ActionWithNoInputsV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =

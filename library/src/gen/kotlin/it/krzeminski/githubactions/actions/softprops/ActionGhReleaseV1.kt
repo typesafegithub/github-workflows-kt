@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/softprops/action-gh-release)
  */
-public class ActionGhReleaseV1(
+public data class ActionGhReleaseV1(
     /**
      * Note-worthy description of changes in release
      */
@@ -90,7 +90,7 @@ public class ActionGhReleaseV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<ActionGhReleaseV1.Outputs>("softprops", "action-gh-release", _customVersion ?:
         "v1") {
     @Suppress("SpreadOperator")

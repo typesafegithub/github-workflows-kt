@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/first-interaction)
  */
-public class FirstInteractionV1(
+public data class FirstInteractionV1(
     /**
      * Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
      */
@@ -39,7 +39,7 @@ public class FirstInteractionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("actions", "first-interaction", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

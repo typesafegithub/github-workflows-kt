@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/stefanzweifel/git-auto-commit-action)
  */
-public class GitAutoCommitActionV4(
+public data class GitAutoCommitActionV4(
     /**
      * Commit message
      */
@@ -106,7 +106,7 @@ public class GitAutoCommitActionV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GitAutoCommitActionV4.Outputs>("stefanzweifel", "git-auto-commit-action",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")

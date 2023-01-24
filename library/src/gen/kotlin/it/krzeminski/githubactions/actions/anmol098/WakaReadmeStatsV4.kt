@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/anmol098/waka-readme-stats)
  */
-public class WakaReadmeStatsV4(
+public data class WakaReadmeStatsV4(
     /**
      * GitHub access token with Repo scope
      */
@@ -95,7 +95,7 @@ public class WakaReadmeStatsV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

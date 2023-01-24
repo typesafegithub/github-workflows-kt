@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/check-gradle-version)
  */
-public class CheckGradleVersionV1(
+public data class CheckGradleVersionV1(
     /**
      * Relative path to gradlew executable
      */
@@ -31,7 +31,7 @@ public class CheckGradleVersionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version",
         _customVersion ?: "v1") {
     @Suppress("SpreadOperator")

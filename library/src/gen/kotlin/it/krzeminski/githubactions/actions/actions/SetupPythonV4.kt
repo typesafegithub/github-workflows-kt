@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-python)
  */
-public class SetupPythonV4(
+public data class SetupPythonV4(
     /**
      * Version range or exact version of Python or PyPy to use, using SemVer's version range syntax.
      * Reads from .python-version if unset.
@@ -68,7 +68,7 @@ public class SetupPythonV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupPythonV4.Outputs>("actions", "setup-python", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

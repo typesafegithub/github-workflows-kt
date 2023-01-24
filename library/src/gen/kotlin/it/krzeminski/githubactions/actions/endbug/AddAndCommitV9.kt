@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/EndBug/add-and-commit)
  */
-public class AddAndCommitV9(
+public data class AddAndCommitV9(
     /**
      * Arguments for the git add command
      */
@@ -104,7 +104,7 @@ public class AddAndCommitV9(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<AddAndCommitV9.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v9") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

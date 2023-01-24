@@ -29,7 +29,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: AuthV1",
     replaceWith = ReplaceWith("AuthV1"),
 )
-public class AuthV0(
+public data class AuthV0(
     /**
      * ID of the default project to use for future API calls and invocations. If
      * unspecified, this action will attempt to extract the value from other
@@ -158,7 +158,7 @@ public class AuthV0(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

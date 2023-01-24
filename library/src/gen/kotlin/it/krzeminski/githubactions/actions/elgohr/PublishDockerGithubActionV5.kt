@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/elgohr/Publish-Docker-Github-Action)
  */
-public class PublishDockerGithubActionV5(
+public data class PublishDockerGithubActionV5(
     /**
      * The name of the image you would like to push
      */
@@ -98,7 +98,7 @@ public class PublishDockerGithubActionV5(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<PublishDockerGithubActionV5.Outputs>("elgohr", "Publish-Docker-Github-Action",
         _customVersion ?: "v5") {
     @Suppress("SpreadOperator")

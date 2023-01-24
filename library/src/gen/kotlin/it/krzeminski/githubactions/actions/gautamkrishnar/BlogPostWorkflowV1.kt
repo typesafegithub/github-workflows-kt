@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gautamkrishnar/blog-post-workflow)
  */
-public class BlogPostWorkflowV1(
+public data class BlogPostWorkflowV1(
     /**
      * GitHub access token with Repo scope
      */
@@ -155,7 +155,7 @@ public class BlogPostWorkflowV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<BlogPostWorkflowV1.Outputs>("gautamkrishnar", "blog-post-workflow",
         _customVersion ?: "v1") {
     @Suppress("SpreadOperator")

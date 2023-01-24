@@ -28,7 +28,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupNodeV3",
     replaceWith = ReplaceWith("SetupNodeV3"),
 )
-public class SetupNodeV2(
+public data class SetupNodeV2(
     /**
      * Set always-auth in npmrc
      */
@@ -88,7 +88,7 @@ public class SetupNodeV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupNodeV2.Outputs>("actions", "setup-node", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

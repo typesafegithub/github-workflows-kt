@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gradle/gradle-build-action)
  */
-public class GradleBuildActionV2(
+public data class GradleBuildActionV2(
     /**
      * Gradle version to use
      */
@@ -88,7 +88,7 @@ public class GradleBuildActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", _customVersion
         ?: "v2") {
     @Suppress("SpreadOperator")

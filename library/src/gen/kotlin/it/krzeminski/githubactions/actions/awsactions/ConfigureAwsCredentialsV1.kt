@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
  */
-public class ConfigureAwsCredentialsV1(
+public data class ConfigureAwsCredentialsV1(
     /**
      * The audience to use for the OIDC provider
      */
@@ -84,7 +84,7 @@ public class ConfigureAwsCredentialsV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<ConfigureAwsCredentialsV1.Outputs>("aws-actions", "configure-aws-credentials",
         _customVersion ?: "v1") {
     @Suppress("SpreadOperator")

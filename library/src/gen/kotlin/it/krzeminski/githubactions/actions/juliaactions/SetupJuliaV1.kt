@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/julia-actions/setup-julia)
  */
-public class SetupJuliaV1(
+public data class SetupJuliaV1(
     /**
      * The Julia version to download (if necessary) and use. Example: 1.0.4
      */
@@ -45,7 +45,7 @@ public class SetupJuliaV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1")
         {
     @Suppress("SpreadOperator")

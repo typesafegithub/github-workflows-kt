@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/ReactiveCircus/android-emulator-runner)
  */
-public class AndroidEmulatorRunnerV2(
+public data class AndroidEmulatorRunnerV2(
     /**
      * API level of the platform and system image - e.g. 23 for Android Marshmallow, 29 for Android
      * 10
@@ -130,7 +130,7 @@ public class AndroidEmulatorRunnerV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

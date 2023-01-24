@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gradle-update/update-gradle-wrapper-action)
  */
-public class UpdateGradleWrapperActionV1(
+public data class UpdateGradleWrapperActionV1(
     /**
      * Access token for the repository, e.g. `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -70,7 +70,7 @@ public class UpdateGradleWrapperActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("gradle-update", "update-gradle-wrapper-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

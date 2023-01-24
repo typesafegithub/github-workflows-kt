@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/c2corg/transifex-pull-request-action)
  */
-public class TransifexPullRequestActionV5(
+public data class TransifexPullRequestActionV5(
     /**
      * Transifex token
      */
@@ -72,7 +72,7 @@ public class TransifexPullRequestActionV5(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("c2corg", "transifex-pull-request-action", _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

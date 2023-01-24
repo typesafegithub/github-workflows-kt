@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/JamesIves/github-pages-deploy-action)
  */
-public class GithubPagesDeployActionV4(
+public data class GithubPagesDeployActionV4(
     /**
      * This option allows you to define a private SSH key to be used in conjunction with a
      * repository deployment key to deploy using SSH. The private key should be stored in the `secrets
@@ -120,7 +120,7 @@ public class GithubPagesDeployActionV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")

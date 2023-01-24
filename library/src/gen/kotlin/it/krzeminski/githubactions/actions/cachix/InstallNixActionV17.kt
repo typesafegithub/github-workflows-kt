@@ -26,7 +26,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: InstallNixActionV18",
     replaceWith = ReplaceWith("InstallNixActionV18"),
 )
-public class InstallNixActionV17(
+public data class InstallNixActionV17(
     /**
      * Installation URL that will contain a script to install Nix.
      */
@@ -51,7 +51,7 @@ public class InstallNixActionV17(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("cachix", "install-nix-action", _customVersion ?: "v17") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

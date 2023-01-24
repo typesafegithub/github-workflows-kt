@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/JasonEtco/create-an-issue)
  */
-public class CreateAnIssueV2(
+public data class CreateAnIssueV2(
     /**
      * GitHub handle of the user(s) to assign the issue (comma-separated)
      */
@@ -49,7 +49,7 @@ public class CreateAnIssueV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", _customVersion ?:
         "v2") {
     @Suppress("SpreadOperator")

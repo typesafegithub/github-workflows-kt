@@ -22,7 +22,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/google-github-actions/auth)
  */
-public class AuthV1(
+public data class AuthV1(
     /**
      * ID of the default project to use for future API calls and invocations. If
      * unspecified, this action will attempt to extract the value from other
@@ -151,7 +151,7 @@ public class AuthV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<AuthV1.Outputs>("google-github-actions", "auth", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

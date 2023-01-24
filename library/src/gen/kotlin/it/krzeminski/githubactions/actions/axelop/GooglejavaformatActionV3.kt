@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/axel-op/googlejavaformat-action)
  */
-public class GooglejavaformatActionV3(
+public data class GooglejavaformatActionV3(
     /**
      * Arguments for the Google Java Format executable
      */
@@ -57,7 +57,7 @@ public class GooglejavaformatActionV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("axel-op", "googlejavaformat-action", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

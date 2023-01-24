@@ -28,7 +28,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: GithubActionsV1",
     replaceWith = ReplaceWith("GithubActionsV1"),
 )
-public class GithubActionsV0(
+public data class GithubActionsV0(
     /**
      * Version of the gcloud SDK to install. If unspecified or set to "latest",
      * the latest available gcloud SDK version for the target platform will be
@@ -85,7 +85,7 @@ public class GithubActionsV0(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("GoogleCloudPlatform", "github-actions", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/subosito/flutter-action)
  */
-public class FlutterActionV2(
+public data class FlutterActionV2(
     /**
      * The Flutter version to make available on the path
      */
@@ -52,7 +52,7 @@ public class FlutterActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2")
         {
     @Suppress("SpreadOperator")
