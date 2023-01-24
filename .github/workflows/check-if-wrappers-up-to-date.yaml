@@ -29,8 +29,30 @@ jobs:
     - id: step-3
       name: Consistency check
       run: git diff --exit-code '.github/workflows/check-if-wrappers-up-to-date.yaml'
-  check:
+  check-on-UbuntuLatest:
     runs-on: ubuntu-latest
+    needs:
+    - check_yaml_consistency
+    steps:
+    - id: step-0
+      uses: actions/checkout@v3
+    - id: step-1
+      name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: zulu
+        cache: gradle
+    - id: step-2
+      name: Generate wrappers
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: :automation:wrapper-generator:run
+    - id: step-3
+      name: Fail if there are any changes in the generated wrappers or their list in the docs
+      run: git diff --exit-code library/src/gen/ docs/supported-actions.md
+  check-on-Windows2022:
+    runs-on: windows-2022
     needs:
     - check_yaml_consistency
     steps:
