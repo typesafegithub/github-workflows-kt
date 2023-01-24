@@ -5,10 +5,8 @@
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-import it.krzeminski.githubactions.domain.triggers.Cron
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.domain.triggers.Schedule
 import it.krzeminski.githubactions.domain.triggers.WorkflowDispatch
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.writeToFile
@@ -21,12 +19,10 @@ workflow(
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
-    yamlConsistencyJobCondition = disableScheduledJobInForks,
 ) {
     job(
         id = "check",
         runsOn = UbuntuLatest,
-        condition = disableScheduledJobInForks,
     ) {
         uses(CheckoutV3())
         setupJava()
