@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions-rs/toolchain)
  */
-public class ToolchainV1(
+public data class ToolchainV1(
     /**
      * Rust toolchain name.
      *
@@ -58,7 +58,7 @@ public class ToolchainV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<ToolchainV1.Outputs>("actions-rs", "toolchain", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

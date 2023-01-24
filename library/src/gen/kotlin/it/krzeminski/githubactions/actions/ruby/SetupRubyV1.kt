@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/ruby/setup-ruby)
  */
-public class SetupRubyV1(
+public data class SetupRubyV1(
     /**
      * Engine and version to use, see the syntax in the README. Reads from .ruby-version or
      * .tool-versions if unset.
@@ -70,7 +70,7 @@ public class SetupRubyV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

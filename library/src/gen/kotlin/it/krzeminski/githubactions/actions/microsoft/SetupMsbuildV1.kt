@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/microsoft/setup-msbuild)
  */
-public class SetupMsbuildV1(
+public data class SetupMsbuildV1(
     /**
      * Folder location of where vswhere.exe is located if a self-hosted agent
      */
@@ -45,7 +45,7 @@ public class SetupMsbuildV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupMsbuildV1.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v1")
         {
     @Suppress("SpreadOperator")

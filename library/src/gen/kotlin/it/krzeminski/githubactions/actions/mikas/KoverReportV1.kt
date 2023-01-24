@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/mi-kas/kover-report)
  */
-public class KoverReportV1(
+public data class KoverReportV1(
     /**
      * Path to the generated kover report xml file
      */
@@ -53,7 +53,7 @@ public class KoverReportV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

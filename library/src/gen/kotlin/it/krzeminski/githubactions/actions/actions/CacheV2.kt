@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: CacheV3",
     replaceWith = ReplaceWith("CacheV3"),
 )
-public class CacheV2(
+public data class CacheV2(
     /**
      * A list of files, directories, and wildcard patterns to cache and restore
      */
@@ -52,7 +52,7 @@ public class CacheV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CacheV2.Outputs>("actions", "cache", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

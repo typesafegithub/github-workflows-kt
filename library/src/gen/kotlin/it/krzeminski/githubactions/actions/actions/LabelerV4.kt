@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/labeler)
  */
-public class LabelerV4(
+public data class LabelerV4(
     /**
      * The GITHUB_TOKEN secret
      */
@@ -40,7 +40,7 @@ public class LabelerV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("actions", "labeler", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

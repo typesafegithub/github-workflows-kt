@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Azure/webapps-deploy)
  */
-public class WebappsDeployV2(
+public data class WebappsDeployV2(
     /**
      * Name of the Azure Web App
      */
@@ -62,7 +62,7 @@ public class WebappsDeployV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peaceiris/actions-gh-pages)
  */
-public class ActionsGhPagesV3(
+public data class ActionsGhPagesV3(
     /**
      * Set a SSH private key from repository secret value for pushing to the remote branch.
      */
@@ -110,7 +110,7 @@ public class ActionsGhPagesV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("peaceiris", "actions-gh-pages", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

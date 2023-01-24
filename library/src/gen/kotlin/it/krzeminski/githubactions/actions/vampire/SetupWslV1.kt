@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Vampire/setup-wsl)
  */
-public class SetupWslV1(
+public data class SetupWslV1(
     /**
      * The WSL distribution to install, update, or configure.
      * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
@@ -103,7 +103,7 @@ public class SetupWslV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupWslV1.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

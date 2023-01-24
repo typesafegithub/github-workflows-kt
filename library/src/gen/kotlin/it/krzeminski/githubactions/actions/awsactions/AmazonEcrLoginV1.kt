@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecr-login)
  */
-public class AmazonEcrLoginV1(
+public data class AmazonEcrLoginV1(
     /**
      * A comma-delimited list of AWS account IDs that are associated with the ECR Private
      * registries. If you do not specify a registry, the default ECR Private registry is assumed. If
@@ -45,7 +45,7 @@ public class AmazonEcrLoginV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
         "v1") {
     @Suppress("SpreadOperator")

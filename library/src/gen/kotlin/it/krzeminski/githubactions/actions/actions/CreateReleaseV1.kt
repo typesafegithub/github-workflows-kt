@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/create-release)
  */
-public class CreateReleaseV1(
+public data class CreateReleaseV1(
     /**
      * The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a
      * user pushes a new tag
@@ -68,7 +68,7 @@ public class CreateReleaseV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1")
         {
     @Suppress("SpreadOperator")

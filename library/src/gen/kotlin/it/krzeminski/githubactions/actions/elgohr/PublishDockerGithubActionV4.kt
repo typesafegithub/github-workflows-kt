@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: PublishDockerGithubActionV5",
     replaceWith = ReplaceWith("PublishDockerGithubActionV5"),
 )
-public class PublishDockerGithubActionV4(
+public data class PublishDockerGithubActionV4(
     /**
      * The name of the image you would like to push
      */
@@ -105,7 +105,7 @@ public class PublishDockerGithubActionV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<PublishDockerGithubActionV4.Outputs>("elgohr", "Publish-Docker-Github-Action",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")

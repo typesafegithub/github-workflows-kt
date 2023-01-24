@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/ericcornelissen/git-tag-annotation-action)
  */
-public class GitTagAnnotationActionV2(
+public data class GitTagAnnotationActionV2(
     /**
      * tag of interest (defaults to the GITHUB_REF environment variable)
      */
@@ -31,7 +31,7 @@ public class GitTagAnnotationActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GitTagAnnotationActionV2.Outputs>("ericcornelissen",
         "git-tag-annotation-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")

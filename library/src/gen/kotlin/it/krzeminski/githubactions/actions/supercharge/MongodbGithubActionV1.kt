@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/supercharge/mongodb-github-action)
  */
-public class MongodbGithubActionV1(
+public data class MongodbGithubActionV1(
     /**
      * MongoDB version to use (default "latest")
      */
@@ -52,7 +52,7 @@ public class MongodbGithubActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("supercharge", "mongodb-github-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

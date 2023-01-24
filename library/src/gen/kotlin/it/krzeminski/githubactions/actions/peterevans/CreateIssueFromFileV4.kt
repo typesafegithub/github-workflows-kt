@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peter-evans/create-issue-from-file)
  */
-public class CreateIssueFromFileV4(
+public data class CreateIssueFromFileV4(
     /**
      * The GitHub authentication token
      */
@@ -57,7 +57,7 @@ public class CreateIssueFromFileV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CreateIssueFromFileV4.Outputs>("peter-evans", "create-issue-from-file",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")

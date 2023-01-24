@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/cache)
  */
-public class CacheV3(
+public data class CacheV3(
     /**
      * A list of files, directories, and wildcard patterns to cache and restore
      */
@@ -52,7 +52,7 @@ public class CacheV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<CacheV3.Outputs>("actions", "cache", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

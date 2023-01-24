@@ -28,7 +28,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: StaleV7",
     replaceWith = ReplaceWith("StaleV7"),
 )
-public class StaleV5(
+public data class StaleV5(
     /**
      * Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -293,7 +293,7 @@ public class StaleV5(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<StaleV5.Outputs>("actions", "stale", _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

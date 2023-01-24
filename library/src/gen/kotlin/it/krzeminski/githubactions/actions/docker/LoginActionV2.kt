@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/login-action)
  */
-public class LoginActionV2(
+public data class LoginActionV2(
     /**
      * Server address of Docker registry. If not set then will default to Docker Hub
      */
@@ -48,7 +48,7 @@ public class LoginActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("docker", "login-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

@@ -26,7 +26,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SemverUtilsV3",
     replaceWith = ReplaceWith("SemverUtilsV3"),
 )
-public class SemverUtilsV2(
+public data class SemverUtilsV2(
     /**
      * A version to process
      */
@@ -55,7 +55,7 @@ public class SemverUtilsV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SemverUtilsV2.Outputs>("madhead", "semver-utils", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

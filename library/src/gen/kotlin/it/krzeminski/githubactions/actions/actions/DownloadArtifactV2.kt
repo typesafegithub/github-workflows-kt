@@ -26,7 +26,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: DownloadArtifactV3",
     replaceWith = ReplaceWith("DownloadArtifactV3"),
 )
-public class DownloadArtifactV2(
+public data class DownloadArtifactV2(
     /**
      * Artifact name
      */
@@ -43,7 +43,7 @@ public class DownloadArtifactV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("actions", "download-artifact", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

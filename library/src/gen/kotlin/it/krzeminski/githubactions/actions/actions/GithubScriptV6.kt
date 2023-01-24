@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/github-script)
  */
-public class GithubScriptV6(
+public data class GithubScriptV6(
     /**
      * The script to run
      */
@@ -63,7 +63,7 @@ public class GithubScriptV6(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GithubScriptV6.Outputs>("actions", "github-script", _customVersion ?: "v6") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

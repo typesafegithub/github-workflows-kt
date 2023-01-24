@@ -26,7 +26,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: LoginActionV2",
     replaceWith = ReplaceWith("LoginActionV2"),
 )
-public class LoginActionV1(
+public data class LoginActionV1(
     /**
      * Server address of Docker registry. If not set then will default to Docker Hub
      */
@@ -55,7 +55,7 @@ public class LoginActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("docker", "login-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/burrunan/gradle-cache-action)
  */
-public class GradleCacheActionV1(
+public data class GradleCacheActionV1(
     /**
      * A job identifier to avoid cache pollution from different jobs
      */
@@ -127,7 +127,7 @@ public class GradleCacheActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GradleCacheActionV1.Outputs>("burrunan", "gradle-cache-action", _customVersion
         ?: "v1") {
     @Suppress("SpreadOperator")

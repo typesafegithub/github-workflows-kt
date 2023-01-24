@@ -16,7 +16,7 @@ import kotlin.collections.Map
  *
  * [Action on GitHub](https://github.com/anothrNick/github-tag-action)
  */
-public class GithubTagActionV1(
+public data class GithubTagActionV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -25,7 +25,7 @@ public class GithubTagActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<GithubTagActionV1.Outputs>("anothrNick", "github-tag-action", _customVersion
         ?: "v1") {
     @Suppress("SpreadOperator")

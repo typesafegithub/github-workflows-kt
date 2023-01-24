@@ -21,7 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gradle/wrapper-validation-action)
  */
-public class WrapperValidationActionV1(
+public data class WrapperValidationActionV1(
     /**
      * Minimum expected wrapper JAR files
      */
@@ -42,7 +42,7 @@ public class WrapperValidationActionV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("gradle", "wrapper-validation-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

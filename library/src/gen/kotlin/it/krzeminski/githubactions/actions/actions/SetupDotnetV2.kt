@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupDotnetV3",
     replaceWith = ReplaceWith("SetupDotnetV3"),
 )
-public class SetupDotnetV2(
+public data class SetupDotnetV2(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
      * available. Examples: 2.2.104, 3.1, 3.1.x
@@ -65,7 +65,7 @@ public class SetupDotnetV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("actions", "setup-dotnet", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

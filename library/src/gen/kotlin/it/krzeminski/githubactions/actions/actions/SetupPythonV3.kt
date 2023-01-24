@@ -26,7 +26,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupPythonV4",
     replaceWith = ReplaceWith("SetupPythonV4"),
 )
-public class SetupPythonV3(
+public data class SetupPythonV3(
     /**
      * Version range or exact version of a Python version to use, using SemVer's version range
      * syntax.
@@ -59,7 +59,7 @@ public class SetupPythonV3(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupPythonV3.Outputs>("actions", "setup-python", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

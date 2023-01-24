@@ -26,7 +26,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupJavaV3",
     replaceWith = ReplaceWith("SetupJavaV3"),
 )
-public class SetupJavaV2(
+public data class SetupJavaV2(
     /**
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported
      * syntax in README file
@@ -100,7 +100,7 @@ public class SetupJavaV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

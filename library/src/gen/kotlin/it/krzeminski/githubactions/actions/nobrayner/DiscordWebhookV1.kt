@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/nobrayner/discord-webhook)
  */
-public class DiscordWebhookV1(
+public data class DiscordWebhookV1(
     /**
      * GitHub Token
      */
@@ -71,7 +71,7 @@ public class DiscordWebhookV1(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("nobrayner", "discord-webhook", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

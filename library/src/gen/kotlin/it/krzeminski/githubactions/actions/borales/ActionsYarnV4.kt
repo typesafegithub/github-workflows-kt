@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Borales/actions-yarn)
  */
-public class ActionsYarnV4(
+public data class ActionsYarnV4(
     /**
      * Yarn command
      */
@@ -35,7 +35,7 @@ public class ActionsYarnV4(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : Action("Borales", "actions-yarn", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

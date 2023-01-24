@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: BuildPushActionV3",
     replaceWith = ReplaceWith("BuildPushActionV3"),
 )
-public class BuildPushActionV2(
+public data class BuildPushActionV2(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
      */
@@ -141,7 +141,7 @@ public class BuildPushActionV2(
      * Allows overriding action's version, for example to use a specific minor version, or a newer
      * version that the wrapper doesn't yet know about
      */
-    _customVersion: String? = null,
+    public val _customVersion: String? = null,
 ) : ActionWithOutputs<BuildPushActionV2.Outputs>("docker", "build-push-action", _customVersion ?:
         "v2") {
     @Suppress("SpreadOperator")
