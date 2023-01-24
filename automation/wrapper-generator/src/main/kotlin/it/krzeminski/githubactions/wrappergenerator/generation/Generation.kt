@@ -147,6 +147,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
         )
     }
     addProperty(PropertySpec.builder(CUSTOM_INPUTS, Types.mapStringString).initializer(CUSTOM_INPUTS).build())
+    addProperty(PropertySpec.builder(CUSTOM_VERSION, Types.nullableString).initializer(CUSTOM_VERSION).build())
     return this
 }
 
