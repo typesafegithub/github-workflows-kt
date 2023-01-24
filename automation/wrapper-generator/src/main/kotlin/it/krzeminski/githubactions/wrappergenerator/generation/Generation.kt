@@ -116,6 +116,7 @@ private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata, coo
 private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec {
     val actionClassName = coords.buildActionClassName()
     return TypeSpec.classBuilder(actionClassName)
+        .addModifiers(KModifier.DATA)
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
         .inheritsFromAction(coords, metadata)

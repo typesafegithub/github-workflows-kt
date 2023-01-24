@@ -16,7 +16,7 @@ import kotlin.collections.Map
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs)
  */
-public class ActionWithNoInputsV3(
+public data class ActionWithNoInputsV3(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */

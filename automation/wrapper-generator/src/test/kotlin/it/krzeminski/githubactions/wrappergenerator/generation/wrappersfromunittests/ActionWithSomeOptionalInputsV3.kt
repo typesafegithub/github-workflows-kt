@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-some-optional-inputs)
  */
-public class ActionWithSomeOptionalInputsV3(
+public data class ActionWithSomeOptionalInputsV3(
     /**
      * Required is default, default is set
      */

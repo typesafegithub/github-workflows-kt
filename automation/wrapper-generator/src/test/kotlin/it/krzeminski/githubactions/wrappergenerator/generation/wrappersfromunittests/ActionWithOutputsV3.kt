@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
  */
-public class ActionWithOutputsV3(
+public data class ActionWithOutputsV3(
     /**
      * Short description
      */

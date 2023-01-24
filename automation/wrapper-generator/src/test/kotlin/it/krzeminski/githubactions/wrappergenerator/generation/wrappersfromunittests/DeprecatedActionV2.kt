@@ -23,7 +23,7 @@ import kotlin.collections.Map
     message = "This action has a newer major version: DeprecatedActionV3",
     replaceWith = ReplaceWith("DeprecatedActionV3"),
 )
-public class DeprecatedActionV2(
+public data class DeprecatedActionV2(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */

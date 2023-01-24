@@ -18,7 +18,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-deprecated-input-and-name-clash)
  */
-public class ActionWithDeprecatedInputAndNameClashV2(
+public data class ActionWithDeprecatedInputAndNameClashV2(
     /**
      * Foo bar - new
      */

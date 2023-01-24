@@ -20,7 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/simple-action-with-lists)
  */
-public class SimpleActionWithListsV3(
+public data class SimpleActionWithListsV3(
     /**
      * List of strings
      */

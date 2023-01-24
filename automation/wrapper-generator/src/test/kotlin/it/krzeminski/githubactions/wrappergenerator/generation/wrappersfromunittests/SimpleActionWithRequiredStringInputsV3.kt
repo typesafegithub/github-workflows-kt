@@ -22,7 +22,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
  */
-public class SimpleActionWithRequiredStringInputsV3(
+public data class SimpleActionWithRequiredStringInputsV3(
     /**
      * Short description
      */

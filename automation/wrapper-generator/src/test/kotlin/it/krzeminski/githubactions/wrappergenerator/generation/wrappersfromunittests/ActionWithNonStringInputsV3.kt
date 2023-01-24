@@ -22,7 +22,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-non-string-inputs)
  */
-public class ActionWithNonStringInputsV3(
+public data class ActionWithNonStringInputsV3(
     /**
      * Short description
      */

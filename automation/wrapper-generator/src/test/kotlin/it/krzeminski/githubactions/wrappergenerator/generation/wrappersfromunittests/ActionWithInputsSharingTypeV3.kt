@@ -19,7 +19,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-inputs-sharing-type)
  */
-public class ActionWithInputsSharingTypeV3(
+public data class ActionWithInputsSharingTypeV3(
     public val fooOne: ActionWithInputsSharingTypeV3.Foo,
     public val fooTwo: ActionWithInputsSharingTypeV3.Foo,
     public val fooThree: ActionWithInputsSharingTypeV3.Foo? = null,
