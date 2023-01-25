@@ -1,14 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.vampire
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -23,11 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Vampire/setup-wsl)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupWslV2",
-    replaceWith = ReplaceWith("SetupWslV2"),
-)
-public data class SetupWslV1(
+public data class SetupWslV2(
     /**
      * The WSL distribution to install, update, or configure.
      * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
@@ -36,7 +29,7 @@ public data class SetupWslV1(
      * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
      * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
      */
-    public val distribution: SetupWslV1.Distribution? = null,
+    public val distribution: SetupWslV2.Distribution? = null,
     /**
      * Whether to use the cache for the downloaded distribution installer.
      * This saves time in subsequent runs, jobs, or workflows but consumes space from
@@ -111,7 +104,7 @@ public data class SetupWslV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupWslV1.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v1") {
+) : ActionWithOutputs<SetupWslV2.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -132,25 +125,25 @@ public data class SetupWslV1(
     public sealed class Distribution(
         public val stringValue: String,
     ) {
-        public object Alpine : SetupWslV1.Distribution("Alpine")
+        public object Alpine : SetupWslV2.Distribution("Alpine")
 
-        public object Debian : SetupWslV1.Distribution("Debian")
+        public object Debian : SetupWslV2.Distribution("Debian")
 
-        public object KaliLinux : SetupWslV1.Distribution("kali-linux")
+        public object KaliLinux : SetupWslV2.Distribution("kali-linux")
 
-        public object OpenSUSELeap152 : SetupWslV1.Distribution("openSUSE-Leap-15.2")
+        public object OpenSUSELeap152 : SetupWslV2.Distribution("openSUSE-Leap-15.2")
 
-        public object Ubuntu2204 : SetupWslV1.Distribution("Ubuntu-22.04")
+        public object Ubuntu2204 : SetupWslV2.Distribution("Ubuntu-22.04")
 
-        public object Ubuntu2004 : SetupWslV1.Distribution("Ubuntu-20.04")
+        public object Ubuntu2004 : SetupWslV2.Distribution("Ubuntu-20.04")
 
-        public object Ubuntu1804 : SetupWslV1.Distribution("Ubuntu-18.04")
+        public object Ubuntu1804 : SetupWslV2.Distribution("Ubuntu-18.04")
 
-        public object Ubuntu1604 : SetupWslV1.Distribution("Ubuntu-16.04")
+        public object Ubuntu1604 : SetupWslV2.Distribution("Ubuntu-16.04")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupWslV1.Distribution(customStringValue)
+        ) : SetupWslV2.Distribution(customStringValue)
     }
 
     public class Outputs(
