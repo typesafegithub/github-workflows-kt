@@ -333,7 +333,7 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
        |
        |${metadata.description.nestedCommentsSanitized}
        |
-       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name})
+       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore('/')}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
     """.trimMargin()
 
 private fun Map<String, Typing>.getInputTyping(key: String) =

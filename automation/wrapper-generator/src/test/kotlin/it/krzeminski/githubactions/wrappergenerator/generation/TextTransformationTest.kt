@@ -23,6 +23,7 @@ class TextTransformationTest : FunSpec({
             "some+name" to "SomePlusName",
             "some name with spaces" to "SomeNameWithSpaces",
             "some.name.with.dots" to "SomeNameWithDots",
+            "some-action/some-subdirectory" to "SomeActionSomeSubdirectory",
         ).forEach { (input, output) ->
             test("should convert '$input' to '$output'") {
                 input.toPascalCase() shouldBe output

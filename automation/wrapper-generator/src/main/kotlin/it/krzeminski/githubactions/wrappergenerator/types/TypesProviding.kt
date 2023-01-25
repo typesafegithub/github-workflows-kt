@@ -60,7 +60,7 @@ private fun ActionCoords.fetchTypingMetadata(
     fetchUri: (URI) -> String = ::fetchUri,
     getCommitHash: (ActionCoords) -> String = ::getCommitHash,
 ): ActionTypes {
-    val cacheFile = actionTypesYamlDir.resolve("$owner-$name-$version.yml")
+    val cacheFile = actionTypesYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
     if (cacheFile.canRead()) {
         println("  ... types from cache: $cacheFile")
         return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
