@@ -1,0 +1,13 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  path:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  key:
+    type: string
+  upload-chunk-size:
+    type: integer
+  enableCrossOsArchive:
+    type: boolean

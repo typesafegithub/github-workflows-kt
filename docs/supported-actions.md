@@ -14,6 +14,7 @@ Click on a version to see the wrapper's code.
     * [toolchain](https://github.com/actions-rs/toolchain) - v1: [`ToolchainV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actionsrs/ToolchainV1.kt)
 * actions
     * [cache/restore](https://github.com/actions/cache/tree/v3/restore) - v3: [`CacheRestoreV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheRestoreV3.kt)
+    * [cache/save](https://github.com/actions/cache/tree/v3/save) - v3: [`CacheSaveV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheSaveV3.kt)
     * [cache](https://github.com/actions/cache) - v2: [`CacheV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheV2.kt), v3: [`CacheV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CacheV3.kt)
     * [checkout](https://github.com/actions/checkout) - v2: [`CheckoutV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV2.kt), v3: [`CheckoutV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
     * [create-release](https://github.com/actions/create-release) - v1: [`CreateReleaseV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CreateReleaseV1.kt)
@@ -123,7 +124,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 72
-* counting each version separately: 94
+* counting by actions: 73
+* counting each version separately: 95
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 11
