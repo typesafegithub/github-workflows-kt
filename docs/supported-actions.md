@@ -118,13 +118,13 @@ Click on a version to see the wrapper's code.
 * supercharge
     * [mongodb-github-action](https://github.com/supercharge/mongodb-github-action) - v1: [`MongodbGithubActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/supercharge/MongodbGithubActionV1.kt)
 * Vampire
-    * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1 ✅: [`SetupWslV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV1.kt)
+    * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1 ✅: [`SetupWslV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV1.kt), v2 ✅: [`SetupWslV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV2.kt)
 
 ## Statistics
 
 Number of wrappers available:
 
 * counting by actions: 73
-* counting each version separately: 95
+* counting each version separately: 96
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 11
