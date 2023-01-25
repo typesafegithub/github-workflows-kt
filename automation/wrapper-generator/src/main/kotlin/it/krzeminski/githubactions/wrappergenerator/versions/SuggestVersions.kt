@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.wrappergenerator.versions
 
 import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
 import it.krzeminski.githubactions.actionsmetadata.model.Version
+import it.krzeminski.githubactions.actionsmetadata.model.isTopLevel
 import it.krzeminski.githubactions.actionsmetadata.wrappersToGenerate
 import it.krzeminski.githubactions.wrappergenerator.metadata.prettyPrint
 import java.io.File
@@ -27,6 +28,7 @@ fun main() {
     val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
         .map { it.actionCoords }
         .filter { it.deprecatedByVersion == null }
+        .filter { it.isTopLevel }
         .groupBy { ActionCoords(it.owner, it.name, version = "*") }
         .mapKeys { it.key.copy(version = it.value.last().version) }
         .mapValues { (_, value) -> value.map { Version(it.version) } }
