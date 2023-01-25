@@ -35,9 +35,9 @@ data class Output(
     val description: String = "",
 )
 
-fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action.yml"
+fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
 
-fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action.yaml"
+fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
 
 val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
@@ -46,13 +46,13 @@ val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
 fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
-    val cacheFile = actionYamlDir.resolve("$owner-$name-$version.yml")
+    val cacheFile = actionYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
     if (cacheFile.canRead()) {
         println("  ... from cache: $cacheFile")
         return myYaml.decodeFromString(cacheFile.readText())
     }
 
-    val commitHash = Path.of("actions", owner, name, version, "commit-hash.txt").toFile().readText().trim()
+    val commitHash = Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
     val list = listOf(actionYmlUrl(commitHash), actionYamlUrl(commitHash))
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {

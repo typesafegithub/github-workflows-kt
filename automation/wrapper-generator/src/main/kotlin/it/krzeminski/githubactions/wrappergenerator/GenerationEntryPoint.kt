@@ -101,4 +101,4 @@ private fun WrapperRequest.toMarkdownLinkToKotlinCode(): String {
 }
 
 private fun ActionCoords.toMarkdownLinkGithub() =
-    "[$name](https://github.com/$owner/$name)"
+    "[$name](https://github.com/$owner/${name.substringBefore('/')}${if ("/" in name) "/tree/$version/${name.substringAfter('/')}" else ""})"
