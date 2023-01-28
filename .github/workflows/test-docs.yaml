@@ -57,4 +57,8 @@ jobs:
       with:
         arguments: :library:dokkaHtml
     - id: step-6
+      run: mkdir -p to-gh-pages/api-docs
+    - id: step-7
+      run: cp -r library/build/dokka/html/* to-gh-pages/api-docs
+    - id: step-8
       run: find to-gh-pages

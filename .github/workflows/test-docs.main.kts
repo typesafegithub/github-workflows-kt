@@ -34,6 +34,8 @@ workflow(
                 arguments = ":library:dokkaHtml",
             )
         )
+        run("mkdir -p to-gh-pages/api-docs")
+        run("cp -r library/build/dokka/html/* to-gh-pages/api-docs")
         run("find to-gh-pages")
     }
 }.writeToFile()
