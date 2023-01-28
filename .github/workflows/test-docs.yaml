@@ -1,0 +1,60 @@
+# This file was generated using Kotlin DSL (.github/workflows/test-docs.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-workflows-kt
+
+name: Test docs
+on:
+  push:
+    branches:
+    - main
+  pull_request: {}
+jobs:
+  check_yaml_consistency:
+    runs-on: ubuntu-latest
+    steps:
+    - id: step-0
+      name: Check out
+      uses: actions/checkout@v3
+    - id: step-1
+      name: Set up Java in proper version
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: zulu
+        cache: gradle
+    - id: step-2
+      name: Execute script
+      run: rm '.github/workflows/test-docs.yaml' && '.github/workflows/test-docs.main.kts'
+    - id: step-3
+      name: Consistency check
+      run: git diff --exit-code '.github/workflows/test-docs.yaml'
+  build_docs:
+    name: Build docs
+    runs-on: ubuntu-latest
+    needs:
+    - check_yaml_consistency
+    steps:
+    - id: step-0
+      uses: actions/checkout@v3
+    - id: step-1
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+    - id: step-2
+      name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: zulu
+        cache: gradle
+    - id: step-3
+      run: pip install -r docs/requirements.txt
+    - id: step-4
+      run: mkdocs build --site-dir to-gh-pages
+    - id: step-5
+      name: Generate Dokka docs
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: :library:dokkaHtml
+    - id: step-6
+      run: find to-gh-pages
