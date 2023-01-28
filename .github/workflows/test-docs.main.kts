@@ -4,11 +4,14 @@
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
+import it.krzeminski.githubactions.actions.jamesives.GithubPagesDeployActionV4
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.PullRequest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.workflow
 import it.krzeminski.githubactions.yaml.writeToFile
+
+val directoryToDeploy = "to-gh-pages"
 
 workflow(
     name = "Test docs",
@@ -27,15 +30,19 @@ workflow(
         setupPython()
         setupJava()
         run("pip install -r docs/requirements.txt")
-        run("mkdocs build --site-dir to-gh-pages")
+        run("mkdocs build --site-dir $directoryToDeploy")
         uses(
             name = "Generate Dokka docs",
             action = GradleBuildActionV2(
                 arguments = ":library:dokkaHtml",
             )
         )
-        run("mkdir -p to-gh-pages/api-docs")
-        run("cp -r library/build/dokka/html/* to-gh-pages/api-docs")
+        run("mkdir -p $directoryToDeploy/api-docs")
+        run("cp -r library/build/dokka/html/* $directoryToDeploy/api-docs")
         run("find to-gh-pages")
+        uses(GithubPagesDeployActionV4(
+            folder = "$directoryToDeploy",
+            branch = "test-docs-deployment",
+        ))
     }
 }.writeToFile()

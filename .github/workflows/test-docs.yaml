@@ -62,3 +62,8 @@ jobs:
       run: cp -r library/build/dokka/html/* to-gh-pages/api-docs
     - id: step-8
       run: find to-gh-pages
+    - id: step-9
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: test-docs-deployment
+        folder: to-gh-pages
