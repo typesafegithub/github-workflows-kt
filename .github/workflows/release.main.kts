@@ -4,6 +4,7 @@
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
+import it.krzeminski.githubactions.actions.jamesives.GithubPagesDeployActionV4
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expressions.expr
@@ -51,9 +52,31 @@ workflow(
                 arguments = ":library:waitUntilLibraryPresentInMavenCentral",
             )
         )
+
+        val directoryToDeploy = "to-gh-pages"
         run(
-            name = "Deploy docs",
-            command = "mkdocs gh-deploy --force",
+            name = "Build Mkdocs docs",
+            command = "mkdocs build --site-dir $directoryToDeploy",
+        )
+        uses(
+            name = "Generate API docs",
+            action = GradleBuildActionV2(
+                arguments = ":library:dokkaHtml",
+            )
+        )
+        run(
+            name = "Prepare target directory for API docs",
+            command = "mkdir -p $directoryToDeploy/api-docs",
+        )
+        run(
+            name = "Copy Dokka output to Mkdocs output",
+            command = "cp -r library/build/dokka/html/* $directoryToDeploy/api-docs",
+        )
+        uses(
+            name = "Deploy merged docs to GitHub Pages",
+            GithubPagesDeployActionV4(
+                folder = "$directoryToDeploy",
+            )
         )
     }
 }.writeToFile()

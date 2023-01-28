@@ -68,5 +68,21 @@ jobs:
       with:
         arguments: :library:waitUntilLibraryPresentInMavenCentral
     - id: step-7
-      name: Deploy docs
-      run: mkdocs gh-deploy --force
+      name: Build Mkdocs docs
+      run: mkdocs build --site-dir to-gh-pages
+    - id: step-8
+      name: Generate API docs
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: :library:dokkaHtml
+    - id: step-9
+      name: Prepare target directory for API docs
+      run: mkdir -p to-gh-pages/api-docs
+    - id: step-10
+      name: Copy Dokka output to Mkdocs output
+      run: cp -r library/build/dokka/html/* to-gh-pages/api-docs
+    - id: step-11
+      name: Deploy merged docs to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: to-gh-pages
