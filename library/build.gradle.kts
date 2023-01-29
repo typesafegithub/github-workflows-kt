@@ -85,3 +85,7 @@ pitest {
         listOf("it.krzeminski.githubactions.actions.*"),
     )
 }
+
+tasks.dokkaHtml {
+    moduleName.set("GitHub Workflows Kt")
+}
