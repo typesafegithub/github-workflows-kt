@@ -724,6 +724,56 @@ class IntegrationTest : FunSpec({
             }
         }
     }
+
+    test("writeToFile() - works without `sourceFile`") {
+        // given
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
+        val workflowWithTempTargetFile = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            targetFileName = "some_workflow.yaml",
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV3(),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
+            }
+        }
+
+        // when
+        workflowWithTempTargetFile.writeToFile(gitRootDir = gitRootDir)
+
+        // then
+        targetTempFile.readText() shouldBe """
+            # This file was generated using a Kotlin DSL.
+            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            name: Test workflow
+            on:
+              push: {}
+            jobs:
+              test_job:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  name: Check out
+                  uses: actions/checkout@v3
+                - id: step-1
+                  name: Hello world!
+                  run: echo 'hello!'
+
+        """.trimIndent()
+    }
 },)
 
 private fun testRanWithGitHub(
