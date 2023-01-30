@@ -118,7 +118,7 @@ public fun workflow(
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
-    sourceFile: Path?,
+    sourceFile: Path? = null,
     targetFileName: String? = sourceFile?.fileName?.let { it.toString().substringBeforeLast(".main.kts") + ".yaml" },
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,

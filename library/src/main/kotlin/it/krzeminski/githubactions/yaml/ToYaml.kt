@@ -22,6 +22,10 @@ public fun Workflow.toYaml(
     )
 }
 
+public fun Workflow.toYaml(): String = toYaml(
+    addConsistencyCheck = sourceFile != null,
+)
+
 public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = true,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),

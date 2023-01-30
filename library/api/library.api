@@ -2759,6 +2759,7 @@ public final class it/krzeminski/githubactions/yaml/JobsToYamlKt {
 }
 
 public final class it/krzeminski/githubactions/yaml/ToYamlKt {
+	public static final fun toYaml (Lit/krzeminski/githubactions/domain/Workflow;)Ljava/lang/String;
 	public static final fun toYaml (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;)Ljava/lang/String;
 	public static synthetic fun toYaml$default (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun writeToFile (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;)V
