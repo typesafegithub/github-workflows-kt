@@ -23,7 +23,7 @@ public fun Workflow.toYaml(
 }
 
 public fun Workflow.writeToFile(
-    addConsistencyCheck: Boolean = true,
+    addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
 ) {
     checkNotNull(gitRootDir) {
