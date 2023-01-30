@@ -12,7 +12,7 @@ import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
 
 public fun Workflow.toYaml(
-    addConsistencyCheck: Boolean = true,
+    addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
 ): String {
     return generateYaml(
@@ -21,10 +21,6 @@ public fun Workflow.toYaml(
         gitRootDir = gitRootDir,
     )
 }
-
-public fun Workflow.toYaml(): String = toYaml(
-    addConsistencyCheck = sourceFile != null,
-)
 
 public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = true,
