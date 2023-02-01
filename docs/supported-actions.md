@@ -58,7 +58,7 @@ Click on a version to see the wrapper's code.
 * codecov
     * [codecov-action](https://github.com/codecov/codecov-action) - v3: [`CodecovActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/codecov/CodecovActionV3.kt)
 * docker
-    * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV3.kt)
+    * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV3.kt), v4: [`BuildPushActionV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV4.kt)
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt), v2: [`LoginActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV2.kt)
     * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt), v2: [`SetupBuildxActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV2.kt)
 * elgohr
@@ -125,6 +125,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 73
-* counting each version separately: 96
+* counting each version separately: 97
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 11
