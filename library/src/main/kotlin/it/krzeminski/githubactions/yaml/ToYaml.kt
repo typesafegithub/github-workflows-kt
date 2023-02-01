@@ -52,10 +52,8 @@ private fun Workflow.generateYaml(
     useGitDiff: Boolean,
     gitRootDir: Path?,
 ): String {
-    val sourceFilePath = if (gitRootDir != null) {
+    val sourceFilePath = gitRootDir?.let {
         sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
-    } else {
-        null
     }
 
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
@@ -102,7 +100,6 @@ private fun Workflow.generateYaml(
         jobs
     }
 
-    /* preamble slightly differs on lines 1 and 2 when sourceFilePath is not available */
     val preamble = if (sourceFilePath != null) {
         """
         # This file was generated using Kotlin DSL ($sourceFilePath).
