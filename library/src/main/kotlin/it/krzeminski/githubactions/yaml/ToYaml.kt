@@ -12,8 +12,8 @@ import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
 
 public fun Workflow.toYaml(
-    addConsistencyCheck: Boolean = true,
-    gitRootDir: Path = sourceFile.absolute().findGitRoot(),
+    addConsistencyCheck: Boolean = sourceFile != null,
+    gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
 ): String {
     return generateYaml(
         addConsistencyCheck = addConsistencyCheck,
@@ -23,26 +23,51 @@ public fun Workflow.toYaml(
 }
 
 public fun Workflow.writeToFile(
-    addConsistencyCheck: Boolean = true,
-    gitRootDir: Path = sourceFile.absolute().findGitRoot(),
+    addConsistencyCheck: Boolean = sourceFile != null,
+    gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
 ) {
+    checkNotNull(gitRootDir) {
+        "gitRootDir must be specified explicitly when sourceFile is null"
+    }
+
+    checkNotNull(this.targetFileName) {
+        "targetFileName must not be null"
+    }
+
     val yaml = generateYaml(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
         gitRootDir = gitRootDir,
     )
-    gitRootDir.resolve(".github").resolve("workflows").resolve(this.targetFileName).toFile().let {
+
+    gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName).toFile().let {
         it.parentFile.mkdirs()
         it.writeText(yaml)
     }
 }
 
 @Suppress("LongMethod")
-private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Boolean, gitRootDir: Path): String {
-    val sourceFilePath = sourceFile.relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
-    val targetFilePath = gitRootDir.resolve(".github").resolve("workflows").resolve(this.targetFileName)
-        .relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
+private fun Workflow.generateYaml(
+    addConsistencyCheck: Boolean,
+    useGitDiff: Boolean,
+    gitRootDir: Path?,
+): String {
+    val sourceFilePath = gitRootDir?.let {
+        sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
+    }
+
     val jobsWithConsistencyCheck = if (addConsistencyCheck) {
+        check(gitRootDir != null && sourceFile != null) {
+            "consistency check requires a valid sourceFile and Git root directory"
+        }
+
+        checkNotNull(targetFileName) {
+            "consistency check requires a targetFileName"
+        }
+
+        val targetFilePath = gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName)
+            .relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
+
         val consistencyCheckJob = this.toBuilder().job(
             id = "check_yaml_consistency",
             name = "Check YAML consistency",
@@ -75,11 +100,19 @@ private fun Workflow.generateYaml(addConsistencyCheck: Boolean, useGitDiff: Bool
         jobs
     }
 
-    val preamble = """
+    val preamble = if (sourceFilePath != null) {
+        """
         # This file was generated using Kotlin DSL ($sourceFilePath).
         # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
         # Generated with https://github.com/krzema12/github-workflows-kt
-    """.trimIndent()
+        """.trimIndent()
+    } else {
+        """
+        # This file was generated using a Kotlin DSL.
+        # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+        # Generated with https://github.com/krzema12/github-workflows-kt
+        """.trimIndent()
+    }
 
     val workflowToBeSerialized = this.toYamlInternal(jobsWithConsistencyCheck)
     val workflowAsYaml = workflowToBeSerialized.toYaml()
