@@ -58,7 +58,7 @@ workflow(
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
                 echo "Compiling ${'$'}file..."
-                kotlinc "${'$'}file"
+                kotlinc -Werror -Xallow-any-scripts-in-source-roots "${'$'}file"
             done
             """.trimIndent()
         )
