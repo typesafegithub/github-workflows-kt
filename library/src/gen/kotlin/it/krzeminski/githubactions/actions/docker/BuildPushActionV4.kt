@@ -1,14 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -23,11 +20,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/build-push-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: BuildPushActionV4",
-    replaceWith = ReplaceWith("BuildPushActionV4"),
-)
-public data class BuildPushActionV2(
+public data class BuildPushActionV4(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
      */
@@ -36,6 +29,10 @@ public data class BuildPushActionV2(
      * List of extra privileged entitlement (e.g., network.host,security.insecure)
      */
     public val allow: List<String>? = null,
+    /**
+     * List of attestation parameters (e.g., type=sbom,generator=image)
+     */
+    public val attests: List<String>? = null,
     /**
      * List of build-time variables
      */
@@ -86,6 +83,10 @@ public data class BuildPushActionV2(
      */
     public val noCache: Boolean? = null,
     /**
+     * Do not cache specified stages
+     */
+    public val noCacheFilters: List<String>? = null,
+    /**
      * List of output destinations (format: type=local,dest=path)
      */
     public val outputs: List<String>? = null,
@@ -94,6 +95,10 @@ public data class BuildPushActionV2(
      */
     public val platforms: List<String>? = null,
     /**
+     * Generate provenance attestation for the build (shorthand for --attest=type=provenance)
+     */
+    public val provenance: Boolean? = null,
+    /**
      * Always attempt to pull all referenced images
      */
     public val pull: Boolean? = null,
@@ -101,6 +106,10 @@ public data class BuildPushActionV2(
      * Push is a shorthand for --output=type=registry
      */
     public val push: Boolean? = null,
+    /**
+     * Generate SBOM attestation for the build (shorthand for --attest=type=sbom)
+     */
+    public val sbom: Boolean? = null,
     /**
      * List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
      */
@@ -142,13 +151,14 @@ public data class BuildPushActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<BuildPushActionV2.Outputs>("docker", "build-push-action", _customVersion ?:
-        "v2") {
+) : ActionWithOutputs<BuildPushActionV4.Outputs>("docker", "build-push-action", _customVersion ?:
+        "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             addHosts?.let { "add-hosts" to it.joinToString("\n") },
             allow?.let { "allow" to it.joinToString("\n") },
+            attests?.let { "attests" to it.joinToString(",") },
             buildArgs?.let { "build-args" to it.joinToString("\n") },
             buildContexts?.let { "build-contexts" to it.joinToString("\n") },
             builder?.let { "builder" to it },
@@ -161,10 +171,13 @@ public data class BuildPushActionV2(
             load?.let { "load" to it.toString() },
             network?.let { "network" to it },
             noCache?.let { "no-cache" to it.toString() },
+            noCacheFilters?.let { "no-cache-filters" to it.joinToString(",") },
             outputs?.let { "outputs" to it.joinToString(",") },
             platforms?.let { "platforms" to it.joinToString(",") },
+            provenance?.let { "provenance" to it.toString() },
             pull?.let { "pull" to it.toString() },
             push?.let { "push" to it.toString() },
+            sbom?.let { "sbom" to it.toString() },
             secrets?.let { "secrets" to it.joinToString("\n") },
             secretFiles?.let { "secret-files" to it.joinToString("\n") },
             shmSize?.let { "shm-size" to it },
