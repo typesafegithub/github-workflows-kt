@@ -1,5 +1,6 @@
 package it.krzeminski.githubactions
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
@@ -773,6 +774,42 @@ class IntegrationTest : FunSpec({
                   run: echo 'hello!'
 
         """.trimIndent()
+    }
+
+    val workflowWithoutSource = workflow(
+        name = "test",
+        on = listOf(Push()),
+    ) {
+        job("test", runsOn = RunnerType.UbuntuLatest) {
+            run(command = "echo 'Hello!'")
+        }
+    }
+
+    test("toYaml() - should succeed without sourceFile") {
+        val yaml = workflowWithoutSource.toYaml()
+
+        yaml shouldBe """
+            # This file was generated using a Kotlin DSL.
+            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - should fail to addConsistencyCheck when sourceFile is absent") {
+        shouldThrow<IllegalStateException> {
+            workflowWithoutSource.toYaml(addConsistencyCheck = true)
+        }
     }
 },)
 
