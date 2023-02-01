@@ -2,7 +2,7 @@ package generated
 
 import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.docker.BuildPushActionV3
+import it.krzeminski.githubactions.actions.docker.BuildPushActionV4
 import it.krzeminski.githubactions.actions.docker.LoginActionV2
 import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
 import it.krzeminski.githubactions.domain.Concurrency
@@ -57,7 +57,7 @@ public val workflowDockerImage: Workflow = workflow(
         )
         uses(
           name = "Build and push Docker image",
-          action = BuildPushActionV3(
+          action = BuildPushActionV4(
             context = ".",
             push = true,
             tags = listOf(
