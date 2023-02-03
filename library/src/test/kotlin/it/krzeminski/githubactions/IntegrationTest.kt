@@ -811,6 +811,48 @@ class IntegrationTest : FunSpec({
             workflowWithoutSource.toYaml(addConsistencyCheck = true)
         }
     }
+
+    test("toYaml() - custom preamble") {
+        val yaml = workflowWithoutSource.toYaml(
+            preamble = """
+                Test preamble
+                with a second line
+            """.trimIndent(),
+        )
+
+        yaml shouldBe """
+            # Test preamble
+            # with a second line
+
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - no preamble") {
+        val yaml = workflowWithoutSource.toYaml(preamble = "")
+
+        yaml shouldBe """
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
 },)
 
 private fun testRanWithGitHub(
