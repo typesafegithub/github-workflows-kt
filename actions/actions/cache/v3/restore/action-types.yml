@@ -14,6 +14,8 @@ inputs:
       type: string
   enableCrossOsArchive:
     type: boolean
+  fail-on-cache-miss:
+    type: boolean
 outputs:
   cache-hit:
     type: boolean

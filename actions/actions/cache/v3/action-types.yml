@@ -16,6 +16,8 @@ inputs:
     type: integer
   enableCrossOsArchive:
     type: boolean
+  fail-on-cache-miss:
+    type: boolean
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:
   cache-hit:
