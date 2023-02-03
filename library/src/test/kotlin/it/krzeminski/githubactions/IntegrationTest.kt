@@ -837,6 +837,33 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    test("toYaml() - custom preamble with empty line") {
+        val yaml = workflowWithoutSource.toYaml(
+            preamble = """
+                Test preamble
+
+                with an empty line
+            """.trimIndent(),
+        )
+
+        yaml shouldBe """
+            # Test preamble
+            #
+            # with an empty line
+
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
+
     test("toYaml() - no preamble") {
         val yaml = workflowWithoutSource.toYaml(preamble = "")
 

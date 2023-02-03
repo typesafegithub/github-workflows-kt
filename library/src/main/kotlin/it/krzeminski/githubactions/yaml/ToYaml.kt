@@ -55,7 +55,7 @@ private fun commentify(preamble: String): String {
 
     return preamble
         .lineSequence()
-        .joinToString("\n", postfix = "\n\n") { "# $it" }
+        .joinToString("\n", postfix = "\n\n") { if (it.isEmpty()) "#" else "# $it" }
 }
 
 @Suppress("LongMethod")
