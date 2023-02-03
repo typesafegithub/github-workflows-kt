@@ -1,6 +1,7 @@
 package it.krzeminski.githubactions.wrappergenerator.updating
 
 import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
+import it.krzeminski.githubactions.actionsmetadata.model.isTopLevel
 import it.krzeminski.githubactions.actionsmetadata.wrappersToGenerate
 import it.krzeminski.githubactions.wrappergenerator.versions.GithubRef
 import it.krzeminski.githubactions.wrappergenerator.versions.GithubTag
@@ -14,19 +15,21 @@ import java.nio.file.Path
 fun main() {
     val githubToken = getGithubToken()
 
-    wrappersToGenerate.forEach { wrapperRequest ->
-        println("For action ${wrapperRequest.actionCoords}")
-        val commitHash = wrapperRequest.actionCoords.fetchCommitHash(githubToken)
-            ?: error("There was a problem fetching commit hash for ${wrapperRequest.actionCoords}")
-        println("  $commitHash")
+    wrappersToGenerate
+        .filter { it.actionCoords.isTopLevel }
+        .forEach { wrapperRequest ->
+            println("For action ${wrapperRequest.actionCoords}")
+            val commitHash = wrapperRequest.actionCoords.fetchCommitHash(githubToken)
+                ?: error("There was a problem fetching commit hash for ${wrapperRequest.actionCoords}")
+            println("  $commitHash")
 
-        val commitHashFilePath = wrapperRequest.actionCoords.buildCommitHashFilePath()
+            val commitHashFilePath = wrapperRequest.actionCoords.buildCommitHashFilePath()
 
-        commitHashFilePath.toFile().apply {
-            deleteRecursively()
-            writeText(commitHash)
+            commitHashFilePath.toFile().apply {
+                deleteRecursively()
+                writeText(commitHash)
+            }
         }
-    }
 }
 
 private fun ActionCoords.fetchCommitHash(githubToken: String): String? {
