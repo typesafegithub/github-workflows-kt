@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.krzema12
 
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.Map
@@ -19,11 +16,7 @@ import kotlin.collections.Map
  *
  * [Action on GitHub](https://github.com/krzema12/github-actions-typing)
  */
-@Deprecated(
-    message = "This action has a newer major version: GithubActionsTypingV1",
-    replaceWith = ReplaceWith("GithubActionsTypingV1"),
-)
-public data class GithubActionsTypingV0(
+public data class GithubActionsTypingV1(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -33,7 +26,7 @@ public data class GithubActionsTypingV0(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("krzema12", "github-actions-typing", _customVersion ?: "v0") {
+) : Action("krzema12", "github-actions-typing", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =
             LinkedHashMap(_customInputs)
