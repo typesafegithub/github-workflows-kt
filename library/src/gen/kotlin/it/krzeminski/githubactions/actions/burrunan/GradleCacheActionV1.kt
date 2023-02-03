@@ -8,6 +8,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -85,7 +86,7 @@ public data class GradleCacheActionV1(
     /**
      * Extra files to take into account for ~/.gradle/caches dependencies
      */
-    public val gradleDependenciesCacheKey: String? = null,
+    public val gradleDependenciesCacheKey: List<String>? = null,
     /**
      * Enables caching of ~/.m2/repository/
      */
@@ -94,7 +95,7 @@ public data class GradleCacheActionV1(
      * Specifies ignored paths in the Maven Local repository (e.g. the artifacts of the current
      * project)
      */
-    public val mavenLocalIgnorePaths: String? = null,
+    public val mavenLocalIgnorePaths: List<String>? = null,
     /**
      * Shows extra logging to debug the action
      */
@@ -106,11 +107,11 @@ public data class GradleCacheActionV1(
     /**
      * Gradle arguments to pass (optionally multiline)
      */
-    public val arguments: String? = null,
+    public val arguments: List<String>? = null,
     /**
      * Extra Gradle properties (multiline) which would be passed as -Pname=value arguments
      */
-    public val properties: String? = null,
+    public val properties: List<String>? = null,
     /**
      * Publishes Gradle Build Scan URL to job report.
      */
@@ -148,13 +149,14 @@ public data class GradleCacheActionV1(
             executionOnlyCaches?.let { "execution-only-caches" to it.toString() },
             remoteBuildCacheProxyEnabled?.let { "remote-build-cache-proxy-enabled" to it.toString()
                     },
-            gradleDependenciesCacheKey?.let { "gradle-dependencies-cache-key" to it },
+            gradleDependenciesCacheKey?.let { "gradle-dependencies-cache-key" to
+                    it.joinToString("\n") },
             saveMavenDependenciesCache?.let { "save-maven-dependencies-cache" to it.toString() },
-            mavenLocalIgnorePaths?.let { "maven-local-ignore-paths" to it },
+            mavenLocalIgnorePaths?.let { "maven-local-ignore-paths" to it.joinToString("\n") },
             debug?.let { "debug" to it.toString() },
             concurrent?.let { "concurrent" to it.toString() },
-            arguments?.let { "arguments" to it },
-            properties?.let { "properties" to it },
+            arguments?.let { "arguments" to it.joinToString("\n") },
+            properties?.let { "properties" to it.joinToString("\n") },
             gradleBuildScanReport?.let { "gradle-build-scan-report" to it.toString() },
             gradleDistributionSha256SumWarning?.let { "gradle-distribution-sha-256-sum-warning" to
                     it.toString() },
