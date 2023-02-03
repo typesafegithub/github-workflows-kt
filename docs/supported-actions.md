@@ -86,7 +86,7 @@ Click on a version to see the wrapper's code.
 * julia-actions
     * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/juliaactions/SetupJuliaV1.kt)
 * krzema12
-    * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt)
+    * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt), v1 ✅: [`GithubActionsTypingV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV1.kt)
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1 ✅: [`CheckGradleVersionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
     * [intellij-http-client-action](https://github.com/madhead/intellij-http-client-action) - v0 ✅: [`IntellijHttpClientActionV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/IntellijHttpClientActionV0.kt)
@@ -125,6 +125,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 73
-* counting each version separately: 97
+* counting each version separately: 98
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 11
