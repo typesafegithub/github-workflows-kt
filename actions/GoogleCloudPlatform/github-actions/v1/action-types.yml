@@ -1,5 +1,7 @@
 # See https://github.com/krzema12/github-actions-typing
 inputs:
+  skip_install:
+    type: boolean
   version:
     type: string
   project_id:
