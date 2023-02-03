@@ -40,6 +40,10 @@ public data class CacheRestoreV3(
      */
     public val enableCrossOsArchive: Boolean? = null,
     /**
+     * Fail the workflow if cache entry is not found
+     */
+    public val failOnCacheMiss: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -56,6 +60,7 @@ public data class CacheRestoreV3(
             "key" to key,
             restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
             enableCrossOsArchive?.let { "enableCrossOsArchive" to it.toString() },
+            failOnCacheMiss?.let { "fail-on-cache-miss" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
