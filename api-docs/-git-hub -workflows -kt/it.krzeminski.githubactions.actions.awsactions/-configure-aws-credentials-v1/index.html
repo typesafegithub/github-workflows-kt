@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ConfigureAwsCredentialsV1</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>GitHub Workflows Kt</span>
+            </a>
+    </div>
+    <div>
+0.36.0    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="GitHub Workflows Kt::it.krzeminski.githubactions.actions.awsactions/ConfigureAwsCredentialsV1///PointingToDeclaration//-1951329584">
+  <div class="breadcrumbs"><a href="../../../index.html">GitHub Workflows Kt</a><span class="delimiter">/</span><a href="../index.html">it.krzeminski.githubactions.actions.awsactions</a><span class="delimiter">/</span><span class="current">ConfigureAwsCredentialsV1</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Configure</span><wbr></wbr><span>Aws</span><wbr></wbr><span>Credentials</span><wbr></wbr><span><span>V1</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">ConfigureAwsCredentialsV1</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>audience<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>awsAccessKeyId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>awsSecretAccessKey<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>awsSessionToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>awsRegion<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>maskAwsAccountId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>roleToAssume<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>webIdentityTokenFile<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>roleDurationSeconds<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>roleSessionName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>roleExternalId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>roleSkipSessionTagging<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>_customInputs<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>mapOf()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>_customVersion<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/index.html">ActionWithOutputs</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-outputs/index.html">ConfigureAwsCredentialsV1.Outputs</a><span class="token operator">&gt; </span></div><p class="paragraph">Action: &quot;Configure AWS Credentials&quot; Action For GitHub Actions</p><p class="paragraph">Configure AWS credential and region environment variables for use with the AWS CLI and AWS SDKs</p><p class="paragraph"><a href="https://github.com/aws-actions/configure-aws-credentials">Action on GitHub</a></p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-1368618318%2FConstructors%2F-1951329584" anchor-label="ConfigureAwsCredentialsV1" id="-1368618318%2FConstructors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-configure-aws-credentials-v1.html"><span>Configure</span><wbr></wbr><span>Aws</span><wbr></wbr><span>Credentials</span><wbr></wbr><span><span>V1</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1368618318%2FConstructors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-configure-aws-credentials-v1.html"><span class="token function">ConfigureAwsCredentialsV1</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">audience<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">awsAccessKeyId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">awsSecretAccessKey<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">awsSessionToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">awsRegion<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">maskAwsAccountId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">roleToAssume<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">webIdentityTokenFile<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">roleDurationSeconds<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">roleSessionName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">roleExternalId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">roleSkipSessionTagging<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">_customInputs<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>mapOf()<span class="token punctuation">, </span></span><span class="parameter ">_customVersion<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="669860573%2FClasslikes%2F-1951329584" anchor-label="Outputs" id="669860573%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-outputs/index.html"><span><span>Outputs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="669860573%2FClasslikes%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-outputs/index.html">Outputs</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">stepId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-838823850%2FFunctions%2F-1951329584" anchor-label="buildOutputObject" id="-838823850%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="build-output-object.html"><span>build</span><wbr></wbr><span>Output</span><wbr></wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-838823850%2FFunctions%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="build-output-object.html"><span class="token function">buildOutputObject</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">stepId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-outputs/index.html">ConfigureAwsCredentialsV1.Outputs</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1705877352%2FFunctions%2F-1951329584" anchor-label="toYamlArguments" id="1705877352%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="to-yaml-arguments.html"><span>to</span><wbr></wbr><span>Yaml</span><wbr></wbr><span><span>Arguments</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1705877352%2FFunctions%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-yaml-arguments.html"><span class="token function">toYamlArguments</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html">LinkedHashMap</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-1983649821%2FProperties%2F-1951329584" anchor-label="_customInputs" id="-1983649821%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="_custom-inputs.html"><span>_custom</span><wbr></wbr><span><span>Inputs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1983649821%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1983649821%2FProperties%2F-1951329584" anchor-label="_customInputs" id="-1983649821%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="_custom-inputs.html">_customInputs</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><a data-name="-1983649821%2FProperties%2F-1951329584" anchor-label="_customInputs" id="-1983649821%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Type-unsafe map where you can put any inputs that are not yet supported by the wrapper</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1584150058%2FProperties%2F-1951329584" anchor-label="_customVersion" id="-1584150058%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="_custom-version.html"><span>_custom</span><wbr></wbr><span><span>Version</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1584150058%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1584150058%2FProperties%2F-1951329584" anchor-label="_customVersion" id="-1584150058%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="_custom-version.html">_customVersion</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-1584150058%2FProperties%2F-1951329584" anchor-label="_customVersion" id="-1584150058%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Allows overriding action's version, for example to use a specific minor version, or a newer version that the wrapper doesn't yet know about</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="385279203%2FProperties%2F-1951329584" anchor-label="actionName" id="385279203%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/action-name.html"><span>action</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="385279203%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="385279203%2FProperties%2F-1951329584" anchor-label="actionName" id="385279203%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/action-name.html">actionName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1581063879%2FProperties%2F-1951329584" anchor-label="actionOwner" id="-1581063879%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/action-owner.html"><span>action</span><wbr></wbr><span><span>Owner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1581063879%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1581063879%2FProperties%2F-1951329584" anchor-label="actionOwner" id="-1581063879%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/action-owner.html">actionOwner</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="136119028%2FProperties%2F-1951329584" anchor-label="actionVersion" id="136119028%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/action-version.html"><span>action</span><wbr></wbr><span><span>Version</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="136119028%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="136119028%2FProperties%2F-1951329584" anchor-label="actionVersion" id="136119028%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../it.krzeminski.githubactions.actions/-action-with-outputs/action-version.html">actionVersion</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-620732870%2FProperties%2F-1951329584" anchor-label="audience" id="-620732870%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="audience.html"><span><span>audience</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-620732870%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-620732870%2FProperties%2F-1951329584" anchor-label="audience" id="-620732870%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="audience.html">audience</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-620732870%2FProperties%2F-1951329584" anchor-label="audience" id="-620732870%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">The audience to use for the OIDC provider</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-3030139%2FProperties%2F-1951329584" anchor-label="awsAccessKeyId" id="-3030139%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="aws-access-key-id.html"><span>aws</span><wbr></wbr><span>Access</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-3030139%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-3030139%2FProperties%2F-1951329584" anchor-label="awsAccessKeyId" id="-3030139%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="aws-access-key-id.html">awsAccessKeyId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-3030139%2FProperties%2F-1951329584" anchor-label="awsAccessKeyId" id="-3030139%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">AWS Access Key ID. This input is required if running in the GitHub hosted environment. It is optional if running in a self-hosted environment that already has AWS credentials, for example on an EC2 instance.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1348289365%2FProperties%2F-1951329584" anchor-label="awsRegion" id="-1348289365%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="aws-region.html"><span>aws</span><wbr></wbr><span><span>Region</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1348289365%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1348289365%2FProperties%2F-1951329584" anchor-label="awsRegion" id="-1348289365%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="aws-region.html">awsRegion</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-1348289365%2FProperties%2F-1951329584" anchor-label="awsRegion" id="-1348289365%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">AWS Region, e.g. us-east-2</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-922160784%2FProperties%2F-1951329584" anchor-label="awsSecretAccessKey" id="-922160784%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="aws-secret-access-key.html"><span>aws</span><wbr></wbr><span>Secret</span><wbr></wbr><span>Access</span><wbr></wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-922160784%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-922160784%2FProperties%2F-1951329584" anchor-label="awsSecretAccessKey" id="-922160784%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="aws-secret-access-key.html">awsSecretAccessKey</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-922160784%2FProperties%2F-1951329584" anchor-label="awsSecretAccessKey" id="-922160784%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">AWS Secret Access Key. This input is required if running in the GitHub hosted environment. It is optional if running in a self-hosted environment that already has AWS credentials, for example on an EC2 instance.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1153827844%2FProperties%2F-1951329584" anchor-label="awsSessionToken" id="-1153827844%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="aws-session-token.html"><span>aws</span><wbr></wbr><span>Session</span><wbr></wbr><span><span>Token</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1153827844%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1153827844%2FProperties%2F-1951329584" anchor-label="awsSessionToken" id="-1153827844%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="aws-session-token.html">awsSessionToken</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-1153827844%2FProperties%2F-1951329584" anchor-label="awsSessionToken" id="-1153827844%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">AWS Session Token</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1889570791%2FProperties%2F-1951329584" anchor-label="maskAwsAccountId" id="1889570791%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="mask-aws-account-id.html"><span>mask</span><wbr></wbr><span>Aws</span><wbr></wbr><span>Account</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1889570791%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="1889570791%2FProperties%2F-1951329584" anchor-label="maskAwsAccountId" id="1889570791%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="mask-aws-account-id.html">maskAwsAccountId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="1889570791%2FProperties%2F-1951329584" anchor-label="maskAwsAccountId" id="1889570791%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Whether to set the AWS account ID for these credentials as a secret value, so that it is masked in logs. Valid values are 'true' and 'false'. Defaults to true</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-321807417%2FProperties%2F-1951329584" anchor-label="roleDurationSeconds" id="-321807417%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="role-duration-seconds.html"><span>role</span><wbr></wbr><span>Duration</span><wbr></wbr><span><span>Seconds</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-321807417%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-321807417%2FProperties%2F-1951329584" anchor-label="roleDurationSeconds" id="-321807417%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="role-duration-seconds.html">roleDurationSeconds</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-321807417%2FProperties%2F-1951329584" anchor-label="roleDurationSeconds" id="-321807417%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Role duration in seconds (default: 6 hours)</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="598036258%2FProperties%2F-1951329584" anchor-label="roleExternalId" id="598036258%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="role-external-id.html"><span>role</span><wbr></wbr><span>External</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="598036258%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="598036258%2FProperties%2F-1951329584" anchor-label="roleExternalId" id="598036258%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="role-external-id.html">roleExternalId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="598036258%2FProperties%2F-1951329584" anchor-label="roleExternalId" id="598036258%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">The external ID of the role to assume</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="110710545%2FProperties%2F-1951329584" anchor-label="roleSessionName" id="110710545%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="role-session-name.html"><span>role</span><wbr></wbr><span>Session</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="110710545%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="110710545%2FProperties%2F-1951329584" anchor-label="roleSessionName" id="110710545%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="role-session-name.html">roleSessionName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="110710545%2FProperties%2F-1951329584" anchor-label="roleSessionName" id="110710545%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Role session name (default: GitHubActions)</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="418683082%2FProperties%2F-1951329584" anchor-label="roleSkipSessionTagging" id="418683082%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="role-skip-session-tagging.html"><span>role</span><wbr></wbr><span>Skip</span><wbr></wbr><span>Session</span><wbr></wbr><span><span>Tagging</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="418683082%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="418683082%2FProperties%2F-1951329584" anchor-label="roleSkipSessionTagging" id="418683082%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="role-skip-session-tagging.html">roleSkipSessionTagging</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="418683082%2FProperties%2F-1951329584" anchor-label="roleSkipSessionTagging" id="418683082%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Skip session tagging during role assumption</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1375141441%2FProperties%2F-1951329584" anchor-label="roleToAssume" id="1375141441%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="role-to-assume.html"><span>role</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Assume</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1375141441%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="1375141441%2FProperties%2F-1951329584" anchor-label="roleToAssume" id="1375141441%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="role-to-assume.html">roleToAssume</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="1375141441%2FProperties%2F-1951329584" anchor-label="roleToAssume" id="1375141441%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Use the provided credentials to assume an IAM role and configure the Actions environment with the assumed role credentials rather than with the provided credentials</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1905921893%2FProperties%2F-1951329584" anchor-label="webIdentityTokenFile" id="-1905921893%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="web-identity-token-file.html"><span>web</span><wbr></wbr><span>Identity</span><wbr></wbr><span>Token</span><wbr></wbr><span><span>File</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1905921893%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1905921893%2FProperties%2F-1951329584" anchor-label="webIdentityTokenFile" id="-1905921893%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="web-identity-token-file.html">webIdentityTokenFile</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><a data-name="-1905921893%2FProperties%2F-1951329584" anchor-label="webIdentityTokenFile" id="-1905921893%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><p class="paragraph">Use the web identity token file from the provided file system path in order to assume an IAM role using a web identity. E.g., from within an Amazon EKS worker node</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

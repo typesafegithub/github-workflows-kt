@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ActionWithOutputs</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>GitHub Workflows Kt</span>
+            </a>
+    </div>
+    <div>
+0.36.0    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="GitHub Workflows Kt::it.krzeminski.githubactions.actions/ActionWithOutputs///PointingToDeclaration//-1951329584">
+  <div class="breadcrumbs"><a href="../../../index.html">GitHub Workflows Kt</a><span class="delimiter">/</span><a href="../index.html">it.krzeminski.githubactions.actions</a><span class="delimiter">/</span><span class="current">ActionWithOutputs</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Action</span><wbr></wbr><span>With</span><wbr></wbr><span><span>Outputs</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">ActionWithOutputs</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>actionOwner<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>actionName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>actionVersion<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="../-action/index.html">Action</a></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="1194440974%2FConstructors%2F-1951329584" anchor-label="ActionWithOutputs" id="1194440974%2FConstructors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-action-with-outputs.html"><span>Action</span><wbr></wbr><span>With</span><wbr></wbr><span><span>Outputs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1194440974%2FConstructors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-action-with-outputs.html"><span class="token function">ActionWithOutputs</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">actionOwner<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">actionName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">actionVersion<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1895016068%2FFunctions%2F-1951329584" anchor-label="buildOutputObject" id="-1895016068%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="build-output-object.html"><span>build</span><wbr></wbr><span>Output</span><wbr></wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1895016068%2FFunctions%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="build-output-object.html"><span class="token function">buildOutputObject</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">stepId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">T</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1294959646%2FFunctions%2F-1951329584" anchor-label="toYamlArguments" id="-1294959646%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-action/to-yaml-arguments.html"><span>to</span><wbr></wbr><span>Yaml</span><wbr></wbr><span><span>Arguments</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1294959646%2FFunctions%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../-action/to-yaml-arguments.html"><span class="token function">toYamlArguments</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-linked-hash-map/index.html">LinkedHashMap</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="385279203%2FProperties%2F-1951329584" anchor-label="actionName" id="385279203%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="action-name.html"><span>action</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="385279203%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="385279203%2FProperties%2F-1951329584" anchor-label="actionName" id="385279203%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="action-name.html">actionName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1581063879%2FProperties%2F-1951329584" anchor-label="actionOwner" id="-1581063879%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="action-owner.html"><span>action</span><wbr></wbr><span><span>Owner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1581063879%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="-1581063879%2FProperties%2F-1951329584" anchor-label="actionOwner" id="-1581063879%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="action-owner.html">actionOwner</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="136119028%2FProperties%2F-1951329584" anchor-label="actionVersion" id="136119028%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="action-version.html"><span>action</span><wbr></wbr><span><span>Version</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="136119028%2FProperties%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><a data-name="136119028%2FProperties%2F-1951329584" anchor-label="actionVersion" id="136119028%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="action-version.html">actionVersion</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Inheritors</h2>
+      <div class="table" data-togglable="Inheritors"><a data-name="-702338377%2FInheritors%2F-1951329584" anchor-label="CacheRestoreV3" id="-702338377%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-cache-restore-v3/index.html">CacheRestoreV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-702338377%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="974873732%2FInheritors%2F-1951329584" anchor-label="CacheV2" id="974873732%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-cache-v2/index.html">CacheV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="974873732%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1005893539%2FInheritors%2F-1951329584" anchor-label="CacheV3" id="1005893539%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-cache-v3/index.html">CacheV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1005893539%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="516459228%2FInheritors%2F-1951329584" anchor-label="CreateReleaseV1" id="516459228%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-create-release-v1/index.html">CreateReleaseV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="516459228%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-678950670%2FInheritors%2F-1951329584" anchor-label="GithubScriptV6" id="-678950670%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-github-script-v6/index.html">GithubScriptV6</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-678950670%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1386396556%2FInheritors%2F-1951329584" anchor-label="SetupDotnetV3" id="-1386396556%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-dotnet-v3/index.html">SetupDotnetV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1386396556%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1938138304%2FInheritors%2F-1951329584" anchor-label="SetupGoV3" id="1938138304%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-go-v3/index.html">SetupGoV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1938138304%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1133579481%2FInheritors%2F-1951329584" anchor-label="SetupJavaV2" id="-1133579481%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-java-v2/index.html">SetupJavaV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1133579481%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1102559674%2FInheritors%2F-1951329584" anchor-label="SetupJavaV3" id="-1102559674%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-java-v3/index.html">SetupJavaV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1102559674%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-181828793%2FInheritors%2F-1951329584" anchor-label="SetupNodeV2" id="-181828793%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-node-v2/index.html">SetupNodeV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-181828793%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-150808986%2FInheritors%2F-1951329584" anchor-label="SetupNodeV3" id="-150808986%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-node-v3/index.html">SetupNodeV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-150808986%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-676332755%2FInheritors%2F-1951329584" anchor-label="SetupPythonV2" id="-676332755%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-python-v2/index.html">SetupPythonV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-676332755%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-645312948%2FInheritors%2F-1951329584" anchor-label="SetupPythonV3" id="-645312948%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-python-v3/index.html">SetupPythonV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-645312948%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-614293141%2FInheritors%2F-1951329584" anchor-label="SetupPythonV4" id="-614293141%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-setup-python-v4/index.html">SetupPythonV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-614293141%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-203918486%2FInheritors%2F-1951329584" anchor-label="StaleV5" id="-203918486%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-stale-v5/index.html">StaleV5</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-203918486%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-172898679%2FInheritors%2F-1951329584" anchor-label="StaleV6" id="-172898679%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-stale-v6/index.html">StaleV6</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-172898679%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-141878872%2FInheritors%2F-1951329584" anchor-label="StaleV7" id="-141878872%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actions/-stale-v7/index.html">StaleV7</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-141878872%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1608165821%2FInheritors%2F-1951329584" anchor-label="ToolchainV1" id="1608165821%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.actionsrs/-toolchain-v1/index.html">ToolchainV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1608165821%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="405231770%2FInheritors%2F-1951329584" anchor-label="GithubTagActionV1" id="405231770%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.anothrnick/-github-tag-action-v1/index.html">GithubTagActionV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="405231770%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="447123117%2FInheritors%2F-1951329584" anchor-label="AmazonEcrLoginV1" id="447123117%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.awsactions/-amazon-ecr-login-v1/index.html">AmazonEcrLoginV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="447123117%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1507989814%2FInheritors%2F-1951329584" anchor-label="AmazonEcsDeployTaskDefinitionV1" id="1507989814%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.awsactions/-amazon-ecs-deploy-task-definition-v1/index.html">AmazonEcsDeployTaskDefinitionV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1507989814%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1368955239%2FInheritors%2F-1951329584" anchor-label="AmazonEcsRenderTaskDefinitionV1" id="1368955239%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.awsactions/-amazon-ecs-render-task-definition-v1/index.html">AmazonEcsRenderTaskDefinitionV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1368955239%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1564547615%2FInheritors%2F-1951329584" anchor-label="ConfigureAwsCredentialsV1" id="-1564547615%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.awsactions/-configure-aws-credentials-v1/index.html">ConfigureAwsCredentialsV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1564547615%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1332840007%2FInheritors%2F-1951329584" anchor-label="WebappsDeployV2" id="1332840007%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.azure/-webapps-deploy-v2/index.html">WebappsDeployV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1332840007%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1282027396%2FInheritors%2F-1951329584" anchor-label="GradleCacheActionV1" id="-1282027396%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.burrunan/-gradle-cache-action-v1/index.html">GradleCacheActionV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1282027396%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-630382899%2FInheritors%2F-1951329584" anchor-label="BrowserslistUpdateActionV2" id="-630382899%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.c2corg/-browserslist-update-action-v2/index.html">BrowserslistUpdateActionV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-630382899%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1879249817%2FInheritors%2F-1951329584" anchor-label="BuildPushActionV2" id="-1879249817%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.docker/-build-push-action-v2/index.html">BuildPushActionV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1879249817%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1848230010%2FInheritors%2F-1951329584" anchor-label="BuildPushActionV3" id="-1848230010%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.docker/-build-push-action-v3/index.html">BuildPushActionV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1848230010%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1817210203%2FInheritors%2F-1951329584" anchor-label="BuildPushActionV4" id="-1817210203%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.docker/-build-push-action-v4/index.html">BuildPushActionV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1817210203%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1526925527%2FInheritors%2F-1951329584" anchor-label="SetupBuildxActionV1" id="-1526925527%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.docker/-setup-buildx-action-v1/index.html">SetupBuildxActionV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1526925527%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1495905720%2FInheritors%2F-1951329584" anchor-label="SetupBuildxActionV2" id="-1495905720%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.docker/-setup-buildx-action-v2/index.html">SetupBuildxActionV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1495905720%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-136858526%2FInheritors%2F-1951329584" anchor-label="PublishDockerGithubActionV4" id="-136858526%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.elgohr/-publish-docker-github-action-v4/index.html">PublishDockerGithubActionV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-136858526%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-105838719%2FInheritors%2F-1951329584" anchor-label="PublishDockerGithubActionV5" id="-105838719%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.elgohr/-publish-docker-github-action-v5/index.html">PublishDockerGithubActionV5</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-105838719%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1092414187%2FInheritors%2F-1951329584" anchor-label="AddAndCommitV8" id="1092414187%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.endbug/-add-and-commit-v8/index.html">AddAndCommitV8</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1092414187%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1123433994%2FInheritors%2F-1951329584" anchor-label="AddAndCommitV9" id="1123433994%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.endbug/-add-and-commit-v9/index.html">AddAndCommitV9</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1123433994%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-354768522%2FInheritors%2F-1951329584" anchor-label="GitTagAnnotationActionV2" id="-354768522%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.ericcornelissen/-git-tag-annotation-action-v2/index.html">GitTagAnnotationActionV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-354768522%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1269506478%2FInheritors%2F-1951329584" anchor-label="BlogPostWorkflowV1" id="-1269506478%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.gautamkrishnar/-blog-post-workflow-v1/index.html">BlogPostWorkflowV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1269506478%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="651367810%2FInheritors%2F-1951329584" anchor-label="AuthV0" id="651367810%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.googlegithubactions/-auth-v0/index.html">AuthV0</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="651367810%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="682387617%2FInheritors%2F-1951329584" anchor-label="AuthV1" id="682387617%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.googlegithubactions/-auth-v1/index.html">AuthV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="682387617%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-690784831%2FInheritors%2F-1951329584" anchor-label="GradleBuildActionV2" id="-690784831%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.gradle/-gradle-build-action-v2/index.html">GradleBuildActionV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-690784831%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1548421020%2FInheritors%2F-1951329584" anchor-label="GithubPagesDeployActionV4" id="-1548421020%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.jamesives/-github-pages-deploy-action-v4/index.html">GithubPagesDeployActionV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1548421020%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="882302653%2FInheritors%2F-1951329584" anchor-label="CreateAnIssueV2" id="882302653%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.jasonetco/-create-an-issue-v2/index.html">CreateAnIssueV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="882302653%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1448591954%2FInheritors%2F-1951329584" anchor-label="SetupJuliaV1" id="-1448591954%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.juliaactions/-setup-julia-v1/index.html">SetupJuliaV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1448591954%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="2137389647%2FInheritors%2F-1951329584" anchor-label="CheckGradleVersionV1" id="2137389647%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.madhead/-check-gradle-version-v1/index.html">CheckGradleVersionV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2137389647%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="412785962%2FInheritors%2F-1951329584" anchor-label="SemverUtilsV2" id="412785962%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.madhead/-semver-utils-v2/index.html">SemverUtilsV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="412785962%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="443805769%2FInheritors%2F-1951329584" anchor-label="SemverUtilsV3" id="443805769%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.madhead/-semver-utils-v3/index.html">SemverUtilsV3</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="443805769%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="965940523%2FInheritors%2F-1951329584" anchor-label="SetupMsbuildV1" id="965940523%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.microsoft/-setup-msbuild-v1/index.html">SetupMsbuildV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="965940523%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-369027792%2FInheritors%2F-1951329584" anchor-label="KoverReportV1" id="-369027792%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.mikas/-kover-report-v1/index.html">KoverReportV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-369027792%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="698213207%2FInheritors%2F-1951329584" anchor-label="CreateIssueFromFileV4" id="698213207%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.peterevans/-create-issue-from-file-v4/index.html">CreateIssueFromFileV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="698213207%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1678910700%2FInheritors%2F-1951329584" anchor-label="CreatePullRequestV4" id="1678910700%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.peterevans/-create-pull-request-v4/index.html">CreatePullRequestV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1678910700%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="808465294%2FInheritors%2F-1951329584" anchor-label="PullRequestV2" id="808465294%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.reposync/-pull-request-v2/index.html">PullRequestV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="808465294%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="1437617013%2FInheritors%2F-1951329584" anchor-label="SetupRubyV1" id="1437617013%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.ruby/-setup-ruby-v1/index.html">SetupRubyV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1437617013%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1580978514%2FInheritors%2F-1951329584" anchor-label="ActionGhReleaseV1" id="-1580978514%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.softprops/-action-gh-release-v1/index.html">ActionGhReleaseV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1580978514%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1834455242%2FInheritors%2F-1951329584" anchor-label="GitAutoCommitActionV4" id="-1834455242%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.stefanzweifel/-git-auto-commit-action-v4/index.html">GitAutoCommitActionV4</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1834455242%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="846157139%2FInheritors%2F-1951329584" anchor-label="FlutterActionV2" id="846157139%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.subosito/-flutter-action-v2/index.html">FlutterActionV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="846157139%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1149033085%2FInheritors%2F-1951329584" anchor-label="SetupWslV1" id="-1149033085%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.vampire/-setup-wsl-v1/index.html">SetupWslV1</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1149033085%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="-1118013278%2FInheritors%2F-1951329584" anchor-label="SetupWslV2" id="-1118013278%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../it.krzeminski.githubactions.actions.vampire/-setup-wsl-v2/index.html">SetupWslV2</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1118013278%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+<a data-name="101350570%2FInheritors%2F-1951329584" anchor-label="CustomAction" id="101350570%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../-custom-action/index.html">CustomAction</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="101350570%2FInheritors%2F-1951329584"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
