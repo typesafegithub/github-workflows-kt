@@ -5,6 +5,7 @@ package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -22,9 +23,16 @@ import kotlin.collections.toTypedArray
  */
 public data class SetupGcloudV1(
     /**
-     * Version of the gcloud SDK to install. If unspecified or set to "latest",
-     * the latest available gcloud SDK version for the target platform will be
-     * installed. Example: "290.0.1".
+     * Skip installation of the gcloud SDK and use the system-supplied version
+     * instead. The "version" input will be ignored.
+     */
+    public val skipInstall: Boolean? = null,
+    /**
+     * Version or version constraint of the gcloud SDK to install. If
+     * unspecified, it will accept any installed version of the gcloud SDK. If
+     * set to "latest", it will download the latest available SDK. If set to a
+     * version constraint, it will download the latest available version that
+     * matches the constraint. Examples: "290.0.1" or ">= 197.0.1".
      */
     public val version: String? = null,
     /**
@@ -50,6 +58,7 @@ public data class SetupGcloudV1(
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
+            skipInstall?.let { "skip_install" to it.toString() },
             version?.let { "version" to it },
             projectId?.let { "project_id" to it },
             installComponents?.let { "install_components" to it.joinToString(",") { it.stringValue }
