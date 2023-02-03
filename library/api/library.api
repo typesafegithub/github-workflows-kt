@@ -2759,10 +2759,10 @@ public final class it/krzeminski/githubactions/yaml/JobsToYamlKt {
 }
 
 public final class it/krzeminski/githubactions/yaml/ToYamlKt {
-	public static final fun toYaml (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;)Ljava/lang/String;
-	public static synthetic fun toYaml$default (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;ILjava/lang/Object;)Ljava/lang/String;
-	public static final fun writeToFile (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;)V
-	public static synthetic fun writeToFile$default (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;ILjava/lang/Object;)V
+	public static final fun toYaml (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;Ljava/lang/String;)Ljava/lang/String;
+	public static synthetic fun toYaml$default (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun writeToFile (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;Ljava/lang/String;)V
+	public static synthetic fun writeToFile$default (Lit/krzeminski/githubactions/domain/Workflow;ZLjava/nio/file/Path;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public final class it/krzeminski/githubactions/yaml/TriggersToYamlKt {

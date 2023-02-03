@@ -14,17 +14,20 @@ import kotlin.io.path.invariantSeparatorsPathString
 public fun Workflow.toYaml(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
+    preamble: String? = null,
 ): String {
     return generateYaml(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = false,
         gitRootDir = gitRootDir,
+        preamble,
     )
 }
 
 public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
+    preamble: String? = null,
 ) {
     checkNotNull(gitRootDir) {
         "gitRootDir must be specified explicitly when sourceFile is null"
@@ -38,6 +41,7 @@ public fun Workflow.writeToFile(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = true,
         gitRootDir = gitRootDir,
+        preamble,
     )
 
     gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName).toFile().let {
@@ -46,11 +50,20 @@ public fun Workflow.writeToFile(
     }
 }
 
+private fun commentify(preamble: String): String {
+    if (preamble.isEmpty()) return ""
+
+    return preamble
+        .lineSequence()
+        .joinToString("\n", postfix = "\n\n") { "# $it" }
+}
+
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(
     addConsistencyCheck: Boolean,
     useGitDiff: Boolean,
     gitRootDir: Path?,
+    preamble: String?,
 ): String {
     val sourceFilePath = gitRootDir?.let {
         sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
@@ -100,24 +113,30 @@ private fun Workflow.generateYaml(
         jobs
     }
 
-    val preamble = if (sourceFilePath != null) {
+    val computedPreamble = if (preamble != null) {
+        commentify(preamble)
+    } else if (sourceFilePath != null) {
         """
         # This file was generated using Kotlin DSL ($sourceFilePath).
         # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
         # Generated with https://github.com/krzema12/github-workflows-kt
+
+
         """.trimIndent()
     } else {
         """
         # This file was generated using a Kotlin DSL.
         # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
         # Generated with https://github.com/krzema12/github-workflows-kt
+
+
         """.trimIndent()
     }
 
     val workflowToBeSerialized = this.toYamlInternal(jobsWithConsistencyCheck)
     val workflowAsYaml = workflowToBeSerialized.toYaml()
 
-    return preamble + "\n\n" + workflowAsYaml
+    return computedPreamble + workflowAsYaml
 }
 
 @Suppress("SpreadOperator")
