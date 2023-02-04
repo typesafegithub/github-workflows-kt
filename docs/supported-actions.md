@@ -127,4 +127,5 @@ Number of wrappers available:
 * counting by actions: 73
 * counting each version separately: 98
 
-Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 11
+Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 12
+
