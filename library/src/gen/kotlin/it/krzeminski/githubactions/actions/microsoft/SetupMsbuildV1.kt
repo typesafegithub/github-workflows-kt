@@ -33,8 +33,8 @@ public data class SetupMsbuildV1(
      */
     public val vsPrerelease: Boolean? = null,
     /**
-     * The preferred processor architecture of MSBuild. Can be either "x86" or "x64". "x64" is only
-     * available from Visual Studio version 17.0 and later.
+     * The preferred processor architecture of MSBuild. Can be either "x86", "x64", or "arm64".
+     * "x64" is only available from Visual Studio version 17.0 and later.
      */
     public val msbuildArchitecture: SetupMsbuildV1.Architecture? = null,
     /**
@@ -67,6 +67,8 @@ public data class SetupMsbuildV1(
         public object X86 : SetupMsbuildV1.Architecture("x86")
 
         public object X64 : SetupMsbuildV1.Architecture("x64")
+
+        public object Arm64 : SetupMsbuildV1.Architecture("arm64")
 
         public class Custom(
             customStringValue: String,
