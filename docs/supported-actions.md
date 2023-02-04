@@ -94,7 +94,7 @@ Click on a version to see the wrapper's code.
 * mi-kas
     * [kover-report](https://github.com/mi-kas/kover-report) - v1 ✅: [`KoverReportV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/mikas/KoverReportV1.kt)
 * microsoft
-    * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1: [`SetupMsbuildV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/microsoft/SetupMsbuildV1.kt)
+    * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1 ✅: [`SetupMsbuildV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/microsoft/SetupMsbuildV1.kt)
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/nobrayner/DiscordWebhookV1.kt)
 * peaceiris
@@ -128,4 +128,3 @@ Number of wrappers available:
 * counting each version separately: 98
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 12
-
