@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.dsl
+package it.krzeminski.githubactions.yaml
 
 public sealed class Preamble(public val content: String) {
     public class Just(content: String) : Preamble(content)

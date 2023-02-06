@@ -4,13 +4,12 @@ import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
 import it.krzeminski.githubactions.domain.Workflow
-import it.krzeminski.githubactions.dsl.Preamble
-import it.krzeminski.githubactions.dsl.Preamble.Just
-import it.krzeminski.githubactions.dsl.Preamble.WithOriginalAfter
-import it.krzeminski.githubactions.dsl.Preamble.WithOriginalBefore
 import it.krzeminski.githubactions.dsl.toBuilder
 import it.krzeminski.githubactions.internal.findGitRoot
 import it.krzeminski.githubactions.internal.relativeToAbsolute
+import it.krzeminski.githubactions.yaml.Preamble.Just
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalAfter
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalBefore
 import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString

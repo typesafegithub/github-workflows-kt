@@ -13,13 +13,13 @@ import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.Preamble.Just
-import it.krzeminski.githubactions.dsl.Preamble.WithOriginalAfter
-import it.krzeminski.githubactions.dsl.Preamble.WithOriginalBefore
 import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
+import it.krzeminski.githubactions.yaml.Preamble.Just
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalAfter
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalBefore
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Path
