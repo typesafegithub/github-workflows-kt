@@ -17,6 +17,9 @@ import it.krzeminski.githubactions.dsl.WorkflowBuilder
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
 import it.krzeminski.githubactions.dsl.workflow
+import it.krzeminski.githubactions.yaml.Preamble.Just
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalAfter
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalBefore
 import it.krzeminski.githubactions.yaml.toYaml
 import it.krzeminski.githubactions.yaml.writeToFile
 import java.nio.file.Path
@@ -814,10 +817,12 @@ class IntegrationTest : FunSpec({
 
     test("toYaml() - custom preamble") {
         val yaml = workflowWithoutSource.toYaml(
-            preamble = """
-                Test preamble
-                with a second line
-            """.trimIndent(),
+            preamble = Just(
+                """
+                    Test preamble
+                    with a second line
+                """.trimIndent(),
+            ),
         )
 
         yaml shouldBe """
@@ -837,8 +842,169 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
+    test("toYaml() - custom preamble with empty line") {
+        val yaml = workflowWithoutSource.toYaml(
+            preamble = Just(
+                """
+                    Test preamble
+
+                    with an empty line
+                """.trimIndent(),
+            ),
+        )
+
+        yaml shouldBe """
+            # Test preamble
+            #
+            # with an empty line
+
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - custom preamble with original after") {
+        val yaml = workflow.toYaml(
+            addConsistencyCheck = false,
+            preamble = WithOriginalAfter(
+                """
+                    Test preamble
+                    with original after
+                """.trimIndent(),
+            ),
+        )
+
+        yaml shouldBe """
+            # Test preamble
+            # with original after
+
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            name: Test workflow
+            on:
+              push: {}
+            jobs:
+              test_job:
+                name: Test Job
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  uses: actions/checkout@v3
+                - id: step-1
+                  run: echo 'hello!'
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - custom preamble with original after without source") {
+        val yaml = workflowWithoutSource.toYaml(
+            preamble = WithOriginalAfter(
+                """
+                    Test preamble
+                    with original after
+                """.trimIndent(),
+            ),
+        )
+
+        yaml shouldBe """
+            # Test preamble
+            # with original after
+
+            # This file was generated using a Kotlin DSL.
+            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - custom preamble with original before") {
+        val yaml = workflow.toYaml(
+            addConsistencyCheck = false,
+            preamble = WithOriginalBefore(
+                """
+                    Test preamble
+                    with original before
+                """.trimIndent(),
+            ),
+        )
+
+        yaml shouldBe """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            # Test preamble
+            # with original before
+
+            name: Test workflow
+            on:
+              push: {}
+            jobs:
+              test_job:
+                name: Test Job
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  uses: actions/checkout@v3
+                - id: step-1
+                  run: echo 'hello!'
+
+        """.trimIndent()
+    }
+
+    test("toYaml() - custom preamble with original before without source") {
+        val yaml = workflowWithoutSource.toYaml(
+            preamble = WithOriginalBefore(
+                """
+                    Test preamble
+                    with original before
+                """.trimIndent(),
+            ),
+        )
+
+        yaml shouldBe """
+            # This file was generated using a Kotlin DSL.
+            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+            # Generated with https://github.com/krzema12/github-workflows-kt
+
+            # Test preamble
+            # with original before
+
+            name: test
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  run: echo 'Hello!'
+
+        """.trimIndent()
+    }
+
     test("toYaml() - no preamble") {
-        val yaml = workflowWithoutSource.toYaml(preamble = "")
+        val yaml = workflowWithoutSource.toYaml(preamble = Just(""))
 
         yaml shouldBe """
             name: test

@@ -7,6 +7,9 @@ import it.krzeminski.githubactions.domain.Workflow
 import it.krzeminski.githubactions.dsl.toBuilder
 import it.krzeminski.githubactions.internal.findGitRoot
 import it.krzeminski.githubactions.internal.relativeToAbsolute
+import it.krzeminski.githubactions.yaml.Preamble.Just
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalAfter
+import it.krzeminski.githubactions.yaml.Preamble.WithOriginalBefore
 import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
@@ -14,7 +17,7 @@ import kotlin.io.path.invariantSeparatorsPathString
 public fun Workflow.toYaml(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
-    preamble: String? = null,
+    preamble: Preamble? = null,
 ): String {
     return generateYaml(
         addConsistencyCheck = addConsistencyCheck,
@@ -27,7 +30,7 @@ public fun Workflow.toYaml(
 public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
-    preamble: String? = null,
+    preamble: Preamble? = null,
 ) {
     checkNotNull(gitRootDir) {
         "gitRootDir must be specified explicitly when sourceFile is null"
@@ -55,7 +58,7 @@ private fun commentify(preamble: String): String {
 
     return preamble
         .lineSequence()
-        .joinToString("\n", postfix = "\n\n") { "# $it" }
+        .joinToString("\n", postfix = "\n\n") { "# $it".trimEnd() }
 }
 
 @Suppress("LongMethod")
@@ -63,7 +66,7 @@ private fun Workflow.generateYaml(
     addConsistencyCheck: Boolean,
     useGitDiff: Boolean,
     gitRootDir: Path?,
-    preamble: String?,
+    preamble: Preamble?,
 ): String {
     val sourceFilePath = gitRootDir?.let {
         sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
@@ -113,24 +116,27 @@ private fun Workflow.generateYaml(
         jobs
     }
 
-    val computedPreamble = if (preamble != null) {
-        commentify(preamble)
-    } else if (sourceFilePath != null) {
-        """
-        # This file was generated using Kotlin DSL ($sourceFilePath).
-        # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-        # Generated with https://github.com/krzema12/github-workflows-kt
+    val originalPreamble = commentify(
+        if (sourceFilePath != null) {
+            """
+            This file was generated using Kotlin DSL ($sourceFilePath).
+            If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            Generated with https://github.com/krzema12/github-workflows-kt
+            """.trimIndent()
+        } else {
+            """
+            This file was generated using a Kotlin DSL.
+            If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+            Generated with https://github.com/krzema12/github-workflows-kt
+            """.trimIndent()
+        },
+    )
 
-
-        """.trimIndent()
-    } else {
-        """
-        # This file was generated using a Kotlin DSL.
-        # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
-        # Generated with https://github.com/krzema12/github-workflows-kt
-
-
-        """.trimIndent()
+    val computedPreamble = when (preamble) {
+        is Just -> commentify(preamble.content)
+        is WithOriginalAfter -> commentify(preamble.content) + originalPreamble
+        is WithOriginalBefore -> originalPreamble + commentify(preamble.content)
+        null -> originalPreamble
     }
 
     val workflowToBeSerialized = this.toYamlInternal(jobsWithConsistencyCheck)
