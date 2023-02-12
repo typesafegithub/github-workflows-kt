@@ -1,7 +1,5 @@
 package it.krzeminski.githubactions.dsl
 
-import it.krzeminski.githubactions.domain.actions.Action
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.ExternalActionStep
@@ -10,6 +8,8 @@ import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")

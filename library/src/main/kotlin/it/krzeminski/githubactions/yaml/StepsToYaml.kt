@@ -1,6 +1,5 @@
 package it.krzeminski.githubactions.yaml
 
-import it.krzeminski.githubactions.domain.actions.fullName
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Shell
@@ -12,6 +11,7 @@ import it.krzeminski.githubactions.domain.Shell.Pwsh
 import it.krzeminski.githubactions.domain.Shell.Python
 import it.krzeminski.githubactions.domain.Shell.Sh
 import it.krzeminski.githubactions.domain.Step
+import it.krzeminski.githubactions.domain.actions.fullName
 
 internal fun List<Step>.stepsToYaml(): List<Map<String, Any?>> =
     this.map { it.toYaml() }
