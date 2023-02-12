@@ -1,9 +1,9 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-package it.krzeminski.githubactions.actions.actionsrs
+package it.krzeminski.githubactions.domain.actions.Actionsrs
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String

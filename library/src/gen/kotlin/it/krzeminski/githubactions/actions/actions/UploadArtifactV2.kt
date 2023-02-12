@@ -3,9 +3,9 @@
 // generator itself.
 @file:Suppress("DEPRECATION")
 
-package it.krzeminski.githubactions.actions.actions
+package it.krzeminski.githubactions.domain.actions.Actions
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.Int

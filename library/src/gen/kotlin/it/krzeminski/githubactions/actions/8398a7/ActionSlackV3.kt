@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.`8398a7`
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress

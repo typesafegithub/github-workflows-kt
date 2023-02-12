@@ -277,9 +277,9 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
 
 private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
     val superclass = if (metadata.outputs.isEmpty()) {
-        ClassName("it.krzeminski.githubactions.actions", "Action")
+        ClassName("it.krzeminski.githubactions.domain.actions", "Action")
     } else {
-        ClassName("it.krzeminski.githubactions.actions", "ActionWithOutputs")
+        ClassName("it.krzeminski.githubactions.domain.actions", "ActionWithOutputs")
             .plusParameter(
                 ClassName(
                     "it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}",

@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.gradle
 
-import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -37,7 +37,7 @@ public data class GradleBuildActionV2(
     public val cacheReadOnly: Boolean? = null,
     /**
      * When 'true', entries will not be restored from the cache but will be saved at the end of the
-     * Job. 
+     * Job.
      * Setting this to 'true' implies cache-read-only will be 'false'.
      */
     public val cacheWriteOnly: Boolean? = null,
