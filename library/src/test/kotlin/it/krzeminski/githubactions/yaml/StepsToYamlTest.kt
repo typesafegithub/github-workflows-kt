@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.yaml
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.CustomAction
+import it.krzeminski.githubactions.domain.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.CheckoutV3.FetchDepth
 import it.krzeminski.githubactions.actions.actions.UploadArtifactV3

@@ -1,6 +1,6 @@
 package it.krzeminski.githubactions.yaml
 
-import it.krzeminski.githubactions.actions.fullName
+import it.krzeminski.githubactions.domain.actions.fullName
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Shell

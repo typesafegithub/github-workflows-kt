@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.dsl
 
-import it.krzeminski.githubactions.actions.Action
-import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.ExternalActionStep

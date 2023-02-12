@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain
 
-import it.krzeminski.githubactions.actions.Action
-import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import it.krzeminski.githubactions.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 

@@ -2,7 +2,7 @@ package it.krzeminski.githubactions.scriptgenerator
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
-import it.krzeminski.githubactions.actions.CustomAction
+import it.krzeminski.githubactions.domain.actions.CustomAction
 import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
 import it.krzeminski.githubactions.actionsmetadata.model.StringTyping
 import it.krzeminski.githubactions.actionsmetadata.model.Typing
