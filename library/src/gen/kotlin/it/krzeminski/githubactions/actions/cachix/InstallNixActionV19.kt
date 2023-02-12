@@ -1,13 +1,10 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.cachix
 
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -22,11 +19,15 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: InstallNixActionV19",
-    replaceWith = ReplaceWith("InstallNixActionV19"),
-)
-public data class InstallNixActionV18(
+public data class InstallNixActionV19(
+    /**
+     * Gets appended to `/etc/nix/nix.conf` if passed.
+     */
+    public val extraNixConfig: String? = null,
+    /**
+     * Configure nix to pull from github using the given github token.
+     */
+    public val githubAccessToken: String? = null,
     /**
      * Installation URL that will contain a script to install Nix.
      */
@@ -40,10 +41,6 @@ public data class InstallNixActionV18(
      */
     public val nixPath: String? = null,
     /**
-     * gets appended to `/etc/nix/nix.conf` if passed.
-     */
-    public val extraNixConfig: String? = null,
-    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -52,14 +49,15 @@ public data class InstallNixActionV18(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("cachix", "install-nix-action", _customVersion ?: "v18") {
+) : Action("cachix", "install-nix-action", _customVersion ?: "v19") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
+            extraNixConfig?.let { "extra_nix_config" to it },
+            githubAccessToken?.let { "github_access_token" to it },
             installUrl?.let { "install_url" to it },
             installOptions?.let { "install_options" to it.joinToString("\n") },
             nixPath?.let { "nix_path" to it },
-            extraNixConfig?.let { "extra_nix_config" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
