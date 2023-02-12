@@ -1,7 +1,7 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-package it.krzeminski.githubactions.domain.actions.Actions
+package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import java.util.LinkedHashMap

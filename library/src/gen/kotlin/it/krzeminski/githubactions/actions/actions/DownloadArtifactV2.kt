@@ -3,7 +3,7 @@
 // generator itself.
 @file:Suppress("DEPRECATION")
 
-package it.krzeminski.githubactions.domain.actions.Actions
+package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
 import java.util.LinkedHashMap
