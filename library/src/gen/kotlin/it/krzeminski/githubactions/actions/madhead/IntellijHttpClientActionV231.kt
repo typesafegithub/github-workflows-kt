@@ -1,14 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
-
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -24,11 +21,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/intellij-http-client-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: IntellijHttpClientActionV231",
-    replaceWith = ReplaceWith("IntellijHttpClientActionV231"),
-)
-public data class IntellijHttpClientActionV0(
+public data class IntellijHttpClientActionV231(
     /**
      * HTTP file paths
      */
@@ -72,7 +65,7 @@ public data class IntellijHttpClientActionV0(
     /**
      * Logging level. One of 'BASIC' (default), 'HEADERS', or 'VERBOSE'
      */
-    public val logLevel: IntellijHttpClientActionV0.LogLevel? = null,
+    public val logLevel: IntellijHttpClientActionV231.LogLevel? = null,
     /**
      * Creates report about execution in JUnit XML Format. Puts it in folder 'reports' in the
      * current directory
@@ -87,7 +80,7 @@ public data class IntellijHttpClientActionV0(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("madhead", "intellij-http-client-action", _customVersion ?: "v0") {
+) : Action("madhead", "intellij-http-client-action", _customVersion ?: "v231") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -110,14 +103,14 @@ public data class IntellijHttpClientActionV0(
     public sealed class LogLevel(
         public val stringValue: String,
     ) {
-        public object Basic : IntellijHttpClientActionV0.LogLevel("BASIC")
+        public object Basic : IntellijHttpClientActionV231.LogLevel("BASIC")
 
-        public object Headers : IntellijHttpClientActionV0.LogLevel("HEADERS")
+        public object Headers : IntellijHttpClientActionV231.LogLevel("HEADERS")
 
-        public object Verbose : IntellijHttpClientActionV0.LogLevel("VERBOSE")
+        public object Verbose : IntellijHttpClientActionV231.LogLevel("VERBOSE")
 
         public class Custom(
             customStringValue: String,
-        ) : IntellijHttpClientActionV0.LogLevel(customStringValue)
+        ) : IntellijHttpClientActionV231.LogLevel(customStringValue)
     }
 }
