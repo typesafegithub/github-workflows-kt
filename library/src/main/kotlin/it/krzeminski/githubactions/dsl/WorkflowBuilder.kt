@@ -14,7 +14,7 @@ import java.nio.file.Path
 public class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
-    env: LinkedHashMap<String, String> = linkedMapOf(),
+    public val env: LinkedHashMap<String, String> = linkedMapOf(),
     sourceFile: Path?,
     targetFileName: String?,
     concurrency: Concurrency? = null,

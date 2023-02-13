@@ -45,6 +45,40 @@ class IntegrationTest : FunSpec({
         }
     }
 
+    test("workflow env should be settable from step outputs") {
+        // when
+        val actualYaml = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+        ) {
+            job(
+                id = "test_job",
+                name = "Test Job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                val outputProvidingStep = uses(SetupPythonV4())
+                this@workflow.env["foo"] = expr(outputProvidingStep.outputs.pythonVersion)
+            }
+        }.toYaml(preamble = Just(""))
+
+        // then
+        actualYaml shouldBe """
+            name: Test workflow
+            on:
+              push: {}
+            env:
+              foo: ${'$'}{{ steps.step-0.outputs.python-version }}
+            jobs:
+              test_job:
+                name: Test Job
+                runs-on: ubuntu-latest
+                steps:
+                - id: step-0
+                  uses: actions/setup-python@v4
+
+        """.trimIndent()
+    }
+
     test("toYaml() - 'hello world' workflow") {
         // when
         val actualYaml = workflow.toYaml()
