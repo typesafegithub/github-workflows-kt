@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -26,8 +27,10 @@ public data class ActionWithNoInputsV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
+) : Action<Action.Outputs>("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =
             LinkedHashMap(_customInputs)
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

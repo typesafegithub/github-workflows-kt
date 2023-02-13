@@ -5,7 +5,8 @@
 
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -101,7 +102,7 @@ public data class SetupJavaV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
+) : Action<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -177,8 +178,8 @@ public data class SetupJavaV2(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Distribution of Java that has been installed
          */
@@ -193,7 +194,5 @@ public data class SetupJavaV2(
          * Path to where the java environment has been installed (same as $JAVA_HOME)
          */
         public val path: String = "steps.$stepId.outputs.path"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.peterevans
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -118,8 +119,8 @@ public data class CreatePullRequestV4(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request",
-        _customVersion ?: "v4") {
+) : Action<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request", _customVersion ?:
+        "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -150,8 +151,8 @@ public data class CreatePullRequestV4(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The pull request number
          */
@@ -171,7 +172,5 @@ public data class CreatePullRequestV4(
          * The commit SHA of the pull request branch.
          */
         public val pullRequestHeadSha: String = "steps.$stepId.outputs.pull-request-head-sha"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

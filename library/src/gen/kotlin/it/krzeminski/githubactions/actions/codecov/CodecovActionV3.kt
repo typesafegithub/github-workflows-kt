@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.codecov
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -154,7 +155,7 @@ public data class CodecovActionV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("codecov", "codecov-action", _customVersion ?: "v3") {
+) : Action<Action.Outputs>("codecov", "codecov-action", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -191,6 +192,8 @@ public data class CodecovActionV3(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class OperatingSystem(
         public val stringValue: String,

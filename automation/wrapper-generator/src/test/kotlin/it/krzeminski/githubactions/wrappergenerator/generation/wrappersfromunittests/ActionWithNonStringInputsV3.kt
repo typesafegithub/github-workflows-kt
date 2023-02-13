@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Float
@@ -68,7 +69,7 @@ public data class ActionWithNonStringInputsV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("john-smith", "action-with-non-string-inputs", _customVersion ?: "v3") {
+) : Action<Action.Outputs>("john-smith", "action-with-non-string-inputs", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -84,6 +85,8 @@ public data class ActionWithNonStringInputsV3(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Bin(
         public val stringValue: String,

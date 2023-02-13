@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.anothrnick
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -26,8 +27,7 @@ public data class GithubTagActionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<GithubTagActionV1.Outputs>("anothrNick", "github-tag-action", _customVersion
-        ?: "v1") {
+) : Action<GithubTagActionV1.Outputs>("anothrNick", "github-tag-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =
             LinkedHashMap(_customInputs)
@@ -35,8 +35,8 @@ public data class GithubTagActionV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Generated tag
          */
@@ -51,7 +51,5 @@ public data class GithubTagActionV1(
          * The part of version which was bumped
          */
         public val part: String = "steps.$stepId.outputs.part"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

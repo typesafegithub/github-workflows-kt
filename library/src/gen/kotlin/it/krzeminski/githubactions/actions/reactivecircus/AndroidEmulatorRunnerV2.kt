@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.reactivecircus
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -131,7 +132,7 @@ public data class AndroidEmulatorRunnerV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2") {
+) : Action<Action.Outputs>("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -161,6 +162,8 @@ public data class AndroidEmulatorRunnerV2(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Target(
         public val stringValue: String,

@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.awsactions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -46,8 +47,7 @@ public data class AmazonEcrLoginV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
-        "v1") {
+) : Action<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -73,14 +73,12 @@ public data class AmazonEcrLoginV1(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The URI of the ECR Private or ECR Public registry. If logging into multiple registries on
          * ECR Private, this output will not be set.
          */
         public val registry: String = "steps.$stepId.outputs.registry"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

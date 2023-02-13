@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.stefanzweifel
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -107,8 +108,8 @@ public data class GitAutoCommitActionV4(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<GitAutoCommitActionV4.Outputs>("stefanzweifel", "git-auto-commit-action",
-        _customVersion ?: "v4") {
+) : Action<GitAutoCommitActionV4.Outputs>("stefanzweifel", "git-auto-commit-action", _customVersion
+        ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -137,8 +138,8 @@ public data class GitAutoCommitActionV4(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Value is "true", if the repository was dirty and file changes have been detected. Value
          * is "false", if no changes have been detected.
@@ -149,7 +150,5 @@ public data class GitAutoCommitActionV4(
          * Full hash of the created commit. Only present if the "changes_detected" output is "true".
          */
         public val commitHash: String = "steps.$stepId.outputs.commit_hash"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

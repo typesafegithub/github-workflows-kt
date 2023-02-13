@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -69,7 +70,7 @@ public data class SetupPythonV4(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupPythonV4.Outputs>("actions", "setup-python", _customVersion ?: "v4") {
+) : Action<SetupPythonV4.Outputs>("actions", "setup-python", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -114,8 +115,8 @@ public data class SetupPythonV4(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The installed Python or PyPy version. Useful when given a version range as input.
          */
@@ -130,7 +131,5 @@ public data class SetupPythonV4(
          * The absolute path to the Python or PyPy executable.
          */
         public val pythonPath: String = "steps.$stepId.outputs.python-path"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

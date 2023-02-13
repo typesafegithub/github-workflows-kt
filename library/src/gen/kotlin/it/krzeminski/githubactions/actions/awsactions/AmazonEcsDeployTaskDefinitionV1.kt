@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.awsactions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -79,7 +80,7 @@ public data class AmazonEcsDeployTaskDefinitionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<AmazonEcsDeployTaskDefinitionV1.Outputs>("aws-actions",
+) : Action<AmazonEcsDeployTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-deploy-task-definition", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -101,8 +102,8 @@ public data class AmazonEcsDeployTaskDefinitionV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The ARN of the registered ECS task definition
          */
@@ -113,7 +114,5 @@ public data class AmazonEcsDeployTaskDefinitionV1(
          * deployment controller
          */
         public val codedeployDeploymentId: String = "steps.$stepId.outputs.codedeploy-deployment-id"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

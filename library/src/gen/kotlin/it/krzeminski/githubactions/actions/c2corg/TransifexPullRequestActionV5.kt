@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.c2corg
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -73,7 +74,7 @@ public data class TransifexPullRequestActionV5(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("c2corg", "transifex-pull-request-action", _customVersion ?: "v5") {
+) : Action<Action.Outputs>("c2corg", "transifex-pull-request-action", _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -91,6 +92,8 @@ public data class TransifexPullRequestActionV5(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Transform(
         public val stringValue: String,

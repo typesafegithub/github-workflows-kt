@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.ericcornelissen
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -32,8 +33,8 @@ public data class GitTagAnnotationActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<GitTagAnnotationActionV2.Outputs>("ericcornelissen",
-        "git-tag-annotation-action", _customVersion ?: "v2") {
+) : Action<GitTagAnnotationActionV2.Outputs>("ericcornelissen", "git-tag-annotation-action",
+        _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -45,13 +46,11 @@ public data class GitTagAnnotationActionV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The git tag annotation
          */
         public val gitTagAnnotation: String = "steps.$stepId.outputs.git-tag-annotation"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

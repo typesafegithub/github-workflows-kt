@@ -1,7 +1,7 @@
 package it.krzeminski.githubactions.domain
 
 import it.krzeminski.githubactions.domain.actions.Action
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import it.krzeminski.githubactions.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 
@@ -14,7 +14,7 @@ public sealed class Step(
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : HasCustomArguments
 
-public interface WithOutputs<T> {
+public interface WithOutputs<out T> {
     public val outputs: T
 }
 
@@ -39,14 +39,15 @@ public data class CommandStep(
 )
 
 @Suppress("LongParameterList")
-public open class ExternalActionStep(
+public open class ExternalActionStep<out OUTPUTS : Outputs>(
     override val id: String,
     public open val name: String? = null,
-    public open val action: Action,
+    public open val action: Action<OUTPUTS>,
     override val env: LinkedHashMap<String, String> = linkedMapOf(),
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
     override val timeoutMinutes: Int? = null,
+    override val outputs: OUTPUTS,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : Step(
     id = id,
@@ -55,26 +56,5 @@ public open class ExternalActionStep(
     timeoutMinutes = timeoutMinutes,
     env = env,
     _customArguments = _customArguments,
-)
-
-public data class ExternalActionStepWithOutputs<T>(
-    override val id: String,
-    override val name: String? = null,
-    override val action: ActionWithOutputs<T>,
-    override val env: LinkedHashMap<String, String> = linkedMapOf(),
-    override val condition: String? = null,
-    override val continueOnError: Boolean? = null,
-    override val timeoutMinutes: Int? = null,
-    override val outputs: T,
-    override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
-) : ExternalActionStep(
-    name = name,
-    action = action,
-    id = id,
-    condition = condition,
-    continueOnError = continueOnError,
-    timeoutMinutes = timeoutMinutes,
-    env = env,
-    _customArguments = _customArguments,
 ),
-    WithOutputs<T>
+    WithOutputs<OUTPUTS>

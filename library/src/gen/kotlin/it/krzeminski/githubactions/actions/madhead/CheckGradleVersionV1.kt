@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.madhead
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -32,8 +33,8 @@ public data class CheckGradleVersionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version",
-        _customVersion ?: "v1") {
+) : Action<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version", _customVersion ?: "v1")
+        {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -45,8 +46,8 @@ public data class CheckGradleVersionV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Project Gradle version
          */
@@ -56,7 +57,5 @@ public data class CheckGradleVersionV1(
          * Current Gradle version
          */
         public val current: String = "steps.$stepId.outputs.current"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

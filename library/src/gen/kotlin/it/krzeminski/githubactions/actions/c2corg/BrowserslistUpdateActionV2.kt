@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.c2corg
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -62,7 +63,7 @@ public data class BrowserslistUpdateActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<BrowserslistUpdateActionV2.Outputs>("c2corg", "browserslist-update-action",
+) : Action<BrowserslistUpdateActionV2.Outputs>("c2corg", "browserslist-update-action",
         _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -82,8 +83,8 @@ public data class BrowserslistUpdateActionV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * A boolean set to true when changes were found and a pull request was created or updated.
          */
@@ -98,7 +99,5 @@ public data class BrowserslistUpdateActionV2(
          * Whether the pull request was created or updated, if applies.
          */
         public val prStatus: String = "steps.$stepId.outputs.pr_status"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

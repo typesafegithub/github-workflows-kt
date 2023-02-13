@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.softprops
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -91,8 +92,7 @@ public data class ActionGhReleaseV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<ActionGhReleaseV1.Outputs>("softprops", "action-gh-release", _customVersion ?:
-        "v1") {
+) : Action<ActionGhReleaseV1.Outputs>("softprops", "action-gh-release", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -117,8 +117,8 @@ public data class ActionGhReleaseV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * URL to the Release HTML Page
          */
@@ -140,7 +140,5 @@ public data class ActionGhReleaseV1(
          * (minus the `uploader` field)
          */
         public val assets: String = "steps.$stepId.outputs.assets"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

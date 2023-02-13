@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.elgohr
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -99,7 +100,7 @@ public data class PublishDockerGithubActionV5(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<PublishDockerGithubActionV5.Outputs>("elgohr", "Publish-Docker-Github-Action",
+) : Action<PublishDockerGithubActionV5.Outputs>("elgohr", "Publish-Docker-Github-Action",
         _customVersion ?: "v5") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -128,8 +129,8 @@ public data class PublishDockerGithubActionV5(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Is the tag, which was pushed
          */
@@ -144,7 +145,5 @@ public data class PublishDockerGithubActionV5(
          * Is the digest of the image, which was pushed
          */
         public val digest: String = "steps.$stepId.outputs.digest"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

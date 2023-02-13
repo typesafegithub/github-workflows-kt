@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.gradleupdate
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -71,7 +72,8 @@ public data class UpdateGradleWrapperActionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("gradle-update", "update-gradle-wrapper-action", _customVersion ?: "v1") {
+) : Action<Action.Outputs>("gradle-update", "update-gradle-wrapper-action", _customVersion ?: "v1")
+        {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -88,6 +90,8 @@ public data class UpdateGradleWrapperActionV1(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class ReleaseChannel(
         public val stringValue: String,

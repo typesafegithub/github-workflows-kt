@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.jasonetco
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -50,8 +51,7 @@ public data class CreateAnIssueV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", _customVersion ?:
-        "v2") {
+) : Action<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -67,8 +67,8 @@ public data class CreateAnIssueV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Number of the issue that was created
          */
@@ -78,7 +78,5 @@ public data class CreateAnIssueV2(
          * URL of the issue that was created
          */
         public val url: String = "steps.$stepId.outputs.url"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

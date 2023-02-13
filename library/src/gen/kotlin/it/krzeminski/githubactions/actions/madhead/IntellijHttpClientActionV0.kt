@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -87,7 +88,7 @@ public data class IntellijHttpClientActionV0(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("madhead", "intellij-http-client-action", _customVersion ?: "v0") {
+) : Action<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -106,6 +107,8 @@ public data class IntellijHttpClientActionV0(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class LogLevel(
         public val stringValue: String,

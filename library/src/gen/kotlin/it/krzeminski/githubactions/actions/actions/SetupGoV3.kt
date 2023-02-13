@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -62,7 +63,7 @@ public data class SetupGoV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupGoV3.Outputs>("actions", "setup-go", _customVersion ?: "v3") {
+) : Action<SetupGoV3.Outputs>("actions", "setup-go", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -92,8 +93,8 @@ public data class SetupGoV3(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The installed Go version. Useful when given a version range as input.
          */
@@ -103,7 +104,5 @@ public data class SetupGoV3(
          * A boolean value to indicate if a cache was hit
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

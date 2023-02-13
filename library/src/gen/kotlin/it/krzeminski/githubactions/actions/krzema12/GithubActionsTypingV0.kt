@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.krzema12
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
@@ -33,8 +34,10 @@ public data class GithubActionsTypingV0(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("krzema12", "github-actions-typing", _customVersion ?: "v0") {
+) : Action<Action.Outputs>("krzema12", "github-actions-typing", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =
             LinkedHashMap(_customInputs)
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actionsrs
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -32,7 +33,7 @@ public data class AuditCheckV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("actions-rs", "audit-check", _customVersion ?: "v1") {
+) : Action<Action.Outputs>("actions-rs", "audit-check", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -40,4 +41,6 @@ public data class AuditCheckV1(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

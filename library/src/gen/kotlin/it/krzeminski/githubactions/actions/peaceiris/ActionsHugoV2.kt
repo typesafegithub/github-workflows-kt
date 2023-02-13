@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.peaceiris
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -38,7 +39,7 @@ public data class ActionsHugoV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("peaceiris", "actions-hugo", _customVersion ?: "v2") {
+) : Action<Action.Outputs>("peaceiris", "actions-hugo", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -47,4 +48,6 @@ public data class ActionsHugoV2(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

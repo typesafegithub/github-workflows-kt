@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.gradle
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -89,8 +90,7 @@ public data class GradleBuildActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", _customVersion
-        ?: "v2") {
+) : Action<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -114,13 +114,11 @@ public data class GradleBuildActionV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Link to the build scan if any
          */
         public val buildScanUrl: String = "steps.$stepId.outputs.build-scan-url"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }
