@@ -5,7 +5,7 @@
 
 package it.krzeminski.githubactions.actions.docker
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated

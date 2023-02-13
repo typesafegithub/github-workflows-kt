@@ -5,7 +5,7 @@
 
 package it.krzeminski.githubactions.actions.elgohr
 
-import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated

@@ -2,6 +2,7 @@ package it.krzeminski.githubactions.actions
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.githubactions.domain.actions.CustomAction
 
 class CustomActionTest : FunSpec({
 

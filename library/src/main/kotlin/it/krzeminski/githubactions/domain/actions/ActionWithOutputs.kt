@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.actions
+package it.krzeminski.githubactions.domain.actions
 
 public abstract class ActionWithOutputs<T>(
     override val actionOwner: String,

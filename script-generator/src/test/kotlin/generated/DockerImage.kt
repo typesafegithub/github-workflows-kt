@@ -1,6 +1,6 @@
 package generated
 
-import it.krzeminski.githubactions.actions.CustomAction
+import it.krzeminski.githubactions.domain.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.docker.BuildPushActionV4
 import it.krzeminski.githubactions.actions.docker.LoginActionV2

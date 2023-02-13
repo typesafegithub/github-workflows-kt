@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.c2corg
 
-import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress

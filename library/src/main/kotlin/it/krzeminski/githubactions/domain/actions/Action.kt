@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.actions
+package it.krzeminski.githubactions.domain.actions
 
 public abstract class Action(
     public open val actionOwner: String,

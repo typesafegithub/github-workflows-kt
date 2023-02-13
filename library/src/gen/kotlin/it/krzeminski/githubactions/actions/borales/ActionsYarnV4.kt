@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.borales
 
-import it.krzeminski.githubactions.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress

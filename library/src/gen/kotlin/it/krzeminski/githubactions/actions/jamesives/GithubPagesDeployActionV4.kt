@@ -3,7 +3,7 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.jamesives
 
-import it.krzeminski.githubactions.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String

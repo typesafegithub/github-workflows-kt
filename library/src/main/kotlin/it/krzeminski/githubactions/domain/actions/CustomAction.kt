@@ -1,4 +1,4 @@
-package it.krzeminski.githubactions.actions
+package it.krzeminski.githubactions.domain.actions
 
 /**
  * CustomAction can be used when there is no type-safe wrapper action
