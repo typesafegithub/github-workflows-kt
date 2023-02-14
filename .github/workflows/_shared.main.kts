@@ -10,7 +10,7 @@ fun JobBuilder<*>.setupJava() =
     uses(
         name = "Set up JDK",
         action = SetupJavaV3(
-            javaVersion = "17",
+            javaVersion = "11",
             distribution = SetupJavaV3.Distribution.Zulu,
             cache = SetupJavaV3.BuildPlatform.Gradle,
         )
