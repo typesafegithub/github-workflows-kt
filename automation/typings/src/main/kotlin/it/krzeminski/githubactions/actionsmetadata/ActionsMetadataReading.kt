@@ -12,6 +12,7 @@ import java.nio.file.Path
 import kotlin.io.path.isRegularFile
 import kotlin.io.path.name
 import kotlin.io.path.readText
+import kotlin.streams.asSequence
 
 internal fun readActionsMetadata(): List<WrapperRequest> =
     readLocalActionTypings()
@@ -21,7 +22,7 @@ internal fun readActionsMetadata(): List<WrapperRequest> =
 private fun readLocalActionTypings(): List<WrapperRequest> {
     val actionTypingsDirectory = Path.of("actions")
 
-    return Files.walk(actionTypingsDirectory)
+    return Files.walk(actionTypingsDirectory).asSequence()
         .filter { it.isRegularFile() }
         .filter { it.name !in setOf("commit-hash.txt") }
         .map {
