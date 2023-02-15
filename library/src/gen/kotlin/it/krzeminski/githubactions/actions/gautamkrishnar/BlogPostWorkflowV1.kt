@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.gautamkrishnar
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -156,8 +157,8 @@ public data class BlogPostWorkflowV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<BlogPostWorkflowV1.Outputs>("gautamkrishnar", "blog-post-workflow",
-        _customVersion ?: "v1") {
+) : Action<BlogPostWorkflowV1.Outputs>("gautamkrishnar", "blog-post-workflow", _customVersion ?:
+        "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -198,13 +199,11 @@ public data class BlogPostWorkflowV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * JSON stringified array of posts
          */
         public val results: String = "steps.$stepId.outputs.results"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.juliaactions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -46,8 +47,7 @@ public data class SetupJuliaV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1")
-        {
+) : Action<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -76,8 +76,8 @@ public data class SetupJuliaV1(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The installed Julia version. May vary from the version input if a version range was given
          * as input.
@@ -89,7 +89,5 @@ public data class SetupJuliaV1(
          * https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_BINDIR
          */
         public val juliaBindir: String = "steps.$stepId.outputs.julia-bindir"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

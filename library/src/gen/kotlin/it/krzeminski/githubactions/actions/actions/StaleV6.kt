@@ -5,7 +5,8 @@
 
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -294,7 +295,7 @@ public data class StaleV6(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<StaleV6.Outputs>("actions", "stale", _customVersion ?: "v6") {
+) : Action<StaleV6.Outputs>("actions", "stale", _customVersion ?: "v6") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -380,8 +381,8 @@ public data class StaleV6(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * List of all closed issues and pull requests.
          */
@@ -391,7 +392,5 @@ public data class StaleV6(
          * List of all staled issues and pull requests.
          */
         public val staledIssuesPrs: String = "steps.$stepId.outputs.staled-issues-prs"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

@@ -8,6 +8,7 @@ import it.krzeminski.githubactions.actions.actions.UploadArtifactV3
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.ExternalActionStep
 import it.krzeminski.githubactions.domain.Shell
+import it.krzeminski.githubactions.domain.actions.Action
 import it.krzeminski.githubactions.domain.actions.CustomAction
 
 class StepsToYamlTest : DescribeSpec({
@@ -23,6 +24,7 @@ class StepsToYamlTest : DescribeSpec({
                 id = "someId",
                 name = "Some external action",
                 action = CheckoutV3(),
+                outputs = Action.Outputs("someId"),
             ),
         )
 
@@ -213,6 +215,7 @@ class StepsToYamlTest : DescribeSpec({
                 ExternalActionStep(
                     id = "someId",
                     action = CheckoutV3(),
+                    outputs = Action.Outputs("someId"),
                 ),
             )
 
@@ -245,6 +248,7 @@ class StepsToYamlTest : DescribeSpec({
                         """.trimIndent(),
                     ),
                     condition = "\${{ matrix.foo == 'bar' }}",
+                    outputs = Action.Outputs("someId"),
                     _customArguments = mapOf(
                         "foo" to true,
                         "null-string" to "null",
@@ -299,6 +303,7 @@ class StepsToYamlTest : DescribeSpec({
                             "compiler" to "latexmk",
                         ),
                     ),
+                    outputs = Action.Outputs("someId"),
                 ),
             )
 
@@ -332,6 +337,7 @@ class StepsToYamlTest : DescribeSpec({
                             "answer" to "42",
                         ),
                     ),
+                    outputs = Action.Outputs("someId"),
                 ),
             )
 
@@ -362,6 +368,7 @@ class StepsToYamlTest : DescribeSpec({
                         path = listOf("path1", "path2"),
                         _customVersion = "v2.3.4",
                     ),
+                    outputs = Action.Outputs("someId"),
                 ),
             )
 
@@ -391,6 +398,7 @@ class StepsToYamlTest : DescribeSpec({
                     id = "someId",
                     name = "Will be overridden",
                     action = CheckoutV3(),
+                    outputs = Action.Outputs("someId"),
                     _customArguments = mapOf(
                         "name" to "Overridden!",
                     ),

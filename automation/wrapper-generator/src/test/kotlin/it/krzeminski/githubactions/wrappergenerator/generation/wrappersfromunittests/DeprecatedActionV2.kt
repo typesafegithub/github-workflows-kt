@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
@@ -33,8 +34,10 @@ public data class DeprecatedActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("john-smith", "deprecated-action", _customVersion ?: "v2") {
+) : Action<Action.Outputs>("john-smith", "deprecated-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =
             LinkedHashMap(_customInputs)
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.subosito
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -53,8 +54,7 @@ public data class FlutterActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2")
-        {
+) : Action<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -101,8 +101,8 @@ public data class FlutterActionV2(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         public val cachePath: String = "steps.$stepId.outputs.CACHE-PATH"
 
         public val cacheKey: String = "steps.$stepId.outputs.CACHE-KEY"
@@ -112,7 +112,5 @@ public data class FlutterActionV2(
         public val version: String = "steps.$stepId.outputs.VERSION"
 
         public val architecture: String = "steps.$stepId.outputs.ARCHITECTURE"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

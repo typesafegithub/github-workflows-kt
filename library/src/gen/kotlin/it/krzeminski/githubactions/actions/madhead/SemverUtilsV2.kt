@@ -5,7 +5,8 @@
 
 package it.krzeminski.githubactions.actions.madhead
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -56,7 +57,7 @@ public data class SemverUtilsV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SemverUtilsV2.Outputs>("madhead", "semver-utils", _customVersion ?: "v2") {
+) : Action<SemverUtilsV2.Outputs>("madhead", "semver-utils", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -72,8 +73,8 @@ public data class SemverUtilsV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Version's release (major.minor.patch)
          */
@@ -161,7 +162,5 @@ public data class SemverUtilsV2(
          * A result of the call of the semver's `inc` function with `prerelease` increment
          */
         public val incPrerelease: String = "steps.$stepId.outputs.inc-prerelease"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

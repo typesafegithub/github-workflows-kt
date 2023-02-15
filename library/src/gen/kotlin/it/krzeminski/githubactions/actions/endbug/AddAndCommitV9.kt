@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.endbug
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -105,7 +106,7 @@ public data class AddAndCommitV9(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<AddAndCommitV9.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v9") {
+) : Action<AddAndCommitV9.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v9") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -162,8 +163,8 @@ public data class AddAndCommitV9(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Whether the action has created a commit.
          */
@@ -193,7 +194,5 @@ public data class AddAndCommitV9(
          * Whether the action has pushed a tag.
          */
         public val tagPushed: String = "steps.$stepId.outputs.tag_pushed"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

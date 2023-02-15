@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -69,8 +70,7 @@ public data class CreateReleaseV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1")
-        {
+) : Action<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -90,8 +90,8 @@ public data class CreateReleaseV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The ID of the created Release
          */
@@ -106,7 +106,5 @@ public data class CreateReleaseV1(
          * The URL for uploading assets to the release
          */
         public val uploadUrl: String = "steps.$stepId.outputs.upload_url"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

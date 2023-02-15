@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.awsactions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -48,7 +49,7 @@ public data class AmazonEcsRenderTaskDefinitionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
+) : Action<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-render-task-definition", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -64,13 +65,11 @@ public data class AmazonEcsRenderTaskDefinitionV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The path to the rendered task definition file
          */
         public val taskDefinition: String = "steps.$stepId.outputs.task-definition"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

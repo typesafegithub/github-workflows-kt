@@ -18,12 +18,12 @@ internal fun List<Step>.stepsToYaml(): List<Map<String, Any?>> =
 
 private fun Step.toYaml() =
     when (this) {
-        is ExternalActionStep -> toYaml()
+        is ExternalActionStep<*> -> toYaml()
         is CommandStep -> toYaml()
     }
 
 @Suppress("SpreadOperator")
-private fun ExternalActionStep.toYaml(): Map<String, Any?> =
+private fun ExternalActionStep<*>.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,

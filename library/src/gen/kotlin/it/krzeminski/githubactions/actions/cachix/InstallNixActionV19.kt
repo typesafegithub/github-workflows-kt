@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.cachix
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -49,7 +50,7 @@ public data class InstallNixActionV19(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("cachix", "install-nix-action", _customVersion ?: "v19") {
+) : Action<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v19") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -61,4 +62,6 @@ public data class InstallNixActionV19(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

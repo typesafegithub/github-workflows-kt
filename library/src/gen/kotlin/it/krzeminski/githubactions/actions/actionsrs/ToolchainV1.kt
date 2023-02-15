@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actionsrs
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -59,7 +60,7 @@ public data class ToolchainV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<ToolchainV1.Outputs>("actions-rs", "toolchain", _customVersion ?: "v1") {
+) : Action<ToolchainV1.Outputs>("actions-rs", "toolchain", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -76,8 +77,8 @@ public data class ToolchainV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Installed Rustc version
          */
@@ -97,7 +98,5 @@ public data class ToolchainV1(
          * Installed rustup version
          */
         public val rustup: String = "steps.$stepId.outputs.rustup"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

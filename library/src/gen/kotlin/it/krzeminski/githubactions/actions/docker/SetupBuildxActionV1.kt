@@ -5,7 +5,8 @@
 
 package it.krzeminski.githubactions.actions.docker
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -73,8 +74,7 @@ public data class SetupBuildxActionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupBuildxActionV1.Outputs>("docker", "setup-buildx-action", _customVersion
-        ?: "v1") {
+) : Action<SetupBuildxActionV1.Outputs>("docker", "setup-buildx-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -94,8 +94,8 @@ public data class SetupBuildxActionV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Builder name
          */
@@ -125,7 +125,5 @@ public data class SetupBuildxActionV1(
          * Builder node platforms available (comma separated)
          */
         public val platforms: String = "steps.$stepId.outputs.platforms"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

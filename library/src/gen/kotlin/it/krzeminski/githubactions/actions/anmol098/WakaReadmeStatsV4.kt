@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.anmol098
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -96,7 +97,7 @@ public data class WakaReadmeStatsV4(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
+) : Action<Action.Outputs>("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -120,4 +121,6 @@ public data class WakaReadmeStatsV4(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

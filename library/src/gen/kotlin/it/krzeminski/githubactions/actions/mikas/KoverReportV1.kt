@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.mikas
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -54,7 +55,7 @@ public data class KoverReportV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
+) : Action<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -71,8 +72,8 @@ public data class KoverReportV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The overall coverage of the project
          */
@@ -82,7 +83,5 @@ public data class KoverReportV1(
          * The total coverage of all changed files
          */
         public val coverageChangedFiles: String = "steps.$stepId.outputs.coverage-changed-files"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

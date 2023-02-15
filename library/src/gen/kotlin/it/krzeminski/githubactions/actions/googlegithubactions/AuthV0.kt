@@ -5,7 +5,8 @@
 
 package it.krzeminski.githubactions.actions.googlegithubactions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -159,7 +160,7 @@ public data class AuthV0(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
+) : Action<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -200,8 +201,8 @@ public data class AuthV0(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Provided or extracted value for the Google Cloud project ID.
          */
@@ -230,7 +231,5 @@ public data class AuthV0(
          * "id_token".
          */
         public val idToken: String = "steps.$stepId.outputs.id_token"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

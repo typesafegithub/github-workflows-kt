@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.borales
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
@@ -47,7 +48,7 @@ public data class ActionsYarnV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("Borales", "actions-yarn", _customVersion ?: "v3") {
+) : Action<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -57,4 +58,6 @@ public data class ActionsYarnV3(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

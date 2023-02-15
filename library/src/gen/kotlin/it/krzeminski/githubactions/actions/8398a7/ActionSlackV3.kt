@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.`8398a7`
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -92,7 +93,7 @@ public data class ActionSlackV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("8398a7", "action-slack", _customVersion ?: "v3") {
+) : Action<Action.Outputs>("8398a7", "action-slack", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -113,6 +114,8 @@ public data class ActionSlackV3(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Status(
         public val stringValue: String,

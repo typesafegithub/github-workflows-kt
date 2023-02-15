@@ -5,7 +5,8 @@
 
 package it.krzeminski.githubactions.actions.docker
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -142,8 +143,7 @@ public data class BuildPushActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<BuildPushActionV2.Outputs>("docker", "build-push-action", _customVersion ?:
-        "v2") {
+) : Action<BuildPushActionV2.Outputs>("docker", "build-push-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -180,8 +180,8 @@ public data class BuildPushActionV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Image ID
          */
@@ -196,7 +196,5 @@ public data class BuildPushActionV2(
          * Build result metadata
          */
         public val metadata: String = "steps.$stepId.outputs.metadata"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

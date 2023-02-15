@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.ruby
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -71,7 +72,7 @@ public data class SetupRubyV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
+) : Action<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -88,13 +89,11 @@ public data class SetupRubyV1(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The prefix of the installed ruby
          */
         public val rubyPrefix: String = "steps.$stepId.outputs.ruby-prefix"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

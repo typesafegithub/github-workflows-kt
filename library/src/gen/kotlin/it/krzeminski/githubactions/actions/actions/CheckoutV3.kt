@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -114,7 +115,7 @@ public data class CheckoutV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("actions", "checkout", _customVersion ?: "v3") {
+) : Action<Action.Outputs>("actions", "checkout", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -135,6 +136,8 @@ public data class CheckoutV3(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class FetchDepth(
         public val integerValue: Int,

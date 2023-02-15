@@ -3,13 +3,11 @@ package it.krzeminski.githubactions.dsl
 import it.krzeminski.githubactions.domain.CommandStep
 import it.krzeminski.githubactions.domain.Concurrency
 import it.krzeminski.githubactions.domain.ExternalActionStep
-import it.krzeminski.githubactions.domain.ExternalActionStepWithOutputs
 import it.krzeminski.githubactions.domain.Job
 import it.krzeminski.githubactions.domain.JobOutputs
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.Shell
 import it.krzeminski.githubactions.domain.actions.Action
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -92,15 +90,15 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
-    public fun uses(
-        action: Action,
+    public fun <T : Action.Outputs> uses(
+        action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ExternalActionStep = uses(
+    ): ExternalActionStep<T> = uses(
         name = null,
         action = action,
         env = env,
@@ -110,60 +108,18 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments = _customArguments,
     )
 
-    public fun uses(
+    public fun <T : Action.Outputs> uses(
         name: String? = null,
-        action: Action,
+        action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ExternalActionStep {
-        val newStep = ExternalActionStep(
-            id = "step-${job.steps.size}",
-            name = name,
-            action = action,
-            env = env,
-            condition = condition,
-            continueOnError = continueOnError,
-            timeoutMinutes = timeoutMinutes,
-            _customArguments = _customArguments,
-        )
-        job = job.copy(steps = job.steps + newStep)
-        return newStep
-    }
-
-    public fun <T> uses(
-        action: ActionWithOutputs<T>,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
-        condition: String? = null,
-        continueOnError: Boolean? = null,
-        timeoutMinutes: Int? = null,
-        @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ExternalActionStepWithOutputs<T> = uses(
-        name = null,
-        action = action,
-        env = env,
-        condition = condition,
-        continueOnError = continueOnError,
-        timeoutMinutes = timeoutMinutes,
-        _customArguments = _customArguments,
-    )
-
-    public fun <T> uses(
-        name: String? = null,
-        action: ActionWithOutputs<T>,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
-        condition: String? = null,
-        continueOnError: Boolean? = null,
-        timeoutMinutes: Int? = null,
-        @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ExternalActionStepWithOutputs<T> {
+    ): ExternalActionStep<T> {
         val stepId = "step-${job.steps.size}"
-        val newStep = ExternalActionStepWithOutputs(
+        val newStep = ExternalActionStep(
             id = stepId,
             name = name,
             action = action,

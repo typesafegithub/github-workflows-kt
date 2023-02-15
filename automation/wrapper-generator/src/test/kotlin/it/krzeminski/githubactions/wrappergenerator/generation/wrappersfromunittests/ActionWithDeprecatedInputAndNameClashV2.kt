@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -32,7 +33,8 @@ public data class ActionWithDeprecatedInputAndNameClashV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("john-smith", "action-with-deprecated-input-and-name-clash", _customVersion ?: "v2") {
+) : Action<Action.Outputs>("john-smith", "action-with-deprecated-input-and-name-clash",
+        _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -40,4 +42,6 @@ public data class ActionWithDeprecatedInputAndNameClashV2(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

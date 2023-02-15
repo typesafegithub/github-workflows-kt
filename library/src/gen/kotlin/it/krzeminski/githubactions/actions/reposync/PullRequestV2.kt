@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.reposync
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -87,7 +88,7 @@ public data class PullRequestV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<PullRequestV2.Outputs>("repo-sync", "pull-request", _customVersion ?: "v2") {
+) : Action<PullRequestV2.Outputs>("repo-sync", "pull-request", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -112,8 +113,8 @@ public data class PullRequestV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * Pull request URL
          */
@@ -133,7 +134,5 @@ public data class PullRequestV2(
          * Boolean string indicating whether any file has been changed
          */
         public val hasChangedFiles: String = "steps.$stepId.outputs.has_changed_files"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

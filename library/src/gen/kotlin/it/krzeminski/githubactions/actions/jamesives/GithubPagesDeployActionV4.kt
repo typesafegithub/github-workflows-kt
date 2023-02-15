@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.jamesives
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -121,7 +122,7 @@ public data class GithubPagesDeployActionV4(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
+) : Action<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
         _customVersion ?: "v4") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -149,14 +150,12 @@ public data class GithubPagesDeployActionV4(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * The status of the deployment that indicates if the run failed or passed. Possible outputs
          * include: success|failed|skipped
          */
         public val deploymentStatus: String = "steps.$stepId.outputs.deployment-status"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

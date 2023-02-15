@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -81,7 +82,7 @@ public data class SetupNodeV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<SetupNodeV3.Outputs>("actions", "setup-node", _customVersion ?: "v3") {
+) : Action<SetupNodeV3.Outputs>("actions", "setup-node", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -116,8 +117,8 @@ public data class SetupNodeV3(
     }
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * A boolean value to indicate if a cache was hit.
          */
@@ -127,7 +128,5 @@ public data class SetupNodeV3(
          * The installed node version.
          */
         public val nodeVersion: String = "steps.$stepId.outputs.node-version"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

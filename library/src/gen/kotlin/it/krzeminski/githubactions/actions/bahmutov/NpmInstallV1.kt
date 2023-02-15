@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.bahmutov
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -46,7 +47,7 @@ public data class NpmInstallV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("bahmutov", "npm-install", _customVersion ?: "v1") {
+) : Action<Action.Outputs>("bahmutov", "npm-install", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -57,4 +58,6 @@ public data class NpmInstallV1(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

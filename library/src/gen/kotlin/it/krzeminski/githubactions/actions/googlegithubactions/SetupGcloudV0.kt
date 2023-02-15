@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.googlegithubactions
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -86,7 +87,7 @@ public data class SetupGcloudV0(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("google-github-actions", "setup-gcloud", _customVersion ?: "v0") {
+) : Action<Action.Outputs>("google-github-actions", "setup-gcloud", _customVersion ?: "v0") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -102,6 +103,8 @@ public data class SetupGcloudV0(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Component(
         public val stringValue: String,

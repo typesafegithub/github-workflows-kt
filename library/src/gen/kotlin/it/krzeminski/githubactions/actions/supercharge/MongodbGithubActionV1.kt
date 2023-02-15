@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.supercharge
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
@@ -53,7 +54,7 @@ public data class MongodbGithubActionV1(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("supercharge", "mongodb-github-action", _customVersion ?: "v1") {
+) : Action<Action.Outputs>("supercharge", "mongodb-github-action", _customVersion ?: "v1") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -66,4 +67,6 @@ public data class MongodbGithubActionV1(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

@@ -4,6 +4,7 @@
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -49,7 +50,7 @@ public data class LoginActionV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("docker", "login-action", _customVersion ?: "v2") {
+) : Action<Action.Outputs>("docker", "login-action", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -61,4 +62,6 @@ public data class LoginActionV2(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

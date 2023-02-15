@@ -151,16 +151,14 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
     return this
 }
 
+private val OutputsBase = ClassName("it.krzeminski.githubactions.domain.actions", "Action.Outputs")
+
 private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): TypeSpec.Builder {
     if (metadata.outputs.isEmpty()) {
         return this
     }
 
     val stepIdConstructorParameter = ParameterSpec.builder("stepId", String::class)
-        .build()
-    val stepIdProperty = PropertySpec.builder("stepId", String::class)
-        .initializer("stepId")
-        .addModifiers(KModifier.PRIVATE)
         .build()
     val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
         PropertySpec.builder(key.toCamelCase(), String::class)
@@ -175,19 +173,9 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
                     .addParameter(stepIdConstructorParameter)
                     .build(),
             )
-            .addProperties(listOf(stepIdProperty) + propertiesFromOutputs)
-            .addFunction(
-                FunSpec.builder("get")
-                    .addModifiers(KModifier.OPERATOR)
-                    .returns(String::class)
-                    .addParameter("outputName", String::class)
-                    .addCode(
-                        CodeBlock.Builder().apply {
-                            add("return \"steps.\$stepId.outputs.\$outputName\"")
-                        }.build(),
-                    )
-                    .build(),
-            )
+            .superclass(OutputsBase)
+            .addSuperclassConstructorParameter("stepId")
+            .addProperties(propertiesFromOutputs)
             .build(),
     )
 
@@ -195,13 +183,9 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
 }
 
 private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: Metadata): TypeSpec.Builder {
-    if (metadata.outputs.isEmpty()) {
-        return this
-    }
-
     addFunction(
         FunSpec.builder("buildOutputObject")
-            .returns(ClassName("", "Outputs"))
+            .returns(if (metadata.outputs.isEmpty()) OutputsBase else ClassName("", "Outputs"))
             .addModifiers(KModifier.OVERRIDE)
             .addParameter("stepId", String::class)
             .addCode(CodeBlock.of("return Outputs(stepId)"))
@@ -276,17 +260,17 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
 }
 
 private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
-    val superclass = if (metadata.outputs.isEmpty()) {
-        ClassName("it.krzeminski.githubactions.domain.actions", "Action")
-    } else {
-        ClassName("it.krzeminski.githubactions.domain.actions", "ActionWithOutputs")
-            .plusParameter(
+    val superclass = ClassName("it.krzeminski.githubactions.domain.actions", "Action")
+        .plusParameter(
+            if (metadata.outputs.isEmpty()) {
+                OutputsBase
+            } else {
                 ClassName(
                     "it.krzeminski.githubactions.actions.${coords.owner.toKotlinPackageName()}",
                     "${coords.buildActionClassName()}.Outputs",
-                ),
-            )
-    }
+                )
+            },
+        )
     return this
         .superclass(superclass)
         .addSuperclassConstructorParameter("%S", coords.owner)

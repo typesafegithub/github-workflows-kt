@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -52,7 +53,7 @@ public data class CacheRestoreV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<CacheRestoreV3.Outputs>("actions", "cache/restore", _customVersion ?: "v3") {
+) : Action<CacheRestoreV3.Outputs>("actions", "cache/restore", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -68,8 +69,8 @@ public data class CacheRestoreV3(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * A boolean value to indicate an exact match was found for the primary key
          */
@@ -85,7 +86,5 @@ public data class CacheRestoreV3(
          * partial/complete match of one of the restore keys
          */
         public val cacheMatchedKey: String = "steps.$stepId.outputs.cache-matched-key"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

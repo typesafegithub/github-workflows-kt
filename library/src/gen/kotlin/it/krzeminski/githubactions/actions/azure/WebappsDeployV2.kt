@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.azure
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -63,7 +64,7 @@ public data class WebappsDeployV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", _customVersion ?: "v2") {
+) : Action<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -81,13 +82,11 @@ public data class WebappsDeployV2(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * URL to work with your webapp
          */
         public val webappUrl: String = "steps.$stepId.outputs.webapp-url"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

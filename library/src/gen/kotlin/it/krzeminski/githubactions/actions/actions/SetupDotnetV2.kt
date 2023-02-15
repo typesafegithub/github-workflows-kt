@@ -6,6 +6,7 @@
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -66,7 +67,7 @@ public data class SetupDotnetV2(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action("actions", "setup-dotnet", _customVersion ?: "v2") {
+) : Action<Action.Outputs>("actions", "setup-dotnet", _customVersion ?: "v2") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -79,4 +80,6 @@ public data class SetupDotnetV2(
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
+
+    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

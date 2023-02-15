@@ -3,7 +3,8 @@
 // generator itself.
 package it.krzeminski.githubactions.actions.actions
 
-import it.krzeminski.githubactions.domain.actions.ActionWithOutputs
+import it.krzeminski.githubactions.domain.actions.Action
+import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -57,7 +58,7 @@ public data class CacheV3(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : ActionWithOutputs<CacheV3.Outputs>("actions", "cache", _customVersion ?: "v3") {
+) : Action<CacheV3.Outputs>("actions", "cache", _customVersion ?: "v3") {
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -74,13 +75,11 @@ public data class CacheV3(
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
-        private val stepId: String,
-    ) {
+        stepId: String,
+    ) : Action.Outputs(stepId) {
         /**
          * A boolean value to indicate an exact match was found for the primary key
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
-
-        public operator fun `get`(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }
