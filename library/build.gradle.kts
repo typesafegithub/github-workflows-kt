@@ -88,4 +88,11 @@ pitest {
 
 tasks.dokkaHtml {
     moduleName.set("GitHub Workflows Kt")
+
+    dokkaSourceSets.configureEach {
+        perPackageOption {
+            matchingRegex.set("it.krzeminski.githubactions.actions.*")
+            suppress.set(true)
+        }
+    }
 }
