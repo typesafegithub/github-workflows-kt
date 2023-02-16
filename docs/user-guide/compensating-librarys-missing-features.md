@@ -17,7 +17,7 @@ For example:
 
 ```kotlin
 workflow(
-    //...
+    // ...
     _customArguments = mapOf(
         "dry-run" to true,
         "some-string-value" to "foobar",
@@ -25,7 +25,7 @@ workflow(
         "concurrency" to mapOf(
             "group" to expr("github.ref"),
             "cancel-in-progress" to "true",
-        )
+        ),
     ),
 )
 ```
@@ -36,11 +36,11 @@ Each action wrapper has an extra constructor parameter - `_customInputs` - which
 
 ```kotlin
 UploadArtifactV3(
-    //...
+    // ...
     _customInputs = mapOf(
         "path" to "override-path-value",
         "answer" to "42",
-    )
+    ),
 )
 ```
 
@@ -54,8 +54,8 @@ version:
 
 ```kotlin
 UploadArtifactV3(
-    //...
-    _customVersion = "v4"
+    // ...
+    _customVersion = "v4",
 )
 ```
 

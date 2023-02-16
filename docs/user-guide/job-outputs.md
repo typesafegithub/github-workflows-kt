@@ -12,7 +12,7 @@ val myJob = job(
     outputs = object : JobOutputs() {
         var myOutput by output()
         var anotherOutput by output()
-    }
+    },
 ) { ... }
 ```
 

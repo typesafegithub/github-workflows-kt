@@ -76,8 +76,10 @@ class MyCoolActionV3(
 Once you've got your action, it's now as simple as using it like this:
 
 ```kotlin
-uses(name = "FooBar",
-     action = MyCoolActionV3(someArgument = "foobar"))
+uses(
+    name = "FooBar",
+    action = MyCoolActionV3(someArgument = "foobar"),
+)
 ```
 
 ### Untyped wrapper
@@ -97,7 +99,7 @@ val customAction = CustomAction(
     inputs = linkedMapOf(
         "root_file" to "report.tex",
         "compiler" to "latexmk",
-    )
+    ),
 )
 ```
 
