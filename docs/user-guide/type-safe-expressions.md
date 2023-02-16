@@ -18,12 +18,12 @@ Here is an example
 ```kotlin
 run(
     name = "Environment variable and functions",
-    command = "echo \$GITHUB_ACTORS",  
-    condition = "\${{invariably()}}",  
+    command = "echo \$GITHUB_ACTORS",
+    condition = "\${{invariably()}}",
 )
-run(  
-    name = "GitHubContext echo sha",  
-    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}"  
+run(
+    name = "GitHubContext echo sha",
+    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}"
 )
 ```
 
@@ -121,7 +121,7 @@ They are available directly in the IDE via the library's `Contexts.env`
 By using this feature in our snippet we would have avoided escaping the dollar and the typo:
 
 ```diff
--command = "echo \$GITHUB_ACTORS",  
+-command = "echo \$GITHUB_ACTORS",
 +command = "echo " + Contexts.env.GITHUB_ACTOR,
 ```
 
@@ -138,19 +138,19 @@ You can create your own type-safe property by using the syntax
 For example:
 
 ```kotlin
-val GREETING by Contexts.env  
-val FIRST_NAME by Contexts.env  
+val GREETING by Contexts.env
+val FIRST_NAME by Contexts.env
 
-job(  
-    env = linkedMapOf(  
-        GREETING to "World",  
-    )  
-) {  
-    run(  
-        name = "Custom environment variable",  
-        env = linkedMapOf(  
-            FIRST_NAME to "Patrick",  
-        ),  
+job(
+    env = linkedMapOf(
+        GREETING to "World",
+    )
+) {
+    run(
+        name = "Custom environment variable",
+        env = linkedMapOf(
+            FIRST_NAME to "Patrick",
+        ),
         command = "echo $GREETING $FIRST_NAME"
     )
 }
@@ -171,19 +171,19 @@ You use them the same way as environment variables, but using `Contexts.secrets`
 For example:
 
 ```kotlin
-val SUPER_SECRET by Contexts.secrets  
+val SUPER_SECRET by Contexts.secrets
 
-val SECRET by Contexts.env  
+val SECRET by Contexts.env
 val TOKEN by Contexts.env
 
-job(id = "job1", runsOn = RunnerType.UbuntuLatest) {  
-    run(  
-        name = "Encrypted secret",  
-        env = linkedMapOf(  
-            SECRET to expr { SUPER_SECRET },  
-            TOKEN to expr { secrets.GITHUB_TOKEN }  
-        ),  
-        command = "echo secret=$SECRET token=$TOKEN"  
+job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
+    run(
+        name = "Encrypted secret",
+        env = linkedMapOf(
+            SECRET to expr { SUPER_SECRET },
+            TOKEN to expr { secrets.GITHUB_TOKEN }
+        ),
+        command = "echo secret=$SECRET token=$TOKEN"
     )
 }
 ```
@@ -198,4 +198,3 @@ There are more `github.event` payloads that we currently do not support: https:/
 We feel what we have is a pretty good start, but if you need an additional feature, you can [create an issue](https://github.com/krzema12/github-workflows-kt/issues)
 
 Or maybe have a look how this type-safe feature is implemented in [it.krzeminski.githubactions.dsl.expressions](https://github.com/krzema12/github-workflows-kt/tree/main/library/src/main/kotlin/it/krzeminski/githubactions/dsl/expressions) and [submit a pull request 🙏🏻](https://github.com/krzema12/github-workflows-kt/pulls)
-
