@@ -23,7 +23,7 @@ run(
 )
 run(
     name = "GitHubContext echo sha",
-    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}"
+    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
 )
 ```
 
@@ -144,14 +144,14 @@ val FIRST_NAME by Contexts.env
 job(
     env = linkedMapOf(
         GREETING to "World",
-    )
+    ),
 ) {
     run(
         name = "Custom environment variable",
         env = linkedMapOf(
             FIRST_NAME to "Patrick",
         ),
-        command = "echo $GREETING $FIRST_NAME"
+        command = "echo $GREETING $FIRST_NAME",
     )
 }
 ```
@@ -181,9 +181,9 @@ job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
         name = "Encrypted secret",
         env = linkedMapOf(
             SECRET to expr { SUPER_SECRET },
-            TOKEN to expr { secrets.GITHUB_TOKEN }
+            TOKEN to expr { secrets.GITHUB_TOKEN },
         ),
-        command = "echo secret=$SECRET token=$TOKEN"
+        command = "echo secret=$SECRET token=$TOKEN",
     )
 }
 ```
