@@ -40,35 +40,35 @@ you have two ways to proceed.
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
-Inherit from [`Action`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt)
-in case of actions without outputs:
+Inherit from [`Action`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/domain/actions/Action.kt)
+and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin
 class MyCoolActionV3(
     private val someArgument: String,
-) : Action("acmecorp", "cool-action", "v3") {
+) : Action<Action.Outputs>("acmecorp", "cool-action", "v3") {
     override fun toYamlArguments() = linkedMapOf(
         "some-argument" to someArgument,
     )
+
+    override fun buildOutputObject(stepId: String) = Outputs(stepId)
 }
 ```
 
-or, in case actions with outputs, from [`ActionWithOutputs`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/ActionWithOutputs.kt):
+or, in case of actions with explicit outputs, create a subclass of `Action.Outputs` for the type argument:
 
 ```kotlin
 class MyCoolActionV3(
     private val someArgument: String,
-) : ActionWithOutputs<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
+) : Action<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
     override fun toYamlArguments() = linkedMapOf(
         "some-argument" to someArgument,
     )
-    
+
     override fun buildOutputObject(stepId: String) = Outputs(stepId)
-    
-    class Outputs(private val stepId: String) {
+
+    class Outputs(stepId: String) : Action.Outputs(stepId) {
         public val coolOutput: String = "steps.$stepId.outputs.coolOutput"
-        
-        public operator fun `get`(outputName: String) = "steps.$stepId.outputs.$outputName"
     }
 }
 ```
