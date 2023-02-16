@@ -16,15 +16,7 @@ They include:
 Here is an example
 
 ```kotlin
-run(
-    name = "Environment variable and functions",
-    command = "echo \$GITHUB_ACTORS",
-    condition = "\${{invariably()}}",
-)
-run(
-    name = "GitHubContext echo sha",
-    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
-)
+--8<-- "TypeSafeExpressionsSnippets.kt:illExample"
 ```
 
 Unfortunately, it is easy to get those expressions wrong.
@@ -138,22 +130,8 @@ You can create your own type-safe property by using the syntax
 For example:
 
 ```kotlin
-val GREETING by Contexts.env
-val FIRST_NAME by Contexts.env
-
-job(
-    env = linkedMapOf(
-        GREETING to "World",
-    ),
-) {
-    run(
-        name = "Custom environment variable",
-        env = linkedMapOf(
-            FIRST_NAME to "Patrick",
-        ),
-        command = "echo $GREETING $FIRST_NAME",
-    )
-}
+--8<-- "TypeSafeExpressionsSnippets.kt:customEnvironmentVariables1"
+--8<-- "TypeSafeExpressionsSnippets.kt:customEnvironmentVariables2"
 ```
 
 Reference: https://docs.github.com/en/actions/learn-github-actions/environment-variables#about-environment-variables
@@ -171,21 +149,7 @@ You use them the same way as environment variables, but using `Contexts.secrets`
 For example:
 
 ```kotlin
-val SUPER_SECRET by Contexts.secrets
-
-val SECRET by Contexts.env
-val TOKEN by Contexts.env
-
-job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
-    run(
-        name = "Encrypted secret",
-        env = linkedMapOf(
-            SECRET to expr { SUPER_SECRET },
-            TOKEN to expr { secrets.GITHUB_TOKEN },
-        ),
-        command = "echo secret=$SECRET token=$TOKEN",
-    )
-}
+--8<-- "TypeSafeExpressionsSnippets.kt:secrets"
 ```
 
 

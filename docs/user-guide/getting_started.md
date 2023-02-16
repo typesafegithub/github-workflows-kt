@@ -24,28 +24,9 @@ names with your own.
    GitHub Actions workflows.
 3. Put this content into the previously created file and save it:
    ```kotlin
-   #!/usr/bin/env kotlin
-
-   @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:[[ version ]]")
-
-   import it.krzeminski.githubactions.actions.actions.CheckoutV3
-   import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-   import it.krzeminski.githubactions.domain.triggers.Push
-   import it.krzeminski.githubactions.dsl.workflow
-   import it.krzeminski.githubactions.yaml.toYaml
-
-   val workflow = workflow(
-       name = "Test workflow",
-       on = listOf(Push()),
-       sourceFile = __FILE__.toPath(),
-   ) {
-       job(id = "test_job", runsOn = UbuntuLatest) {
-           uses(name = "Check out", action = CheckoutV3())
-           run(name = "Print greeting", command = "echo 'Hello world!'")
-       }
-   }
-
-   println(workflow.toYaml())
+   --8<-- "GettingStartedSnippets.kt:gettingStarted1"
+   --8<-- "GettingStartedSnippets.kt:gettingStarted2"
+   --8<-- "GettingStartedSnippets.kt:gettingStarted3"
    ```
    Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source
    file path is to be able to generate consistency checks, to ensure that both source and target files are in sync.

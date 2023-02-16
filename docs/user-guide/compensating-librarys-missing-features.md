@@ -16,18 +16,8 @@ needed, especially using basic types like booleans, strings or integers, and fur
 For example:
 
 ```kotlin
-workflow(
-    // ...
-    _customArguments = mapOf(
-        "dry-run" to true,
-        "some-string-value" to "foobar",
-        "written-by" to listOf("Alice", "Bob"),
-        "concurrency" to mapOf(
-            "group" to expr("github.ref"),
-            "cancel-in-progress" to "true",
-        ),
-    ),
-)
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customArguments1"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customArguments2"
 ```
 
 ## Action's inputs
@@ -35,13 +25,8 @@ workflow(
 Each action wrapper has an extra constructor parameter - `_customInputs` - which is a map from `String` to `String`:
 
 ```kotlin
-UploadArtifactV3(
-    // ...
-    _customInputs = mapOf(
-        "path" to "override-path-value",
-        "answer" to "42",
-    ),
-)
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customInputs1"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customInputs2"
 ```
 
 You can use it to set inputs that the wrapper doesn't know about, or to set any custom value if the wrapper's typing is
@@ -53,10 +38,8 @@ Each action wrapper has an extra constructor parameter - `_customVersion` - whic
 version:
 
 ```kotlin
-UploadArtifactV3(
-    // ...
-    _customVersion = "v4",
-)
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customVersion1"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customVersion2"
 ```
 
 It's useful e.g. when the wrapper doesn't keep up with action's versions and the API is fairly compatible, or if you

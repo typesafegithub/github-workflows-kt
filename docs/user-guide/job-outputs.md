@@ -6,37 +6,18 @@ are).
 First, define `outputs` parameter in `job` function, inheriting from `JobOutputs`:
 
 ```kotlin hl_lines="4-7"
-val myJob = job(
-    id = "my_job",
-    runsOn = RunnerType.UbuntuLatest,
-    outputs = object : JobOutputs() {
-        var myOutput by output()
-        var anotherOutput by output()
-    },
-) { ... }
+--8<-- "JobOutputsSnippets.kt:defineJobOutputs1"
+--8<-- "JobOutputsSnippets.kt:defineJobOutputs2"
 ```
 
 To set an output from within the job, use `jobOutputs`, and then an appropriate object field:
 
 ```kotlin
-jobOutputs.myOutput = someStep.outputs.someStepOutput
-jobOutputs.anotherOutput = someStep.outputs["custom-output"]
+--8<-- "JobOutputsSnippets.kt:setJobOutputs"
 ```
 
 and then use job's output from another job this way:
 
 ```kotlin hl_lines="9-10"
-job(
-    id = "use_output",
-    runsOn = RunnerType.UbuntuLatest,
-    needs = listOf(myJob),
-) {
-    run(
-        name = "Use outputs",
-        command = """
-            echo ${expr { myJob.outputs.myOutput }}
-            echo ${expr { myJob.outputs.anotherOutput }}
-        """.trimIndent(),
-    )
-}
+--8<-- "JobOutputsSnippets.kt:useJobOutputs"
 ```

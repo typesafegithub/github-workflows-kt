@@ -44,42 +44,20 @@ Inherit from [`Action`](https://github.com/krzema12/github-workflows-kt/blob/mai
 and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin
-class MyCoolActionV3(
-    private val someArgument: String,
-) : Action<Action.Outputs>("acmecorp", "cool-action", "v3") {
-    override fun toYamlArguments() = linkedMapOf(
-        "some-argument" to someArgument,
-    )
-
-    override fun buildOutputObject(stepId: String) = Outputs(stepId)
-}
+--8<-- "UsingActionsSnippets.kt:actionWithoutOutputs"
 ```
 
 or, in case of actions with explicit outputs, create a subclass of `Action.Outputs` for the type argument:
 
 ```kotlin
-class MyCoolActionV3(
-    private val someArgument: String,
-) : Action<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
-    override fun toYamlArguments() = linkedMapOf(
-        "some-argument" to someArgument,
-    )
-
-    override fun buildOutputObject(stepId: String) = Outputs(stepId)
-
-    class Outputs(stepId: String) : Action.Outputs(stepId) {
-        public val coolOutput: String = "steps.$stepId.outputs.coolOutput"
-    }
-}
+--8<-- "UsingActionsSnippets.kt:actionWithOutputs1"
+--8<-- "UsingActionsSnippets.kt:actionWithOutputs2"
 ```
 
 Once you've got your action, it's now as simple as using it like this:
 
 ```kotlin
-uses(
-    name = "FooBar",
-    action = MyCoolActionV3(someArgument = "foobar"),
-)
+--8<-- "UsingActionsSnippets.kt:using"
 ```
 
 ### Untyped wrapper
@@ -92,27 +70,11 @@ uses(
 Use a [`CustomAction`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
 
 ```kotlin
-val customAction = CustomAction(
-    actionOwner = "xu-cheng",
-    actionName = "latex-action",
-    actionVersion = "v2",
-    inputs = linkedMapOf(
-        "root_file" to "report.tex",
-        "compiler" to "latexmk",
-    ),
-)
+--8<-- "UsingActionsSnippets.kt:customAction"
 ```
 
 If your custom action has outputs, you can access them, albeit in a type-unsafe manner:
 
 ```kotlin
-job("test_job", runsOn = RunnerType.UbuntuLatest) {
-    val customActionStep = uses(
-        name = "Some step with output",
-        action = customAction,
-    )
-    
-    // use your outputs:
-    println(expr(customActionStep.outputs["custom-output"]))
-}
+--8<-- "UsingActionsSnippets.kt:customActionOutputs"
 ```
