@@ -166,7 +166,7 @@ If you have sensitive information, you should store it as a GitHub secret:
 
 You use them the same way as environment variables, but using `Contexts.secrets` instead of `Contexts.env`:
 
-> val SUPER_SECRET by Contexts.secrets
+> `val SUPER_SECRET by Contexts.secrets`
 
 For example:
 
