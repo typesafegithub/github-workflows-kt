@@ -198,3 +198,4 @@ There are more `github.event` payloads that we currently do not support: https:/
 We feel what we have is a pretty good start, but if you need an additional feature, you can [create an issue](https://github.com/krzema12/github-workflows-kt/issues)
 
 Or maybe have a look how this type-safe feature is implemented in [it.krzeminski.githubactions.dsl.expressions](https://github.com/krzema12/github-workflows-kt/tree/main/library/src/main/kotlin/it/krzeminski/githubactions/dsl/expressions) and [submit a pull request 🙏🏻](https://github.com/krzema12/github-workflows-kt/pulls)
+
