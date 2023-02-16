@@ -35,7 +35,7 @@ workflow(
 Each action wrapper has an extra constructor parameter - `_customInputs` - which is a map from `String` to `String`:
 
 ```kotlin
-UploadArtifactV2(
+UploadArtifactV3(
     //...
     _customInputs = mapOf(
         "path" to "override-path-value",
@@ -53,9 +53,9 @@ Each action wrapper has an extra constructor parameter - `_customVersion` - whic
 version:
 
 ```kotlin
-UploadArtifactV2(
+UploadArtifactV3(
     //...
-    _customVersion = "v3"
+    _customVersion = "v4"
 )
 ```
 
