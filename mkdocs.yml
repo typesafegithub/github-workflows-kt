@@ -26,6 +26,10 @@ markdown_extensions:
   - pymdownx.magiclink
   - pymdownx.inlinehilite
   - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path:
+        - library/src/test/kotlin/it/krzeminski/githubactions/docsnippets
+      check_paths: True
   - admonition
 
 plugins:

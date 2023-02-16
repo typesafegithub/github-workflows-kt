@@ -71,6 +71,10 @@ val validateDuplicatedVersion by tasks.creating<Task> {
             project.rootDir.resolve("script-generator/src/main/kotlin/it/krzeminski/githubactions/scriptgenerator/Version.kt").readText()
                 .contains("val LIBRARY_VERSION = \"$version\"")
         ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
+        require(
+            project.file("src/test/kotlin/it/krzeminski/githubactions/docsnippets/GettingStartedSnippets.kt").readText()
+                .contains("\"it.krzeminski:github-actions-kotlin-dsl:$version\"")
+        ) { "Library version stated in library/src/test/.../GettingStarted.kt should be equal to $version!" }
     }
 }
 
