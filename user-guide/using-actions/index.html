@@ -17,7 +17,7 @@
         <link rel="next" href="../type-safe-expressions/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
@@ -620,36 +620,38 @@ you have two ways to proceed.</p>
 library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
 inside <code>toYamlArguments</code>. Use it to have better type-safety when using the wrapper.</p>
 </div>
-<p>Inherit from <a href="https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/Action.kt"><code>Action</code></a>
-in case of actions without outputs:</p>
+<p>Inherit from <a href="https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/domain/actions/Action.kt"><code>Action</code></a>
+and in case of actions without explicit outputs, use the <code>Actions.Outputs</code> class as type argument:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyCoolActionV3</span><span class="p">(</span>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">someArgument</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Action</span><span class="p">(</span><span class="s">&quot;acmecorp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cool-action&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v3&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="n">Action</span><span class="p">.</span><span class="na">Outputs</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;acmecorp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cool-action&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v3&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">toYamlArguments</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
 <span class="w">        </span><span class="s">&quot;some-argument&quot;</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">someArgument</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">buildOutputObject</span><span class="p">(</span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>or, in case actions with outputs, from <a href="https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/ActionWithOutputs.kt"><code>ActionWithOutputs</code></a>:</p>
+<p>or, in case of actions with explicit outputs, create a subclass of <code>Action.Outputs</code> for the type argument:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyCoolActionV3</span><span class="p">(</span>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">someArgument</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ActionWithOutputs</span><span class="o">&lt;</span><span class="n">MyCoolActionV3</span><span class="p">.</span><span class="na">Outputs</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;acmecorp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cool-action&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v3&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="n">MyCoolActionV3</span><span class="p">.</span><span class="na">Outputs</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;acmecorp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cool-action&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v3&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">toYamlArguments</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
 <span class="w">        </span><span class="s">&quot;some-argument&quot;</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">someArgument</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
 
 <span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">buildOutputObject</span><span class="p">(</span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span>
 
-<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">Outputs</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Action</span><span class="p">.</span><span class="na">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">coolOutput</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;steps.</span><span class="si">$</span><span class="n">stepId</span><span class="s">.outputs.coolOutput&quot;</span>
-
-<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`get`</span><span class="p">(</span><span class="n">outputName</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;steps.</span><span class="si">$</span><span class="n">stepId</span><span class="s">.outputs.</span><span class="si">$</span><span class="n">outputName</span><span class="s">&quot;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Once you've got your action, it's now as simple as using it like this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">uses</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;FooBar&quot;</span><span class="p">,</span>
-<span class="w">     </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyCoolActionV3</span><span class="p">(</span><span class="n">someArgument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;foobar&quot;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="n">uses</span><span class="p">(</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;FooBar&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyCoolActionV3</span><span class="p">(</span><span class="n">someArgument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;foobar&quot;</span><span class="p">),</span>
+<span class="p">)</span>
 </code></pre></div>
 <h3 id="untyped-wrapper">Untyped wrapper</h3>
 <div class="admonition info">
@@ -666,7 +668,7 @@ generator.</p>
 <span class="w">    </span><span class="n">inputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
 <span class="w">        </span><span class="s">&quot;root_file&quot;</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;report.tex&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s">&quot;compiler&quot;</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;latexmk&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">),</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>If your custom action has outputs, you can access them, albeit in a type-unsafe manner:</p>
@@ -717,10 +719,10 @@ generator.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.36.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.37.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6df46069.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>

@@ -17,7 +17,7 @@
         <link rel="next" href="../job-outputs/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
@@ -646,12 +646,12 @@
 <p>Here is an example</p>
 <div class="highlight"><pre><span></span><code><span class="n">run</span><span class="p">(</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Environment variable and functions&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo \</span><span class="si">$</span><span class="n">GITHUB_ACTORS</span><span class="s">&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w">    </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\</span><span class="si">${</span><span class="p">{</span><span class="n">invariably</span><span class="p">()}</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span><span class="w">  </span>
+<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo \</span><span class="si">$</span><span class="n">GITHUB_ACTORS</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\</span><span class="si">${</span><span class="p">{</span><span class="n">invariably</span><span class="p">()}</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">run</span><span class="p">(</span><span class="w">  </span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GitHubContext echo sha&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo commit: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">sha256</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">  event: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">release</span><span class="p">.</span><span class="na">zip_url</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">&quot;</span><span class="w">  </span>
+<span class="n">run</span><span class="p">(</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GitHubContext echo sha&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo commit: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">sha256</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">  event: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">release</span><span class="p">.</span><span class="na">zip_url</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>Unfortunately, it is easy to get those expressions wrong.</p>
@@ -711,7 +711,7 @@ Here we detect immediatly another bug in our original snippet</p>
 <p>They are available directly in the IDE via the library's <code>Contexts.env</code>
 <img width="873" src="https://user-images.githubusercontent.com/459464/176902143-454254d3-2bb7-4b93-91dd-64a589d980a8.png">
 By using this feature in our snippet we would have avoided escaping the dollar and the typo:</p>
-<div class="highlight"><pre><span></span><code><span class="gd">-command = &quot;echo \$GITHUB_ACTORS&quot;,  </span>
+<div class="highlight"><pre><span></span><code><span class="gd">-command = &quot;echo \$GITHUB_ACTORS&quot;,</span>
 <span class="gi">+command = &quot;echo &quot; + Contexts.env.GITHUB_ACTOR,</span>
 </code></pre></div>
 <p>Reference: <a href="https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables">https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables</a></p>
@@ -722,20 +722,20 @@ By using this feature in our snippet we would have avoided escaping the dollar a
 <p><code>val MY_VARIABLE_NAME by Contexts.env</code></p>
 </blockquote>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">GREETING</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span><span class="w">  </span>
-<span class="kd">val</span><span class="w"> </span><span class="nv">FIRST_NAME</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span><span class="w">  </span>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">GREETING</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">FIRST_NAME</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span>
 
-<span class="n">job</span><span class="p">(</span><span class="w">  </span>
-<span class="w">    </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span><span class="w">  </span>
-<span class="w">        </span><span class="n">GREETING</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;World&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w">    </span><span class="p">)</span><span class="w">  </span>
-<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span>
-<span class="w">    </span><span class="n">run</span><span class="p">(</span><span class="w">  </span>
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Custom environment variable&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w">        </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span><span class="w">  </span>
-<span class="w">            </span><span class="n">FIRST_NAME</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Patrick&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w">        </span><span class="p">),</span><span class="w">  </span>
-<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo </span><span class="si">$</span><span class="n">GREETING</span><span class="s"> </span><span class="si">$</span><span class="n">FIRST_NAME</span><span class="s">&quot;</span>
+<span class="n">job</span><span class="p">(</span>
+<span class="w">    </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
+<span class="w">        </span><span class="n">GREETING</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;World&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">run</span><span class="p">(</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Custom environment variable&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
+<span class="w">            </span><span class="n">FIRST_NAME</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Patrick&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo </span><span class="si">$</span><span class="n">GREETING</span><span class="s"> </span><span class="si">$</span><span class="n">FIRST_NAME</span><span class="s">&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -745,22 +745,22 @@ By using this feature in our snippet we would have avoided escaping the dollar a
 <p><img width="1372" alt="Actions_secrets" src="https://user-images.githubusercontent.com/459464/176906278-9262973f-885e-4b5b-9d29-f24acad8302b.png"></p>
 <p>You use them the same way as environment variables, but using <code>Contexts.secrets</code> instead of <code>Contexts.env</code>:</p>
 <blockquote>
-<p>val SUPER_SECRET by Contexts.secrets</p>
+<p><code>val SUPER_SECRET by Contexts.secrets</code></p>
 </blockquote>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">SUPER_SECRET</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">secrets</span><span class="w">  </span>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">SUPER_SECRET</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">secrets</span>
 
-<span class="kd">val</span><span class="w"> </span><span class="nv">SECRET</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span><span class="w">  </span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">SECRET</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span>
 <span class="kd">val</span><span class="w"> </span><span class="nv">TOKEN</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span>
 
-<span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;job1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RunnerType</span><span class="p">.</span><span class="na">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span>
-<span class="w">    </span><span class="n">run</span><span class="p">(</span><span class="w">  </span>
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Encrypted secret&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w">        </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span><span class="w">  </span>
-<span class="w">            </span><span class="n">SECRET</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SUPER_SECRET</span><span class="w"> </span><span class="p">},</span><span class="w">  </span>
-<span class="w">            </span><span class="n">TOKEN</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">secrets</span><span class="p">.</span><span class="na">GITHUB_TOKEN</span><span class="w"> </span><span class="p">}</span><span class="w">  </span>
-<span class="w">        </span><span class="p">),</span><span class="w">  </span>
-<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo secret=</span><span class="si">$</span><span class="n">SECRET</span><span class="s"> token=</span><span class="si">$</span><span class="n">TOKEN</span><span class="s">&quot;</span><span class="w">  </span>
+<span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;job1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RunnerType</span><span class="p">.</span><span class="na">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">run</span><span class="p">(</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Encrypted secret&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
+<span class="w">            </span><span class="n">SECRET</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SUPER_SECRET</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="n">TOKEN</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">secrets</span><span class="p">.</span><span class="na">GITHUB_TOKEN</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo secret=</span><span class="si">$</span><span class="n">SECRET</span><span class="s"> token=</span><span class="si">$</span><span class="n">TOKEN</span><span class="s">&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -806,10 +806,10 @@ By using this feature in our snippet we would have avoided escaping the dollar a
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.36.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.37.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6df46069.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>
