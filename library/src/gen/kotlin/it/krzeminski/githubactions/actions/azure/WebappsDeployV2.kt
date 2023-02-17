@@ -56,6 +56,10 @@ public data class WebappsDeployV2(
      */
     public val startupCommand: String? = null,
     /**
+     * Enter the resource group name of the web app
+     */
+    public val resourceGroupName: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -75,6 +79,7 @@ public data class WebappsDeployV2(
             "images" to images.joinToString("\n"),
             configurationFile?.let { "configuration-file" to it },
             startupCommand?.let { "startup-command" to it },
+            resourceGroupName?.let { "resource-group-name" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
