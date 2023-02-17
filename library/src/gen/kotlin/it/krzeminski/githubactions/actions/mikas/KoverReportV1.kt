@@ -47,6 +47,10 @@ public data class KoverReportV1(
      */
     public val minCoverageChangedFiles: Int? = null,
     /**
+     * Report counter type (`INSTRUCTION``, `LINE` or `BRANCH`) to calculate coverage metrics.
+     */
+    public val coverageCounterType: KoverReportV1.CoverageCounterType? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -65,11 +69,26 @@ public data class KoverReportV1(
             updateComment?.let { "update-comment" to it.toString() },
             minCoverageOverall?.let { "min-coverage-overall" to it.toString() },
             minCoverageChangedFiles?.let { "min-coverage-changed-files" to it.toString() },
+            coverageCounterType?.let { "coverage-counter-type" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public sealed class CoverageCounterType(
+        public val stringValue: String,
+    ) {
+        public object Instruction : KoverReportV1.CoverageCounterType("INSTRUCTION")
+
+        public object Line : KoverReportV1.CoverageCounterType("LINE")
+
+        public object Branch : KoverReportV1.CoverageCounterType("BRANCH")
+
+        public class Custom(
+            customStringValue: String,
+        ) : KoverReportV1.CoverageCounterType(customStringValue)
+    }
 
     public class Outputs(
         stepId: String,
