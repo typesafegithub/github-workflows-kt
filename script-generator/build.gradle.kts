@@ -13,7 +13,7 @@ dependencies {
     implementation(projects.automation.typings)
     implementation(projects.automation.wrapperGenerator)
     implementation(projects.library)
-    implementation("com.charleskorn.kaml:kaml:0.51.0")
+    implementation("com.charleskorn.kaml:kaml:0.52.0")
     implementation("com.squareup:kotlinpoet:1.12.0")
     implementation(kotlin("reflect"))
 }
