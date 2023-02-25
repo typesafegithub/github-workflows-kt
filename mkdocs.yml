@@ -30,6 +30,7 @@ markdown_extensions:
       base_path:
         - library/src/test/kotlin/it/krzeminski/githubactions/docsnippets
       check_paths: True
+      dedent_subsections: True
   - admonition
 
 plugins:

@@ -19,19 +19,17 @@ class TypeSafeExpressionsSnippets : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-/* ktlint-disable indent */
-// --8<-- [start:illExample]
-run(
-    name = "Environment variable and functions",
-    command = "echo \$GITHUB_ACTORS",
-    condition = "\${{invariably()}}",
-)
-run(
-    name = "GitHubContext echo sha",
-    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
-)
-// --8<-- [end:illExample]
-/* ktlint-enable indent */
+                // --8<-- [start:illExample]
+                run(
+                    name = "Environment variable and functions",
+                    command = "echo \$GITHUB_ACTORS",
+                    condition = "\${{invariably()}}",
+                )
+                run(
+                    name = "GitHubContext echo sha",
+                    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
+                )
+                // --8<-- [end:illExample]
             }
         }
     }
@@ -41,30 +39,28 @@ run(
             name = "Test workflow",
             on = listOf(Push()),
         ) {
-/* ktlint-disable indent */
-// --8<-- [start:customEnvironmentVariables1]
-val GREETING by Contexts.env
-val FIRST_NAME by Contexts.env
+            // --8<-- [start:customEnvironmentVariables1]
+            val GREETING by Contexts.env
+            val FIRST_NAME by Contexts.env
 
-job(
-// --8<-- [end:customEnvironmentVariables1]
-    id = "job0",
-    runsOn = RunnerType.UbuntuLatest,
-// --8<-- [start:customEnvironmentVariables2]
-    env = linkedMapOf(
-        GREETING to "World",
-    ),
-) {
-    run(
-        name = "Custom environment variable",
-        env = linkedMapOf(
-            FIRST_NAME to "Patrick",
-        ),
-        command = "echo $GREETING $FIRST_NAME",
-    )
-}
-// --8<-- [end:customEnvironmentVariables2]
-/* ktlint-enable indent */
+            job(
+                // --8<-- [end:customEnvironmentVariables1]
+                id = "job0",
+                runsOn = RunnerType.UbuntuLatest,
+                // --8<-- [start:customEnvironmentVariables2]
+                env = linkedMapOf(
+                    GREETING to "World",
+                ),
+            ) {
+                run(
+                    name = "Custom environment variable",
+                    env = linkedMapOf(
+                        FIRST_NAME to "Patrick",
+                    ),
+                    command = "echo $GREETING $FIRST_NAME",
+                )
+            }
+            // --8<-- [end:customEnvironmentVariables2]
         }
     }
 
@@ -73,25 +69,23 @@ job(
             name = "Test workflow",
             on = listOf(Push()),
         ) {
-/* ktlint-disable indent */
-// --8<-- [start:secrets]
-val SUPER_SECRET by Contexts.secrets
+            // --8<-- [start:secrets]
+            val SUPER_SECRET by Contexts.secrets
 
-val SECRET by Contexts.env
-val TOKEN by Contexts.env
+            val SECRET by Contexts.env
+            val TOKEN by Contexts.env
 
-job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
-    run(
-        name = "Encrypted secret",
-        env = linkedMapOf(
-            SECRET to expr { SUPER_SECRET },
-            TOKEN to expr { secrets.GITHUB_TOKEN },
-        ),
-        command = "echo secret=$SECRET token=$TOKEN",
-    )
-}
-// --8<-- [end:secrets]
-/* ktlint-enable indent */
+            job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
+                run(
+                    name = "Encrypted secret",
+                    env = linkedMapOf(
+                        SECRET to expr { SUPER_SECRET },
+                        TOKEN to expr { secrets.GITHUB_TOKEN },
+                    ),
+                    command = "echo secret=$SECRET token=$TOKEN",
+                )
+            }
+            // --8<-- [end:secrets]
         }
     }
 },)

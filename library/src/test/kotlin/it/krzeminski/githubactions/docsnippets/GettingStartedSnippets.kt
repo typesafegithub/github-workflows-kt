@@ -14,32 +14,30 @@ import java.io.File
 
 class GettingStartedSnippets : FunSpec({
     test("gettingStarted") {
-/* ktlint-disable indent */
-/*
-// --8<-- [start:gettingStarted1]
-#!/usr/bin/env kotlin
+        /*
+        // --8<-- [start:gettingStarted1]
+        #!/usr/bin/env kotlin
 
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.38.0")
+        @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.38.0")
 
-// --8<-- [end:gettingStarted1]
-*/
-@Suppress("VariableNaming")
-val __FILE__ = File("")
-// --8<-- [start:gettingStarted3]
+        // --8<-- [end:gettingStarted1]
+        */
+        @Suppress("VariableNaming")
+        val __FILE__ = File("")
+        // --8<-- [start:gettingStarted3]
 
-val workflow = workflow(
-    name = "Test workflow",
-    on = listOf(Push()),
-    sourceFile = __FILE__.toPath(),
-) {
-    job(id = "test_job", runsOn = UbuntuLatest) {
-        uses(name = "Check out", action = CheckoutV3())
-        run(name = "Print greeting", command = "echo 'Hello world!'")
-    }
-}
+        val workflow = workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = __FILE__.toPath(),
+        ) {
+            job(id = "test_job", runsOn = UbuntuLatest) {
+                uses(name = "Check out", action = CheckoutV3())
+                run(name = "Print greeting", command = "echo 'Hello world!'")
+            }
+        }
 
-println(workflow.toYaml())
-// --8<-- [end:gettingStarted3]
-/* ktlint-enable indent */
+        println(workflow.toYaml())
+        // --8<-- [end:gettingStarted3]
     }
 },)
