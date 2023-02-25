@@ -44,14 +44,14 @@ Inherit from [`Action`](https://github.com/krzema12/github-workflows-kt/blob/mai
 and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin
---8<-- "UsingActionsSnippets.kt:actionWithoutOutputs"
+--8<-- "UsingActionsSnippets.kt:action-without-outputs"
 ```
 
 or, in case of actions with explicit outputs, create a subclass of `Action.Outputs` for the type argument:
 
 ```kotlin
---8<-- "UsingActionsSnippets.kt:actionWithOutputs1"
---8<-- "UsingActionsSnippets.kt:actionWithOutputs2"
+--8<-- "UsingActionsSnippets.kt:action-with-outputs-1"
+--8<-- "UsingActionsSnippets.kt:action-with-outputs-2"
 ```
 
 Once you've got your action, it's now as simple as using it like this:
@@ -70,11 +70,11 @@ Once you've got your action, it's now as simple as using it like this:
 Use a [`CustomAction`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
 
 ```kotlin
---8<-- "UsingActionsSnippets.kt:customAction"
+--8<-- "UsingActionsSnippets.kt:custom-action"
 ```
 
 If your custom action has outputs, you can access them, albeit in a type-unsafe manner:
 
 ```kotlin
---8<-- "UsingActionsSnippets.kt:customActionOutputs"
+--8<-- "UsingActionsSnippets.kt:custom-action-outputs"
 ```

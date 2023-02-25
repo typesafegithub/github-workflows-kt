@@ -19,7 +19,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                // --8<-- [start:illExample]
+                // --8<-- [start:ill-example]
                 run(
                     name = "Environment variable and functions",
                     command = "echo \$GITHUB_ACTORS",
@@ -29,7 +29,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
                     name = "GitHubContext echo sha",
                     command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
                 )
-                // --8<-- [end:illExample]
+                // --8<-- [end:ill-example]
             }
         }
     }
@@ -39,15 +39,15 @@ class TypeSafeExpressionsSnippets : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
         ) {
-            // --8<-- [start:customEnvironmentVariables1]
+            // --8<-- [start:custom-environment-variables-1]
             val GREETING by Contexts.env
             val FIRST_NAME by Contexts.env
 
             job(
-                // --8<-- [end:customEnvironmentVariables1]
+                // --8<-- [end:custom-environment-variables-1]
                 id = "job0",
                 runsOn = RunnerType.UbuntuLatest,
-                // --8<-- [start:customEnvironmentVariables2]
+                // --8<-- [start:custom-environment-variables-2]
                 env = linkedMapOf(
                     GREETING to "World",
                 ),
@@ -60,7 +60,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
                     command = "echo $GREETING $FIRST_NAME",
                 )
             }
-            // --8<-- [end:customEnvironmentVariables2]
+            // --8<-- [end:custom-environment-variables-2]
         }
     }
 

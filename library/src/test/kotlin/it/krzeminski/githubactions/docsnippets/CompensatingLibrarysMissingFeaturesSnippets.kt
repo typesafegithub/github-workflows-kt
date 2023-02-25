@@ -9,12 +9,12 @@ import it.krzeminski.githubactions.dsl.workflow
 
 class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
     test("customArguments") {
-        // --8<-- [start:customArguments1]
+        // --8<-- [start:custom-arguments-1]
         workflow(
-            // --8<-- [end:customArguments1]
+            // --8<-- [end:custom-arguments-1]
             name = "customArguments",
             on = listOf(Push()),
-            // --8<-- [start:customArguments2]
+            // --8<-- [start:custom-arguments-2]
             // ...
             _customArguments = mapOf(
                 "dry-run" to true,
@@ -26,7 +26,7 @@ class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
                 ),
             ),
         )
-        // --8<-- [end:customArguments2]
+        // --8<-- [end:custom-arguments-2]
         {
             job(id = "test_job", runsOn = UbuntuLatest) {
                 run(command = "echo 'Hello world!'")
@@ -35,29 +35,29 @@ class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
     }
 
     test("customInputs") {
-        // --8<-- [start:customInputs1]
+        // --8<-- [start:custom-inputs-1]
         UploadArtifactV3(
-            // --8<-- [end:customInputs1]
+            // --8<-- [end:custom-inputs-1]
             path = emptyList(),
-            // --8<-- [start:customInputs2]
+            // --8<-- [start:custom-inputs-2]
             // ...
             _customInputs = mapOf(
                 "path" to "override-path-value",
                 "answer" to "42",
             ),
         )
-        // --8<-- [end:customInputs2]
+        // --8<-- [end:custom-inputs-2]
     }
 
     test("customVersion") {
-        // --8<-- [start:customVersion1]
+        // --8<-- [start:custom-version-1]
         UploadArtifactV3(
-            // --8<-- [end:customVersion1]
+            // --8<-- [end:custom-version-1]
             path = emptyList(),
-            // --8<-- [start:customVersion2]
+            // --8<-- [start:custom-version-2]
             // ...
             _customVersion = "v4",
         )
-        // --8<-- [end:customVersion2]
+        // --8<-- [end:custom-version-2]
     }
 },)

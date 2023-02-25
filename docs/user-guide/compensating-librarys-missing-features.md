@@ -16,8 +16,8 @@ needed, especially using basic types like booleans, strings or integers, and fur
 For example:
 
 ```kotlin
---8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customArguments1"
---8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customArguments2"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:custom-arguments-1"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:custom-arguments-2"
 ```
 
 ## Action's inputs
@@ -25,8 +25,8 @@ For example:
 Each action wrapper has an extra constructor parameter - `_customInputs` - which is a map from `String` to `String`:
 
 ```kotlin
---8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customInputs1"
---8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customInputs2"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:custom-inputs-1"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:custom-inputs-2"
 ```
 
 You can use it to set inputs that the wrapper doesn't know about, or to set any custom value if the wrapper's typing is
@@ -38,8 +38,8 @@ Each action wrapper has an extra constructor parameter - `_customVersion` - whic
 version:
 
 ```kotlin
---8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customVersion1"
---8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:customVersion2"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:custom-version-1"
+--8<-- "CompensatingLibrarysMissingFeaturesSnippets.kt:custom-version-2"
 ```
 
 It's useful e.g. when the wrapper doesn't keep up with action's versions and the API is fairly compatible, or if you

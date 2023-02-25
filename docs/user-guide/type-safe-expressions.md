@@ -16,7 +16,7 @@ They include:
 Here is an example
 
 ```kotlin
---8<-- "TypeSafeExpressionsSnippets.kt:illExample"
+--8<-- "TypeSafeExpressionsSnippets.kt:ill-example"
 ```
 
 Unfortunately, it is easy to get those expressions wrong.
@@ -130,8 +130,8 @@ You can create your own type-safe property by using the syntax
 For example:
 
 ```kotlin
---8<-- "TypeSafeExpressionsSnippets.kt:customEnvironmentVariables1"
---8<-- "TypeSafeExpressionsSnippets.kt:customEnvironmentVariables2"
+--8<-- "TypeSafeExpressionsSnippets.kt:custom-environment-variables-1"
+--8<-- "TypeSafeExpressionsSnippets.kt:custom-environment-variables-2"
 ```
 
 Reference: https://docs.github.com/en/actions/learn-github-actions/environment-variables#about-environment-variables
