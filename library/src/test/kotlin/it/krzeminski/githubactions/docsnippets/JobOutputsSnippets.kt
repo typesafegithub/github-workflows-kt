@@ -15,7 +15,7 @@ class JobOutputsSnippets : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
         ) {
-            // --8<-- [start:defineJobOutputs1]
+            // --8<-- [start:define-job-outputs-1]
             val myJob = job(
                 id = "my_job",
                 runsOn = RunnerType.UbuntuLatest,
@@ -23,11 +23,11 @@ class JobOutputsSnippets : FunSpec({
                     var myOutput by output()
                     var anotherOutput by output()
                 },
-                // --8<-- [end:defineJobOutputs1]
+                // --8<-- [end:define-job-outputs-1]
                 /*
-                // --8<-- [start:defineJobOutputs2]
+                // --8<-- [start:define-job-outputs-2]
                 ) { ... }
-                // --8<-- [end:defineJobOutputs2]
+                // --8<-- [end:define-job-outputs-2]
                 */
             ) {
                 class DocTest : Action<DocTest.Outputs>("doc", "test", "v0") {
@@ -39,13 +39,13 @@ class JobOutputsSnippets : FunSpec({
                 }
                 val someStep = uses(DocTest())
 
-                // --8<-- [start:setJobOutputs]
+                // --8<-- [start:set-job-outputs]
                 jobOutputs.myOutput = someStep.outputs.someStepOutput
                 jobOutputs.anotherOutput = someStep.outputs["custom-output"]
-                // --8<-- [end:setJobOutputs]
+                // --8<-- [end:set-job-outputs]
             }
 
-            // --8<-- [start:useJobOutputs]
+            // --8<-- [start:use-job-outputs]
             job(
                 id = "use_output",
                 runsOn = RunnerType.UbuntuLatest,
@@ -59,7 +59,7 @@ class JobOutputsSnippets : FunSpec({
                     """.trimIndent(),
                 )
             }
-            // --8<-- [end:useJobOutputs]
+            // --8<-- [end:use-job-outputs]
         }
     }
 },)

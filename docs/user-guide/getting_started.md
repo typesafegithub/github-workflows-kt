@@ -24,9 +24,9 @@ names with your own.
    GitHub Actions workflows.
 3. Put this content into the previously created file and save it:
    ```kotlin
-   --8<-- "GettingStartedSnippets.kt:gettingStarted1"
-   --8<-- "GettingStartedSnippets.kt:gettingStarted2"
-   --8<-- "GettingStartedSnippets.kt:gettingStarted3"
+   --8<-- "GettingStartedSnippets.kt:getting-started-1"
+   --8<-- "GettingStartedSnippets.kt:getting-started-2"
+   --8<-- "GettingStartedSnippets.kt:getting-started-3"
    ```
    Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source
    file path is to be able to generate consistency checks, to ensure that both source and target files are in sync.
