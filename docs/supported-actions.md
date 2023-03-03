@@ -54,7 +54,7 @@ Click on a version to see the wrapper's code.
     * [browserslist-update-action](https://github.com/c2corg/browserslist-update-action) - v2 ✅: [`BrowserslistUpdateActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/c2corg/BrowserslistUpdateActionV2.kt)
     * [transifex-pull-request-action](https://github.com/c2corg/transifex-pull-request-action) - v5 ✅: [`TransifexPullRequestActionV5`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/c2corg/TransifexPullRequestActionV5.kt)
 * cachix
-    * [install-nix-action](https://github.com/cachix/install-nix-action) - v17: [`InstallNixActionV17`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV17.kt), v18: [`InstallNixActionV18`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV18.kt), v19: [`InstallNixActionV19`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV19.kt)
+    * [install-nix-action](https://github.com/cachix/install-nix-action) - v17: [`InstallNixActionV17`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV17.kt), v18: [`InstallNixActionV18`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV18.kt), v19: [`InstallNixActionV19`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV19.kt), v20: [`InstallNixActionV20`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/cachix/InstallNixActionV20.kt)
 * codecov
     * [codecov-action](https://github.com/codecov/codecov-action) - v3: [`CodecovActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/codecov/CodecovActionV3.kt)
 * docker
@@ -125,6 +125,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 73
-* counting each version separately: 100
+* counting each version separately: 101
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 13
