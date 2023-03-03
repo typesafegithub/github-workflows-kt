@@ -75,6 +75,8 @@ inputs:
     type: string
   remove_duplicates:
     type: boolean
+  skip_commit:
+    type: boolean
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:
   results:
