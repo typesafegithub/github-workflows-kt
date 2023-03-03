@@ -1,11 +1,14 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress("DEPRECATION")
+
 package it.krzeminski.githubactions.actions.cachix
 
 import it.krzeminski.githubactions.domain.actions.Action
 import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -20,6 +23,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
  */
+@Deprecated(
+    message = "This action has a newer major version: InstallNixActionV20",
+    replaceWith = ReplaceWith("InstallNixActionV20"),
+)
 public data class InstallNixActionV19(
     /**
      * Gets appended to `/etc/nix/nix.conf` if passed.
