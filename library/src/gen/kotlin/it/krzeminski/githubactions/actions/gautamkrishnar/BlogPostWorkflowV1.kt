@@ -149,6 +149,10 @@ public data class BlogPostWorkflowV1(
      */
     public val removeDuplicates: Boolean? = null,
     /**
+     * Skips committing the changes to repo
+     */
+    public val skipCommit: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -192,6 +196,7 @@ public data class BlogPostWorkflowV1(
             filterDates?.let { "filter_dates" to it },
             randSeed?.let { "rand_seed" to it },
             removeDuplicates?.let { "remove_duplicates" to it.toString() },
+            skipCommit?.let { "skip_commit" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
