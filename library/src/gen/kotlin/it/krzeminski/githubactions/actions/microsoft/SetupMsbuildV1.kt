@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.microsoft
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/microsoft/setup-msbuild)
  */
-public data class SetupMsbuildV1(
+public data class SetupMsbuildV1 private constructor(
     /**
      * Folder location of where vswhere.exe is located if a self-hosted agent
      */
@@ -48,6 +54,18 @@ public data class SetupMsbuildV1(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupMsbuildV1.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        vswherePath: String? = null,
+        vsVersion: String? = null,
+        vsPrerelease: Boolean? = null,
+        msbuildArchitecture: SetupMsbuildV1.Architecture? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(vswherePath=vswherePath, vsVersion=vsVersion, vsPrerelease=vsPrerelease,
+            msbuildArchitecture=msbuildArchitecture, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

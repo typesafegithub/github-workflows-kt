@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.azure
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Azure/webapps-deploy)
  */
-public data class WebappsDeployV2(
+public data class WebappsDeployV2 private constructor(
     /**
      * Name of the Azure Web App
      */
@@ -69,6 +75,23 @@ public data class WebappsDeployV2(
      */
     public val _customVersion: String? = null,
 ) : Action<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        appName: String,
+        publishProfile: String? = null,
+        slotName: String? = null,
+        `package`: String? = null,
+        images: List<String>,
+        configurationFile: String? = null,
+        startupCommand: String? = null,
+        resourceGroupName: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(appName=appName, publishProfile=publishProfile, slotName=slotName, `package`=`package`,
+            images=images, configurationFile=configurationFile, startupCommand=startupCommand,
+            resourceGroupName=resourceGroupName, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

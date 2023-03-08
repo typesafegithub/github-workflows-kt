@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.actions
 
@@ -12,6 +16,7 @@ import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -27,7 +32,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupJavaV3",
     replaceWith = ReplaceWith("SetupJavaV3"),
 )
-public data class SetupJavaV2(
+public data class SetupJavaV2 private constructor(
     /**
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported
      * syntax in README file
@@ -103,6 +108,32 @@ public data class SetupJavaV2(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        javaVersion: String,
+        distribution: SetupJavaV2.Distribution,
+        javaPackage: SetupJavaV2.JavaPackage? = null,
+        architecture: String? = null,
+        jdkFile: String? = null,
+        checkLatest: Boolean? = null,
+        serverId: String? = null,
+        serverUsername: String? = null,
+        serverPassword: String? = null,
+        settingsPath: String? = null,
+        overwriteSettings: Boolean? = null,
+        gpgPrivateKey: String? = null,
+        gpgPassphrase: String? = null,
+        cache: SetupJavaV2.BuildPlatform? = null,
+        jobStatus: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(javaVersion=javaVersion, distribution=distribution, javaPackage=javaPackage,
+            architecture=architecture, jdkFile=jdkFile, checkLatest=checkLatest, serverId=serverId,
+            serverUsername=serverUsername, serverPassword=serverPassword, settingsPath=settingsPath,
+            overwriteSettings=overwriteSettings, gpgPrivateKey=gpgPrivateKey,
+            gpgPassphrase=gpgPassphrase, cache=cache, jobStatus=jobStatus,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.softprops
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/softprops/action-gh-release)
  */
-public data class ActionGhReleaseV1(
+public data class ActionGhReleaseV1 private constructor(
     /**
      * Note-worthy description of changes in release
      */
@@ -93,6 +99,31 @@ public data class ActionGhReleaseV1(
      */
     public val _customVersion: String? = null,
 ) : Action<ActionGhReleaseV1.Outputs>("softprops", "action-gh-release", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        body: String? = null,
+        bodyPath: String? = null,
+        name: String? = null,
+        tagName: String? = null,
+        draft: Boolean? = null,
+        prerelease: Boolean? = null,
+        files: List<String>? = null,
+        failOnUnmatchedFiles: Boolean? = null,
+        repository: String? = null,
+        token: String? = null,
+        targetCommitish: String? = null,
+        discussionCategoryName: String? = null,
+        generateReleaseNotes: Boolean? = null,
+        appendBody: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(body=body, bodyPath=bodyPath, name=name, tagName=tagName, draft=draft,
+            prerelease=prerelease, files=files, failOnUnmatchedFiles=failOnUnmatchedFiles,
+            repository=repository, token=token, targetCommitish=targetCommitish,
+            discussionCategoryName=discussionCategoryName,
+            generateReleaseNotes=generateReleaseNotes, appendBody=appendBody,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.madhead
 
@@ -13,6 +17,7 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -29,7 +34,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: IntellijHttpClientActionV231",
     replaceWith = ReplaceWith("IntellijHttpClientActionV231"),
 )
-public data class IntellijHttpClientActionV0(
+public data class IntellijHttpClientActionV0 private constructor(
     /**
      * HTTP file paths
      */
@@ -89,6 +94,28 @@ public data class IntellijHttpClientActionV0(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?: "v0") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        files: List<String>,
+        socketTimeout: Int? = null,
+        connectTimeout: Int? = null,
+        insecure: Boolean? = null,
+        env: String? = null,
+        envFile: String? = null,
+        envVariables: List<String>? = null,
+        privateEnvFile: String? = null,
+        privateEnvVariables: List<String>? = null,
+        dockerMode: Boolean? = null,
+        logLevel: IntellijHttpClientActionV0.LogLevel? = null,
+        report: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(files=files, socketTimeout=socketTimeout, connectTimeout=connectTimeout,
+            insecure=insecure, env=env, envFile=envFile, envVariables=envVariables,
+            privateEnvFile=privateEnvFile, privateEnvVariables=privateEnvVariables,
+            dockerMode=dockerMode, logLevel=logLevel, report=report, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

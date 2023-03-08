@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/create-release)
  */
-public data class CreateReleaseV1(
+public data class CreateReleaseV1 private constructor(
     /**
      * The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a
      * user pushes a new tag
@@ -71,6 +77,23 @@ public data class CreateReleaseV1(
      */
     public val _customVersion: String? = null,
 ) : Action<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        tagName: String,
+        releaseName: String,
+        body: String? = null,
+        bodyPath: String? = null,
+        draft: Boolean? = null,
+        prerelease: Boolean? = null,
+        commitish: String? = null,
+        owner: String? = null,
+        repo: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(tagName=tagName, releaseName=releaseName, body=body, bodyPath=bodyPath, draft=draft,
+            prerelease=prerelease, commitish=commitish, owner=owner, repo=repo,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

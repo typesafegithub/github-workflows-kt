@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.endbug
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -19,7 +25,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/EndBug/add-and-commit)
  */
-public data class AddAndCommitV9(
+public data class AddAndCommitV9 private constructor(
     /**
      * Arguments for the git add command
      */
@@ -107,6 +113,35 @@ public data class AddAndCommitV9(
      */
     public val _customVersion: String? = null,
 ) : Action<AddAndCommitV9.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v9") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        add: String? = null,
+        authorName: String? = null,
+        authorEmail: String? = null,
+        commit: String? = null,
+        committerName: String? = null,
+        committerEmail: String? = null,
+        cwd: String? = null,
+        defaultAuthor: AddAndCommitV9.DefaultAuthor? = null,
+        fetch: String? = null,
+        message: String? = null,
+        newBranch: String? = null,
+        pathspecErrorHandling: AddAndCommitV9.PathspecErrorHandling? = null,
+        pull: String? = null,
+        push: String? = null,
+        remove: String? = null,
+        tag: String? = null,
+        tagPush: String? = null,
+        githubToken: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(add=add, authorName=authorName, authorEmail=authorEmail, commit=commit,
+            committerName=committerName, committerEmail=committerEmail, cwd=cwd,
+            defaultAuthor=defaultAuthor, fetch=fetch, message=message, newBranch=newBranch,
+            pathspecErrorHandling=pathspecErrorHandling, pull=pull, push=push, remove=remove,
+            tag=tag, tagPush=tagPush, githubToken=githubToken, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

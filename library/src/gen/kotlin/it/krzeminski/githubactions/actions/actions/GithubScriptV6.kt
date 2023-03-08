@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/github-script)
  */
-public data class GithubScriptV6(
+public data class GithubScriptV6 private constructor(
     /**
      * The script to run
      */
@@ -66,6 +72,23 @@ public data class GithubScriptV6(
      */
     public val _customVersion: String? = null,
 ) : Action<GithubScriptV6.Outputs>("actions", "github-script", _customVersion ?: "v6") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        script: String,
+        githubToken: String? = null,
+        debug: Boolean? = null,
+        userAgent: String? = null,
+        previews: List<String>? = null,
+        resultEncoding: GithubScriptV6.Encoding? = null,
+        retries: Int? = null,
+        retryExemptStatusCodes: List<Int>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(script=script, githubToken=githubToken, debug=debug, userAgent=userAgent,
+            previews=previews, resultEncoding=resultEncoding, retries=retries,
+            retryExemptStatusCodes=retryExemptStatusCodes, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

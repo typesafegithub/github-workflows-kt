@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -19,7 +25,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/first-interaction)
  */
-public data class FirstInteractionV1(
+public data class FirstInteractionV1 private constructor(
     /**
      * Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
      */
@@ -42,6 +48,16 @@ public data class FirstInteractionV1(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("actions", "first-interaction", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        repoToken: String,
+        issueMessage: String? = null,
+        prMessage: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(repoToken=repoToken, issueMessage=issueMessage, prMessage=prMessage,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

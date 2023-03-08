@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.bahmutov
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/bahmutov/npm-install)
  */
-public data class NpmInstallV1(
+public data class NpmInstallV1 private constructor(
     /**
      * Working directory to specify subfolder in which dependencies are defined
      */
@@ -48,6 +54,18 @@ public data class NpmInstallV1(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("bahmutov", "npm-install", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        workingDirectory: String? = null,
+        useLockFile: Boolean? = null,
+        useRollingCache: Boolean? = null,
+        installCommand: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(workingDirectory=workingDirectory, useLockFile=useLockFile,
+            useRollingCache=useRollingCache, installCommand=installCommand,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

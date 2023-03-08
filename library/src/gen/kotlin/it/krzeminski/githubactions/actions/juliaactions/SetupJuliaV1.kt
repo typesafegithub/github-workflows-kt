@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.juliaactions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/julia-actions/setup-julia)
  */
-public data class SetupJuliaV1(
+public data class SetupJuliaV1 private constructor(
     /**
      * The Julia version to download (if necessary) and use. Example: 1.0.4
      */
@@ -48,6 +54,18 @@ public data class SetupJuliaV1(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        version: String? = null,
+        includeAllPrereleases: Boolean? = null,
+        arch: SetupJuliaV1.Architecture? = null,
+        showVersioninfo: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(version=version, includeAllPrereleases=includeAllPrereleases, arch=arch,
+            showVersioninfo=showVersioninfo, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

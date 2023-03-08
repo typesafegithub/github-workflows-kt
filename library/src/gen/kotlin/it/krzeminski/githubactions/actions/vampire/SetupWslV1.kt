@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.vampire
 
@@ -12,6 +16,7 @@ import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -28,7 +33,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupWslV2",
     replaceWith = ReplaceWith("SetupWslV2"),
 )
-public data class SetupWslV1(
+public data class SetupWslV1 private constructor(
     /**
      * The WSL distribution to install, update, or configure.
      * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
@@ -113,6 +118,23 @@ public data class SetupWslV1(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupWslV1.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        distribution: SetupWslV1.Distribution? = null,
+        useCache: Boolean? = null,
+        wslConf: String? = null,
+        setAsDefault: Boolean? = null,
+        update: Boolean? = null,
+        additionalPackages: List<String>? = null,
+        wslShellUser: String? = null,
+        wslShellCommand: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(distribution=distribution, useCache=useCache, wslConf=wslConf,
+            setAsDefault=setAsDefault, update=update, additionalPackages=additionalPackages,
+            wslShellUser=wslShellUser, wslShellCommand=wslShellCommand, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

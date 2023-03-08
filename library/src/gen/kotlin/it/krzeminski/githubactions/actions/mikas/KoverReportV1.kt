@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.mikas
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/mi-kas/kover-report)
  */
-public data class KoverReportV1(
+public data class KoverReportV1 private constructor(
     /**
      * Path to the generated kover report xml file
      */
@@ -60,6 +66,22 @@ public data class KoverReportV1(
      */
     public val _customVersion: String? = null,
 ) : Action<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        path: String,
+        token: String,
+        title: String? = null,
+        updateComment: Boolean? = null,
+        minCoverageOverall: Int? = null,
+        minCoverageChangedFiles: Int? = null,
+        coverageCounterType: KoverReportV1.CoverageCounterType? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(path=path, token=token, title=title, updateComment=updateComment,
+            minCoverageOverall=minCoverageOverall, minCoverageChangedFiles=minCoverageChangedFiles,
+            coverageCounterType=coverageCounterType, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.awsactions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
  */
-public data class ConfigureAwsCredentialsV1(
+public data class ConfigureAwsCredentialsV1 private constructor(
     /**
      * The audience to use for the OIDC provider
      */
@@ -88,6 +94,30 @@ public data class ConfigureAwsCredentialsV1(
     public val _customVersion: String? = null,
 ) : Action<ConfigureAwsCredentialsV1.Outputs>("aws-actions", "configure-aws-credentials",
         _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        audience: String? = null,
+        awsAccessKeyId: String? = null,
+        awsSecretAccessKey: String? = null,
+        awsSessionToken: String? = null,
+        awsRegion: String,
+        maskAwsAccountId: String? = null,
+        roleToAssume: String? = null,
+        webIdentityTokenFile: String? = null,
+        roleDurationSeconds: Int? = null,
+        roleSessionName: String? = null,
+        roleExternalId: String? = null,
+        roleSkipSessionTagging: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
+            awsSecretAccessKey=awsSecretAccessKey, awsSessionToken=awsSessionToken,
+            awsRegion=awsRegion, maskAwsAccountId=maskAwsAccountId, roleToAssume=roleToAssume,
+            webIdentityTokenFile=webIdentityTokenFile, roleDurationSeconds=roleDurationSeconds,
+            roleSessionName=roleSessionName, roleExternalId=roleExternalId,
+            roleSkipSessionTagging=roleSkipSessionTagging, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -19,7 +25,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/check-gradle-version)
  */
-public data class CheckGradleVersionV1(
+public data class CheckGradleVersionV1 private constructor(
     /**
      * Relative path to gradlew executable
      */
@@ -35,6 +41,13 @@ public data class CheckGradleVersionV1(
     public val _customVersion: String? = null,
 ) : Action<CheckGradleVersionV1.Outputs>("madhead", "check-gradle-version", _customVersion ?: "v1")
         {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        gradlew: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(gradlew=gradlew, _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

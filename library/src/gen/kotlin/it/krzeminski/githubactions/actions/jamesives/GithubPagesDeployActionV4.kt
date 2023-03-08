@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.jamesives
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/JamesIves/github-pages-deploy-action)
  */
-public data class GithubPagesDeployActionV4(
+public data class GithubPagesDeployActionV4 private constructor(
     /**
      * This option allows you to define a private SSH key to be used in conjunction with a
      * repository deployment key to deploy using SSH. The private key should be stored in the `secrets
@@ -124,6 +130,32 @@ public data class GithubPagesDeployActionV4(
     public val _customVersion: String? = null,
 ) : Action<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
         _customVersion ?: "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        sshKey: String? = null,
+        token: String? = null,
+        branch: String? = null,
+        folder: String,
+        targetFolder: String? = null,
+        commitMessage: String? = null,
+        clean: Boolean? = null,
+        cleanExclude: List<String>? = null,
+        dryRun: Boolean? = null,
+        force: Boolean? = null,
+        gitConfigName: String? = null,
+        gitConfigEmail: String? = null,
+        repositoryName: String? = null,
+        tag: String? = null,
+        singleCommit: Boolean? = null,
+        silent: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(sshKey=sshKey, token=token, branch=branch, folder=folder, targetFolder=targetFolder,
+            commitMessage=commitMessage, clean=clean, cleanExclude=cleanExclude, dryRun=dryRun,
+            force=force, gitConfigName=gitConfigName, gitConfigEmail=gitConfigEmail,
+            repositoryName=repositoryName, tag=tag, singleCommit=singleCommit, silent=silent,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

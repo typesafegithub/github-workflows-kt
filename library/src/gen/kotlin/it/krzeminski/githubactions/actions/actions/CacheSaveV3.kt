@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/cache/tree/v3/save)
  */
-public data class CacheSaveV3(
+public data class CacheSaveV3 private constructor(
     /**
      * A list of files, directories, and wildcard patterns to cache
      */
@@ -50,6 +56,18 @@ public data class CacheSaveV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("actions", "cache/save", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        path: List<String>,
+        key: String,
+        uploadChunkSize: Int? = null,
+        enableCrossOsArchive: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(path=path, key=key, uploadChunkSize=uploadChunkSize,
+            enableCrossOsArchive=enableCrossOsArchive, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

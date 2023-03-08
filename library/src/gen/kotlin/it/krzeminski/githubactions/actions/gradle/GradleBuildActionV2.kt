@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.gradle
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gradle/gradle-build-action)
  */
-public data class GradleBuildActionV2(
+public data class GradleBuildActionV2 private constructor(
     /**
      * Gradle version to use
      */
@@ -91,6 +97,32 @@ public data class GradleBuildActionV2(
      */
     public val _customVersion: String? = null,
 ) : Action<GradleBuildActionV2.Outputs>("gradle", "gradle-build-action", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        gradleVersion: String? = null,
+        cacheDisabled: Boolean? = null,
+        cacheReadOnly: Boolean? = null,
+        cacheWriteOnly: Boolean? = null,
+        gradleHomeCacheIncludes: List<String>? = null,
+        gradleHomeCacheExcludes: List<String>? = null,
+        arguments: String? = null,
+        buildRootDirectory: String? = null,
+        gradleExecutable: String? = null,
+        generateJobSummary: Boolean? = null,
+        gradleHomeCacheStrictMatch: String? = null,
+        workflowJobContext: String? = null,
+        gradleHomeCacheCleanup: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(gradleVersion=gradleVersion, cacheDisabled=cacheDisabled, cacheReadOnly=cacheReadOnly,
+            cacheWriteOnly=cacheWriteOnly, gradleHomeCacheIncludes=gradleHomeCacheIncludes,
+            gradleHomeCacheExcludes=gradleHomeCacheExcludes, arguments=arguments,
+            buildRootDirectory=buildRootDirectory, gradleExecutable=gradleExecutable,
+            generateJobSummary=generateJobSummary,
+            gradleHomeCacheStrictMatch=gradleHomeCacheStrictMatch,
+            workflowJobContext=workflowJobContext, gradleHomeCacheCleanup=gradleHomeCacheCleanup,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

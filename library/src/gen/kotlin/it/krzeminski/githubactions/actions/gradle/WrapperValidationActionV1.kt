@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.gradle
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gradle/wrapper-validation-action)
  */
-public data class WrapperValidationActionV1(
+public data class WrapperValidationActionV1 private constructor(
     /**
      * Minimum expected wrapper JAR files
      */
@@ -45,6 +51,17 @@ public data class WrapperValidationActionV1(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("gradle", "wrapper-validation-action", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        minWrapperCount: Int? = null,
+        allowSnapshots: Boolean? = null,
+        allowChecksums: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(minWrapperCount=minWrapperCount, allowSnapshots=allowSnapshots,
+            allowChecksums=allowChecksums, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

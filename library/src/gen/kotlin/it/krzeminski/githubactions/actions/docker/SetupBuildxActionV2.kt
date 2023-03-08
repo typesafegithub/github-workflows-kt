@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.docker
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/setup-buildx-action)
  */
-public data class SetupBuildxActionV2(
+public data class SetupBuildxActionV2 private constructor(
     /**
      * Buildx version. (eg. v0.3.0)
      */
@@ -76,6 +82,26 @@ public data class SetupBuildxActionV2(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupBuildxActionV2.Outputs>("docker", "setup-buildx-action", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        version: String? = null,
+        driver: String? = null,
+        driverOpts: List<String>? = null,
+        buildkitdFlags: String? = null,
+        install: Boolean? = null,
+        use: Boolean? = null,
+        endpoint: String? = null,
+        platforms: List<String>? = null,
+        config: String? = null,
+        configInline: String? = null,
+        append: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(version=version, driver=driver, driverOpts=driverOpts, buildkitdFlags=buildkitdFlags,
+            install=install, use=use, endpoint=endpoint, platforms=platforms, config=config,
+            configInline=configInline, append=append, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

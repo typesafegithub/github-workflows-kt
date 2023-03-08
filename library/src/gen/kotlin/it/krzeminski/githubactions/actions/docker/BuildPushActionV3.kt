@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.docker
 
@@ -12,6 +16,7 @@ import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -28,7 +33,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: BuildPushActionV4",
     replaceWith = ReplaceWith("BuildPushActionV4"),
 )
-public data class BuildPushActionV3(
+public data class BuildPushActionV3 private constructor(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
      */
@@ -160,6 +165,49 @@ public data class BuildPushActionV3(
      */
     public val _customVersion: String? = null,
 ) : Action<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        addHosts: List<String>? = null,
+        allow: List<String>? = null,
+        attests: List<String>? = null,
+        buildArgs: List<String>? = null,
+        buildContexts: List<String>? = null,
+        builder: String? = null,
+        cacheFrom: List<String>? = null,
+        cacheTo: List<String>? = null,
+        cgroupParent: String? = null,
+        context: String? = null,
+        `file`: String? = null,
+        labels: List<String>? = null,
+        load: Boolean? = null,
+        network: String? = null,
+        noCache: Boolean? = null,
+        noCacheFilters: List<String>? = null,
+        outputs: List<String>? = null,
+        platforms: List<String>? = null,
+        provenance: Boolean? = null,
+        pull: Boolean? = null,
+        push: Boolean? = null,
+        sbom: Boolean? = null,
+        secrets: List<String>? = null,
+        secretFiles: List<String>? = null,
+        shmSize: String? = null,
+        ssh: List<String>? = null,
+        tags: List<String>? = null,
+        target: String? = null,
+        ulimit: String? = null,
+        githubToken: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(addHosts=addHosts, allow=allow, attests=attests, buildArgs=buildArgs,
+            buildContexts=buildContexts, builder=builder, cacheFrom=cacheFrom, cacheTo=cacheTo,
+            cgroupParent=cgroupParent, context=context, `file`=`file`, labels=labels, load=load,
+            network=network, noCache=noCache, noCacheFilters=noCacheFilters, outputs=outputs,
+            platforms=platforms, provenance=provenance, pull=pull, push=push, sbom=sbom,
+            secrets=secrets, secretFiles=secretFiles, shmSize=shmSize, ssh=ssh, tags=tags,
+            target=target, ulimit=ulimit, githubToken=githubToken, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

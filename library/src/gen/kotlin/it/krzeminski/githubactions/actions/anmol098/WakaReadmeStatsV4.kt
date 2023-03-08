@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.anmol098
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/anmol098/waka-readme-stats)
  */
-public data class WakaReadmeStatsV4(
+public data class WakaReadmeStatsV4 private constructor(
     /**
      * GitHub access token with Repo scope
      */
@@ -98,6 +104,35 @@ public data class WakaReadmeStatsV4(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        ghToken: String? = null,
+        wakatimeApiKey: String,
+        showOs: Boolean? = null,
+        showProjects: Boolean? = null,
+        showEditors: Boolean? = null,
+        showTimezone: Boolean? = null,
+        showCommit: Boolean? = null,
+        showLanguage: Boolean? = null,
+        showLinesOfCode: Boolean? = null,
+        showLanguagePerRepo: Boolean? = null,
+        showLocChart: Boolean? = null,
+        showDaysOfWeek: Boolean? = null,
+        showProfileViews: Boolean? = null,
+        showShortInfo: Boolean? = null,
+        locale: String? = null,
+        commitByMe: Boolean? = null,
+        ignoredRepos: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(ghToken=ghToken, wakatimeApiKey=wakatimeApiKey, showOs=showOs,
+            showProjects=showProjects, showEditors=showEditors, showTimezone=showTimezone,
+            showCommit=showCommit, showLanguage=showLanguage, showLinesOfCode=showLinesOfCode,
+            showLanguagePerRepo=showLanguagePerRepo, showLocChart=showLocChart,
+            showDaysOfWeek=showDaysOfWeek, showProfileViews=showProfileViews,
+            showShortInfo=showShortInfo, locale=locale, commitByMe=commitByMe,
+            ignoredRepos=ignoredRepos, _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

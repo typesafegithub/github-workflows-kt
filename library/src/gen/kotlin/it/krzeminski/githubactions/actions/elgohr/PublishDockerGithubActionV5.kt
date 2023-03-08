@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.elgohr
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/elgohr/Publish-Docker-Github-Action)
  */
-public data class PublishDockerGithubActionV5(
+public data class PublishDockerGithubActionV5 private constructor(
     /**
      * The name of the image you would like to push
      */
@@ -102,6 +108,33 @@ public data class PublishDockerGithubActionV5(
     public val _customVersion: String? = null,
 ) : Action<PublishDockerGithubActionV5.Outputs>("elgohr", "Publish-Docker-Github-Action",
         _customVersion ?: "v5") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        name: String,
+        username: String,
+        password: String,
+        registry: String? = null,
+        snapshot: Boolean? = null,
+        defaultBranch: String? = null,
+        dockerfile: String? = null,
+        workdir: String? = null,
+        context: String? = null,
+        buildargs: List<String>? = null,
+        buildoptions: String? = null,
+        cache: Boolean? = null,
+        tags: List<String>? = null,
+        tagNames: Boolean? = null,
+        tagSemver: Boolean? = null,
+        noPush: Boolean? = null,
+        platforms: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(name=name, username=username, password=password, registry=registry, snapshot=snapshot,
+            defaultBranch=defaultBranch, dockerfile=dockerfile, workdir=workdir, context=context,
+            buildargs=buildargs, buildoptions=buildoptions, cache=cache, tags=tags,
+            tagNames=tagNames, tagSemver=tagSemver, noPush=noPush, platforms=platforms,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

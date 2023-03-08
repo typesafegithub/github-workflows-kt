@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.stefanzweifel
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/stefanzweifel/git-auto-commit-action)
  */
-public data class GitAutoCommitActionV4(
+public data class GitAutoCommitActionV4 private constructor(
     /**
      * Commit message
      */
@@ -110,6 +116,37 @@ public data class GitAutoCommitActionV4(
     public val _customVersion: String? = null,
 ) : Action<GitAutoCommitActionV4.Outputs>("stefanzweifel", "git-auto-commit-action", _customVersion
         ?: "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        commitMessage: String? = null,
+        branch: String? = null,
+        commitOptions: String? = null,
+        addOptions: String? = null,
+        statusOptions: String? = null,
+        filePattern: String? = null,
+        repository: String? = null,
+        commitUserName: String? = null,
+        commitUserEmail: String? = null,
+        commitAuthor: String? = null,
+        taggingMessage: String? = null,
+        pushOptions: String? = null,
+        skipDirtyCheck: Boolean? = null,
+        skipFetch: Boolean? = null,
+        skipCheckout: Boolean? = null,
+        disableGlobbing: Boolean? = null,
+        createBranch: Boolean? = null,
+        internalGitBinary: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(commitMessage=commitMessage, branch=branch, commitOptions=commitOptions,
+            addOptions=addOptions, statusOptions=statusOptions, filePattern=filePattern,
+            repository=repository, commitUserName=commitUserName, commitUserEmail=commitUserEmail,
+            commitAuthor=commitAuthor, taggingMessage=taggingMessage, pushOptions=pushOptions,
+            skipDirtyCheck=skipDirtyCheck, skipFetch=skipFetch, skipCheckout=skipCheckout,
+            disableGlobbing=disableGlobbing, createBranch=createBranch,
+            internalGitBinary=internalGitBinary, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

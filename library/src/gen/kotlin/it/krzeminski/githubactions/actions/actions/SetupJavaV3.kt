@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-java)
  */
-public data class SetupJavaV3(
+public data class SetupJavaV3 private constructor(
     /**
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported
      * syntax in README file
@@ -117,6 +123,38 @@ public data class SetupJavaV3(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupJavaV3.Outputs>("actions", "setup-java", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        javaVersion: String? = null,
+        javaVersionFile: String? = null,
+        distribution: SetupJavaV3.Distribution,
+        javaPackage: SetupJavaV3.JavaPackage? = null,
+        architecture: String? = null,
+        jdkFile: String? = null,
+        checkLatest: Boolean? = null,
+        serverId: String? = null,
+        serverUsername: String? = null,
+        serverPassword: String? = null,
+        settingsPath: String? = null,
+        overwriteSettings: Boolean? = null,
+        gpgPrivateKey: String? = null,
+        gpgPassphrase: String? = null,
+        cache: SetupJavaV3.BuildPlatform? = null,
+        jobStatus: String? = null,
+        token: String? = null,
+        mvnToolchainId: String? = null,
+        mvnToolchainVendor: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(javaVersion=javaVersion, javaVersionFile=javaVersionFile, distribution=distribution,
+            javaPackage=javaPackage, architecture=architecture, jdkFile=jdkFile,
+            checkLatest=checkLatest, serverId=serverId, serverUsername=serverUsername,
+            serverPassword=serverPassword, settingsPath=settingsPath,
+            overwriteSettings=overwriteSettings, gpgPrivateKey=gpgPrivateKey,
+            gpgPassphrase=gpgPassphrase, cache=cache, jobStatus=jobStatus, token=token,
+            mvnToolchainId=mvnToolchainId, mvnToolchainVendor=mvnToolchainVendor,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

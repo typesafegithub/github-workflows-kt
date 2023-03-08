@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.actions
 
@@ -12,6 +16,7 @@ import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -28,7 +33,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupDotnetV3",
     replaceWith = ReplaceWith("SetupDotnetV3"),
 )
-public data class SetupDotnetV2(
+public data class SetupDotnetV2 private constructor(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
      * available. Examples: 2.2.104, 3.1, 3.1.x
@@ -68,6 +73,20 @@ public data class SetupDotnetV2(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("actions", "setup-dotnet", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        dotnetVersion: String? = null,
+        globalJsonFile: String? = null,
+        sourceUrl: String? = null,
+        owner: String? = null,
+        configFile: String? = null,
+        includePrerelease: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(dotnetVersion=dotnetVersion, globalJsonFile=globalJsonFile, sourceUrl=sourceUrl,
+            owner=owner, configFile=configFile, includePrerelease=includePrerelease,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

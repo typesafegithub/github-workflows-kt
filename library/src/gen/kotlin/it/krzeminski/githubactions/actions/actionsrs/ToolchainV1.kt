@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actionsrs
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions-rs/toolchain)
  */
-public data class ToolchainV1(
+public data class ToolchainV1 private constructor(
     /**
      * Rust toolchain name.
      *
@@ -61,6 +67,20 @@ public data class ToolchainV1(
      */
     public val _customVersion: String? = null,
 ) : Action<ToolchainV1.Outputs>("actions-rs", "toolchain", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        toolchain: String? = null,
+        target: String? = null,
+        default: Boolean? = null,
+        `override`: Boolean? = null,
+        profile: String? = null,
+        components: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(toolchain=toolchain, target=target, default=default, `override`=`override`,
+            profile=profile, components=components, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

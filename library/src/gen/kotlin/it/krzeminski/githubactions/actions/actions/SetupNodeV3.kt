@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-node)
  */
-public data class SetupNodeV3(
+public data class SetupNodeV3 private constructor(
     /**
      * Set always-auth in npmrc.
      */
@@ -83,6 +89,25 @@ public data class SetupNodeV3(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupNodeV3.Outputs>("actions", "setup-node", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        alwaysAuth: Boolean? = null,
+        nodeVersion: String? = null,
+        nodeVersionFile: String? = null,
+        architecture: String? = null,
+        checkLatest: Boolean? = null,
+        registryUrl: String? = null,
+        scope: String? = null,
+        token: String? = null,
+        cache: SetupNodeV3.PackageManager? = null,
+        cacheDependencyPath: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(alwaysAuth=alwaysAuth, nodeVersion=nodeVersion, nodeVersionFile=nodeVersionFile,
+            architecture=architecture, checkLatest=checkLatest, registryUrl=registryUrl,
+            scope=scope, token=token, cache=cache, cacheDependencyPath=cacheDependencyPath,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.ruby
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/ruby/setup-ruby)
  */
-public data class SetupRubyV1(
+public data class SetupRubyV1 private constructor(
     /**
      * Engine and version to use, see the syntax in the README. Reads from .ruby-version or
      * .tool-versions if unset.
@@ -73,6 +79,20 @@ public data class SetupRubyV1(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        rubyVersion: String? = null,
+        rubygems: String? = null,
+        bundler: String? = null,
+        bundlerCache: Boolean? = null,
+        workingDirectory: String? = null,
+        cacheVersion: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(rubyVersion=rubyVersion, rubygems=rubygems, bundler=bundler, bundlerCache=bundlerCache,
+            workingDirectory=workingDirectory, cacheVersion=cacheVersion,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/labeler)
  */
-public data class LabelerV4(
+public data class LabelerV4 private constructor(
     /**
      * The GITHUB_TOKEN secret
      */
@@ -43,6 +49,16 @@ public data class LabelerV4(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("actions", "labeler", _customVersion ?: "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        repoToken: String? = null,
+        configurationPath: String? = null,
+        syncLabels: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(repoToken=repoToken, configurationPath=configurationPath, syncLabels=syncLabels,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

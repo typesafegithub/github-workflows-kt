@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.gradleupdate
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gradle-update/update-gradle-wrapper-action)
  */
-public data class UpdateGradleWrapperActionV1(
+public data class UpdateGradleWrapperActionV1 private constructor(
     /**
      * Access token for the repository, e.g. `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -74,6 +80,26 @@ public data class UpdateGradleWrapperActionV1(
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("gradle-update", "update-gradle-wrapper-action", _customVersion ?: "v1")
         {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        repoToken: String? = null,
+        reviewers: List<String>? = null,
+        teamReviewers: List<String>? = null,
+        labels: List<String>? = null,
+        baseBranch: String? = null,
+        targetBranch: String? = null,
+        setDistributionChecksum: Boolean? = null,
+        paths: List<String>? = null,
+        pathsIgnore: List<String>? = null,
+        releaseChannel: UpdateGradleWrapperActionV1.ReleaseChannel? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(repoToken=repoToken, reviewers=reviewers, teamReviewers=teamReviewers, labels=labels,
+            baseBranch=baseBranch, targetBranch=targetBranch,
+            setDistributionChecksum=setDistributionChecksum, paths=paths, pathsIgnore=pathsIgnore,
+            releaseChannel=releaseChannel, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
