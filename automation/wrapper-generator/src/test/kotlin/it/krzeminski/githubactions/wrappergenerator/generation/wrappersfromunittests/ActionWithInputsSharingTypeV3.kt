@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-inputs-sharing-type)
  */
-public data class ActionWithInputsSharingTypeV3(
+public data class ActionWithInputsSharingTypeV3 private constructor(
     public val fooOne: ActionWithInputsSharingTypeV3.Foo,
     public val fooTwo: ActionWithInputsSharingTypeV3.Foo,
     public val fooThree: ActionWithInputsSharingTypeV3.Foo? = null,
@@ -35,6 +41,16 @@ public data class ActionWithInputsSharingTypeV3(
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("john-smith", "action-with-inputs-sharing-type", _customVersion ?: "v3")
         {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        fooOne: ActionWithInputsSharingTypeV3.Foo,
+        fooTwo: ActionWithInputsSharingTypeV3.Foo,
+        fooThree: ActionWithInputsSharingTypeV3.Foo? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(fooOne=fooOne, fooTwo=fooTwo, fooThree=fooThree, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

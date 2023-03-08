@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/simple-action-with-lists)
  */
-public data class SimpleActionWithListsV3(
+public data class SimpleActionWithListsV3 private constructor(
     /**
      * List of strings
      */
@@ -48,6 +54,18 @@ public data class SimpleActionWithListsV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("john-smith", "simple-action-with-lists", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        listStrings: List<String>? = null,
+        listInts: List<Int>? = null,
+        listEnums: List<SimpleActionWithListsV3.MyEnum>? = null,
+        listIntSpecial: List<SimpleActionWithListsV3.MyInt>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(listStrings=listStrings, listInts=listInts, listEnums=listEnums,
+            listIntSpecial=listIntSpecial, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

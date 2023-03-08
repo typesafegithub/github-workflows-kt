@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.johnsmith
 
@@ -11,6 +15,7 @@ import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 
 /**
@@ -24,7 +29,7 @@ import kotlin.collections.Map
     message = "This action has a newer major version: DeprecatedActionV3",
     replaceWith = ReplaceWith("DeprecatedActionV3"),
 )
-public data class DeprecatedActionV2(
+public data class DeprecatedActionV2 private constructor(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -35,6 +40,12 @@ public data class DeprecatedActionV2(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("john-smith", "deprecated-action", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(_customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> =
             LinkedHashMap(_customInputs)

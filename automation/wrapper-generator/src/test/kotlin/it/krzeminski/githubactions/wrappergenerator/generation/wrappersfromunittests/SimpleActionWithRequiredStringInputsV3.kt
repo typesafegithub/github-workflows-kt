@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.johnsmith
 
@@ -11,6 +15,7 @@ import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -23,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
  */
-public data class SimpleActionWithRequiredStringInputsV3(
+public data class SimpleActionWithRequiredStringInputsV3 private constructor(
     /**
      * Short description
      */
@@ -45,6 +50,15 @@ public data class SimpleActionWithRequiredStringInputsV3(
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs", _customVersion
         ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        fooBar: String,
+        bazGoo: String,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(fooBar=fooBar, bazGoo=bazGoo, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

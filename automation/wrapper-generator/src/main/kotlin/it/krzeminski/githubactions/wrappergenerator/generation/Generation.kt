@@ -94,7 +94,7 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
             """.trimIndent(),
         )
         .addType(generateActionClass(metadata, coords, inputTypings))
-        .annotateSuppressDeprecation(metadata, coords)
+        .addSuppressAnnotation(metadata, coords)
         .indent("    ")
         .build()
     return buildString {
@@ -102,15 +102,21 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
     }
 }
 
-private fun FileSpec.Builder.annotateSuppressDeprecation(metadata: Metadata, coords: ActionCoords) = apply {
+private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata, coords: ActionCoords) = apply {
     val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
-    if (isDeprecatedInputUsed || coords.deprecatedByVersion != null) {
-        addAnnotation(
-            AnnotationSpec.builder(Suppress::class.asClassName())
-                .addMember(CodeBlock.of("%S", "DEPRECATION"))
-                .build(),
-        )
-    }
+    val addSuppressionForDeprecation = isDeprecatedInputUsed || coords.deprecatedByVersion != null
+
+    addAnnotation(
+        AnnotationSpec.builder(Suppress::class.asClassName())
+            .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
+            .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
+            .apply {
+                if (addSuppressionForDeprecation) {
+                    addMember(CodeBlock.of("%S", "DEPRECATION"))
+                }
+            }
+            .build(),
+    )
 }
 
 private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec {
@@ -122,6 +128,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
         .inheritsFromAction(coords, metadata)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
         .properties(metadata, coords, inputTypings)
+        .addFunction(metadata.secondaryConstructor(inputTypings, coords))
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
         .addCustomTypes(inputTypings, coords)
         .addOutputClassIfNecessary(metadata)
@@ -280,29 +287,49 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: 
 
 private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
     return FunSpec.constructorBuilder()
-        .addParameters(
-            inputs.map { (key, input) ->
-                ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
-                    .defaultValueIfNullable(input)
-                    .addKdoc(input.description.nestedCommentsSanitized)
-                    .build()
-            }.plus(
-                ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
-                    .defaultValue("mapOf()")
-                    .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
-                    .build(),
-            ).plus(
-                ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
-                    .defaultValue("null")
-                    .addKdoc(
-                        "Allows overriding action's version, for example to use a specific minor version, " +
-                            "or a newer version that the wrapper doesn't yet know about",
-                    )
-                    .build(),
-            ),
+        .addModifiers(KModifier.PRIVATE)
+        .addParameters(buildCommonConstructorParameters(inputTypings, coords))
+        .build()
+}
+
+private fun Metadata.secondaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
+    return FunSpec.constructorBuilder()
+        .addParameter(
+            ParameterSpec.builder("pleaseUseNamedArguments", Unit::class)
+                .addModifiers(KModifier.VARARG)
+                .build(),
+        )
+        .addParameters(buildCommonConstructorParameters(inputTypings, coords))
+        .callThisConstructor(
+            (inputs.keys.map { it.toCamelCase() } + CUSTOM_INPUTS + CUSTOM_VERSION)
+                .map { CodeBlock.of("%N=%N", it, it) },
         )
         .build()
 }
+
+private fun Metadata.buildCommonConstructorParameters(
+    inputTypings: Map<String, Typing>,
+    coords: ActionCoords,
+): List<ParameterSpec> =
+    inputs.map { (key, input) ->
+        ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
+            .defaultValueIfNullable(input)
+            .addKdoc(input.description.nestedCommentsSanitized)
+            .build()
+    }.plus(
+        ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
+            .defaultValue("mapOf()")
+            .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
+            .build(),
+    ).plus(
+        ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
+            .defaultValue("null")
+            .addKdoc(
+                "Allows overriding action's version, for example to use a specific minor version, " +
+                    "or a newer version that the wrapper doesn't yet know about",
+            )
+            .build(),
+    )
 
 private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): ParameterSpec.Builder {
     if (!input.shouldBeNonNullInWrapper()) {
