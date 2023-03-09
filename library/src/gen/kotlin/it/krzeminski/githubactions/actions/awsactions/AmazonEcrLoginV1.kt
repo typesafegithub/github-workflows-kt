@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.awsactions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecr-login)
  */
-public data class AmazonEcrLoginV1(
+public data class AmazonEcrLoginV1 private constructor(
     /**
      * A comma-delimited list of AWS account IDs that are associated with the ECR Private
      * registries. If you do not specify a registry, the default ECR Private registry is assumed. If
@@ -48,6 +54,16 @@ public data class AmazonEcrLoginV1(
      */
     public val _customVersion: String? = null,
 ) : Action<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        registries: List<String>? = null,
+        skipLogout: Boolean? = null,
+        registryType: AmazonEcrLoginV1.RegistryType? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(registries=registries, skipLogout=skipLogout, registryType=registryType,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

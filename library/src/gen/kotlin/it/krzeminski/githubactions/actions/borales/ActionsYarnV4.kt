@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.borales
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -19,7 +25,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Borales/actions-yarn)
  */
-public data class ActionsYarnV4(
+public data class ActionsYarnV4 private constructor(
     /**
      * Yarn command
      */
@@ -38,6 +44,14 @@ public data class ActionsYarnV4(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        cmd: String,
+        dir: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(cmd=cmd, dir=dir, _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

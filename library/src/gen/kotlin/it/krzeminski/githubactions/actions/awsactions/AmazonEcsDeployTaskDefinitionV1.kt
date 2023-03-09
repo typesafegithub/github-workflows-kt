@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.awsactions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecs-deploy-task-definition)
  */
-public data class AmazonEcsDeployTaskDefinitionV1(
+public data class AmazonEcsDeployTaskDefinitionV1 private constructor(
     /**
      * The path to the ECS task definition file to register
      */
@@ -82,6 +88,28 @@ public data class AmazonEcsDeployTaskDefinitionV1(
     public val _customVersion: String? = null,
 ) : Action<AmazonEcsDeployTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-deploy-task-definition", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        taskDefinition: String,
+        service: String? = null,
+        cluster: String? = null,
+        waitForServiceStability: Boolean? = null,
+        waitForMinutes: Int? = null,
+        codedeployAppspec: String? = null,
+        codedeployApplication: String? = null,
+        codedeployDeploymentGroup: String? = null,
+        codedeployDeploymentDescription: String? = null,
+        forceNewDeployment: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(taskDefinition=taskDefinition, service=service, cluster=cluster,
+            waitForServiceStability=waitForServiceStability, waitForMinutes=waitForMinutes,
+            codedeployAppspec=codedeployAppspec, codedeployApplication=codedeployApplication,
+            codedeployDeploymentGroup=codedeployDeploymentGroup,
+            codedeployDeploymentDescription=codedeployDeploymentDescription,
+            forceNewDeployment=forceNewDeployment, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

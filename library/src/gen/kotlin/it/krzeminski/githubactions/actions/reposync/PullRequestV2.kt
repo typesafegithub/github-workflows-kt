@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.reposync
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/repo-sync/pull-request)
  */
-public data class PullRequestV2(
+public data class PullRequestV2 private constructor(
     /**
      * Repository (user/repo) to create the pull request in, falls back to checkout repository or
      * triggered repository
@@ -89,6 +95,31 @@ public data class PullRequestV2(
      */
     public val _customVersion: String? = null,
 ) : Action<PullRequestV2.Outputs>("repo-sync", "pull-request", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        destinationRepository: String? = null,
+        sourceBranch: String? = null,
+        destinationBranch: String? = null,
+        prTitle: String? = null,
+        prBody: String? = null,
+        prTemplate: String? = null,
+        prReviewer: List<String>? = null,
+        prAssignee: List<String>? = null,
+        prLabel: List<String>? = null,
+        prMilestone: String? = null,
+        prDraft: Boolean? = null,
+        prAllowEmpty: Boolean? = null,
+        githubToken: String? = null,
+        debug: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(destinationRepository=destinationRepository, sourceBranch=sourceBranch,
+            destinationBranch=destinationBranch, prTitle=prTitle, prBody=prBody,
+            prTemplate=prTemplate, prReviewer=prReviewer, prAssignee=prAssignee, prLabel=prLabel,
+            prMilestone=prMilestone, prDraft=prDraft, prAllowEmpty=prAllowEmpty,
+            githubToken=githubToken, debug=debug, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

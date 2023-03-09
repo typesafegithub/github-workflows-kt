@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.jasonetco
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/JasonEtco/create-an-issue)
  */
-public data class CreateAnIssueV2(
+public data class CreateAnIssueV2 private constructor(
     /**
      * GitHub handle of the user(s) to assign the issue (comma-separated)
      */
@@ -52,6 +58,19 @@ public data class CreateAnIssueV2(
      */
     public val _customVersion: String? = null,
 ) : Action<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        assignees: List<String>? = null,
+        milestone: String? = null,
+        filename: String? = null,
+        updateExisting: Boolean? = null,
+        searchExisting: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(assignees=assignees, milestone=milestone, filename=filename,
+            updateExisting=updateExisting, searchExisting=searchExisting,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

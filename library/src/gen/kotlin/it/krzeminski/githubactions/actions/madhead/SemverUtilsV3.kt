@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.madhead
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/semver-utils)
  */
-public data class SemverUtilsV3(
+public data class SemverUtilsV3 private constructor(
     /**
      * A version to process
      */
@@ -56,6 +62,20 @@ public data class SemverUtilsV3(
      */
     public val _customVersion: String? = null,
 ) : Action<SemverUtilsV3.Outputs>("madhead", "semver-utils", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        version: String,
+        compareTo: String? = null,
+        diffWith: String? = null,
+        satisfies: String? = null,
+        identifier: String? = null,
+        lenient: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(version=version, compareTo=compareTo, diffWith=diffWith, satisfies=satisfies,
+            identifier=identifier, lenient=lenient, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

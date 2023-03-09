@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-python)
  */
-public data class SetupPythonV4(
+public data class SetupPythonV4 private constructor(
     /**
      * Version range or exact version of Python or PyPy to use, using SemVer's version range syntax.
      * Reads from .python-version if unset.
@@ -71,6 +77,23 @@ public data class SetupPythonV4(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupPythonV4.Outputs>("actions", "setup-python", _customVersion ?: "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        pythonVersion: String? = null,
+        pythonVersionFile: String? = null,
+        cache: SetupPythonV4.PackageManager? = null,
+        architecture: SetupPythonV4.Architecture? = null,
+        checkLatest: Boolean? = null,
+        token: String? = null,
+        cacheDependencyPath: List<String>? = null,
+        updateEnvironment: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(pythonVersion=pythonVersion, pythonVersionFile=pythonVersionFile, cache=cache,
+            architecture=architecture, checkLatest=checkLatest, token=token,
+            cacheDependencyPath=cacheDependencyPath, updateEnvironment=updateEnvironment,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

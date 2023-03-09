@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.cachix
 
@@ -11,6 +15,7 @@ import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -27,7 +32,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: InstallNixActionV20",
     replaceWith = ReplaceWith("InstallNixActionV20"),
 )
-public data class InstallNixActionV17(
+public data class InstallNixActionV17 private constructor(
     /**
      * Installation URL that will contain a script to install Nix.
      */
@@ -54,6 +59,18 @@ public data class InstallNixActionV17(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v17") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        installUrl: String? = null,
+        installOptions: List<String>? = null,
+        nixPath: String? = null,
+        extraNixConfig: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(installUrl=installUrl, installOptions=installOptions, nixPath=nixPath,
+            extraNixConfig=extraNixConfig, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.burrunan
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/burrunan/gradle-cache-action)
  */
-public data class GradleCacheActionV1(
+public data class GradleCacheActionV1 private constructor(
     /**
      * A job identifier to avoid cache pollution from different jobs
      */
@@ -131,6 +137,49 @@ public data class GradleCacheActionV1(
      */
     public val _customVersion: String? = null,
 ) : Action<GradleCacheActionV1.Outputs>("burrunan", "gradle-cache-action", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        jobId: String? = null,
+        buildRootDirectory: String? = null,
+        homeDirectory: String? = null,
+        gradleVersion: String? = null,
+        readOnly: Boolean? = null,
+        saveGeneratedGradleJars: Boolean? = null,
+        saveLocalBuildCache: Boolean? = null,
+        multiCacheEnabled: Boolean? = null,
+        multiCacheVersion: String? = null,
+        multiCacheRepository: String? = null,
+        multiCacheGroupIdFilter: String? = null,
+        saveGradleDependenciesCache: Boolean? = null,
+        executionOnlyCaches: Boolean? = null,
+        remoteBuildCacheProxyEnabled: Boolean? = null,
+        gradleDependenciesCacheKey: List<String>? = null,
+        saveMavenDependenciesCache: Boolean? = null,
+        mavenLocalIgnorePaths: List<String>? = null,
+        debug: Boolean? = null,
+        concurrent: Boolean? = null,
+        arguments: List<String>? = null,
+        properties: List<String>? = null,
+        gradleBuildScanReport: Boolean? = null,
+        gradleDistributionSha256SumWarning: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(jobId=jobId, buildRootDirectory=buildRootDirectory, homeDirectory=homeDirectory,
+            gradleVersion=gradleVersion, readOnly=readOnly,
+            saveGeneratedGradleJars=saveGeneratedGradleJars,
+            saveLocalBuildCache=saveLocalBuildCache, multiCacheEnabled=multiCacheEnabled,
+            multiCacheVersion=multiCacheVersion, multiCacheRepository=multiCacheRepository,
+            multiCacheGroupIdFilter=multiCacheGroupIdFilter,
+            saveGradleDependenciesCache=saveGradleDependenciesCache,
+            executionOnlyCaches=executionOnlyCaches,
+            remoteBuildCacheProxyEnabled=remoteBuildCacheProxyEnabled,
+            gradleDependenciesCacheKey=gradleDependenciesCacheKey,
+            saveMavenDependenciesCache=saveMavenDependenciesCache,
+            mavenLocalIgnorePaths=mavenLocalIgnorePaths, debug=debug, concurrent=concurrent,
+            arguments=arguments, properties=properties, gradleBuildScanReport=gradleBuildScanReport,
+            gradleDistributionSha256SumWarning=gradleDistributionSha256SumWarning,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

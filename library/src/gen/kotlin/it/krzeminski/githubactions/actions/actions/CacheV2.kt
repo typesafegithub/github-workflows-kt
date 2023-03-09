@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.actions
 
@@ -12,6 +16,7 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -28,7 +33,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: CacheV3",
     replaceWith = ReplaceWith("CacheV3"),
 )
-public data class CacheV2(
+public data class CacheV2 private constructor(
     /**
      * A list of files, directories, and wildcard patterns to cache and restore
      */
@@ -55,6 +60,17 @@ public data class CacheV2(
      */
     public val _customVersion: String? = null,
 ) : Action<CacheV2.Outputs>("actions", "cache", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        path: List<String>,
+        key: String,
+        restoreKeys: List<String>? = null,
+        uploadChunkSize: Int? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(path=path, key=key, restoreKeys=restoreKeys, uploadChunkSize=uploadChunkSize,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

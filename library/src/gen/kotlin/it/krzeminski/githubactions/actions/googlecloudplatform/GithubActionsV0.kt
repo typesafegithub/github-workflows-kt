@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.googlecloudplatform
 
@@ -12,6 +16,7 @@ import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -29,7 +34,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: GithubActionsV1",
     replaceWith = ReplaceWith("GithubActionsV1"),
 )
-public data class GithubActionsV0(
+public data class GithubActionsV0 private constructor(
     /**
      * Version of the gcloud SDK to install. If unspecified or set to "latest",
      * the latest available gcloud SDK version for the target platform will be
@@ -88,6 +93,24 @@ public data class GithubActionsV0(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("GoogleCloudPlatform", "github-actions", _customVersion ?: "v0") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        version: String? = null,
+        serviceAccountEmail: String? = null,
+        serviceAccountKey: String? = null,
+        projectId: String? = null,
+        installComponents: List<String>? = null,
+        exportDefaultCredentials: Boolean? = null,
+        credentialsFilePath: String? = null,
+        cleanupCredentials: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(version=version, serviceAccountEmail=serviceAccountEmail,
+            serviceAccountKey=serviceAccountKey, projectId=projectId,
+            installComponents=installComponents, exportDefaultCredentials=exportDefaultCredentials,
+            credentialsFilePath=credentialsFilePath, cleanupCredentials=cleanupCredentials,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.docker
 
@@ -12,6 +16,7 @@ import kotlin.Boolean
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -27,7 +32,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: LoginActionV2",
     replaceWith = ReplaceWith("LoginActionV2"),
 )
-public data class LoginActionV1(
+public data class LoginActionV1 private constructor(
     /**
      * Server address of Docker registry. If not set then will default to Docker Hub
      */
@@ -58,6 +63,18 @@ public data class LoginActionV1(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("docker", "login-action", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        registry: String? = null,
+        username: String? = null,
+        password: String? = null,
+        ecr: Boolean? = null,
+        logout: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(registry=registry, username=username, password=password, ecr=ecr, logout=logout,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

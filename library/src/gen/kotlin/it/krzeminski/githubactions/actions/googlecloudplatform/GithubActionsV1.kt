@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.googlecloudplatform
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/GoogleCloudPlatform/github-actions)
  */
-public data class GithubActionsV1(
+public data class GithubActionsV1 private constructor(
     /**
      * Skip installation of the gcloud SDK and use the system-supplied version
      * instead. The "version" input will be ignored.
@@ -56,6 +62,18 @@ public data class GithubActionsV1(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("GoogleCloudPlatform", "github-actions", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        skipInstall: Boolean? = null,
+        version: String? = null,
+        projectId: String? = null,
+        installComponents: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(skipInstall=skipInstall, version=version, projectId=projectId,
+            installComponents=installComponents, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

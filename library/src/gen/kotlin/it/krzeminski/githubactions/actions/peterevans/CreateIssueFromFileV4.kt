@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.peterevans
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peter-evans/create-issue-from-file)
  */
-public data class CreateIssueFromFileV4(
+public data class CreateIssueFromFileV4 private constructor(
     /**
      * The GitHub authentication token
      */
@@ -61,6 +67,21 @@ public data class CreateIssueFromFileV4(
     public val _customVersion: String? = null,
 ) : Action<CreateIssueFromFileV4.Outputs>("peter-evans", "create-issue-from-file", _customVersion ?:
         "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        token: String? = null,
+        repository: String? = null,
+        issueNumber: Int? = null,
+        title: String,
+        contentFilepath: String? = null,
+        labels: List<String>? = null,
+        assignees: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(token=token, repository=repository, issueNumber=issueNumber, title=title,
+            contentFilepath=contentFilepath, labels=labels, assignees=assignees,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

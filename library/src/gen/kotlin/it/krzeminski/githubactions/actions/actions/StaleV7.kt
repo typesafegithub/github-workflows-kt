@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -11,6 +16,7 @@ import kotlin.Float
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -23,7 +29,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/stale)
  */
-public data class StaleV7(
+public data class StaleV7 private constructor(
     /**
      * Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -290,6 +296,91 @@ public data class StaleV7(
      */
     public val _customVersion: String? = null,
 ) : Action<StaleV7.Outputs>("actions", "stale", _customVersion ?: "v7") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        repoToken: String? = null,
+        staleIssueMessage: String? = null,
+        stalePrMessage: String? = null,
+        closeIssueMessage: String? = null,
+        closePrMessage: String? = null,
+        daysBeforeStale: Float? = null,
+        daysBeforeIssueStale: String? = null,
+        daysBeforePrStale: StaleV7.Days? = null,
+        daysBeforeClose: Int? = null,
+        daysBeforeIssueClose: StaleV7.Days? = null,
+        daysBeforePrClose: StaleV7.Days? = null,
+        staleIssueLabel: String? = null,
+        closeIssueLabel: String? = null,
+        exemptIssueLabels: List<String>? = null,
+        closeIssueReason: StaleV7.CloseIssueReason? = null,
+        stalePrLabel: String? = null,
+        closePrLabel: String? = null,
+        exemptPrLabels: List<String>? = null,
+        exemptMilestones: List<String>? = null,
+        exemptIssueMilestones: List<String>? = null,
+        exemptPrMilestones: List<String>? = null,
+        exemptAllMilestones: Boolean? = null,
+        exemptAllIssueMilestones: Boolean? = null,
+        exemptAllPrMilestones: Boolean? = null,
+        onlyLabels: List<String>? = null,
+        anyOfLabels: List<String>? = null,
+        anyOfIssueLabels: List<String>? = null,
+        anyOfPrLabels: List<String>? = null,
+        onlyIssueLabels: List<String>? = null,
+        onlyPrLabels: List<String>? = null,
+        operationsPerRun: Int? = null,
+        removeStaleWhenUpdated: Boolean? = null,
+        removeIssueStaleWhenUpdated: Boolean? = null,
+        removePrStaleWhenUpdated: Boolean? = null,
+        debugOnly: Boolean? = null,
+        ascending: Boolean? = null,
+        deleteBranch: Boolean? = null,
+        startDate: String? = null,
+        exemptAssignees: List<String>? = null,
+        exemptIssueAssignees: List<String>? = null,
+        exemptPrAssignees: List<String>? = null,
+        exemptAllAssignees: Boolean? = null,
+        exemptAllIssueAssignees: String? = null,
+        exemptAllPrAssignees: Boolean? = null,
+        exemptDraftPr: Boolean? = null,
+        enableStatistics: Boolean? = null,
+        labelsToAddWhenUnstale: List<String>? = null,
+        labelsToRemoveWhenUnstale: List<String>? = null,
+        ignoreUpdates: Boolean? = null,
+        ignoreIssueUpdates: Boolean? = null,
+        ignorePrUpdates: Boolean? = null,
+        includeOnlyAssigned: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(repoToken=repoToken, staleIssueMessage=staleIssueMessage,
+            stalePrMessage=stalePrMessage, closeIssueMessage=closeIssueMessage,
+            closePrMessage=closePrMessage, daysBeforeStale=daysBeforeStale,
+            daysBeforeIssueStale=daysBeforeIssueStale, daysBeforePrStale=daysBeforePrStale,
+            daysBeforeClose=daysBeforeClose, daysBeforeIssueClose=daysBeforeIssueClose,
+            daysBeforePrClose=daysBeforePrClose, staleIssueLabel=staleIssueLabel,
+            closeIssueLabel=closeIssueLabel, exemptIssueLabels=exemptIssueLabels,
+            closeIssueReason=closeIssueReason, stalePrLabel=stalePrLabel, closePrLabel=closePrLabel,
+            exemptPrLabels=exemptPrLabels, exemptMilestones=exemptMilestones,
+            exemptIssueMilestones=exemptIssueMilestones, exemptPrMilestones=exemptPrMilestones,
+            exemptAllMilestones=exemptAllMilestones,
+            exemptAllIssueMilestones=exemptAllIssueMilestones,
+            exemptAllPrMilestones=exemptAllPrMilestones, onlyLabels=onlyLabels,
+            anyOfLabels=anyOfLabels, anyOfIssueLabels=anyOfIssueLabels, anyOfPrLabels=anyOfPrLabels,
+            onlyIssueLabels=onlyIssueLabels, onlyPrLabels=onlyPrLabels,
+            operationsPerRun=operationsPerRun, removeStaleWhenUpdated=removeStaleWhenUpdated,
+            removeIssueStaleWhenUpdated=removeIssueStaleWhenUpdated,
+            removePrStaleWhenUpdated=removePrStaleWhenUpdated, debugOnly=debugOnly,
+            ascending=ascending, deleteBranch=deleteBranch, startDate=startDate,
+            exemptAssignees=exemptAssignees, exemptIssueAssignees=exemptIssueAssignees,
+            exemptPrAssignees=exemptPrAssignees, exemptAllAssignees=exemptAllAssignees,
+            exemptAllIssueAssignees=exemptAllIssueAssignees,
+            exemptAllPrAssignees=exemptAllPrAssignees, exemptDraftPr=exemptDraftPr,
+            enableStatistics=enableStatistics, labelsToAddWhenUnstale=labelsToAddWhenUnstale,
+            labelsToRemoveWhenUnstale=labelsToRemoveWhenUnstale, ignoreUpdates=ignoreUpdates,
+            ignoreIssueUpdates=ignoreIssueUpdates, ignorePrUpdates=ignorePrUpdates,
+            includeOnlyAssigned=includeOnlyAssigned, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

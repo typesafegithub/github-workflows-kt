@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.subosito
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/subosito/flutter-action)
  */
-public data class FlutterActionV2(
+public data class FlutterActionV2 private constructor(
     /**
      * The Flutter version to make available on the path
      */
@@ -55,6 +61,20 @@ public data class FlutterActionV2(
      */
     public val _customVersion: String? = null,
 ) : Action<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        flutterVersion: String? = null,
+        channel: FlutterActionV2.Channel? = null,
+        cache: Boolean? = null,
+        cacheKey: String? = null,
+        cachePath: String? = null,
+        architecture: FlutterActionV2.Architecture? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(flutterVersion=flutterVersion, channel=channel, cache=cache, cacheKey=cacheKey,
+            cachePath=cachePath, architecture=architecture, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

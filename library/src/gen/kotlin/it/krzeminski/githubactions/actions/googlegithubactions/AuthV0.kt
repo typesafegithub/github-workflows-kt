@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.googlegithubactions
 
@@ -13,6 +17,7 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -30,7 +35,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: AuthV1",
     replaceWith = ReplaceWith("AuthV1"),
 )
-public data class AuthV0(
+public data class AuthV0 private constructor(
     /**
      * ID of the default project to use for future API calls and invocations. If
      * unspecified, this action will attempt to extract the value from other
@@ -161,6 +166,39 @@ public data class AuthV0(
      */
     public val _customVersion: String? = null,
 ) : Action<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        projectId: String? = null,
+        workloadIdentityProvider: String? = null,
+        serviceAccount: String? = null,
+        audience: String? = null,
+        credentialsJson: String? = null,
+        createCredentialsFile: Boolean? = null,
+        exportEnvironmentVariables: Boolean? = null,
+        tokenFormat: AuthV0.TokenFormat? = null,
+        delegates: List<String>? = null,
+        cleanupCredentials: Boolean? = null,
+        accessTokenLifetime: String? = null,
+        accessTokenScopes: List<String>? = null,
+        accessTokenSubject: String? = null,
+        retries: Int? = null,
+        backoff: Int? = null,
+        backoffLimit: Int? = null,
+        idTokenAudience: String? = null,
+        idTokenIncludeEmail: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(projectId=projectId, workloadIdentityProvider=workloadIdentityProvider,
+            serviceAccount=serviceAccount, audience=audience, credentialsJson=credentialsJson,
+            createCredentialsFile=createCredentialsFile,
+            exportEnvironmentVariables=exportEnvironmentVariables, tokenFormat=tokenFormat,
+            delegates=delegates, cleanupCredentials=cleanupCredentials,
+            accessTokenLifetime=accessTokenLifetime, accessTokenScopes=accessTokenScopes,
+            accessTokenSubject=accessTokenSubject, retries=retries, backoff=backoff,
+            backoffLimit=backoffLimit, idTokenAudience=idTokenAudience,
+            idTokenIncludeEmail=idTokenIncludeEmail, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

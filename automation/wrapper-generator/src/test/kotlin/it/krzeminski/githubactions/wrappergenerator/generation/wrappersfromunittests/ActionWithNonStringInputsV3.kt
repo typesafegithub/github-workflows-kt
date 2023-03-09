@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.johnsmith
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -11,6 +16,7 @@ import kotlin.Float
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -23,7 +29,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-non-string-inputs)
  */
-public data class ActionWithNonStringInputsV3(
+public data class ActionWithNonStringInputsV3 private constructor(
     /**
      * Short description
      */
@@ -70,6 +76,23 @@ public data class ActionWithNonStringInputsV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("john-smith", "action-with-non-string-inputs", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        fooBar: String,
+        bazGoo: Boolean,
+        binKin: Boolean? = null,
+        intPint: Int,
+        floPint: Float,
+        booZoo: List<String>,
+        finBin: ActionWithNonStringInputsV3.Bin,
+        gooZen: ActionWithNonStringInputsV3.Zen,
+        bahEnum: ActionWithNonStringInputsV3.BahEnum,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(fooBar=fooBar, bazGoo=bazGoo, binKin=binKin, intPint=intPint, floPint=floPint,
+            booZoo=booZoo, finBin=finBin, gooZen=gooZen, bahEnum=bahEnum,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

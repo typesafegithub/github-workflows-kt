@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.peaceiris
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peaceiris/actions-gh-pages)
  */
-public data class ActionsGhPagesV3(
+public data class ActionsGhPagesV3 private constructor(
     /**
      * Set a SSH private key from repository secret value for pushing to the remote branch.
      */
@@ -113,6 +119,39 @@ public data class ActionsGhPagesV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("peaceiris", "actions-gh-pages", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        deployKey: String? = null,
+        githubToken: String? = null,
+        personalToken: String? = null,
+        publishBranch: String? = null,
+        publishDir: String? = null,
+        destinationDir: String? = null,
+        externalRepository: String? = null,
+        allowEmptyCommit: Boolean? = null,
+        keepFiles: Boolean? = null,
+        forceOrphan: Boolean? = null,
+        userName: String? = null,
+        userEmail: String? = null,
+        commitMessage: String? = null,
+        fullCommitMessage: String? = null,
+        tagName: String? = null,
+        tagMessage: String? = null,
+        enableJekyll: Boolean? = null,
+        disableNojekyll: Boolean? = null,
+        cname: String? = null,
+        excludeAssets: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(deployKey=deployKey, githubToken=githubToken, personalToken=personalToken,
+            publishBranch=publishBranch, publishDir=publishDir, destinationDir=destinationDir,
+            externalRepository=externalRepository, allowEmptyCommit=allowEmptyCommit,
+            keepFiles=keepFiles, forceOrphan=forceOrphan, userName=userName, userEmail=userEmail,
+            commitMessage=commitMessage, fullCommitMessage=fullCommitMessage, tagName=tagName,
+            tagMessage=tagMessage, enableJekyll=enableJekyll, disableNojekyll=disableNojekyll,
+            cname=cname, excludeAssets=excludeAssets, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

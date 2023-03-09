@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.codecov
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/codecov/codecov-action)
  */
-public data class CodecovActionV3(
+public data class CodecovActionV3 private constructor(
     /**
      * Repository upload token - get it from codecov.io. Required only for private repositories
      */
@@ -156,6 +162,50 @@ public data class CodecovActionV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("codecov", "codecov-action", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        token: String? = null,
+        files: List<String>? = null,
+        directory: String? = null,
+        flags: List<String>? = null,
+        commitParent: String? = null,
+        dryRun: Boolean? = null,
+        envVars: List<String>? = null,
+        failCiIfError: Boolean? = null,
+        `file`: String? = null,
+        functionalities: List<String>? = null,
+        gcov: Boolean? = null,
+        gcovArgs: List<String>? = null,
+        gcovIgnore: List<String>? = null,
+        gcovInclude: List<String>? = null,
+        moveCoverageToTrash: Boolean? = null,
+        name: String? = null,
+        overrideBranch: String? = null,
+        overrideBuild: Int? = null,
+        overrideCommit: String? = null,
+        overridePr: Int? = null,
+        overrideTag: String? = null,
+        os: CodecovActionV3.OperatingSystem? = null,
+        rootDir: String? = null,
+        slug: String? = null,
+        url: String? = null,
+        verbose: Boolean? = null,
+        version: String? = null,
+        workingDirectory: String? = null,
+        xcode: Boolean? = null,
+        xcodeArchivePath: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(token=token, files=files, directory=directory, flags=flags, commitParent=commitParent,
+            dryRun=dryRun, envVars=envVars, failCiIfError=failCiIfError, `file`=`file`,
+            functionalities=functionalities, gcov=gcov, gcovArgs=gcovArgs, gcovIgnore=gcovIgnore,
+            gcovInclude=gcovInclude, moveCoverageToTrash=moveCoverageToTrash, name=name,
+            overrideBranch=overrideBranch, overrideBuild=overrideBuild,
+            overrideCommit=overrideCommit, overridePr=overridePr, overrideTag=overrideTag, os=os,
+            rootDir=rootDir, slug=slug, url=url, verbose=verbose, version=version,
+            workingDirectory=workingDirectory, xcode=xcode, xcodeArchivePath=xcodeArchivePath,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.borales
 
@@ -11,6 +15,7 @@ import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -26,7 +31,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: ActionsYarnV4",
     replaceWith = ReplaceWith("ActionsYarnV4"),
 )
-public data class ActionsYarnV3(
+public data class ActionsYarnV3 private constructor(
     /**
      * Yarn command
      */
@@ -49,6 +54,16 @@ public data class ActionsYarnV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        cmd: String,
+        authToken: String? = null,
+        registryUrl: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(cmd=cmd, authToken=authToken, registryUrl=registryUrl, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

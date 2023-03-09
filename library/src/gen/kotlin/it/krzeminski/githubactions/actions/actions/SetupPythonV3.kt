@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.actions
 
@@ -11,6 +15,7 @@ import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -27,7 +32,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: SetupPythonV4",
     replaceWith = ReplaceWith("SetupPythonV4"),
 )
-public data class SetupPythonV3(
+public data class SetupPythonV3 private constructor(
     /**
      * Version range or exact version of a Python version to use, using SemVer's version range
      * syntax.
@@ -62,6 +67,19 @@ public data class SetupPythonV3(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupPythonV3.Outputs>("actions", "setup-python", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        pythonVersion: String? = null,
+        cache: SetupPythonV3.PackageManager? = null,
+        architecture: SetupPythonV3.Architecture? = null,
+        token: String? = null,
+        cacheDependencyPath: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(pythonVersion=pythonVersion, cache=cache, architecture=architecture, token=token,
+            cacheDependencyPath=cacheDependencyPath, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

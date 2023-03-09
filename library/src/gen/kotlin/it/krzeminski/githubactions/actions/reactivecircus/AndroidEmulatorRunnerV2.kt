@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.reactivecircus
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/ReactiveCircus/android-emulator-runner)
  */
-public data class AndroidEmulatorRunnerV2(
+public data class AndroidEmulatorRunnerV2 private constructor(
     /**
      * API level of the platform and system image - e.g. 23 for Android Marshmallow, 29 for Android
      * 10
@@ -133,6 +139,43 @@ public data class AndroidEmulatorRunnerV2(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("ReactiveCircus", "android-emulator-runner", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        apiLevel: Int,
+        target: AndroidEmulatorRunnerV2.Target? = null,
+        arch: AndroidEmulatorRunnerV2.Arch? = null,
+        profile: String? = null,
+        cores: Int? = null,
+        ramSize: String? = null,
+        heapSize: String? = null,
+        sdcardPathOrSize: String? = null,
+        diskSize: String? = null,
+        avdName: String? = null,
+        forceAvdCreation: Boolean? = null,
+        emulatorOptions: String? = null,
+        disableAnimations: Boolean? = null,
+        disableSpellchecker: Boolean? = null,
+        disableLinuxHwAccel: String? = null,
+        enableHwKeyboard: Boolean? = null,
+        emulatorBuild: String? = null,
+        workingDirectory: String? = null,
+        ndk: String? = null,
+        cmake: String? = null,
+        channel: AndroidEmulatorRunnerV2.Channel? = null,
+        script: String,
+        preEmulatorLaunchScript: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(apiLevel=apiLevel, target=target, arch=arch, profile=profile, cores=cores,
+            ramSize=ramSize, heapSize=heapSize, sdcardPathOrSize=sdcardPathOrSize,
+            diskSize=diskSize, avdName=avdName, forceAvdCreation=forceAvdCreation,
+            emulatorOptions=emulatorOptions, disableAnimations=disableAnimations,
+            disableSpellchecker=disableSpellchecker, disableLinuxHwAccel=disableLinuxHwAccel,
+            enableHwKeyboard=enableHwKeyboard, emulatorBuild=emulatorBuild,
+            workingDirectory=workingDirectory, ndk=ndk, cmake=cmake, channel=channel, script=script,
+            preEmulatorLaunchScript=preEmulatorLaunchScript, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

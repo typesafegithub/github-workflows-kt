@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.`8398a7`
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/8398a7/action-slack)
  */
-public data class ActionSlackV3(
+public data class ActionSlackV3 private constructor(
     /**
      * Specify success or failure or cancelled or custom.
      */
@@ -94,6 +100,30 @@ public data class ActionSlackV3(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("8398a7", "action-slack", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        status: ActionSlackV3.Status,
+        fields: List<String>? = null,
+        customPayload: String? = null,
+        mention: String? = null,
+        ifMention: List<ActionSlackV3.MentionStatus>? = null,
+        authorName: String? = null,
+        text: String? = null,
+        username: String? = null,
+        iconEmoji: String? = null,
+        iconUrl: String? = null,
+        channel: String? = null,
+        jobName: String? = null,
+        githubToken: String? = null,
+        githubBaseUrl: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(status=status, fields=fields, customPayload=customPayload, mention=mention,
+            ifMention=ifMention, authorName=authorName, text=text, username=username,
+            iconEmoji=iconEmoji, iconUrl=iconUrl, channel=channel, jobName=jobName,
+            githubToken=githubToken, githubBaseUrl=githubBaseUrl, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

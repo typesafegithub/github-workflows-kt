@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/cache/tree/v3/restore)
  */
-public data class CacheRestoreV3(
+public data class CacheRestoreV3 private constructor(
     /**
      * A list of files, directories, and wildcard patterns to restore
      */
@@ -54,6 +60,19 @@ public data class CacheRestoreV3(
      */
     public val _customVersion: String? = null,
 ) : Action<CacheRestoreV3.Outputs>("actions", "cache/restore", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        path: List<String>,
+        key: String,
+        restoreKeys: List<String>? = null,
+        enableCrossOsArchive: Boolean? = null,
+        failOnCacheMiss: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(path=path, key=key, restoreKeys=restoreKeys, enableCrossOsArchive=enableCrossOsArchive,
+            failOnCacheMiss=failOnCacheMiss, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

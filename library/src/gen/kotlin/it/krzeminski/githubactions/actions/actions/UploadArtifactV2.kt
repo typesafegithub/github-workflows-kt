@@ -1,7 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
-@file:Suppress("DEPRECATION")
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+    "DEPRECATION",
+)
 
 package it.krzeminski.githubactions.actions.actions
 
@@ -12,6 +16,7 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -28,7 +33,7 @@ import kotlin.collections.toTypedArray
     message = "This action has a newer major version: UploadArtifactV3",
     replaceWith = ReplaceWith("UploadArtifactV3"),
 )
-public data class UploadArtifactV2(
+public data class UploadArtifactV2 private constructor(
     /**
      * Artifact name
      */
@@ -60,6 +65,17 @@ public data class UploadArtifactV2(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("actions", "upload-artifact", _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        name: String? = null,
+        path: List<String>,
+        ifNoFilesFound: UploadArtifactV2.BehaviorIfNoFilesFound? = null,
+        retentionDays: UploadArtifactV2.RetentionPeriod? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(name=name, path=path, ifNoFilesFound=ifNoFilesFound, retentionDays=retentionDays,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

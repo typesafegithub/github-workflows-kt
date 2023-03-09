@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.gautamkrishnar
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -10,6 +15,7 @@ import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -22,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/gautamkrishnar/blog-post-workflow)
  */
-public data class BlogPostWorkflowV1(
+public data class BlogPostWorkflowV1 private constructor(
     /**
      * GitHub access token with Repo scope
      */
@@ -163,6 +169,55 @@ public data class BlogPostWorkflowV1(
     public val _customVersion: String? = null,
 ) : Action<BlogPostWorkflowV1.Outputs>("gautamkrishnar", "blog-post-workflow", _customVersion ?:
         "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        ghToken: String? = null,
+        readmePath: List<String>? = null,
+        maxPostCount: Int? = null,
+        feedList: List<String>? = null,
+        disableSort: Boolean? = null,
+        filterComments: List<String>? = null,
+        tagPostPreNewline: Boolean? = null,
+        template: String? = null,
+        dateFormat: String? = null,
+        commentTagName: String? = null,
+        userAgent: String? = null,
+        acceptHeader: String? = null,
+        customTags: List<String>? = null,
+        titleMaxLength: Int? = null,
+        descriptionMaxLength: Int? = null,
+        itemExec: String? = null,
+        commitMessage: String? = null,
+        committerUsername: String? = null,
+        committerEmail: String? = null,
+        outputOnly: Boolean? = null,
+        enableKeepalive: Boolean? = null,
+        retryCount: Int? = null,
+        retryWaitTime: Int? = null,
+        feedNames: List<String>? = null,
+        disableHtmlEncoding: Boolean? = null,
+        categoriesTemplate: String? = null,
+        disableItemValidation: Boolean? = null,
+        filterDates: String? = null,
+        randSeed: String? = null,
+        removeDuplicates: Boolean? = null,
+        skipCommit: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(ghToken=ghToken, readmePath=readmePath, maxPostCount=maxPostCount, feedList=feedList,
+            disableSort=disableSort, filterComments=filterComments,
+            tagPostPreNewline=tagPostPreNewline, template=template, dateFormat=dateFormat,
+            commentTagName=commentTagName, userAgent=userAgent, acceptHeader=acceptHeader,
+            customTags=customTags, titleMaxLength=titleMaxLength,
+            descriptionMaxLength=descriptionMaxLength, itemExec=itemExec,
+            commitMessage=commitMessage, committerUsername=committerUsername,
+            committerEmail=committerEmail, outputOnly=outputOnly, enableKeepalive=enableKeepalive,
+            retryCount=retryCount, retryWaitTime=retryWaitTime, feedNames=feedNames,
+            disableHtmlEncoding=disableHtmlEncoding, categoriesTemplate=categoriesTemplate,
+            disableItemValidation=disableItemValidation, filterDates=filterDates, randSeed=randSeed,
+            removeDuplicates=removeDuplicates, skipCommit=skipCommit, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-dotnet)
  */
-public data class SetupDotnetV3(
+public data class SetupDotnetV3 private constructor(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
      * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x
@@ -60,6 +66,20 @@ public data class SetupDotnetV3(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupDotnetV3.Outputs>("actions", "setup-dotnet", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        dotnetVersion: String? = null,
+        dotnetQuality: SetupDotnetV3.DotNetQuality? = null,
+        globalJsonFile: String? = null,
+        sourceUrl: String? = null,
+        owner: String? = null,
+        configFile: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(dotnetVersion=dotnetVersion, dotnetQuality=dotnetQuality,
+            globalJsonFile=globalJsonFile, sourceUrl=sourceUrl, owner=owner, configFile=configFile,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.nobrayner
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/nobrayner/discord-webhook)
  */
-public data class DiscordWebhookV1(
+public data class DiscordWebhookV1 private constructor(
     /**
      * GitHub Token
      */
@@ -74,6 +80,26 @@ public data class DiscordWebhookV1(
      */
     public val _customVersion: String? = null,
 ) : Action<Action.Outputs>("nobrayner", "discord-webhook", _customVersion ?: "v1") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        githubToken: String,
+        discordWebhook: String,
+        username: String? = null,
+        avatarUrl: String? = null,
+        title: String? = null,
+        description: String? = null,
+        includeDetails: Boolean? = null,
+        colorSuccess: String? = null,
+        colorFailure: String? = null,
+        colorCancelled: String? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(githubToken=githubToken, discordWebhook=discordWebhook, username=username,
+            avatarUrl=avatarUrl, title=title, description=description,
+            includeDetails=includeDetails, colorSuccess=colorSuccess, colorFailure=colorFailure,
+            colorCancelled=colorCancelled, _customInputs=_customInputs,
+            _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

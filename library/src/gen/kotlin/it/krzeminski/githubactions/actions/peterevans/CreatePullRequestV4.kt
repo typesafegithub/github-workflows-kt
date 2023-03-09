@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.peterevans
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peter-evans/create-pull-request)
  */
-public data class CreatePullRequestV4(
+public data class CreatePullRequestV4 private constructor(
     /**
      * GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
      */
@@ -121,6 +127,37 @@ public data class CreatePullRequestV4(
     public val _customVersion: String? = null,
 ) : Action<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request", _customVersion ?:
         "v4") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        token: String? = null,
+        path: String? = null,
+        addPaths: List<String>? = null,
+        commitMessage: String? = null,
+        committer: String? = null,
+        author: String? = null,
+        signoff: Boolean? = null,
+        branch: String? = null,
+        deleteBranch: Boolean? = null,
+        branchSuffix: String? = null,
+        base: String? = null,
+        pushToFork: String? = null,
+        title: String? = null,
+        body: String? = null,
+        labels: List<String>? = null,
+        assignees: List<String>? = null,
+        reviewers: List<String>? = null,
+        teamReviewers: List<String>? = null,
+        milestone: String? = null,
+        draft: Boolean? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(token=token, path=path, addPaths=addPaths, commitMessage=commitMessage,
+            committer=committer, author=author, signoff=signoff, branch=branch,
+            deleteBranch=deleteBranch, branchSuffix=branchSuffix, base=base, pushToFork=pushToFork,
+            title=title, body=body, labels=labels, assignees=assignees, reviewers=reviewers,
+            teamReviewers=teamReviewers, milestone=milestone, draft=draft,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.actions
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -9,6 +14,7 @@ import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -20,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-go)
  */
-public data class SetupGoV3(
+public data class SetupGoV3 private constructor(
     /**
      * The Go version to download (if necessary) and use. Supports semver spec and ranges.
      */
@@ -64,6 +70,21 @@ public data class SetupGoV3(
      */
     public val _customVersion: String? = null,
 ) : Action<SetupGoV3.Outputs>("actions", "setup-go", _customVersion ?: "v3") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        goVersion: String? = null,
+        goVersionFile: String? = null,
+        checkLatest: Boolean? = null,
+        token: String? = null,
+        cache: Boolean? = null,
+        cacheDependencyPath: String? = null,
+        architecture: SetupGoV3.Architecture? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(goVersion=goVersion, goVersionFile=goVersionFile, checkLatest=checkLatest, token=token,
+            cache=cache, cacheDependencyPath=cacheDependencyPath, architecture=architecture,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(

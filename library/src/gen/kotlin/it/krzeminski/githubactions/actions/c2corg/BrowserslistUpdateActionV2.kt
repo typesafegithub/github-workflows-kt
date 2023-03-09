@@ -1,6 +1,11 @@
 // This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
+@file:Suppress(
+    "DataClassPrivateConstructor",
+    "UNUSED_PARAMETER",
+)
+
 package it.krzeminski.githubactions.actions.c2corg
 
 import it.krzeminski.githubactions.domain.actions.Action
@@ -8,6 +13,7 @@ import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
+import kotlin.Unit
 import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
@@ -21,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/c2corg/browserslist-update-action)
  */
-public data class BrowserslistUpdateActionV2(
+public data class BrowserslistUpdateActionV2 private constructor(
     /**
      * GitHub secret
      */
@@ -65,6 +71,22 @@ public data class BrowserslistUpdateActionV2(
     public val _customVersion: String? = null,
 ) : Action<BrowserslistUpdateActionV2.Outputs>("c2corg", "browserslist-update-action",
         _customVersion ?: "v2") {
+    public constructor(
+        vararg pleaseUseNamedArguments: Unit,
+        githubToken: String,
+        branch: String? = null,
+        baseBranch: String? = null,
+        directory: String? = null,
+        commitMessage: String? = null,
+        title: String? = null,
+        body: String? = null,
+        labels: List<String>? = null,
+        _customInputs: Map<String, String> = mapOf(),
+        _customVersion: String? = null,
+    ) : this(githubToken=githubToken, branch=branch, baseBranch=baseBranch, directory=directory,
+            commitMessage=commitMessage, title=title, body=body, labels=labels,
+            _customInputs=_customInputs, _customVersion=_customVersion)
+
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
