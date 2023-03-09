@@ -52,6 +52,7 @@ nav:
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Supported actions: 'supported-actions.md'
+  - API docs: 'https://krzema12.github.io/github-workflows-kt/api-docs/'
   - Projects using this library: 'projects-using-this-library.md'
 
 extra:
