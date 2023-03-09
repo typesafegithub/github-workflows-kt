@@ -44,7 +44,7 @@ public fun Workflow.toYaml(
 
 /**
  * Writes the workflow given in the receiver to a YAML string, under a path that is built this way:
- * `<git-repo-root>`/.github/workflows/<[Workflow.targetFileName]>.yaml`.
+ * `<git-repo-root>/.github/workflows/<[Workflow.targetFileName]>.yaml`.
  *
  * @receiver a workflow which needs to be written to the file.
  *
