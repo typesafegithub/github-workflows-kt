@@ -14,6 +14,21 @@ import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
 
+/**
+ * Returns a YAML string representing the workflow given in the receiver.
+ *
+ * @receiver a workflow which needs to be written to a YAML string.
+ *
+ * @param addConsistencyCheck If true, adds an extra job that makes sure the Kotlin script defined in
+ * [Workflow.sourceFile] produces exactly the same YAML as in [Workflow.targetFileName], and fails the whole workflow if
+ * it's not the case. This parameter defaults to `true` if [Workflow.sourceFile] is set, otherwise defaults to `false`.
+ * @param gitRootDir Path to the git root directory, used for building relative paths for the consistency check. Usually
+ * there's no need to set it explicitly, unless testing the library. Leave unset if unsure.
+ * @param preamble Allows customizing the comment at the beginning of the generated YAML by either passing an extra
+ * string, or replacing the whole preamble.
+ *
+ * @return Workflow as YAML string.
+ */
 public fun Workflow.toYaml(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
@@ -27,6 +42,20 @@ public fun Workflow.toYaml(
     )
 }
 
+/**
+ * Writes the workflow given in the receiver to a YAML string, under a path that is built this way:
+ * `<git-repo-root>/.github/workflows/<[Workflow.targetFileName]>.yaml`.
+ *
+ * @receiver a workflow which needs to be written to the file.
+ *
+ * @param addConsistencyCheck If true, adds an extra job that makes sure the Kotlin script defined in
+ * [Workflow.sourceFile] produces exactly the same YAML as in [Workflow.targetFileName], and fails the whole workflow if
+ * it's not the case. This parameter defaults to `true` if [Workflow.sourceFile] is set, otherwise defaults to `false`.
+ * @param gitRootDir Path to the git root directory, used for building relative paths for the consistency check. Usually
+ * there's no need to set it explicitly, unless testing the library. Leave unset if unsure.
+ * @param preamble Allows customizing the comment at the beginning of the generated YAML by either passing an extra
+ * string, or replacing the whole preamble.
+ */
 public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
