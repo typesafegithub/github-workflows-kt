@@ -1,0 +1,28 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  images:
+    type: list
+    separator: '\n'
+    list-item:
+      type: string
+  tags:
+    type: list
+    separator: '\n'
+    list-item:
+      type: string
+  flavor:
+    type: list
+    separator: '\n'
+    list-item:
+      type: string
+  labels:
+    type: list
+    separator: '\n'
+    list-item:
+      type: string
+  sep-tags:
+    type: string
+  sep-labels:
+    type: string
+  bake-target:
+    type: string
