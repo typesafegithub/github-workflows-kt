@@ -60,6 +60,7 @@ Click on a version to see the wrapper's code.
 * docker
     * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV3.kt), v4: [`BuildPushActionV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/BuildPushActionV4.kt)
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV1.kt), v2: [`LoginActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/LoginActionV2.kt)
+    * [metadata-action](https://github.com/docker/metadata-action) - v4: [`MetadataActionV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/MetadataActionV4.kt)
     * [setup-buildx-action](https://github.com/docker/setup-buildx-action) - v1: [`SetupBuildxActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV1.kt), v2: [`SetupBuildxActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/docker/SetupBuildxActionV2.kt)
 * elgohr
     * [Publish-Docker-Github-Action](https://github.com/elgohr/Publish-Docker-Github-Action) - v4: [`PublishDockerGithubActionV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV4.kt), v5: [`PublishDockerGithubActionV5`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/elgohr/PublishDockerGithubActionV5.kt)
@@ -124,7 +125,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 73
-* counting each version separately: 101
+* counting by actions: 74
+* counting each version separately: 102
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 13
