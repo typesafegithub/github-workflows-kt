@@ -10,25 +10,19 @@ inputs:
     separator: '\n'
     list-item:
       type: string
-    required: false
   flavor:
     type: list
     separator: '\n'
     list-item:
       type: string
-    required: false
   labels:
     type: list
     separator: '\n'
     list-item:
       type: string
-    required: false
   sep-tags:
     type: string
-    required: false
   sep-labels:
     type: string
-    required: false
   bake-target:
     type: string
-    required: false
