@@ -23,7 +23,7 @@ Click on a version to see the wrapper's code.
     * [github-script](https://github.com/actions/github-script) - v6: [`GithubScriptV6`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/GithubScriptV6.kt)
     * [labeler](https://github.com/actions/labeler) - v4: [`LabelerV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/LabelerV4.kt)
     * [setup-dotnet](https://github.com/actions/setup-dotnet) - v2: [`SetupDotnetV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupDotnetV2.kt), v3: [`SetupDotnetV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupDotnetV3.kt)
-    * [setup-go](https://github.com/actions/setup-go) - v3: [`SetupGoV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupGoV3.kt)
+    * [setup-go](https://github.com/actions/setup-go) - v3: [`SetupGoV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupGoV3.kt), v4: [`SetupGoV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupGoV4.kt)
     * [setup-java](https://github.com/actions/setup-java) - v2: [`SetupJavaV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV2.kt), v3: [`SetupJavaV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupJavaV3.kt)
     * [setup-node](https://github.com/actions/setup-node) - v2: [`SetupNodeV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV2.kt), v3: [`SetupNodeV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupNodeV3.kt)
     * [setup-python](https://github.com/actions/setup-python) - v2: [`SetupPythonV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupPythonV2.kt), v3: [`SetupPythonV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupPythonV3.kt), v4: [`SetupPythonV4`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/SetupPythonV4.kt)
@@ -126,6 +126,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 74
-* counting each version separately: 102
+* counting each version separately: 103
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 13
