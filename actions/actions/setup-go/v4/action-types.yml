@@ -1,0 +1,25 @@
+# See https://github.com/krzema12/github-actions-typing
+inputs:
+  go-version:
+    type: string
+  go-version-file:
+    type: string
+  check-latest:
+    type: boolean
+  token:
+    type: string
+  cache:
+    type: boolean
+  cache-dependency-path:
+    type: string
+  architecture:
+    type: enum
+    allowed-values:
+    - x86
+    - x64
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  go-version:
+    type: string
+  cache-hit:
+    type: string
