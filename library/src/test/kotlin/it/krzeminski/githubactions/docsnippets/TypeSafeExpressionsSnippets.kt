@@ -88,4 +88,4 @@ class TypeSafeExpressionsSnippets : FunSpec({
             // --8<-- [end:secrets]
         }
     }
-},)
+})

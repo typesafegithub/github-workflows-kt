@@ -62,4 +62,4 @@ class JobOutputsSnippets : FunSpec({
             // --8<-- [end:use-job-outputs]
         }
     }
-},)
+})

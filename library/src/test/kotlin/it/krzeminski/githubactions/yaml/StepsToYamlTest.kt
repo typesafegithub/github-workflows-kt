@@ -418,4 +418,4 @@ class StepsToYamlTest : DescribeSpec({
             )
         }
     }
-},)
+})

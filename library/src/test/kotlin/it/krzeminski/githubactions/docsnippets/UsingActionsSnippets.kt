@@ -88,4 +88,4 @@ class UsingActionsSnippets : FunSpec({
             // --8<-- [end:custom-action-outputs]
         }
     }
-},)
+})

@@ -125,4 +125,4 @@ class ObjectToYamlTest : DescribeSpec({
 
         """.trimIndent()
     }
-},)
+})

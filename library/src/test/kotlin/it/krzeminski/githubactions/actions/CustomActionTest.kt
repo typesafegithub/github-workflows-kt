@@ -24,4 +24,4 @@ class CustomActionTest : FunSpec({
         // when & then
         outputs["custom-output"] shouldBe "steps.someStepId.outputs.custom-output"
     }
-},)
+})

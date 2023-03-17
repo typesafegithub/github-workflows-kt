@@ -322,4 +322,4 @@ class JobsToYamlTest : DescribeSpec({
             ),
         )
     }
-},)
+})

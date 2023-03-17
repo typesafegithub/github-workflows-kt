@@ -65,4 +65,4 @@ class ScheduleTest : FunSpec({
             )
         }
     }
-},)
+})

@@ -43,4 +43,4 @@ class TextTransformationTest : FunSpec({
             }
         }
     }
-},)
+})

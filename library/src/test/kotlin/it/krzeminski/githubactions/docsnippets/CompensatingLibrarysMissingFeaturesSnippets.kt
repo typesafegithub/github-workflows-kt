@@ -60,4 +60,4 @@ class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
         )
         // --8<-- [end:custom-version-2]
     }
-},)
+})
