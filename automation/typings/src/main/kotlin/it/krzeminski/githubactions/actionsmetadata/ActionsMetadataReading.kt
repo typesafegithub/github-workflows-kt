@@ -69,6 +69,7 @@ private fun buildTypingsSource(
 
 private val myYaml = Yaml(
     configuration = Yaml.default.configuration.copy(
-        strictMode = false,
+        // Don't allow any unknown keys, to keep the YAMLs minimal.
+        strictMode = true,
     ),
 )
