@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package it.krzeminski.githubactions.actions.awsactions
@@ -13,7 +12,6 @@ import it.krzeminski.githubactions.domain.actions.Action
 import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -23,17 +21,13 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- * Action: "Configure AWS Credentials" Action For GitHub Actions
+ * Action: Configure AWS Credentials For GitHub Actions
  *
  * Configure AWS credential and region environment variables for use with the AWS CLI and AWS SDKs
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
  */
-@Deprecated(
-    message = "This action has a newer major version: ConfigureAwsCredentialsV2",
-    replaceWith = ReplaceWith("ConfigureAwsCredentialsV2"),
-)
-public data class ConfigureAwsCredentialsV1 private constructor(
+public data class ConfigureAwsCredentialsV2 private constructor(
     /**
      * The audience to use for the OIDC provider
      */
@@ -74,7 +68,7 @@ public data class ConfigureAwsCredentialsV1 private constructor(
      */
     public val webIdentityTokenFile: String? = null,
     /**
-     * Role duration in seconds (default: 6 hours)
+     * Role duration in seconds (default: 6 hours, 1 hour for OIDC/specified aws-session-token)
      */
     public val roleDurationSeconds: Int? = null,
     /**
@@ -90,6 +84,10 @@ public data class ConfigureAwsCredentialsV1 private constructor(
      */
     public val roleSkipSessionTagging: Boolean? = null,
     /**
+     * Proxy to use for the AWS SDK agent
+     */
+    public val httpProxy: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -98,8 +96,8 @@ public data class ConfigureAwsCredentialsV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<ConfigureAwsCredentialsV1.Outputs>("aws-actions", "configure-aws-credentials",
-        _customVersion ?: "v1") {
+) : Action<ConfigureAwsCredentialsV2.Outputs>("aws-actions", "configure-aws-credentials",
+        _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         audience: String? = null,
@@ -114,6 +112,7 @@ public data class ConfigureAwsCredentialsV1 private constructor(
         roleSessionName: String? = null,
         roleExternalId: String? = null,
         roleSkipSessionTagging: Boolean? = null,
+        httpProxy: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
@@ -121,8 +120,8 @@ public data class ConfigureAwsCredentialsV1 private constructor(
             awsRegion=awsRegion, maskAwsAccountId=maskAwsAccountId, roleToAssume=roleToAssume,
             webIdentityTokenFile=webIdentityTokenFile, roleDurationSeconds=roleDurationSeconds,
             roleSessionName=roleSessionName, roleExternalId=roleExternalId,
-            roleSkipSessionTagging=roleSkipSessionTagging, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            roleSkipSessionTagging=roleSkipSessionTagging, httpProxy=httpProxy,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -139,6 +138,7 @@ public data class ConfigureAwsCredentialsV1 private constructor(
             roleSessionName?.let { "role-session-name" to it },
             roleExternalId?.let { "role-external-id" to it },
             roleSkipSessionTagging?.let { "role-skip-session-tagging" to it.toString() },
+            httpProxy?.let { "http-proxy" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

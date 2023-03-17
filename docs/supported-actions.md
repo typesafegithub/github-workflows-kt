@@ -37,7 +37,7 @@ Click on a version to see the wrapper's code.
     * [amazon-ecr-login](https://github.com/aws-actions/amazon-ecr-login) - v1: [`AmazonEcrLoginV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/AmazonEcrLoginV1.kt)
     * [amazon-ecs-deploy-task-definition](https://github.com/aws-actions/amazon-ecs-deploy-task-definition) - v1: [`AmazonEcsDeployTaskDefinitionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/AmazonEcsDeployTaskDefinitionV1.kt)
     * [amazon-ecs-render-task-definition](https://github.com/aws-actions/amazon-ecs-render-task-definition) - v1: [`AmazonEcsRenderTaskDefinitionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/AmazonEcsRenderTaskDefinitionV1.kt)
-    * [configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) - v1: [`ConfigureAwsCredentialsV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/ConfigureAwsCredentialsV1.kt)
+    * [configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) - v1: [`ConfigureAwsCredentialsV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/ConfigureAwsCredentialsV1.kt), v2: [`ConfigureAwsCredentialsV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/awsactions/ConfigureAwsCredentialsV2.kt)
 * axel-op
     * [googlejavaformat-action](https://github.com/axel-op/googlejavaformat-action) - v3: [`GooglejavaformatActionV3`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/axelop/GooglejavaformatActionV3.kt)
 * Azure
@@ -126,6 +126,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 74
-* counting each version separately: 103
+* counting each version separately: 104
 
 Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): 13
