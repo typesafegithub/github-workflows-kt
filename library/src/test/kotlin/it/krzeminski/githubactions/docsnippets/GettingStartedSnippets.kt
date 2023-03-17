@@ -18,7 +18,7 @@ class GettingStartedSnippets : FunSpec({
         // --8<-- [start:getting-started-1]
         #!/usr/bin/env kotlin
 
-        @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.38.0")
+        @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.39.0")
 
         // --8<-- [end:getting-started-1]
         */
