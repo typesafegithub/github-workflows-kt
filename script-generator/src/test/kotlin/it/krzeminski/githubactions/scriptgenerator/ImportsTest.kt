@@ -42,4 +42,4 @@ class ImportsTest : FunSpec({
             content.contains(import).shouldBeTrue()
         }
     }
-},)
+})

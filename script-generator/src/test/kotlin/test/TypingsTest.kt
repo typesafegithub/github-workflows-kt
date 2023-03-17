@@ -72,4 +72,4 @@ class TypingsTest : FunSpec({
             valueWithTyping(value, typing, coords).toString() shouldBe expected
         }
     }
-},)
+})

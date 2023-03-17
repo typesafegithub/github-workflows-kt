@@ -352,4 +352,4 @@ class GenerationTest : FunSpec({
         // then
         wrapper.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
     }
-},)
+})

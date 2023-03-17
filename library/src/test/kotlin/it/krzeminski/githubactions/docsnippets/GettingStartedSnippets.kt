@@ -40,4 +40,4 @@ class GettingStartedSnippets : FunSpec({
         println(workflow.toYaml())
         // --8<-- [end:getting-started-3]
     }
-},)
+})

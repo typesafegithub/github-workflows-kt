@@ -86,4 +86,4 @@ class SuggestVersionsTest : FunSpec({
             }
         }
     }
-},)
+})

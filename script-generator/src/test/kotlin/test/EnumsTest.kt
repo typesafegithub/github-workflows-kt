@@ -48,4 +48,4 @@ class EnumsTest : FunSpec({
             "runsOn = it.krzeminski.githubactions.domain.RunnerType.Custom(expr(\"github.event.inputs.run-on || 'ubuntu-latest'\")),\n",
         )
     }
-},)
+})

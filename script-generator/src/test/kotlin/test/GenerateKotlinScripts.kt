@@ -40,7 +40,7 @@ class GenerateKotlinScripts : FunSpec({
             }
         }
     }
-},)
+})
 
 data class TestInput(val name: String) {
     val filename = name.removeSuffix(".yml")

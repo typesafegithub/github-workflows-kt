@@ -1019,7 +1019,7 @@ class IntegrationTest : FunSpec({
 
         """.trimIndent()
     }
-},)
+})
 
 private fun testRanWithGitHub(
     name: String,

@@ -113,4 +113,4 @@ class JobTest : FunSpec({
             )
         } shouldHaveMessage "timeout should be positive"
     }
-},)
+})

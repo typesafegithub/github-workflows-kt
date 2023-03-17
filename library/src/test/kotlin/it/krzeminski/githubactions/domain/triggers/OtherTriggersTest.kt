@@ -161,4 +161,4 @@ class OtherTriggersTest : FunSpec({
             "workflow_run" to mapOf("types" to listOf("completed", "requested")),
         )
     }
-},)
+})

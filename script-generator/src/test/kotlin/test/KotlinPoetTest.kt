@@ -114,4 +114,4 @@ class KotlinPoetTest : DescribeSpec({
                 .toString() shouldBe ""
         }
     }
-},)
+})

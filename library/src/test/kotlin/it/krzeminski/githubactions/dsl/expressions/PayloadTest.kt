@@ -22,7 +22,7 @@ class PayloadTest : FunSpec({
 
         context.properties() shouldMatch jsonObject.keys.sorted()
     }
-},)
+})
 
 infix fun List<String>.shouldMatch(other: List<String>) {
     if (this.toSet() != other.toSet()) {
