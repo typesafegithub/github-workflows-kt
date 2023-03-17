@@ -40,8 +40,11 @@
             </a>
     </div>
     <div>
-0.38.0    </div>
+0.39.0    </div>
     <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":library:dokkaHtml/main">jvm</button>
+        </div>
         <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
         <div id="searchBar"></div>
     </div>
@@ -51,317 +54,198 @@
         <div id="sideMenu"></div>
     </div>
     <div id="main">
-<div class="main-content" id="content" pageIds="GitHub Workflows Kt::it.krzeminski.githubactions.domain/RunnerType///PointingToDeclaration//-1951329584">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="GitHub Workflows Kt::it.krzeminski.githubactions.domain/RunnerType///PointingToDeclaration//-1951329584">
   <div class="breadcrumbs"><a href="../../../index.html">GitHub Workflows Kt</a><span class="delimiter">/</span><a href="../index.html">it.krzeminski.githubactions.domain</a><span class="delimiter">/</span><span class="current">RunnerType</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Runner</span><wbr></wbr><span><span>Type</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">RunnerType</a></div><p class="paragraph">Types of GitHub-hosted runners available. Should be kept in sync with the official list at https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">RunnerType</a></div><p class="paragraph">Types of GitHub-hosted runners available. Should be kept in sync with the official list at https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-custom/index.html">Custom</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-ubuntu-latest/index.html">UbuntuLatest</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-windows-latest/index.html">WindowsLatest</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-mac-o-s-latest/index.html">MacOSLatest</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-windows2022/index.html">Windows2022</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-windows2019/index.html">Windows2019</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-windows2016/index.html">Windows2016</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-ubuntu2004/index.html">Ubuntu2004</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-ubuntu1804/index.html">Ubuntu1804</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-mac-o-s11/index.html">MacOS11</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-mac-o-s1015/index.html">MacOS1015</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
-    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Extensions">Extensions</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
-      <h2 class="">Types</h2>
-      <div class="table" data-togglable="Types"><a data-name="781429497%2FClasslikes%2F-1951329584" anchor-label="Custom" id="781429497%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-custom/index.html"><span><span>Custom</span></span></a></div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="781429497%2FClasslikes%2F-1951329584" anchor-label="Custom" id="781429497%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-custom/index.html"><span><span>Custom</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="781429497%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-custom/index.html">Custom</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>runsOn<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-custom/index.html">Custom</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>runsOn<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="1962733250%2FClasslikes%2F-1951329584" anchor-label="MacOS1015" id="1962733250%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-mac-o-s1015/index.html"><span>Mac</span><wbr></wbr><span><span>OS1015</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mac-o-s1015/index.html"><span>Mac</span><wbr></wbr><span><span>OS1015</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1962733250%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-mac-o-s1015/index.html">MacOS1015</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-mac-o-s1015/index.html">MacOS1015</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="193192133%2FClasslikes%2F-1951329584" anchor-label="MacOS11" id="193192133%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-mac-o-s11/index.html"><span>Mac</span><wbr></wbr><span><span>OS11</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mac-o-s11/index.html"><span>Mac</span><wbr></wbr><span><span>OS11</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="193192133%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-mac-o-s11/index.html">MacOS11</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-mac-o-s11/index.html">MacOS11</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-581867746%2FClasslikes%2F-1951329584" anchor-label="MacOSLatest" id="-581867746%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-mac-o-s-latest/index.html"><span>Mac</span><wbr></wbr><span><span>OSLatest</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mac-o-s-latest/index.html"><span>Mac</span><wbr></wbr><span><span>OSLatest</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-581867746%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-mac-o-s-latest/index.html">MacOSLatest</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-mac-o-s-latest/index.html">MacOSLatest</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-58092744%2FClasslikes%2F-1951329584" anchor-label="Ubuntu1804" id="-58092744%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-ubuntu1804/index.html"><span><span>Ubuntu1804</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-ubuntu1804/index.html"><span><span>Ubuntu1804</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-58092744%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ubuntu1804/index.html">Ubuntu1804</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ubuntu1804/index.html">Ubuntu1804</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1622065983%2FClasslikes%2F-1951329584" anchor-label="Ubuntu2004" id="-1622065983%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-ubuntu2004/index.html"><span><span>Ubuntu2004</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-ubuntu2004/index.html"><span><span>Ubuntu2004</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1622065983%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ubuntu2004/index.html">Ubuntu2004</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ubuntu2004/index.html">Ubuntu2004</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-922594052%2FClasslikes%2F-1951329584" anchor-label="UbuntuLatest" id="-922594052%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-ubuntu-latest/index.html"><span>Ubuntu</span><wbr></wbr><span><span>Latest</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-ubuntu-latest/index.html"><span>Ubuntu</span><wbr></wbr><span><span>Latest</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-922594052%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ubuntu-latest/index.html">UbuntuLatest</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ubuntu-latest/index.html">UbuntuLatest</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="1253851026%2FClasslikes%2F-1951329584" anchor-label="Windows2016" id="1253851026%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows2016/index.html"><span><span>Windows2016</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-windows2016/index.html"><span><span>Windows2016</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1253851026%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows2016/index.html">Windows2016</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows2016/index.html">Windows2016</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="1346910447%2FClasslikes%2F-1951329584" anchor-label="Windows2019" id="1346910447%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows2019/index.html"><span><span>Windows2019</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-windows2019/index.html"><span><span>Windows2019</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1346910447%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows2019/index.html">Windows2019</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows2019/index.html">Windows2019</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="2091385815%2FClasslikes%2F-1951329584" anchor-label="Windows2022" id="2091385815%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows2022/index.html"><span><span>Windows2022</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-windows2022/index.html"><span><span>Windows2022</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2091385815%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows2022/index.html">Windows2022</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows2022/index.html">Windows2022</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="986051662%2FClasslikes%2F-1951329584" anchor-label="WindowsLatest" id="986051662%2FClasslikes%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows-latest/index.html"><span>Windows</span><wbr></wbr><span><span>Latest</span></span></a></div>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-windows-latest/index.html"><span>Windows</span><wbr></wbr><span><span>Latest</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="986051662%2FClasslikes%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows-latest/index.html">WindowsLatest</a> : <a href="index.html">RunnerType</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-windows-latest/index.html">WindowsLatest</a> : <a href="index.html">RunnerType</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Inheritors</h2>
-      <div class="table" data-togglable="Inheritors"><a data-name="781429497%2FInheritors%2F-1951329584" anchor-label="Custom" id="781429497%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-custom/index.html">Custom</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="781429497%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="-922594052%2FInheritors%2F-1951329584" anchor-label="UbuntuLatest" id="-922594052%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-ubuntu-latest/index.html">UbuntuLatest</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-922594052%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="986051662%2FInheritors%2F-1951329584" anchor-label="WindowsLatest" id="986051662%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows-latest/index.html">WindowsLatest</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="986051662%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="-581867746%2FInheritors%2F-1951329584" anchor-label="MacOSLatest" id="-581867746%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-mac-o-s-latest/index.html">MacOSLatest</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-581867746%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="2091385815%2FInheritors%2F-1951329584" anchor-label="Windows2022" id="2091385815%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows2022/index.html">Windows2022</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2091385815%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="1346910447%2FInheritors%2F-1951329584" anchor-label="Windows2019" id="1346910447%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows2019/index.html">Windows2019</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1346910447%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="1253851026%2FInheritors%2F-1951329584" anchor-label="Windows2016" id="1253851026%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-windows2016/index.html">Windows2016</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1253851026%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="-1622065983%2FInheritors%2F-1951329584" anchor-label="Ubuntu2004" id="-1622065983%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-ubuntu2004/index.html">Ubuntu2004</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1622065983%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="-58092744%2FInheritors%2F-1951329584" anchor-label="Ubuntu1804" id="-58092744%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-ubuntu1804/index.html">Ubuntu1804</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-58092744%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="193192133%2FInheritors%2F-1951329584" anchor-label="MacOS11" id="193192133%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-mac-o-s11/index.html">MacOS11</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="193192133%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-<a data-name="1962733250%2FInheritors%2F-1951329584" anchor-label="MacOS1015" id="1962733250%2FInheritors%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-mac-o-s1015/index.html">MacOS1015</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1962733250%2FInheritors%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <h2 class="tabbedcontent">Extensions</h2>
-      <div class="table" data-togglable="Extensions"><a data-name="1052326556%2FExtensions%2F-1951329584" anchor-label="toYaml" id="1052326556%2FExtensions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
-        <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="../../it.krzeminski.githubactions.yaml/to-yaml.html"><span>to</span><wbr></wbr><span><span>Yaml</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1052326556%2FExtensions%2F-1951329584"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">RunnerType</a><span class="token punctuation">.</span><a href="../../it.krzeminski.githubactions.yaml/to-yaml.html"><span class="token function">toYaml</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+      <div data-togglable="EXTENSION_FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1052326556%2FFunctions%2F-1951329584" anchor-label="toYaml" id="1052326556%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../it.krzeminski.githubactions.yaml/to-yaml.html"><span>to</span><wbr></wbr><span><span>Yaml</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1052326556%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">RunnerType</a><span class="token punctuation">.</span><a href="../../it.krzeminski.githubactions.yaml/to-yaml.html"><span class="token function">toYaml</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
