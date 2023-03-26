@@ -15,6 +15,10 @@ class ScheduleTest : FunSpec({
                 to "1 2 3 4 5",
             Cron(minute = "1,4,5", hour = "4-6", dayMonth = "10-20/2", month = "6,8", dayWeek = "1/3")
                 to "1,4,5 4-6 10-20/2 6,8 1/3",
+            Cron(dayWeek = "MON")
+                to "* * * * MON",
+            Cron(month = "JAN")
+                to "* * * JAN *",
         )
 
         test("valid expressions") {
@@ -61,6 +65,28 @@ class ScheduleTest : FunSpec({
                 Your Cron syntax [= ; * * *] contains errors:
                 - Field 'minute' with value [=] contains invalid characters
                 - Field 'hour' with value [;] contains invalid characters
+                """.trimIndent(),
+            )
+        }
+
+        test("with invalid dayWeek name") {
+            shouldThrowAny {
+                Cron(dayWeek = "XYZ")
+            }.shouldHaveMessage(
+                """
+                Your Cron syntax [* * * * XYZ] contains errors:
+                - Field 'dayWeek' with value [XYZ] contains value(s) not included in [MON, TUE, WED, THU, FRI, SAT, SUN]
+                """.trimIndent(),
+            )
+        }
+
+        test("with invalid month name") {
+            shouldThrowAny {
+                Cron(month = "XYZ")
+            }.shouldHaveMessage(
+                """
+                Your Cron syntax [* * * XYZ *] contains errors:
+                - Field 'month' with value [XYZ] contains value(s) not included in [JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC]
                 """.trimIndent(),
             )
         }
