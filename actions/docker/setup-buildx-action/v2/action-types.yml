@@ -28,6 +28,8 @@ inputs:
     type: string
   append:
     type: string
+  cleanup:
+    type: boolean
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:
   name:

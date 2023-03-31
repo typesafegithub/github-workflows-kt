@@ -73,6 +73,10 @@ public data class SetupBuildxActionV2 private constructor(
      */
     public val append: String? = null,
     /**
+     * Cleanup temp files and remove builder at the end of a job
+     */
+    public val cleanup: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -95,11 +99,12 @@ public data class SetupBuildxActionV2 private constructor(
         config: String? = null,
         configInline: String? = null,
         append: String? = null,
+        cleanup: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(version=version, driver=driver, driverOpts=driverOpts, buildkitdFlags=buildkitdFlags,
             install=install, use=use, endpoint=endpoint, platforms=platforms, config=config,
-            configInline=configInline, append=append, _customInputs=_customInputs,
+            configInline=configInline, append=append, cleanup=cleanup, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -116,6 +121,7 @@ public data class SetupBuildxActionV2 private constructor(
             config?.let { "config" to it },
             configInline?.let { "config-inline" to it },
             append?.let { "append" to it },
+            cleanup?.let { "cleanup" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
