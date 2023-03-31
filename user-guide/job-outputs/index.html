@@ -17,7 +17,7 @@
         <link rel="next" href="../compensating-librarys-missing-features/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.5">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.c4a75a56.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7a7fce14.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -475,12 +475,12 @@
   
 
 
-<h1 id="job-outputs">Job outputs</h1>
+<div><h1 id="job-outputs">Job outputs</h1>
 <p>It's possible to pass output from a job in a somewhat type-safe way (that is: types aren't checked, but the field names
 are).</p>
 <p>First, define <code>outputs</code> parameter in <code>job</code> function, inheriting from <code>JobOutputs</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">myJob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">job</span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;my_job&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"my_job"</span><span class="p">,</span>
 <span class="w">    </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RunnerType</span><span class="p">.</span><span class="na">UbuntuLatest</span><span class="p">,</span>
 <span class="hll"><span class="w">    </span><span class="n">outputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">JobOutputs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 </span><span class="hll"><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nv">myOutput</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">output</span><span class="p">()</span>
@@ -490,23 +490,23 @@ are).</p>
 </code></pre></div>
 <p>To set an output from within the job, use <code>jobOutputs</code>, and then an appropriate object field:</p>
 <div class="highlight"><pre><span></span><code><span class="n">jobOutputs</span><span class="p">.</span><span class="na">myOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">someStep</span><span class="p">.</span><span class="na">outputs</span><span class="p">.</span><span class="na">someStepOutput</span>
-<span class="n">jobOutputs</span><span class="p">.</span><span class="na">anotherOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">someStep</span><span class="p">.</span><span class="na">outputs</span><span class="o">[</span><span class="s">&quot;custom-output&quot;</span><span class="o">]</span>
+<span class="n">jobOutputs</span><span class="p">.</span><span class="na">anotherOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">someStep</span><span class="p">.</span><span class="na">outputs</span><span class="o">[</span><span class="s">"custom-output"</span><span class="o">]</span>
 </code></pre></div>
 <p>and then use job's output from another job this way:</p>
 <div class="highlight"><pre><span></span><code><span class="n">job</span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;use_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"use_output"</span><span class="p">,</span>
 <span class="w">    </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RunnerType</span><span class="p">.</span><span class="na">UbuntuLatest</span><span class="p">,</span>
 <span class="w">    </span><span class="n">needs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">myJob</span><span class="p">),</span>
 <span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">run</span><span class="p">(</span>
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Use outputs&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Use outputs"</span><span class="p">,</span>
+<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"""</span>
 <span class="hll"><span class="s">            echo </span><span class="si">${</span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">myJob</span><span class="p">.</span><span class="na">outputs</span><span class="p">.</span><span class="na">myOutput</span><span class="w"> </span><span class="p">}</span><span class="si">}</span>
 </span><span class="hll"><span class="s">            echo </span><span class="si">${</span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">myJob</span><span class="p">.</span><span class="na">outputs</span><span class="p">.</span><span class="na">anotherOutput</span><span class="w"> </span><span class="p">}</span><span class="si">}</span>
-</span><span class="s">        &quot;&quot;&quot;</span><span class="p">.</span><span class="na">trimIndent</span><span class="p">(),</span>
+</span><span class="s">        """</span><span class="p">.</span><span class="na">trimIndent</span><span class="p">(),</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre></div>
+</code></pre></div></div>
 
 
 
@@ -544,10 +544,10 @@ are).</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.39.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.40.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.407015b8.min.js"></script>
       
     
   </body>

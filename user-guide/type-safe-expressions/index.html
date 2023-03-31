@@ -17,7 +17,7 @@
         <link rel="next" href="../job-outputs/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.5">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.c4a75a56.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7a7fce14.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -647,7 +647,7 @@
   
 
 
-<h1 id="typesafe-github-expressions">Typesafe GitHub Expressions</h1>
+<div><h1 id="typesafe-github-expressions">Typesafe GitHub Expressions</h1>
 <h2 id="github-expressions">GitHub expressions</h2>
 <p>GitHub supports pretty advanced expressions via the <code>${{ ... }}</code> syntax.</p>
 <p>They include:</p>
@@ -661,13 +661,13 @@
 </ul>
 <p>Here is an example</p>
 <div class="highlight"><pre><span></span><code><span class="n">run</span><span class="p">(</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Environment variable and functions&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo \</span><span class="si">$</span><span class="n">GITHUB_ACTORS</span><span class="s">&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\</span><span class="si">${</span><span class="p">{</span><span class="n">invariably</span><span class="p">()}</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Environment variable and functions"</span><span class="p">,</span>
+<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"echo \</span><span class="si">$</span><span class="n">GITHUB_ACTORS</span><span class="s">"</span><span class="p">,</span>
+<span class="w">    </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"\</span><span class="si">${</span><span class="p">{</span><span class="n">invariably</span><span class="p">()}</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">run</span><span class="p">(</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GitHubContext echo sha&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo commit: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">sha256</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">  event: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">release</span><span class="p">.</span><span class="na">zip_url</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"GitHubContext echo sha"</span><span class="p">,</span>
+<span class="w">    </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"echo commit: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">sha256</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">  event: \</span><span class="si">${</span><span class="p">{</span><span class="w"> </span><span class="n">github</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">release</span><span class="p">.</span><span class="na">zip_url</span><span class="w"> </span><span class="p">}</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>Unfortunately, it is easy to get those expressions wrong.</p>
@@ -676,8 +676,8 @@
 <p>To make life easier, let us introduce type-safe GitHub expressions.</p>
 <h2 id="the-expr-helper-function">The <code>expr("")</code> helper function</h2>
 <p>First, because <code>\${{ ... }}</code> is awkward in Kotlin, it can be replaced by the <code>expr("")</code> helper function</p>
-<div class="highlight"><pre><span></span><code><span class="gd">- &quot;\${{invariably()}}&quot;</span>
-<span class="gi">+ expr(&quot;invariably()&quot;)</span>
+<div class="highlight"><pre><span></span><code><span class="gd">- "\${{invariably()}}"</span>
+<span class="gi">+ expr("invariably()")</span>
 </code></pre></div>
 <p>But this is still not type-safe.</p>
 <h2 id="type-safe-functions-with-the-expr-dsl">Type-safe functions with the <code>expr { }</code>  DSL</h2>
@@ -690,8 +690,8 @@
 <p>For example, you can use auto-completion to find out which functions are available:</p>
 <p><img width="581" src="https://user-images.githubusercontent.com/459464/176900956-74370289-79c4-488f-86a9-afb0c3ba1ba8.png"></p>
 <p>Here we immediately see how to fix a first bug in our original snippet:</p>
-<div class="highlight"><pre><span></span><code><span class="gd">- &quot;\${{invariably()}}&quot;</span>
-<span class="gd">- expr(&quot;invariably()&quot;)</span>
+<div class="highlight"><pre><span></span><code><span class="gd">- "\${{invariably()}}"</span>
+<span class="gd">- expr("invariably()")</span>
 <span class="gi">+ expr { always() }</span>
 </code></pre></div>
 <p>Reference: <a href="https://docs.github.com/en/actions/learn-github-actions/expressions#functions">https://docs.github.com/en/actions/learn-github-actions/expressions#functions</a></p>
@@ -705,8 +705,8 @@
 <p>The possible properties are available via <code>expr { github.xxx }</code></p>
 <p><img width="857" src="https://user-images.githubusercontent.com/459464/176904326-4a7685cb-96d6-4ff2-a9b0-7a63f8bdb714.png">
 Here we detect immediatly another bug in our original snippet</p>
-<div class="highlight"><pre><span></span><code><span class="gd">-command = &quot;echo commit: ${&#39;$&#39;}{{ github.sha256 }}</span>
-<span class="gi">+command = &quot;echo commit: &quot; + expr { github.sha }</span>
+<div class="highlight"><pre><span></span><code><span class="gd">-command = "echo commit: ${'$'}{{ github.sha256 }}</span>
+<span class="gi">+command = "echo commit: " + expr { github.sha }</span>
 </code></pre></div>
 <p>Reference: <a href="https://docs.github.com/en/actions/learn-github-actions/contexts#github-context">https://docs.github.com/en/actions/learn-github-actions/contexts#github-context</a></p>
 <h2 id="the-githubeventxxx-payload">The <code>github.eventXXX</code> payload</h2>
@@ -727,8 +727,8 @@ Here we detect immediatly another bug in our original snippet</p>
 <p>They are available directly in the IDE via the library's <code>Contexts.env</code>
 <img width="873" src="https://user-images.githubusercontent.com/459464/176902143-454254d3-2bb7-4b93-91dd-64a589d980a8.png">
 By using this feature in our snippet we would have avoided escaping the dollar and the typo:</p>
-<div class="highlight"><pre><span></span><code><span class="gd">-command = &quot;echo \$GITHUB_ACTORS&quot;,</span>
-<span class="gi">+command = &quot;echo &quot; + Contexts.env.GITHUB_ACTOR,</span>
+<div class="highlight"><pre><span></span><code><span class="gd">-command = "echo \$GITHUB_ACTORS",</span>
+<span class="gi">+command = "echo " + Contexts.env.GITHUB_ACTOR,</span>
 </code></pre></div>
 <p>Reference: <a href="https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables">https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables</a></p>
 <h2 id="custom-environment-variables">Custom environment variables</h2>
@@ -743,15 +743,15 @@ By using this feature in our snippet we would have avoided escaping the dollar a
 
 <span class="n">job</span><span class="p">(</span>
 <span class="w">    </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
-<span class="w">        </span><span class="n">GREETING</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;World&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">GREETING</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">"World"</span><span class="p">,</span>
 <span class="w">    </span><span class="p">),</span>
 <span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">run</span><span class="p">(</span>
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Custom environment variable&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Custom environment variable"</span><span class="p">,</span>
 <span class="w">        </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
-<span class="w">            </span><span class="n">FIRST_NAME</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">&quot;Patrick&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">FIRST_NAME</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s">"Patrick"</span><span class="p">,</span>
 <span class="w">        </span><span class="p">),</span>
-<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo </span><span class="si">$</span><span class="n">GREETING</span><span class="s"> </span><span class="si">$</span><span class="n">FIRST_NAME</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"echo </span><span class="si">$</span><span class="n">GREETING</span><span class="s"> </span><span class="si">$</span><span class="n">FIRST_NAME</span><span class="s">"</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -769,14 +769,14 @@ By using this feature in our snippet we would have avoided escaping the dollar a
 <span class="kd">val</span><span class="w"> </span><span class="nv">SECRET</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span>
 <span class="kd">val</span><span class="w"> </span><span class="nv">TOKEN</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Contexts</span><span class="p">.</span><span class="na">env</span>
 
-<span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;job1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RunnerType</span><span class="p">.</span><span class="na">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"job1"</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RunnerType</span><span class="p">.</span><span class="na">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">run</span><span class="p">(</span>
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Encrypted secret&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Encrypted secret"</span><span class="p">,</span>
 <span class="w">        </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linkedMapOf</span><span class="p">(</span>
 <span class="w">            </span><span class="n">SECRET</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SUPER_SECRET</span><span class="w"> </span><span class="p">},</span>
 <span class="w">            </span><span class="n">TOKEN</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">secrets</span><span class="p">.</span><span class="na">GITHUB_TOKEN</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="p">),</span>
-<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;echo secret=</span><span class="si">$</span><span class="n">SECRET</span><span class="s"> token=</span><span class="si">$</span><span class="n">TOKEN</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"echo secret=</span><span class="si">$</span><span class="n">SECRET</span><span class="s"> token=</span><span class="si">$</span><span class="n">TOKEN</span><span class="s">"</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -784,7 +784,7 @@ By using this feature in our snippet we would have avoided escaping the dollar a
 <p>GitHub has more contexts that we don't support yet: <a href="https://docs.github.com/en/actions/learn-github-actions/contexts">https://docs.github.com/en/actions/learn-github-actions/contexts</a></p>
 <p>There are more <code>github.event</code> payloads that we currently do not support: <a href="https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads">https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads</a></p>
 <p>We feel what we have is a pretty good start, but if you need an additional feature, you can <a href="https://github.com/krzema12/github-workflows-kt/issues">create an issue</a></p>
-<p>Or maybe have a look how this type-safe feature is implemented in <a href="https://github.com/krzema12/github-workflows-kt/tree/main/library/src/main/kotlin/it/krzeminski/githubactions/dsl/expressions">it.krzeminski.githubactions.dsl.expressions</a> and <a href="https://github.com/krzema12/github-workflows-kt/pulls">submit a pull request 🙏🏻</a></p>
+<p>Or maybe have a look how this type-safe feature is implemented in <a href="https://github.com/krzema12/github-workflows-kt/tree/main/library/src/main/kotlin/it/krzeminski/githubactions/dsl/expressions">it.krzeminski.githubactions.dsl.expressions</a> and <a href="https://github.com/krzema12/github-workflows-kt/pulls">submit a pull request 🙏🏻</a></p></div>
 
 
 
@@ -822,10 +822,10 @@ By using this feature in our snippet we would have avoided escaping the dollar a
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.39.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.40.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.407015b8.min.js"></script>
       
     
   </body>
