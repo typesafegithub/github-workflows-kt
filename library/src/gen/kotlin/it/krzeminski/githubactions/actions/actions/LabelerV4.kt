@@ -28,7 +28,7 @@ import kotlin.collections.toTypedArray
  */
 public data class LabelerV4 private constructor(
     /**
-     * The GITHUB_TOKEN secret
+     * The GitHub token used to manage labels
      */
     public val repoToken: String? = null,
     /**
