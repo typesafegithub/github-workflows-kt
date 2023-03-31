@@ -45,6 +45,10 @@ public data class AmazonEcrLoginV1 private constructor(
      */
     public val registryType: AmazonEcrLoginV1.RegistryType? = null,
     /**
+     * Proxy to use for the AWS SDK agent.
+     */
+    public val httpProxy: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -59,10 +63,11 @@ public data class AmazonEcrLoginV1 private constructor(
         registries: List<String>? = null,
         skipLogout: Boolean? = null,
         registryType: AmazonEcrLoginV1.RegistryType? = null,
+        httpProxy: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(registries=registries, skipLogout=skipLogout, registryType=registryType,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            httpProxy=httpProxy, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -70,6 +75,7 @@ public data class AmazonEcrLoginV1 private constructor(
             registries?.let { "registries" to it.joinToString(",") },
             skipLogout?.let { "skip-logout" to it.toString() },
             registryType?.let { "registry-type" to it.stringValue },
+            httpProxy?.let { "http-proxy" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
