@@ -77,6 +77,11 @@ public data class AndroidEmulatorRunnerV2 private constructor(
      */
     public val forceAvdCreation: Boolean? = null,
     /**
+     * Emulator boot timeout in seconds. If it takes longer to boot, the action would fail - e.g.
+     * `300` for 5 minutes
+     */
+    public val emulatorBootTimeout: Int? = null,
+    /**
      * command-line options used when launching the emulator - e.g.
      * `-no-window -no-snapshot -camera-back emulated`
      */
@@ -152,6 +157,7 @@ public data class AndroidEmulatorRunnerV2 private constructor(
         diskSize: String? = null,
         avdName: String? = null,
         forceAvdCreation: Boolean? = null,
+        emulatorBootTimeout: Int? = null,
         emulatorOptions: String? = null,
         disableAnimations: Boolean? = null,
         disableSpellchecker: Boolean? = null,
@@ -169,12 +175,12 @@ public data class AndroidEmulatorRunnerV2 private constructor(
     ) : this(apiLevel=apiLevel, target=target, arch=arch, profile=profile, cores=cores,
             ramSize=ramSize, heapSize=heapSize, sdcardPathOrSize=sdcardPathOrSize,
             diskSize=diskSize, avdName=avdName, forceAvdCreation=forceAvdCreation,
-            emulatorOptions=emulatorOptions, disableAnimations=disableAnimations,
-            disableSpellchecker=disableSpellchecker, disableLinuxHwAccel=disableLinuxHwAccel,
-            enableHwKeyboard=enableHwKeyboard, emulatorBuild=emulatorBuild,
-            workingDirectory=workingDirectory, ndk=ndk, cmake=cmake, channel=channel, script=script,
-            preEmulatorLaunchScript=preEmulatorLaunchScript, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            emulatorBootTimeout=emulatorBootTimeout, emulatorOptions=emulatorOptions,
+            disableAnimations=disableAnimations, disableSpellchecker=disableSpellchecker,
+            disableLinuxHwAccel=disableLinuxHwAccel, enableHwKeyboard=enableHwKeyboard,
+            emulatorBuild=emulatorBuild, workingDirectory=workingDirectory, ndk=ndk, cmake=cmake,
+            channel=channel, script=script, preEmulatorLaunchScript=preEmulatorLaunchScript,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -190,6 +196,7 @@ public data class AndroidEmulatorRunnerV2 private constructor(
             diskSize?.let { "disk-size" to it },
             avdName?.let { "avd-name" to it },
             forceAvdCreation?.let { "force-avd-creation" to it.toString() },
+            emulatorBootTimeout?.let { "emulator-boot-timeout" to it.toString() },
             emulatorOptions?.let { "emulator-options" to it },
             disableAnimations?.let { "disable-animations" to it.toString() },
             disableSpellchecker?.let { "disable-spellchecker" to it.toString() },
