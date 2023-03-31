@@ -56,6 +56,11 @@ public data class CacheV3 private constructor(
      */
     public val failOnCacheMiss: Boolean? = null,
     /**
+     * Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading
+     * the cache
+     */
+    public val lookupOnly: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -73,11 +78,12 @@ public data class CacheV3 private constructor(
         uploadChunkSize: Int? = null,
         enableCrossOsArchive: Boolean? = null,
         failOnCacheMiss: Boolean? = null,
+        lookupOnly: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(path=path, key=key, restoreKeys=restoreKeys, uploadChunkSize=uploadChunkSize,
             enableCrossOsArchive=enableCrossOsArchive, failOnCacheMiss=failOnCacheMiss,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            lookupOnly=lookupOnly, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -88,6 +94,7 @@ public data class CacheV3 private constructor(
             uploadChunkSize?.let { "upload-chunk-size" to it.toString() },
             enableCrossOsArchive?.let { "enableCrossOsArchive" to it.toString() },
             failOnCacheMiss?.let { "fail-on-cache-miss" to it.toString() },
+            lookupOnly?.let { "lookup-only" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
