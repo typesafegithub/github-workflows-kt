@@ -70,6 +70,15 @@ public data class SetupRubyV1 private constructor(
      */
     public val cacheVersion: String? = null,
     /**
+     * Consider the runner as a self-hosted runner, which means not using prebuilt Ruby binaries
+     * which only work
+     * on GitHub-hosted runners or self-hosted runners with a very similar image to the ones used by
+     * GitHub runners.
+     * The default is to detect this automatically based on the OS, OS version and
+     * $RUNNER_TOOL_CACHE.
+     */
+    public val selfHosted: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -87,10 +96,11 @@ public data class SetupRubyV1 private constructor(
         bundlerCache: Boolean? = null,
         workingDirectory: String? = null,
         cacheVersion: String? = null,
+        selfHosted: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(rubyVersion=rubyVersion, rubygems=rubygems, bundler=bundler, bundlerCache=bundlerCache,
-            workingDirectory=workingDirectory, cacheVersion=cacheVersion,
+            workingDirectory=workingDirectory, cacheVersion=cacheVersion, selfHosted=selfHosted,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -102,6 +112,7 @@ public data class SetupRubyV1 private constructor(
             bundlerCache?.let { "bundler-cache" to it.toString() },
             workingDirectory?.let { "working-directory" to it },
             cacheVersion?.let { "cache-version" to it },
+            selfHosted?.let { "self-hosted" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

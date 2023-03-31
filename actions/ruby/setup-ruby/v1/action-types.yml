@@ -12,6 +12,8 @@ inputs:
     type: string
   cache-version:
     type: string
+  self-hosted:
+    type: boolean
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:
   ruby-prefix:
