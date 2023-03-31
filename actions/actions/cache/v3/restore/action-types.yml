@@ -16,6 +16,8 @@ inputs:
     type: boolean
   fail-on-cache-miss:
     type: boolean
+  lookup-only:
+    type: boolean
 outputs:
   cache-hit:
     type: boolean

@@ -51,6 +51,11 @@ public data class CacheRestoreV3 private constructor(
      */
     public val failOnCacheMiss: Boolean? = null,
     /**
+     * Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading
+     * the cache
+     */
+    public val lookupOnly: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -67,10 +72,11 @@ public data class CacheRestoreV3 private constructor(
         restoreKeys: List<String>? = null,
         enableCrossOsArchive: Boolean? = null,
         failOnCacheMiss: Boolean? = null,
+        lookupOnly: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(path=path, key=key, restoreKeys=restoreKeys, enableCrossOsArchive=enableCrossOsArchive,
-            failOnCacheMiss=failOnCacheMiss, _customInputs=_customInputs,
+            failOnCacheMiss=failOnCacheMiss, lookupOnly=lookupOnly, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -81,6 +87,7 @@ public data class CacheRestoreV3 private constructor(
             restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
             enableCrossOsArchive?.let { "enableCrossOsArchive" to it.toString() },
             failOnCacheMiss?.let { "fail-on-cache-miss" to it.toString() },
+            lookupOnly?.let { "lookup-only" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
