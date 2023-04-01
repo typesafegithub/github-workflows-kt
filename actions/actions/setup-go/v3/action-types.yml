@@ -1,4 +1,4 @@
-# See https://github.com/krzema12/github-actions-typing
+# See https://github.com/typesafegithub/github-actions-typing
 inputs:
   go-version:
     type: string

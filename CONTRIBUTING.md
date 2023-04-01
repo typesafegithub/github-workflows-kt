@@ -15,11 +15,11 @@ There's also a designated template for it, and the rule of checking if the reque
 ## Requesting/adding support for an action
 
 Apart from filing an issue using the template, we strongly encourage you to:
-* ask the owner to provide the typings using https://github.com/krzema12/github-actions-typing - it greatly limits the amount of work needed in this DSL library, both when adding and maintaining support for actions. For inspiration how such request could look, see https://github.com/burrunan/gradle-cache-action/issues/58
+* ask the owner to provide the typings using https://github.com/typesafegithub/github-actions-typing - it greatly limits the amount of work needed in this DSL library, both when adding and maintaining support for actions. For inspiration how such request could look, see https://github.com/burrunan/gradle-cache-action/issues/58
 * create a PR that adds support for the action. Start by adding an appropriate file to the [actions](actions) directory
   * the layout is as follows: `actions/<owner>/<name>/<version>`
   * each such directory contains a `commit-hash.txt` file pointing to the commit in the action's repo from which the metadata should be fetched
-  * in each directory, there's either a `action-types.yml` file that contains typings compatible with https://github.com/krzema12/github-actions-typing, or an empty `typings-hosted-by-action` file denoting that the action itself hosts `action-types.yml`
+  * in each directory, there's either a `action-types.yml` file that contains typings compatible with https://github.com/typesafegithub/github-actions-typing, or an empty `typings-hosted-by-action` file denoting that the action itself hosts `action-types.yml`
   * run `./gradlew :automation:wrapper-generator:run` to (re)generate various files
   * check if everything builds fine using `./gradlew build` and create the commit and the PR
 

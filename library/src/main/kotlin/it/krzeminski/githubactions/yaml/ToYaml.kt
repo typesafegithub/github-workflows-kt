@@ -150,13 +150,13 @@ private fun Workflow.generateYaml(
             """
             This file was generated using Kotlin DSL ($sourceFilePath).
             If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            Generated with https://github.com/krzema12/github-workflows-kt
+            Generated with https://github.com/typesafegithub/github-workflows-kt
             """.trimIndent()
         } else {
             """
             This file was generated using a Kotlin DSL.
             If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
-            Generated with https://github.com/krzema12/github-workflows-kt
+            Generated with https://github.com/typesafegithub/github-workflows-kt
             """.trimIndent()
         },
     )

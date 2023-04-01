@@ -7,7 +7,7 @@ your possibilities.
 ## Built-in actions
 
 Take a look here: [Supported actions](../supported-actions.md).
-These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
+These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/gen/kotlin/it/krzeminski/githubactions/actions/actions/CheckoutV3.kt)
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to
 version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
@@ -26,7 +26,7 @@ if the following conditions are fulfilled:
 
 Nice to have:
 
-* provides typings using [github-actions-typing](https://github.com/krzema12/github-actions-typing/)
+* provides typings using [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/)
 
 ## User-defined actions
 
@@ -40,7 +40,7 @@ you have two ways to proceed.
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
-Inherit from [`Action`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/domain/actions/Action.kt)
+Inherit from [`Action`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/domain/actions/Action.kt)
 and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin
@@ -67,7 +67,7 @@ Once you've got your action, it's now as simple as using it like this:
     types because you're in the middle of experimenting. It's also more convenient to produce such code by a code
     generator.
 
-Use a [`CustomAction`](https://github.com/krzema12/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
+Use a [`CustomAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/it/krzeminski/githubactions/actions/CustomAction.kt):
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-action"
