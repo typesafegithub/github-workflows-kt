@@ -86,8 +86,6 @@ Click on a version to see the wrapper's code.
     * [create-an-issue](https://github.com/JasonEtco/create-an-issue) - v2: [`CreateAnIssueV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/jasonetco/CreateAnIssueV2.kt)
 * julia-actions
     * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/juliaactions/SetupJuliaV1.kt)
-* krzema12
-    * [github-actions-typing](https://github.com/krzema12/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV0.kt), v1 ✅: [`GithubActionsTypingV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/krzema12/GithubActionsTypingV1.kt)
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1 ✅: [`CheckGradleVersionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/CheckGradleVersionV1.kt)
     * [intellij-http-client-action](https://github.com/madhead/intellij-http-client-action) - v0 ✅: [`IntellijHttpClientActionV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/IntellijHttpClientActionV0.kt), v231 ✅: [`IntellijHttpClientActionV231`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/madhead/IntellijHttpClientActionV231.kt)
@@ -118,6 +116,8 @@ Click on a version to see the wrapper's code.
     * [flutter-action](https://github.com/subosito/flutter-action) - v2: [`FlutterActionV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/subosito/FlutterActionV2.kt)
 * supercharge
     * [mongodb-github-action](https://github.com/supercharge/mongodb-github-action) - v1 ✅: [`MongodbGithubActionV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/supercharge/MongodbGithubActionV1.kt)
+* typesafegithub
+    * [github-actions-typing](https://github.com/typesafegithub/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/typesafegithub/GithubActionsTypingV0.kt), v1 ✅: [`GithubActionsTypingV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/typesafegithub/GithubActionsTypingV1.kt)
 * Vampire
     * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1 ✅: [`SetupWslV1`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV1.kt), v2 ✅: [`SetupWslV2`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/vampire/SetupWslV2.kt)
 
