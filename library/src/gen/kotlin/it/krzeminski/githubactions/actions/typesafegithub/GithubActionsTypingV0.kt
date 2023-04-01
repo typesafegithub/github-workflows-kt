@@ -4,13 +4,15 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
-package it.krzeminski.githubactions.actions.krzema12
+package it.krzeminski.githubactions.actions.typesafegithub
 
 import it.krzeminski.githubactions.domain.actions.Action
 import it.krzeminski.githubactions.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -21,9 +23,13 @@ import kotlin.collections.Map
  *
  * Bring type-safety to your GitHub actions' API!
  *
- * [Action on GitHub](https://github.com/krzema12/github-actions-typing)
+ * [Action on GitHub](https://github.com/typesafegithub/github-actions-typing)
  */
-public data class GithubActionsTypingV1 private constructor(
+@Deprecated(
+    message = "This action has a newer major version: GithubActionsTypingV1",
+    replaceWith = ReplaceWith("GithubActionsTypingV1"),
+)
+public data class GithubActionsTypingV0 private constructor(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -33,7 +39,7 @@ public data class GithubActionsTypingV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("krzema12", "github-actions-typing", _customVersion ?: "v1") {
+) : Action<Action.Outputs>("typesafegithub", "github-actions-typing", _customVersion ?: "v0") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         _customInputs: Map<String, String> = mapOf(),
