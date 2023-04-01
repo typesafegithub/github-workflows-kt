@@ -3,8 +3,8 @@
 
 site_name: GitHub Workflows Kt
 site_author: Piotr Krzemiński
-repo_url: https://github.com/krzema12/github-workflows-kt/
-edit_uri: https://github.com/krzema12/github-workflows-kt/tree/main/docs
+repo_url: https://github.com/typesafegithub/github-workflows-kt/
+edit_uri: https://github.com/typesafegithub/github-workflows-kt/tree/main/docs
 
 theme:
   name: material

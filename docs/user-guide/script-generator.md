@@ -7,7 +7,7 @@ when you want to save time on migrating your workflows to YAML.
 To use it, clone the repository locally, in a version corresponding to the latest released version of the library:
 
 ```bash
-git clone -b v[[ scriptGeneratorVersion ]] https://github.com/krzema12/github-workflows-kt
+git clone -b v[[ scriptGeneratorVersion ]] https://github.com/typesafegithub/github-workflows-kt
 cd github-workflows-kt
 ```
 

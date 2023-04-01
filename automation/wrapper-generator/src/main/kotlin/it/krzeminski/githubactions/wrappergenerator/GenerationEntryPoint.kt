@@ -89,7 +89,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
             * counting by actions: $uniqueActionsCount
             * counting each version separately: ${wrappersToGenerate.size}
 
-            Actions [providing typings](https://github.com/krzema12/github-actions-typing/) (marked with ✅ on the above list): $uniqueActionsProvidingTypingsCount
+            Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): $uniqueActionsProvidingTypingsCount
             """.trimIndent(),
         )
     }
@@ -97,7 +97,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
 
 private fun WrapperRequest.toMarkdownLinkToKotlinCode(): String {
     val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
-    return "${actionCoords.version}$typingsMarker: [`${actionCoords.buildActionClassName()}`](https://github.com/krzema12/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${actionCoords.owner.toKotlinPackageName()}/${this.actionCoords.buildActionClassName()}.kt)"
+    return "${actionCoords.version}$typingsMarker: [`${actionCoords.buildActionClassName()}`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/it/krzeminski/githubactions/actions/${actionCoords.owner.toKotlinPackageName()}/${this.actionCoords.buildActionClassName()}.kt)"
 }
 
 private fun ActionCoords.toMarkdownLinkGithub() =
