@@ -42,7 +42,7 @@ public final class it/krzeminski/githubactions/domain/Concurrency {
 	public final fun getGroup ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/Concurrency;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/Concurrency;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/Concurrency$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -299,7 +299,7 @@ public final class it/krzeminski/githubactions/domain/triggers/BranchProtectionR
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/BranchProtectionRule;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/BranchProtectionRule;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/BranchProtectionRule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -330,7 +330,7 @@ public final class it/krzeminski/githubactions/domain/triggers/CheckRun : it/krz
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/CheckRun;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/CheckRun;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/CheckRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -361,7 +361,7 @@ public final class it/krzeminski/githubactions/domain/triggers/CheckSuite : it/k
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/CheckSuite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/CheckSuite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/CheckSuite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -392,7 +392,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Create : it/krzem
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Create;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Create;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Create$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -421,7 +421,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Cron {
 	public final fun getExpression ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Cron;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Cron;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Cron$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -452,7 +452,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Delete : it/krzem
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Delete;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Delete;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Delete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -483,7 +483,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Deployment : it/k
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Deployment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Deployment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Deployment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -514,7 +514,7 @@ public final class it/krzeminski/githubactions/domain/triggers/DeploymentStatus 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/DeploymentStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/DeploymentStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/DeploymentStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -545,7 +545,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Discussion : it/k
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Discussion;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Discussion;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Discussion$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -576,7 +576,7 @@ public final class it/krzeminski/githubactions/domain/triggers/DiscussionComment
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/DiscussionComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/DiscussionComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/DiscussionComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -607,7 +607,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Fork : it/krzemin
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Fork;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Fork;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Fork$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -638,7 +638,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Gollum : it/krzem
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Gollum;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Gollum;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Gollum$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -669,7 +669,7 @@ public final class it/krzeminski/githubactions/domain/triggers/IssueComment : it
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/IssueComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/IssueComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/IssueComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -700,7 +700,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Issues : it/krzem
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Issues;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Issues;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Issues$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -731,7 +731,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Label : it/krzemi
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Label;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Label;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Label$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -762,7 +762,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Milestone : it/kr
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Milestone;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Milestone;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Milestone$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -793,7 +793,7 @@ public final class it/krzeminski/githubactions/domain/triggers/PageBuild : it/kr
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PageBuild;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PageBuild;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PageBuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -824,7 +824,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Project : it/krze
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Project;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Project;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Project$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -855,7 +855,7 @@ public final class it/krzeminski/githubactions/domain/triggers/ProjectCard : it/
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/ProjectCard;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/ProjectCard;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/ProjectCard$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -886,7 +886,7 @@ public final class it/krzeminski/githubactions/domain/triggers/ProjectColumn : i
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/ProjectColumn;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/ProjectColumn;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/ProjectColumn$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -917,7 +917,7 @@ public final class it/krzeminski/githubactions/domain/triggers/PublicWorkflow : 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PublicWorkflow;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PublicWorkflow;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PublicWorkflow$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -958,7 +958,7 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequest : it/
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1016,7 +1016,7 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestReview
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequestReview;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequestReview;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestReview$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1047,7 +1047,7 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestReview
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequestReviewComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequestReviewComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestReviewComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1088,7 +1088,7 @@ public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequestTarget;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/PullRequestTarget;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/PullRequestTarget$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1158,7 +1158,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Push : it/krzemin
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Push;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Push;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Push$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1189,7 +1189,7 @@ public final class it/krzeminski/githubactions/domain/triggers/RegistryPackage :
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/RegistryPackage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/RegistryPackage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/RegistryPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1220,7 +1220,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Release : it/krze
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Release;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Release;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Release$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1251,7 +1251,7 @@ public final class it/krzeminski/githubactions/domain/triggers/RepositoryDispatc
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/RepositoryDispatch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/RepositoryDispatch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/RepositoryDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1301,7 +1301,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Status : it/krzem
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Status;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Status;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Status$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1335,7 +1335,7 @@ public final class it/krzeminski/githubactions/domain/triggers/Watch : it/krzemi
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Watch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/Watch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/Watch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1366,7 +1366,7 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowCall : it
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowCall;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowCall;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowCall$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1399,7 +1399,7 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1427,7 +1427,7 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch$
 	public final fun getOptions ()Ljava/util/List;
 	public final fun getRequired ()Z
 	public final fun getType ()Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Type;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Input;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Input;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowDispatch$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1472,7 +1472,7 @@ public final class it/krzeminski/githubactions/domain/triggers/WorkflowRun : it/
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowRun;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lit/krzeminski/githubactions/domain/triggers/WorkflowRun;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class it/krzeminski/githubactions/domain/triggers/WorkflowRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
