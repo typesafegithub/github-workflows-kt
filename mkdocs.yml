@@ -56,7 +56,7 @@ nav:
   - Projects using this library: 'projects-using-this-library.md'
 
 extra:
-  version: 0.40.0
+  version: 0.40.1
 
   # branch or tag name - the script-generator may have not yet updated to a breaking change in the library
   scriptGeneratorVersion: 0.22.0

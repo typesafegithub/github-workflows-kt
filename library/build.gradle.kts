@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "io.github.typesafegithub"
-version = "0.40.0"
+version = "0.40.1"
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.6")
