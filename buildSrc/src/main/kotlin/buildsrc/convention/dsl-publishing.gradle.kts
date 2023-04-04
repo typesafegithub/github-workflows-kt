@@ -50,7 +50,7 @@ publishing {
     val ossrhPassword: String? by project
 
     repositories {
-        maven(url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        maven(url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
             credentials {
                 username = ossrhUsername
                 password = ossrhPassword
