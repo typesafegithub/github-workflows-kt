@@ -31,7 +31,7 @@ names with your own.
    Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source
    file path is to be able to generate consistency checks, to ensure that both source and target files are in sync.
    You'll see it in a moment in the generated file. What's written to the `workflow` variable is an object of type
-   `it.krzeminski.githubactions.domain.Workflow`, it's not a YAML yet. However, a call to `toYaml()` extension function
+   `io.github.typesafegithub.workflows.domain.Workflow`, it's not a YAML yet. However, a call to `toYaml()` extension function
    does the final piece of job.  
    Alternatively, apart from `toYaml()` which returns a string, there's also `writeToFile()` which puts the string
    straight into the file under path inferred by the library or name overridden with `targetFileName` workflow argument.

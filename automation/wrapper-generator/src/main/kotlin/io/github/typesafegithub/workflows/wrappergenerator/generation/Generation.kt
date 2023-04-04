@@ -1,0 +1,364 @@
+package io.github.typesafegithub.workflows.wrappergenerator.generation
+
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.MemberName
+import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
+import com.squareup.kotlinpoet.asTypeName
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
+import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
+import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
+import io.github.typesafegithub.workflows.wrappergenerator.generation.Properties.CUSTOM_INPUTS
+import io.github.typesafegithub.workflows.wrappergenerator.generation.Properties.CUSTOM_VERSION
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.Input
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.Metadata
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.fetchMetadata
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.prettyPrint
+
+data class Wrapper(
+    val kotlinCode: String,
+    val filePath: String,
+)
+
+object Types {
+    val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
+    val nullableString = String::class.asTypeName().copy(nullable = true)
+    val mapToList = MemberName("kotlin.collections", "toList")
+    val listToArray = MemberName("kotlin.collections", "toTypedArray")
+}
+
+object Properties {
+    val CUSTOM_INPUTS = "_customInputs"
+    val CUSTOM_VERSION = "_customVersion"
+}
+
+fun ActionCoords.generateWrapper(
+    inputTypings: Map<String, Typing> = emptyMap(),
+    fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
+): Wrapper {
+    require(this.version.removePrefix("v").toIntOrNull() != null) {
+        "Only major versions are supported, and '${this.version}' was given!"
+    }
+
+    val metadata = fetchMetadataImpl().removeDeprecatedInputsIfNameClash()
+    checkPropertiesAreValid(metadata, inputTypings)
+    metadata.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
+        println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
+    }
+
+    val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
+    return Wrapper(
+        kotlinCode = actionWrapperSourceCode,
+        filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
+    )
+}
+
+private fun Metadata.removeDeprecatedInputsIfNameClash(): Metadata {
+    val newInputs = this.inputs.entries
+        .groupBy { (originalKey, _) -> originalKey.toCamelCase() }
+        .mapValues { (_, clashingInputs) ->
+            clashingInputs
+                .find { it.value.deprecationMessage == null }
+                ?: clashingInputs.first()
+        }.values.associateBy({ it.key }, { it.value })
+    return this.copy(inputs = newInputs)
+}
+
+private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {
+    val invalidProperties = inputTypings.keys - metadata.inputs.keys
+    require(invalidProperties.isEmpty()) {
+        """
+            Request contains invalid properties:
+            Available: ${metadata.inputs.keys}
+            Invalid:   $invalidProperties
+        """.trimIndent()
+    }
+}
+
+private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
+    val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
+        .addFileComment(
+            """
+            This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+            be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+            generator itself.
+            """.trimIndent(),
+        )
+        .addType(generateActionClass(metadata, coords, inputTypings))
+        .addSuppressAnnotation(metadata, coords)
+        .indent("    ")
+        .build()
+    return buildString {
+        fileSpec.writeTo(this)
+    }
+}
+
+private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata, coords: ActionCoords) = apply {
+    val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
+    val addSuppressionForDeprecation = isDeprecatedInputUsed || coords.deprecatedByVersion != null
+
+    addAnnotation(
+        AnnotationSpec.builder(Suppress::class.asClassName())
+            .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
+            .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
+            .apply {
+                if (addSuppressionForDeprecation) {
+                    addMember(CodeBlock.of("%S", "DEPRECATION"))
+                }
+            }
+            .build(),
+    )
+}
+
+private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec {
+    val actionClassName = coords.buildActionClassName()
+    return TypeSpec.classBuilder(actionClassName)
+        .addModifiers(KModifier.DATA)
+        .addKdoc(actionKdoc(metadata, coords))
+        .addMaybeDeprecated(coords)
+        .inheritsFromAction(coords, metadata)
+        .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
+        .properties(metadata, coords, inputTypings)
+        .addFunction(metadata.secondaryConstructor(inputTypings, coords))
+        .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
+        .addCustomTypes(inputTypings, coords)
+        .addOutputClassIfNecessary(metadata)
+        .addBuildOutputObjectFunctionIfNecessary(metadata)
+        .build()
+}
+
+private fun TypeSpec.Builder.addCustomTypes(typings: Map<String, Typing>, coords: ActionCoords): TypeSpec.Builder {
+    typings
+        .mapNotNull { (inputName, typing) -> typing.buildCustomType(coords, inputName) }
+        .distinctBy { it.name }
+        .forEach { addType(it) }
+    return this
+}
+
+private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec.Builder {
+    metadata.inputs.forEach { (key, input) ->
+        addProperty(
+            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
+                .initializer(key.toCamelCase())
+                .annotateDeprecated(input)
+                .build(),
+        )
+    }
+    addProperty(PropertySpec.builder(CUSTOM_INPUTS, Types.mapStringString).initializer(CUSTOM_INPUTS).build())
+    addProperty(PropertySpec.builder(CUSTOM_VERSION, Types.nullableString).initializer(CUSTOM_VERSION).build())
+    return this
+}
+
+private val OutputsBase = ClassName("io.github.typesafegithub.workflows.domain.actions", "Action.Outputs")
+
+private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): TypeSpec.Builder {
+    if (metadata.outputs.isEmpty()) {
+        return this
+    }
+
+    val stepIdConstructorParameter = ParameterSpec.builder("stepId", String::class)
+        .build()
+    val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
+        PropertySpec.builder(key.toCamelCase(), String::class)
+            .initializer("\"steps.\$stepId.outputs.$key\"")
+            .addKdoc(value.description.nestedCommentsSanitized)
+            .build()
+    }
+    addType(
+        TypeSpec.classBuilder("Outputs")
+            .primaryConstructor(
+                FunSpec.constructorBuilder()
+                    .addParameter(stepIdConstructorParameter)
+                    .build(),
+            )
+            .superclass(OutputsBase)
+            .addSuperclassConstructorParameter("stepId")
+            .addProperties(propertiesFromOutputs)
+            .build(),
+    )
+
+    return this
+}
+
+private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: Metadata): TypeSpec.Builder {
+    addFunction(
+        FunSpec.builder("buildOutputObject")
+            .returns(if (metadata.outputs.isEmpty()) OutputsBase else ClassName("", "Outputs"))
+            .addModifiers(KModifier.OVERRIDE)
+            .addParameter("stepId", String::class)
+            .addCode(CodeBlock.of("return Outputs(stepId)"))
+            .build(),
+    )
+
+    return this
+}
+
+private fun PropertySpec.Builder.annotateDeprecated(input: Input) = apply {
+    if (input.deprecationMessage != null) {
+        addAnnotation(
+            AnnotationSpec.builder(Deprecated::class.asClassName())
+                .addMember(CodeBlock.of("%S", input.deprecationMessage))
+                .build(),
+        )
+    }
+}
+
+private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typing>) =
+    FunSpec.builder("toYamlArguments")
+        .addModifiers(KModifier.OVERRIDE)
+        .returns(LinkedHashMap::class.parameterizedBy(String::class, String::class))
+        .addAnnotation(
+            AnnotationSpec.builder(Suppress::class)
+                .addMember("\"SpreadOperator\"")
+                .build(),
+        )
+        .addCode(linkedMapOfInputs(inputTypings))
+        .build()
+
+private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
+    if (inputs.isEmpty()) {
+        return CodeBlock.Builder()
+            .add(CodeBlock.of("return %T($CUSTOM_INPUTS)", LinkedHashMap::class))
+            .build()
+    } else {
+        return CodeBlock.Builder().apply {
+            add("return linkedMapOf(\n")
+            indent()
+            add("*listOfNotNull(\n")
+            indent()
+            inputs.forEach { (key, value) ->
+                val asStringCode = inputTypings.getInputTyping(key).asString()
+                if (!value.shouldBeNonNullInWrapper()) {
+                    add("%N?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
+                } else {
+                    add("%S to %N$asStringCode,\n", key, key.toCamelCase())
+                }
+            }
+            add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
+            unindent()
+            add(").toTypedArray()\n")
+            unindent()
+            add(")")
+        }.build()
+    }
+}
+
+private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.Builder {
+    if (coords.deprecatedByVersion == null) {
+        return this
+    }
+    val newerClass = coords.copy(version = coords.deprecatedByVersion!!)
+    addAnnotation(
+        AnnotationSpec.builder(Deprecated::class)
+            .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")
+            .addMember("replaceWith = ReplaceWith(%S)", newerClass.buildActionClassName())
+            .build(),
+    )
+    return this
+}
+
+private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
+    val superclass = ClassName("io.github.typesafegithub.workflows.domain.actions", "Action")
+        .plusParameter(
+            if (metadata.outputs.isEmpty()) {
+                OutputsBase
+            } else {
+                ClassName(
+                    "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+                    "${coords.buildActionClassName()}.Outputs",
+                )
+            },
+        )
+    return this
+        .superclass(superclass)
+        .addSuperclassConstructorParameter("%S", coords.owner)
+        .addSuperclassConstructorParameter("%S", coords.name)
+        .addSuperclassConstructorParameter("_customVersion ?: %S", coords.version)
+}
+
+private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
+    return FunSpec.constructorBuilder()
+        .addModifiers(KModifier.PRIVATE)
+        .addParameters(buildCommonConstructorParameters(inputTypings, coords))
+        .build()
+}
+
+private fun Metadata.secondaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
+    return FunSpec.constructorBuilder()
+        .addParameter(
+            ParameterSpec.builder("pleaseUseNamedArguments", Unit::class)
+                .addModifiers(KModifier.VARARG)
+                .build(),
+        )
+        .addParameters(buildCommonConstructorParameters(inputTypings, coords))
+        .callThisConstructor(
+            (inputs.keys.map { it.toCamelCase() } + CUSTOM_INPUTS + CUSTOM_VERSION)
+                .map { CodeBlock.of("%N=%N", it, it) },
+        )
+        .build()
+}
+
+private fun Metadata.buildCommonConstructorParameters(
+    inputTypings: Map<String, Typing>,
+    coords: ActionCoords,
+): List<ParameterSpec> =
+    inputs.map { (key, input) ->
+        ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
+            .defaultValueIfNullable(input)
+            .addKdoc(input.description.nestedCommentsSanitized)
+            .build()
+    }.plus(
+        ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
+            .defaultValue("mapOf()")
+            .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
+            .build(),
+    ).plus(
+        ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
+            .defaultValue("null")
+            .addKdoc(
+                "Allows overriding action's version, for example to use a specific minor version, " +
+                    "or a newer version that the wrapper doesn't yet know about",
+            )
+            .build(),
+    )
+
+private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): ParameterSpec.Builder {
+    if (!input.shouldBeNonNullInWrapper()) {
+        defaultValue("null")
+    }
+    return this
+}
+
+private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
+    """
+       |Action: ${metadata.name.nestedCommentsSanitized}
+       |
+       |${metadata.description.nestedCommentsSanitized}
+       |
+       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore('/')}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
+    """.trimMargin()
+
+private fun Map<String, Typing>.getInputTyping(key: String) =
+    this[key] ?: StringTyping
+
+private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords) =
+    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName(), key)
+        .copy(nullable = !input.shouldBeNonNullInWrapper())
+
+// Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
+//            and a shortcoming in KotlinPoet: https://github.com/square/kotlinpoet/issues/887
+private val String.nestedCommentsSanitized
+    get() = replace("/*", "/&#42;")
+        .replace("*/", "&#42;/")
+        .replace("`[^`]++`".toRegex()) {
+            it.value.replace("&#42;", "`&#42;`")
+        }

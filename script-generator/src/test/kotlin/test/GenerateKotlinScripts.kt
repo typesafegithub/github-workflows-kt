@@ -1,13 +1,13 @@
 package test
 
+import io.github.typesafegithub.workflows.scriptgenerator.decodeYamlWorkflow
+import io.github.typesafegithub.workflows.scriptgenerator.rootProject
+import io.github.typesafegithub.workflows.scriptgenerator.toFileSpec
+import io.github.typesafegithub.workflows.scriptmodel.YamlWorkflow
+import io.github.typesafegithub.workflows.wrappergenerator.generation.toPascalCase
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.scriptgenerator.decodeYamlWorkflow
-import it.krzeminski.githubactions.scriptgenerator.rootProject
-import it.krzeminski.githubactions.scriptgenerator.toFileSpec
-import it.krzeminski.githubactions.scriptmodel.YamlWorkflow
-import it.krzeminski.githubactions.wrappergenerator.generation.toPascalCase
 import java.io.FileFilter
 
 class GenerateKotlinScripts : FunSpec({

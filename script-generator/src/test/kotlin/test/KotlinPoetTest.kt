@@ -2,16 +2,16 @@ package test
 
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.asTypeName
+import io.github.typesafegithub.workflows.actions.actions.SetupNodeV3
+import io.github.typesafegithub.workflows.domain.triggers.PullRequest
+import io.github.typesafegithub.workflows.scriptgenerator.CodeBlock
+import io.github.typesafegithub.workflows.scriptgenerator.Members
+import io.github.typesafegithub.workflows.scriptgenerator.enumMemberName
+import io.github.typesafegithub.workflows.scriptgenerator.joinToCode
+import io.github.typesafegithub.workflows.scriptgenerator.templateOf
+import io.github.typesafegithub.workflows.wrappergenerator.generation.toCamelCase
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actions.actions.SetupNodeV3
-import it.krzeminski.githubactions.domain.triggers.PullRequest
-import it.krzeminski.githubactions.scriptgenerator.CodeBlock
-import it.krzeminski.githubactions.scriptgenerator.Members
-import it.krzeminski.githubactions.scriptgenerator.enumMemberName
-import it.krzeminski.githubactions.scriptgenerator.joinToCode
-import it.krzeminski.githubactions.scriptgenerator.templateOf
-import it.krzeminski.githubactions.wrappergenerator.generation.toCamelCase
 
 class KotlinPoetTest : DescribeSpec({
 
@@ -26,7 +26,7 @@ class KotlinPoetTest : DescribeSpec({
 
     it("enumMemberName()") {
         val validEnum = enumMemberName<PullRequest.Type>("assigned")
-        validEnum?.toString() shouldBe "it.krzeminski.githubactions.domain.triggers.PullRequest.Type.Assigned"
+        validEnum?.toString() shouldBe "io.github.typesafegithub.workflows.domain.triggers.PullRequest.Type.Assigned"
 
         val invalidEnum = enumMemberName<PullRequest.Type>("invalid")
         invalidEnum?.toString() shouldBe null
@@ -96,7 +96,7 @@ class KotlinPoetTest : DescribeSpec({
             )
 
             codeblock.toString() shouldBe """
-              val myAction = it.krzeminski.githubactions.actions.actions.SetupNodeV3(
+              val myAction = io.github.typesafegithub.workflows.actions.actions.SetupNodeV3(
                 alwaysAuth = false,
                 nodeVersion = "1.0.0",
                 token = "my-token",

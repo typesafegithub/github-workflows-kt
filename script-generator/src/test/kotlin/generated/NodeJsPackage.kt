@@ -1,12 +1,12 @@
 package generated
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupNodeV3
-import it.krzeminski.githubactions.domain.Concurrency
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.Workflow
-import it.krzeminski.githubactions.domain.triggers.Release
-import it.krzeminski.githubactions.dsl.workflow
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.SetupNodeV3
+import io.github.typesafegithub.workflows.domain.Concurrency
+import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.triggers.Release
+import io.github.typesafegithub.workflows.dsl.workflow
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
 

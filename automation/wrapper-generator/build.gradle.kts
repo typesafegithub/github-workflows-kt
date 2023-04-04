@@ -19,7 +19,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("it.krzeminski.githubactions.wrappergenerator.GenerationEntryPointKt")
+    mainClass.set("io.github.typesafegithub.workflows.wrappergenerator.GenerationEntryPointKt")
 }
 
 tasks.run.configure {
@@ -28,14 +28,14 @@ tasks.run.configure {
 
 tasks.register<JavaExec>("suggestVersions") {
     classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("it.krzeminski.githubactions.wrappergenerator.versions.SuggestVersionsKt")
+    mainClass.set("io.github.typesafegithub.workflows.wrappergenerator.versions.SuggestVersionsKt")
     workingDir = rootDir
     dependsOn(tasks.compileKotlin)
 }
 
 tasks.register<JavaExec>("updateCommitHashes") {
     classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("it.krzeminski.githubactions.wrappergenerator.updating.UpdateCommitHashesKt")
+    mainClass.set("io.github.typesafegithub.workflows.wrappergenerator.updating.UpdateCommitHashesKt")
     workingDir = rootDir
     dependsOn(tasks.compileKotlin)
 }

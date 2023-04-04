@@ -1,9 +1,9 @@
 package test
 
+import io.github.typesafegithub.workflows.scriptgenerator.filename
+import io.github.typesafegithub.workflows.scriptmodel.normalizeYaml
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.scriptgenerator.filename
-import it.krzeminski.githubactions.scriptmodel.normalizeYaml
 import java.net.URL
 
 class NormalizeYamlTest : FunSpec({
@@ -98,9 +98,9 @@ class NormalizeYamlTest : FunSpec({
     test("Normalize workflow and job concurrency") {
         val input = """
             name: Test workflow
-            
+
             concurrency: workflow_staging_environment
-              
+
             jobs:
               "test_job":
                 concurrency: job_staging_environment
@@ -108,11 +108,11 @@ class NormalizeYamlTest : FunSpec({
 
         input.normalizeYaml() shouldBe """
             name: Test workflow
-            
+
             concurrency:
               group: workflow_staging_environment
               cancel-in-progress: false
-              
+
             jobs:
               "test_job":
                 concurrency:

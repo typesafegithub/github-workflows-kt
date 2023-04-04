@@ -9,9 +9,9 @@ import generated.workflowRefreshversionsBuild
 import generated.workflowRefreshversionsPr
 import generated.workflowRefreshversionsWebsite
 import generated.workflowUpdateGradleWrapper
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
-import it.krzeminski.githubactions.yaml.writeToFile
 
 class RunKotlinScripts : FunSpec({
     val allWorkflows = listOf(
