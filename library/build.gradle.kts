@@ -15,7 +15,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.8.10"
 }
 
-group = "it.krzeminski"
+group = "io.github.typesafegithub"
 version = "0.40.0"
 
 dependencies {
@@ -73,7 +73,7 @@ val validateDuplicatedVersion by tasks.creating<Task> {
         ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
         require(
             project.file("src/test/kotlin/it/krzeminski/githubactions/docsnippets/GettingStartedSnippets.kt").readText()
-                .contains("\"it.krzeminski:github-actions-kotlin-dsl:$version\"")
+                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
         ) { "Library version stated in library/src/test/.../GettingStarted.kt should be equal to $version!" }
     }
 }
