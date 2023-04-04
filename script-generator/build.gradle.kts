@@ -19,7 +19,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("it.krzeminski.githubactions.scriptgenerator.MainKt")
+    mainClass.set("io.github.typesafegithub.workflows.scriptgenerator.MainKt")
     tasks.run.get().workingDir = rootProject.projectDir
 }
 
@@ -37,7 +37,7 @@ tasks.formatKotlinTest {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += listOf(
-            "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
+            "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi"
         )
     }
 }

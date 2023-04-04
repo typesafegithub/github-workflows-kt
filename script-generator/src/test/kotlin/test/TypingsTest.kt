@@ -1,5 +1,13 @@
 package test
 
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
+import io.github.typesafegithub.workflows.actionsmetadata.model.BooleanTyping
+import io.github.typesafegithub.workflows.actionsmetadata.model.EnumTyping
+import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerTyping
+import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpecialValueTyping
+import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
+import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
+import io.github.typesafegithub.workflows.scriptgenerator.valueWithTyping
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.Table3
 import io.kotest.data.forAll
@@ -7,14 +15,6 @@ import io.kotest.data.headers
 import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.shouldBe
-import it.krzeminski.githubactions.actionsmetadata.model.ActionCoords
-import it.krzeminski.githubactions.actionsmetadata.model.BooleanTyping
-import it.krzeminski.githubactions.actionsmetadata.model.EnumTyping
-import it.krzeminski.githubactions.actionsmetadata.model.IntegerTyping
-import it.krzeminski.githubactions.actionsmetadata.model.IntegerWithSpecialValueTyping
-import it.krzeminski.githubactions.actionsmetadata.model.ListOfTypings
-import it.krzeminski.githubactions.actionsmetadata.model.Typing
-import it.krzeminski.githubactions.scriptgenerator.valueWithTyping
 
 class TypingsTest : FunSpec({
     val coords = ActionCoords("8398a7", "action-slack", "v3")

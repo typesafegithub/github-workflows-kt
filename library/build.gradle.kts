@@ -37,7 +37,7 @@ sourceSets {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += listOf(
-            "-opt-in=it.krzeminski.githubactions.internal.InternalGithubActionsApi"
+            "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi"
         )
     }
 }
@@ -47,7 +47,7 @@ kotlin {
 }
 
 apiValidation {
-    ignoredPackages.add("it.krzeminski.githubactions.actions")
+    ignoredPackages.add("io.github.typesafegithub.workflows.actions")
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
@@ -68,11 +68,11 @@ val validateDuplicatedVersion by tasks.creating<Task> {
                 .contains("  version: $version")
         ) { "Library version stated in the docs should be equal to $version!" }
         require(
-            project.rootDir.resolve("script-generator/src/main/kotlin/it/krzeminski/githubactions/scriptgenerator/Version.kt").readText()
+            project.rootDir.resolve("script-generator/src/main/kotlin/io/github/typesafegithub/workflows/scriptgenerator/Version.kt").readText()
                 .contains("val LIBRARY_VERSION = \"$version\"")
         ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
         require(
-            project.file("src/test/kotlin/it/krzeminski/githubactions/docsnippets/GettingStartedSnippets.kt").readText()
+            project.file("src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
                 .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
         ) { "Library version stated in library/src/test/.../GettingStarted.kt should be equal to $version!" }
     }
@@ -86,7 +86,7 @@ pitest {
     junit5PluginVersion.set("1.1.0")
     excludedClasses.set(
         // Generated action wrappers.
-        listOf("it.krzeminski.githubactions.actions.*"),
+        listOf("io.github.typesafegithub.workflows.actions.*"),
     )
 }
 
@@ -95,7 +95,7 @@ tasks.dokkaHtml {
 
     dokkaSourceSets.configureEach {
         perPackageOption {
-            matchingRegex.set("it.krzeminski.githubactions.actions.*")
+            matchingRegex.set("io.github.typesafegithub.workflows.actions.*")
             suppress.set(true)
         }
     }

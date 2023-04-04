@@ -1,15 +1,15 @@
 package generated
 
-import it.krzeminski.githubactions.domain.actions.CustomAction
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.docker.BuildPushActionV4
-import it.krzeminski.githubactions.actions.docker.LoginActionV2
-import it.krzeminski.githubactions.actions.docker.SetupBuildxActionV2
-import it.krzeminski.githubactions.domain.Concurrency
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.Workflow
-import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.workflow
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.docker.BuildPushActionV4
+import io.github.typesafegithub.workflows.actions.docker.LoginActionV2
+import io.github.typesafegithub.workflows.actions.docker.SetupBuildxActionV2
+import io.github.typesafegithub.workflows.domain.Concurrency
+import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.workflow
 import java.nio.`file`.Paths
 
 public val workflowDockerImage: Workflow = workflow(
