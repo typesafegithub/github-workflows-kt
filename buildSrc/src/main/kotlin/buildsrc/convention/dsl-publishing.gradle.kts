@@ -7,9 +7,9 @@ plugins {
     signing
 }
 
-val githubUser = "krzema12"
+val githubUser = "typesafegithub"
 val repositoryName = "github-workflows-kt"
-val mavenLibraryName = "github-actions-kotlin-dsl"
+val mavenLibraryName = repositoryName
 
 publishing {
     publications {

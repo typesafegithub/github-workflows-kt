@@ -67,7 +67,7 @@ private fun YamlWorkflow.workflowEnv(): CodeBlock {
 fun YamlWorkflow.toKotlin(filename: String): String = """
         |#!/usr/bin/env kotlin
         |
-        |@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:$LIBRARY_VERSION")
+        |@file:DependsOn("io.github.typesafegithub:github-workflows-kt:$LIBRARY_VERSION")
         |
         |${toFileSpec(filename)}
         |workflow${filename.toPascalCase()}.writeToFile()

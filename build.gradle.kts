@@ -9,5 +9,5 @@ nexusPublishing {
     repositories {
         sonatype()
     }
-    packageGroup.set("it.krzeminski")
+    packageGroup.set("io.github.typesafegithub")
 }
