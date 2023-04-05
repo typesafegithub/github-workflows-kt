@@ -1,10 +1,10 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.40.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.40.1")
 
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.actions.SetupPythonV4
-import it.krzeminski.githubactions.dsl.expressions.expr
-import it.krzeminski.githubactions.dsl.JobBuilder
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
+import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
+import io.github.typesafegithub.workflows.dsl.expressions.expr
+import io.github.typesafegithub.workflows.dsl.JobBuilder
 
 fun JobBuilder<*>.setupJava() =
     uses(
