@@ -12,6 +12,6 @@ data easily, the tendency is also to overuse them for more complicated scenarios
 language would be beneficial. This library aims at filling this gap, utilizing Kotlin as a modern general-purpose
 language with good internal DSL support.
 
-# For more info please see [the documentation](https://krzema12.github.io/github-workflows-kt/).
+# For more info please see [the documentation](https://typesafegithub.github.io/github-workflows-kt/).
 
 ![carbon(12)](https://user-images.githubusercontent.com/459464/174335482-9e2744e4-332d-490d-9427-6b5ee7d66100.png)
