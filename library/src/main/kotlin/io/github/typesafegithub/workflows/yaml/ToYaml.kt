@@ -179,6 +179,7 @@ private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map
     mapOfNotNullValues(
         "name" to name,
         "on" to on.triggersToYaml(),
+        "permissions" to permissions?.associate { it.type to it.mode.toString() },
         "concurrency" to concurrency?.let {
             mapOf(
                 "group" to it.group,
