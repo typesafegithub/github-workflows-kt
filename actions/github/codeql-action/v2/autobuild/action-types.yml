@@ -1,0 +1,8 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  token:
+    type: string
+  matrix:
+    type: string
+  working-directory:
+    type: string

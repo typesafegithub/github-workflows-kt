@@ -1,0 +1,50 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  tools:
+    type: string
+  languages:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  token:
+    type: string
+  registries:
+    type: string
+  matrix:
+    type: string
+  config-file:
+    type: string
+  db-location:
+    type: string
+  queries:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  packs:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  external-repository-token:
+    type: string
+  setup-python-dependencies:
+    type: boolean
+  source-root:
+    type: string
+  ram:
+    type: integer
+  threads:
+    type: integer
+  debug:
+    type: boolean
+  debug-artifact-name:
+    type: string
+  debug-database-name:
+    type: string
+  trap-caching:
+    type: boolean
+outputs:
+  codeql-path:
+    type: string
