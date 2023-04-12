@@ -1,0 +1,50 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  check_name:
+    type: string
+  output:
+    type: string
+  upload:
+    type: enum
+    allowed-values:
+      - always
+      - failure-only
+      - never
+  cleanup-level:
+    type: enum
+    allowed-values:
+      - none
+      - brutal
+      - normal
+      - light
+  ram:
+    type: integer
+  add-snippets:
+    type: boolean
+  skip-queries:
+    type: boolean
+  threads:
+    type: integer
+  checkout_path:
+    type: string
+  ref:
+    type: string
+  sha:
+    type: string
+  category:
+    type: string
+  upload-database:
+    type: boolean
+  wait-for-processing:
+    type: boolean
+  token:
+    type: string
+  matrix:
+    type: string
+  expect-error:
+    type: boolean
+outputs:
+  db-locations:
+    type: string
+  sarif-id:
+    type: string
