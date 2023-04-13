@@ -44,8 +44,10 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
 
         allWarningsAsErrors = true
+    }
 
-        freeCompilerArgs += listOf(
+    compilerOptions {
+        freeCompilerArgs.addAll(
             "-opt-in=kotlin.ExperimentalStdlibApi",
             "-opt-in=kotlin.time.ExperimentalTime",
         )

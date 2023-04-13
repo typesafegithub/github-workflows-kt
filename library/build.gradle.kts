@@ -35,9 +35,9 @@ sourceSets {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += listOf(
-            "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi"
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi",
         )
     }
 }
