@@ -10,6 +10,7 @@
 package io.github.typesafegithub.workflows.actions.actions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.Int
@@ -58,7 +59,7 @@ public data class CacheV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<CacheV2.Outputs>("actions", "cache", _customVersion ?: "v2") {
+) : RegularAction<CacheV2.Outputs>("actions", "cache", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         path: List<String>,

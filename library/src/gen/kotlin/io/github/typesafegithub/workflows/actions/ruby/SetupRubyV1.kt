@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.ruby
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -86,7 +87,7 @@ public data class SetupRubyV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
+) : RegularAction<SetupRubyV1.Outputs>("ruby", "setup-ruby", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         rubyVersion: String? = null,

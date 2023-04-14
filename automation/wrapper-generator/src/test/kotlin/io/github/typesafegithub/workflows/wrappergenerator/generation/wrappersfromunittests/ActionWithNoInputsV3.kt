@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.johnsmith
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -32,7 +33,7 @@ public data class ActionWithNoInputsV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         _customInputs: Map<String, String> = mapOf(),

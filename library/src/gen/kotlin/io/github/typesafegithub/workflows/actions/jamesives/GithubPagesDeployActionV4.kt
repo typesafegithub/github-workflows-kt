@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.jamesives
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -127,7 +128,7 @@ public data class GithubPagesDeployActionV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
+) : RegularAction<GithubPagesDeployActionV4.Outputs>("JamesIves", "github-pages-deploy-action",
         _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,

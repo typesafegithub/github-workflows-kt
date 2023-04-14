@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.`8398a7`
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -98,7 +99,7 @@ public data class ActionSlackV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("8398a7", "action-slack", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("8398a7", "action-slack", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         status: ActionSlackV3.Status,

@@ -125,7 +125,7 @@ private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputT
         .addModifiers(KModifier.DATA)
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
-        .inheritsFromAction(coords, metadata)
+        .inheritsFromRegularAction(coords, metadata)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
         .properties(metadata, coords, inputTypings)
         .addFunction(metadata.secondaryConstructor(inputTypings, coords))
@@ -266,8 +266,8 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     return this
 }
 
-private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
-    val superclass = ClassName("io.github.typesafegithub.workflows.domain.actions", "Action")
+private fun TypeSpec.Builder.inheritsFromRegularAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
+    val superclass = ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
         .plusParameter(
             if (metadata.outputs.isEmpty()) {
                 OutputsBase

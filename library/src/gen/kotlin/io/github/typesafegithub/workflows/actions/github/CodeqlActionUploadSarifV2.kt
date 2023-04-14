@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.github
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -70,8 +71,8 @@ public data class CodeqlActionUploadSarifV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<CodeqlActionUploadSarifV2.Outputs>("github", "codeql-action/upload-sarif", _customVersion
-        ?: "v2") {
+) : RegularAction<CodeqlActionUploadSarifV2.Outputs>("github", "codeql-action/upload-sarif",
+        _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         sarifFile: String? = null,

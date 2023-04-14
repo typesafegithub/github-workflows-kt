@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.github
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -149,7 +150,8 @@ public data class CodeqlActionInitV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<CodeqlActionInitV2.Outputs>("github", "codeql-action/init", _customVersion ?: "v2") {
+) : RegularAction<CodeqlActionInitV2.Outputs>("github", "codeql-action/init", _customVersion ?:
+        "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         tools: String? = null,

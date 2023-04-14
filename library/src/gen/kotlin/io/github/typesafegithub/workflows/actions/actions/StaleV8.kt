@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.actions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Float
@@ -296,7 +297,7 @@ public data class StaleV8 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<StaleV8.Outputs>("actions", "stale", _customVersion ?: "v8") {
+) : RegularAction<StaleV8.Outputs>("actions", "stale", _customVersion ?: "v8") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         repoToken: String? = null,

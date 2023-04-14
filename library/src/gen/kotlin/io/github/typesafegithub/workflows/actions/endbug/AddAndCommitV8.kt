@@ -10,6 +10,7 @@
 package io.github.typesafegithub.workflows.actions.endbug
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
@@ -108,7 +109,7 @@ public data class AddAndCommitV8 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v8") {
+) : RegularAction<AddAndCommitV8.Outputs>("EndBug", "add-and-commit", _customVersion ?: "v8") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         add: String? = null,

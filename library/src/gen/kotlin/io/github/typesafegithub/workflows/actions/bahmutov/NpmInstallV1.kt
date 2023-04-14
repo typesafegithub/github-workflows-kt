@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.bahmutov
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -52,7 +53,7 @@ public data class NpmInstallV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("bahmutov", "npm-install", _customVersion ?: "v1") {
+) : RegularAction<Action.Outputs>("bahmutov", "npm-install", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         workingDirectory: String? = null,

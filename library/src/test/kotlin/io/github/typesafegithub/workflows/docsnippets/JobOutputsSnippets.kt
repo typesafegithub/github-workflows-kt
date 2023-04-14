@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.docsnippets
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -30,7 +31,7 @@ class JobOutputsSnippets : FunSpec({
                 // --8<-- [end:define-job-outputs-2]
                 */
             ) {
-                class DocTest : Action<DocTest.Outputs>("doc", "test", "v0") {
+                class DocTest : RegularAction<DocTest.Outputs>("doc", "test", "v0") {
                     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf()
                     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
                     inner class Outputs(stepId: String) : Action.Outputs(stepId) {

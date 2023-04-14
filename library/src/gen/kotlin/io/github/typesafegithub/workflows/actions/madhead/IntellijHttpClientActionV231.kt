@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.madhead
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -86,7 +87,8 @@ public data class IntellijHttpClientActionV231 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?: "v231") {
+) : RegularAction<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?:
+        "v231") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         files: List<String>,
