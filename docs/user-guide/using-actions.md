@@ -40,7 +40,9 @@ you have two ways to proceed.
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
-Inherit from [`RegularAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt)
+#### Repository based actions
+
+In case of a repository based action which most GitHub actions are, inherit from [`RegularAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt)
 and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin
@@ -60,6 +62,15 @@ Once you've got your action, it's now as simple as using it like this:
 --8<-- "UsingActionsSnippets.kt:using"
 ```
 
+#### Local actions
+
+In case of a local action you have available in your repository or cloned from a private repository,
+inherit from [`LocalAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/LocalAction.kt) instead:
+
+```kotlin
+--8<-- "UsingActionsSnippets.kt:local-action"
+```
+
 ### Untyped wrapper
 
 !!! info "When to use this approach"
@@ -67,7 +78,9 @@ Once you've got your action, it's now as simple as using it like this:
     types because you're in the middle of experimenting. It's also more convenient to produce such code by a code
     generator.
 
-Use a [`CustomAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomAction.kt):
+#### Repository based actions
+
+In case of a repository based action which most GitHub actions are, use a [`CustomAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomAction.kt):
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-action"
@@ -77,4 +90,13 @@ If your custom action has outputs, you can access them, albeit in a type-unsafe 
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-action-outputs"
+```
+
+#### Local actions
+
+In case of a local action you have available in your repository or cloned from a private repository,
+use a [`CustomLocalAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomLocalAction.kt) instead:
+
+```kotlin
+--8<-- "UsingActionsSnippets.kt:custom-local-action"
 ```

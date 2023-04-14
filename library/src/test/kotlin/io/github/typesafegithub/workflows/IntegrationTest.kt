@@ -10,6 +10,8 @@ import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.CustomLocalAction
+import io.github.typesafegithub.workflows.domain.actions.LocalAction
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -199,6 +201,16 @@ class IntegrationTest : FunSpec({
 
                 uses(
                     name = "Check out again",
+                    action = CustomLocalAction(
+                        actionPath = "./.github/actions/checkout",
+                        inputs = mapOf(
+                            "clean" to "false",
+                        ),
+                    ),
+                )
+
+                uses(
+                    name = "Check out again",
                     action = object : RegularAction<Action.Outputs>(
                         actionOwner = "actions",
                         actionName = "checkout",
@@ -208,6 +220,18 @@ class IntegrationTest : FunSpec({
                             "repository" to "actions/checkout",
                             "ref" to "v3",
                             "path" to "./.github/actions/checkout",
+                            "clean" to "false",
+                        )
+                        override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)
+                    },
+                )
+
+                uses(
+                    name = "Check out again",
+                    action = object : LocalAction<Action.Outputs>(
+                        actionPath = "./.github/actions/checkout",
+                    ) {
+                        override fun toYamlArguments() = linkedMapOf(
                             "clean" to "false",
                         )
                         override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)

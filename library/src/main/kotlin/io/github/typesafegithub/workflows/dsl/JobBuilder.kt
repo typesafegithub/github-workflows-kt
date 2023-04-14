@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows.dsl
 
+import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
-import io.github.typesafegithub.workflows.domain.ExternalActionStep
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
@@ -98,7 +98,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ExternalActionStep<T> = uses(
+    ): ActionStep<T> = uses(
         name = null,
         action = action,
         env = env,
@@ -117,9 +117,9 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         timeoutMinutes: Int? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ExternalActionStep<T> {
+    ): ActionStep<T> {
         val stepId = "step-${job.steps.size}"
-        val newStep = ExternalActionStep(
+        val newStep = ActionStep(
             id = stepId,
             name = name,
             action = action,

@@ -21,3 +21,10 @@ public abstract class RegularAction<out OUTPUTS : Outputs>(
     override val usesString
         get() = "$actionOwner/$actionName@$actionVersion"
 }
+
+public abstract class LocalAction<out OUTPUTS : Outputs>(
+    public open val actionPath: String,
+) : Action<OUTPUTS>() {
+    override val usesString
+        get() = actionPath
+}
