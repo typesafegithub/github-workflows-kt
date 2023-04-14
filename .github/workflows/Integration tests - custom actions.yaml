@@ -23,6 +23,9 @@ jobs:
       with:
         clean: false
     - id: step-2
+      name: Run alpine
+      uses: docker://alpine:3.8
+    - id: step-3
       name: Check out again
       uses: actions/checkout@v3
       with:
@@ -30,8 +33,11 @@ jobs:
         ref: v3
         path: ./.github/actions/checkout
         clean: false
-    - id: step-3
+    - id: step-4
       name: Check out again
       uses: ./.github/actions/checkout
       with:
         clean: false
+    - id: step-5
+      name: Run alpine
+      uses: docker://alpine:3.8

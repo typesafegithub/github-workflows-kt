@@ -10,7 +10,9 @@ import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.CustomDockerAction
 import io.github.typesafegithub.workflows.domain.actions.CustomLocalAction
+import io.github.typesafegithub.workflows.domain.actions.DockerAction
 import io.github.typesafegithub.workflows.domain.actions.LocalAction
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -210,6 +212,14 @@ class IntegrationTest : FunSpec({
                 )
 
                 uses(
+                    name = "Run alpine",
+                    action = CustomDockerAction(
+                        actionImage = "alpine",
+                        actionTag = "3.8",
+                    ),
+                )
+
+                uses(
                     name = "Check out again",
                     action = object : RegularAction<Action.Outputs>(
                         actionOwner = "actions",
@@ -234,6 +244,17 @@ class IntegrationTest : FunSpec({
                         override fun toYamlArguments() = linkedMapOf(
                             "clean" to "false",
                         )
+                        override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)
+                    },
+                )
+
+                uses(
+                    name = "Run alpine",
+                    action = object : DockerAction<Action.Outputs>(
+                        actionImage = "alpine",
+                        actionTag = "3.8",
+                    ) {
+                        override fun toYamlArguments() = linkedMapOf<String, String>()
                         override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)
                     },
                 )
