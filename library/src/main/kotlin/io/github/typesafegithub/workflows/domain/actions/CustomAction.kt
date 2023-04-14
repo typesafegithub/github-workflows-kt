@@ -31,3 +31,16 @@ public data class CustomLocalAction(
     override fun buildOutputObject(stepId: String): Outputs =
         Outputs(stepId)
 }
+
+public data class CustomDockerAction(
+    override val actionImage: String,
+    override val actionTag: String,
+    public val inputs: Map<String, String> = emptyMap(),
+    override val actionHost: String? = null,
+) : DockerAction<Outputs>(actionImage, actionTag, actionHost) {
+    override fun toYamlArguments(): LinkedHashMap<String, String> =
+        LinkedHashMap(inputs)
+
+    override fun buildOutputObject(stepId: String): Outputs =
+        Outputs(stepId)
+}

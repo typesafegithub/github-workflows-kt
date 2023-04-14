@@ -28,3 +28,12 @@ public abstract class LocalAction<out OUTPUTS : Outputs>(
     override val usesString
         get() = actionPath
 }
+
+public abstract class DockerAction<out OUTPUTS : Outputs>(
+    public open val actionImage: String,
+    public open val actionTag: String,
+    public open val actionHost: String? = null,
+) : Action<OUTPUTS>() {
+    override val usesString
+        get() = "docker://${if (actionHost == null) "" else "$actionHost/"}$actionImage:$actionTag"
+}

@@ -71,6 +71,14 @@ inherit from [`LocalAction`](https://github.com/typesafegithub/github-workflows-
 --8<-- "UsingActionsSnippets.kt:local-action"
 ```
 
+#### Published Docker actions
+
+In case of a published Docker action, inherit from [`DockerAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/DockerAction.kt) instead:
+
+```kotlin
+--8<-- "UsingActionsSnippets.kt:docker-action"
+```
+
 ### Untyped wrapper
 
 !!! info "When to use this approach"
@@ -99,4 +107,12 @@ use a [`CustomLocalAction`](https://github.com/typesafegithub/github-workflows-k
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-local-action"
+```
+
+#### Published Docker actions
+
+In case of a published Docker action, use a [`CustomDockerAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomDockerAction.kt) instead:
+
+```kotlin
+--8<-- "UsingActionsSnippets.kt:custom-docker-action"
 ```
