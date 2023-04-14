@@ -8,6 +8,7 @@ import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.WorkflowBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
@@ -1029,7 +1030,7 @@ private fun testRanWithGitHub(
     val fileName = "Integration tests - $name"
     val trivialWorkflow = workflow(
         name = "Integration tests - $name",
-        on = listOf(Push()),
+        on = listOf(Push(), PullRequest()),
         sourceFile = Path.of("../.github/workflows/$fileName.main.kts"),
     ) {
         workflow()

@@ -5,6 +5,7 @@
 name: Integration tests - one job depending on another
 on:
   push: {}
+  pull_request: {}
 jobs:
   test_job_1:
     runs-on: ubuntu-latest
