@@ -81,9 +81,9 @@ inputs:
     type: boolean
   version:
     type: string
-  working-directory:
-    type: string
   xcode:
     type: boolean
   xcode_archive_path:
     type: string
+  swift:
+    type: boolean
