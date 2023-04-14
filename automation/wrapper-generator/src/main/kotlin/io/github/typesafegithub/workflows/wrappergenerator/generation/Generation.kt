@@ -158,7 +158,7 @@ private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords
     return this
 }
 
-private val OutputsBase = ClassName("io.github.typesafegithub.workflows.domain.actions", "Action.Outputs")
+private val OutputsBase = ClassName("io.github.typesafegithub.workflows.domain.actions", "Action", "Outputs")
 
 private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): TypeSpec.Builder {
     if (metadata.outputs.isEmpty()) {
@@ -274,7 +274,8 @@ private fun TypeSpec.Builder.inheritsFromAction(coords: ActionCoords, metadata: 
             } else {
                 ClassName(
                     "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
-                    "${coords.buildActionClassName()}.Outputs",
+                    coords.buildActionClassName(),
+                    "Outputs",
                 )
             },
         )
