@@ -9,7 +9,6 @@
 package io.github.typesafegithub.workflows.actions.googlegithubactions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
