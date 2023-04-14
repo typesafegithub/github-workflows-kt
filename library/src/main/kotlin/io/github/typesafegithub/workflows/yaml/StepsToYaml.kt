@@ -22,7 +22,6 @@ private fun Step.toYaml() =
         is CommandStep -> toYaml()
     }
 
-@Suppress("SpreadOperator")
 private fun ExternalActionStep<*>.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
@@ -35,7 +34,6 @@ private fun ExternalActionStep<*>.toYaml(): Map<String, Any?> =
         "if" to condition,
     ) + _customArguments
 
-@Suppress("SpreadOperator")
 private fun CommandStep.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
