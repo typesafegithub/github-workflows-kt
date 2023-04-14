@@ -19,9 +19,19 @@ jobs:
         path: ./.github/actions/checkout
     - id: step-1
       name: Check out again
+      uses: ./.github/actions/checkout
+      with:
+        clean: false
+    - id: step-2
+      name: Check out again
       uses: actions/checkout@v3
       with:
         repository: actions/checkout
         ref: v3
         path: ./.github/actions/checkout
+        clean: false
+    - id: step-3
+      name: Check out again
+      uses: ./.github/actions/checkout
+      with:
         clean: false

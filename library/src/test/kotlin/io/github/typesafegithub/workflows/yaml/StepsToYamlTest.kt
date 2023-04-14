@@ -3,8 +3,8 @@ package io.github.typesafegithub.workflows.yaml
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3.FetchDepth
 import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV3
+import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
-import io.github.typesafegithub.workflows.domain.ExternalActionStep
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
@@ -20,7 +20,7 @@ class StepsToYamlTest : DescribeSpec({
                 name = "Some command",
                 command = "echo 'test!'",
             ),
-            ExternalActionStep(
+            ActionStep(
                 id = "someId",
                 name = "Some external action",
                 action = CheckoutV3(),
@@ -212,7 +212,7 @@ class StepsToYamlTest : DescribeSpec({
         it("renders with required parameters and no action inputs") {
             // given
             val steps = listOf(
-                ExternalActionStep(
+                ActionStep(
                     id = "someId",
                     action = CheckoutV3(),
                     outputs = Action.Outputs("someId"),
@@ -234,7 +234,7 @@ class StepsToYamlTest : DescribeSpec({
         it("renders with all parameters") {
             // given
             val steps = listOf(
-                ExternalActionStep(
+                ActionStep(
                     id = "someId",
                     name = "Some external action",
                     continueOnError = true,
@@ -291,7 +291,7 @@ class StepsToYamlTest : DescribeSpec({
         it("renders custom action") {
             // given
             val steps = listOf(
-                ExternalActionStep(
+                ActionStep(
                     id = "latex",
                     name = "Latex",
                     action = CustomAction(
@@ -327,7 +327,7 @@ class StepsToYamlTest : DescribeSpec({
         it("renders with action with custom arguments") {
             // given
             val steps = listOf(
-                ExternalActionStep(
+                ActionStep(
                     id = "someId",
                     action = UploadArtifactV3(
                         name = "artifact",
@@ -361,7 +361,7 @@ class StepsToYamlTest : DescribeSpec({
         it("renders with action's custom version") {
             // given
             val steps = listOf(
-                ExternalActionStep(
+                ActionStep(
                     id = "someId",
                     action = UploadArtifactV3(
                         name = "artifact",
@@ -394,7 +394,7 @@ class StepsToYamlTest : DescribeSpec({
         it("renders with custom argument overriding built-in argument") {
             // given
             val steps = listOf(
-                ExternalActionStep(
+                ActionStep(
                     id = "someId",
                     name = "Will be overridden",
                     action = CheckoutV3(),

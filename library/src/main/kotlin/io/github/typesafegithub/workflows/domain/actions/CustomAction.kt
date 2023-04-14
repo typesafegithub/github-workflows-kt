@@ -20,3 +20,14 @@ public data class CustomAction(
     override fun buildOutputObject(stepId: String): Outputs =
         Outputs(stepId)
 }
+
+public data class CustomLocalAction(
+    override val actionPath: String,
+    public val inputs: Map<String, String> = emptyMap(),
+) : LocalAction<Outputs>(actionPath) {
+    override fun toYamlArguments(): LinkedHashMap<String, String> =
+        LinkedHashMap(inputs)
+
+    override fun buildOutputObject(stepId: String): Outputs =
+        Outputs(stepId)
+}

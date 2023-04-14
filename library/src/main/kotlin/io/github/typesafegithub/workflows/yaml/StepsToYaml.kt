@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.yaml
 
+import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
-import io.github.typesafegithub.workflows.domain.ExternalActionStep
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.Shell.Bash
 import io.github.typesafegithub.workflows.domain.Shell.Cmd
@@ -17,11 +17,11 @@ internal fun List<Step>.stepsToYaml(): List<Map<String, Any?>> =
 
 private fun Step.toYaml() =
     when (this) {
-        is ExternalActionStep<*> -> toYaml()
+        is ActionStep<*> -> toYaml()
         is CommandStep -> toYaml()
     }
 
-private fun ExternalActionStep<*>.toYaml(): Map<String, Any?> =
+private fun ActionStep<*>.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,

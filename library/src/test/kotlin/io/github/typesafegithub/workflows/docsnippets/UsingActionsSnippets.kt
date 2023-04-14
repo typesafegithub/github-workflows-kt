@@ -3,6 +3,8 @@ package io.github.typesafegithub.workflows.docsnippets
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.CustomLocalAction
+import io.github.typesafegithub.workflows.domain.actions.LocalAction
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -59,6 +61,20 @@ class UsingActionsSnippets : FunSpec({
         }
     }
 
+    test("localAction") {
+        // --8<-- [start:local-action]
+        class MyCoolLocalActionV3(
+            private val someArgument: String,
+        ) : LocalAction<Action.Outputs>("./.github/actions/cool-action") {
+            override fun toYamlArguments() = linkedMapOf(
+                "some-argument" to someArgument,
+            )
+
+            override fun buildOutputObject(stepId: String) = Outputs(stepId)
+        }
+        // --8<-- [end:local-action]
+    }
+
     test("customAction") {
         // --8<-- [start:custom-action]
         val customAction = CustomAction(
@@ -87,6 +103,26 @@ class UsingActionsSnippets : FunSpec({
                 println(expr(customActionStep.outputs["custom-output"]))
             }
             // --8<-- [end:custom-action-outputs]
+        }
+    }
+
+    test("customLocalAction") {
+        // --8<-- [start:custom-local-action]
+        val customAction = CustomLocalAction(
+            actionPath = "./.github/actions/setup-build-env",
+        )
+        // --8<-- [end:custom-local-action]
+
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+        ) {
+            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+                uses(
+                    name = "Some step with output",
+                    action = customAction,
+                )
+            }
         }
     }
 })
