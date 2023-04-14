@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EnvContext</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>GitHub Workflows Kt</span>
+            </a>
+    </div>
+    <div>
+0.41.0    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":library:dokkaHtml/main">jvm</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="GitHub Workflows Kt::io.github.typesafegithub.workflows.dsl.expressions.contexts/EnvContext///PointingToDeclaration//-1951329584">
+  <div class="breadcrumbs"><a href="../../../index.html">GitHub Workflows Kt</a><span class="delimiter">/</span><a href="../index.html">io.github.typesafegithub.workflows.dsl.expressions.contexts</a><span class="delimiter">/</span><span class="current">EnvContext</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Env</span><wbr></wbr><span><span>Context</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">EnvContext</a> : <a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html">ExpressionContext</a></div><p class="paragraph">Environment variables: https://docs.github.com/en/actions/learn-github-actions/environment-variables#about-environment-variables Default Environment variables: https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="182506349%2FFunctions%2F-1951329584" anchor-label="containsKey" id="182506349%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#182506349%2FFunctions%2F-1951329584"><span>contains</span><wbr></wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="182506349%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#182506349%2FFunctions%2F-1951329584"><span class="token function">containsKey</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="810257215%2FFunctions%2F-1951329584" anchor-label="containsValue" id="810257215%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#810257215%2FFunctions%2F-1951329584"><span>contains</span><wbr></wbr><span><span>Value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="810257215%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#810257215%2FFunctions%2F-1951329584"><span class="token function">containsValue</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1085614808%2FFunctions%2F-1951329584" anchor-label="forEach" id="1085614808%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1085614808%2FFunctions%2F-1951329584"><span>for</span><wbr></wbr><span><span>Each</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1085614808%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1085614808%2FFunctions%2F-1951329584"><span class="token function">forEach</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">p0<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html">BiConsumer</a><span class="token operator">&lt;</span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword">in </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1885167485%2FFunctions%2F-1951329584" anchor-label="get" id="-1885167485%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1885167485%2FFunctions%2F-1951329584"><span><span>get</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1885167485%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1885167485%2FFunctions%2F-1951329584"><span class="token function">get</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-71378642%2FFunctions%2F-1951329584" anchor-label="getOrDefault" id="-71378642%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-71378642%2FFunctions%2F-1951329584"><span>get</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-71378642%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-71378642%2FFunctions%2F-1951329584"><span class="token function">getOrDefault</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">defaultValue<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1708477740%2FFunctions%2F-1951329584" anchor-label="isEmpty" id="-1708477740%2FFunctions%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1708477740%2FFunctions%2F-1951329584"><span>is</span><wbr></wbr><span><span>Empty</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1708477740%2FFunctions%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1708477740%2FFunctions%2F-1951329584"><span class="token function">isEmpty</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1681182390%2FProperties%2F-1951329584" anchor-label="CI" id="1681182390%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-i.html"><span><span>CI</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1681182390%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-c-i.html">CI</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Always set to true.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="43098407%2FProperties%2F-1951329584" anchor-label="entries" id="43098407%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#43098407%2FProperties%2F-1951329584"><span><span>entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="43098407%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#43098407%2FProperties%2F-1951329584">entries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-set/index.html">Set</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/-entry/index.html">Map.Entry</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1464822804%2FProperties%2F-1951329584" anchor-label="GITHUB_ACTION" id="-1464822804%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n.html"><span><span>GITHUB_ACTION</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1464822804%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-a-c-t-i-o-n.html">GITHUB_ACTION</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the action currently running, or the id of a step. For example, for an action, __repo-owner_name-of-action-repo.GitHub removes special characters, and uses the name __run when the current step runs a script without an id. If you use the same script or action more than once in the same job, the name will include a suffix that consists of the sequence number preceded by an underscore. For example, the first script you run will have the name __run, and the second script will be named __run_2. Similarly, the second invocation of actions/checkout will be actionscheckout2.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="522145898%2FProperties%2F-1951329584" anchor-label="GITHUB_ACTION_PATH" id="522145898%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n_-p-a-t-h.html"><span><span>GITHUB_ACTION_PATH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="522145898%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-a-c-t-i-o-n_-p-a-t-h.html">GITHUB_ACTION_PATH</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The path where an action is located. This property is only supported in composite actions. You can use this path to access files located in the same repository as the action. For example, /home/runner/work/_actions/repo-owner/name-of-action-repo/v1.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1722082459%2FProperties%2F-1951329584" anchor-label="GITHUB_ACTION_REPOSITORY" id="-1722082459%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n_-r-e-p-o-s-i-t-o-r-y.html"><span><span>GITHUB_ACTION_REPOSITORY</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1722082459%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-a-c-t-i-o-n_-r-e-p-o-s-i-t-o-r-y.html">GITHUB_ACTION_REPOSITORY</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">For a step executing an action, this is the owner and repository name of the action. For example, actions/checkout.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1886212997%2FProperties%2F-1951329584" anchor-label="GITHUB_ACTIONS" id="-1886212997%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n-s.html"><span><span>GITHUB_ACTIONS</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1886212997%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-a-c-t-i-o-n-s.html">GITHUB_ACTIONS</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Always set to true when GitHub Actions is running the workflow. You can use this variable to differentiate when tests are being run locally or by GitHub Actions.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1507023171%2FProperties%2F-1951329584" anchor-label="GITHUB_ACTOR" id="1507023171%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-a-c-t-o-r.html"><span><span>GITHUB_ACTOR</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1507023171%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-a-c-t-o-r.html">GITHUB_ACTOR</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the person or app that initiated the workflow. For example, octocat.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1575992210%2FProperties%2F-1951329584" anchor-label="GITHUB_API_URL" id="-1575992210%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-a-p-i_-u-r-l.html"><span><span>GITHUB_API_URL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1575992210%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-a-p-i_-u-r-l.html">GITHUB_API_URL</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Returns the API URL. For example: https://api.github.com.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-124146243%2FProperties%2F-1951329584" anchor-label="GITHUB_BASE_REF" id="-124146243%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-b-a-s-e_-r-e-f.html"><span><span>GITHUB_BASE_REF</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-124146243%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-b-a-s-e_-r-e-f.html">GITHUB_BASE_REF</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the base ref or target branch of the pull request in a workflow run. This is only set when the event that triggers a workflow run is either pull_request or pull_request_target. For example, main.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-868616181%2FProperties%2F-1951329584" anchor-label="GITHUB_ENV" id="-868616181%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-e-n-v.html"><span><span>GITHUB_ENV</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-868616181%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-e-n-v.html">GITHUB_ENV</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The path on the runner to the file that sets environment variables from workflow commands. This file is unique to the current step and changes for each step in a job. For example, /home/runner/work/_temp/_runner_file_commands/set_env_87406d6e-4979-4d42-98e1-3dab1f48b13a. For more information, see &quot;Workflow commands for GitHub Actions.&quot;</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="264104882%2FProperties%2F-1951329584" anchor-label="GITHUB_EVENT_NAME" id="264104882%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-e-v-e-n-t_-n-a-m-e.html"><span><span>GITHUB_EVENT_NAME</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="264104882%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-e-v-e-n-t_-n-a-m-e.html">GITHUB_EVENT_NAME</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the event that triggered the workflow. For example, workflow_dispatch.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-115268776%2FProperties%2F-1951329584" anchor-label="GITHUB_EVENT_PATH" id="-115268776%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-e-v-e-n-t_-p-a-t-h.html"><span><span>GITHUB_EVENT_PATH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-115268776%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-e-v-e-n-t_-p-a-t-h.html">GITHUB_EVENT_PATH</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The path to the file on the runner that contains the full event webhook payload. For example, /github/workflow/event.json.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="272003967%2FProperties%2F-1951329584" anchor-label="GITHUB_GRAPHQL_URL" id="272003967%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-g-r-a-p-h-q-l_-u-r-l.html"><span><span>GITHUB_GRAPHQL_URL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="272003967%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-g-r-a-p-h-q-l_-u-r-l.html">GITHUB_GRAPHQL_URL</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Returns the GraphQL API URL. For example: https://api.github.com/graphql.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1822534386%2FProperties%2F-1951329584" anchor-label="GITHUB_HEAD_REF" id="-1822534386%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-h-e-a-d_-r-e-f.html"><span><span>GITHUB_HEAD_REF</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1822534386%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-h-e-a-d_-r-e-f.html">GITHUB_HEAD_REF</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The head ref or source branch of the pull request in a workflow run. This property is only set when the event that triggers a workflow run is either pull_request or pull_request_target. For example, feature-branch-1.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1801081029%2FProperties%2F-1951329584" anchor-label="GITHUB_JOB" id="-1801081029%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-j-o-b.html"><span><span>GITHUB_JOB</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1801081029%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-j-o-b.html">GITHUB_JOB</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The job_id of the current job. For example, greeting_job.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-502363619%2FProperties%2F-1951329584" anchor-label="GITHUB_PATH" id="-502363619%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-p-a-t-h.html"><span><span>GITHUB_PATH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-502363619%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-p-a-t-h.html">GITHUB_PATH</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The path on the runner to the file that sets system PATH variables from workflow commands. This file is unique to the current step and changes for each step in a job. For example, /home/runner/work/_temp/_runner_file_commands/add_path_899b9445-ad4a-400c-aa89-249f18632cf5. For more information, see &quot;Workflow commands for GitHub Actions.&quot;</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-446132443%2FProperties%2F-1951329584" anchor-label="GITHUB_REF" id="-446132443%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-f.html"><span><span>GITHUB_REF</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-446132443%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-f.html">GITHUB_REF</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The branch or tag ref that triggered the workflow run. For branches this is the format refs/heads/, for tags it is refs/tags/, and for pull requests it is refs/pull//merge. This variable is only set if a branch or tag is available for the event type. For example, refs/heads/feature-branch-1.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="84752683%2FProperties%2F-1951329584" anchor-label="GITHUB_REF_NAME" id="84752683%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-f_-n-a-m-e.html"><span><span>GITHUB_REF_NAME</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="84752683%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-f_-n-a-m-e.html">GITHUB_REF_NAME</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The branch or tag name that triggered the workflow run. For example, feature-branch-1.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2000644618%2FProperties%2F-1951329584" anchor-label="GITHUB_REF_PROTECTED" id="-2000644618%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-f_-p-r-o-t-e-c-t-e-d.html"><span><span>GITHUB_REF_PROTECTED</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2000644618%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-f_-p-r-o-t-e-c-t-e-d.html">GITHUB_REF_PROTECTED</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">true if branch protections are configured for the ref that triggered the workflow run.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1014527836%2FProperties%2F-1951329584" anchor-label="GITHUB_REF_TYPE" id="1014527836%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-f_-t-y-p-e.html"><span><span>GITHUB_REF_TYPE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1014527836%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-f_-t-y-p-e.html">GITHUB_REF_TYPE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The type of ref that triggered the workflow run. Valid values are branch or tag.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1832321752%2FProperties%2F-1951329584" anchor-label="GITHUB_REPOSITORY" id="1832321752%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-p-o-s-i-t-o-r-y.html"><span><span>GITHUB_REPOSITORY</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1832321752%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-p-o-s-i-t-o-r-y.html">GITHUB_REPOSITORY</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The owner and repository name. For example, octocat/Hello-World.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1707846780%2FProperties%2F-1951329584" anchor-label="GITHUB_REPOSITORY_OWNER" id="-1707846780%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-p-o-s-i-t-o-r-y_-o-w-n-e-r.html"><span><span>GITHUB_REPOSITORY_OWNER</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1707846780%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-p-o-s-i-t-o-r-y_-o-w-n-e-r.html">GITHUB_REPOSITORY_OWNER</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The repository owner's name. For example, octocat.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="826863210%2FProperties%2F-1951329584" anchor-label="GITHUB_RETENTION_DAYS" id="826863210%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-e-t-e-n-t-i-o-n_-d-a-y-s.html"><span><span>GITHUB_RETENTION_DAYS</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="826863210%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-e-t-e-n-t-i-o-n_-d-a-y-s.html">GITHUB_RETENTION_DAYS</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The number of days that workflow run logs and artifacts are kept. For example, 90.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="738858623%2FProperties%2F-1951329584" anchor-label="GITHUB_RUN_ATTEMPT" id="738858623%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-u-n_-a-t-t-e-m-p-t.html"><span><span>GITHUB_RUN_ATTEMPT</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="738858623%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-u-n_-a-t-t-e-m-p-t.html">GITHUB_RUN_ATTEMPT</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">A unique number for each attempt of a particular workflow run in a repository. This number begins at 1 for the workflow run's first attempt, and increments with each re-run. For example, 3.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1744671955%2FProperties%2F-1951329584" anchor-label="GITHUB_RUN_ID" id="1744671955%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-u-n_-i-d.html"><span><span>GITHUB_RUN_ID</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1744671955%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-u-n_-i-d.html">GITHUB_RUN_ID</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">A unique number for each workflow run within a repository. This number does not change if you re-run the workflow run. For example, 1658821493.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="339226085%2FProperties%2F-1951329584" anchor-label="GITHUB_RUN_NUMBER" id="339226085%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-r-u-n_-n-u-m-b-e-r.html"><span><span>GITHUB_RUN_NUMBER</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="339226085%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-r-u-n_-n-u-m-b-e-r.html">GITHUB_RUN_NUMBER</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">A unique number for each run of a particular workflow in a repository. This number begins at 1 for the workflow's first run, and increments with each new run. This number does not change if you re-run the workflow run. For example, 3.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1112288273%2FProperties%2F-1951329584" anchor-label="GITHUB_SERVER_URL" id="-1112288273%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-s-e-r-v-e-r_-u-r-l.html"><span><span>GITHUB_SERVER_URL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1112288273%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-s-e-r-v-e-r_-u-r-l.html">GITHUB_SERVER_URL</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The URL of the GitHub server. For example: https://github.com.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2028874028%2FProperties%2F-1951329584" anchor-label="GITHUB_SHA" id="2028874028%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-s-h-a.html"><span><span>GITHUB_SHA</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2028874028%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-s-h-a.html">GITHUB_SHA</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The commit SHA that triggered the workflow. The value of this commit SHA depends on the event that triggered the workflow. For more information, see Events that trigger workflows. For example, ffac537e6cbbf934b08745a378932722df287a53.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1543013699%2FProperties%2F-1951329584" anchor-label="GITHUB_WORKFLOW" id="1543013699%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-w-o-r-k-f-l-o-w.html"><span><span>GITHUB_WORKFLOW</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1543013699%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-w-o-r-k-f-l-o-w.html">GITHUB_WORKFLOW</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the workflow. For example, My test workflow. If the workflow file doesn't specify a name, the value of this variable is the full path of the workflow file in the repository.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="866577699%2FProperties%2F-1951329584" anchor-label="GITHUB_WORKSPACE" id="866577699%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-i-t-h-u-b_-w-o-r-k-s-p-a-c-e.html"><span><span>GITHUB_WORKSPACE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="866577699%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-g-i-t-h-u-b_-w-o-r-k-s-p-a-c-e.html">GITHUB_WORKSPACE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The default working directory on the runner for steps, and the default location of your repository when using the checkout action. For example, /home/runner/work/my-repo-name/my-repo-name.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-915758449%2FProperties%2F-1951329584" anchor-label="keys" id="-915758449%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-915758449%2FProperties%2F-1951329584"><span><span>keys</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-915758449%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-915758449%2FProperties%2F-1951329584">keys</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-set/index.html">Set</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1144911067%2FProperties%2F-1951329584" anchor-label="propertyToExprPath" id="1144911067%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/property-to-expr-path.html"><span>property</span><wbr></wbr><span>To</span><wbr></wbr><span>Expr</span><wbr></wbr><span><span>Path</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1144911067%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/property-to-expr-path.html">propertyToExprPath</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-963099239%2FProperties%2F-1951329584" anchor-label="RUNNER_ARCH" id="-963099239%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-r-u-n-n-e-r_-a-r-c-h.html"><span><span>RUNNER_ARCH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-963099239%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-r-u-n-n-e-r_-a-r-c-h.html">RUNNER_ARCH</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The architecture of the runner executing the job. Possible values are X86, X64, ARM, or ARM64.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="425988356%2FProperties%2F-1951329584" anchor-label="RUNNER_NAME" id="425988356%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-r-u-n-n-e-r_-n-a-m-e.html"><span><span>RUNNER_NAME</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="425988356%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-r-u-n-n-e-r_-n-a-m-e.html">RUNNER_NAME</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name of the runner executing the job. For example, Hosted Agent</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-771558325%2FProperties%2F-1951329584" anchor-label="RUNNER_OS" id="-771558325%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-r-u-n-n-e-r_-o-s.html"><span><span>RUNNER_OS</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-771558325%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-r-u-n-n-e-r_-o-s.html">RUNNER_OS</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The operating system of the runner executing the job. Possible values are Linux, Windows, or macOS. For example, Windows</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-388097061%2FProperties%2F-1951329584" anchor-label="RUNNER_TEMP" id="-388097061%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-r-u-n-n-e-r_-t-e-m-p.html"><span><span>RUNNER_TEMP</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-388097061%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-r-u-n-n-e-r_-t-e-m-p.html">RUNNER_TEMP</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The path to a temporary directory on the runner. This directory is emptied at the beginning and end of each job. Note that files will not be removed if the runner's user account does not have permission to delete them. For example, D:\a\_temp</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2067560980%2FProperties%2F-1951329584" anchor-label="RUNNER_TOOL_CACHE" id="2067560980%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-r-u-n-n-e-r_-t-o-o-l_-c-a-c-h-e.html"><span><span>RUNNER_TOOL_CACHE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2067560980%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="-r-u-n-n-e-r_-t-o-o-l_-c-a-c-h-e.html">RUNNER_TOOL_CACHE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The path to the directory containing preinstalled tools for GitHub-hosted runners. For more information, see &quot;About GitHub-hosted runners&quot;. For example, C:\hostedtoolcache\windows</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-157521630%2FProperties%2F-1951329584" anchor-label="size" id="-157521630%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-157521630%2FProperties%2F-1951329584"><span><span>size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-157521630%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-157521630%2FProperties%2F-1951329584">size</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1310951841%2FProperties%2F-1951329584" anchor-label="values" id="1310951841%2FProperties%2F-1951329584" data-filterable-set=":library:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":library:dokkaHtml/main" data-filterable-set=":library:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1310951841%2FProperties%2F-1951329584"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1310951841%2FProperties%2F-1951329584"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1310951841%2FProperties%2F-1951329584">values</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/index.html">Collection</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
