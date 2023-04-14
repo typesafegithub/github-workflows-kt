@@ -5,6 +5,7 @@
 name: Integration tests - trivial workflow
 on:
   push: {}
+  pull_request: {}
 jobs:
   test_job:
     runs-on: ubuntu-latest

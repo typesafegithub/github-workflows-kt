@@ -5,6 +5,7 @@
 name: Integration tests - job outputs mapping
 on:
   push: {}
+  pull_request: {}
 jobs:
   set_output:
     runs-on: ubuntu-latest
