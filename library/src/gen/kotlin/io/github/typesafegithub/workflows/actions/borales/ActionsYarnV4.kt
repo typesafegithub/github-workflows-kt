@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.borales
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -42,7 +43,7 @@ public data class ActionsYarnV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v4") {
+) : RegularAction<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         cmd: String,

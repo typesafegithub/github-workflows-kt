@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.juliaactions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -52,7 +53,7 @@ public data class SetupJuliaV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1") {
+) : RegularAction<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         version: String? = null,

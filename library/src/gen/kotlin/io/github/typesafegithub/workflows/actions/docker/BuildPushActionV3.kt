@@ -10,6 +10,7 @@
 package io.github.typesafegithub.workflows.actions.docker
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -163,7 +164,8 @@ public data class BuildPushActionV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?: "v3") {
+) : RegularAction<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?: "v3")
+        {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         addHosts: List<String>? = null,

@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.docsnippets
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -13,7 +14,7 @@ class UsingActionsSnippets : FunSpec({
         // --8<-- [start:action-without-outputs]
         class MyCoolActionV3(
             private val someArgument: String,
-        ) : Action<Action.Outputs>("acmecorp", "cool-action", "v3") {
+        ) : RegularAction<Action.Outputs>("acmecorp", "cool-action", "v3") {
             override fun toYamlArguments() = linkedMapOf(
                 "some-argument" to someArgument,
             )
@@ -27,7 +28,7 @@ class UsingActionsSnippets : FunSpec({
         // --8<-- [start:action-with-outputs-1]
         class MyCoolActionV3(
             private val someArgument: String,
-        ) : Action<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
+        ) : RegularAction<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
             override fun toYamlArguments() = linkedMapOf(
                 "some-argument" to someArgument,
             )

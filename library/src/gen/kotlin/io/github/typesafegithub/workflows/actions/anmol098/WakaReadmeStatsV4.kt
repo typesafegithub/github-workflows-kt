@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.anmol098
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -102,7 +103,7 @@ public data class WakaReadmeStatsV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
+) : RegularAction<Action.Outputs>("anmol098", "waka-readme-stats", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         ghToken: String? = null,

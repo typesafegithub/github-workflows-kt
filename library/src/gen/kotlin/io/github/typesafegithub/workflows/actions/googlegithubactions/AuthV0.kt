@@ -10,6 +10,7 @@
 package io.github.typesafegithub.workflows.actions.googlegithubactions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -164,7 +165,7 @@ public data class AuthV0 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
+) : RegularAction<AuthV0.Outputs>("google-github-actions", "auth", _customVersion ?: "v0") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         projectId: String? = null,

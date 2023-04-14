@@ -8,12 +8,12 @@ import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
  *
  * Consider adding first-class support for your action! See CONTRIBUTING.md.
  */
-public class CustomAction(
+public data class CustomAction(
     override val actionOwner: String,
     override val actionName: String,
     override val actionVersion: String,
-    public val inputs: Map<String, String>,
-) : Action<Outputs>(actionOwner, actionName, actionVersion) {
+    public val inputs: Map<String, String> = emptyMap(),
+) : RegularAction<Outputs>(actionOwner, actionName, actionVersion) {
     override fun toYamlArguments(): LinkedHashMap<String, String> =
         LinkedHashMap(inputs)
 

@@ -1,0 +1,27 @@
+# This file was generated using Kotlin DSL (.github/workflows/Integration tests - custom actions.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/typesafegithub/github-workflows-kt
+
+name: Integration tests - custom actions
+on:
+  push: {}
+  pull_request: {}
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    steps:
+    - id: step-0
+      name: Check out
+      uses: actions/checkout@v3
+      with:
+        repository: actions/checkout
+        ref: v3
+        path: ./.github/actions/checkout
+    - id: step-1
+      name: Check out again
+      uses: actions/checkout@v3
+      with:
+        repository: actions/checkout
+        ref: v3
+        path: ./.github/actions/checkout
+        clean: false

@@ -8,6 +8,9 @@ import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.WorkflowBuilder
@@ -169,6 +172,46 @@ class IntegrationTest : FunSpec({
                 run(
                     name = "Hello world!",
                     command = "echo 'hello!'",
+                )
+            }
+        }
+    }
+
+    test("writeToFile() - custom actions") {
+        testRanWithGitHub("custom actions") {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CustomAction(
+                        actionOwner = "actions",
+                        actionName = "checkout",
+                        actionVersion = "v3",
+                        inputs = mapOf(
+                            "repository" to "actions/checkout",
+                            "ref" to "v3",
+                            "path" to "./.github/actions/checkout",
+                        ),
+                    ),
+                )
+
+                uses(
+                    name = "Check out again",
+                    action = object : RegularAction<Action.Outputs>(
+                        actionOwner = "actions",
+                        actionName = "checkout",
+                        actionVersion = "v3",
+                    ) {
+                        override fun toYamlArguments() = linkedMapOf(
+                            "repository" to "actions/checkout",
+                            "ref" to "v3",
+                            "path" to "./.github/actions/checkout",
+                            "clean" to "false",
+                        )
+                        override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)
+                    },
                 )
             }
         }

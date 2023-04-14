@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.codecov
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -160,7 +161,7 @@ public data class CodecovActionV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("codecov", "codecov-action", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("codecov", "codecov-action", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         token: String? = null,

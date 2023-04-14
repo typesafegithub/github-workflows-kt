@@ -40,7 +40,7 @@ you have two ways to proceed.
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
     inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
 
-Inherit from [`Action`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/Action.kt)
+Inherit from [`RegularAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt)
 and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin

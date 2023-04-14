@@ -9,6 +9,7 @@
 package io.github.typesafegithub.workflows.actions.jasonetco
 
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -56,7 +57,7 @@ public data class CreateAnIssueV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", _customVersion ?: "v2") {
+) : RegularAction<CreateAnIssueV2.Outputs>("JasonEtco", "create-an-issue", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         assignees: List<String>? = null,
