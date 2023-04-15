@@ -5,8 +5,6 @@ plugins {
     buildsrc.convention.`kotlin-jvm`
 
     kotlin("plugin.serialization")
-
-    application
 }
 
 dependencies {
@@ -16,11 +14,6 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.53.0")
     implementation("com.squareup:kotlinpoet:1.13.0")
     implementation(kotlin("reflect"))
-}
-
-application {
-    mainClass.set("io.github.typesafegithub.workflows.scriptgenerator.MainKt")
-    tasks.run.get().workingDir = rootProject.projectDir
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
