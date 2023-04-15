@@ -12,7 +12,7 @@ import java.io.FileFilter
 
 class GenerateKotlinScripts : FunSpec({
 
-    val testInputs = rootProject.resolve("script-generator/yaml-input")
+    val testInputs = rootProject.resolve("script-generator/logic/yaml-input")
         .listFiles(FileFilter { it.extension == "yaml" })!!
         .map { it.name }
 
@@ -44,12 +44,12 @@ class GenerateKotlinScripts : FunSpec({
 
 data class TestInput(val name: String) {
     val filename = name.removeSuffix(".yml")
-    val yamlFile = rootProject.resolve("script-generator/yaml-input/$filename.yml")
+    val yamlFile = rootProject.resolve("script-generator/logic/yaml-input/$filename.yml")
         .also { require(it.canRead()) { "Invalid file ${it.canonicalPath}" } }
 
-    private fun file(path: String) = rootProject.resolve("script-generator/src/test/kotlin/generated/$path")
+    private fun file(path: String) = rootProject.resolve("script-generator/logic/src/test/kotlin/generated/$path")
     val expectedFile = file("${filename.toPascalCase()}.kt")
-    val actualDir = rootProject.resolve("script-generator/src/test/kotlin/actual")
+    val actualDir = rootProject.resolve("script-generator/logic/src/test/kotlin/actual")
         .also { it.mkdirs() }
     val actualFile = actualDir.resolve("${filename.toPascalCase()}.kt")
     val expected = if (expectedFile.canRead()) {
