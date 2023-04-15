@@ -81,7 +81,7 @@ class UsingActionsSnippets : FunSpec({
         // --8<-- [start:docker-action]
         class MyCoolDockerActionV3(
             private val someArgument: String,
-        ) : DockerAction<Action.Outputs>("alpine", "3.8") {
+        ) : DockerAction<Action.Outputs>("alpine", "latest") {
             override fun toYamlArguments() = linkedMapOf(
                 "some-argument" to someArgument,
             )
@@ -146,7 +146,7 @@ class UsingActionsSnippets : FunSpec({
         // --8<-- [start:custom-docker-action]
         val customAction = CustomDockerAction(
             actionImage = "alpine",
-            actionTag = "3.8",
+            actionTag = "latest",
         )
         // --8<-- [end:custom-docker-action]
 
