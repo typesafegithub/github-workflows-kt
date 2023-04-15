@@ -24,7 +24,7 @@ jobs:
         clean: false
     - id: step-2
       name: Run alpine
-      uses: docker://alpine:3.8
+      uses: docker://alpine:3.17
     - id: step-3
       name: Check out again
       uses: actions/checkout@v3
@@ -40,4 +40,4 @@ jobs:
         clean: false
     - id: step-5
       name: Run alpine
-      uses: docker://alpine:3.8
+      uses: docker://alpine:3.17
