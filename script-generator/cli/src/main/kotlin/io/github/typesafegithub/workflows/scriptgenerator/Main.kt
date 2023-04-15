@@ -1,9 +1,5 @@
 package io.github.typesafegithub.workflows.scriptgenerator
 
-import io.github.typesafegithub.workflows.scriptmodel.YamlWorkflow
-import io.github.typesafegithub.workflows.scriptmodel.myYaml
-import io.github.typesafegithub.workflows.scriptmodel.normalizeYaml
-import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.net.URL
 
@@ -15,9 +11,9 @@ fun main(args: Array<String>) {
         else -> usage()
     }
 
-    val workflow: YamlWorkflow = decodeYamlWorkflow(content)
+    val kotlinScriptContents = yamlToKotlinScript(yaml = content, filename = filename)
     val buildFile = File("$filename.main.kts")
-    buildFile.writeText(workflow.toKotlin(filename))
+    buildFile.writeText(kotlinScriptContents)
     buildFile.setExecutable(true)
     println(
         """
@@ -39,10 +35,3 @@ fun usage(): Nothing {
         """.trimMargin(),
     )
 }
-
-fun decodeYamlWorkflow(text: String): YamlWorkflow {
-    return myYaml.decodeFromString(text.normalizeYaml())
-}
-
-fun URL.filename(): String =
-    path.substringAfterLast("/").substringBefore(".")
