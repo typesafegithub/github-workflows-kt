@@ -215,7 +215,7 @@ class IntegrationTest : FunSpec({
                     name = "Run alpine",
                     action = CustomDockerAction(
                         actionImage = "alpine",
-                        actionTag = "3.8",
+                        actionTag = "latest",
                     ),
                 )
 
@@ -252,7 +252,7 @@ class IntegrationTest : FunSpec({
                     name = "Run alpine",
                     action = object : DockerAction<Action.Outputs>(
                         actionImage = "alpine",
-                        actionTag = "3.8",
+                        actionTag = "latest",
                     ) {
                         override fun toYamlArguments() = linkedMapOf<String, String>()
                         override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)
