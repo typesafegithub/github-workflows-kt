@@ -1,3 +1,18 @@
+public class io/github/typesafegithub/workflows/domain/ActionStep : io/github/typesafegithub/workflows/domain/Step, io/github/typesafegithub/workflows/domain/WithOutputs {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getAction ()Lio/github/typesafegithub/workflows/domain/actions/Action;
+	public fun getCondition ()Ljava/lang/String;
+	public fun getContinueOnError ()Ljava/lang/Boolean;
+	public fun getEnv ()Ljava/util/LinkedHashMap;
+	public fun getId ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getOutputs ()Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
+	public synthetic fun getOutputs ()Ljava/lang/Object;
+	public fun getTimeoutMinutes ()Ljava/lang/Integer;
+	public fun get_customArguments ()Ljava/util/Map;
+}
+
 public final class io/github/typesafegithub/workflows/domain/CommandStep : io/github/typesafegithub/workflows/domain/Step {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Shell;Ljava/lang/String;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Shell;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -58,21 +73,6 @@ public final class io/github/typesafegithub/workflows/domain/Concurrency$$serial
 
 public final class io/github/typesafegithub/workflows/domain/Concurrency$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public class io/github/typesafegithub/workflows/domain/ExternalActionStep : io/github/typesafegithub/workflows/domain/Step, io/github/typesafegithub/workflows/domain/WithOutputs {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getAction ()Lio/github/typesafegithub/workflows/domain/actions/Action;
-	public fun getCondition ()Ljava/lang/String;
-	public fun getContinueOnError ()Ljava/lang/Boolean;
-	public fun getEnv ()Ljava/util/LinkedHashMap;
-	public fun getId ()Ljava/lang/String;
-	public fun getName ()Ljava/lang/String;
-	public fun getOutputs ()Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
-	public synthetic fun getOutputs ()Ljava/lang/Object;
-	public fun getTimeoutMinutes ()Ljava/lang/Integer;
-	public fun get_customArguments ()Ljava/util/Map;
 }
 
 public final class io/github/typesafegithub/workflows/domain/Job : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
@@ -295,11 +295,8 @@ public final class io/github/typesafegithub/workflows/domain/Workflow : io/githu
 }
 
 public abstract class io/github/typesafegithub/workflows/domain/actions/Action {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> ()V
 	public abstract fun buildOutputObject (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
-	public fun getActionName ()Ljava/lang/String;
-	public fun getActionOwner ()Ljava/lang/String;
-	public fun getActionVersion ()Ljava/lang/String;
 	public abstract fun toYamlArguments ()Ljava/util/LinkedHashMap;
 }
 
@@ -308,14 +305,80 @@ public class io/github/typesafegithub/workflows/domain/actions/Action$Outputs {
 	public final fun get (Ljava/lang/String;)Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/domain/actions/CustomAction : io/github/typesafegithub/workflows/domain/actions/Action {
+public final class io/github/typesafegithub/workflows/domain/actions/CustomAction : io/github/typesafegithub/workflows/domain/actions/RegularAction {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun buildOutputObject (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/actions/CustomAction;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/actions/CustomAction;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/actions/CustomAction;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getActionName ()Ljava/lang/String;
 	public fun getActionOwner ()Ljava/lang/String;
 	public fun getActionVersion ()Ljava/lang/String;
 	public final fun getInputs ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 	public fun toYamlArguments ()Ljava/util/LinkedHashMap;
+}
+
+public final class io/github/typesafegithub/workflows/domain/actions/CustomDockerAction : io/github/typesafegithub/workflows/domain/actions/DockerAction {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun buildOutputObject (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/actions/CustomDockerAction;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/actions/CustomDockerAction;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/actions/CustomDockerAction;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getActionHost ()Ljava/lang/String;
+	public fun getActionImage ()Ljava/lang/String;
+	public fun getActionTag ()Ljava/lang/String;
+	public final fun getInputs ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun toYamlArguments ()Ljava/util/LinkedHashMap;
+}
+
+public final class io/github/typesafegithub/workflows/domain/actions/CustomLocalAction : io/github/typesafegithub/workflows/domain/actions/LocalAction {
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun buildOutputObject (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/actions/CustomLocalAction;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/actions/CustomLocalAction;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/actions/CustomLocalAction;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getActionPath ()Ljava/lang/String;
+	public final fun getInputs ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun toYamlArguments ()Ljava/util/LinkedHashMap;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/actions/DockerAction : io/github/typesafegithub/workflows/domain/actions/Action {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getActionHost ()Ljava/lang/String;
+	public fun getActionImage ()Ljava/lang/String;
+	public fun getActionTag ()Ljava/lang/String;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/actions/LocalAction : io/github/typesafegithub/workflows/domain/actions/Action {
+	public fun <init> (Ljava/lang/String;)V
+	public fun getActionPath ()Ljava/lang/String;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/actions/RegularAction : io/github/typesafegithub/workflows/domain/actions/Action {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun getActionName ()Ljava/lang/String;
+	public fun getActionOwner ()Ljava/lang/String;
+	public fun getActionVersion ()Ljava/lang/String;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1546,10 +1609,10 @@ public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github
 	public final fun run (Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Shell;Ljava/lang/String;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/CommandStep;
 	public static synthetic fun run$default (Lio/github/typesafegithub/workflows/dsl/JobBuilder;Ljava/lang/String;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Shell;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/CommandStep;
 	public static synthetic fun run$default (Lio/github/typesafegithub/workflows/dsl/JobBuilder;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Shell;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/CommandStep;
-	public final fun uses (Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/ExternalActionStep;
-	public final fun uses (Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/ExternalActionStep;
-	public static synthetic fun uses$default (Lio/github/typesafegithub/workflows/dsl/JobBuilder;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/ExternalActionStep;
-	public static synthetic fun uses$default (Lio/github/typesafegithub/workflows/dsl/JobBuilder;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/ExternalActionStep;
+	public final fun uses (Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/ActionStep;
+	public final fun uses (Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/ActionStep;
+	public static synthetic fun uses$default (Lio/github/typesafegithub/workflows/dsl/JobBuilder;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/ActionStep;
+	public static synthetic fun uses$default (Lio/github/typesafegithub/workflows/dsl/JobBuilder;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/ActionStep;
 }
 
 public final class io/github/typesafegithub/workflows/dsl/WorkflowBuilder {

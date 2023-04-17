@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.azure
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -47,7 +47,7 @@ public data class DockerLoginV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("Azure", "docker-login", _customVersion ?: "v1") {
+) : RegularAction<Action.Outputs>("Azure", "docker-login", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         username: String? = null,

@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.actions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -76,7 +76,7 @@ public data class CreateReleaseV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1") {
+) : RegularAction<CreateReleaseV1.Outputs>("actions", "create-release", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         tagName: String,

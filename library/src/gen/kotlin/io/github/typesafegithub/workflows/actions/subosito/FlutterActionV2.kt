@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.subosito
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -60,7 +60,7 @@ public data class FlutterActionV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2") {
+) : RegularAction<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         flutterVersion: String? = null,

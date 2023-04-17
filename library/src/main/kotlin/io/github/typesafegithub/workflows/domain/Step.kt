@@ -39,7 +39,7 @@ public data class CommandStep(
 )
 
 @Suppress("LongParameterList")
-public open class ExternalActionStep<out OUTPUTS : Outputs>(
+public open class ActionStep<out OUTPUTS : Outputs>(
     override val id: String,
     public open val name: String? = null,
     public open val action: Action<OUTPUTS>,

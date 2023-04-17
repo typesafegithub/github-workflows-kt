@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.c2corg
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -80,7 +80,8 @@ public data class TransifexPullRequestActionV5 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("c2corg", "transifex-pull-request-action", _customVersion ?: "v5") {
+) : RegularAction<Action.Outputs>("c2corg", "transifex-pull-request-action", _customVersion ?: "v5")
+        {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         transifexToken: String,

@@ -8,12 +8,36 @@ import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
  *
  * Consider adding first-class support for your action! See CONTRIBUTING.md.
  */
-public class CustomAction(
+public data class CustomAction(
     override val actionOwner: String,
     override val actionName: String,
     override val actionVersion: String,
-    public val inputs: Map<String, String>,
-) : Action<Outputs>(actionOwner, actionName, actionVersion) {
+    public val inputs: Map<String, String> = emptyMap(),
+) : RegularAction<Outputs>(actionOwner, actionName, actionVersion) {
+    override fun toYamlArguments(): LinkedHashMap<String, String> =
+        LinkedHashMap(inputs)
+
+    override fun buildOutputObject(stepId: String): Outputs =
+        Outputs(stepId)
+}
+
+public data class CustomLocalAction(
+    override val actionPath: String,
+    public val inputs: Map<String, String> = emptyMap(),
+) : LocalAction<Outputs>(actionPath) {
+    override fun toYamlArguments(): LinkedHashMap<String, String> =
+        LinkedHashMap(inputs)
+
+    override fun buildOutputObject(stepId: String): Outputs =
+        Outputs(stepId)
+}
+
+public data class CustomDockerAction(
+    override val actionImage: String,
+    override val actionTag: String,
+    public val inputs: Map<String, String> = emptyMap(),
+    override val actionHost: String? = null,
+) : DockerAction<Outputs>(actionImage, actionTag, actionHost) {
     override fun toYamlArguments(): LinkedHashMap<String, String> =
         LinkedHashMap(inputs)
 

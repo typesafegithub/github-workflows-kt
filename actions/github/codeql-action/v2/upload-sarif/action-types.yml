@@ -1,0 +1,21 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  sarif_file:
+    type: string
+  checkout_path:
+    type: string
+  ref:
+    type: string
+  sha:
+    type: string
+  token:
+    type: string
+  matrix:
+    type: string
+  category:
+    type: string
+  wait-for-processing:
+    type: boolean
+outputs:
+  sarif-id:
+    type: string

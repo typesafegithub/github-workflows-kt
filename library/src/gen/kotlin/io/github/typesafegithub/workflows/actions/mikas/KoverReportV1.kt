@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.mikas
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Int
@@ -65,7 +65,7 @@ public data class KoverReportV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
+) : RegularAction<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         path: String,

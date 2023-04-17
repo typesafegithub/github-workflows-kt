@@ -14,4 +14,4 @@ language with good internal DSL support.
 
 # For more info please see [the documentation](https://typesafegithub.github.io/github-workflows-kt/).
 
-![carbon(12)](https://user-images.githubusercontent.com/459464/174335482-9e2744e4-332d-490d-9427-6b5ee7d66100.png)
+![teaser](images/teaser.svg)

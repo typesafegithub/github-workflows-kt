@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.docker
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.String
@@ -158,7 +158,8 @@ public data class BuildPushActionV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<BuildPushActionV4.Outputs>("docker", "build-push-action", _customVersion ?: "v4") {
+) : RegularAction<BuildPushActionV4.Outputs>("docker", "build-push-action", _customVersion ?: "v4")
+        {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         addHosts: List<String>? = null,

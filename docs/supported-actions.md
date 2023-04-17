@@ -70,6 +70,11 @@ Click on a version to see the wrapper's code.
     * [git-tag-annotation-action](https://github.com/ericcornelissen/git-tag-annotation-action) - v2 ✅: [`GitTagAnnotationActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/GitTagAnnotationActionV2.kt)
 * gautamkrishnar
     * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - v1: [`BlogPostWorkflowV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
+* github
+    * [codeql-action/analyze](https://github.com/github/codeql-action/tree/v2/analyze) - v2: [`CodeqlActionAnalyzeV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/github/CodeqlActionAnalyzeV2.kt)
+    * [codeql-action/autobuild](https://github.com/github/codeql-action/tree/v2/autobuild) - v2: [`CodeqlActionAutobuildV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/github/CodeqlActionAutobuildV2.kt)
+    * [codeql-action/init](https://github.com/github/codeql-action/tree/v2/init) - v2: [`CodeqlActionInitV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/github/CodeqlActionInitV2.kt)
+    * [codeql-action/upload-sarif](https://github.com/github/codeql-action/tree/v2/upload-sarif) - v2: [`CodeqlActionUploadSarifV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/github/CodeqlActionUploadSarifV2.kt)
 * google-github-actions
     * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV0.kt), v1: [`AuthV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV1.kt)
     * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/SetupGcloudV0.kt), v1: [`SetupGcloudV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/SetupGcloudV1.kt)
@@ -125,7 +130,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 74
-* counting each version separately: 105
+* counting by actions: 78
+* counting each version separately: 109
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 13

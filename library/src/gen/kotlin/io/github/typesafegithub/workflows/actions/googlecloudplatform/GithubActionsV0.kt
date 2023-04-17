@@ -10,7 +10,7 @@
 package io.github.typesafegithub.workflows.actions.googlecloudplatform
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
 import kotlin.Deprecated
@@ -92,7 +92,7 @@ public data class GithubActionsV0 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("GoogleCloudPlatform", "github-actions", _customVersion ?: "v0") {
+) : RegularAction<Action.Outputs>("GoogleCloudPlatform", "github-actions", _customVersion ?: "v0") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         version: String? = null,

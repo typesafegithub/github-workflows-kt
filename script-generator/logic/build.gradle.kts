@@ -5,8 +5,6 @@ plugins {
     buildsrc.convention.`kotlin-jvm`
 
     kotlin("plugin.serialization")
-
-    application
 }
 
 dependencies {
@@ -14,13 +12,8 @@ dependencies {
     implementation(projects.automation.wrapperGenerator)
     implementation(projects.library)
     implementation("com.charleskorn.kaml:kaml:0.53.0")
-    implementation("com.squareup:kotlinpoet:1.12.0")
+    implementation("com.squareup:kotlinpoet:1.13.0")
     implementation(kotlin("reflect"))
-}
-
-application {
-    mainClass.set("io.github.typesafegithub.workflows.scriptgenerator.MainKt")
-    tasks.run.get().workingDir = rootProject.projectDir
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
@@ -35,9 +28,9 @@ tasks.formatKotlinTest {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += listOf(
-            "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi"
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi",
         )
     }
 }

@@ -10,7 +10,7 @@
 package io.github.typesafegithub.workflows.actions.cachix
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Deprecated
 import kotlin.String
@@ -58,7 +58,7 @@ public data class InstallNixActionV17 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v17") {
+) : RegularAction<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v17") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         installUrl: String? = null,

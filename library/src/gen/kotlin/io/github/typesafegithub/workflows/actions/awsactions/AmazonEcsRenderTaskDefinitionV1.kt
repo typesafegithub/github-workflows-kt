@@ -9,7 +9,7 @@
 package io.github.typesafegithub.workflows.actions.awsactions
 
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.String
 import kotlin.Suppress
@@ -55,7 +55,7 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : Action<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
+) : RegularAction<AmazonEcsRenderTaskDefinitionV1.Outputs>("aws-actions",
         "amazon-ecs-render-task-definition", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,

@@ -4,13 +4,15 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 
 include(
     "library",
-    "script-generator",
+    ":script-generator:logic",
+    ":script-generator:cli",
+    ":script-generator:web",
     ":automation:typings",
     ":automation:wrapper-generator",
 )
 
 plugins {
-    id("com.gradle.enterprise") version "3.12.6"
+    id("com.gradle.enterprise") version "3.13"
 }
 
 dependencyResolutionManagement {
