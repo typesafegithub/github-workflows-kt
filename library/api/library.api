@@ -76,12 +76,13 @@ public class io/github/typesafegithub/workflows/domain/ExternalActionStep : io/g
 }
 
 public final class io/github/typesafegithub/workflows/domain/Job : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Ljava/lang/Integer;
-	public final fun component11 ()Lio/github/typesafegithub/workflows/domain/Concurrency;
-	public final fun component12 ()Ljava/util/Map;
+	public final fun component10 ()Ljava/util/Map;
+	public final fun component11 ()Ljava/lang/Integer;
+	public final fun component12 ()Lio/github/typesafegithub/workflows/domain/Concurrency;
+	public final fun component13 ()Ljava/util/Map;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Lio/github/typesafegithub/workflows/domain/RunnerType;
 	public final fun component4 ()Ljava/util/List;
@@ -90,8 +91,8 @@ public final class io/github/typesafegithub/workflows/domain/Job : io/github/typ
 	public final fun component7 ()Ljava/util/LinkedHashMap;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/Job;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Job;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Job;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/Job;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Job;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Job;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getConcurrency ()Lio/github/typesafegithub/workflows/domain/Concurrency;
 	public final fun getCondition ()Ljava/lang/String;
@@ -100,6 +101,7 @@ public final class io/github/typesafegithub/workflows/domain/Job : io/github/typ
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNeeds ()Ljava/util/List;
 	public final fun getOutputs ()Lio/github/typesafegithub/workflows/domain/JobOutputs;
+	public final fun getPermissions ()Ljava/util/Map;
 	public final fun getRunsOn ()Lio/github/typesafegithub/workflows/domain/RunnerType;
 	public final fun getSteps ()Ljava/util/List;
 	public final fun getStrategyMatrix ()Ljava/util/Map;
@@ -125,6 +127,34 @@ public final class io/github/typesafegithub/workflows/domain/JobOutputs$Ref : ko
 	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
 	public fun setValue (Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/reflect/KProperty;Ljava/lang/String;)V
 	public synthetic fun setValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;Ljava/lang/Object;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/Mode : java/lang/Enum {
+	public static final field None Lio/github/typesafegithub/workflows/domain/Mode;
+	public static final field Read Lio/github/typesafegithub/workflows/domain/Mode;
+	public static final field Write Lio/github/typesafegithub/workflows/domain/Mode;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Mode;
+	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Mode;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission : java/lang/Enum {
+	public static final field Actions Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Checks Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Contents Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Deployments Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Discussions Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field IdToken Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Issues Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Packages Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Pages Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field PullRequests Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field RepositoryProjects Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field SecurityEvents Lio/github/typesafegithub/workflows/domain/Permission;
+	public static final field Statuses Lio/github/typesafegithub/workflows/domain/Permission;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Permission;
+	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Permission;
 }
 
 public abstract interface class io/github/typesafegithub/workflows/domain/RunnerType {
@@ -235,25 +265,27 @@ public abstract interface class io/github/typesafegithub/workflows/domain/WithOu
 }
 
 public final class io/github/typesafegithub/workflows/domain/Workflow : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/util/Map;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/LinkedHashMap;
 	public final fun component4 ()Ljava/nio/file/Path;
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Lio/github/typesafegithub/workflows/domain/Concurrency;
-	public final fun component7 ()Ljava/lang/String;
-	public final fun component8 ()Ljava/util/List;
-	public final fun component9 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/Workflow;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Workflow;Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public final fun component7 ()Ljava/util/Map;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Workflow;Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getConcurrency ()Lio/github/typesafegithub/workflows/domain/Concurrency;
 	public final fun getEnv ()Ljava/util/LinkedHashMap;
 	public final fun getJobs ()Ljava/util/List;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOn ()Ljava/util/List;
+	public final fun getPermissions ()Ljava/util/Map;
 	public final fun getSourceFile ()Ljava/nio/file/Path;
 	public final fun getTargetFileName ()Ljava/lang/String;
 	public final fun getYamlConsistencyJobCondition ()Ljava/lang/String;
@@ -1495,8 +1527,8 @@ public abstract interface class io/github/typesafegithub/workflows/dsl/HasCustom
 }
 
 public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lio/github/typesafegithub/workflows/domain/Job;
 	public final fun getConcurrency ()Lio/github/typesafegithub/workflows/domain/Concurrency;
 	public final fun getCondition ()Ljava/lang/String;
@@ -1505,6 +1537,7 @@ public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github
 	public final fun getJobOutputs ()Lio/github/typesafegithub/workflows/domain/JobOutputs;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNeeds ()Ljava/util/List;
+	public final fun getPermissions ()Ljava/util/Map;
 	public final fun getRunsOn ()Lio/github/typesafegithub/workflows/domain/RunnerType;
 	public final fun getStrategyMatrix ()Ljava/util/Map;
 	public final fun getTimeoutMinutes ()Ljava/lang/Integer;
@@ -1520,19 +1553,19 @@ public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github
 }
 
 public final class io/github/typesafegithub/workflows/dsl/WorkflowBuilder {
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lio/github/typesafegithub/workflows/domain/Workflow;
-	public final fun job (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Job;
-	public final fun job (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Job;
-	public static synthetic fun job$default (Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Job;
-	public static synthetic fun job$default (Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Job;
+	public final fun job (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Job;
+	public final fun job (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Job;
+	public static synthetic fun job$default (Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Job;
+	public static synthetic fun job$default (Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/util/LinkedHashMap;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Job;
 }
 
 public final class io/github/typesafegithub/workflows/dsl/WorkflowBuilderKt {
 	public static final fun toBuilder (Lio/github/typesafegithub/workflows/domain/Workflow;)Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;
-	public static final fun workflow (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Workflow;
-	public static synthetic fun workflow$default (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public static final fun workflow (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public static synthetic fun workflow$default (Ljava/lang/String;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/nio/file/Path;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
 }
 
 public final class io/github/typesafegithub/workflows/dsl/expressions/Contexts : io/github/typesafegithub/workflows/dsl/expressions/contexts/FunctionsContext {

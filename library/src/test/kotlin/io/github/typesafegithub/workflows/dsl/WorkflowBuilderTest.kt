@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.dsl
 
+import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -131,14 +132,24 @@ class WorkflowBuilderTest : FunSpec(
             test("permissions") {
                 val yaml = workflow(
                     name = "test",
-                    permissions = listOf(
-                        Permission.actions.read,
-                        Permission.checks.read,
-                        Permission.contents.write,
+                    permissions = mapOf(
+                        Permission.Actions to Mode.Read,
+                        Permission.Checks to Mode.Write,
+                        Permission.Contents to Mode.None,
                     ),
                     on = listOf(Push()),
                 ) {
-                    job(id = "job", runsOn = UbuntuLatest) { run(command = "ls") }
+                    job(
+                        id = "job",
+                        runsOn = UbuntuLatest,
+                        permissions = mapOf(
+                            Permission.Actions to Mode.Read,
+                            Permission.Checks to Mode.Write,
+                            Permission.Contents to Mode.None,
+                        ),
+                    ) {
+                        run(command = "ls")
+                    }
                 }.toYaml(addConsistencyCheck = false, preamble = Preamble.Just(""))
 
                 yaml.trim() shouldBe """
@@ -147,11 +158,15 @@ class WorkflowBuilderTest : FunSpec(
                       push: {}
                     permissions:
                       actions: read
-                      checks: read
-                      contents: write
+                      checks: write
+                      contents: none
                     jobs:
                       job:
                         runs-on: ubuntu-latest
+                        permissions:
+                          actions: read
+                          checks: write
+                          contents: none
                         steps:
                         - id: step-0
                           run: ls
@@ -160,3 +175,5 @@ class WorkflowBuilderTest : FunSpec(
         }
     },
 )
+
+private class MyJobOutputs
