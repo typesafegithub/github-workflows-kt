@@ -252,7 +252,11 @@ val allTriggersMap: Map<String, Trigger> =
     allTriggersNames.zip(allTriggers).toMap()
 
 val rootProject = File(".").canonicalFile.let {
-    if (it.name == "github-workflows-kt") it else it.parentFile.parentFile
+    when (it.name) {
+        "github-workflows-kt" -> it
+        "" -> it // Root directory in Docker container.
+        else -> it.parentFile.parentFile
+    }
 }
 
 const val PACKAGE = "io.github.typesafegithub.workflows"
