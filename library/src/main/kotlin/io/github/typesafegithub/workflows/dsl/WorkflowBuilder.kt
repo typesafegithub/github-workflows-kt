@@ -8,6 +8,7 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
+import io.github.typesafegithub.workflows.util.either
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
@@ -44,6 +45,7 @@ public class WorkflowBuilder(
         name: String? = null,
         runsOn: RunnerType,
         needs: List<Job<*>> = emptyList(),
+        `if`: String? = null,
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
@@ -59,7 +61,7 @@ public class WorkflowBuilder(
             name = name,
             runsOn = runsOn,
             needs = needs,
-            condition = condition,
+            condition = either("if" to `if`, "condition" to condition),
             env = env,
             strategyMatrix = strategyMatrix,
             permissions = permissions,
@@ -84,6 +86,7 @@ public class WorkflowBuilder(
         name: String? = null,
         runsOn: RunnerType,
         needs: List<Job<*>> = emptyList(),
+        `if`: String? = null,
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
@@ -97,7 +100,7 @@ public class WorkflowBuilder(
         name = name,
         runsOn = runsOn,
         needs = needs,
-        condition = condition,
+        condition = either("if" to `if`, "condition" to condition),
         env = env,
         strategyMatrix = strategyMatrix,
         permissions = permissions,

@@ -10,6 +10,7 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.util.either
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -47,6 +48,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public fun run(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
@@ -58,7 +60,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         name = null,
         command = command,
         env = env,
-        condition = condition,
+        condition = either("if" to `if`, "condition" to condition),
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         shell = shell,
@@ -70,6 +72,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         name: String? = null,
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
@@ -83,7 +86,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             name = name,
             command = command,
             env = env,
-            condition = condition,
+            condition = either("if" to `if`, "condition" to condition),
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             shell = shell,
@@ -97,6 +100,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public fun <T : Action.Outputs> uses(
         action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
@@ -106,7 +110,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         name = null,
         action = action,
         env = env,
-        condition = condition,
+        condition = either("if" to `if`, "condition" to condition),
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         _customArguments = _customArguments,
@@ -116,6 +120,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         name: String? = null,
         action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
@@ -128,7 +133,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             name = name,
             action = action,
             env = env,
-            condition = condition,
+            condition = either("if" to `if`, "condition" to condition),
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             outputs = action.buildOutputObject(stepId),
