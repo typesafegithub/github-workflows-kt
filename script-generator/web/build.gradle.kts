@@ -1,5 +1,8 @@
+import io.ktor.plugin.features.*
+
 plugins {
     kotlin("plugin.serialization")
+    id("io.ktor.plugin") version "2.2.4"
     buildsrc.convention.`kotlin-jvm`
     application
 }
@@ -18,4 +21,10 @@ dependencies {
 
 application {
     mainClass.set("io.github.typesafegithub.workflows.scriptgenerator.rest.MainKt")
+}
+
+ktor {
+    docker {
+        localImageName.set("script-generator-server")
+    }
 }
