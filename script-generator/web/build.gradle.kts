@@ -23,8 +23,19 @@ application {
     mainClass.set("io.github.typesafegithub.workflows.scriptgenerator.rest.MainKt")
 }
 
+val dockerAppName = "github-workflows-kt-script-generator-server"
+
 ktor {
     docker {
-        localImageName.set("script-generator-server")
+        localImageName.set(dockerAppName)
+        imageTag.set(projects.library.version)
+
+        externalRegistry.set(
+            DockerImageRegistry.dockerHub(
+                appName = provider { dockerAppName },
+                username = providers.environmentVariable("DOCKERHUB_USERNAME"),
+                password = providers.environmentVariable("DOCKERHUB_PASSWORD"),
+            ),
+        )
     }
 }
