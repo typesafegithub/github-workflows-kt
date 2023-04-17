@@ -175,3 +175,5 @@ class WorkflowBuilderTest : FunSpec(
         }
     },
 )
+
+private class MyJobOutputs
