@@ -6,6 +6,7 @@ include(
     "library",
     ":script-generator:logic",
     ":script-generator:cli",
+    ":script-generator:web",
     ":automation:typings",
     ":automation:wrapper-generator",
 )
