@@ -1,0 +1,12 @@
+exceptions:
+  TooGenericExceptionThrown:
+    active: false
+
+#naming:
+#  FunctionParameterNaming:
+#    active: false
+
+#complexity:
+#  LongParameterList:
+#    active: false
+#    ignoreDefaultParameters: true

@@ -8,7 +8,7 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
-import io.github.typesafegithub.workflows.util.either
+import io.github.typesafegithub.workflows.internal.either
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
 

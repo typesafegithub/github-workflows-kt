@@ -10,7 +10,7 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.util.either
+import io.github.typesafegithub.workflows.internal.either
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -29,7 +29,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
-    private var job = Job<OUTPUT>(
+    private var job = Job(
         id = id,
         name = name,
         runsOn = runsOn,
@@ -48,6 +48,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public fun run(
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
@@ -72,6 +73,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         name: String? = null,
         command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
@@ -100,6 +102,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public fun <T : Action.Outputs> uses(
         action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
@@ -120,6 +123,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         name: String? = null,
         action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,

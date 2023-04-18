@@ -46,6 +46,11 @@ kotlin {
     explicitApi()
 }
 
+detekt {
+    buildUponDefaultConfig = true
+    config = files("$rootDir/detekt.yml")
+}
+
 apiValidation {
     ignoredPackages.add("io.github.typesafegithub.workflows.actions")
 }
@@ -65,15 +70,17 @@ val validateDuplicatedVersion by tasks.creating<Task> {
     doLast {
         require(
             project.rootDir.resolve("mkdocs.yml").readText()
-                .contains("  version: $version")
+                .contains("  version: $version"),
         ) { "Library version stated in the docs should be equal to $version!" }
         require(
-            project.rootDir.resolve("script-generator/logic/src/main/kotlin/io/github/typesafegithub/workflows/scriptgenerator/Version.kt").readText()
-                .contains("val LIBRARY_VERSION = \"$version\"")
+            project.rootDir.resolve("script-generator/logic/src/main/kotlin/io/github/typesafegithub/workflows/scriptgenerator/Version.kt")
+                .readText()
+                .contains("val LIBRARY_VERSION = \"$version\""),
         ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
         require(
-            project.file("src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
-                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
+            project.file("src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt")
+                .readText()
+                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\""),
         ) { "Library version stated in library/src/test/.../GettingStarted.kt should be equal to $version!" }
     }
 }
