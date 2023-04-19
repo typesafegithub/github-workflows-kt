@@ -3,4 +3,4 @@ before_install:
   - sdk use java 17.0.4.1-zulu
 install:
   - echo "Running a custom install command"
-  - ./gradlew clean :library:publishToMavenLocal -xtest -xsignMavenJavaPublication
+  - ./gradlew clean :library:publishToMavenLocal -x test -P suppressSigning=true
