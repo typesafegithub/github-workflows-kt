@@ -2,7 +2,7 @@ import io.ktor.plugin.features.*
 
 plugins {
     kotlin("plugin.serialization")
-    id("io.ktor.plugin") version "2.2.4"
+    id("io.ktor.plugin") version "2.3.0"
     buildsrc.convention.`kotlin-jvm`
     application
 }
