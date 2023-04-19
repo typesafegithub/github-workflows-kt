@@ -2,17 +2,17 @@
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-name: Integration tests - trivial workflow
+name: 'Integration tests - trivial workflow'
 on:
   push: {}
   pull_request: {}
 jobs:
   test_job:
-    runs-on: ubuntu-latest
+    runs-on: 'ubuntu-latest'
     steps:
-    - id: step-0
-      name: Check out
-      uses: actions/checkout@v3
-    - id: step-1
-      name: Hello world!
-      run: echo 'hello!'
+    - id: 'step-0'
+      name: 'Check out'
+      uses: 'actions/checkout@v3'
+    - id: 'step-1'
+      name: 'Hello world!'
+      run: 'echo ''hello!'''

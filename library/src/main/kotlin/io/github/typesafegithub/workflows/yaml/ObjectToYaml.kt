@@ -84,10 +84,8 @@ private fun Any?.scalarToYaml(emitter: Emitter) {
     val scalarStyle = if (this is String) {
         if (lines().size > 1) {
             ScalarStyle.LITERAL
-        } else if (isEmpty() || (this == "null")) {
-            ScalarStyle.SINGLE_QUOTED
         } else {
-            ScalarStyle.PLAIN
+            ScalarStyle.SINGLE_QUOTED
         }
     } else {
         ScalarStyle.PLAIN

@@ -46,7 +46,7 @@ class ObjectToYamlTest : DescribeSpec({
         // then
         yaml shouldBe """
             foo:
-            - bar
+            - 'bar'
             - 123
             - 456.789
             - - another-foo: 123
@@ -55,7 +55,7 @@ class ObjectToYamlTest : DescribeSpec({
               - - 1
                 - 2
                 - 3
-              - yet: another-map
+              - yet: 'another-map'
             bar: 456
 
         """.trimIndent()
@@ -101,7 +101,7 @@ class ObjectToYamlTest : DescribeSpec({
               hey
               hi
               hello
-            bar: baz
+            bar: 'baz'
 
         """.trimIndent()
     }
