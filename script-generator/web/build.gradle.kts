@@ -10,7 +10,7 @@ plugins {
 dependencies {
     implementation(projects.scriptGenerator.logic)
 
-    implementation(platform("io.ktor:ktor-bom:2.2.4"))
+    implementation(platform("io.ktor:ktor-bom:2.3.0"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-content-negotiation")
