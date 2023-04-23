@@ -11,7 +11,7 @@ jobs:
   check_yaml_consistency:
     name: Check YAML consistency
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'krzema12' || github.event_name != 'schedule' }}
+    if: ${{ github.repository_owner == 'typesafegithub' || github.event_name != 'schedule' }}
     steps:
     - id: step-0
       name: Check out
