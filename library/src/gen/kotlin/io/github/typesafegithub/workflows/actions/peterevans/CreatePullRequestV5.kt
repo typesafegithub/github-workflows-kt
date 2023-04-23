@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.peterevans
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/peter-evans/create-pull-request)
  */
-@Deprecated(
-    message = "This action has a newer major version: CreatePullRequestV5",
-    replaceWith = ReplaceWith("CreatePullRequestV5"),
-)
-public data class CreatePullRequestV4 private constructor(
+public data class CreatePullRequestV5 private constructor(
     /**
      * GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
      */
@@ -97,6 +91,10 @@ public data class CreatePullRequestV4 private constructor(
      */
     public val body: String? = null,
     /**
+     * The path to a file containing the pull request body. Takes precedence over `body`.
+     */
+    public val bodyPath: String? = null,
+    /**
      * A comma or newline separated list of labels.
      */
     public val labels: List<String>? = null,
@@ -131,8 +129,8 @@ public data class CreatePullRequestV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<CreatePullRequestV4.Outputs>("peter-evans", "create-pull-request", _customVersion
-        ?: "v4") {
+) : RegularAction<CreatePullRequestV5.Outputs>("peter-evans", "create-pull-request", _customVersion
+        ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         token: String? = null,
@@ -149,6 +147,7 @@ public data class CreatePullRequestV4 private constructor(
         pushToFork: String? = null,
         title: String? = null,
         body: String? = null,
+        bodyPath: String? = null,
         labels: List<String>? = null,
         assignees: List<String>? = null,
         reviewers: List<String>? = null,
@@ -160,8 +159,8 @@ public data class CreatePullRequestV4 private constructor(
     ) : this(token=token, path=path, addPaths=addPaths, commitMessage=commitMessage,
             committer=committer, author=author, signoff=signoff, branch=branch,
             deleteBranch=deleteBranch, branchSuffix=branchSuffix, base=base, pushToFork=pushToFork,
-            title=title, body=body, labels=labels, assignees=assignees, reviewers=reviewers,
-            teamReviewers=teamReviewers, milestone=milestone, draft=draft,
+            title=title, body=body, bodyPath=bodyPath, labels=labels, assignees=assignees,
+            reviewers=reviewers, teamReviewers=teamReviewers, milestone=milestone, draft=draft,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -181,6 +180,7 @@ public data class CreatePullRequestV4 private constructor(
             pushToFork?.let { "push-to-fork" to it },
             title?.let { "title" to it },
             body?.let { "body" to it },
+            bodyPath?.let { "body-path" to it },
             labels?.let { "labels" to it.joinToString("\n") },
             assignees?.let { "assignees" to it.joinToString("\n") },
             reviewers?.let { "reviewers" to it.joinToString("\n") },
