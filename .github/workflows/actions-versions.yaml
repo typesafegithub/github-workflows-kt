@@ -48,5 +48,5 @@ jobs:
       name: Create issue
       uses: peter-evans/create-issue-from-file@v4
       with:
-        title: Updates available
+        title: New major versions of actions available
         content-filepath: build/suggestVersions.md
