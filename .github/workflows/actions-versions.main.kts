@@ -41,7 +41,7 @@ workflow(
         uses(
             name = "Create issue",
             action = CreateIssueFromFileV4(
-                title = "Updates available",
+                title = "New major versions of actions available",
                 contentFilepath = "build/suggestVersions.md",
             )
         )
