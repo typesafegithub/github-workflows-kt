@@ -1,5 +1,7 @@
 plugins {
     kotlin("js")
+    kotlin("plugin.serialization")
+
     id("org.jmailen.kotlinter")
 }
 
