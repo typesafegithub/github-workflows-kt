@@ -19,6 +19,26 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.7")
 }
 
+val targetJsBundleDir = "${project.buildDir}/resources"
+
+sourceSets {
+    main {
+        resources {
+            setSrcDirs(srcDirs + targetJsBundleDir)
+        }
+    }
+}
+
+tasks.processResources {
+    dependsOn(copyJsBundleToResources)
+}
+
+val copyJsBundleToResources by tasks.registering(Copy::class) {
+    dependsOn(":script-generator:web:ui:build")
+    from("$rootDir/script-generator/web/ui/build/distributions")
+    into(targetJsBundleDir)
+}
+
 application {
     mainClass.set("io.github.typesafegithub.workflows.scriptgenerator.rest.MainKt")
 }

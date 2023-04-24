@@ -14,6 +14,7 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import kotlinx.serialization.Serializable
+import io.ktor.server.http.content.singlePageApplication
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
@@ -48,6 +49,10 @@ private fun Application.configureRouting() {
 
                 call.respond(response)
             }
+        }
+
+        singlePageApplication {
+            useResources = true
         }
     }
 }
