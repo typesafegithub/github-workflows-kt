@@ -9,8 +9,7 @@ dependencies {
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-mui")
-//    implementation("org.jetbrains.kotlin-wrappers:kotlin-mui-icons")
-//    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
 
     implementation(platform("io.ktor:ktor-bom:2.3.0"))
     implementation("io.ktor:ktor-client-core")
