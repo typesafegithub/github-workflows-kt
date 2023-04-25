@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class YamlToKotlinResponse(
-    val kotlinScript: String,
+    val kotlinScript: String? = null,
+    val error: String? = null,
 )

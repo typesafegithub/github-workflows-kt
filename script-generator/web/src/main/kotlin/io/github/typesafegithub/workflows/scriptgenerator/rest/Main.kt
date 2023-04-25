@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.scriptgenerator.rest
 import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinRequest
 import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinResponse
 import io.github.typesafegithub.workflows.scriptgenerator.yamlToKotlinScript
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -33,7 +34,15 @@ private fun Application.configureRouting() {
             post("yaml-to-kotlin") {
                 val requestBody = call.receive<YamlToKotlinRequest>()
 
-                val kotlinScript = yamlToKotlinScript(requestBody.yaml)
+                val kotlinScript = try {
+                    yamlToKotlinScript(requestBody.yaml)
+                } catch (e: Throwable) {
+                    val response = YamlToKotlinResponse(
+                        error = e.message,
+                    )
+                    call.respond(status = HttpStatusCode.BadRequest, message = response)
+                    return@post
+                }
                 val response = YamlToKotlinResponse(
                     kotlinScript = kotlinScript,
                 )
