@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.webui.components
 
-import emotion.react.css
 import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinRequest
 import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinResponse
 import io.ktor.client.HttpClient
