@@ -1,5 +1,7 @@
 package io.github.typesafegithub.workflows.scriptgenerator.rest
 
+import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinRequest
+import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinResponse
 import io.github.typesafegithub.workflows.scriptgenerator.yamlToKotlinScript
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -14,7 +16,6 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
-import kotlinx.serialization.Serializable
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
@@ -25,16 +26,6 @@ fun main() {
         configureRouting()
     }.start(wait = true)
 }
-
-@Serializable
-data class YamlToKotlinRequest(
-    val yaml: String,
-)
-
-@Serializable
-data class YamlToKotlinResponse(
-    val kotlinScript: String,
-)
 
 private fun Application.configureRouting() {
     routing {

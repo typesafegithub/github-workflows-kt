@@ -1,5 +1,7 @@
 package io.github.typesafegithub.workflows.webui.components
 
+import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinRequest
+import io.github.typesafegithub.workflows.scriptgenerator.rest.api.YamlToKotlinResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.js.Js
@@ -11,7 +13,6 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
 import mui.material.TextField
 import react.FC
 import react.Props
@@ -19,16 +20,6 @@ import react.dom.html.ReactHTML.br
 import react.dom.onChange
 import react.useEffect
 import react.useState
-
-@Serializable
-data class YamlToKotlinRequest(
-    val yaml: String,
-)
-
-@Serializable
-data class YamlToKotlinResponse(
-    val kotlinScript: String,
-)
 
 val App = FC<Props> {
     val (yamlToConvert, setYamlToConvert) = useState("")

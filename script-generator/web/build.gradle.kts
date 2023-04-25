@@ -1,4 +1,4 @@
-import io.ktor.plugin.features.*
+import io.ktor.plugin.features.DockerImageRegistry
 
 plugins {
     kotlin("plugin.serialization")
@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
     implementation(projects.scriptGenerator.logic)
+    implementation(projects.scriptGenerator.web.api)
 
     implementation(platform("io.ktor:ktor-bom:2.3.0"))
     implementation("io.ktor:ktor-server-core")
@@ -31,6 +32,7 @@ sourceSets {
 
 tasks.processResources {
     dependsOn(copyJsBundleToResources)
+    dependsOn(tasks.processTestResources)
 }
 
 tasks["sourcesJar"].dependsOn(tasks.processResources)

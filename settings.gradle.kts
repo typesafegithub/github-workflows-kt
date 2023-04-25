@@ -7,6 +7,7 @@ include(
     ":script-generator:logic",
     ":script-generator:cli",
     ":script-generator:web",
+    ":script-generator:web:api",
     ":script-generator:web:ui",
     ":automation:typings",
     ":automation:wrapper-generator",
