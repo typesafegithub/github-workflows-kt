@@ -33,6 +33,8 @@ tasks.processResources {
     dependsOn(copyJsBundleToResources)
 }
 
+tasks["sourcesJar"].dependsOn(tasks.processResources)
+
 val copyJsBundleToResources by tasks.registering(Copy::class) {
     dependsOn(":script-generator:web:ui:build")
     from("$rootDir/script-generator/web/ui/build/distributions")
