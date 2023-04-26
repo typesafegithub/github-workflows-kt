@@ -1,4 +1,5 @@
-# github-workflows-kt 
+![Logo white](images/Logo-White.svg#gh-dark-mode-only)
+![Logo white](images/Logo-Black.svg#gh-light-mode-only)
 
 > _You won't get back to YAML!_
 
