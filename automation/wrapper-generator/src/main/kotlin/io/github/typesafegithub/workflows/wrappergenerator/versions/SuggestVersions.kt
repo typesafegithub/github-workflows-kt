@@ -44,6 +44,7 @@ fun main() {
     File("build/suggestVersions.md").let { file ->
         if (output.isNotEmpty()) {
             println("Updated ${file.absolutePath}")
+            file.parentFile.mkdirs()
             file.writeText(output)
         } else {
             println("No versions to suggest - ensuring that ${file.absolutePath} doesn't exist")

@@ -1,0 +1,69 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  token:
+    type: string
+  path:
+    type: string
+  add-paths:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  commit-message:
+    type: string
+  committer:
+    type: string
+  author:
+    type: string
+  signoff:
+    type: boolean
+  branch:
+    type: string
+  delete-branch:
+    type: boolean
+  branch-suffix:
+    type: string
+  base:
+    type: string
+  push-to-fork:
+    type: string
+  title:
+    type: string
+  body:
+    type: string
+  body-path:
+    type: string
+  labels:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  assignees:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  reviewers:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  team-reviewers:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  milestone:
+    type: string
+  draft:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  pull-request-number:
+    type: string
+  pull-request-url:
+    type: string
+  pull-request-operation:
+    type: string
+  pull-request-head-sha:
+    type: string
