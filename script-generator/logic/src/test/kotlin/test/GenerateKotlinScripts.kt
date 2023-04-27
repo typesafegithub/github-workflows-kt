@@ -11,7 +11,7 @@ import java.io.FileFilter
 class GenerateKotlinScripts : FunSpec({
 
     val testInputs = rootProject.resolve("script-generator/logic/yaml-input")
-        .listFiles(FileFilter { it.extension == "yaml" })!!
+        .listFiles(FileFilter { it.extension == "yml" })!!
         .map { it.name }
 
     testInputs.forEach { name ->
