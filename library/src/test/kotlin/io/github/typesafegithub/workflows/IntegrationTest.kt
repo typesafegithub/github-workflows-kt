@@ -7,6 +7,8 @@ import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredent
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
@@ -1107,6 +1109,50 @@ class IntegrationTest : FunSpec({
                   run: 'echo ''Hello!'''
 
         """.trimIndent()
+    }
+
+    context("properties") {
+        test("permissions") {
+            val yaml = workflow(
+                name = "test",
+                permissions = mapOf(
+                    Permission.Actions to Mode.Write,
+                    Permission.Checks to Mode.None,
+                    Permission.Contents to Mode.Read,
+                ),
+                on = listOf(Push()),
+            ) {
+                job(
+                    id = "job",
+                    permissions = mapOf(
+                        Permission.Actions to Mode.Read,
+                        Permission.Checks to Mode.Write,
+                        Permission.Contents to Mode.None,
+                    ),
+                    runsOn = RunnerType.UbuntuLatest,
+                ) { run(command = "ls") }
+            }.toYaml(addConsistencyCheck = false, preamble = Just(""))
+
+            yaml.trim() shouldBe """
+                name: 'test'
+                on:
+                  push: {}
+                permissions:
+                  actions: 'write'
+                  checks: 'none'
+                  contents: 'read'
+                jobs:
+                  job:
+                    runs-on: 'ubuntu-latest'
+                    permissions:
+                      actions: 'read'
+                      checks: 'write'
+                      contents: 'none'
+                    steps:
+                    - id: 'step-0'
+                      run: 'ls'
+            """.trimIndent()
+        }
     }
 })
 
