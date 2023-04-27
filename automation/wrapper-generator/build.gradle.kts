@@ -12,7 +12,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.53.0")
     implementation("com.squareup:kotlinpoet:1.13.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation(projects.automation.typings)
 
     testImplementation(projects.library)

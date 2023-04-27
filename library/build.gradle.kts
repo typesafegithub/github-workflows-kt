@@ -10,13 +10,13 @@ plugins {
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
     id("info.solidsoft.pitest") version "1.9.11"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.1"
 
     id("org.jetbrains.dokka") version "1.8.10"
 }
 
 group = "io.github.typesafegithub"
-version = "0.41.0"
+version = "0.41.1-SNAPSHOT"
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.6")

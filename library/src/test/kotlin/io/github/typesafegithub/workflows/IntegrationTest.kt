@@ -65,30 +65,30 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               check_yaml_consistency:
-                name: Check YAML consistency
-                runs-on: ubuntu-latest
+                name: 'Check YAML consistency'
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  name: Check out
-                  uses: actions/checkout@v3
-                - id: step-1
-                  name: Consistency check
-                  run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+                - id: 'step-0'
+                  name: 'Check out'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  name: 'Consistency check'
+                  run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
               test_job:
-                name: Test Job
-                runs-on: ubuntu-latest
+                name: 'Test Job'
+                runs-on: 'ubuntu-latest'
                 needs:
-                - check_yaml_consistency
+                - 'check_yaml_consistency'
                 steps:
-                - id: step-0
-                  uses: actions/checkout@v3
-                - id: step-1
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -129,18 +129,18 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               test_job:
-                name: Test Job
-                runs-on: ubuntu-latest
+                name: 'Test Job'
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  uses: actions/checkout@v3
-                - id: step-1
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -300,34 +300,34 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               check_yaml_consistency:
-                name: Check YAML consistency
-                runs-on: ubuntu-latest
+                name: 'Check YAML consistency'
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  name: Check out
-                  uses: actions/checkout@v3
-                - id: step-1
-                  name: Execute script
-                  run: rm '.github/workflows/some_workflow.yaml' && '.github/workflows/some_workflow.main.kts'
-                - id: step-2
-                  name: Consistency check
-                  run: git diff --exit-code '.github/workflows/some_workflow.yaml'
+                - id: 'step-0'
+                  name: 'Check out'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  name: 'Execute script'
+                  run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                - id: 'step-2'
+                  name: 'Consistency check'
+                  run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
               test_job:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 needs:
-                - check_yaml_consistency
+                - 'check_yaml_consistency'
                 steps:
-                - id: step-0
-                  name: Check out
-                  uses: actions/checkout@v3
-                - id: step-1
-                  name: Hello world!
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  name: 'Check out'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  name: 'Hello world!'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -421,51 +421,51 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Overridden name!
+            name: 'Overridden name!'
             on:
               push: {}
             env:
-              SIMPLE_VAR: simple-value-workflow
+              SIMPLE_VAR: 'simple-value-workflow'
               MULTILINE_VAR: |-
                 hey,
                 hi,
                 hello! workflow
-            foo-bar: baz
+            foo-bar: 'baz'
             jobs:
               test_job:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 env:
-                  SIMPLE_VAR: simple-value-job
+                  SIMPLE_VAR: 'simple-value-job'
                   MULTILINE_VAR: |-
                     hey,
                     hi,
                     hello! job
-                if: ${'$'}{{ always() }}
+                if: '${'$'}{{ always() }}'
                 baz-goo: 123
                 null-string: 'null'
                 null-value: null
                 empty-string: ''
                 steps:
-                - id: step-0
-                  name: Check out
+                - id: 'step-0'
+                  name: 'Check out'
                   continue-on-error: true
-                  uses: actions/checkout@v3
+                  uses: 'actions/checkout@v3'
                   env:
-                    SIMPLE_VAR: simple-value-uses
+                    SIMPLE_VAR: 'simple-value-uses'
                     MULTILINE_VAR: |-
                       hey,
                       hi,
                       hello! uses
-                - id: step-1
-                  name: Hello world!
+                - id: 'step-1'
+                  name: 'Hello world!'
                   env:
-                    SIMPLE_VAR: simple-value-run
+                    SIMPLE_VAR: 'simple-value-run'
                     MULTILINE_VAR: |-
                       hey,
                       hi,
                       hello! run
                   continue-on-error: true
-                  run: echo 'hello!'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -521,28 +521,28 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             concurrency:
-              group: workflow_staging_environment
+              group: 'workflow_staging_environment'
               cancel-in-progress: false
             jobs:
               test_job:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 concurrency:
-                  group: job_staging_environment
+                  group: 'job_staging_environment'
                   cancel-in-progress: false
                 steps:
-                - id: step-0
-                  uses: EndBug/add-and-commit@v9
-                - id: step-1
-                  name: Some step consuming other step's output
-                  uses: actions/checkout@v3
+                - id: 'step-0'
+                  uses: 'EndBug/add-and-commit@v9'
+                - id: 'step-1'
+                  name: 'Some step consuming other step''s output'
+                  uses: 'actions/checkout@v3'
                   with:
-                    repository: ${'$'}{{ step-0 }}
-                    ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
-                    token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+                    repository: '${'$'}{{ step-0 }}'
+                    ref: '${'$'}{{ steps.step-0.outputs.commit_sha }}'
+                    token: '${'$'}{{ steps.step-0.outputs.my-unsafe-output }}'
 
             """.trimIndent()
         }
@@ -589,33 +589,33 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               deploy-dev:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  uses: aws-actions/configure-aws-credentials@v2
+                - id: 'step-0'
+                  uses: 'aws-actions/configure-aws-credentials@v2'
                   with:
-                    aws-region: us-west-1
-                    role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/123456789012345678901234567890
-                - id: step-1
-                  uses: aws-actions/configure-aws-credentials@v2
+                    aws-region: 'us-west-1'
+                    role-to-assume: 'arn:aws:iam::12345678901234567890:role/github-actions-role/123456789012345678901234567890'
+                - id: 'step-1'
+                  uses: 'aws-actions/configure-aws-credentials@v2'
                   with:
-                    aws-region: us-west-1
-                    role-to-assume: arn:aws:iam:::role/github-actions-role/${'$'}{{ github.token }}
-                - id: step-2
-                  uses: aws-actions/configure-aws-credentials@v2
+                    aws-region: 'us-west-1'
+                    role-to-assume: 'arn:aws:iam:::role/github-actions-role/${'$'}{{ github.token }}'
+                - id: 'step-2'
+                  uses: 'aws-actions/configure-aws-credentials@v2'
                   with:
-                    aws-region: us-west-1
-                    role-to-assume: arn:aws:iam::1234567890:role/github-actions-role/${'$'}{{ github.token }}
-                - id: step-3
-                  uses: aws-actions/configure-aws-credentials@v2
+                    aws-region: 'us-west-1'
+                    role-to-assume: 'arn:aws:iam::1234567890:role/github-actions-role/${'$'}{{ github.token }}'
+                - id: 'step-3'
+                  uses: 'aws-actions/configure-aws-credentials@v2'
                   with:
-                    aws-region: us-west-1
-                    role-to-assume: arn:aws:iam::12345678901234567890:role/github-actions-role/${'$'}{{ github.token }}
+                    aws-region: 'us-west-1'
+                    role-to-assume: 'arn:aws:iam::12345678901234567890:role/github-actions-role/${'$'}{{ github.token }}'
 
             """.trimIndent()
         }
@@ -652,28 +652,28 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             concurrency:
-              group: workflow_staging_environment
+              group: 'workflow_staging_environment'
               cancel-in-progress: true
             jobs:
               test_job:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 concurrency:
-                  group: job_staging_environment
+                  group: 'job_staging_environment'
                   cancel-in-progress: true
                 steps:
-                - id: step-0
-                  uses: EndBug/add-and-commit@v9
-                - id: step-1
-                  name: Some step consuming other step's output
-                  uses: actions/checkout@v3
+                - id: 'step-0'
+                  uses: 'EndBug/add-and-commit@v9'
+                - id: 'step-1'
+                  name: 'Some step consuming other step''s output'
+                  uses: 'actions/checkout@v3'
                   with:
-                    repository: ${'$'}{{ step-0 }}
-                    ref: ${'$'}{{ steps.step-0.outputs.commit_sha }}
-                    token: ${'$'}{{ steps.step-0.outputs.my-unsafe-output }}
+                    repository: '${'$'}{{ step-0 }}'
+                    ref: '${'$'}{{ steps.step-0.outputs.commit_sha }}'
+                    token: '${'$'}{{ steps.step-0.outputs.my-unsafe-output }}'
 
             """.trimIndent()
         }
@@ -751,31 +751,31 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               check_yaml_consistency:
-                name: Check YAML consistency
-                runs-on: ubuntu-latest
-                if: ${'$'}{{ always() }}
+                name: 'Check YAML consistency'
+                runs-on: 'ubuntu-latest'
+                if: '${'$'}{{ always() }}'
                 steps:
-                - id: step-0
-                  name: Check out
-                  uses: actions/checkout@v3
-                - id: step-1
-                  name: Consistency check
-                  run: diff -u '.github/workflows/some_workflow.yaml' <('.github/workflows/some_workflow.main.kts')
+                - id: 'step-0'
+                  name: 'Check out'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  name: 'Consistency check'
+                  run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
               test_job:
-                name: Test Job
-                runs-on: ubuntu-latest
+                name: 'Test Job'
+                runs-on: 'ubuntu-latest'
                 needs:
-                - check_yaml_consistency
+                - 'check_yaml_consistency'
                 steps:
-                - id: step-0
-                  uses: actions/checkout@v3
-                - id: step-1
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -855,19 +855,19 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               test_job:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  name: Check out
-                  uses: actions/checkout@v3
-                - id: step-1
-                  name: Hello world!
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  name: 'Check out'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  name: 'Hello world!'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -889,15 +889,15 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: test
+            name: 'test'
             on:
               push: {}
             jobs:
               test:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  run: echo 'Hello!'
+                - id: 'step-0'
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
         }
@@ -922,15 +922,15 @@ class IntegrationTest : FunSpec(
             # Test preamble
             # with a second line
 
-            name: test
+            name: 'test'
             on:
               push: {}
             jobs:
               test:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  run: echo 'Hello!'
+                - id: 'step-0'
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
         }
@@ -951,15 +951,15 @@ class IntegrationTest : FunSpec(
             #
             # with an empty line
 
-            name: test
+            name: 'test'
             on:
               push: {}
             jobs:
               test:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  run: echo 'Hello!'
+                - id: 'step-0'
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
         }
@@ -983,18 +983,18 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               test_job:
-                name: Test Job
-                runs-on: ubuntu-latest
+                name: 'Test Job'
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  uses: actions/checkout@v3
-                - id: step-1
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -1017,15 +1017,15 @@ class IntegrationTest : FunSpec(
             # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-            name: test
+            name: 'test'
             on:
               push: {}
             jobs:
               test:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  run: echo 'Hello!'
+                - id: 'step-0'
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
         }
@@ -1049,18 +1049,18 @@ class IntegrationTest : FunSpec(
             # Test preamble
             # with original before
 
-            name: Test workflow
+            name: 'Test workflow'
             on:
               push: {}
             jobs:
               test_job:
-                name: Test Job
-                runs-on: ubuntu-latest
+                name: 'Test Job'
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  uses: actions/checkout@v3
-                - id: step-1
-                  run: echo 'hello!'
+                - id: 'step-0'
+                  uses: 'actions/checkout@v3'
+                - id: 'step-1'
+                  run: 'echo ''hello!'''
 
             """.trimIndent()
         }
@@ -1083,15 +1083,15 @@ class IntegrationTest : FunSpec(
             # Test preamble
             # with original before
 
-            name: test
+            name: 'test'
             on:
               push: {}
             jobs:
               test:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  run: echo 'Hello!'
+                - id: 'step-0'
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
         }
@@ -1105,10 +1105,10 @@ class IntegrationTest : FunSpec(
               push: {}
             jobs:
               test:
-                runs-on: ubuntu-latest
+                runs-on: 'ubuntu-latest'
                 steps:
-                - id: step-0
-                  run: echo 'Hello!'
+                - id: 'step-0'
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
         }

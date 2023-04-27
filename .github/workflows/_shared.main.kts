@@ -20,4 +20,4 @@ fun JobBuilder<*>.setupPython() =
     uses(SetupPythonV4(pythonVersion = "3.8"))
 
 val disableScheduledJobInForks =
-    expr { "${github.repository_owner} == 'krzema12' || ${github.event_name} != 'schedule'" }
+    expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }

@@ -1,22 +1,46 @@
-import io.ktor.plugin.features.*
+import io.ktor.plugin.features.DockerImageRegistry
 
 plugins {
     kotlin("plugin.serialization")
-    id("io.ktor.plugin") version "2.2.4"
+    id("io.ktor.plugin") version "2.3.0"
     buildsrc.convention.`kotlin-jvm`
     application
 }
 
 dependencies {
     implementation(projects.scriptGenerator.logic)
+    implementation(projects.scriptGenerator.web.api)
 
-    implementation(platform("io.ktor:ktor-bom:2.2.4"))
+    implementation(platform("io.ktor:ktor-bom:2.3.0"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
-    implementation("org.slf4j:slf4j-api:2.0.6")
-    implementation("org.slf4j:slf4j-simple:2.0.6")
+    implementation("org.slf4j:slf4j-api:2.0.7")
+    implementation("org.slf4j:slf4j-simple:2.0.7")
+}
+
+val targetJsBundleDir = "${project.buildDir}/resources"
+
+sourceSets {
+    main {
+        resources {
+            setSrcDirs(srcDirs + targetJsBundleDir)
+        }
+    }
+}
+
+tasks.processResources {
+    dependsOn(copyJsBundleToResources)
+    dependsOn(tasks.processTestResources)
+}
+
+tasks["sourcesJar"].dependsOn(tasks.processResources)
+
+val copyJsBundleToResources by tasks.registering(Copy::class) {
+    dependsOn(":script-generator:web:ui:build")
+    from("$rootDir/script-generator/web/ui/build/distributions")
+    into(targetJsBundleDir)
 }
 
 application {
