@@ -6,8 +6,12 @@ import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Release
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
+import kotlin.collections.listOf
 import kotlin.collections.mapOf
 
 public val workflowNodejsPackage: Workflow = workflow(

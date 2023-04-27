@@ -7,11 +7,16 @@ import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.actions.reposync.PullRequestV2
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Cron
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
+import kotlin.collections.mapOf
 
 public val workflowRefreshversionsPr: Workflow = workflow(
       name = "RefreshVersions Pr",
@@ -38,6 +43,20 @@ public val workflowRefreshversionsPr: Workflow = workflow(
           action = SetupJavaV3(
             javaVersion = "11",
             distribution = SetupJavaV3.Distribution.Adopt,
+          ),
+        )
+        uses(
+          name = "create-branch",
+          action = CustomAction(
+            actionOwner = "peterjgrainger",
+            actionName = "action-create-branch",
+            actionVersion = "v2.1.0",
+            inputs = mapOf(
+              "branch" to "dependency-update",
+            )
+          ),
+          env = linkedMapOf(
+            "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN"),
           ),
         )
         uses(

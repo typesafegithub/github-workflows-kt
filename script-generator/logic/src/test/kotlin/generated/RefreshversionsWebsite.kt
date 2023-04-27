@@ -6,7 +6,10 @@ import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowRefreshversionsWebsite: Workflow = workflow(

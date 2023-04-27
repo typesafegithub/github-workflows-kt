@@ -1,6 +1,5 @@
 package generated
 
-import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.actions.docker.BuildPushActionV4
 import io.github.typesafegithub.workflows.actions.docker.LoginActionV2
@@ -8,8 +7,12 @@ import io.github.typesafegithub.workflows.actions.docker.SetupBuildxActionV2
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
 
 public val workflowDockerImage: Workflow = workflow(

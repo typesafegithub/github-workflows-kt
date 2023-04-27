@@ -10,11 +10,12 @@ import io.github.typesafegithub.workflows.scriptmodel.YamlWorkflow
 import io.github.typesafegithub.workflows.wrappergenerator.generation.toPascalCase
 import java.nio.file.Paths
 
-fun YamlWorkflow.toFileSpec(filenameFromUrl: String?) = FileSpec.builder("", "$name.main.kts")
-    .addImport("$PACKAGE.yaml", "toYaml", "writeToFile")
-    .addImport("$PACKAGE.dsl.expressions", "expr")
-    .addProperty(workFlowProperty(filenameFromUrl))
-    .build()
+fun YamlWorkflow.toFileSpec(filenameFromUrl: String?, packageName: String = "") =
+    FileSpec.builder(packageName, "$name.main.kts")
+        .addImport("$PACKAGE.yaml", "toYaml", "writeToFile")
+        .addImport("$PACKAGE.dsl.expressions", "expr")
+        .addProperty(workFlowProperty(filenameFromUrl))
+        .build()
 
 fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
     val filename = (filenameFromUrl ?: name).lowercase().replace(" ", "-")

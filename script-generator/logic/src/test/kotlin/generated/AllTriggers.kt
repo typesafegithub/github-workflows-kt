@@ -38,8 +38,12 @@ import io.github.typesafegithub.workflows.domain.triggers.Watch
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowCall
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowRun
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
+import kotlin.collections.listOf
 import kotlin.collections.mapOf
 
 public val workflowAllTriggers: Workflow = workflow(

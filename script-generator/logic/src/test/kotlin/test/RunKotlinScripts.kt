@@ -9,6 +9,7 @@ import generated.workflowRefreshversionsBuild
 import generated.workflowRefreshversionsPr
 import generated.workflowRefreshversionsWebsite
 import generated.workflowUpdateGradleWrapper
+import io.github.typesafegithub.workflows.scriptgenerator.rootProject
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -34,5 +35,10 @@ class RunKotlinScripts : FunSpec({
             it.copy(sourceFile = gitRootDir.resolve(it.sourceFile))
                 .writeToFile(addConsistencyCheck = false)
         }
+
+        val outputDir = rootProject.resolve("script-generator/logic/yaml-output")
+        gitRootDir.resolve(".github/workflows")
+            .toFile()
+            .copyRecursively(outputDir)
     }
 })

@@ -11,6 +11,11 @@ fun yamlToKotlinScript(yaml: String, filename: String? = null): String {
     return workflow.toKotlin(filename ?: workflow.name)
 }
 
+fun yamlToKotlinFile(yaml: String, filename: String? = null, packageName: String = ""): String {
+    val workflow: YamlWorkflow = decodeYamlWorkflow(yaml)
+    return workflow.toFileSpec(filename ?: workflow.name, packageName).toString()
+}
+
 fun URL.filename(): String =
     path.substringAfterLast("/").substringBefore(".")
 

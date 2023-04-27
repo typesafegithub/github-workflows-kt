@@ -12,6 +12,8 @@ import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Type.
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Type.Choice
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.listOf
 

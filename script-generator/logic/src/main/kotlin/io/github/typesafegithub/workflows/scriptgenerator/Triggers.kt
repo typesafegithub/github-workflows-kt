@@ -106,7 +106,7 @@ private fun YamlTrigger?.toKotlin(triggerName: String): CodeBlock {
                 .add("\n").indent()
                 .add("_customArguments = %M(\n", Members.mapOf)
                 .indent()
-                .add("%S to %T", "types", Any::class.asClassName())
+                .add("%S to %M", "types", Members.listOf)
                 .add(types.joinToCode(separator = ", ", transform = { CodeBlock.of("%S", it) }))
                 .unindent()
                 .add("),\n")

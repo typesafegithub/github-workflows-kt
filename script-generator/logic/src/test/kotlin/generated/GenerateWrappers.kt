@@ -6,7 +6,10 @@ import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.toYaml
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.nio.`file`.Paths
 import kotlin.collections.mapOf
 
@@ -60,7 +63,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
         uses(
           name = "Generate wrappers",
           action = GradleBuildActionV2(
-            arguments = ":automation:wrapper-generator:run",
+            arguments = ":wrapper-generator:run",
             _customVersion = "v1",
           ),
         )
@@ -78,7 +81,7 @@ public val workflowGenerateWrappers: Workflow = workflow(
           |git add .
           |git commit --allow-empty -m "Regenerate wrappers (${'$'}GITHUB_SHA)"  # an empty commit explicitly shows that the wrappers are up-to-date
           |git push
-          """.trimMargin(),
+          |""".trimMargin(),
         )
       }
 

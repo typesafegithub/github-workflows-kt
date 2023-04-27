@@ -7,12 +7,23 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
 import kotlinx.serialization.decodeFromString
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.io.path.isRegularFile
 import kotlin.io.path.name
 import kotlin.io.path.readText
+import kotlin.io.path.relativeTo
 import kotlin.streams.asSequence
+
+internal val rootProject = File(".").canonicalFile.let {
+    when (it.name) {
+        "github-workflows-kt" -> it
+        "" -> it // Root directory in Docker container.
+        else -> it.parentFile.parentFile
+    }
+}
 
 internal fun readActionsMetadata(): List<WrapperRequest> =
     readLocalActionTypings()
@@ -20,18 +31,17 @@ internal fun readActionsMetadata(): List<WrapperRequest> =
         .sortedBy { it.actionCoords.prettyPrint.lowercase() }
 
 private fun readLocalActionTypings(): List<WrapperRequest> {
-    val actionTypingsDirectory = Path.of("actions")
+    val actionTypingsDirectory = rootProject.resolve("actions").toPath()
 
     return Files.walk(actionTypingsDirectory).asSequence()
         .filter { it.isRegularFile() }
         .filter { it.name !in setOf("commit-hash.txt") }
         .map {
-            val pathParts = it.toFile().invariantSeparatorsPath.split("/")
-            // pathParts[0] is "actions" directory
-            val owner = pathParts[1]
-            val name = pathParts[2]
-            val version = pathParts[3]
-            val subname = pathParts.subList(4, pathParts.size - 1).joinToString("/")
+            val pathParts = it.relativeTo(actionTypingsDirectory).invariantSeparatorsPathString.split("/")
+            val owner = pathParts[0]
+            val name = pathParts[1]
+            val version = pathParts[2]
+            val subname = pathParts.subList(3, pathParts.size - 1).joinToString("/")
             val file = pathParts.last()
             WrapperRequest(
                 actionCoords = ActionCoords(
