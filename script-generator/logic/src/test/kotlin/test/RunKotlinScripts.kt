@@ -39,6 +39,6 @@ class RunKotlinScripts : FunSpec({
         val outputDir = rootProject.resolve("script-generator/logic/yaml-output")
         gitRootDir.resolve(".github/workflows")
             .toFile()
-            .copyRecursively(outputDir)
+            .copyRecursively(outputDir, overwrite = true)
     }
 })

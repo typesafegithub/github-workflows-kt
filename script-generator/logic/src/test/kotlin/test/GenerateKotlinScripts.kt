@@ -1,7 +1,7 @@
 package test
 
 import io.github.typesafegithub.workflows.scriptgenerator.rootProject
-import io.github.typesafegithub.workflows.scriptgenerator.yamlToKotlinFile
+import io.github.typesafegithub.workflows.scriptgenerator.yamlToKotlin
 import io.github.typesafegithub.workflows.wrappergenerator.generation.toPascalCase
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.FunSpec
@@ -18,7 +18,7 @@ class GenerateKotlinScripts : FunSpec({
         test("Generating $name") {
             val input = TestInput(name)
 
-            val newContent = yamlToKotlinFile(yaml = input.yamlFile.readText(), packageName = "generated")
+            val newContent = yamlToKotlin(yaml = input.yamlFile.readText(), packageName = "generated")
                 .removeWindowsEndings()
 
             input.actualFile.writeText(

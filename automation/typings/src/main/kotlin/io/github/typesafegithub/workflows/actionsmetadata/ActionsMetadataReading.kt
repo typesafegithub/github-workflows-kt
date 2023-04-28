@@ -17,7 +17,7 @@ import kotlin.io.path.readText
 import kotlin.io.path.relativeTo
 import kotlin.streams.asSequence
 
-internal val rootProject = File(".").canonicalFile.let {
+private val rootProject = File(".").canonicalFile.let {
     when (it.name) {
         "github-workflows-kt" -> it
         "" -> it // Root directory in Docker container.
@@ -25,19 +25,20 @@ internal val rootProject = File(".").canonicalFile.let {
     }
 }
 
+val actionsDirectory: Path = rootProject.resolve("actions").toPath()
+
 internal fun readActionsMetadata(): List<WrapperRequest> =
     readLocalActionTypings()
         .addDeprecationInfo()
         .sortedBy { it.actionCoords.prettyPrint.lowercase() }
 
 private fun readLocalActionTypings(): List<WrapperRequest> {
-    val actionTypingsDirectory = rootProject.resolve("actions").toPath()
-
-    return Files.walk(actionTypingsDirectory).asSequence()
+    return Files.walk(actionsDirectory)
+        .asSequence()
         .filter { it.isRegularFile() }
         .filter { it.name !in setOf("commit-hash.txt") }
         .map {
-            val pathParts = it.relativeTo(actionTypingsDirectory).invariantSeparatorsPathString.split("/")
+            val pathParts = it.relativeTo(actionsDirectory).invariantSeparatorsPathString.split("/")
             val owner = pathParts[0]
             val name = pathParts[1]
             val version = pathParts[2]
@@ -53,7 +54,7 @@ private fun readLocalActionTypings(): List<WrapperRequest> {
                 typingsSource = buildTypingsSource(
                     path = it,
                     fileName = file,
-                    actionTypingsDirectory = actionTypingsDirectory,
+                    actionTypingsDirectory = actionsDirectory,
                 ),
             )
         }.toList()
