@@ -115,7 +115,7 @@ public data class CodecovActionV3 private constructor(
      */
     public val networkPrefix: String? = null,
     /**
-     * Override the assumed OS. Options are alpine | linux | macos | windows.
+     * Override the assumed OS. Options are aarch64 | alpine | linux | macos | windows.
      */
     public val os: CodecovActionV3.OperatingSystem? = null,
     /**
@@ -296,6 +296,8 @@ public data class CodecovActionV3 private constructor(
     public sealed class OperatingSystem(
         public val stringValue: String,
     ) {
+        public object Aarch64 : CodecovActionV3.OperatingSystem("aarch64")
+
         public object Alpine : CodecovActionV3.OperatingSystem("alpine")
 
         public object Linux : CodecovActionV3.OperatingSystem("linux")
