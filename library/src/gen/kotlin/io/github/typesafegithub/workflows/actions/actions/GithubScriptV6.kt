@@ -38,7 +38,8 @@ public data class GithubScriptV6 private constructor(
      */
     public val githubToken: String? = null,
     /**
-     * Whether to tell the GitHub client to log details of its requests
+     * Whether to tell the GitHub client to log details of its requests. true or false. Default is
+     * to run in debug mode when the GitHub Actions step debug logging is turned on.
      */
     public val debug: Boolean? = null,
     /**
