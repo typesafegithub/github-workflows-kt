@@ -28,6 +28,10 @@ import kotlin.collections.toTypedArray
  */
 public data class MetadataActionV4 private constructor(
     /**
+     * Where to get context data. Allowed options are "workflow"  (default), "git".
+     */
+    public val context: MetadataActionV4.Context? = null,
+    /**
      * List of Docker images to use as base name for tags
      */
     public val images: List<String>,
@@ -71,6 +75,7 @@ public data class MetadataActionV4 private constructor(
 ) : RegularAction<MetadataActionV4.Outputs>("docker", "metadata-action", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
+        context: MetadataActionV4.Context? = null,
         images: List<String>,
         tags: List<String>? = null,
         flavor: List<String>? = null,
@@ -81,13 +86,14 @@ public data class MetadataActionV4 private constructor(
         githubToken: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(images=images, tags=tags, flavor=flavor, labels=labels, sepTags=sepTags,
-            sepLabels=sepLabels, bakeTarget=bakeTarget, githubToken=githubToken,
+    ) : this(context=context, images=images, tags=tags, flavor=flavor, labels=labels,
+            sepTags=sepTags, sepLabels=sepLabels, bakeTarget=bakeTarget, githubToken=githubToken,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
+            context?.let { "context" to it.stringValue },
             "images" to images.joinToString("\n"),
             tags?.let { "tags" to it.joinToString("\n") },
             flavor?.let { "flavor" to it.joinToString("\n") },
@@ -101,6 +107,18 @@ public data class MetadataActionV4 private constructor(
     )
 
     public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public sealed class Context(
+        public val stringValue: String,
+    ) {
+        public object Workflow : MetadataActionV4.Context("workflow")
+
+        public object Git : MetadataActionV4.Context("git")
+
+        public class Custom(
+            customStringValue: String,
+        ) : MetadataActionV4.Context(customStringValue)
+    }
 
     public class Outputs(
         stepId: String,
