@@ -39,7 +39,7 @@ workflow(
             if (runnerType == UbuntuLatest) {
                 uses(
                     name = "Publish a snapshot to Sonatype",
-                    condition = expr { "${github.ref} == 'refs/heads/main'" },
+//                    condition = expr { "${github.ref} == 'refs/heads/main'" },
                     action = GradleBuildActionV2(
                         arguments = ":library:publishToSonatype",
                     ),

@@ -46,7 +46,6 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: :library:publishToSonatype
-      if: ${{ github.ref == 'refs/heads/main' }}
   build-for-Windows2022:
     runs-on: windows-2022
     needs:
