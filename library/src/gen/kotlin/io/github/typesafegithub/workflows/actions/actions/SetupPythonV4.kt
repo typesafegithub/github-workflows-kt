@@ -68,6 +68,11 @@ public data class SetupPythonV4 private constructor(
      */
     public val updateEnvironment: Boolean? = null,
     /**
+     * When 'true', a version range passed to 'python-version' input will match prerelease versions
+     * if no GA versions are found. Only 'x.y' version range is supported for CPython.
+     */
+    public val allowPrereleases: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -87,12 +92,14 @@ public data class SetupPythonV4 private constructor(
         token: String? = null,
         cacheDependencyPath: List<String>? = null,
         updateEnvironment: Boolean? = null,
+        allowPrereleases: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(pythonVersion=pythonVersion, pythonVersionFile=pythonVersionFile, cache=cache,
             architecture=architecture, checkLatest=checkLatest, token=token,
             cacheDependencyPath=cacheDependencyPath, updateEnvironment=updateEnvironment,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            allowPrereleases=allowPrereleases, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -105,6 +112,7 @@ public data class SetupPythonV4 private constructor(
             token?.let { "token" to it },
             cacheDependencyPath?.let { "cache-dependency-path" to it.joinToString("\n") },
             updateEnvironment?.let { "update-environment" to it.toString() },
+            allowPrereleases?.let { "allow-prereleases" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
