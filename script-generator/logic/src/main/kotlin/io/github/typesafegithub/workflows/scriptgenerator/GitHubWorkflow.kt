@@ -27,7 +27,7 @@ fun YamlWorkflow.workFlowProperty(filenameFromUrl: String?): PropertySpec {
                     .indent()
                     .add("name = %S,\n", name)
                     .add("on = %L", on.toKotlin())
-                    .add("sourceFile = %T.get(%S),\n", Paths::class, Paths.get(".github/workflows/$filename.main.kts"))
+                    .add("sourceFile = %T.get(%S),\n", Paths::class, ".github/workflows/$filename.main.kts")
                     .add(workflowEnv())
                     .add(concurrencyOf(concurrency))
                     .unindent()
