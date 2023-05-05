@@ -18,7 +18,7 @@ class GettingStartedSnippets : FunSpec({
         // --8<-- [start:getting-started-1]
         #!/usr/bin/env kotlin
 
-        @file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.42.1-SNAPSHOT")
+        @file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.43.0-SNAPSHOT")
 
         // --8<-- [end:getting-started-1]
         */
