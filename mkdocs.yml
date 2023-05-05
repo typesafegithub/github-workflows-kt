@@ -46,7 +46,7 @@ nav:
   - Introduction: 'index.md'
   - User guide:
       - Getting started: 'user-guide/getting_started.md'
-      - Script generator: 'user-guide/script-generator.md'
+      - Script generator (experimental): 'user-guide/script-generator.md'
       - Using actions: 'user-guide/using-actions.md'
       - Type-safe expressions: 'user-guide/type-safe-expressions.md'
       - Job outputs: 'user-guide/job-outputs.md'
