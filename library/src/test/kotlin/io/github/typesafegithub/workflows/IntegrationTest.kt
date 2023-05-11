@@ -1111,48 +1111,57 @@ class IntegrationTest : FunSpec({
         """.trimIndent()
     }
 
-    context("properties") {
-        test("permissions") {
-            val yaml = workflow(
-                name = "test",
-                permissions = mapOf(
-                    Permission.Actions to Mode.Write,
-                    Permission.Checks to Mode.None,
-                    Permission.Contents to Mode.Read,
-                ),
-                on = listOf(Push()),
+    test("writeToFile() - permissions") {
+        testRanWithGitHub("permissions") {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
             ) {
-                job(
-                    id = "job",
-                    permissions = mapOf(
-                        Permission.Actions to Mode.Read,
-                        Permission.Checks to Mode.Write,
-                        Permission.Contents to Mode.None,
-                    ),
-                    runsOn = RunnerType.UbuntuLatest,
-                ) { run(command = "ls") }
-            }.toYaml(addConsistencyCheck = false, preamble = Just(""))
-
-            yaml.trim() shouldBe """
-                name: 'test'
-                on:
-                  push: {}
-                permissions:
-                  actions: 'write'
-                  checks: 'none'
-                  contents: 'read'
-                jobs:
-                  job:
-                    runs-on: 'ubuntu-latest'
-                    permissions:
-                      actions: 'read'
-                      checks: 'write'
-                      contents: 'none'
-                    steps:
-                    - id: 'step-0'
-                      run: 'ls'
-            """.trimIndent()
+                run(
+                    name = "Hello world!",
+                    command = """
+                        less test.txt \
+                        | grep -P "foobar" \
+                        | sort \
+                        > result.txt
+                    """.trimIndent(),
+                )
+            }
         }
+    }
+
+    test("permissions") {
+        val fileName = "Integration tests - permissions"
+        val permissionWorkflow = workflow(
+            name = fileName,
+            on = listOf(Push(), PullRequest()),
+            sourceFile = Path.of("../.github/workflows/$fileName.main.kts"),
+            permissions = mapOf(
+                Permission.Actions to Mode.Write,
+                Permission.Checks to Mode.None,
+                Permission.Contents to Mode.Read,
+            ),
+        ) {
+            job(
+                id = "job",
+                permissions = mapOf(
+                    Permission.Actions to Mode.Read,
+                    Permission.Checks to Mode.Write,
+                    Permission.Contents to Mode.None,
+                ),
+                runsOn = RunnerType.UbuntuLatest,
+            ) { run(command = "ls") }
+        }
+
+        val targetPath = Path.of("../.github/workflows/$fileName.yaml")
+        val expectedYaml = targetPath.toFile().readText()
+
+        // when
+        permissionWorkflow.writeToFile(addConsistencyCheck = false, preamble = Just(""))
+
+        // then
+        val actualYaml = targetPath.toFile().readText()
+        actualYaml shouldBe expectedYaml
     }
 })
 
