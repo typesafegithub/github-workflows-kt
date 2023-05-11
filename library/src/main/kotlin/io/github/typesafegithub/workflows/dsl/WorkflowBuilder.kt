@@ -3,6 +3,8 @@ package io.github.typesafegithub.workflows.dsl
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
@@ -20,6 +22,7 @@ public class WorkflowBuilder(
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
     jobs: List<Job<*>> = emptyList(),
+    permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any?>,
 ) {
     internal var workflow = Workflow(
@@ -29,6 +32,7 @@ public class WorkflowBuilder(
         sourceFile = sourceFile,
         targetFileName = targetFileName,
         jobs = jobs,
+        permissions = permissions,
         concurrency = concurrency,
         yamlConsistencyJobCondition = yamlConsistencyJobCondition,
         _customArguments = _customArguments,
@@ -43,6 +47,7 @@ public class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
+        permissions: Map<Permission, Mode>? = null,
         _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
@@ -57,6 +62,7 @@ public class WorkflowBuilder(
             condition = condition,
             env = env,
             strategyMatrix = strategyMatrix,
+            permissions = permissions,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
             jobOutputs = outputs,
@@ -81,6 +87,7 @@ public class WorkflowBuilder(
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
+        permissions: Map<Permission, Mode>? = null,
         _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
@@ -93,6 +100,7 @@ public class WorkflowBuilder(
         condition = condition,
         env = env,
         strategyMatrix = strategyMatrix,
+        permissions = permissions,
         _customArguments = _customArguments,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
@@ -108,6 +116,7 @@ public fun Workflow.toBuilder(): WorkflowBuilder =
         name = name,
         on = on,
         sourceFile = sourceFile,
+        permissions = permissions,
         targetFileName = targetFileName,
         jobs = jobs,
         _customArguments = _customArguments,
@@ -122,6 +131,7 @@ public fun workflow(
     targetFileName: String? = sourceFile?.fileName?.let { it.toString().substringBeforeLast(".main.kts") + ".yaml" },
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
+    permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -135,6 +145,7 @@ public fun workflow(
         env = env,
         sourceFile = sourceFile,
         targetFileName = targetFileName,
+        permissions = permissions,
         concurrency = concurrency,
         yamlConsistencyJobCondition = yamlConsistencyJobCondition,
         _customArguments = _customArguments,

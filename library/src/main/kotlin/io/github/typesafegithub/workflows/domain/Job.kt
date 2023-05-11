@@ -14,6 +14,7 @@ public data class Job<OUTPUT : JobOutputs>(
     val env: LinkedHashMap<String, String> = linkedMapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
+    val permissions: Map<Permission, Mode>? = null,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
     override val _customArguments: Map<String, @Contextual Any?> = mapOf(),

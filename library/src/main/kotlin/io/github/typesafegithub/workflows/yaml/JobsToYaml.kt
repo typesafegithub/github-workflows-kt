@@ -26,6 +26,7 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "name" to name,
         "runs-on" to runsOn.toYaml(),
+        "permissions" to permissions?.mapToYaml(),
         "concurrency" to concurrency?.let {
             mapOf(
                 "group" to it.group,
