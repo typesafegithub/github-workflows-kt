@@ -119,21 +119,21 @@ private fun Workflow.generateYaml(
             runsOn = UbuntuLatest,
             condition = yamlConsistencyJobCondition,
         ) {
-            uses("Check out", CheckoutV3())
+            uses(name = "Check out", action = CheckoutV3())
             if (useGitDiff) {
                 run(
-                    "Execute script",
-                    "rm '$targetFilePath' " +
+                    name = "Execute script",
+                    command = "rm '$targetFilePath' " +
                         "&& '$sourceFilePath'",
                 )
                 run(
-                    "Consistency check",
-                    "git diff --exit-code '$targetFilePath'",
+                    name = "Consistency check",
+                    command = "git diff --exit-code '$targetFilePath'",
                 )
             } else {
                 run(
-                    "Consistency check",
-                    "diff -u '$targetFilePath' " +
+                    name = "Consistency check",
+                    command = "diff -u '$targetFilePath' " +
                         "<('$sourceFilePath')",
                 )
             }

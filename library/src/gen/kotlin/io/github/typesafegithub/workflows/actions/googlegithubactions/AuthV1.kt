@@ -125,13 +125,14 @@ public data class AuthV1 private constructor(
     public val accessTokenSubject: String? = null,
     /**
      * Number of times to retry a failed authentication attempt. This is useful
-     * for automated pipelines that may execute before IAM permissions are fully propogated.
+     * for automated pipelines that may execute before IAM permissions are fully
+     * propogated.
      */
     public val retries: Int? = null,
     /**
-     * Delay time before trying another authentication attempt. This
-     * is implemented using a fibonacci backoff method (e.g. 1-1-2-3-5).
-     * This value defaults to 100 milliseconds when retries are greater than 0.
+     * Delay time before trying another authentication attempt. This is
+     * implemented using a fibonacci backoff method (e.g. 1-1-2-3-5). The default
+     * value is 250 milliseconds.
      */
     public val backoff: Int? = null,
     /**

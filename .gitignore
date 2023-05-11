@@ -2,5 +2,6 @@
 
 .idea
 !.idea/externalDependencies.xml # Required IntelliJ plugins.
+!.idea/icon.svg
 
 build
