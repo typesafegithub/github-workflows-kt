@@ -19,7 +19,7 @@ Legend:
 | Docker actions                              | ✅       |                                                                          |
 | Local actions                               | ✅       |                                                                          |
 | `outcome` context                           | ❌       | [#296](https://github.com/typesafegithub/github-workflows-kt/issues/296) |
-| Permissions                                 | ❌       | [#615](https://github.com/typesafegithub/github-workflows-kt/issues/615) |
+| Permissions                                 | ✅       |                                                                          |
 | Public actions                              | ✅       |                                                                          |
 | `runner` context                            | ✅       |                                                                          |
 | Strategy matrix (`matrix` context)          | ✅/❌     | [#368](https://github.com/typesafegithub/github-workflows-kt/issues/368) |
