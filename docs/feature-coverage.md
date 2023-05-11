@@ -26,4 +26,3 @@ Legend:
 | Secrets (`secrets` context)                 | ✅       |                                                                          |
 | Timeouts                                    | ✅       |                                                                          |
 | Workflow dispatch inputs (`inputs` context) | ✅/❌     | [#811](https://github.com/typesafegithub/github-workflows-kt/issues/811) |
- 
