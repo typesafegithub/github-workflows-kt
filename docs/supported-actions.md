@@ -124,6 +124,8 @@ Click on a version to see the wrapper's code.
     * [flutter-action](https://github.com/subosito/flutter-action) - v2: [`FlutterActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/subosito/FlutterActionV2.kt)
 * supercharge
     * [mongodb-github-action](https://github.com/supercharge/mongodb-github-action) - v1 ✅: [`MongodbGithubActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/supercharge/MongodbGithubActionV1.kt)
+* superfly
+    * [flyctl-actions/setup-flyctl](https://github.com/superfly/flyctl-actions/tree/v1/setup-flyctl) - v1: [`FlyctlActionsSetupFlyctlV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/superfly/FlyctlActionsSetupFlyctlV1.kt)
 * typesafegithub
     * [github-actions-typing](https://github.com/typesafegithub/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/typesafegithub/GithubActionsTypingV0.kt), v1 ✅: [`GithubActionsTypingV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/typesafegithub/GithubActionsTypingV1.kt)
 * Vampire
@@ -133,7 +135,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 80
-* counting each version separately: 112
+* counting by actions: 81
+* counting each version separately: 113
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 14
