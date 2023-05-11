@@ -39,7 +39,7 @@ public data class SemanticReleaseActionV3 private constructor(
      * https://semantic-release.gitbook.io/semantic-release/usage/configuration#branches for more
      * information.
      */
-    public val branches: List<String>? = null,
+    public val branches: String? = null,
     /**
      * The branch on which releases should happen. It will override the branch attribute in your
      * configuration file. If the attribute is not configured on both sides, the default is master.
@@ -89,7 +89,7 @@ public data class SemanticReleaseActionV3 private constructor(
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         semanticVersion: String? = null,
-        branches: List<String>? = null,
+        branches: String? = null,
         branch: String? = null,
         extraPlugins: List<String>? = null,
         dryRun: Boolean? = null,
@@ -108,7 +108,7 @@ public data class SemanticReleaseActionV3 private constructor(
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             semanticVersion?.let { "semantic_version" to it },
-            branches?.let { "branches" to it.joinToString("\n") },
+            branches?.let { "branches" to it },
             branch?.let { "branch" to it },
             extraPlugins?.let { "extra_plugins" to it.joinToString("\n") },
             dryRun?.let { "dry_run" to it.toString() },
