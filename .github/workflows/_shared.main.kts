@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.41.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.42.0")
 
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
 import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
@@ -20,4 +20,4 @@ fun JobBuilder<*>.setupPython() =
     uses(SetupPythonV4(pythonVersion = "3.8"))
 
 val disableScheduledJobInForks =
-    expr { "${github.repository_owner} == 'krzema12' || ${github.event_name} != 'schedule'" }
+    expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }

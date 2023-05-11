@@ -69,6 +69,7 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
         .add(issue_comment.toKotlin("issue_comment"))
         .add(issues.toKotlin("issues"))
         .add(label.toKotlin("label"))
+        .add(merge_group.toKotlin("merge_group"))
         .add(milestone.toKotlin("milestone"))
         .add(page_build.toKotlin("page_build"))
         .add(public.toKotlin("public"))
@@ -252,7 +253,11 @@ val allTriggersMap: Map<String, Trigger> =
     allTriggersNames.zip(allTriggers).toMap()
 
 val rootProject = File(".").canonicalFile.let {
-    if (it.name == "github-workflows-kt") it else it.parentFile.parentFile
+    when (it.name) {
+        "github-workflows-kt" -> it
+        "" -> it // Root directory in Docker container.
+        else -> it.parentFile.parentFile
+    }
 }
 
 const val PACKAGE = "io.github.typesafegithub.workflows"

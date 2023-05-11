@@ -7,6 +7,7 @@ repo_url: https://github.com/typesafegithub/github-workflows-kt/
 edit_uri: https://github.com/typesafegithub/github-workflows-kt/tree/main/docs
 
 theme:
+  logo: Logo.svg
   name: material
   features:
     - navigation.expand
@@ -45,18 +46,19 @@ nav:
   - Introduction: 'index.md'
   - User guide:
       - Getting started: 'user-guide/getting_started.md'
-      - Script generator: 'user-guide/script-generator.md'
+      - Script generator (experimental): 'user-guide/script-generator.md'
       - Using actions: 'user-guide/using-actions.md'
       - Type-safe expressions: 'user-guide/type-safe-expressions.md'
       - Job outputs: 'user-guide/job-outputs.md'
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
+  - Feature coverage: 'feature-coverage.md'
   - Supported actions: 'supported-actions.md'
-  - API docs: 'https://krzema12.github.io/github-workflows-kt/api-docs/'
+  - API docs: 'https://typesafegithub.github.io/github-workflows-kt/api-docs/'
   - Projects using this library: 'projects-using-this-library.md'
 
 extra:
-  version: 0.41.0
+  version: 0.43.0-SNAPSHOT
 
   # branch or tag name - the script-generator may have not yet updated to a breaking change in the library
   scriptGeneratorVersion: 0.22.0

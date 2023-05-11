@@ -60,7 +60,9 @@ publishing {
 }
 
 signing {
-    sign(publishing.publications["mavenJava"])
+    if (!project.version.toString().endsWith("-SNAPSHOT") && !project.findProperty("suppressSigning")?.toString().toBoolean()) {
+        sign(publishing.publications["mavenJava"])
+    }
 
     val signingKey = System.getenv("SIGNING_KEY")
     val signingPassword = System.getenv("SIGNING_PASSWORD")

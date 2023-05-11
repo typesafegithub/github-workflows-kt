@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.41.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.42.0")
 @file:Import("_shared.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
@@ -41,7 +41,7 @@ workflow(
         uses(
             name = "Create issue",
             action = CreateIssueFromFileV4(
-                title = "Updates available",
+                title = "New major versions of actions available",
                 contentFilepath = "build/suggestVersions.md",
             )
         )

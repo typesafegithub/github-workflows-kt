@@ -67,6 +67,7 @@ inputs:
     type: enum
     name: OperatingSystem
     allowed-values:
+    - aarch64
     - alpine
     - linux
     - macos
