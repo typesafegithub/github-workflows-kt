@@ -690,6 +690,11 @@ class IntegrationTest : FunSpec({
                 env = linkedMapOf(
                     GREETING to "World",
                 ),
+                permissions = mapOf(
+                    Permission.Actions to Mode.Read,
+                    Permission.Checks to Mode.Write,
+                    Permission.Contents to Mode.None,
+                ),
             ) {
                 uses(CheckoutV3())
                 run(
@@ -1109,59 +1114,6 @@ class IntegrationTest : FunSpec({
                   run: 'echo ''Hello!'''
 
         """.trimIndent()
-    }
-
-    test("writeToFile() - permissions") {
-        testRanWithGitHub("permissions") {
-            job(
-                id = "test_job",
-                runsOn = RunnerType.UbuntuLatest,
-            ) {
-                run(
-                    name = "Hello world!",
-                    command = """
-                        less test.txt \
-                        | grep -P "foobar" \
-                        | sort \
-                        > result.txt
-                    """.trimIndent(),
-                )
-            }
-        }
-    }
-
-    test("permissions") {
-        val fileName = "Integration tests - permissions"
-        val permissionWorkflow = workflow(
-            name = fileName,
-            on = listOf(Push(), PullRequest()),
-            sourceFile = Path.of("../.github/workflows/$fileName.main.kts"),
-            permissions = mapOf(
-                Permission.Actions to Mode.Write,
-                Permission.Checks to Mode.None,
-                Permission.Contents to Mode.Read,
-            ),
-        ) {
-            job(
-                id = "job",
-                permissions = mapOf(
-                    Permission.Actions to Mode.Read,
-                    Permission.Checks to Mode.Write,
-                    Permission.Contents to Mode.None,
-                ),
-                runsOn = RunnerType.UbuntuLatest,
-            ) { run(command = "ls") }
-        }
-
-        val targetPath = Path.of("../.github/workflows/$fileName.yaml")
-        val expectedYaml = targetPath.toFile().readText()
-
-        // when
-        permissionWorkflow.writeToFile(addConsistencyCheck = false, preamble = Just(""))
-
-        // then
-        val actualYaml = targetPath.toFile().readText()
-        actualYaml shouldBe expectedYaml
     }
 })
 
