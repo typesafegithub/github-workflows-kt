@@ -1,0 +1,29 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  semantic_version:
+    type: string
+  branches:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  branch:
+    type: string
+  extra_plugins:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  dry_run:
+    type: boolean
+  ci:
+    type: boolean
+  extends:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  working_directory:
+    type: string
+  tag_format:
+    type: string
