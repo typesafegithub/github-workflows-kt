@@ -74,7 +74,7 @@ workflow(
         )
         uses(
             name = "Deploy merged docs to GitHub Pages",
-            GithubPagesDeployActionV4(
+            action = GithubPagesDeployActionV4(
                 folder = "$directoryToDeploy",
             )
         )
