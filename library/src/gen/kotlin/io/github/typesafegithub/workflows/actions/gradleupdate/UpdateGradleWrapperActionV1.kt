@@ -70,6 +70,11 @@ public data class UpdateGradleWrapperActionV1 private constructor(
      */
     public val releaseChannel: UpdateGradleWrapperActionV1.ReleaseChannel? = null,
     /**
+     * Which merge method to use for auto-merge (either `MERGE`, `REBASE`, or `SQUASH`).  If unset,
+     * auto-merge will not be enabled on opened PRs.
+     */
+    public val mergeMethod: UpdateGradleWrapperActionV1.MergeMethod? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -92,12 +97,13 @@ public data class UpdateGradleWrapperActionV1 private constructor(
         paths: List<String>? = null,
         pathsIgnore: List<String>? = null,
         releaseChannel: UpdateGradleWrapperActionV1.ReleaseChannel? = null,
+        mergeMethod: UpdateGradleWrapperActionV1.MergeMethod? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(repoToken=repoToken, reviewers=reviewers, teamReviewers=teamReviewers, labels=labels,
             baseBranch=baseBranch, targetBranch=targetBranch,
             setDistributionChecksum=setDistributionChecksum, paths=paths, pathsIgnore=pathsIgnore,
-            releaseChannel=releaseChannel, _customInputs=_customInputs,
+            releaseChannel=releaseChannel, mergeMethod=mergeMethod, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -113,6 +119,7 @@ public data class UpdateGradleWrapperActionV1 private constructor(
             paths?.let { "paths" to it.joinToString(",") },
             pathsIgnore?.let { "paths-ignore" to it.joinToString(",") },
             releaseChannel?.let { "release-channel" to it.stringValue },
+            mergeMethod?.let { "merge-method" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -130,5 +137,19 @@ public data class UpdateGradleWrapperActionV1 private constructor(
         public class Custom(
             customStringValue: String,
         ) : UpdateGradleWrapperActionV1.ReleaseChannel(customStringValue)
+    }
+
+    public sealed class MergeMethod(
+        public val stringValue: String,
+    ) {
+        public object Merge : UpdateGradleWrapperActionV1.MergeMethod("MERGE")
+
+        public object Rebase : UpdateGradleWrapperActionV1.MergeMethod("REBASE")
+
+        public object Squash : UpdateGradleWrapperActionV1.MergeMethod("SQUASH")
+
+        public class Custom(
+            customStringValue: String,
+        ) : UpdateGradleWrapperActionV1.MergeMethod(customStringValue)
     }
 }
