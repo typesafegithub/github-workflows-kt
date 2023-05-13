@@ -1,8 +1,10 @@
 package io.github.typesafegithub.workflows.wrappergenerator.updating
 
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
+import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.prettyPrint
 import io.github.typesafegithub.workflows.wrappergenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.wrappergenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.wrappergenerator.versions.getGithubToken
@@ -18,18 +20,34 @@ fun main() {
     wrappersToGenerate
         .filter { it.actionCoords.isTopLevel }
         .forEach { wrapperRequest ->
-            println("For action ${wrapperRequest.actionCoords}")
-            val commitHash = wrapperRequest.actionCoords.fetchCommitHash(githubToken)
-                ?: error("There was a problem fetching commit hash for ${wrapperRequest.actionCoords}")
-            println("  $commitHash")
+            println("For action ${wrapperRequest.actionCoords.prettyPrint}")
 
-            val commitHashFilePath = wrapperRequest.actionCoords.buildCommitHashFilePath()
-
-            commitHashFilePath.toFile().apply {
-                deleteRecursively()
-                writeText(commitHash)
+            if (wrapperRequest.didCommitHashChange(githubToken = githubToken)) {
+                print("  it DID change, checking further")
+            } else {
+                print("  it didn't change, skipping")
             }
+
+
+//            commitHashFilePath.toFile().apply {
+//                deleteRecursively()
+//                writeText(newestCommitHash)
+//            }
         }
+}
+
+private fun WrapperRequest.didCommitHashChange(githubToken: String): Boolean {
+    println("  checking if commit hash changed:")
+
+    val commitHashFilePath = this.actionCoords.buildCommitHashFilePath()
+    val currentCommitHash = commitHashFilePath.toFile().readText().trim()
+    print("    current: $currentCommitHash")
+
+    val newestCommitHash = this.actionCoords.fetchCommitHash(githubToken)
+        ?: error("There was a problem fetching commit hash for ${this.actionCoords}")
+    println("    newest: $newestCommitHash")
+
+    return currentCommitHash != newestCommitHash
 }
 
 private fun ActionCoords.fetchCommitHash(githubToken: String): String? {
