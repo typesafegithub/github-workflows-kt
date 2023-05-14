@@ -16,13 +16,13 @@ plugins {
 }
 
 group = "io.github.typesafegithub"
-version = "0.41.1-SNAPSHOT"
+version = "0.43.1-SNAPSHOT"
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.6")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
 
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     testImplementation(kotlin("reflect"))
 }
 

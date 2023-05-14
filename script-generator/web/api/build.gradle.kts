@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    commonMainImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    commonMainImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 }
 
 kotlin {

@@ -1,0 +1,4 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  version:
+    type: string

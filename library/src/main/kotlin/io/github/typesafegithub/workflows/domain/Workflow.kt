@@ -18,14 +18,18 @@ public data class Workflow(
     override val _customArguments: Map<String, @Contextual Any?> = mapOf(),
 ) : HasCustomArguments
 
+/**
+ * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions">GitHub</a>
+ */
+@Suppress("MaxLineLength")
 public enum class Permission(public val value: String) {
     Actions("actions"),
     Checks("checks"),
     Contents("contents"),
     Deployments("deployments"),
+    Discussions("discussions"),
     IdToken("id-token"),
     Issues("issues"),
-    Discussions("discussions"),
     Packages("packages"),
     Pages("pages"),
     PullRequests("pull-requests"),
@@ -34,6 +38,10 @@ public enum class Permission(public val value: String) {
     Statuses("statuses"),
 }
 
+/**
+ * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions">GitHub</a>
+ */
+@Suppress("MaxLineLength")
 public enum class Mode(public val value: String) {
     Read("read"),
     Write("write"),

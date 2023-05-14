@@ -47,31 +47,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
 
     public fun run(
         command: String,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
-        @SuppressWarnings("FunctionParameterNaming")
-        `if`: String? = null,
-        condition: String? = null,
-        continueOnError: Boolean? = null,
-        timeoutMinutes: Int? = null,
-        shell: Shell? = null,
-        workingDirectory: String? = null,
-        @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): CommandStep = run(
-        name = null,
-        command = command,
-        env = env,
-        condition = either("if" to `if`, "condition" to condition),
-        continueOnError = continueOnError,
-        timeoutMinutes = timeoutMinutes,
-        shell = shell,
-        workingDirectory = workingDirectory,
-        _customArguments = _customArguments,
-    )
-
-    public fun run(
         name: String? = null,
-        command: String,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
@@ -101,27 +77,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
 
     public fun <T : Action.Outputs> uses(
         action: Action<T>,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
-        @SuppressWarnings("FunctionParameterNaming")
-        `if`: String? = null,
-        condition: String? = null,
-        continueOnError: Boolean? = null,
-        timeoutMinutes: Int? = null,
-        @SuppressWarnings("FunctionParameterNaming")
-        _customArguments: Map<String, @Contextual Any> = mapOf(),
-    ): ActionStep<T> = uses(
-        name = null,
-        action = action,
-        env = env,
-        condition = either("if" to `if`, "condition" to condition),
-        continueOnError = continueOnError,
-        timeoutMinutes = timeoutMinutes,
-        _customArguments = _customArguments,
-    )
-
-    public fun <T : Action.Outputs> uses(
         name: String? = null,
-        action: Action<T>,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,

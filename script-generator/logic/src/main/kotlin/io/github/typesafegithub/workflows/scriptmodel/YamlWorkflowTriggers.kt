@@ -27,6 +27,7 @@ data class YamlWorkflowTriggers(
     val issue_comment: YamlTrigger? = null,
     val issues: YamlTrigger? = null,
     val label: YamlTrigger? = null,
+    val merge_group: YamlTrigger? = null,
     val milestone: YamlTrigger? = null,
     val page_build: YamlTrigger? = null,
     val project: YamlTrigger? = null,

@@ -69,6 +69,7 @@ fun YamlWorkflowTriggers.toKotlin() = CodeBlock { builder ->
         .add(issue_comment.toKotlin("issue_comment"))
         .add(issues.toKotlin("issues"))
         .add(label.toKotlin("label"))
+        .add(merge_group.toKotlin("merge_group"))
         .add(milestone.toKotlin("milestone"))
         .add(page_build.toKotlin("page_build"))
         .add(public.toKotlin("public"))

@@ -16,6 +16,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Gollum
 import io.github.typesafegithub.workflows.domain.triggers.IssueComment
 import io.github.typesafegithub.workflows.domain.triggers.Issues
 import io.github.typesafegithub.workflows.domain.triggers.Label
+import io.github.typesafegithub.workflows.domain.triggers.MergeGroup
 import io.github.typesafegithub.workflows.domain.triggers.Milestone
 import io.github.typesafegithub.workflows.domain.triggers.PageBuild
 import io.github.typesafegithub.workflows.domain.triggers.Project
@@ -109,6 +110,7 @@ public fun Trigger.triggerName(): String = when (this) {
     is IssueComment -> "issue_comment"
     is Issues -> "issues"
     is Label -> "label"
+    is MergeGroup -> "merge_group"
     is Milestone -> "milestone"
     is PageBuild -> "page_build"
     is Project -> "project"
