@@ -10,7 +10,6 @@ import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
-import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.actions.CustomDockerAction
@@ -688,50 +687,50 @@ class IntegrationTest : FunSpec(
                 val TOKEN by Contexts.env
                 val SUPER_SECRET by Contexts.secrets
 
-            job(
-                id = "job1",
-                runsOn = RunnerType.UbuntuLatest,
-                env = linkedMapOf(
-                    GREETING to "World",
-                ),
-                permissions = mapOf(
-                    Permission.Actions to Mode.Read,
-                    Permission.Checks to Mode.Write,
-                    Permission.Contents to Mode.None,
-                ),
-            ) {
-                uses(CheckoutV3())
-                run(
-                    name = "Default environment variable",
-                    command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
-                    condition = expr { always() },
-                )
-                run(
-                    name = "Custom environment variable",
+                job(
+                    id = "job1",
+                    runsOn = RunnerType.UbuntuLatest,
                     env = linkedMapOf(
-                        FIRST_NAME to "Patrick",
+                        GREETING to "World",
                     ),
-                    command = "echo $GREETING $FIRST_NAME",
-                )
-                run(
-                    name = "Encrypted secret",
-                    env = linkedMapOf(
-                        SECRET to expr { SUPER_SECRET },
-                        TOKEN to expr { secrets.GITHUB_TOKEN },
+                    permissions = mapOf(
+                        Permission.Actions to Mode.Read,
+                        Permission.Checks to Mode.Write,
+                        Permission.Contents to Mode.None,
                     ),
-                    command = "echo secret=$SECRET token=$TOKEN",
-                )
-                run(
-                    name = "RunnerContext create temp directory",
-                    command = "mkdir " + expr { runner.temp } + "/build_logs",
-                )
-                run(
-                    name = "GitHubContext echo sha",
-                    command = "echo " + expr { github.sha } + " event " + expr { github.eventRelease.release.url },
-                )
+                ) {
+                    uses(CheckoutV3())
+                    run(
+                        name = "Default environment variable",
+                        command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
+                        condition = expr { always() },
+                    )
+                    run(
+                        name = "Custom environment variable",
+                        env = linkedMapOf(
+                            FIRST_NAME to "Patrick",
+                        ),
+                        command = "echo $GREETING $FIRST_NAME",
+                    )
+                    run(
+                        name = "Encrypted secret",
+                        env = linkedMapOf(
+                            SECRET to expr { SUPER_SECRET },
+                            TOKEN to expr { secrets.GITHUB_TOKEN },
+                        ),
+                        command = "echo secret=$SECRET token=$TOKEN",
+                    )
+                    run(
+                        name = "RunnerContext create temp directory",
+                        command = "mkdir " + expr { runner.temp } + "/build_logs",
+                    )
+                    run(
+                        name = "GitHubContext echo sha",
+                        command = "echo " + expr { github.sha } + " event " + expr { github.eventRelease.release.url },
+                    )
+                }
             }
         }
-    }
 
         test("toYaml() - YAML consistency job condition") {
             // when
@@ -1107,7 +1106,7 @@ class IntegrationTest : FunSpec(
             val yaml = workflowWithoutSource.toYaml(preamble = Just(""))
 
             yaml shouldBe """
-            name: test
+            name: 'test'
             on:
               push: {}
             jobs:

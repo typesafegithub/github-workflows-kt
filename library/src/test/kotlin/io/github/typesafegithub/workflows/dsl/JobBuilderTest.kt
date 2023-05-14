@@ -91,16 +91,16 @@ class JobBuilderTest : FunSpec(
                     }
                 }.toYaml(addConsistencyCheck = false, preamble = Preamble.Just(""))
                 yaml.trim() shouldBe """
-                name: test
+                name: 'test'
                 on:
                   push: {}
                 jobs:
                   test:
-                    runs-on: ubuntu-latest
-                    if: b
+                    runs-on: 'ubuntu-latest'
+                    if: 'b'
                     steps:
-                    - id: step-0
-                      run: ls
+                    - id: 'step-0'
+                      run: 'ls'
                 """.trimIndent()
             }
 
@@ -114,16 +114,16 @@ class JobBuilderTest : FunSpec(
                     }
                 }.toTestYaml()
                 yaml.trim() shouldBe """
-                name: test
+                name: 'test'
                 on:
                   push: {}
                 jobs:
                   test:
-                    runs-on: ubuntu-latest
-                    if: a
+                    runs-on: 'ubuntu-latest'
+                    if: 'a'
                     steps:
-                    - id: step-0
-                      run: ls
+                    - id: 'step-0'
+                      run: 'ls'
                 """.trimIndent()
             }
         }

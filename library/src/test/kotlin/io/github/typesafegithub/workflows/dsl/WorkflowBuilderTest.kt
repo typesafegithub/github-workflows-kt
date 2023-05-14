@@ -153,23 +153,23 @@ class WorkflowBuilderTest : FunSpec(
                 }.toYaml(addConsistencyCheck = false, preamble = Preamble.Just(""))
 
                 yaml.trim() shouldBe """
-                    name: test
+                    name: 'test'
                     on:
                       push: {}
                     permissions:
-                      actions: read
-                      checks: write
-                      contents: none
+                      actions: 'read'
+                      checks: 'write'
+                      contents: 'none'
                     jobs:
                       job:
-                        runs-on: ubuntu-latest
+                        runs-on: 'ubuntu-latest'
                         permissions:
-                          actions: read
-                          checks: write
-                          contents: none
+                          actions: 'read'
+                          checks: 'write'
+                          contents: 'none'
                         steps:
-                        - id: step-0
-                          run: ls
+                        - id: 'step-0'
+                          run: 'ls'
                 """.trimIndent()
             }
         }
