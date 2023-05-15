@@ -13,6 +13,13 @@ dependencies {
     implementation("com.squareup:kotlinpoet:1.13.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+    implementation(platform("io.ktor:ktor-bom:2.3.0"))
+    implementation("io.ktor:ktor-client-core")
+    implementation("io.ktor:ktor-client-cio")
+    implementation("io.ktor:ktor-client-content-negotiation")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
+
     implementation(projects.automation.typings)
 
     testImplementation(projects.library)
