@@ -47,6 +47,13 @@ tasks.register<JavaExec>("updateCommitHashes") {
     dependsOn(tasks.compileKotlin)
 }
 
+tasks.register<JavaExec>("createActionUpdatePRs") {
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("io.github.typesafegithub.workflows.wrappergenerator.updating.CreateActionUpdatePRsKt")
+    workingDir = rootDir
+    dependsOn(tasks.compileKotlin)
+}
+
 fun ConfigurableKtLintTask.kotlinterConfig() {
     exclude("**/wrappersfromunittests/**")
 }

@@ -1,36 +1,84 @@
 package io.github.typesafegithub.workflows.wrappergenerator.updating
 
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
+import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
+import io.github.typesafegithub.workflows.wrappergenerator.generation.Wrapper
+import io.github.typesafegithub.workflows.wrappergenerator.generation.generateWrapper
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.fetchMetadata
+import io.github.typesafegithub.workflows.wrappergenerator.metadata.prettyPrint
+import io.github.typesafegithub.workflows.wrappergenerator.types.provideTypes
 import io.github.typesafegithub.workflows.wrappergenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.wrappergenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.wrappergenerator.versions.getGithubToken
 import io.github.typesafegithub.workflows.wrappergenerator.versions.json
 import io.github.typesafegithub.workflows.wrappergenerator.versions.okhttpClient
-import kotlinx.serialization.decodeFromString
 import okhttp3.Request
 import java.nio.file.Path
+import kotlin.io.path.pathString
 
-fun main() {
+suspend fun main() {
     val githubToken = getGithubToken()
 
     wrappersToGenerate
         .filter { it.actionCoords.isTopLevel }
         .forEach { wrapperRequest ->
-            println("For action ${wrapperRequest.actionCoords}")
-            val commitHash = wrapperRequest.actionCoords.fetchCommitHash(githubToken)
-                ?: error("There was a problem fetching commit hash for ${wrapperRequest.actionCoords}")
-            println("  $commitHash")
+            println("➡\uFE0F For action ${wrapperRequest.actionCoords.prettyPrint}")
 
             val commitHashFilePath = wrapperRequest.actionCoords.buildCommitHashFilePath()
+            val currentCommitHash = commitHashFilePath.toFile().readText().trim()
 
-            commitHashFilePath.toFile().apply {
-                deleteRecursively()
-                writeText(commitHash)
+            val newestCommitHash = wrapperRequest.actionCoords.fetchCommitHash(githubToken)
+                ?: error("There was a problem fetching commit hash for ${wrapperRequest.actionCoords}")
+
+            val (codeCurrent, path) = wrapperRequest.generateWrapperForCommit(currentCommitHash)
+            val (codeNewest, _) = wrapperRequest.generateWrapperForCommit(newestCommitHash)
+
+            if (codeCurrent != codeNewest) {
+                println("\uD83D\uDEA8 GENERATED CODE CHANGED! $path \uD83D\uDEA8")
+                createPullRequest(
+                    wrapperRequest = wrapperRequest,
+                    path = path,
+                    wrapperCode = codeNewest,
+                    commitHashFilePath = commitHashFilePath,
+                    newCommitHash = newestCommitHash,
+                    githubToken = githubToken,
+                )
+            } else {
+                println("Generated code is the same, doing nothing.")
             }
         }
 }
+
+private suspend fun createPullRequest(
+    wrapperRequest: WrapperRequest,
+    path: String,
+    wrapperCode: String,
+    commitHashFilePath: Path,
+    newCommitHash: String,
+    githubToken: String,
+) {
+    println("Creating a PR:")
+    createPullRequest(
+        branchName = "update-${wrapperRequest.actionCoords.prettyPrint}",
+        prTitle = "feat(actions): update ${wrapperRequest.actionCoords.prettyPrint}",
+        prBody = "Created automatically.",
+        fileNamesToContents = mapOf(
+            path to wrapperCode,
+            commitHashFilePath.pathString to newCommitHash,
+        ),
+        githubToken = githubToken,
+        githubRepoOwner = "typesafegithub",
+        githubRepoName = "github-workflows-kt",
+    )
+}
+
+private fun WrapperRequest.generateWrapperForCommit(commitHash: String): Wrapper =
+    actionCoords.generateWrapper(
+        inputTypings = provideTypes(getCommitHash = { commitHash }),
+        fetchMetadataImpl = { fetchMetadata(commitHash = commitHash, useCache = false) },
+    )
 
 private fun ActionCoords.fetchCommitHash(githubToken: String): String? {
     fun fetch(detailsUrl: String): String? {
