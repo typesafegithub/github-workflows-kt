@@ -3,4 +3,4 @@ mkdocs-markdownextradata-plugin==0.2.5
 mkdocs-material==9.1.12
 mkdocs-material-extensions==1.1.1
 mkdocs-video==1.5.0
-pymdown-extensions==9.11
+pymdown-extensions==10.0

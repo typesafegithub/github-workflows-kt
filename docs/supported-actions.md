@@ -68,6 +68,8 @@ Click on a version to see the wrapper's code.
     * [Publish-Docker-Github-Action](https://github.com/elgohr/Publish-Docker-Github-Action) - v4: [`PublishDockerGithubActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/elgohr/PublishDockerGithubActionV4.kt), v5: [`PublishDockerGithubActionV5`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/elgohr/PublishDockerGithubActionV5.kt)
 * EndBug
     * [add-and-commit](https://github.com/EndBug/add-and-commit) - v8: [`AddAndCommitV8`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/endbug/AddAndCommitV8.kt), v9: [`AddAndCommitV9`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/endbug/AddAndCommitV9.kt)
+* entrostat
+    * [git-secret-action](https://github.com/entrostat/git-secret-action) - v4 ✅: [`GitSecretActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/entrostat/GitSecretActionV4.kt)
 * ericcornelissen
     * [git-tag-annotation-action](https://github.com/ericcornelissen/git-tag-annotation-action) - v2 ✅: [`GitTagAnnotationActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/GitTagAnnotationActionV2.kt)
     * [svgo-action](https://github.com/ericcornelissen/svgo-action) - v3 ✅: [`SvgoActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/SvgoActionV3.kt)
@@ -135,7 +137,7 @@ Click on a version to see the wrapper's code.
 
 Number of wrappers available:
 
-* counting by actions: 81
-* counting each version separately: 113
+* counting by actions: 82
+* counting each version separately: 114
 
-Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 14
+Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
