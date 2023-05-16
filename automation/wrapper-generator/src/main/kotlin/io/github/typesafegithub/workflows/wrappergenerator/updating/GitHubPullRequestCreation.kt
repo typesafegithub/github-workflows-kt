@@ -62,11 +62,11 @@ suspend fun createPullRequest(
     println("New tree SHA: ${createTreeResponse.sha}")
 
     val createCommitResponse = prCreationContext.createCommit(
-        message = "Test commit! ${Instant.now()}",
+        message = prTitle,
         treeSha = createTreeResponse.sha,
         parentCommitSha = getHeadResponse.`object`.sha,
-        authorName = "Piotrek Krzemiski",
-        authorEmail = "wohoo@krzeminski.it",
+        authorName = "github-actions[bot]",
+        authorEmail = "41898282+github-actions[bot]@users.noreply.github.com",
         date = Instant.now(),
     )
     println("New commit SHA: ${createCommitResponse.sha}")
@@ -82,6 +82,13 @@ suspend fun createPullRequest(
 
     return 1
 }
+
+private data class PrCreationContext(
+    val httpClient: HttpClient,
+    val githubRepoOwner: String,
+    val githubRepoName: String,
+    val githubToken: String,
+)
 
 @Serializable
 private data class GetHeadResponse(
@@ -256,10 +263,3 @@ private suspend inline fun <reified T> PrCreationContext.gitHubApiRequest(
         header(key = "X-GitHub-Api-Version", value = "2022-11-28")
         block()
     }.body()
-
-private data class PrCreationContext(
-    val httpClient: HttpClient,
-    val githubRepoOwner: String,
-    val githubRepoName: String,
-    val githubToken: String,
-)
