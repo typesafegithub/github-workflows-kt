@@ -10,6 +10,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.time.Instant
+import kotlin.random.Random
 
 /**
  * Create a PR with the desired changes.
@@ -68,6 +69,15 @@ suspend fun createPullRequest(
         date = Instant.now(),
     )
     println("New commit SHA: ${createCommitResponse.sha}")
+
+    prCreationContext.createRef(name = "refs/heads/$branchName", sha = createCommitResponse.sha)
+    val createPullRequestResponse = prCreationContext.createPullRequest(
+        title = "Test PR created through API - ${Random.nextInt()}",
+        body = "Some test body! **Markdown rulez**",
+        head = branchName,
+        base = baseBranch,
+    )
+    println("PR created at: https://github.com/$githubRepoOwner/$githubRepoName/pull/${createPullRequestResponse.number}")
 
     return 1
 }
@@ -185,6 +195,56 @@ private suspend fun PrCreationContext.createCommit(
         )
     }
 
+@Serializable
+private data class CreateRefRequest(
+    val ref: String,
+    val sha: String,
+)
+
+private suspend fun PrCreationContext.createRef(name: String, sha: String): Unit =
+    gitHubApiRequest(urlSuffix = "/git/refs") {
+        method = HttpMethod.Post
+        contentType(ContentType(contentType = "application", contentSubtype = "vnd.github+json"))
+        setBody(
+            CreateRefRequest(
+                ref = name,
+                sha = sha,
+            ),
+        )
+    }
+
+@Serializable
+private data class CreatePullRequestRequest(
+    val title: String,
+    val body: String,
+    val head: String,
+    val base: String,
+)
+
+@Serializable
+private data class CreatePullRequestResponse(
+    val number: Int,
+)
+
+private suspend fun PrCreationContext.createPullRequest(
+    title: String,
+    body: String,
+    head: String,
+    base: String,
+): CreatePullRequestResponse =
+    gitHubApiRequest(urlSuffix = "/pulls") {
+        method = HttpMethod.Post
+        contentType(ContentType(contentType = "application", contentSubtype = "vnd.github+json"))
+        setBody(
+            CreatePullRequestRequest(
+                title = title,
+                body = body,
+                head = head,
+                base = base,
+            ),
+        )
+    }
+
 private suspend inline fun <reified T> PrCreationContext.gitHubApiRequest(
     urlSuffix: String,
     block: HttpRequestBuilder.() -> Unit = {},
@@ -205,7 +265,7 @@ private data class PrCreationContext(
 
 suspend fun main() {
     createPullRequest(
-        branchName = "aloha",
+        branchName = "aloha-${Random.nextInt()}",
         fileNamesToContents = mapOf(
             "foo-bar.txt" to "Test123",
             "test/path.txt" to "Foo\nbar\nbaz",
