@@ -10,7 +10,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.time.Instant
-import kotlin.random.Random
 
 /**
  * Create a PR with the desired changes.
@@ -19,6 +18,8 @@ import kotlin.random.Random
  */
 suspend fun createPullRequest(
     branchName: String,
+    prTitle: String,
+    prBody: String,
     fileNamesToContents: Map<String, String>,
     githubToken: String,
     githubRepoOwner: String,
@@ -72,8 +73,8 @@ suspend fun createPullRequest(
 
     prCreationContext.createRef(name = "refs/heads/$branchName", sha = createCommitResponse.sha)
     val createPullRequestResponse = prCreationContext.createPullRequest(
-        title = "Test PR created through API - ${Random.nextInt()}",
-        body = "Some test body! **Markdown rulez**",
+        title = prTitle,
+        body = prBody,
         head = branchName,
         base = baseBranch,
     )
@@ -262,16 +263,3 @@ private data class PrCreationContext(
     val githubRepoName: String,
     val githubToken: String,
 )
-
-suspend fun main() {
-    createPullRequest(
-        branchName = "aloha-${Random.nextInt()}",
-        fileNamesToContents = mapOf(
-            "foo-bar.txt" to "Test123",
-            "test/path.txt" to "Foo\nbar\nbaz",
-        ),
-        githubToken = "redacted",
-        githubRepoOwner = "typesafegithub",
-        githubRepoName = "github-workflows-kt",
-    )
-}
