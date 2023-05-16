@@ -171,6 +171,10 @@ public data class CodecovActionV3 private constructor(
      */
     public val version: String? = null,
     /**
+     * Directory in which to execute codecov.sh
+     */
+    public val workingDirectory: String? = null,
+    /**
      * Run with xcode support
      */
     public val xcode: Boolean? = null,
@@ -229,6 +233,7 @@ public data class CodecovActionV3 private constructor(
         url: String? = null,
         verbose: Boolean? = null,
         version: String? = null,
+        workingDirectory: String? = null,
         xcode: Boolean? = null,
         xcodeArchivePath: String? = null,
         xtraArgs: String? = null,
@@ -243,9 +248,9 @@ public data class CodecovActionV3 private constructor(
             overrideBranch=overrideBranch, overrideBuild=overrideBuild,
             overrideCommit=overrideCommit, overridePr=overridePr, overrideTag=overrideTag,
             rootDir=rootDir, slug=slug, swift=swift, swiftProject=swiftProject,
-            upstreamProxy=upstreamProxy, url=url, verbose=verbose, version=version, xcode=xcode,
-            xcodeArchivePath=xcodeArchivePath, xtraArgs=xtraArgs, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            upstreamProxy=upstreamProxy, url=url, verbose=verbose, version=version,
+            workingDirectory=workingDirectory, xcode=xcode, xcodeArchivePath=xcodeArchivePath,
+            xtraArgs=xtraArgs, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -284,6 +289,7 @@ public data class CodecovActionV3 private constructor(
             url?.let { "url" to it },
             verbose?.let { "verbose" to it.toString() },
             version?.let { "version" to it },
+            workingDirectory?.let { "working-directory" to it },
             xcode?.let { "xcode" to it.toString() },
             xcodeArchivePath?.let { "xcode_archive_path" to it },
             xtraArgs?.let { "xtra_args" to it },
