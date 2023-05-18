@@ -4,7 +4,6 @@ inputs:
     type: string
   distribution:
     type: enum
-    name: Distribution
     allowed-values:
     - adopt
     - adopt-hotspot

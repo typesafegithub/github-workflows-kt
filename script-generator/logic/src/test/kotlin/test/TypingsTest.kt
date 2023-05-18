@@ -9,7 +9,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import io.github.typesafegithub.workflows.scriptgenerator.valueWithTyping
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.data.Table3
+import io.kotest.data.Table4
 import io.kotest.data.forAll
 import io.kotest.data.headers
 import io.kotest.data.row
@@ -24,17 +24,23 @@ class TypingsTest : FunSpec({
         listOf("success", "failure", "cancelled", "custom"),
         listOf("Success", "Failure", "Cancelled", "CustomEnum"),
     )
+    val enumTypingWithoutTypeName = EnumTyping(
+        null,
+        listOf("success", "failure", "cancelled", "custom"),
+        listOf("Success", "Failure", "Cancelled", "CustomEnum"),
+    )
     val dollar = '$'.toString()
 
-    val testCases: Table3<String, String, Typing> = table(
-        headers("value", "expected", "typing"),
-        row("true", "true", BooleanTyping),
-        row("42", "42", IntegerTyping),
-        row("$dollar{{ some condition }}", "\"$dollar{'$dollar'}{{ some condition }}\"", IntegerTyping),
-        row("42", "ActionSlackV3.FetchDepth.Value(42)", intSpecialTyping),
-        row("0", "ActionSlackV3.FetchDepth.Infinite", intSpecialTyping),
-        row("success", "ActionSlackV3.Status.Success", enumTyping),
-        row("custom", "ActionSlackV3.Status.CustomEnum", enumTyping),
+    val testCases: Table4<String, String, Typing, String> = table(
+        headers("value", "expected", "typing", "key"),
+        row("true", "true", BooleanTyping, ""),
+        row("42", "42", IntegerTyping, ""),
+        row("$dollar{{ some condition }}", "\"$dollar{'$dollar'}{{ some condition }}\"", IntegerTyping, ""),
+        row("42", "ActionSlackV3.FetchDepth.Value(42)", intSpecialTyping, ""),
+        row("0", "ActionSlackV3.FetchDepth.Infinite", intSpecialTyping, ""),
+        row("success", "ActionSlackV3.Status.Success", enumTyping, ""),
+        row("custom", "ActionSlackV3.Status.CustomEnum", enumTyping, ""),
+        row("custom", "ActionSlackV3.Status.CustomEnum", enumTypingWithoutTypeName, "Status"),
         row(
             "field1,field2",
             """|listOf(
@@ -44,6 +50,7 @@ class TypingsTest : FunSpec({
               |
             """.trimMargin(),
             ListOfTypings(","),
+            "",
         ),
         row(
             "tag1\ntag2",
@@ -54,6 +61,7 @@ class TypingsTest : FunSpec({
               |
             """.trimMargin(),
             ListOfTypings("\\n"),
+            "",
         ),
         row(
             "success,custom",
@@ -64,12 +72,13 @@ class TypingsTest : FunSpec({
               |
             """.trimMargin(),
             ListOfTypings(",", enumTyping),
+            "",
         ),
     )
 
     test("typings") {
-        testCases.forAll { value, expected, typing ->
-            valueWithTyping(value, typing, coords).toString() shouldBe expected
+        testCases.forAll { value, expected, typing, key ->
+            valueWithTyping(value, typing, coords, key).toString() shouldBe expected
         }
     }
 })

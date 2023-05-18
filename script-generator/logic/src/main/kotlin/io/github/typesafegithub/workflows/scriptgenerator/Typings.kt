@@ -24,14 +24,15 @@ fun String.orExpression(): CodeBlock {
 private const val EXPR_PREFIX = "\${{"
 private const val EXPR_SUFFIX = "}}"
 
-fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): CodeBlock {
+fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords, key: String): CodeBlock {
     val classname = coords.buildActionClassName()
     return when (typing) {
         is EnumTyping -> {
             val itemsNames = typing.itemsNames ?: typing.items.map { it.toPascalCase() }
             val itemsNameMap = typing.items.zip(itemsNames).toMap()
             val enumName = itemsNameMap[value]?.toPascalCase()
-            CodeBlock.of("%L", "$classname.${typing.typeName}.$enumName")
+            val typeName = typing.typeName ?: key.toPascalCase()
+            CodeBlock.of("%L", "$classname.$typeName.$enumName")
         }
 
         is BooleanTyping ->
@@ -58,7 +59,7 @@ fun valueWithTyping(value: String, typing: Typing, coords: ActionCoords): CodeBl
                 prefix = CodeBlock.of("listOf("),
                 postfix = ")",
             ) { elem ->
-                valueWithTyping(elem, typing.typing, coords)
+                valueWithTyping(elem, typing.typing, coords, key)
             }
         }
         else ->

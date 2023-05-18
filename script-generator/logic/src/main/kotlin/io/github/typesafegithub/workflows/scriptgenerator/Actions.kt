@@ -102,7 +102,7 @@ private fun existingActionProperty(
     val typing = inputTypings?.get(key) ?: StringTyping
     builder
         .add("%N = ", key.toCamelCase())
-        .add(valueWithTyping(value, typing, coords))
+        .add(valueWithTyping(value, typing, coords, key))
         .add(",\n")
 }
 
