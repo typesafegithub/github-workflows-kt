@@ -9,6 +9,10 @@ on:
 jobs:
   job1:
     runs-on: 'ubuntu-latest'
+    permissions:
+      actions: 'read'
+      checks: 'write'
+      contents: 'none'
     env:
       $GREETING: 'World'
     steps:

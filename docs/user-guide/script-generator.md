@@ -1,3 +1,6 @@
+!!! warning "Experimental"
+    The script generator's development is in progress. Please expect missing features and other kinds of instabilities.
+
 If you have an existing working GitHub YAML workflow, the **script generator** can convert it to a Kotlin script! It may
 not produce the most readable or by any means final code (as with every code generator), but it's a good starting point
 when you want to save time on migrating your workflows to YAML.

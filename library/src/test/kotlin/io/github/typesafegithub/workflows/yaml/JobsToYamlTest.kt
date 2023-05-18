@@ -4,6 +4,8 @@ import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -135,6 +137,11 @@ class JobsToYamlTest : DescribeSpec({
                         command = "echo 'test!'",
                     ),
                 ),
+                permissions = mapOf(
+                    Permission.Actions to Mode.Read,
+                    Permission.Checks to Mode.Write,
+                    Permission.Contents to Mode.None,
+                ),
                 _customArguments = mapOf(
                     "distribute-job" to true,
                     "servers" to listOf("server-1", "server-2"),
@@ -178,6 +185,11 @@ class JobsToYamlTest : DescribeSpec({
                         "name" to "Some command",
                         "run" to "echo 'test!'",
                     ),
+                ),
+                "permissions" to mapOf(
+                    "actions" to "read",
+                    "checks" to "write",
+                    "contents" to "none",
                 ),
                 "distribute-job" to true,
                 "servers" to listOf("server-1", "server-2"),

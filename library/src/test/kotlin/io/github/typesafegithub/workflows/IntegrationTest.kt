@@ -7,6 +7,8 @@ import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredent
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
@@ -687,6 +689,11 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 env = linkedMapOf(
                     GREETING to "World",
+                ),
+                permissions = mapOf(
+                    Permission.Actions to Mode.Read,
+                    Permission.Checks to Mode.Write,
+                    Permission.Contents to Mode.None,
                 ),
             ) {
                 uses(CheckoutV3())

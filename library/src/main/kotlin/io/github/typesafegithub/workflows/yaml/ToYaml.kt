@@ -2,6 +2,8 @@ package io.github.typesafegithub.workflows.yaml
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.domain.Job
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.dsl.toBuilder
@@ -174,11 +176,14 @@ private fun Workflow.generateYaml(
     return computedPreamble + workflowAsYaml
 }
 
+internal fun Map<Permission, Mode>.mapToYaml() = map { (p, m) -> p.value to m.value }.toMap()
+
 @Suppress("SpreadOperator")
 private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map<String, Any> =
     mapOfNotNullValues(
         "name" to name,
         "on" to on.triggersToYaml(),
+        "permissions" to permissions?.mapToYaml(),
         "concurrency" to concurrency?.let {
             mapOf(
                 "group" to it.group,

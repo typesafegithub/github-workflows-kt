@@ -5,6 +5,8 @@ import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
@@ -20,6 +22,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val env: LinkedHashMap<String, String>,
     public val condition: String?,
     public val strategyMatrix: Map<String, List<String>>?,
+    public val permissions: Map<Permission, Mode>? = null,
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val jobOutputs: OUTPUT,
@@ -34,6 +37,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         env = env,
         steps = emptyList(),
         strategyMatrix = strategyMatrix,
+        permissions = permissions,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
         outputs = jobOutputs,

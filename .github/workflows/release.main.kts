@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.42.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.43.0")
 @file:Import("_shared.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
@@ -74,7 +74,7 @@ workflow(
         )
         uses(
             name = "Deploy merged docs to GitHub Pages",
-            GithubPagesDeployActionV4(
+            action = GithubPagesDeployActionV4(
                 folder = "$directoryToDeploy",
             )
         )

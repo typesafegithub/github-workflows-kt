@@ -38,3 +38,9 @@ inputs:
     allowed-values:
     - stable
     - release-candidate
+  merge-method:
+    type: enum
+    allowed-values:
+    - MERGE
+    - REBASE
+    - SQUASH

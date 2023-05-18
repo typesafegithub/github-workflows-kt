@@ -45,14 +45,19 @@ val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
 val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
-fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata {
-    val cacheFile = actionYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
-    if (cacheFile.canRead()) {
-        println("  ... from cache: $cacheFile")
-        return myYaml.decodeFromString(cacheFile.readText())
+fun ActionCoords.fetchMetadata(
+    commitHash: String = getCommitHashFromFileSystem(),
+    useCache: Boolean = true,
+    fetchUri: (URI) -> String = ::fetchUri,
+): Metadata {
+    if (useCache) {
+        val cacheFile = actionYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
+        if (cacheFile.canRead()) {
+            println("  ... from cache: $cacheFile")
+            return myYaml.decodeFromString(cacheFile.readText())
+        }
     }
 
-    val commitHash = Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
     val list = listOf(actionYmlUrl(commitHash), actionYamlUrl(commitHash))
     val metadataYaml = list.firstNotNullOfOrNull { url ->
         try {
@@ -63,9 +68,16 @@ fun ActionCoords.fetchMetadata(fetchUri: (URI) -> String = ::fetchUri): Metadata
         }
     } ?: error("$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\nCheck release page $releasesUrl")
 
-    cacheFile.writeText(metadataYaml)
+    if (useCache) {
+        val cacheFile = actionYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
+        cacheFile.parentFile.mkdirs()
+        cacheFile.writeText(metadataYaml)
+    }
     return myYaml.decodeFromString(metadataYaml)
 }
+
+private fun ActionCoords.getCommitHashFromFileSystem(): String =
+    Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
 
 fun fetchUri(uri: URI) = uri.toURL().readText()
 
