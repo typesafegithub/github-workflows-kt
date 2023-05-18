@@ -18,6 +18,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Gollum
 import io.github.typesafegithub.workflows.domain.triggers.IssueComment
 import io.github.typesafegithub.workflows.domain.triggers.Issues
 import io.github.typesafegithub.workflows.domain.triggers.Label
+import io.github.typesafegithub.workflows.domain.triggers.MergeGroup
 import io.github.typesafegithub.workflows.domain.triggers.Milestone
 import io.github.typesafegithub.workflows.domain.triggers.PageBuild
 import io.github.typesafegithub.workflows.domain.triggers.Project
@@ -224,6 +225,7 @@ val allTriggers: List<Trigger> = listOf(
     IssueComment(),
     Issues(),
     Label(),
+    MergeGroup(),
     Milestone(),
     PageBuild(),
     Project(),

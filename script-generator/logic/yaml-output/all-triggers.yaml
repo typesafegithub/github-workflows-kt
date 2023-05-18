@@ -45,6 +45,7 @@ on:
     - 'crDiscussionCommenteated'
     - 'deleted'
     - 'edited'
+  merge_group: {}
   milestone:
     types:
     - 'created'

@@ -18,6 +18,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Gollum
 import io.github.typesafegithub.workflows.domain.triggers.IssueComment
 import io.github.typesafegithub.workflows.domain.triggers.Issues
 import io.github.typesafegithub.workflows.domain.triggers.Label
+import io.github.typesafegithub.workflows.domain.triggers.MergeGroup
 import io.github.typesafegithub.workflows.domain.triggers.Milestone
 import io.github.typesafegithub.workflows.domain.triggers.PageBuild
 import io.github.typesafegithub.workflows.domain.triggers.Project
@@ -94,6 +95,7 @@ public val workflowAllTriggers: Workflow = workflow(
             "types" to listOf("crDiscussionCommenteated", "deleted", "edited")
           ),
         ),
+        MergeGroup(),
         Milestone(
           _customArguments = mapOf(
             "types" to listOf("created", "closed")
