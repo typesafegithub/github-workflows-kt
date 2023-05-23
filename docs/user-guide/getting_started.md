@@ -1,10 +1,5 @@
 # Getting started
 
-!!! info "Automatic migration of existing workflows"
-    This chapter describes how to start from scratch with something simple, so that you get a gist of how this library
-    works. If you prefer to try automatic conversion of your workflows, head over to
-    [Script generator (experimental)](script-generator.md) chapter.
-
 As an exercise, we'll add a job that prints out `Hello world!`. Feel free to replace the actual workflow's logic and all
 names with your own.
 
