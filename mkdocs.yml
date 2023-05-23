@@ -46,7 +46,6 @@ nav:
   - Introduction: 'index.md'
   - User guide:
       - Getting started: 'user-guide/getting_started.md'
-      - Script generator (experimental): 'user-guide/script-generator.md'
       - Using actions: 'user-guide/using-actions.md'
       - Type-safe expressions: 'user-guide/type-safe-expressions.md'
       - Job outputs: 'user-guide/job-outputs.md'
@@ -59,6 +58,3 @@ nav:
 
 extra:
   version: 0.44.0-SNAPSHOT
-
-  # branch or tag name - the script-generator may have not yet updated to a breaking change in the library
-  scriptGeneratorVersion: 0.22.0
