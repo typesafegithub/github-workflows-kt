@@ -29,8 +29,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
  */
 @Deprecated(
-    message = "This action has a newer major version: InstallNixActionV20",
-    replaceWith = ReplaceWith("InstallNixActionV20"),
+    message = "This action has a newer major version: InstallNixActionV21",
+    replaceWith = ReplaceWith("InstallNixActionV21"),
 )
 public data class InstallNixActionV17 private constructor(
     /**
