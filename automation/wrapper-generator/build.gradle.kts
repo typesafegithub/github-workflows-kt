@@ -40,13 +40,6 @@ tasks.register<JavaExec>("suggestVersions") {
     dependsOn(tasks.compileKotlin)
 }
 
-tasks.register<JavaExec>("updateCommitHashes") {
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("io.github.typesafegithub.workflows.wrappergenerator.updating.UpdateCommitHashesKt")
-    workingDir = rootDir
-    dependsOn(tasks.compileKotlin)
-}
-
 tasks.register<JavaExec>("createActionUpdatePRs") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("io.github.typesafegithub.workflows.wrappergenerator.updating.CreateActionUpdatePRsKt")
