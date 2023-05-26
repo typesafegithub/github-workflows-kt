@@ -29,7 +29,7 @@ import kotlin.collections.toTypedArray
 public data class SetupDotnetV3 private constructor(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
-     * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x
+     * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
      */
     public val dotnetVersion: String? = null,
     /**
