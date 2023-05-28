@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.53.0")
+    implementation("com.charleskorn.kaml:kaml:0.54.0")
 }
