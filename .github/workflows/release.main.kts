@@ -4,7 +4,6 @@
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
-import io.github.typesafegithub.workflows.actions.jamesives.GithubPagesDeployActionV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -36,7 +35,6 @@ workflow(
         )
 
         setupPython()
-        run("pip install -r docs/requirements.txt")
 
         // From here, there are steps performing deployments. Before, it's only about building and testing.
 
@@ -53,30 +51,6 @@ workflow(
             )
         )
 
-        val directoryToDeploy = "to-gh-pages"
-        run(
-            name = "Build Mkdocs docs",
-            command = "mkdocs build --site-dir $directoryToDeploy",
-        )
-        uses(
-            name = "Generate API docs",
-            action = GradleBuildActionV2(
-                arguments = ":library:dokkaHtml",
-            )
-        )
-        run(
-            name = "Prepare target directory for API docs",
-            command = "mkdir -p $directoryToDeploy/api-docs",
-        )
-        run(
-            name = "Copy Dokka output to Mkdocs output",
-            command = "cp -r library/build/dokka/html/* $directoryToDeploy/api-docs",
-        )
-        uses(
-            name = "Deploy merged docs to GitHub Pages",
-            action = GithubPagesDeployActionV4(
-                folder = "$directoryToDeploy",
-            )
-        )
+        deployDocs()
     }
 }.writeToFile()

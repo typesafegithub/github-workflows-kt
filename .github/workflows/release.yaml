@@ -50,17 +50,17 @@ jobs:
       with:
         python-version: '3.8'
     - id: 'step-4'
-      run: 'pip install -r docs/requirements.txt'
-    - id: 'step-5'
       name: 'Publish to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository'
-    - id: 'step-6'
+    - id: 'step-5'
       name: 'Wait until library present in Maven Central'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:waitUntilLibraryPresentInMavenCentral'
+    - id: 'step-6'
+      run: 'pip install -r docs/requirements.txt'
     - id: 'step-7'
       name: 'Build Mkdocs docs'
       run: 'mkdocs build --site-dir to-gh-pages'
