@@ -21,7 +21,7 @@ class GettingStartedSnippets : FunSpec({
         @file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.44.1-SNAPSHOT")
 
         // --8<-- [end:getting-started-1]
-        */
+         */
         @Suppress("VariableNaming")
         val __FILE__ = File("")
         // --8<-- [start:getting-started-3]
