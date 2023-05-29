@@ -14,10 +14,10 @@
         <link rel="prev" href="../..">
       
       
-        <link rel="next" href="../script-generator/">
+        <link rel="next" href="../using-actions/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.11">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
@@ -314,20 +314,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../script-generator/" class="md-nav__link">
-        Script generator (experimental)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../using-actions/" class="md-nav__link">
         Using actions
       </a>
@@ -495,12 +481,6 @@
 
 
 <div><h1 id="getting-started">Getting started</h1>
-<div class="admonition info">
-<p class="admonition-title">Automatic migration of existing workflows</p>
-<p>This chapter describes how to start from scratch with something simple, so that you get a gist of how this library
-works. If you prefer to try automatic conversion of your workflows, head over to
-<a href="../script-generator/">Script generator (experimental)</a> chapter.</p>
-</div>
 <p>As an exercise, we'll add a job that prints out <code>Hello world!</code>. Feel free to replace the actual workflow's logic and all
 names with your own.</p>
 <ol>
@@ -519,7 +499,7 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
 <li>Put this content into the previously created file and save it:
    <div class="highlight"><pre><span></span><code><span class="c1">#!/usr/bin/env kotlin</span>
 
-<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:github-workflows-kt:0.43.0"</span><span class="p">)</span>
+<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:github-workflows-kt:0.44.0"</span><span class="p">)</span>
 
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.actions.CheckoutV3</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest</span>
@@ -593,10 +573,10 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.43.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.44.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
     
   </body>
