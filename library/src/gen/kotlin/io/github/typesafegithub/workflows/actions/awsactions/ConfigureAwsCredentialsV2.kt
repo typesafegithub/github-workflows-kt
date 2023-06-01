@@ -90,7 +90,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
     /**
      * Use existing credentials from the environment to assume a new role
      */
-    public val roleChaining: String? = null,
+    public val roleChaining: Boolean? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -117,7 +117,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
         roleExternalId: String? = null,
         roleSkipSessionTagging: Boolean? = null,
         httpProxy: String? = null,
-        roleChaining: String? = null,
+        roleChaining: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
@@ -144,7 +144,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             roleExternalId?.let { "role-external-id" to it },
             roleSkipSessionTagging?.let { "role-skip-session-tagging" to it.toString() },
             httpProxy?.let { "http-proxy" to it },
-            roleChaining?.let { "role-chaining" to it },
+            roleChaining?.let { "role-chaining" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

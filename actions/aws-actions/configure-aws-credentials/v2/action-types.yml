@@ -24,6 +24,8 @@ inputs:
     type: string
   role-skip-session-tagging:
     type: boolean
+  role-chaining:
+    type: boolean
   http-proxy:
     type: string
 # Please check those outputs's description and set a proper type. 'string' is just set by default
