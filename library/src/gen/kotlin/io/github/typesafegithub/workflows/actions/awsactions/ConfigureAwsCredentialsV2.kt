@@ -88,6 +88,10 @@ public data class ConfigureAwsCredentialsV2 private constructor(
      */
     public val httpProxy: String? = null,
     /**
+     * Use existing credentials from the environment to assume a new role
+     */
+    public val roleChaining: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -113,6 +117,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
         roleExternalId: String? = null,
         roleSkipSessionTagging: Boolean? = null,
         httpProxy: String? = null,
+        roleChaining: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
@@ -121,7 +126,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             webIdentityTokenFile=webIdentityTokenFile, roleDurationSeconds=roleDurationSeconds,
             roleSessionName=roleSessionName, roleExternalId=roleExternalId,
             roleSkipSessionTagging=roleSkipSessionTagging, httpProxy=httpProxy,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            roleChaining=roleChaining, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -139,6 +144,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             roleExternalId?.let { "role-external-id" to it },
             roleSkipSessionTagging?.let { "role-skip-session-tagging" to it.toString() },
             httpProxy?.let { "http-proxy" to it },
+            roleChaining?.let { "role-chaining" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
