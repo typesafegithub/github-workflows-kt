@@ -57,6 +57,15 @@ public data class SetupDotnetV3 private constructor(
      */
     public val configFile: String? = null,
     /**
+     * Optional input to enable caching of the NuGet global-packages folder
+     */
+    public val cache: String? = null,
+    /**
+     * Used to specify the path to a dependency file: packages.lock.json. Supports wildcards or a
+     * list of file names for caching multiple dependencies.
+     */
+    public val cacheDependencyPath: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -74,11 +83,14 @@ public data class SetupDotnetV3 private constructor(
         sourceUrl: String? = null,
         owner: String? = null,
         configFile: String? = null,
+        cache: String? = null,
+        cacheDependencyPath: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(dotnetVersion=dotnetVersion, dotnetQuality=dotnetQuality,
             globalJsonFile=globalJsonFile, sourceUrl=sourceUrl, owner=owner, configFile=configFile,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            cache=cache, cacheDependencyPath=cacheDependencyPath, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -89,6 +101,8 @@ public data class SetupDotnetV3 private constructor(
             sourceUrl?.let { "source-url" to it },
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
+            cache?.let { "cache" to it },
+            cacheDependencyPath?.let { "cache-dependency-path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -116,6 +130,11 @@ public data class SetupDotnetV3 private constructor(
     public class Outputs(
         stepId: String,
     ) : Action.Outputs(stepId) {
+        /**
+         * A boolean value to indicate if a cache was hit.
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
         /**
          * Contains the installed by action .NET SDK version for reuse.
          */
