@@ -11,6 +11,7 @@ package io.github.typesafegithub.workflows.actions.actions
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -59,7 +60,7 @@ public data class SetupDotnetV3 private constructor(
     /**
      * Optional input to enable caching of the NuGet global-packages folder
      */
-    public val cache: String? = null,
+    public val cache: Boolean? = null,
     /**
      * Used to specify the path to a dependency file: packages.lock.json. Supports wildcards or a
      * list of file names for caching multiple dependencies.
@@ -83,7 +84,7 @@ public data class SetupDotnetV3 private constructor(
         sourceUrl: String? = null,
         owner: String? = null,
         configFile: String? = null,
-        cache: String? = null,
+        cache: Boolean? = null,
         cacheDependencyPath: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
@@ -101,7 +102,7 @@ public data class SetupDotnetV3 private constructor(
             sourceUrl?.let { "source-url" to it },
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
-            cache?.let { "cache" to it },
+            cache?.let { "cache" to it.toString() },
             cacheDependencyPath?.let { "cache-dependency-path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
