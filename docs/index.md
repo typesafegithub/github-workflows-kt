@@ -1,6 +1,6 @@
 # GitHub Workflows Kt
 
-> _You won't get back to YAML!_
+> _You won't go back to YAML!_
 
 ## 🧪 Work in progress - "moving fast" phase
 
