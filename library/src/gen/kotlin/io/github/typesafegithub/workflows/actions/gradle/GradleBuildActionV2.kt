@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -44,7 +44,7 @@ public data class GradleBuildActionV2 private constructor(
     public val cacheReadOnly: Boolean? = null,
     /**
      * When 'true', entries will not be restored from the cache but will be saved at the end of the
-     * Job. 
+     * Job.
      * Setting this to 'true' implies cache-read-only will be 'false'.
      */
     public val cacheWriteOnly: Boolean? = null,

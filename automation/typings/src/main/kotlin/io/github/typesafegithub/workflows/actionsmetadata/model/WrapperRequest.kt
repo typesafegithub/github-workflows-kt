@@ -1,11 +1,11 @@
 package io.github.typesafegithub.workflows.actionsmetadata.model
 
 sealed interface TypingsSource {
-    data class WrapperGenerator(val inputTypings: Map<String, Typing> = emptyMap()) : TypingsSource
+    data class CodeGenerator(val inputTypings: Map<String, Typing> = emptyMap()) : TypingsSource
     object ActionTypes : TypingsSource
 }
 
 data class WrapperRequest(
     val actionCoords: ActionCoords,
-    val typingsSource: TypingsSource = TypingsSource.WrapperGenerator(),
+    val typingsSource: TypingsSource = TypingsSource.CodeGenerator(),
 )
