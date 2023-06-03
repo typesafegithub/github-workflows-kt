@@ -45,6 +45,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     )
 
     public fun run(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
         command: String,
         name: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
@@ -73,6 +75,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     }
 
     public fun <T : Action.Outputs> uses(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
         action: Action<T>,
         name: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),

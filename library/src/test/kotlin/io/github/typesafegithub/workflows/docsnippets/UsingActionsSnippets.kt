@@ -109,7 +109,7 @@ class UsingActionsSnippets : FunSpec({
             on = listOf(Push()),
         ) {
             // --8<-- [start:custom-action-outputs]
-            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+            job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 val customActionStep = uses(
                     name = "Some step with output",
                     action = customAction,
@@ -133,7 +133,7 @@ class UsingActionsSnippets : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
         ) {
-            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+            job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 uses(
                     name = "Some step with output",
                     action = customAction,
@@ -154,7 +154,7 @@ class UsingActionsSnippets : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
         ) {
-            job("test_job", runsOn = RunnerType.UbuntuLatest) {
+            job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 uses(
                     name = "Some step with output",
                     action = customAction,

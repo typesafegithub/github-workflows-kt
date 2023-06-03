@@ -40,6 +40,8 @@ public class WorkflowBuilder(
 
     @Suppress("LongParameterList")
     public fun <OUTPUT : JobOutputs> job(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
         id: String,
         name: String? = null,
         runsOn: RunnerType,
@@ -80,6 +82,8 @@ public class WorkflowBuilder(
     }
 
     public fun job(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
         id: String,
         name: String? = null,
         runsOn: RunnerType,
@@ -124,6 +128,8 @@ public fun Workflow.toBuilder(): WorkflowBuilder =
 
 @Suppress("LongParameterList", "FunctionParameterNaming")
 public fun workflow(
+    @Suppress("UNUSED_PARAMETER")
+    vararg pleaseUseNamedArguments: Unit,
     name: String,
     on: List<Trigger>,
     env: LinkedHashMap<String, String> = linkedMapOf(),
