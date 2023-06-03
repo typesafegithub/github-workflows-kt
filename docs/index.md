@@ -1,5 +1,9 @@
-# GitHub Workflows Kt
+# github-workflows-kt
 
+> [github-workflows-kt](https://github.com/typesafegithub/github-workflows-kt/) is a tool for creating GitHub Actions
+> workflows in a _type-safe_ script, helping you to build robust workflows for your GitHub projects without mistakes,
+> with pleasure, in Kotlin.
+>
 > _You won't go back to YAML!_
 
 ## 🧪 Work in progress - "moving fast" phase

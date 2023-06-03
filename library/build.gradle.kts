@@ -88,7 +88,7 @@ pitest {
 }
 
 tasks.dokkaHtml {
-    moduleName.set("GitHub Workflows Kt")
+    moduleName.set("github-workflows-kt")
 
     dokkaSourceSets.configureEach {
         perPackageOption {
