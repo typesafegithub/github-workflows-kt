@@ -253,7 +253,7 @@ public data class CodecovActionV3 private constructor(
             xtraArgs=xtraArgs, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             token?.let { "token" to it },
             `file`?.let { "file" to it },
@@ -297,7 +297,7 @@ public data class CodecovActionV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class OperatingSystem(
         public val stringValue: String,

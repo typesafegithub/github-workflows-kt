@@ -55,7 +55,7 @@ public data class GitSecretActionV4 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "gpg-private-key" to gpgPrivateKey,
             gpgPrivateKeyPassphrase?.let { "gpg-private-key-passphrase" to it },
@@ -63,5 +63,5 @@ public data class GitSecretActionV4 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

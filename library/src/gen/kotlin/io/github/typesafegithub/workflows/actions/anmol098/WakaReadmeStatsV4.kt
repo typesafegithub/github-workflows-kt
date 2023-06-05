@@ -134,7 +134,7 @@ public data class WakaReadmeStatsV4 private constructor(
             ignoredRepos=ignoredRepos, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             ghToken?.let { "GH_TOKEN" to it },
             "WAKATIME_API_KEY" to wakatimeApiKey,
@@ -157,5 +157,5 @@ public data class WakaReadmeStatsV4 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

@@ -77,7 +77,7 @@ public data class MongodbGithubActionV1 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             mongodbVersion?.let { "mongodb-version" to it },
             mongodbReplicaSet?.let { "mongodb-replica-set" to it },
@@ -89,5 +89,5 @@ public data class MongodbGithubActionV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

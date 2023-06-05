@@ -219,7 +219,7 @@ public data class BlogPostWorkflowV1 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             ghToken?.let { "gh_token" to it },
             readmePath?.let { "readme_path" to it.joinToString(",") },
@@ -256,7 +256,7 @@ public data class BlogPostWorkflowV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         stepId: String,

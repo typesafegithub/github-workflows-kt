@@ -138,7 +138,7 @@ public data class AddAndCommitV8 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             add?.let { "add" to it },
             authorName?.let { "author_name" to it },
@@ -160,7 +160,7 @@ public data class AddAndCommitV8 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class DefaultAuthor(
         public val stringValue: String,

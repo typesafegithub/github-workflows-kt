@@ -117,7 +117,7 @@ public data class SetupNodeV2 private constructor(
             version=version, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             alwaysAuth?.let { "always-auth" to it.toString() },
             nodeVersion?.let { "node-version" to it },
@@ -134,7 +134,7 @@ public data class SetupNodeV2 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class PackageManager(
         public val stringValue: String,

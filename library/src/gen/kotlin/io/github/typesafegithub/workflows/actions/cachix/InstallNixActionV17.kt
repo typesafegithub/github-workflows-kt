@@ -72,7 +72,7 @@ public data class InstallNixActionV17 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             installUrl?.let { "install_url" to it },
             installOptions?.let { "install_options" to it.joinToString("\n") },
@@ -82,5 +82,5 @@ public data class InstallNixActionV17 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

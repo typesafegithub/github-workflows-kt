@@ -76,7 +76,7 @@ public data class FlutterActionV2 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             flutterVersion?.let { "flutter-version" to it },
             channel?.let { "channel" to it.stringValue },
@@ -88,7 +88,7 @@ public data class FlutterActionV2 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Channel(
         public val stringValue: String,
