@@ -50,8 +50,8 @@ class IntegrationTest : FunSpec({
             name = "Test Job",
             runsOn = RunnerType.UbuntuLatest,
         ) {
-            uses(CheckoutV3())
-            run("echo 'hello!'")
+            uses(action = CheckoutV3())
+            run(command = "echo 'hello!'")
         }
     }
 
@@ -474,7 +474,7 @@ class IntegrationTest : FunSpec({
                 id = "test_job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                val addAndCommit = uses(SetupPythonV4())
+                val addAndCommit = uses(action = SetupPythonV4())
 
                 uses(
                     name = "Some step consuming other step's output",
@@ -500,7 +500,7 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 concurrency = Concurrency("job_staging_environment"),
             ) {
-                val addAndCommit = uses(AddAndCommitV9())
+                val addAndCommit = uses(action = AddAndCommitV9())
 
                 uses(
                     name = "Some step consuming other step's output",
@@ -631,7 +631,7 @@ class IntegrationTest : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 concurrency = Concurrency("job_staging_environment", cancelInProgress = true),
             ) {
-                val addAndCommit = uses(AddAndCommitV9())
+                val addAndCommit = uses(action = AddAndCommitV9())
 
                 uses(
                     name = "Some step consuming other step's output",
@@ -696,7 +696,7 @@ class IntegrationTest : FunSpec({
                     Permission.Contents to Mode.None,
                 ),
             ) {
-                uses(CheckoutV3())
+                uses(action = CheckoutV3())
                 run(
                     name = "Default environment variable",
                     command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
@@ -743,8 +743,8 @@ class IntegrationTest : FunSpec({
                     name = "Test Job",
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
-                    uses(CheckoutV3())
-                    run("echo 'hello!'")
+                    uses(action = CheckoutV3())
+                    run(command = "echo 'hello!'")
                 }
             }.toYaml()
 
@@ -795,7 +795,7 @@ class IntegrationTest : FunSpec({
                 },
             ) {
                 val scriptStep = uses(
-                    GithubScriptV6(
+                    action = GithubScriptV6(
                         script = """
                         core.setOutput("key", "value")
                         core.setOutput("key2", "value2")
@@ -879,7 +879,7 @@ class IntegrationTest : FunSpec({
         name = "test",
         on = listOf(Push()),
     ) {
-        job("test", runsOn = RunnerType.UbuntuLatest) {
+        job(id = "test", runsOn = RunnerType.UbuntuLatest) {
             run(command = "echo 'Hello!'")
         }
     }

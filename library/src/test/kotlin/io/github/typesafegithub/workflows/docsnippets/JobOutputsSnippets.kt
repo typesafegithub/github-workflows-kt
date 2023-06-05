@@ -38,7 +38,7 @@ class JobOutputsSnippets : FunSpec({
                         val someStepOutput: String = ""
                     }
                 }
-                val someStep = uses(DocTest())
+                val someStep = uses(action = DocTest())
 
                 // --8<-- [start:set-job-outputs]
                 jobOutputs.myOutput = someStep.outputs.someStepOutput
