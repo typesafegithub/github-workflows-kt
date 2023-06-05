@@ -14,7 +14,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
-    implementation(platform("io.ktor:ktor-bom:2.3.0"))
+    implementation(platform("io.ktor:ktor-bom:2.3.1"))
     implementation("io.ktor:ktor-client-core")
     implementation("io.ktor:ktor-client-cio")
     implementation("io.ktor:ktor-client-content-negotiation")
