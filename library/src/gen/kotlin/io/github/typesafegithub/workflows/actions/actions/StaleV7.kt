@@ -388,7 +388,7 @@ public data class StaleV7 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             repoToken?.let { "repo-token" to it },
             staleIssueMessage?.let { "stale-issue-message" to it },
@@ -447,7 +447,7 @@ public data class StaleV7 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Days(
         public val integerValue: Int,

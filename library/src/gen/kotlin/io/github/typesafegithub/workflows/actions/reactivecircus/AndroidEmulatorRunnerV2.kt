@@ -184,7 +184,7 @@ public data class AndroidEmulatorRunnerV2 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "api-level" to apiLevel.toString(),
             target?.let { "target" to it.stringValue },
@@ -214,7 +214,7 @@ public data class AndroidEmulatorRunnerV2 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Target(
         public val stringValue: String,

@@ -49,14 +49,14 @@ public data class CheckGradleVersionV1 private constructor(
     ) : this(gradlew=gradlew, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             gradlew?.let { "gradlew" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         stepId: String,

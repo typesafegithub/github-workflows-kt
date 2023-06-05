@@ -91,7 +91,7 @@ public data class GithubScriptV6 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "script" to script,
             githubToken?.let { "github-token" to it },
@@ -106,7 +106,7 @@ public data class GithubScriptV6 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Encoding(
         public val stringValue: kotlin.String,

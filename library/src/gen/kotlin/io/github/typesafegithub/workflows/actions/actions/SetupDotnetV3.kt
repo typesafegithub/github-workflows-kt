@@ -94,7 +94,7 @@ public data class SetupDotnetV3 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             dotnetVersion?.let { "dotnet-version" to it },
             dotnetQuality?.let { "dotnet-quality" to it.stringValue },
@@ -108,7 +108,7 @@ public data class SetupDotnetV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class DotNetQuality(
         public val stringValue: String,

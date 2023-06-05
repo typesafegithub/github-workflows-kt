@@ -67,7 +67,7 @@ public data class NpmInstallV1 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             workingDirectory?.let { "working-directory" to it },
             useLockFile?.let { "useLockFile" to it.toString() },
@@ -77,5 +77,5 @@ public data class NpmInstallV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

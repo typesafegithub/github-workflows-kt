@@ -52,7 +52,7 @@ public data class ActionWithInputsSharingTypeV3 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo-one" to fooOne.integerValue.toString(),
             "foo-two" to fooTwo.integerValue.toString(),
@@ -61,7 +61,7 @@ public data class ActionWithInputsSharingTypeV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Foo(
         public val integerValue: Int,

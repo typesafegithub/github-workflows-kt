@@ -41,8 +41,7 @@ public data class ActionWithNoInputsV3 private constructor(
     ) : this(_customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> =
-            LinkedHashMap(_customInputs)
+    override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(_customInputs)
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

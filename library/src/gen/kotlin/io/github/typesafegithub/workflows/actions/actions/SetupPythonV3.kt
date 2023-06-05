@@ -81,7 +81,7 @@ public data class SetupPythonV3 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             pythonVersion?.let { "python-version" to it },
             cache?.let { "cache" to it.stringValue },
@@ -92,7 +92,7 @@ public data class SetupPythonV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class PackageManager(
         public val stringValue: String,

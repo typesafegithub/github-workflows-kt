@@ -60,7 +60,7 @@ public data class SimpleActionWithRequiredStringInputsV3 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
             "baz-goo" to bazGoo,
@@ -68,5 +68,5 @@ public data class SimpleActionWithRequiredStringInputsV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

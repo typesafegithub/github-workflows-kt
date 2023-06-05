@@ -88,7 +88,7 @@ public data class LoginV1 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             creds?.let { "creds" to it },
             clientId?.let { "client-id" to it },
@@ -102,7 +102,7 @@ public data class LoginV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Environment(
         public val stringValue: String,

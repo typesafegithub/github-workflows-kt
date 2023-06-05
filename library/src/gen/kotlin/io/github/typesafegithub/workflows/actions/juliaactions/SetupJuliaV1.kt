@@ -67,7 +67,7 @@ public data class SetupJuliaV1 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             version?.let { "version" to it },
             includeAllPrereleases?.let { "include-all-prereleases" to it.toString() },
@@ -77,7 +77,7 @@ public data class SetupJuliaV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Architecture(
         public val stringValue: String,

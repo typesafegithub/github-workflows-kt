@@ -153,7 +153,7 @@ public data class CodeqlActionAnalyzeV2 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             checkName?.let { "check_name" to it },
             output?.let { "output" to it },
@@ -176,7 +176,7 @@ public data class CodeqlActionAnalyzeV2 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Upload(
         public val stringValue: String,

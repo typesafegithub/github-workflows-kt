@@ -71,7 +71,7 @@ public data class AmazonEcrLoginV1 private constructor(
             httpProxy=httpProxy, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             registries?.let { "registries" to it.joinToString(",") },
             skipLogout?.let { "skip-logout" to it.toString() },
@@ -81,7 +81,7 @@ public data class AmazonEcrLoginV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class RegistryType(
         public val stringValue: String,

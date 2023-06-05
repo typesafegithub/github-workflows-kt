@@ -68,7 +68,7 @@ public data class SimpleActionWithListsV3 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             listStrings?.let { "list-strings" to it.joinToString(",") },
             listInts?.let { "list-ints" to it.joinToString(",") { it.toString() } },
@@ -79,7 +79,7 @@ public data class SimpleActionWithListsV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class MyEnum(
         public val stringValue: String,

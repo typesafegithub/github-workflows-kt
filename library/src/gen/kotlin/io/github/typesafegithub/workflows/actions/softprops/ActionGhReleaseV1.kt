@@ -126,7 +126,7 @@ public data class ActionGhReleaseV1 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             body?.let { "body" to it },
             bodyPath?.let { "body_path" to it },
@@ -146,7 +146,7 @@ public data class ActionGhReleaseV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         stepId: String,

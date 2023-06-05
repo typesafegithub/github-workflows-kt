@@ -104,7 +104,7 @@ public data class TransifexPullRequestActionV5 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "transifex_token" to transifexToken,
             "transifex_organisation" to transifexOrganisation,
@@ -121,7 +121,7 @@ public data class TransifexPullRequestActionV5 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Transform(
         public val stringValue: String,

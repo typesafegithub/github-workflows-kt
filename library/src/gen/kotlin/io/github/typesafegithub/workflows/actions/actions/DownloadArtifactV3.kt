@@ -54,7 +54,7 @@ public data class DownloadArtifactV3 private constructor(
     ) : this(name=name, path=path, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             name?.let { "name" to it },
             path?.let { "path" to it },
@@ -62,5 +62,5 @@ public data class DownloadArtifactV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }
