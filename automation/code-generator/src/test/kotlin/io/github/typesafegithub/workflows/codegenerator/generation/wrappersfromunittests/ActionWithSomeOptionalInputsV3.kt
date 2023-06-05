@@ -70,7 +70,7 @@ public data class ActionWithSomeOptionalInputsV3 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             fooBar?.let { "foo-bar" to it },
             bazGoo?.let { "baz-goo" to it },
@@ -81,5 +81,5 @@ public data class ActionWithSomeOptionalInputsV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

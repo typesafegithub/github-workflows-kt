@@ -95,7 +95,7 @@ public data class ActionWithNonStringInputsV3 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
             "baz-goo" to bazGoo.toString(),
@@ -110,7 +110,7 @@ public data class ActionWithNonStringInputsV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 
     public sealed class Bin(
         public val stringValue: String,
