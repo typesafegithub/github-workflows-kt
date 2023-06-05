@@ -170,7 +170,7 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
     val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
         PropertySpec.builder(key.toCamelCase(), String::class)
             .initializer("\"steps.\$stepId.outputs.$key\"")
-            .addKdoc(value.description.nestedCommentsSanitized)
+            .addKdoc(value.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
             .build()
     }
     addType(
@@ -315,7 +315,7 @@ private fun Metadata.buildCommonConstructorParameters(
     inputs.map { (key, input) ->
         ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
             .defaultValueIfNullable(input)
-            .addKdoc(input.description.nestedCommentsSanitized)
+            .addKdoc(input.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
             .build()
     }.plus(
         ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
@@ -343,7 +343,7 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
     """
        |Action: ${metadata.name.nestedCommentsSanitized}
        |
-       |${metadata.description.nestedCommentsSanitized}
+       |${metadata.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine()}
        |
        |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore('/')}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
     """.trimMargin()

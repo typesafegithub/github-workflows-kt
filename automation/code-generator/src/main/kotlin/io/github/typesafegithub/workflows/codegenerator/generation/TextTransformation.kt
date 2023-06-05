@@ -18,3 +18,6 @@ fun String.toPascalCase(): String {
 
 fun String.toCamelCase(): String =
     toPascalCase().replaceFirstChar { it.lowercase() }
+
+fun String.removeTrailingWhitespacesForEachLine(): String =
+    lines().joinToString(separator = "\n") { it.trimEnd() }
