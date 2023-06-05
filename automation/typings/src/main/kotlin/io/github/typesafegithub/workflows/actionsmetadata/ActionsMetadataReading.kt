@@ -61,7 +61,7 @@ private fun buildTypingsSource(
             println("There was a problem parsing action typing: $path")
             throw e
         }
-        TypingsSource.WrapperGenerator(inputTypings = typings.toTypesMap())
+        TypingsSource.CodeGenerator(inputTypings = typings.toTypesMap())
     }
     "typings-hosted-by-action" -> TypingsSource.ActionTypes
     else -> error("An unexpected file found in $actionTypingsDirectory: '$fileName'")

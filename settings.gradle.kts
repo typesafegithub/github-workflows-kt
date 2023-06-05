@@ -5,7 +5,7 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 include(
     "library",
     ":automation:typings",
-    ":automation:wrapper-generator",
+    ":automation:code-generator",
 )
 
 plugins {

@@ -31,7 +31,7 @@ workflow(
             uses(
                 name = "Generate wrappers",
                 action = GradleBuildActionV2(
-                    arguments = ":automation:wrapper-generator:run",
+                    arguments = ":automation:code-generator:run",
                 )
             )
             run(

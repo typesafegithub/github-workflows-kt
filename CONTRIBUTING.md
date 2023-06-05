@@ -20,7 +20,7 @@ Apart from filing an issue using the template, we strongly encourage you to:
   * the layout is as follows: `actions/<owner>/<name>/<version>`
   * each such directory contains a `commit-hash.txt` file pointing to the commit in the action's repo from which the metadata should be fetched
   * in each directory, there's either a `action-types.yml` file that contains typings compatible with https://github.com/typesafegithub/github-actions-typing, or an empty `typings-hosted-by-action` file denoting that the action itself hosts `action-types.yml`
-  * run `./gradlew :automation:wrapper-generator:run` to (re)generate various files
+  * run `./gradlew :automation:code-generator:run` to (re)generate various files
   * check if everything builds fine using `./gradlew build` and create the commit and the PR
 
 ## Contributing a feature
