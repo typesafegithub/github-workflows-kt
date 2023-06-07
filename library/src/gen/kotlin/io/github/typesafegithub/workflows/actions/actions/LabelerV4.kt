@@ -40,6 +40,10 @@ public data class LabelerV4 private constructor(
      */
     public val syncLabels: Boolean? = null,
     /**
+     * Whether or not to auto-include paths starting with dot (e.g. `.github`)
+     */
+    public val dot: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -54,10 +58,11 @@ public data class LabelerV4 private constructor(
         repoToken: String? = null,
         configurationPath: String? = null,
         syncLabels: Boolean? = null,
+        dot: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(repoToken=repoToken, configurationPath=configurationPath, syncLabels=syncLabels,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            dot=dot, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -65,6 +70,7 @@ public data class LabelerV4 private constructor(
             repoToken?.let { "repo-token" to it },
             configurationPath?.let { "configuration-path" to it },
             syncLabels?.let { "sync-labels" to it.toString() },
+            dot?.let { "dot" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
