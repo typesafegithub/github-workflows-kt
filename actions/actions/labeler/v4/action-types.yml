@@ -6,3 +6,5 @@ inputs:
     type: string
   sync-labels:
     type: boolean
+  dot:
+    type: boolean

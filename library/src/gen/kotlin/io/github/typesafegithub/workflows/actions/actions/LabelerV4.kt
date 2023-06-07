@@ -42,7 +42,7 @@ public data class LabelerV4 private constructor(
     /**
      * Whether or not to auto-include paths starting with dot (e.g. `.github`)
      */
-    public val dot: String? = null,
+    public val dot: Boolean? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -58,7 +58,7 @@ public data class LabelerV4 private constructor(
         repoToken: String? = null,
         configurationPath: String? = null,
         syncLabels: Boolean? = null,
-        dot: String? = null,
+        dot: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(repoToken=repoToken, configurationPath=configurationPath, syncLabels=syncLabels,
@@ -70,7 +70,7 @@ public data class LabelerV4 private constructor(
             repoToken?.let { "repo-token" to it },
             configurationPath?.let { "configuration-path" to it },
             syncLabels?.let { "sync-labels" to it.toString() },
-            dot?.let { "dot" to it },
+            dot?.let { "dot" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
