@@ -26,7 +26,7 @@ workflow(
             id = "check-on-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
-            uses(CheckoutV3())
+            uses(action = CheckoutV3())
             setupJava()
             uses(
                 name = "Generate wrappers",

@@ -26,7 +26,7 @@ workflow(
         id = "validation",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         uses(
             name = "Validate wrapper",
             action = WrapperValidationActionV1(),

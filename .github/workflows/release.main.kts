@@ -25,7 +25,7 @@ workflow(
         id = "release",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         setupJava()
         uses(
             name = "Build",

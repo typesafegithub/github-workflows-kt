@@ -17,7 +17,7 @@ workflow(
         id = "release-docs",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         setupJava()
         setupPython()
 

@@ -19,13 +19,13 @@ fun JobBuilder<*>.setupJava() =
     )
 
 fun JobBuilder<*>.setupPython() =
-    uses(SetupPythonV4(pythonVersion = "3.8"))
+    uses(action = SetupPythonV4(pythonVersion = "3.8"))
 
 val disableScheduledJobInForks =
     expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }
 
 fun JobBuilder<*>.deployDocs() {
-    run("pip install -r docs/requirements.txt")
+    run(command = "pip install -r docs/requirements.txt")
 
     val directoryToDeploy = "to-gh-pages"
     run(

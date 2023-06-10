@@ -29,7 +29,7 @@ workflow(
         runsOn = UbuntuLatest,
         condition = disableScheduledJobInForks,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         setupJava()
         uses(
             name = "Run logic",
