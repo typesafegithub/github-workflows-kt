@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.44.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.45.0")
 @file:Import("_shared.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
@@ -26,7 +26,7 @@ workflow(
             id = "check-on-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
-            uses(CheckoutV3())
+            uses(action = CheckoutV3())
             setupJava()
             uses(
                 name = "Generate wrappers",
