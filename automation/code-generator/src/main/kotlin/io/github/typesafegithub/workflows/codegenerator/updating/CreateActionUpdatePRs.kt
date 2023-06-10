@@ -12,9 +12,12 @@ import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
+import io.github.typesafegithub.workflows.codegenerator.versions.httpClient
 import io.github.typesafegithub.workflows.codegenerator.versions.json
-import io.github.typesafegithub.workflows.codegenerator.versions.okhttpClient
-import okhttp3.Request
+import io.ktor.client.request.bearerAuth
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
 import java.nio.file.Path
 import kotlin.io.path.pathString
 
@@ -80,8 +83,8 @@ private fun WrapperRequest.generateWrapperForCommit(commitHash: String): Wrapper
         fetchMetadataImpl = { fetchMetadata(commitHash = commitHash, useCache = false) },
     )
 
-private fun ActionCoords.fetchCommitHash(githubToken: String): String? {
-    fun fetch(detailsUrl: String): String? {
+private suspend fun ActionCoords.fetchCommitHash(githubToken: String): String? {
+    suspend fun fetch(detailsUrl: String): String? {
         val responseJson = tryFetchingCommitHash(
             owner = this.owner,
             name = this.name,
@@ -118,29 +121,20 @@ private fun ActionCoords.fetchCommitHash(githubToken: String): String? {
         ?: fetch("ref/heads/${version.removePrefix("v")}")
 }
 
-private fun tryFetchingCommitHash(owner: String, name: String, detailsUrl: String, githubToken: String): String? {
+private suspend fun tryFetchingCommitHash(owner: String, name: String, detailsUrl: String, githubToken: String): String? {
     val url = "https://api.github.com/repos/$owner/$name/git/$detailsUrl"
     return fetchGithubUrl(url, githubToken)
 }
 
-private fun fetchGithubUrl(url: String, githubToken: String): String? {
+private suspend fun fetchGithubUrl(url: String, githubToken: String): String? {
     println("    trying $url")
-    val request: Request = Request.Builder()
-        .header("Authorization", "token $githubToken")
-        .url(url)
-        .build()
-
-    return okhttpClient.newCall(request).execute().use { response ->
-        if (response.isSuccessful.not()) {
-            if (response.code == 404) {
-                return null
-            } else {
-                print("HTTP code was ${response.code}")
-                error("There was an error making request!")
-            }
-        }
-        response.body!!.string()
+    val response = httpClient.get(urlString = url) {
+        bearerAuth(githubToken)
     }
+    if (response.status == HttpStatusCode.NotFound) {
+        return null
+    }
+    return response.bodyAsText()
 }
 
 private fun ActionCoords.buildCommitHashFilePath(): Path =

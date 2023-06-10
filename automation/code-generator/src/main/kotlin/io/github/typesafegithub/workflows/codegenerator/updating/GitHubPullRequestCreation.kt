@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
+import io.github.typesafegithub.workflows.codegenerator.versions.httpClient
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.client.request.bearerAuth
@@ -12,10 +12,8 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import java.time.Instant
 
 /**
@@ -35,18 +33,9 @@ suspend fun createPullRequest(
 ): Int {
     println(branchName)
     println(fileNamesToContents)
-    val client = HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                },
-            )
-        }
-    }
 
     val prCreationContext = PrCreationContext(
-        httpClient = client,
+        httpClient = httpClient,
         githubRepoOwner = githubRepoOwner,
         githubRepoName = githubRepoName,
         githubToken = githubToken,

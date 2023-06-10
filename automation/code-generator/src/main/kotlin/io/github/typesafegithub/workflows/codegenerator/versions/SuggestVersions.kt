@@ -21,7 +21,7 @@ import java.io.File
  * $ ./gradlew :code-generator:suggestVersions
  * ```
  */
-fun main() {
+suspend fun main() {
     var output: String = ""
     val githubAuthorization = getGithubToken()
 
