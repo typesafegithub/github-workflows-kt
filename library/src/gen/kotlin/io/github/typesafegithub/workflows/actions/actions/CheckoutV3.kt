@@ -86,6 +86,14 @@ public data class CheckoutV3 private constructor(
      */
     public val clean: Boolean? = null,
     /**
+     * Do a sparse checkout on given patterns. Each pattern should be separated with new lines
+     */
+    public val sparseCheckout: String? = null,
+    /**
+     * Specifies whether to use cone-mode when doing a sparse checkout.
+     */
+    public val sparseCheckoutConeMode: String? = null,
+    /**
      * Number of commits to fetch. 0 indicates all history for all branches and tags.
      */
     public val fetchDepth: CheckoutV3.FetchDepth? = null,
@@ -133,6 +141,8 @@ public data class CheckoutV3 private constructor(
         persistCredentials: Boolean? = null,
         path: String? = null,
         clean: Boolean? = null,
+        sparseCheckout: String? = null,
+        sparseCheckoutConeMode: String? = null,
         fetchDepth: CheckoutV3.FetchDepth? = null,
         lfs: Boolean? = null,
         submodules: Boolean? = null,
@@ -142,9 +152,11 @@ public data class CheckoutV3 private constructor(
         _customVersion: String? = null,
     ) : this(repository=repository, ref=ref, token=token, sshKey=sshKey,
             sshKnownHosts=sshKnownHosts, sshStrict=sshStrict, persistCredentials=persistCredentials,
-            path=path, clean=clean, fetchDepth=fetchDepth, lfs=lfs, submodules=submodules,
-            setSafeDirectory=setSafeDirectory, githubServerUrl=githubServerUrl,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            path=path, clean=clean, sparseCheckout=sparseCheckout,
+            sparseCheckoutConeMode=sparseCheckoutConeMode, fetchDepth=fetchDepth, lfs=lfs,
+            submodules=submodules, setSafeDirectory=setSafeDirectory,
+            githubServerUrl=githubServerUrl, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -158,6 +170,8 @@ public data class CheckoutV3 private constructor(
             persistCredentials?.let { "persist-credentials" to it.toString() },
             path?.let { "path" to it },
             clean?.let { "clean" to it.toString() },
+            sparseCheckout?.let { "sparse-checkout" to it },
+            sparseCheckoutConeMode?.let { "sparse-checkout-cone-mode" to it },
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
