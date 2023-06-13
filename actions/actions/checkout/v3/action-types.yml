@@ -30,3 +30,7 @@ inputs:
     type: boolean
   github-server-url:
     type: string
+  sparse-checkout:
+    type: boolean
+  sparse-checkout-cone-mode:
+    type: boolean
