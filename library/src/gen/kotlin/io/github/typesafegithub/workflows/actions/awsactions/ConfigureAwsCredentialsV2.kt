@@ -92,6 +92,14 @@ public data class ConfigureAwsCredentialsV2 private constructor(
      */
     public val roleChaining: Boolean? = null,
     /**
+     * Inline session policy
+     */
+    public val inlineSessionPolicy: String? = null,
+    /**
+     * List of managed session policies
+     */
+    public val managedSessionPolicies: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -118,6 +126,8 @@ public data class ConfigureAwsCredentialsV2 private constructor(
         roleSkipSessionTagging: Boolean? = null,
         httpProxy: String? = null,
         roleChaining: Boolean? = null,
+        inlineSessionPolicy: String? = null,
+        managedSessionPolicies: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
@@ -126,7 +136,9 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             webIdentityTokenFile=webIdentityTokenFile, roleDurationSeconds=roleDurationSeconds,
             roleSessionName=roleSessionName, roleExternalId=roleExternalId,
             roleSkipSessionTagging=roleSkipSessionTagging, httpProxy=httpProxy,
-            roleChaining=roleChaining, _customInputs=_customInputs, _customVersion=_customVersion)
+            roleChaining=roleChaining, inlineSessionPolicy=inlineSessionPolicy,
+            managedSessionPolicies=managedSessionPolicies, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -145,6 +157,8 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             roleSkipSessionTagging?.let { "role-skip-session-tagging" to it.toString() },
             httpProxy?.let { "http-proxy" to it },
             roleChaining?.let { "role-chaining" to it.toString() },
+            inlineSessionPolicy?.let { "inline-session-policy" to it },
+            managedSessionPolicies?.let { "managed-session-policies" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
