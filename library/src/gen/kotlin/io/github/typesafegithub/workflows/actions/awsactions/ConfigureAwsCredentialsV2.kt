@@ -16,6 +16,7 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
+import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -98,7 +99,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
     /**
      * List of managed session policies
      */
-    public val managedSessionPolicies: String? = null,
+    public val managedSessionPolicies: List<String>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -127,7 +128,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
         httpProxy: String? = null,
         roleChaining: Boolean? = null,
         inlineSessionPolicy: String? = null,
-        managedSessionPolicies: String? = null,
+        managedSessionPolicies: List<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
@@ -158,7 +159,7 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             httpProxy?.let { "http-proxy" to it },
             roleChaining?.let { "role-chaining" to it.toString() },
             inlineSessionPolicy?.let { "inline-session-policy" to it },
-            managedSessionPolicies?.let { "managed-session-policies" to it },
+            managedSessionPolicies?.let { "managed-session-policies" to it.joinToString("\n") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
