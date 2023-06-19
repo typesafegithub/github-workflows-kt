@@ -9,7 +9,7 @@ include(
 )
 
 plugins {
-    id("com.gradle.enterprise") version "3.13.3"
+    id("com.gradle.enterprise") version "3.13.4"
 }
 
 dependencyResolutionManagement {
