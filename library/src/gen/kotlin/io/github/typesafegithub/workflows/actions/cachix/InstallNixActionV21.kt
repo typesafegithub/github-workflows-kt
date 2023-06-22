@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.cachix
@@ -11,6 +12,7 @@ package io.github.typesafegithub.workflows.actions.cachix
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -26,6 +28,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
  */
+@Deprecated(
+    message = "This action has a newer major version: InstallNixActionV22",
+    replaceWith = ReplaceWith("InstallNixActionV22"),
+)
 public data class InstallNixActionV21 private constructor(
     /**
      * Gets appended to `/etc/nix/nix.conf` if passed.

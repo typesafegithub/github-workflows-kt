@@ -1,0 +1,15 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  github_access_token:
+    type: string
+  install_url:
+    type: string
+  install_options:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  nix_path:
+    type: string
+  extra_nix_config:
+    type: string
