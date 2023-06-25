@@ -43,6 +43,8 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
         },
         "timeout-minutes" to timeoutMinutes,
         "outputs" to outputs.outputMapping.ifEmpty { null },
+        "container" to container?.toYaml(),
+        "services" to services.ifEmpty { null }?.mapValues { it.value.toYaml() },
     ) + _customArguments +
         mapOf("steps" to steps.stepsToYaml())
 

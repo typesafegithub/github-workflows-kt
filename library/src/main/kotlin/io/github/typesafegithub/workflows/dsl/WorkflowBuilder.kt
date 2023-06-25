@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.dsl
 
 import io.github.typesafegithub.workflows.domain.Concurrency
+import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
@@ -53,6 +54,8 @@ public class WorkflowBuilder(
         _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
+        container: Container? = null,
+        services: Map<String, Container> = emptyMap(),
         outputs: OUTPUT,
         block: JobBuilder<OUTPUT>.() -> Unit,
     ): Job<OUTPUT> {
@@ -67,6 +70,8 @@ public class WorkflowBuilder(
             permissions = permissions,
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
+            container = container,
+            services = services,
             jobOutputs = outputs,
             _customArguments = _customArguments,
         )
@@ -95,6 +100,8 @@ public class WorkflowBuilder(
         _customArguments: Map<String, @Contextual Any?> = mapOf(),
         timeoutMinutes: Int? = null,
         concurrency: Concurrency? = null,
+        container: Container? = null,
+        services: Map<String, Container> = emptyMap(),
         block: JobBuilder<JobOutputs.EMPTY>.() -> Unit,
     ): Job<JobOutputs.EMPTY> = job(
         id = id,
@@ -109,6 +116,8 @@ public class WorkflowBuilder(
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
         outputs = JobOutputs.EMPTY,
+        container = container,
+        services = services,
         block = block,
     )
 

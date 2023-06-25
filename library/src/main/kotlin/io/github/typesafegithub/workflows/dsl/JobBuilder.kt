@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.dsl
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
+import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
@@ -25,6 +26,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val permissions: Map<Permission, Mode>? = null,
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
+    public val container: Container? = null,
+    public val services: Map<String, Container> = emptyMap(),
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
@@ -40,6 +43,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         permissions = permissions,
         timeoutMinutes = timeoutMinutes,
         concurrency = concurrency,
+        container = container,
+        services = services,
         outputs = jobOutputs,
         _customArguments = _customArguments,
     )

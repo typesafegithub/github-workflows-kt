@@ -17,6 +17,8 @@ public data class Job<OUTPUT : JobOutputs>(
     val permissions: Map<Permission, Mode>? = null,
     val timeoutMinutes: Int? = null,
     val concurrency: Concurrency? = null,
+    val container: Container? = null,
+    val services: Map<String, Container> = emptyMap(),
     override val _customArguments: Map<String, @Contextual Any?> = mapOf(),
 ) : HasCustomArguments {
     init {
