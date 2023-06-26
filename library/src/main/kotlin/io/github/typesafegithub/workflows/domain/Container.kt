@@ -3,6 +3,11 @@ package io.github.typesafegithub.workflows.domain
 import io.github.typesafegithub.workflows.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 
+/**
+ * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer">GitHub - Job container</a>
+ * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idservices">GitHub - Job services</a>
+ */
+@Suppress("MaxLineLength")
 public data class Container(
     val image: String,
     val credentials: Credentials? = null,
