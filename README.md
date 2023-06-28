@@ -3,6 +3,7 @@
 
 > _You won't go back to YAML!_
 
+test
 <!-- maven coordinates -->
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.typesafegithub/github-workflows-kt/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.typesafegithub/github-workflows-kt)
 [![Slack channel](https://img.shields.io/badge/chat-slack-blue.svg?logo=slack)](https://kotlinlang.slack.com/messages/github-actions/)
