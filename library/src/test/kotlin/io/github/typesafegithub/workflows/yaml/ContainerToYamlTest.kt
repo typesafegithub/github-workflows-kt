@@ -63,6 +63,55 @@ class ContainerToYamlTest : DescribeSpec({
         )
     }
 
+    it("renders GitHub Actions documentation samples") {
+        // https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+        Container(
+            image = "postgres",
+            options = Container.healthCheck(
+                command = "pg_isready",
+                intervalSeconds = 10,
+                timeoutSeconds = 5,
+                retries = 5,
+            ),
+            env = linkedMapOf("POSTGRES_PASSWORD" to "postgres"),
+        ).toYaml() shouldBe mapOf(
+            "image" to "postgres",
+            "options" to "--health-cmd \"pg_isready\" --health-interval 10s --health-timeout 5s --health-retries 5",
+            "env" to mapOf("POSTGRES_PASSWORD" to "postgres"),
+        )
+
+        // https://docs.github.com/en/actions/using-containerized-services/creating-redis-service-containers
+        Container(
+            image = "redis",
+            options = Container.healthCheck(
+                command = "redis-cli ping",
+                intervalSeconds = 10,
+                timeoutSeconds = 5,
+                retries = 5,
+            ),
+        ).toYaml() shouldBe mapOf(
+            "image" to "redis",
+            "options" to "--health-cmd \"redis-cli ping\" --health-interval 10s --health-timeout 5s --health-retries 5",
+        )
+
+        // https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container
+        Container(
+            image = "node:14.16",
+            env = linkedMapOf("NODE_ENV" to "development"),
+            ports = listOf(port(80)),
+            volumes = listOf(volume("my_docker_volume" to "/volume_mount")),
+            options = listOf("--cpus 1"),
+        ).toYaml() shouldBe mapOf(
+            "image" to "node:14.16",
+            "env" to mapOf(
+                "NODE_ENV" to "development",
+            ),
+            "ports" to listOf("80"),
+            "volumes" to listOf("my_docker_volume:/volume_mount"),
+            "options" to "--cpus 1",
+        )
+    }
+
     it("renders volumes") {
         volume("/container/path")
             .toYaml() shouldBe "/container/path"
