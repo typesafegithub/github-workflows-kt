@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.yaml
 
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
+import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
@@ -142,6 +143,10 @@ class JobsToYamlTest : DescribeSpec({
                     Permission.Checks to Mode.Write,
                     Permission.Contents to Mode.None,
                 ),
+                container = Container(image = "some-image"),
+                services = mapOf(
+                    "some-service" to Container(image = "some-service-image"),
+                ),
                 _customArguments = mapOf(
                     "distribute-job" to true,
                     "servers" to listOf("server-1", "server-2"),
@@ -190,6 +195,14 @@ class JobsToYamlTest : DescribeSpec({
                     "actions" to "read",
                     "checks" to "write",
                     "contents" to "none",
+                ),
+                "container" to mapOf(
+                    "image" to "some-image",
+                ),
+                "services" to mapOf(
+                    "some-service" to mapOf(
+                        "image" to "some-service-image",
+                    ),
                 ),
                 "distribute-job" to true,
                 "servers" to listOf("server-1", "server-2"),

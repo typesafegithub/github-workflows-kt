@@ -16,6 +16,7 @@ Legend:
 | Different types of workers                  | ✅       |                                                                          |
 | Environment variables (`env` context)       | ✅       |                                                                          |
 | `github` context                            | ✅       |                                                                          |
+| Job containers                              | ✅       |                                                                          |
 | Docker actions                              | ✅       |                                                                          |
 | Local actions                               | ✅       |                                                                          |
 | `outcome` context                           | ❌       | [#296](https://github.com/typesafegithub/github-workflows-kt/issues/296) |
@@ -24,5 +25,6 @@ Legend:
 | `runner` context                            | ✅       |                                                                          |
 | Strategy matrix (`matrix` context)          | ✅/❌     | [#368](https://github.com/typesafegithub/github-workflows-kt/issues/368) |
 | Secrets (`secrets` context)                 | ✅       |                                                                          |
+| Service containers                          | ✅       |                                                                          |
 | Timeouts                                    | ✅       |                                                                          |
 | Workflow dispatch inputs (`inputs` context) | ✅/❌     | [#811](https://github.com/typesafegithub/github-workflows-kt/issues/811) |
