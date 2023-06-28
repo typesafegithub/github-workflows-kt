@@ -32,7 +32,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'zulu'
-        cache: 'gradle'
     - id: 'step-2'
       uses: 'actions/setup-python@v4'
       with:
