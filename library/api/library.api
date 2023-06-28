@@ -204,6 +204,48 @@ public final class io/github/typesafegithub/workflows/domain/Permission : java/l
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Permission;
 }
 
+public final class io/github/typesafegithub/workflows/domain/PortMapping {
+	public fun <init> (ILjava/lang/Integer;Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;)V
+	public synthetic fun <init> (ILjava/lang/Integer;Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;
+	public final fun copy (ILjava/lang/Integer;Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/PortMapping;ILjava/lang/Integer;Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContainer ()Ljava/lang/Integer;
+	public final fun getHost ()I
+	public final fun getProtocol ()Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/github/typesafegithub/workflows/domain/PortMapping$Protocol {
+}
+
+public final class io/github/typesafegithub/workflows/domain/PortMapping$Protocol$All : io/github/typesafegithub/workflows/domain/PortMapping$Protocol {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol$All;
+}
+
+public final class io/github/typesafegithub/workflows/domain/PortMapping$Protocol$Custom : io/github/typesafegithub/workflows/domain/PortMapping$Protocol {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/PortMapping$Protocol$TCP : io/github/typesafegithub/workflows/domain/PortMapping$Protocol {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol$TCP;
+}
+
+public final class io/github/typesafegithub/workflows/domain/PortMapping$Protocol$UDP : io/github/typesafegithub/workflows/domain/PortMapping$Protocol {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol$UDP;
+}
+
 public abstract interface class io/github/typesafegithub/workflows/domain/RunnerType {
 }
 
@@ -305,6 +347,22 @@ public abstract class io/github/typesafegithub/workflows/domain/Step : io/github
 	public fun getId ()Ljava/lang/String;
 	public fun getTimeoutMinutes ()Ljava/lang/Integer;
 	public fun get_customArguments ()Ljava/util/Map;
+}
+
+public final class io/github/typesafegithub/workflows/domain/VolumeMapping {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Z)Lio/github/typesafegithub/workflows/domain/VolumeMapping;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/VolumeMapping;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/VolumeMapping;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSource ()Ljava/lang/String;
+	public final fun getTarget ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isReadOnly ()Z
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class io/github/typesafegithub/workflows/domain/WithOutputs {
@@ -1661,6 +1719,21 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRu
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/dsl/ContainerKt {
+	public static final fun port (ILio/github/typesafegithub/workflows/domain/PortMapping$Protocol;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static final fun port (Lkotlin/Pair;Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static synthetic fun port$default (ILio/github/typesafegithub/workflows/domain/PortMapping$Protocol;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static synthetic fun port$default (Lkotlin/Pair;Lio/github/typesafegithub/workflows/domain/PortMapping$Protocol;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static final fun tcp (I)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static final fun tcp (Lkotlin/Pair;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static final fun udp (I)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static final fun udp (Lkotlin/Pair;)Lio/github/typesafegithub/workflows/domain/PortMapping;
+	public static final fun volume (Ljava/lang/String;Z)Lio/github/typesafegithub/workflows/domain/VolumeMapping;
+	public static final fun volume (Lkotlin/Pair;Z)Lio/github/typesafegithub/workflows/domain/VolumeMapping;
+	public static synthetic fun volume$default (Ljava/lang/String;ZILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/VolumeMapping;
+	public static synthetic fun volume$default (Lkotlin/Pair;ZILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/VolumeMapping;
 }
 
 public abstract interface class io/github/typesafegithub/workflows/dsl/HasCustomArguments {
