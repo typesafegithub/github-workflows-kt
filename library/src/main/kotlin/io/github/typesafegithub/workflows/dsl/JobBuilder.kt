@@ -32,7 +32,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
-    private var job = Job(
+    private var job = Job<OUTPUT>(
         id = id,
         name = name,
         runsOn = runsOn,
