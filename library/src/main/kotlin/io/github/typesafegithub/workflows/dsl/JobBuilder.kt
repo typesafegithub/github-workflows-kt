@@ -55,6 +55,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         command: String,
         name: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
+        `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
@@ -63,12 +65,16 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
+
         val newStep = CommandStep(
             id = "step-${job.steps.size}",
             name = name,
             command = command,
             env = env,
-            condition = condition,
+            condition = `if` ?: condition,
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             shell = shell,
@@ -85,6 +91,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         action: Action<T>,
         name: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
+        `if`: String? = null,
         condition: String? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
@@ -92,12 +100,15 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ActionStep<T> {
         val stepId = "step-${job.steps.size}"
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
         val newStep = ActionStep(
             id = stepId,
             name = name,
             action = action,
             env = env,
-            condition = condition,
+            condition = `if` ?: condition,
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             outputs = action.buildOutputObject(stepId),

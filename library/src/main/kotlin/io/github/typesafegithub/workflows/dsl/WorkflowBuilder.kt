@@ -47,6 +47,7 @@ public class WorkflowBuilder(
         name: String? = null,
         runsOn: RunnerType,
         needs: List<Job<*>> = emptyList(),
+        `if`: String? = null,
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
@@ -59,12 +60,15 @@ public class WorkflowBuilder(
         outputs: OUTPUT,
         block: JobBuilder<OUTPUT>.() -> Unit,
     ): Job<OUTPUT> {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
         val jobBuilder = JobBuilder(
             id = id,
             name = name,
             runsOn = runsOn,
             needs = needs,
-            condition = condition,
+            condition = `if` ?: condition,
             env = env,
             strategyMatrix = strategyMatrix,
             permissions = permissions,
@@ -93,6 +97,7 @@ public class WorkflowBuilder(
         name: String? = null,
         runsOn: RunnerType,
         needs: List<Job<*>> = emptyList(),
+        `if`: String? = null,
         condition: String? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
@@ -103,23 +108,28 @@ public class WorkflowBuilder(
         container: Container? = null,
         services: Map<String, Container> = emptyMap(),
         block: JobBuilder<JobOutputs.EMPTY>.() -> Unit,
-    ): Job<JobOutputs.EMPTY> = job(
-        id = id,
-        name = name,
-        runsOn = runsOn,
-        needs = needs,
-        condition = condition,
-        env = env,
-        strategyMatrix = strategyMatrix,
-        permissions = permissions,
-        _customArguments = _customArguments,
-        timeoutMinutes = timeoutMinutes,
-        concurrency = concurrency,
-        outputs = JobOutputs.EMPTY,
-        container = container,
-        services = services,
-        block = block,
-    )
+    ): Job<JobOutputs.EMPTY> {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
+        return job(
+            id = id,
+            name = name,
+            runsOn = runsOn,
+            needs = needs,
+            condition = `if` ?: condition,
+            env = env,
+            strategyMatrix = strategyMatrix,
+            permissions = permissions,
+            _customArguments = _customArguments,
+            timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
+            outputs = JobOutputs.EMPTY,
+            container = container,
+            services = services,
+            block = block,
+        )
+    }
 
     public fun build(): Workflow = workflow
 }

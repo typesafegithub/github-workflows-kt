@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import java.nio.file.Paths
@@ -59,6 +60,51 @@ class JobBuilderTest : FunSpec({
             job.steps.forEachIndexed { index, step ->
                 step._customArguments shouldBe mapOf("foo$index" to true)
             }
+        }
+    }
+
+    context("conditions") {
+        test("'if' and 'condition' are both set") {
+            shouldThrow<IllegalArgumentException> {
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "a", `if` = "b") {
+                        run(command = "ls")
+                    }
+                }
+            }
+        }
+
+        test("use 'if'") {
+            // When
+            val workflow = workflow(
+                name = "test",
+                on = listOf(Push()),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
+                    run(command = "ls")
+                }
+            }
+
+            // Then
+            workflow.jobs[0].condition shouldBe "b"
+        }
+
+        test("use 'condition'") {
+            // When
+            val workflow = workflow(
+                name = "test",
+                on = listOf(Push()),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
+                    run(command = "ls")
+                }
+            }
+
+            // Then
+            workflow.jobs[0].condition shouldBe "b"
         }
     }
 })
