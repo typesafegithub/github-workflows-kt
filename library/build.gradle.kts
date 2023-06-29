@@ -46,11 +46,6 @@ kotlin {
     explicitApi()
 }
 
-detekt {
-    buildUponDefaultConfig = true
-    config = files("$rootDir/detekt.yml")
-}
-
 apiValidation {
     ignoredPackages.add("io.github.typesafegithub.workflows.actions")
 }
