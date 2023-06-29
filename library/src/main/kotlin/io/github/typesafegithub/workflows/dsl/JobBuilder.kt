@@ -11,7 +11,6 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.internal.either
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -66,12 +65,16 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): CommandStep {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
+
         val newStep = CommandStep(
             id = "step-${job.steps.size}",
             name = name,
             command = command,
             env = env,
-            condition = either("if" to `if`, "condition" to condition),
+            condition = `if` ?: condition,
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             shell = shell,
@@ -97,12 +100,15 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ActionStep<T> {
         val stepId = "step-${job.steps.size}"
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
         val newStep = ActionStep(
             id = stepId,
             name = name,
             action = action,
             env = env,
-            condition = either("if" to `if`, "condition" to condition),
+            condition = `if` ?: condition,
             continueOnError = continueOnError,
             timeoutMinutes = timeoutMinutes,
             outputs = action.buildOutputObject(stepId),

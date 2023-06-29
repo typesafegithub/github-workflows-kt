@@ -65,7 +65,7 @@ class JobBuilderTest : FunSpec({
 
     context("conditions") {
         test("if and condition are both set") {
-            shouldThrow<Error> {
+            shouldThrow<IllegalArgumentException> {
                 workflow(
                     name = "test",
                     on = listOf(Push()),

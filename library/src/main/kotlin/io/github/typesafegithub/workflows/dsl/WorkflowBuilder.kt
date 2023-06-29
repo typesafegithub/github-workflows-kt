@@ -9,7 +9,6 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
-import io.github.typesafegithub.workflows.internal.either
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
@@ -61,12 +60,15 @@ public class WorkflowBuilder(
         outputs: OUTPUT,
         block: JobBuilder<OUTPUT>.() -> Unit,
     ): Job<OUTPUT> {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
         val jobBuilder = JobBuilder(
             id = id,
             name = name,
             runsOn = runsOn,
             needs = needs,
-            condition = either("if" to `if`, "condition" to condition),
+            condition = `if` ?: condition,
             env = env,
             strategyMatrix = strategyMatrix,
             permissions = permissions,
@@ -106,23 +108,28 @@ public class WorkflowBuilder(
         container: Container? = null,
         services: Map<String, Container> = emptyMap(),
         block: JobBuilder<JobOutputs.EMPTY>.() -> Unit,
-    ): Job<JobOutputs.EMPTY> = job(
-        id = id,
-        name = name,
-        runsOn = runsOn,
-        needs = needs,
-        condition = either("if" to `if`, "condition" to condition),
-        env = env,
-        strategyMatrix = strategyMatrix,
-        permissions = permissions,
-        _customArguments = _customArguments,
-        timeoutMinutes = timeoutMinutes,
-        concurrency = concurrency,
-        outputs = JobOutputs.EMPTY,
-        container = container,
-        services = services,
-        block = block,
-    )
+    ): Job<JobOutputs.EMPTY> {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
+        return job(
+            id = id,
+            name = name,
+            runsOn = runsOn,
+            needs = needs,
+            condition = `if` ?: condition,
+            env = env,
+            strategyMatrix = strategyMatrix,
+            permissions = permissions,
+            _customArguments = _customArguments,
+            timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
+            outputs = JobOutputs.EMPTY,
+            container = container,
+            services = services,
+            block = block,
+        )
+    }
 
     public fun build(): Workflow = workflow
 }
