@@ -1,9 +1,10 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.cachix
@@ -11,6 +12,7 @@ package io.github.typesafegithub.workflows.actions.cachix
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -26,6 +28,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
  */
+@Deprecated(
+    message = "This action has a newer major version: InstallNixActionV22",
+    replaceWith = ReplaceWith("InstallNixActionV22"),
+)
 public data class InstallNixActionV20 private constructor(
     /**
      * Gets appended to `/etc/nix/nix.conf` if passed.
@@ -71,7 +77,7 @@ public data class InstallNixActionV20 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             extraNixConfig?.let { "extra_nix_config" to it },
             githubAccessToken?.let { "github_access_token" to it },
@@ -82,5 +88,5 @@ public data class InstallNixActionV20 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

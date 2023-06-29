@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.43.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.46.0")
 @file:Import("_shared.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
@@ -25,7 +25,7 @@ workflow(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
-            uses(CheckoutV3())
+            uses(action = CheckoutV3())
             setupJava()
             uses(
                 name = "Build",
@@ -41,10 +41,10 @@ workflow(
         name = "Build docs",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         setupPython()
-        run("pip install -r docs/requirements.txt")
-        run("mkdocs build --site-dir public")
+        run(command = "pip install -r docs/requirements.txt")
+        run(command = "mkdocs build --site-dir public")
     }
 
     job(
@@ -52,9 +52,9 @@ workflow(
         name = "Build Kotlin scripts",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         run(
-            """
+            command = """
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
                 echo "Compiling ${'$'}file..."
@@ -69,7 +69,7 @@ workflow(
         name = "Run consistency check on all GitHub workflows",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         uses(
             name = "Set up Java in proper version",
             action = SetupJavaV3(
@@ -78,7 +78,7 @@ workflow(
                 cache = SetupJavaV3.BuildPlatform.Gradle,
             ),
         )
-        run("cd .github/workflows")
+        run(command = "cd .github/workflows")
         run(
             name = "Regenerate all workflow YAMLs",
             command = """

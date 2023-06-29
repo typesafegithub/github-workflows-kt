@@ -29,7 +29,7 @@ class JobOutputsSnippets : FunSpec({
                 // --8<-- [start:define-job-outputs-2]
                 ) { ... }
                 // --8<-- [end:define-job-outputs-2]
-                */
+                 */
             ) {
                 class DocTest : RegularAction<DocTest.Outputs>("doc", "test", "v0") {
                     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf()
@@ -38,7 +38,7 @@ class JobOutputsSnippets : FunSpec({
                         val someStepOutput: String = ""
                     }
                 }
-                val someStep = uses(DocTest())
+                val someStep = uses(action = DocTest())
 
                 // --8<-- [start:set-job-outputs]
                 jobOutputs.myOutput = someStep.outputs.someStepOutput

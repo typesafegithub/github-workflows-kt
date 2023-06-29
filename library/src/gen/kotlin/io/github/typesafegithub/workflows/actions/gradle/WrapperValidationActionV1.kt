@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -63,7 +63,7 @@ public data class WrapperValidationActionV1 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             minWrapperCount?.let { "min-wrapper-count" to it.toString() },
             allowSnapshots?.let { "allow-snapshots" to it.toString() },
@@ -72,5 +72,5 @@ public data class WrapperValidationActionV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

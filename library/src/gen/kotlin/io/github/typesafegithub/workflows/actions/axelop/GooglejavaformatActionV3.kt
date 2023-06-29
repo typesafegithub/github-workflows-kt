@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -82,7 +82,7 @@ public data class GooglejavaformatActionV3 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             args?.let { "args" to it },
             files?.let { "files" to it },
@@ -95,5 +95,5 @@ public data class GooglejavaformatActionV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

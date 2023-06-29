@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.43.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.46.0")
 @file:Import("_shared.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
@@ -29,7 +29,7 @@ workflow(
         runsOn = UbuntuLatest,
         condition = disableScheduledJobInForks,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         setupJava()
         uses(
             name = "Run suggestVersions",

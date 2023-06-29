@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -11,6 +11,7 @@ package io.github.typesafegithub.workflows.actions.actions
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,7 +30,7 @@ import kotlin.collections.toTypedArray
 public data class SetupDotnetV3 private constructor(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
-     * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x
+     * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
      */
     public val dotnetVersion: String? = null,
     /**
@@ -57,6 +58,15 @@ public data class SetupDotnetV3 private constructor(
      */
     public val configFile: String? = null,
     /**
+     * Optional input to enable caching of the NuGet global-packages folder
+     */
+    public val cache: Boolean? = null,
+    /**
+     * Used to specify the path to a dependency file: packages.lock.json. Supports wildcards or a
+     * list of file names for caching multiple dependencies.
+     */
+    public val cacheDependencyPath: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -74,14 +84,17 @@ public data class SetupDotnetV3 private constructor(
         sourceUrl: String? = null,
         owner: String? = null,
         configFile: String? = null,
+        cache: Boolean? = null,
+        cacheDependencyPath: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(dotnetVersion=dotnetVersion, dotnetQuality=dotnetQuality,
             globalJsonFile=globalJsonFile, sourceUrl=sourceUrl, owner=owner, configFile=configFile,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            cache=cache, cacheDependencyPath=cacheDependencyPath, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             dotnetVersion?.let { "dotnet-version" to it },
             dotnetQuality?.let { "dotnet-quality" to it.stringValue },
@@ -89,11 +102,13 @@ public data class SetupDotnetV3 private constructor(
             sourceUrl?.let { "source-url" to it },
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
+            cache?.let { "cache" to it.toString() },
+            cacheDependencyPath?.let { "cache-dependency-path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class DotNetQuality(
         public val stringValue: String,
@@ -116,6 +131,11 @@ public data class SetupDotnetV3 private constructor(
     public class Outputs(
         stepId: String,
     ) : Action.Outputs(stepId) {
+        /**
+         * A boolean value to indicate if a cache was hit.
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
         /**
          * Contains the installed by action .NET SDK version for reuse.
          */

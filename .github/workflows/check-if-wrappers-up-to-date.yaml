@@ -36,12 +36,11 @@ jobs:
       with:
         java-version: '11'
         distribution: 'zulu'
-        cache: 'gradle'
     - id: 'step-2'
       name: 'Generate wrappers'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:wrapper-generator:run'
+        arguments: ':automation:code-generator:run'
     - id: 'step-3'
       name: 'Fail if there are any changes in the generated wrappers or their list in the docs'
       run: 'git diff --exit-code library/src/gen/ docs/supported-actions.md'
@@ -58,12 +57,11 @@ jobs:
       with:
         java-version: '11'
         distribution: 'zulu'
-        cache: 'gradle'
     - id: 'step-2'
       name: 'Generate wrappers'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:wrapper-generator:run'
+        arguments: ':automation:code-generator:run'
     - id: 'step-3'
       name: 'Fail if there are any changes in the generated wrappers or their list in the docs'
       run: 'git diff --exit-code library/src/gen/ docs/supported-actions.md'

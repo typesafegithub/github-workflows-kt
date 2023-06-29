@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.43.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.46.0")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.actions.gradle.WrapperValidationActionV1
@@ -26,7 +26,7 @@ workflow(
         id = "validation",
         runsOn = UbuntuLatest,
     ) {
-        uses(CheckoutV3())
+        uses(action = CheckoutV3())
         uses(
             name = "Validate wrapper",
             action = WrapperValidationActionV1(),

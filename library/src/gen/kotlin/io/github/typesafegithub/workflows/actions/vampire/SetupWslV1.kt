@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -136,7 +136,7 @@ public data class SetupWslV1 private constructor(
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             distribution?.let { "distribution" to it.stringValue },
             useCache?.let { "use-cache" to it.toString() },
@@ -150,7 +150,7 @@ public data class SetupWslV1 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Distribution(
         public val stringValue: String,

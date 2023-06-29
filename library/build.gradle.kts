@@ -10,13 +10,13 @@ plugins {
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
     id("info.solidsoft.pitest") version "1.9.11"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.1"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
 
-    id("org.jetbrains.dokka") version "1.8.10"
+    id("org.jetbrains.dokka") version "1.8.20"
 }
 
 group = "io.github.typesafegithub"
-version = "0.43.1-SNAPSHOT"
+version = "0.46.1-SNAPSHOT"
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.6")
@@ -72,11 +72,6 @@ val validateDuplicatedVersion by tasks.creating<Task> {
             project.rootDir.resolve("mkdocs.yml").readText()
                 .contains("  version: $version"),
         ) { "Library version stated in the docs should be equal to $version!" }
-        require(
-            project.rootDir.resolve("script-generator/logic/src/main/kotlin/io/github/typesafegithub/workflows/scriptgenerator/Version.kt")
-                .readText()
-                .contains("val LIBRARY_VERSION = \"$version\""),
-        ) { "Library version stated in script-generator/.../Version.kt should be equal to $version!" }
         require(
             project.file("src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt")
                 .readText()

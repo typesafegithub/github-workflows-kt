@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -16,6 +16,7 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
+import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -88,6 +89,18 @@ public data class ConfigureAwsCredentialsV2 private constructor(
      */
     public val httpProxy: String? = null,
     /**
+     * Use existing credentials from the environment to assume a new role
+     */
+    public val roleChaining: Boolean? = null,
+    /**
+     * Inline session policy
+     */
+    public val inlineSessionPolicy: String? = null,
+    /**
+     * List of managed session policies
+     */
+    public val managedSessionPolicies: List<String>? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -113,6 +126,9 @@ public data class ConfigureAwsCredentialsV2 private constructor(
         roleExternalId: String? = null,
         roleSkipSessionTagging: Boolean? = null,
         httpProxy: String? = null,
+        roleChaining: Boolean? = null,
+        inlineSessionPolicy: String? = null,
+        managedSessionPolicies: List<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(audience=audience, awsAccessKeyId=awsAccessKeyId,
@@ -121,10 +137,12 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             webIdentityTokenFile=webIdentityTokenFile, roleDurationSeconds=roleDurationSeconds,
             roleSessionName=roleSessionName, roleExternalId=roleExternalId,
             roleSkipSessionTagging=roleSkipSessionTagging, httpProxy=httpProxy,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            roleChaining=roleChaining, inlineSessionPolicy=inlineSessionPolicy,
+            managedSessionPolicies=managedSessionPolicies, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             audience?.let { "audience" to it },
             awsAccessKeyId?.let { "aws-access-key-id" to it },
@@ -139,11 +157,14 @@ public data class ConfigureAwsCredentialsV2 private constructor(
             roleExternalId?.let { "role-external-id" to it },
             roleSkipSessionTagging?.let { "role-skip-session-tagging" to it.toString() },
             httpProxy?.let { "http-proxy" to it },
+            roleChaining?.let { "role-chaining" to it.toString() },
+            inlineSessionPolicy?.let { "inline-session-policy" to it },
+            managedSessionPolicies?.let { "managed-session-policies" to it.joinToString("\n") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         stepId: String,

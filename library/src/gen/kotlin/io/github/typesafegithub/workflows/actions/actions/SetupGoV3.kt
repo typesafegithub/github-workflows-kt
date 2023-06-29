@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -92,7 +92,7 @@ public data class SetupGoV3 private constructor(
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             goVersion?.let { "go-version" to it },
             goVersionFile?.let { "go-version-file" to it },
@@ -105,7 +105,7 @@ public data class SetupGoV3 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Architecture(
         public val stringValue: String,

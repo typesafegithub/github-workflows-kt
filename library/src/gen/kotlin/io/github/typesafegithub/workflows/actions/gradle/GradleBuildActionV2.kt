@@ -1,4 +1,4 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
+// This file was generated using 'code-generator' module. Don't change it by hand, your changes will
 // be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
@@ -29,9 +29,19 @@ import kotlin.collections.toTypedArray
  */
 public data class GradleBuildActionV2 private constructor(
     /**
-     * Gradle version to use
+     * Gradle version to use. If specified, this Gradle version will be downloaded, added to the
+     * PATH and used for invoking Gradle.
      */
     public val gradleVersion: String? = null,
+    /**
+     * Path to the Gradle executable. If specified, this executable will be added to the PATH and
+     * used for invoking Gradle.
+     */
+    public val gradleExecutable: String? = null,
+    /**
+     * Path to the root directory of the build. Default is the root of the GitHub workspace.
+     */
+    public val buildRootDirectory: String? = null,
     /**
      * When 'true', all caching is disabled. No entries will be written to or read from the cache.
      */
@@ -44,7 +54,7 @@ public data class GradleBuildActionV2 private constructor(
     public val cacheReadOnly: Boolean? = null,
     /**
      * When 'true', entries will not be restored from the cache but will be saved at the end of the
-     * Job. 
+     * Job.
      * Setting this to 'true' implies cache-read-only will be 'false'.
      */
     public val cacheWriteOnly: Boolean? = null,
@@ -60,14 +70,6 @@ public data class GradleBuildActionV2 private constructor(
      * Gradle command line arguments (supports multi-line input)
      */
     public val arguments: String? = null,
-    /**
-     * Path to the root directory of the build
-     */
-    public val buildRootDirectory: String? = null,
-    /**
-     * Path to the Gradle executable
-     */
-    public val gradleExecutable: String? = null,
     /**
      * When 'false', no Job Summary will be generated for the Job.
      */
@@ -101,41 +103,42 @@ public data class GradleBuildActionV2 private constructor(
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         gradleVersion: String? = null,
+        gradleExecutable: String? = null,
+        buildRootDirectory: String? = null,
         cacheDisabled: Boolean? = null,
         cacheReadOnly: Boolean? = null,
         cacheWriteOnly: Boolean? = null,
         gradleHomeCacheIncludes: List<String>? = null,
         gradleHomeCacheExcludes: List<String>? = null,
         arguments: String? = null,
-        buildRootDirectory: String? = null,
-        gradleExecutable: String? = null,
         generateJobSummary: Boolean? = null,
         gradleHomeCacheStrictMatch: String? = null,
         workflowJobContext: String? = null,
         gradleHomeCacheCleanup: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(gradleVersion=gradleVersion, cacheDisabled=cacheDisabled, cacheReadOnly=cacheReadOnly,
-            cacheWriteOnly=cacheWriteOnly, gradleHomeCacheIncludes=gradleHomeCacheIncludes,
+    ) : this(gradleVersion=gradleVersion, gradleExecutable=gradleExecutable,
+            buildRootDirectory=buildRootDirectory, cacheDisabled=cacheDisabled,
+            cacheReadOnly=cacheReadOnly, cacheWriteOnly=cacheWriteOnly,
+            gradleHomeCacheIncludes=gradleHomeCacheIncludes,
             gradleHomeCacheExcludes=gradleHomeCacheExcludes, arguments=arguments,
-            buildRootDirectory=buildRootDirectory, gradleExecutable=gradleExecutable,
             generateJobSummary=generateJobSummary,
             gradleHomeCacheStrictMatch=gradleHomeCacheStrictMatch,
             workflowJobContext=workflowJobContext, gradleHomeCacheCleanup=gradleHomeCacheCleanup,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    public override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             gradleVersion?.let { "gradle-version" to it },
+            gradleExecutable?.let { "gradle-executable" to it },
+            buildRootDirectory?.let { "build-root-directory" to it },
             cacheDisabled?.let { "cache-disabled" to it.toString() },
             cacheReadOnly?.let { "cache-read-only" to it.toString() },
             cacheWriteOnly?.let { "cache-write-only" to it.toString() },
             gradleHomeCacheIncludes?.let { "gradle-home-cache-includes" to it.joinToString("\n") },
             gradleHomeCacheExcludes?.let { "gradle-home-cache-excludes" to it.joinToString("\n") },
             arguments?.let { "arguments" to it },
-            buildRootDirectory?.let { "build-root-directory" to it },
-            gradleExecutable?.let { "gradle-executable" to it },
             generateJobSummary?.let { "generate-job-summary" to it.toString() },
             gradleHomeCacheStrictMatch?.let { "gradle-home-cache-strict-match" to it },
             workflowJobContext?.let { "workflow-job-context" to it },
@@ -144,7 +147,7 @@ public data class GradleBuildActionV2 private constructor(
         ).toTypedArray()
     )
 
-    public override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public class Outputs(
         stepId: String,

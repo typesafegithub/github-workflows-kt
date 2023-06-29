@@ -46,6 +46,7 @@ class IntegrationTest : FunSpec(
             on = listOf(Push()),
             sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
         ) {
+<<<<<<< HEAD
             job(
                 id = "test_job",
                 name = "Test Job",
@@ -54,6 +55,10 @@ class IntegrationTest : FunSpec(
                 uses(CheckoutV3())
                 run("echo 'hello!'")
             }
+=======
+            uses(action = CheckoutV3())
+            run(command = "echo 'hello!'")
+>>>>>>> main
         }
 
         test("toYaml() - 'hello world' workflow") {
@@ -471,6 +476,7 @@ class IntegrationTest : FunSpec(
             """.trimIndent()
         }
 
+<<<<<<< HEAD
         test("writeToFile() - step with outputs") {
             testRanWithGitHub("step with outputs") {
                 job(
@@ -478,6 +484,15 @@ class IntegrationTest : FunSpec(
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
                     val addAndCommit = uses(SetupPythonV4())
+=======
+    test("writeToFile() - step with outputs") {
+        testRanWithGitHub("step with outputs") {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                val addAndCommit = uses(action = SetupPythonV4())
+>>>>>>> main
 
                     uses(
                         name = "Some step consuming other step's output",
@@ -498,6 +513,7 @@ class IntegrationTest : FunSpec(
                 sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
                 concurrency = Concurrency("workflow_staging_environment"),
             ) {
+<<<<<<< HEAD
                 job(
                     id = "test_job",
                     runsOn = RunnerType.UbuntuLatest,
@@ -515,6 +531,20 @@ class IntegrationTest : FunSpec(
                     )
                 }
             }.toYaml(addConsistencyCheck = false)
+=======
+                val addAndCommit = uses(action = AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    ),
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+>>>>>>> main
 
             // then
             actualYaml shouldBe """
@@ -629,6 +659,7 @@ class IntegrationTest : FunSpec(
                 sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
                 concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
             ) {
+<<<<<<< HEAD
                 job(
                     id = "test_job",
                     runsOn = RunnerType.UbuntuLatest,
@@ -646,6 +677,20 @@ class IntegrationTest : FunSpec(
                     )
                 }
             }.toYaml(addConsistencyCheck = false)
+=======
+                val addAndCommit = uses(action = AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action = CheckoutV3(
+                        repository = expr(addAndCommit.id),
+                        ref = expr(addAndCommit.outputs.commitSha),
+                        token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    ),
+                )
+            }
+        }.toYaml(addConsistencyCheck = false)
+>>>>>>> main
 
             // then
             actualYaml shouldBe """
@@ -687,9 +732,32 @@ class IntegrationTest : FunSpec(
                 val TOKEN by Contexts.env
                 val SUPER_SECRET by Contexts.secrets
 
+<<<<<<< HEAD
                 job(
                     id = "job1",
                     runsOn = RunnerType.UbuntuLatest,
+=======
+            job(
+                id = "job1",
+                runsOn = RunnerType.UbuntuLatest,
+                env = linkedMapOf(
+                    GREETING to "World",
+                ),
+                permissions = mapOf(
+                    Permission.Actions to Mode.Read,
+                    Permission.Checks to Mode.Write,
+                    Permission.Contents to Mode.None,
+                ),
+            ) {
+                uses(action = CheckoutV3())
+                run(
+                    name = "Default environment variable",
+                    command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
+                    condition = expr { always() },
+                )
+                run(
+                    name = "Custom environment variable",
+>>>>>>> main
                     env = linkedMapOf(
                         GREETING to "World",
                     ),
@@ -741,6 +809,7 @@ class IntegrationTest : FunSpec(
                     yamlConsistencyJobCondition = "\${{ always() }}",
                     sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
                 ) {
+<<<<<<< HEAD
                     job(
                         id = "test_job",
                         name = "Test Job",
@@ -750,6 +819,12 @@ class IntegrationTest : FunSpec(
                         run("echo 'hello!'")
                     }
                 }.toYaml()
+=======
+                    uses(action = CheckoutV3())
+                    run(command = "echo 'hello!'")
+                }
+            }.toYaml()
+>>>>>>> main
 
             // then
             actualYaml shouldBe """
@@ -786,6 +861,7 @@ class IntegrationTest : FunSpec(
             """.trimIndent()
         }
 
+<<<<<<< HEAD
         test("writeToFile() - job outputs mapping") {
             testRanWithGitHub("job outputs mapping") {
                 val setOutputJob = job(
@@ -800,6 +876,22 @@ class IntegrationTest : FunSpec(
                     val scriptStep = uses(
                         GithubScriptV6(
                             script = """
+=======
+    test("writeToFile() - job outputs mapping") {
+        testRanWithGitHub("job outputs mapping") {
+            val setOutputJob = job(
+                id = "set_output",
+                runsOn = RunnerType.UbuntuLatest,
+                outputs = object : JobOutputs() {
+                    var scriptKey by output()
+                    var scriptKey2 by output()
+                    var scriptResult by output()
+                },
+            ) {
+                val scriptStep = uses(
+                    action = GithubScriptV6(
+                        script = """
+>>>>>>> main
                         core.setOutput("key", "value")
                         core.setOutput("key2", "value2")
                         return "return"
@@ -878,6 +970,7 @@ class IntegrationTest : FunSpec(
             """.trimIndent()
         }
 
+<<<<<<< HEAD
         val workflowWithoutSource = workflow(
             name = "test",
             on = listOf(Push()),
@@ -885,6 +978,14 @@ class IntegrationTest : FunSpec(
             job("test", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")
             }
+=======
+    val workflowWithoutSource = workflow(
+        name = "test",
+        on = listOf(Push()),
+    ) {
+        job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+            run(command = "echo 'Hello!'")
+>>>>>>> main
         }
 
         test("toYaml() - should succeed without sourceFile") {
