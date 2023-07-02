@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.yaml
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.RunnerType.Custom
+import io.github.typesafegithub.workflows.domain.RunnerType.Labelled
 import io.github.typesafegithub.workflows.domain.RunnerType.MacOS1015
 import io.github.typesafegithub.workflows.domain.RunnerType.MacOS11
 import io.github.typesafegithub.workflows.domain.RunnerType.MacOSLatest
@@ -49,9 +50,14 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
         mapOf("steps" to steps.stepsToYaml())
 
 @InternalGithubActionsApi
-public fun RunnerType.toYaml(): String =
+public fun RunnerType.toYaml(): Any =
     when (this) {
         is Custom -> runsOn
+        is Labelled -> labels.toList()
+        is RunnerType.Group -> mapOfNotNullValues(
+            "group" to name,
+            "labels" to labels?.toList(),
+        )
         UbuntuLatest -> "ubuntu-latest"
         WindowsLatest -> "windows-latest"
         MacOSLatest -> "macos-latest"

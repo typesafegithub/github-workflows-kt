@@ -347,4 +347,26 @@ class JobsToYamlTest : DescribeSpec({
             ),
         )
     }
+
+    context("RunnerType") {
+        it("renders properly") {
+            RunnerType.selfHosted()
+                .toYaml() shouldBe listOf("self-hosted")
+            RunnerType.selfHosted("self-hosted")
+                .toYaml() shouldBe listOf("self-hosted")
+            RunnerType.selfHosted("test-label", "test-arch", "test-label")
+                .toYaml() shouldBe listOf("self-hosted", "test-label", "test-arch")
+
+            RunnerType.Group("test-group")
+                .toYaml() shouldBe mapOf("group" to "test-group")
+            RunnerType.Group("test-group", "test-label", "test-label-2", "test-label")
+                .toYaml() shouldBe mapOf(
+                "group" to "test-group",
+                "labels" to listOf("test-label", "test-label-2"),
+            )
+
+            RunnerType.Labelled("test-label", "test-label-2", "test-label")
+                .toYaml() shouldBe listOf("test-label", "test-label-2")
+        }
+    }
 })

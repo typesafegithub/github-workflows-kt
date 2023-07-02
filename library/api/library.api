@@ -247,6 +247,11 @@ public final class io/github/typesafegithub/workflows/domain/PortMapping$Protoco
 }
 
 public abstract interface class io/github/typesafegithub/workflows/domain/RunnerType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/RunnerType$Companion;
+}
+
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Companion {
+	public final fun selfHosted ([Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/RunnerType$Labelled;
 }
 
 public final class io/github/typesafegithub/workflows/domain/RunnerType$Custom : io/github/typesafegithub/workflows/domain/RunnerType {
@@ -256,6 +261,33 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Custom :
 	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/RunnerType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/RunnerType$Custom;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getRunsOn ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Group : io/github/typesafegithub/workflows/domain/RunnerType {
+	public fun <init> (Ljava/lang/String;Ljava/util/LinkedHashSet;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/LinkedHashSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;[Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/LinkedHashSet;
+	public final fun copy (Ljava/lang/String;Ljava/util/LinkedHashSet;)Lio/github/typesafegithub/workflows/domain/RunnerType$Group;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/RunnerType$Group;Ljava/lang/String;Ljava/util/LinkedHashSet;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/RunnerType$Group;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLabels ()Ljava/util/LinkedHashSet;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Labelled : io/github/typesafegithub/workflows/domain/RunnerType {
+	public fun <init> (Ljava/util/LinkedHashSet;)V
+	public fun <init> ([Ljava/lang/String;)V
+	public final fun component1 ()Ljava/util/LinkedHashSet;
+	public final fun copy (Ljava/util/LinkedHashSet;)Lio/github/typesafegithub/workflows/domain/RunnerType$Labelled;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/RunnerType$Labelled;Ljava/util/LinkedHashSet;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/RunnerType$Labelled;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLabels ()Ljava/util/LinkedHashSet;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -2993,7 +3025,7 @@ public final class io/github/typesafegithub/workflows/yaml/CaseKt {
 }
 
 public final class io/github/typesafegithub/workflows/yaml/JobsToYamlKt {
-	public static final fun toYaml (Lio/github/typesafegithub/workflows/domain/RunnerType;)Ljava/lang/String;
+	public static final fun toYaml (Lio/github/typesafegithub/workflows/domain/RunnerType;)Ljava/lang/Object;
 }
 
 public abstract class io/github/typesafegithub/workflows/yaml/Preamble {
