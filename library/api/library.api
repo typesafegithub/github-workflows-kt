@@ -180,6 +180,7 @@ public final class io/github/typesafegithub/workflows/domain/Mode : java/lang/En
 	public static final field None Lio/github/typesafegithub/workflows/domain/Mode;
 	public static final field Read Lio/github/typesafegithub/workflows/domain/Mode;
 	public static final field Write Lio/github/typesafegithub/workflows/domain/Mode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Mode;
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Mode;
@@ -199,6 +200,7 @@ public final class io/github/typesafegithub/workflows/domain/Permission : java/l
 	public static final field RepositoryProjects Lio/github/typesafegithub/workflows/domain/Permission;
 	public static final field SecurityEvents Lio/github/typesafegithub/workflows/domain/Permission;
 	public static final field Statuses Lio/github/typesafegithub/workflows/domain/Permission;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Permission;
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Permission;
@@ -1258,6 +1260,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public static final field Unassigned Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$Type;
 	public static final field Unlabeled Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$Type;
 	public static final field Unlocked Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$Type;
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$Type;
 }
@@ -1388,6 +1391,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public static final field Unassigned Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Type;
 	public static final field Unlabeled Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Type;
 	public static final field Unlocked Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Type;
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Type;
 }
@@ -1714,6 +1718,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type$Companion;
 	public static final field Environment Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 	public static final field String Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 }
