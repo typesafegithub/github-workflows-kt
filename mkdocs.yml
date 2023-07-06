@@ -57,4 +57,4 @@ nav:
   - Projects using this library: 'projects-using-this-library.md'
 
 extra:
-  version: 0.47.0
+  version: 0.47.1-SNAPSHOT
