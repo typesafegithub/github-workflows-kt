@@ -37,9 +37,6 @@ fun JavaToolchainSpec.requiredJdkVersion() {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        apiVersion = "1.5"
-        languageVersion = "1.7"
-
         // It's available without extra setup on GitHub Actions runners.
         jvmTarget = "11"
 
