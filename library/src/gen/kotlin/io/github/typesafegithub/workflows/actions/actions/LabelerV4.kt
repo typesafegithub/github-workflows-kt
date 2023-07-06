@@ -52,7 +52,7 @@ public data class LabelerV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("actions", "labeler", _customVersion ?: "v4") {
+) : RegularAction<LabelerV4.Outputs>("actions", "labeler", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         repoToken: String? = null,
@@ -75,5 +75,19 @@ public data class LabelerV4 private constructor(
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * A comma-separated list of all new labels
+         */
+        public val newLabels: String = "steps.$stepId.outputs.new-labels"
+
+        /**
+         * A comma-separated list of all labels that the PR contains
+         */
+        public val allLabels: String = "steps.$stepId.outputs.all-labels"
+    }
 }
