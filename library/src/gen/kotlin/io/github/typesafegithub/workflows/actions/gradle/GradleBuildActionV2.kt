@@ -75,6 +75,12 @@ public data class GradleBuildActionV2 private constructor(
      */
     public val generateJobSummary: Boolean? = null,
     /**
+     * Specifies if a GitHub dependency snapshot should be generated for each Gradle build, and if
+     * so, how. Valid values are 'disabled' (default), 'generate', 'generate-and-submit' and
+     * 'download-and-submit'.
+     */
+    public val dependencyGraph: String? = null,
+    /**
      * When 'true', the action will not attempt to restore the Gradle User Home entries from other
      * Jobs.
      */
@@ -89,6 +95,10 @@ public data class GradleBuildActionV2 private constructor(
      * Home prior to saving to the GitHub Actions cache.
      */
     public val gradleHomeCacheCleanup: Boolean? = null,
+    /**
+     * The GitHub token used to authenticate when submitting via the Dependency Submission API.
+     */
+    public val githubToken: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -112,9 +122,11 @@ public data class GradleBuildActionV2 private constructor(
         gradleHomeCacheExcludes: List<String>? = null,
         arguments: String? = null,
         generateJobSummary: Boolean? = null,
+        dependencyGraph: String? = null,
         gradleHomeCacheStrictMatch: String? = null,
         workflowJobContext: String? = null,
         gradleHomeCacheCleanup: Boolean? = null,
+        githubToken: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(gradleVersion=gradleVersion, gradleExecutable=gradleExecutable,
@@ -122,10 +134,10 @@ public data class GradleBuildActionV2 private constructor(
             cacheReadOnly=cacheReadOnly, cacheWriteOnly=cacheWriteOnly,
             gradleHomeCacheIncludes=gradleHomeCacheIncludes,
             gradleHomeCacheExcludes=gradleHomeCacheExcludes, arguments=arguments,
-            generateJobSummary=generateJobSummary,
+            generateJobSummary=generateJobSummary, dependencyGraph=dependencyGraph,
             gradleHomeCacheStrictMatch=gradleHomeCacheStrictMatch,
             workflowJobContext=workflowJobContext, gradleHomeCacheCleanup=gradleHomeCacheCleanup,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            githubToken=githubToken, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -140,9 +152,11 @@ public data class GradleBuildActionV2 private constructor(
             gradleHomeCacheExcludes?.let { "gradle-home-cache-excludes" to it.joinToString("\n") },
             arguments?.let { "arguments" to it },
             generateJobSummary?.let { "generate-job-summary" to it.toString() },
+            dependencyGraph?.let { "dependency-graph" to it },
             gradleHomeCacheStrictMatch?.let { "gradle-home-cache-strict-match" to it },
             workflowJobContext?.let { "workflow-job-context" to it },
             gradleHomeCacheCleanup?.let { "gradle-home-cache-cleanup" to it.toString() },
+            githubToken?.let { "github-token" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
