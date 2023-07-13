@@ -30,15 +30,17 @@ import kotlin.collections.toTypedArray
  */
 public data class WrapperValidationActionV1 private constructor(
     /**
-     * Minimum expected wrapper JAR files
+     * Minimum number expected gradle-wrapper.jar files found in the repository. Non-negative
+     * number. Higher number is useful in monorepos where each project might have their own wrapper.
      */
     public val minWrapperCount: Int? = null,
     /**
-     * Allow snapshot Gradle versions
+     * Allow Gradle snapshot versions during checksum verification. Boolean, true or false.
      */
     public val allowSnapshots: Boolean? = null,
     /**
-     * Allow arbitrary checksums, comma separated
+     * Accept arbitrary user-defined checksums as valid. Comma separated list of SHA256 checksums
+     * (lowercase hex).
      */
     public val allowChecksums: List<String>? = null,
     /**
