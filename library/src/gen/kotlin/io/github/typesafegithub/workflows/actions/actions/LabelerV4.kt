@@ -15,6 +15,7 @@ import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
+import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -46,7 +47,7 @@ public data class LabelerV4 private constructor(
     /**
      * The pull request number(s)
      */
-    public val prNumber: String? = null,
+    public val prNumber: List<String>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -63,7 +64,7 @@ public data class LabelerV4 private constructor(
         configurationPath: String? = null,
         syncLabels: Boolean? = null,
         dot: Boolean? = null,
-        prNumber: String? = null,
+        prNumber: List<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(repoToken=repoToken, configurationPath=configurationPath, syncLabels=syncLabels,
@@ -76,7 +77,7 @@ public data class LabelerV4 private constructor(
             configurationPath?.let { "configuration-path" to it },
             syncLabels?.let { "sync-labels" to it.toString() },
             dot?.let { "dot" to it.toString() },
-            prNumber?.let { "pr-number" to it },
+            prNumber?.let { "pr-number" to it.joinToString("\n") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

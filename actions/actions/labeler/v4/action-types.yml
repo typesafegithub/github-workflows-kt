@@ -8,3 +8,8 @@ inputs:
     type: boolean
   dot:
     type: boolean
+  pr-number:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
