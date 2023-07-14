@@ -79,7 +79,7 @@ public data class GradleBuildActionV2 private constructor(
      * so, how. Valid values are 'disabled' (default), 'generate', 'generate-and-submit' and
      * 'download-and-submit'.
      */
-    public val dependencyGraph: String? = null,
+    public val dependencyGraph: GradleBuildActionV2.DependencyGraph? = null,
     /**
      * When 'true', the action will not attempt to restore the Gradle User Home entries from other
      * Jobs.
@@ -122,7 +122,7 @@ public data class GradleBuildActionV2 private constructor(
         gradleHomeCacheExcludes: List<String>? = null,
         arguments: String? = null,
         generateJobSummary: Boolean? = null,
-        dependencyGraph: String? = null,
+        dependencyGraph: GradleBuildActionV2.DependencyGraph? = null,
         gradleHomeCacheStrictMatch: String? = null,
         workflowJobContext: String? = null,
         gradleHomeCacheCleanup: Boolean? = null,
@@ -152,7 +152,7 @@ public data class GradleBuildActionV2 private constructor(
             gradleHomeCacheExcludes?.let { "gradle-home-cache-excludes" to it.joinToString("\n") },
             arguments?.let { "arguments" to it },
             generateJobSummary?.let { "generate-job-summary" to it.toString() },
-            dependencyGraph?.let { "dependency-graph" to it },
+            dependencyGraph?.let { "dependency-graph" to it.stringValue },
             gradleHomeCacheStrictMatch?.let { "gradle-home-cache-strict-match" to it },
             workflowJobContext?.let { "workflow-job-context" to it },
             gradleHomeCacheCleanup?.let { "gradle-home-cache-cleanup" to it.toString() },
@@ -162,6 +162,22 @@ public data class GradleBuildActionV2 private constructor(
     )
 
     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public sealed class DependencyGraph(
+        public val stringValue: String,
+    ) {
+        public object Disabled : GradleBuildActionV2.DependencyGraph("disabled")
+
+        public object Generate : GradleBuildActionV2.DependencyGraph("generate")
+
+        public object GenerateAndSubmit : GradleBuildActionV2.DependencyGraph("generate-and-submit")
+
+        public object DownloadAndSubmit : GradleBuildActionV2.DependencyGraph("download-and-submit")
+
+        public class Custom(
+            customStringValue: String,
+        ) : GradleBuildActionV2.DependencyGraph(customStringValue)
+    }
 
     public class Outputs(
         stepId: String,
