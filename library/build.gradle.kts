@@ -23,6 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    testImplementation("com.github.tschuchortdev:kotlin-compile-testing:1.5.0")
     testImplementation(kotlin("reflect"))
 }
 
