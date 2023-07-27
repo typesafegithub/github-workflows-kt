@@ -52,7 +52,8 @@ public data class WrapperValidationActionV1 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("gradle", "wrapper-validation-action", _customVersion ?: "v1") {
+) : RegularAction<WrapperValidationActionV1.Outputs>("gradle", "wrapper-validation-action",
+        _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         minWrapperCount: Int? = null,
@@ -74,5 +75,14 @@ public data class WrapperValidationActionV1 private constructor(
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * The path of the Gradle Wrapper(s) JAR that failed validation.
+         */
+        public val failedWrapper: String = "steps.$stepId.outputs.failed-wrapper"
+    }
 }
