@@ -11,7 +11,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     implementation("org.jetbrains.kotlin:kotlin-serialization:1.9.0")
 
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.0")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1")
     implementation("org.jmailen.gradle:kotlinter-gradle:3.15.0")
 
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.7.3"))
