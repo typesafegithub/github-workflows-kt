@@ -47,6 +47,7 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs.addAll(
             "-opt-in=kotlin.ExperimentalStdlibApi",
             "-opt-in=kotlin.time.ExperimentalTime",
+            "-Xsuppress-version-warnings",
         )
     }
 }
