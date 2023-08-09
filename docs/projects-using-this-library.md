@@ -7,6 +7,7 @@ It's also a great source of examples how to use the library.
 * [factcast](https://github.com/factcast/factcast/tree/master/.github/kts)
 * [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/tree/main/.github/workflows)
 * [github-workflows-kt](https://github.com/typesafegithub/github-workflows-kt/tree/main/.github/workflows) (this library - we [dogfood](https://en.wikipedia.org/wiki/Eating_your_own_dog_food), of course)
+* [gradle-release-plugin](https://github.com/cloudshiftinc/gradle-release-plugin/tree/main/.github/workflows)
 * [greenback](https://github.com/DoudemoEthernet/greenback/tree/main/.github/workflows)
 * [kotlin-python](https://github.com/krzema12/kotlin-python/tree/python-backend/.github/workflows)
 * [markout](https://github.com/mfwgenerics/markout/tree/main/markout-github-workflows-kt)
