@@ -76,7 +76,7 @@ suspend fun createPullRequest(
     )
     println("PR created at: https://github.com/$githubRepoOwner/$githubRepoName/pull/${createPullRequestResponse.number}")
 
-    return 1
+    return createPullRequestResponse.number
 }
 
 private data class PrCreationContext(
