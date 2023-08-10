@@ -30,24 +30,30 @@ import kotlin.collections.toTypedArray
  */
 public data class AmazonEcrLoginV1 private constructor(
     /**
+     * Proxy to use for the AWS SDK agent.
+     */
+    public val httpProxy: String? = null,
+    /**
+     * Mask the docker password to prevent it being printed to action logs if debug logging is
+     * enabled. NOTE: This will prevent the Docker password output from being shared between separate
+     * jobs. Options: ['true', 'false']
+     */
+    public val maskPassword: String? = null,
+    /**
      * A comma-delimited list of AWS account IDs that are associated with the ECR Private
      * registries. If you do not specify a registry, the default ECR Private registry is assumed. If
      * 'public' is given as input to 'registry-type', this input is ignored.
      */
     public val registries: List<String>? = null,
     /**
-     * Whether to skip explicit logout of the registries during post-job cleanup. Exists for
-     * backward compatibility on self-hosted runners. Not recommended. Options: ['true', 'false']
-     */
-    public val skipLogout: Boolean? = null,
-    /**
      * Which ECR registry type to log into. Options: [private, public]
      */
     public val registryType: AmazonEcrLoginV1.RegistryType? = null,
     /**
-     * Proxy to use for the AWS SDK agent.
+     * Whether to skip explicit logout of the registries during post-job cleanup. Exists for
+     * backward compatibility on self-hosted runners. Not recommended. Options: ['true', 'false']
      */
-    public val httpProxy: String? = null,
+    public val skipLogout: Boolean? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
@@ -61,22 +67,25 @@ public data class AmazonEcrLoginV1 private constructor(
         "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        registries: List<String>? = null,
-        skipLogout: Boolean? = null,
-        registryType: AmazonEcrLoginV1.RegistryType? = null,
         httpProxy: String? = null,
+        maskPassword: String? = null,
+        registries: List<String>? = null,
+        registryType: AmazonEcrLoginV1.RegistryType? = null,
+        skipLogout: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(registries=registries, skipLogout=skipLogout, registryType=registryType,
-            httpProxy=httpProxy, _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(httpProxy=httpProxy, maskPassword=maskPassword, registries=registries,
+            registryType=registryType, skipLogout=skipLogout, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            registries?.let { "registries" to it.joinToString(",") },
-            skipLogout?.let { "skip-logout" to it.toString() },
-            registryType?.let { "registry-type" to it.stringValue },
             httpProxy?.let { "http-proxy" to it },
+            maskPassword?.let { "mask-password" to it },
+            registries?.let { "registries" to it.joinToString(",") },
+            registryType?.let { "registry-type" to it.stringValue },
+            skipLogout?.let { "skip-logout" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
