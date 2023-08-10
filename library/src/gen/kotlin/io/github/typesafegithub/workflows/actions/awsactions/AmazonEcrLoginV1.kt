@@ -38,7 +38,7 @@ public data class AmazonEcrLoginV1 private constructor(
      * enabled. NOTE: This will prevent the Docker password output from being shared between separate
      * jobs. Options: ['true', 'false']
      */
-    public val maskPassword: String? = null,
+    public val maskPassword: Boolean? = null,
     /**
      * A comma-delimited list of AWS account IDs that are associated with the ECR Private
      * registries. If you do not specify a registry, the default ECR Private registry is assumed. If
@@ -68,7 +68,7 @@ public data class AmazonEcrLoginV1 private constructor(
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         httpProxy: String? = null,
-        maskPassword: String? = null,
+        maskPassword: Boolean? = null,
         registries: List<String>? = null,
         registryType: AmazonEcrLoginV1.RegistryType? = null,
         skipLogout: Boolean? = null,
@@ -82,7 +82,7 @@ public data class AmazonEcrLoginV1 private constructor(
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             httpProxy?.let { "http-proxy" to it },
-            maskPassword?.let { "mask-password" to it },
+            maskPassword?.let { "mask-password" to it.toString() },
             registries?.let { "registries" to it.joinToString(",") },
             registryType?.let { "registry-type" to it.stringValue },
             skipLogout?.let { "skip-logout" to it.toString() },
