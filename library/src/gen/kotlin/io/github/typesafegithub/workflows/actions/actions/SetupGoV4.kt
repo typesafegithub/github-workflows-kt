@@ -28,7 +28,8 @@ import kotlin.collections.toTypedArray
  */
 public data class SetupGoV4 private constructor(
     /**
-     * The Go version to download (if necessary) and use. Supports semver spec and ranges.
+     * The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure
+     * to enclose this option in single quotation marks.
      */
     public val goVersion: String? = null,
     /**
@@ -41,7 +42,7 @@ public data class SetupGoV4 private constructor(
      */
     public val checkLatest: Boolean? = null,
     /**
-     * Used to pull node distributions from go-versions. Since there's a default, this is typically
+     * Used to pull Go distributions from go-versions. Since there's a default, this is typically
      * not supplied by the user. When running this action on github.com, the default value is
      * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
      * experiencing rate limiting.
