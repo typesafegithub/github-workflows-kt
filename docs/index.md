@@ -1,33 +1,45 @@
 # github-workflows-kt
 
-> [github-workflows-kt](https://github.com/typesafegithub/github-workflows-kt/) is a tool for creating GitHub Actions
-> workflows in a _type-safe_ script, helping you to build robust workflows for your GitHub projects without mistakes,
-> with pleasure, in Kotlin.
->
-> _You won't go back to YAML!_
-
 ## 🧪 Work in progress - "moving fast" phase
 
 Please expect breaking API changes (they're documented in release notes) and missing features.
 
 ---
 
-## 💡 Idea
+github-workflows-kt is a tool for creating
+[GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows) in a **type-safe** script, helping you to
+build **robust** workflows for your GitHub projects without mistakes, with **pleasure**, in
+[Kotlin](https://kotlinlang.org/).
 
-YAMLs and JSONs surround us more and more frequently. While their syntax is simple and they allow defining hierarchical
-data easily, the tendency is also to overuse them for more complicated scenarios where a power of a regular programming
-language would be beneficial. This library aims at filling this gap, utilizing Kotlin as a modern general-purpose
-language with good internal DSL support.
+> _You won't go back to YAML!_
 
-## ✨ Benefits
+### 💡 Idea
 
-* no more confusion about YAML's indent level - Kotlin's syntax doesn't rely on it
-* thanks to Kotlin being a compiled language, adds a compilation phase where a number of errors can be caught and
-  prevented from getting into your workflows' runtime phase
-* superb IDE support: author your workflows in any IDE that supports Kotlin, with auto-completion
-* remove duplication: ability to extract common parts to constants or functions
-* programmatically generate your workflow's arbitrarily complex logic, you can even call an external service and
-  generate your workflow based on the response. Whatever Kotlin and the JVM allows you to do
+We're often surrounded by YAML configuration. It's a powerful format that provides simple syntax for defining
+hierarchical data, but it is sometimes used (abused?) to configure complicated scenarios which leads to complicated
+files that are difficult to write and maintain.
+
+Who among us hasn't accidentally used the wrong indentation, missed a possibility to extract a reusable piece of code,
+or been confused by ambiguous types? The power of a generic-purpose would come in handy in these cases.
+
+We're developing **github-workflows-kt** to solve these and other problems, so you can create GitHub Workflows with
+confidence.
+
+### ✨ Benefits
+
+* **no indentation confusion** - Kotlin's syntax doesn't rely on it
+* **immediate validation** - catch bugs early during development, not during runtime
+* **strongly typed values** - no more confusion about what type is needed for a given parameter
+* **superb IDE support** - author your workflows in any IDE that supports Kotlin, with auto-completion and documentation
+  at your fingertips
+* **no duplication** - don't repeat yourself! Share common configuration using constant values, or define your own
+  functions to encapsulate logic
+* **fully featured language** - use the full power of Kotlin to generate workflows dynamically, randomly generate data,
+  or add custom validation
+* **built-in support for over 100 actions** - the most popular actions can be used in a type-safe manner thanks to the
+  bundled bindings. For more information, see
+  [Supported actions](supported-actions.md)
+* and more!
 
 ## 🎥 Video presentation
 
