@@ -13,7 +13,7 @@ build **robust** workflows for your GitHub projects without mistakes, with **ple
 
 > _You won't go back to YAML!_
 
-### 💡 Idea
+## 💡 Idea
 
 We're often surrounded by YAML configuration. It's a powerful format that provides simple syntax for defining
 hierarchical data, but it is sometimes used (abused?) to configure complicated scenarios which leads to complicated
@@ -25,7 +25,7 @@ or been confused by ambiguous types? The power of a generic-purpose would come i
 We're developing **github-workflows-kt** to solve these and other problems, so you can create GitHub Workflows with
 confidence.
 
-### ✨ Benefits
+## ✨ Benefits
 
 * **no indentation confusion** - Kotlin's syntax doesn't rely on it
 * **immediate validation** - catch bugs early during development, not during runtime
