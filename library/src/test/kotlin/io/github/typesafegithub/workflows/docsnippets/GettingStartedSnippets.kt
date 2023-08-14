@@ -1,6 +1,7 @@
+@file:Suppress("ktlint:standard:import-ordering")
+
 package io.github.typesafegithub.workflows.docsnippets
 
-/* ktlint-disable import-ordering */
 import io.kotest.core.spec.style.FunSpec
 // --8<-- [start:getting-started-2]
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
@@ -10,7 +11,6 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 // --8<-- [end:getting-started-2]
 import java.io.File
-/* ktlint-enable import-ordering */
 
 class GettingStartedSnippets : FunSpec({
     test("gettingStarted") {
