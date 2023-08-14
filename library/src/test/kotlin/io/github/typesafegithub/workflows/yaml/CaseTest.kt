@@ -34,5 +34,6 @@ class CaseTest : DescribeSpec({
 })
 
 private enum class MyEnum {
-    In_valid, // ktlint-disable enum-entry-name-case
+    @Suppress("ktlint:standard:enum-entry-name-case")
+    In_valid,
 }
