@@ -11,7 +11,7 @@ plugins {
 dependencies {
     implementation("com.charleskorn.kaml:kaml:0.55.0")
     implementation("com.squareup:kotlinpoet:1.14.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     implementation(platform("io.ktor:ktor-bom:2.3.3"))
     implementation("io.ktor:ktor-client-core")
