@@ -23,7 +23,8 @@ import kotlin.collections.toTypedArray
 /**
  * Action: Gradle Build Action
  *
- * Configures Gradle for use in GitHub actions, caching useful state in the GitHub actions cache
+ * Configures Gradle for GitHub actions, caching state and generating a dependency graph via
+ * Dependency Submission.
  *
  * [Action on GitHub](https://github.com/gradle/gradle-build-action)
  */
