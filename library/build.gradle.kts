@@ -19,7 +19,7 @@ group = "io.github.typesafegithub"
 version = "0.50.1-SNAPSHOT"
 
 dependencies {
-    implementation("org.snakeyaml:snakeyaml-engine:2.6")
+    implementation("org.snakeyaml:snakeyaml-engine:2.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0")
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
