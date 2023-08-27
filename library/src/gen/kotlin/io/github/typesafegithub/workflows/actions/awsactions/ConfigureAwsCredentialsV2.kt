@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.awsactions
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -28,6 +30,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
  */
+@Deprecated(
+    message = "This action has a newer major version: ConfigureAwsCredentialsV3",
+    replaceWith = ReplaceWith("ConfigureAwsCredentialsV3"),
+)
 public data class ConfigureAwsCredentialsV2 private constructor(
     /**
      * The audience to use for the OIDC provider
