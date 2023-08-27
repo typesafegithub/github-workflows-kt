@@ -3,7 +3,7 @@ package io.github.typesafegithub.workflows
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.actions.actions.GithubScriptV6
 import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
-import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV2
+import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV3
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.JobOutputs
@@ -555,25 +555,25 @@ class IntegrationTest : FunSpec({
         ) {
             job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
                 uses(
-                    action = ConfigureAwsCredentialsV2(
+                    action = ConfigureAwsCredentialsV3(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
                         awsRegion = "us-west-1",
                     ),
                 )
                 uses(
-                    action = ConfigureAwsCredentialsV2(
+                    action = ConfigureAwsCredentialsV3(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
                         awsRegion = "us-west-1",
                     ),
                 )
                 uses(
-                    action = ConfigureAwsCredentialsV2(
+                    action = ConfigureAwsCredentialsV3(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
                         awsRegion = "us-west-1",
                     ),
                 )
                 uses(
-                    action = ConfigureAwsCredentialsV2(
+                    action = ConfigureAwsCredentialsV3(
                         roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
                         awsRegion = "us-west-1",
                     ),
@@ -595,22 +595,22 @@ class IntegrationTest : FunSpec({
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
-                  uses: 'aws-actions/configure-aws-credentials@v2'
+                  uses: 'aws-actions/configure-aws-credentials@v3'
                   with:
                     aws-region: 'us-west-1'
                     role-to-assume: 'arn:aws:iam::12345678901234567890:role/github-actions-role/123456789012345678901234567890'
                 - id: 'step-1'
-                  uses: 'aws-actions/configure-aws-credentials@v2'
+                  uses: 'aws-actions/configure-aws-credentials@v3'
                   with:
                     aws-region: 'us-west-1'
                     role-to-assume: 'arn:aws:iam:::role/github-actions-role/${'$'}{{ github.token }}'
                 - id: 'step-2'
-                  uses: 'aws-actions/configure-aws-credentials@v2'
+                  uses: 'aws-actions/configure-aws-credentials@v3'
                   with:
                     aws-region: 'us-west-1'
                     role-to-assume: 'arn:aws:iam::1234567890:role/github-actions-role/${'$'}{{ github.token }}'
                 - id: 'step-3'
-                  uses: 'aws-actions/configure-aws-credentials@v2'
+                  uses: 'aws-actions/configure-aws-credentials@v3'
                   with:
                     aws-region: 'us-west-1'
                     role-to-assume: 'arn:aws:iam::12345678901234567890:role/github-actions-role/${'$'}{{ github.token }}'
