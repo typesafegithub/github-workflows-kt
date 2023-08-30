@@ -60,6 +60,10 @@ public data class GradleBuildActionV2 private constructor(
      */
     public val cacheWriteOnly: Boolean? = null,
     /**
+     * When 'true', a pre-existing Gradle User Home will not prevent the cache from being restored.
+     */
+    public val cacheOverwriteExisting: String? = null,
+    /**
      * Paths within Gradle User Home to cache.
      */
     public val gradleHomeCacheIncludes: List<String>? = null,
@@ -119,6 +123,7 @@ public data class GradleBuildActionV2 private constructor(
         cacheDisabled: Boolean? = null,
         cacheReadOnly: Boolean? = null,
         cacheWriteOnly: Boolean? = null,
+        cacheOverwriteExisting: String? = null,
         gradleHomeCacheIncludes: List<String>? = null,
         gradleHomeCacheExcludes: List<String>? = null,
         arguments: String? = null,
@@ -133,6 +138,7 @@ public data class GradleBuildActionV2 private constructor(
     ) : this(gradleVersion=gradleVersion, gradleExecutable=gradleExecutable,
             buildRootDirectory=buildRootDirectory, cacheDisabled=cacheDisabled,
             cacheReadOnly=cacheReadOnly, cacheWriteOnly=cacheWriteOnly,
+            cacheOverwriteExisting=cacheOverwriteExisting,
             gradleHomeCacheIncludes=gradleHomeCacheIncludes,
             gradleHomeCacheExcludes=gradleHomeCacheExcludes, arguments=arguments,
             generateJobSummary=generateJobSummary, dependencyGraph=dependencyGraph,
@@ -149,6 +155,7 @@ public data class GradleBuildActionV2 private constructor(
             cacheDisabled?.let { "cache-disabled" to it.toString() },
             cacheReadOnly?.let { "cache-read-only" to it.toString() },
             cacheWriteOnly?.let { "cache-write-only" to it.toString() },
+            cacheOverwriteExisting?.let { "cache-overwrite-existing" to it },
             gradleHomeCacheIncludes?.let { "gradle-home-cache-includes" to it.joinToString("\n") },
             gradleHomeCacheExcludes?.let { "gradle-home-cache-excludes" to it.joinToString("\n") },
             arguments?.let { "arguments" to it },
@@ -195,5 +202,10 @@ public data class GradleBuildActionV2 private constructor(
          * itself.
          */
         public val dependencyGraphFile: String = "steps.$stepId.outputs.dependency-graph-file"
+
+        /**
+         * Version of Gradle that was setup by the action
+         */
+        public val gradleVersion: String = "steps.$stepId.outputs.gradle-version"
     }
 }
