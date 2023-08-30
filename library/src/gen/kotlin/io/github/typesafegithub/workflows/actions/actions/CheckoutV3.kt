@@ -100,7 +100,7 @@ public data class CheckoutV3 private constructor(
     /**
      * Whether to fetch tags, even if fetch-depth > 0.
      */
-    public val fetchTags: String? = null,
+    public val fetchTags: Boolean? = null,
     /**
      * Whether to download Git-LFS files
      */
@@ -148,7 +148,7 @@ public data class CheckoutV3 private constructor(
         sparseCheckout: Boolean? = null,
         sparseCheckoutConeMode: Boolean? = null,
         fetchDepth: CheckoutV3.FetchDepth? = null,
-        fetchTags: String? = null,
+        fetchTags: Boolean? = null,
         lfs: Boolean? = null,
         submodules: Boolean? = null,
         setSafeDirectory: Boolean? = null,
@@ -178,7 +178,7 @@ public data class CheckoutV3 private constructor(
             sparseCheckout?.let { "sparse-checkout" to it.toString() },
             sparseCheckoutConeMode?.let { "sparse-checkout-cone-mode" to it.toString() },
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
-            fetchTags?.let { "fetch-tags" to it },
+            fetchTags?.let { "fetch-tags" to it.toString() },
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
             setSafeDirectory?.let { "set-safe-directory" to it.toString() },
