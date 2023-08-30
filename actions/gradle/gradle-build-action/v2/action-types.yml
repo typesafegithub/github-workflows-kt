@@ -39,6 +39,8 @@ inputs:
     type: string
   gradle-home-cache-cleanup:
     type: boolean
+  cache-overwrite-existing:
+    type: boolean
 # Please check those outputs's description and set a proper type. 'string' is just set by default
 outputs:
   build-scan-url:

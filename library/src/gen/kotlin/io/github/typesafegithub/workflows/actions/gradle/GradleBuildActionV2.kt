@@ -62,7 +62,7 @@ public data class GradleBuildActionV2 private constructor(
     /**
      * When 'true', a pre-existing Gradle User Home will not prevent the cache from being restored.
      */
-    public val cacheOverwriteExisting: String? = null,
+    public val cacheOverwriteExisting: Boolean? = null,
     /**
      * Paths within Gradle User Home to cache.
      */
@@ -123,7 +123,7 @@ public data class GradleBuildActionV2 private constructor(
         cacheDisabled: Boolean? = null,
         cacheReadOnly: Boolean? = null,
         cacheWriteOnly: Boolean? = null,
-        cacheOverwriteExisting: String? = null,
+        cacheOverwriteExisting: Boolean? = null,
         gradleHomeCacheIncludes: List<String>? = null,
         gradleHomeCacheExcludes: List<String>? = null,
         arguments: String? = null,
@@ -155,7 +155,7 @@ public data class GradleBuildActionV2 private constructor(
             cacheDisabled?.let { "cache-disabled" to it.toString() },
             cacheReadOnly?.let { "cache-read-only" to it.toString() },
             cacheWriteOnly?.let { "cache-write-only" to it.toString() },
-            cacheOverwriteExisting?.let { "cache-overwrite-existing" to it },
+            cacheOverwriteExisting?.let { "cache-overwrite-existing" to it.toString() },
             gradleHomeCacheIncludes?.let { "gradle-home-cache-includes" to it.joinToString("\n") },
             gradleHomeCacheExcludes?.let { "gradle-home-cache-excludes" to it.joinToString("\n") },
             arguments?.let { "arguments" to it },
