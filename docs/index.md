@@ -1,11 +1,5 @@
 # github-workflows-kt
 
-## 🧪 Work in progress - "moving fast" phase
-
-Please expect breaking API changes (they're documented in release notes) and missing features.
-
----
-
 github-workflows-kt is a tool for creating
 [GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows) in a **type-safe** script, helping you to
 build **robust** workflows for your GitHub projects without mistakes, with **pleasure**, in
