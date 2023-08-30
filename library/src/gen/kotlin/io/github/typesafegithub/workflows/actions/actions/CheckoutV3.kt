@@ -98,6 +98,10 @@ public data class CheckoutV3 private constructor(
      */
     public val fetchDepth: CheckoutV3.FetchDepth? = null,
     /**
+     * Whether to fetch tags, even if fetch-depth > 0.
+     */
+    public val fetchTags: Boolean? = null,
+    /**
      * Whether to download Git-LFS files
      */
     public val lfs: Boolean? = null,
@@ -144,6 +148,7 @@ public data class CheckoutV3 private constructor(
         sparseCheckout: Boolean? = null,
         sparseCheckoutConeMode: Boolean? = null,
         fetchDepth: CheckoutV3.FetchDepth? = null,
+        fetchTags: Boolean? = null,
         lfs: Boolean? = null,
         submodules: Boolean? = null,
         setSafeDirectory: Boolean? = null,
@@ -153,8 +158,8 @@ public data class CheckoutV3 private constructor(
     ) : this(repository=repository, ref=ref, token=token, sshKey=sshKey,
             sshKnownHosts=sshKnownHosts, sshStrict=sshStrict, persistCredentials=persistCredentials,
             path=path, clean=clean, sparseCheckout=sparseCheckout,
-            sparseCheckoutConeMode=sparseCheckoutConeMode, fetchDepth=fetchDepth, lfs=lfs,
-            submodules=submodules, setSafeDirectory=setSafeDirectory,
+            sparseCheckoutConeMode=sparseCheckoutConeMode, fetchDepth=fetchDepth,
+            fetchTags=fetchTags, lfs=lfs, submodules=submodules, setSafeDirectory=setSafeDirectory,
             githubServerUrl=githubServerUrl, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
@@ -173,6 +178,7 @@ public data class CheckoutV3 private constructor(
             sparseCheckout?.let { "sparse-checkout" to it.toString() },
             sparseCheckoutConeMode?.let { "sparse-checkout-cone-mode" to it.toString() },
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
+            fetchTags?.let { "fetch-tags" to it.toString() },
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
             setSafeDirectory?.let { "set-safe-directory" to it.toString() },

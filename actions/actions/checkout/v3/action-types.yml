@@ -34,3 +34,5 @@ inputs:
     type: boolean
   sparse-checkout-cone-mode:
     type: boolean
+  fetch-tags:
+    type: boolean
