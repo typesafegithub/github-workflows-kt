@@ -1,0 +1,51 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  semantic_version:
+    type: string
+  branches:
+    type: string
+  branch:
+    type: string
+  extra_plugins:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  dry_run:
+    type: boolean
+  ci:
+    type: boolean
+  extends:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  working_directory:
+    type: string
+  tag_format:
+    type: string
+outputs:
+  new_release_published:
+    type: boolean
+  new_release_version:
+    type: string
+  new_release_major_version:
+    type: integer
+  new_release_minor_version:
+    type: integer
+  new_release_patch_version:
+    type: integer
+  new_release_channel:
+    type: string
+  new_release_notes:
+    type: string
+  new_release_git_head:
+    type: string
+  new_release_git_tag:
+    type: string
+  last_release_version:
+    type: string
+  last_release_git_head:
+    type: string
+  last_release_git_tag:
+    type: string
