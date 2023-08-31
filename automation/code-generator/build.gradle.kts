@@ -13,7 +13,7 @@ dependencies {
     implementation("com.squareup:kotlinpoet:1.14.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-    implementation(platform("io.ktor:ktor-bom:2.3.3"))
+    implementation(platform("io.ktor:ktor-bom:2.3.4"))
     implementation("io.ktor:ktor-client-core")
     implementation("io.ktor:ktor-client-cio")
     implementation("io.ktor:ktor-client-content-negotiation")
