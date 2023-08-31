@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.cycjimmy
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/cycjimmy/semantic-release-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: SemanticReleaseActionV4",
-    replaceWith = ReplaceWith("SemanticReleaseActionV4"),
-)
-public data class SemanticReleaseActionV3 private constructor(
+public data class SemanticReleaseActionV4 private constructor(
     /**
      * Specify specifying version range for semantic-release. If no version range is specified,
      * latest version will be used by default
@@ -90,8 +84,8 @@ public data class SemanticReleaseActionV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SemanticReleaseActionV3.Outputs>("cycjimmy", "semantic-release-action",
-        _customVersion ?: "v3") {
+) : RegularAction<SemanticReleaseActionV4.Outputs>("cycjimmy", "semantic-release-action",
+        _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         semanticVersion: String? = null,
