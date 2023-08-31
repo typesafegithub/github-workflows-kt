@@ -58,7 +58,7 @@ Click on a version to see the wrapper's code.
 * codecov
     * [codecov-action](https://github.com/codecov/codecov-action) - v3: [`CodecovActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/codecov/CodecovActionV3.kt)
 * cycjimmy
-    * [semantic-release-action](https://github.com/cycjimmy/semantic-release-action) - v3: [`SemanticReleaseActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/cycjimmy/SemanticReleaseActionV3.kt)
+    * [semantic-release-action](https://github.com/cycjimmy/semantic-release-action) - v3: [`SemanticReleaseActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/cycjimmy/SemanticReleaseActionV3.kt), v4: [`SemanticReleaseActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/cycjimmy/SemanticReleaseActionV4.kt)
 * docker
     * [build-push-action](https://github.com/docker/build-push-action) - v2: [`BuildPushActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/docker/BuildPushActionV2.kt), v3: [`BuildPushActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/docker/BuildPushActionV3.kt), v4: [`BuildPushActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/docker/BuildPushActionV4.kt)
     * [login-action](https://github.com/docker/login-action) - v1: [`LoginActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/docker/LoginActionV1.kt), v2: [`LoginActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/docker/LoginActionV2.kt)
@@ -138,6 +138,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 82
-* counting each version separately: 117
+* counting each version separately: 118
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
