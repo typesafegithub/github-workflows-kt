@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/checkout)
  */
-@Deprecated(
-    message = "This action has a newer major version: CheckoutV4",
-    replaceWith = ReplaceWith("CheckoutV4"),
-)
-public data class CheckoutV2 private constructor(
+public data class CheckoutV4 private constructor(
     /**
      * Repository name with owner. For example, actions/checkout
      */
@@ -92,9 +86,25 @@ public data class CheckoutV2 private constructor(
      */
     public val clean: Boolean? = null,
     /**
+     * Do a sparse checkout on given patterns. Each pattern should be separated with new lines
+     */
+    public val sparseCheckout: Boolean? = null,
+    /**
+     * Specifies whether to use cone-mode when doing a sparse checkout.
+     */
+    public val sparseCheckoutConeMode: Boolean? = null,
+    /**
      * Number of commits to fetch. 0 indicates all history for all branches and tags.
      */
-    public val fetchDepth: CheckoutV2.FetchDepth? = null,
+    public val fetchDepth: CheckoutV4.FetchDepth? = null,
+    /**
+     * Whether to fetch tags, even if fetch-depth > 0.
+     */
+    public val fetchTags: Boolean? = null,
+    /**
+     * Whether to show progress status output when fetching.
+     */
+    public val showProgress: Boolean? = null,
     /**
      * Whether to download Git-LFS files
      */
@@ -113,6 +123,12 @@ public data class CheckoutV2 private constructor(
      */
     public val setSafeDirectory: Boolean? = null,
     /**
+     * The base URL for the GitHub instance that you are trying to clone from, will use environment
+     * defaults to fetch from the same instance that the workflow is running from unless specified.
+     * Example URLs are https://github.com or https://my-ghes-server.example.com
+     */
+    public val githubServerUrl: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -121,7 +137,7 @@ public data class CheckoutV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("actions", "checkout", _customVersion ?: "v2") {
+) : RegularAction<Action.Outputs>("actions", "checkout", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         repository: String? = null,
@@ -133,17 +149,24 @@ public data class CheckoutV2 private constructor(
         persistCredentials: Boolean? = null,
         path: String? = null,
         clean: Boolean? = null,
-        fetchDepth: CheckoutV2.FetchDepth? = null,
+        sparseCheckout: Boolean? = null,
+        sparseCheckoutConeMode: Boolean? = null,
+        fetchDepth: CheckoutV4.FetchDepth? = null,
+        fetchTags: Boolean? = null,
+        showProgress: Boolean? = null,
         lfs: Boolean? = null,
         submodules: Boolean? = null,
         setSafeDirectory: Boolean? = null,
+        githubServerUrl: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(repository=repository, ref=ref, token=token, sshKey=sshKey,
             sshKnownHosts=sshKnownHosts, sshStrict=sshStrict, persistCredentials=persistCredentials,
-            path=path, clean=clean, fetchDepth=fetchDepth, lfs=lfs, submodules=submodules,
-            setSafeDirectory=setSafeDirectory, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            path=path, clean=clean, sparseCheckout=sparseCheckout,
+            sparseCheckoutConeMode=sparseCheckoutConeMode, fetchDepth=fetchDepth,
+            fetchTags=fetchTags, showProgress=showProgress, lfs=lfs, submodules=submodules,
+            setSafeDirectory=setSafeDirectory, githubServerUrl=githubServerUrl,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -157,10 +180,15 @@ public data class CheckoutV2 private constructor(
             persistCredentials?.let { "persist-credentials" to it.toString() },
             path?.let { "path" to it },
             clean?.let { "clean" to it.toString() },
+            sparseCheckout?.let { "sparse-checkout" to it.toString() },
+            sparseCheckoutConeMode?.let { "sparse-checkout-cone-mode" to it.toString() },
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
+            fetchTags?.let { "fetch-tags" to it.toString() },
+            showProgress?.let { "show-progress" to it.toString() },
             lfs?.let { "lfs" to it.toString() },
             submodules?.let { "submodules" to it.toString() },
             setSafeDirectory?.let { "set-safe-directory" to it.toString() },
+            githubServerUrl?.let { "github-server-url" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -172,8 +200,8 @@ public data class CheckoutV2 private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : CheckoutV2.FetchDepth(requestedValue)
+        ) : CheckoutV4.FetchDepth(requestedValue)
 
-        public object Infinite : CheckoutV2.FetchDepth(0)
+        public object Infinite : CheckoutV4.FetchDepth(0)
     }
 }
