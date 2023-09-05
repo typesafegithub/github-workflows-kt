@@ -4,7 +4,7 @@ package io.github.typesafegithub.workflows.docsnippets
 
 import io.kotest.core.spec.style.FunSpec
 // --8<-- [start:getting-started-2]
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -32,7 +32,7 @@ class GettingStartedSnippets : FunSpec({
             sourceFile = __FILE__.toPath(),
         ) {
             job(id = "test_job", runsOn = UbuntuLatest) {
-                uses(name = "Check out", action = CheckoutV3())
+                uses(name = "Check out", action = CheckoutV4())
                 run(name = "Print greeting", command = "echo 'Hello world!'")
             }
         }.writeToFile()

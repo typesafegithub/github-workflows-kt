@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.dsl
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
 import io.github.typesafegithub.workflows.domain.RunnerType
@@ -34,11 +34,11 @@ class JobBuilderTest : FunSpec({
                     )
                     uses(
                         name = "Check out",
-                        action = CheckoutV3(),
+                        action = CheckoutV4(),
                         _customArguments = mapOf("foo2" to true),
                     )
                     uses(
-                        action = CheckoutV3(),
+                        action = CheckoutV4(),
                         _customArguments = mapOf("foo3" to true),
                     )
                     uses(

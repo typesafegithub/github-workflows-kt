@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.yaml
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
@@ -121,7 +121,7 @@ private fun Workflow.generateYaml(
             runsOn = UbuntuLatest,
             condition = yamlConsistencyJobCondition,
         ) {
-            uses(name = "Check out", action = CheckoutV3())
+            uses(name = "Check out", action = CheckoutV4())
             if (useGitDiff) {
                 run(
                     name = "Execute script",

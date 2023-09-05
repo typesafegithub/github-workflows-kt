@@ -16,7 +16,7 @@ Click on a version to see the wrapper's code.
     * [cache/restore](https://github.com/actions/cache/tree/v3/restore) - v3: [`CacheRestoreV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CacheRestoreV3.kt)
     * [cache/save](https://github.com/actions/cache/tree/v3/save) - v3: [`CacheSaveV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CacheSaveV3.kt)
     * [cache](https://github.com/actions/cache) - v2: [`CacheV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CacheV2.kt), v3: [`CacheV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CacheV3.kt)
-    * [checkout](https://github.com/actions/checkout) - v2: [`CheckoutV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV2.kt), v3: [`CheckoutV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt)
+    * [checkout](https://github.com/actions/checkout) - v2: [`CheckoutV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV2.kt), v3: [`CheckoutV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt), v4: [`CheckoutV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV4.kt)
     * [create-release](https://github.com/actions/create-release) - v1: [`CreateReleaseV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CreateReleaseV1.kt)
     * [download-artifact](https://github.com/actions/download-artifact) - v2: [`DownloadArtifactV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/DownloadArtifactV2.kt), v3: [`DownloadArtifactV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/DownloadArtifactV3.kt)
     * [first-interaction](https://github.com/actions/first-interaction) - v1: [`FirstInteractionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/FirstInteractionV1.kt)
@@ -138,6 +138,6 @@ Click on a version to see the wrapper's code.
 Number of wrappers available:
 
 * counting by actions: 82
-* counting each version separately: 118
+* counting each version separately: 119
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15

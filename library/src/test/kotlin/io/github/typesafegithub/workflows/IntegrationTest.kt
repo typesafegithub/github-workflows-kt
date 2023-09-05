@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.GithubScriptV6
 import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV3
@@ -50,7 +50,7 @@ class IntegrationTest : FunSpec({
             name = "Test Job",
             runsOn = RunnerType.UbuntuLatest,
         ) {
-            uses(action = CheckoutV3())
+            uses(action = CheckoutV4())
             run(command = "echo 'hello!'")
         }
     }
@@ -75,7 +75,7 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: 'step-0'
                   name: 'Check out'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Consistency check'
                   run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
@@ -86,7 +86,7 @@ class IntegrationTest : FunSpec({
                 - 'check_yaml_consistency'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   run: 'echo ''hello!'''
 
@@ -138,7 +138,7 @@ class IntegrationTest : FunSpec({
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   run: 'echo ''hello!'''
 
@@ -172,7 +172,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                 )
 
                 run(
@@ -279,7 +279,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                 )
 
                 run(
@@ -308,7 +308,7 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: 'step-0'
                   name: 'Check out'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Execute script'
                   run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
@@ -322,7 +322,7 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: 'step-0'
                   name: 'Check out'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Hello world!'
                   run: 'echo ''hello!'''
@@ -339,7 +339,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                 )
             }
         }
@@ -385,7 +385,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                     env = linkedMapOf(
                         "SIMPLE_VAR" to "simple-value-uses",
                         "MULTILINE_VAR" to """
@@ -447,7 +447,7 @@ class IntegrationTest : FunSpec({
                 - id: 'step-0'
                   name: 'Check out'
                   continue-on-error: true
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                   env:
                     SIMPLE_VAR: 'simple-value-uses'
                     MULTILINE_VAR: |-
@@ -478,7 +478,7 @@ class IntegrationTest : FunSpec({
 
                 uses(
                     name = "Some step consuming other step's output",
-                    action = CheckoutV3(
+                    action = CheckoutV4(
                         sshKey = expr(addAndCommit.outputs.pythonVersion),
                         path = expr(addAndCommit.outputs["my-unsafe-output"]),
                     ),
@@ -504,7 +504,7 @@ class IntegrationTest : FunSpec({
 
                 uses(
                     name = "Some step consuming other step's output",
-                    action = CheckoutV3(
+                    action = CheckoutV4(
                         repository = expr(addAndCommit.id),
                         ref = expr(addAndCommit.outputs.commitSha),
                         token = expr(addAndCommit.outputs["my-unsafe-output"]),
@@ -536,7 +536,7 @@ class IntegrationTest : FunSpec({
                   uses: 'EndBug/add-and-commit@v9'
                 - id: 'step-1'
                   name: 'Some step consuming other step''s output'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                   with:
                     repository: '${'$'}{{ step-0 }}'
                     ref: '${'$'}{{ steps.step-0.outputs.commit_sha }}'
@@ -635,7 +635,7 @@ class IntegrationTest : FunSpec({
 
                 uses(
                     name = "Some step consuming other step's output",
-                    action = CheckoutV3(
+                    action = CheckoutV4(
                         repository = expr(addAndCommit.id),
                         ref = expr(addAndCommit.outputs.commitSha),
                         token = expr(addAndCommit.outputs["my-unsafe-output"]),
@@ -667,7 +667,7 @@ class IntegrationTest : FunSpec({
                   uses: 'EndBug/add-and-commit@v9'
                 - id: 'step-1'
                   name: 'Some step consuming other step''s output'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                   with:
                     repository: '${'$'}{{ step-0 }}'
                     ref: '${'$'}{{ steps.step-0.outputs.commit_sha }}'
@@ -696,7 +696,7 @@ class IntegrationTest : FunSpec({
                     Permission.Contents to Mode.None,
                 ),
             ) {
-                uses(action = CheckoutV3())
+                uses(action = CheckoutV4())
                 run(
                     name = "Default environment variable",
                     command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
@@ -743,7 +743,7 @@ class IntegrationTest : FunSpec({
                     name = "Test Job",
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
-                    uses(action = CheckoutV3())
+                    uses(action = CheckoutV4())
                     run(command = "echo 'hello!'")
                 }
             }.toYaml()
@@ -765,7 +765,7 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: 'step-0'
                   name: 'Check out'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Consistency check'
                   run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
@@ -776,7 +776,7 @@ class IntegrationTest : FunSpec({
                 - 'check_yaml_consistency'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   run: 'echo ''hello!'''
 
@@ -839,7 +839,7 @@ class IntegrationTest : FunSpec({
             ) {
                 uses(
                     name = "Check out",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                 )
 
                 run(
@@ -867,7 +867,7 @@ class IntegrationTest : FunSpec({
                 steps:
                 - id: 'step-0'
                   name: 'Check out'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Hello world!'
                   run: 'echo ''hello!'''
@@ -995,7 +995,7 @@ class IntegrationTest : FunSpec({
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   run: 'echo ''hello!'''
 
@@ -1061,7 +1061,7 @@ class IntegrationTest : FunSpec({
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v3'
+                  uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   run: 'echo ''hello!'''
 

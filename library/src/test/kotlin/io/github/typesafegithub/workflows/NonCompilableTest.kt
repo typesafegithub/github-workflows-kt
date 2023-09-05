@@ -13,7 +13,7 @@ class NonCompilableTest : FunSpec({
         val compilationResult = compile(
             code = """
             import io.github.typesafegithub.workflows.dsl.workflow
-            import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+            import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
             import io.github.typesafegithub.workflows.domain.RunnerType
             import io.github.typesafegithub.workflows.domain.triggers.Push
             import java.nio.file.Path
@@ -28,7 +28,7 @@ class NonCompilableTest : FunSpec({
                     name = "Test Job",
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
-                    uses(action = CheckoutV3())
+                    uses(action = CheckoutV4())
                     run(command = "echo 'hello!'")
 
                     job(
@@ -36,7 +36,7 @@ class NonCompilableTest : FunSpec({
                         name = "Test Job",
                         runsOn = RunnerType.UbuntuLatest,
                     ) {
-                        uses(action = CheckoutV3())
+                        uses(action = CheckoutV4())
                         run(command = "echo 'hello!'")
                     }
                 }
@@ -52,7 +52,7 @@ class NonCompilableTest : FunSpec({
         val compilationResult = compile(
             code = """
             import io.github.typesafegithub.workflows.dsl.workflow
-            import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+            import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
             import io.github.typesafegithub.workflows.domain.RunnerType
             import io.github.typesafegithub.workflows.domain.triggers.Push
             import java.nio.file.Path
@@ -67,7 +67,7 @@ class NonCompilableTest : FunSpec({
                     name = "Test Job",
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
-                    uses(action = CheckoutV3())
+                    uses(action = CheckoutV4())
                     run(command = "echo 'hello!'")
                 }
             }

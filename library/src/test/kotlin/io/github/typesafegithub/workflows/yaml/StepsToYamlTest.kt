@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.yaml
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3.FetchDepth
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4.FetchDepth
 import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV3
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
@@ -23,7 +23,7 @@ class StepsToYamlTest : DescribeSpec({
             ActionStep(
                 id = "someId",
                 name = "Some external action",
-                action = CheckoutV3(),
+                action = CheckoutV4(),
                 outputs = Action.Outputs("someId"),
             ),
         )
@@ -41,7 +41,7 @@ class StepsToYamlTest : DescribeSpec({
             mapOf(
                 "id" to "someId",
                 "name" to "Some external action",
-                "uses" to "actions/checkout@v3",
+                "uses" to "actions/checkout@v4",
             ),
         )
     }
@@ -214,7 +214,7 @@ class StepsToYamlTest : DescribeSpec({
             val steps = listOf(
                 ActionStep(
                     id = "someId",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                     outputs = Action.Outputs("someId"),
                 ),
             )
@@ -226,7 +226,7 @@ class StepsToYamlTest : DescribeSpec({
             yaml shouldBe listOf(
                 mapOf(
                     "id" to "someId",
-                    "uses" to "actions/checkout@v3",
+                    "uses" to "actions/checkout@v4",
                 ),
             )
         }
@@ -239,7 +239,7 @@ class StepsToYamlTest : DescribeSpec({
                     name = "Some external action",
                     continueOnError = true,
                     timeoutMinutes = 123,
-                    action = CheckoutV3(fetchDepth = FetchDepth.Infinite),
+                    action = CheckoutV4(fetchDepth = FetchDepth.Infinite),
                     env = linkedMapOf(
                         "FOO" to "bar",
                         "BAZ" to """
@@ -268,7 +268,7 @@ class StepsToYamlTest : DescribeSpec({
                     "name" to "Some external action",
                     "continue-on-error" to true,
                     "timeout-minutes" to 123,
-                    "uses" to "actions/checkout@v3",
+                    "uses" to "actions/checkout@v4",
                     "with" to mapOf(
                         "fetch-depth" to "0",
                     ),
@@ -397,7 +397,7 @@ class StepsToYamlTest : DescribeSpec({
                 ActionStep(
                     id = "someId",
                     name = "Will be overridden",
-                    action = CheckoutV3(),
+                    action = CheckoutV4(),
                     outputs = Action.Outputs("someId"),
                     _customArguments = mapOf(
                         "name" to "Overridden!",
@@ -413,7 +413,7 @@ class StepsToYamlTest : DescribeSpec({
                 mapOf(
                     "id" to "someId",
                     "name" to "Overridden!",
-                    "uses" to "actions/checkout@v3",
+                    "uses" to "actions/checkout@v4",
                 ),
             )
         }
