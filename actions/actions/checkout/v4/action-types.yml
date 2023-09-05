@@ -1,0 +1,40 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  repository:
+    type: string
+  ref:
+    type: string
+  token:
+    type: string
+  ssh-key:
+    type: string
+  ssh-known-hosts:
+    type: string
+  ssh-strict:
+    type: boolean
+  persist-credentials:
+    type: boolean
+  path:
+    type: string
+  clean:
+    type: boolean
+  fetch-depth:
+    type: integer
+    named-values:
+      Infinite: 0
+  show-progress:
+    type: boolean
+  lfs:
+    type: boolean
+  submodules:
+    type: boolean
+  set-safe-directory:
+    type: boolean
+  github-server-url:
+    type: string
+  sparse-checkout:
+    type: boolean
+  sparse-checkout-cone-mode:
+    type: boolean
+  fetch-tags:
+    type: boolean

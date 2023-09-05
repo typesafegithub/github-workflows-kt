@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -27,6 +29,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/checkout)
  */
+@Deprecated(
+    message = "This action has a newer major version: CheckoutV4",
+    replaceWith = ReplaceWith("CheckoutV4"),
+)
 public data class CheckoutV3 private constructor(
     /**
      * Repository name with owner. For example, actions/checkout
