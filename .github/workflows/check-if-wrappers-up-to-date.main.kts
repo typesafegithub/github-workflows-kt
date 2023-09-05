@@ -2,7 +2,7 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.0.0")
 @file:Import("_shared.main.kts")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
@@ -26,7 +26,7 @@ workflow(
             id = "check-on-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
-            uses(action = CheckoutV3())
+            uses(action = CheckoutV4())
             setupJava()
             uses(
                 name = "Generate wrappers",

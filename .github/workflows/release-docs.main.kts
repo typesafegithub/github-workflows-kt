@@ -2,7 +2,7 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.0.0")
 @file:Import("_shared.main.kts")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -17,7 +17,7 @@ workflow(
         id = "release-docs",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV3())
+        uses(action = CheckoutV4())
         setupJava()
         setupPython()
 
