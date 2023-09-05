@@ -17,7 +17,7 @@ jobs:
       $GREETING: 'World'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Default environment variable'
       run: 'action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY'

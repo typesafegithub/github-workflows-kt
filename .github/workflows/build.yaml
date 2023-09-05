@@ -15,7 +15,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/build.yaml'' && ''.github/workflows/build.main.kts'''
@@ -28,7 +28,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v3'
@@ -46,7 +46,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v3'
@@ -65,7 +65,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       uses: 'actions/setup-python@v4'
       with:
@@ -81,7 +81,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       run: |-
         find -name *.main.kts -print0 | while read -d $'\0' file
@@ -96,7 +96,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Set up Java in proper version'
       uses: 'actions/setup-java@v3'

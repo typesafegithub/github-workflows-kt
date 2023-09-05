@@ -16,7 +16,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/check-if-wrappers-up-to-date.yaml'' && ''.github/workflows/check-if-wrappers-up-to-date.main.kts'''
@@ -29,7 +29,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v3'
@@ -50,7 +50,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v3'
