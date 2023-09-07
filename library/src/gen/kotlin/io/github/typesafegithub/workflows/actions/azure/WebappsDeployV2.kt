@@ -50,7 +50,7 @@ public data class WebappsDeployV2 private constructor(
      * example, 'myregistry.azurecr.io/nginx:latest' or 'python:3.7.2-alpine/'. For multi-container
      * scenario multiple container image names can be provided (multi-line separated)
      */
-    public val images: List<String>,
+    public val images: List<String>? = null,
     /**
      * Applies to Web App Containers only: Path of the Docker-Compose file. Should be a fully
      * qualified path or relative to the default working directory. Required for multi-container
@@ -81,7 +81,7 @@ public data class WebappsDeployV2 private constructor(
         publishProfile: String? = null,
         slotName: String? = null,
         `package`: String? = null,
-        images: List<String>,
+        images: List<String>? = null,
         configurationFile: String? = null,
         startupCommand: String? = null,
         resourceGroupName: String? = null,
@@ -99,7 +99,7 @@ public data class WebappsDeployV2 private constructor(
             publishProfile?.let { "publish-profile" to it },
             slotName?.let { "slot-name" to it },
             `package`?.let { "package" to it },
-            "images" to images.joinToString("\n"),
+            images?.let { "images" to it.joinToString("\n") },
             configurationFile?.let { "configuration-file" to it },
             startupCommand?.let { "startup-command" to it },
             resourceGroupName?.let { "resource-group-name" to it },
