@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.awsactions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -30,11 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
  */
-@Deprecated(
-    message = "This action has a newer major version: ConfigureAwsCredentialsV4",
-    replaceWith = ReplaceWith("ConfigureAwsCredentialsV4"),
-)
-public data class ConfigureAwsCredentialsV3 private constructor(
+public data class ConfigureAwsCredentialsV4 private constructor(
     /**
      * AWS Region, e.g. us-east-2
      */
@@ -139,8 +133,8 @@ public data class ConfigureAwsCredentialsV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ConfigureAwsCredentialsV3.Outputs>("aws-actions", "configure-aws-credentials",
-        _customVersion ?: "v3") {
+) : RegularAction<ConfigureAwsCredentialsV4.Outputs>("aws-actions", "configure-aws-credentials",
+        _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         awsRegion: String,

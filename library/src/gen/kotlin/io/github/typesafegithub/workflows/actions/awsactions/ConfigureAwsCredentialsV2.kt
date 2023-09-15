@@ -31,8 +31,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
  */
 @Deprecated(
-    message = "This action has a newer major version: ConfigureAwsCredentialsV3",
-    replaceWith = ReplaceWith("ConfigureAwsCredentialsV3"),
+    message = "This action has a newer major version: ConfigureAwsCredentialsV4",
+    replaceWith = ReplaceWith("ConfigureAwsCredentialsV4"),
 )
 public data class ConfigureAwsCredentialsV2 private constructor(
     /**

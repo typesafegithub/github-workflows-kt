@@ -1,0 +1,52 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  audience:
+    type: string
+  aws-access-key-id:
+    type: string
+  aws-secret-access-key:
+    type: string
+  aws-session-token:
+    type: string
+  aws-region:
+    type: string
+  mask-aws-account-id:
+    type: boolean
+  role-to-assume:
+    type: string
+  web-identity-token-file:
+    type: string
+  role-duration-seconds:
+    type: integer
+  role-session-name:
+    type: string
+  role-external-id:
+    type: string
+  role-skip-session-tagging:
+    type: boolean
+  role-chaining:
+    type: boolean
+  http-proxy:
+    type: string
+  inline-session-policy:
+    type: string
+  managed-session-policies:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  output-credentials:
+    type: boolean
+  retry-max-attempts:
+    type: integer
+  special-characters-workaround:
+    type: boolean
+outputs:
+  aws-account-id:
+    type: string
+  aws-access-key-id:
+    type: string
+  aws-secret-access-key:
+    type: string
+  aws-session-token:
+    type: string
