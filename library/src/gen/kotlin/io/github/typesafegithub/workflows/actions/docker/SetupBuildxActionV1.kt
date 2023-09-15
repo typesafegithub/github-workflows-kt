@@ -30,8 +30,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/docker/setup-buildx-action)
  */
 @Deprecated(
-    message = "This action has a newer major version: SetupBuildxActionV2",
-    replaceWith = ReplaceWith("SetupBuildxActionV2"),
+    message = "This action has a newer major version: SetupBuildxActionV3",
+    replaceWith = ReplaceWith("SetupBuildxActionV3"),
 )
 public data class SetupBuildxActionV1 private constructor(
     /**
