@@ -1,0 +1,115 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  add-hosts:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  allow:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  attests:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  build-args:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  build-contexts:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  builder:
+    type: string
+  cache-from:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  cache-to:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  cgroup-parent:
+    type: string
+  context:
+    type: string
+  file:
+    type: string
+  labels:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  load:
+    type: boolean
+  network:
+    type: string
+  no-cache:
+    type: boolean
+  no-cache-filters:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  outputs:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  platforms:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  provenance:
+    type: boolean
+  pull:
+    type: boolean
+  push:
+    type: boolean
+  sbom:
+    type: boolean
+  secrets:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  secret-files:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  shm-size:
+    type: string
+  ssh:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  tags:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  target:
+    type: string
+  ulimit:
+    type: string
+  github-token:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  imageid:
+    type: string
+  digest:
+    type: string
+  metadata:
+    type: string
