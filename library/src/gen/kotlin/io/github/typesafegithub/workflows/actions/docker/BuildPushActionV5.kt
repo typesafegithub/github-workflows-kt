@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.docker
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/build-push-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: BuildPushActionV5",
-    replaceWith = ReplaceWith("BuildPushActionV5"),
-)
-public data class BuildPushActionV3 private constructor(
+public data class BuildPushActionV5 private constructor(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
      */
@@ -164,7 +158,7 @@ public data class BuildPushActionV3 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?: "v3")
+) : RegularAction<BuildPushActionV5.Outputs>("docker", "build-push-action", _customVersion ?: "v5")
         {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,

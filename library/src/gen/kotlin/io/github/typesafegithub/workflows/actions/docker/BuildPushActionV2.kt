@@ -30,8 +30,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/docker/build-push-action)
  */
 @Deprecated(
-    message = "This action has a newer major version: BuildPushActionV4",
-    replaceWith = ReplaceWith("BuildPushActionV4"),
+    message = "This action has a newer major version: BuildPushActionV5",
+    replaceWith = ReplaceWith("BuildPushActionV5"),
 )
 public data class BuildPushActionV2 private constructor(
     /**
