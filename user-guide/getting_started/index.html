@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -571,9 +571,9 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
 <li>Put this content into the previously created file and save it:
    <div class="highlight"><pre><span></span><code><span class="c1">#!/usr/bin/env kotlin</span>
 
-<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:github-workflows-kt:1.0.0"</span><span class="p">)</span>
+<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:github-workflows-kt:1.1.0"</span><span class="p">)</span>
 
-<span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.actions.CheckoutV3</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.actions.CheckoutV4</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.triggers.Push</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.dsl.workflow</span>
@@ -585,7 +585,7 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
 <span class="w">    </span><span class="n">sourceFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__FILE__</span><span class="p">.</span><span class="na">toPath</span><span class="p">(),</span>
 <span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"test_job"</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Check out"</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CheckoutV3</span><span class="p">())</span>
+<span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Check out"</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CheckoutV4</span><span class="p">())</span>
 <span class="w">        </span><span class="n">run</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Print greeting"</span><span class="p">,</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"echo 'Hello world!'"</span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}.</span><span class="na">writeToFile</span><span class="p">()</span>
@@ -644,10 +644,10 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.0.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.1.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>
