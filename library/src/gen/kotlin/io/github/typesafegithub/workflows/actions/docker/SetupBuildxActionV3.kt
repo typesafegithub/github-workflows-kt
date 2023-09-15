@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.docker
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/setup-buildx-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupBuildxActionV3",
-    replaceWith = ReplaceWith("SetupBuildxActionV3"),
-)
-public data class SetupBuildxActionV2 private constructor(
+public data class SetupBuildxActionV3 private constructor(
     /**
      * Buildx version. (eg. v0.3.0)
      */
@@ -91,8 +85,8 @@ public data class SetupBuildxActionV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SetupBuildxActionV2.Outputs>("docker", "setup-buildx-action", _customVersion ?:
-        "v2") {
+) : RegularAction<SetupBuildxActionV3.Outputs>("docker", "setup-buildx-action", _customVersion ?:
+        "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         version: String? = null,

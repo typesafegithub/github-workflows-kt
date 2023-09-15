@@ -1,0 +1,48 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  version:
+    type: string
+  driver:
+    type: string
+  driver-opts:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  buildkitd-flags:
+    type: string
+  install:
+    type: boolean
+  use:
+    type: boolean
+  endpoint:
+    type: string
+  platforms:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  config:
+    type: string
+  config-inline:
+    type: string
+  append:
+    type: string
+  cleanup:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  name:
+    type: string
+  driver:
+    type: string
+  platforms:
+    type: string
+  nodes:
+    type: string
+  endpoint:
+    type: string
+  status:
+    type: string
+  flags:
+    type: string
