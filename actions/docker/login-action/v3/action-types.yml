@@ -1,0 +1,12 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  registry:
+    type: string
+  username:
+    type: string
+  password:
+    type: string
+  ecr:
+    type: boolean
+  logout:
+    type: boolean

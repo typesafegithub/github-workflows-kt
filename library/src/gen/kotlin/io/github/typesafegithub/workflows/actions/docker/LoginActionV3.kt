@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.docker
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,11 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/login-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: LoginActionV3",
-    replaceWith = ReplaceWith("LoginActionV3"),
-)
-public data class LoginActionV2 private constructor(
+public data class LoginActionV3 private constructor(
     /**
      * Server address of Docker registry. If not set then will default to Docker Hub
      */
@@ -62,7 +56,7 @@ public data class LoginActionV2 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("docker", "login-action", _customVersion ?: "v2") {
+) : RegularAction<Action.Outputs>("docker", "login-action", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         registry: String? = null,
