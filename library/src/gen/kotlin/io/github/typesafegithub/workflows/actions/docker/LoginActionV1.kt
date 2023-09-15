@@ -29,8 +29,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/docker/login-action)
  */
 @Deprecated(
-    message = "This action has a newer major version: LoginActionV2",
-    replaceWith = ReplaceWith("LoginActionV2"),
+    message = "This action has a newer major version: LoginActionV3",
+    replaceWith = ReplaceWith("LoginActionV3"),
 )
 public data class LoginActionV1 private constructor(
     /**
