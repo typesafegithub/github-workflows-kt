@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.docker
@@ -12,7 +11,6 @@ package io.github.typesafegithub.workflows.actions.docker
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,15 +26,11 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/docker/metadata-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: MetadataActionV5",
-    replaceWith = ReplaceWith("MetadataActionV5"),
-)
-public data class MetadataActionV4 private constructor(
+public data class MetadataActionV5 private constructor(
     /**
      * Where to get context data. Allowed options are "workflow"  (default), "git".
      */
-    public val context: MetadataActionV4.Context? = null,
+    public val context: MetadataActionV5.Context? = null,
     /**
      * List of Docker images to use as base name for tags
      */
@@ -78,10 +72,10 @@ public data class MetadataActionV4 private constructor(
      * version that the wrapper doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<MetadataActionV4.Outputs>("docker", "metadata-action", _customVersion ?: "v4") {
+) : RegularAction<MetadataActionV5.Outputs>("docker", "metadata-action", _customVersion ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        context: MetadataActionV4.Context? = null,
+        context: MetadataActionV5.Context? = null,
         images: List<String>,
         tags: List<String>? = null,
         flavor: List<String>? = null,
@@ -117,13 +111,13 @@ public data class MetadataActionV4 private constructor(
     public sealed class Context(
         public val stringValue: String,
     ) {
-        public object Workflow : MetadataActionV4.Context("workflow")
+        public object Workflow : MetadataActionV5.Context("workflow")
 
-        public object Git : MetadataActionV4.Context("git")
+        public object Git : MetadataActionV5.Context("git")
 
         public class Custom(
             customStringValue: String,
-        ) : MetadataActionV4.Context(customStringValue)
+        ) : MetadataActionV5.Context(customStringValue)
     }
 
     public class Outputs(
