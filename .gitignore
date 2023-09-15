@@ -5,3 +5,6 @@
 !.idea/icon.svg
 
 build
+
+# Created in unit tests - easier and more readable to ignore it rather than adjust the test.
+/.github/workflows/.yaml
