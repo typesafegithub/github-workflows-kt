@@ -1,8 +1,8 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.0.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.1.0")
 @file:Import("_shared.main.kts")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -25,7 +25,7 @@ workflow(
         id = "release",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV3())
+        uses(action = CheckoutV4())
         setupJava()
         uses(
             name = "Build",
