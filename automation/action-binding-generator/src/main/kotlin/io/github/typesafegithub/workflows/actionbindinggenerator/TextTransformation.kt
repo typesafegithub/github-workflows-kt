@@ -16,8 +16,8 @@ public fun String.toPascalCase(): String {
         }
 }
 
-public fun String.toCamelCase(): String =
+internal fun String.toCamelCase() =
     toPascalCase().replaceFirstChar { it.lowercase() }
 
-public fun String.removeTrailingWhitespacesForEachLine(): String =
+internal fun String.removeTrailingWhitespacesForEachLine() =
     lines().joinToString(separator = "\n") { it.trimEnd() }

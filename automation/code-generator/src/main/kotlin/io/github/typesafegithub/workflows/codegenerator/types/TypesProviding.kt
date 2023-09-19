@@ -2,7 +2,6 @@ package io.github.typesafegithub.workflows.codegenerator.types
 
 import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.fetchUri
-import io.github.typesafegithub.workflows.actionbindinggenerator.myYaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionbindinggenerator.releasesUrl
 import io.github.typesafegithub.workflows.actionbindinggenerator.toPascalCase
@@ -123,3 +122,9 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(text: Strin
     } else {
         default
     }
+
+private val myYaml = Yaml(
+    configuration = Yaml.default.configuration.copy(
+        strictMode = false,
+    ),
+)
