@@ -13,7 +13,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
 workflow(
-    name = "Check if wrappers up to date",
+    name = "Check if action bindings up to date",
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
@@ -29,13 +29,13 @@ workflow(
             uses(action = CheckoutV4())
             setupJava()
             uses(
-                name = "Generate wrappers",
+                name = "Generate action bindings",
                 action = GradleBuildActionV2(
                     arguments = ":automation:code-generator:run",
                 )
             )
             run(
-                name = "Fail if there are any changes in the generated wrappers or their list in the docs",
+                name = "Fail if there are any changes in the generated action bindings or their list in the docs",
                 command = "git diff --exit-code library/src/gen/ docs/supported-actions.md"
             )
         }

@@ -11,12 +11,12 @@ These are actions ready to use, grouped by owners. For `actions/checkout@v3`, th
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to
 version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
-Each new major version means a breaking change, and it usually means that the Kotlin wrapper for the action needs a
+Each new major version means a breaking change, and it usually means that the Kotlin binding for the action needs a
 breaking change as well.
 
 ### Requirements for adding a new action
 
-An action is eligible to be added to this library (i.e. have its Kotlin wrapper generated and maintained by the library)
+An action is eligible to be added to this library (i.e. have its Kotlin binding generated and maintained by the library)
 if the following conditions are fulfilled:
 
 * follows [Semantic Versioning](https://semver.org/), with exceptions for pre-releases (like `v0.2`)
@@ -33,12 +33,12 @@ Nice to have:
 If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
 you have two ways to proceed.
 
-### Typed wrapper
+### Typed binding
 
 !!! info "When to use this approach"
-    It lets you create an action wrapper in a similar manner that is provided by the built-in action wrappers in this
+    It lets you create an action binding in a similar manner that is provided by the built-in action bindings in this
     library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
-    inside `toYamlArguments`. Use it to have better type-safety when using the wrapper.
+    inside `toYamlArguments`. Use it to have better type-safety when using the binding.
 
 #### Repository based actions
 
@@ -79,7 +79,7 @@ In case of a published Docker action, inherit from [`DockerAction`](https://gith
 --8<-- "UsingActionsSnippets.kt:docker-action"
 ```
 
-### Untyped wrapper
+### Untyped binding
 
 !!! info "When to use this approach"
     It omits typing entirely, and both inputs and outputs are referenced using strings. Use it if you don't care about

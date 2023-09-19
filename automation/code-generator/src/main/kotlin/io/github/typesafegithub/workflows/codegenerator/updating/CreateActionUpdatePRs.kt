@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
@@ -41,7 +41,7 @@ suspend fun main() {
             if (codeCurrent != codeNewest) {
                 println("\uD83D\uDEA8 GENERATED CODE CHANGED! $path \uD83D\uDEA8")
                 createPullRequest(
-                    wrapperRequest = wrapperRequest,
+                    actionBindingRequest = wrapperRequest,
                     path = path,
                     wrapperCode = codeNewest,
                     commitHashFilePath = commitHashFilePath,
@@ -55,7 +55,7 @@ suspend fun main() {
 }
 
 private suspend fun createPullRequest(
-    wrapperRequest: WrapperRequest,
+    actionBindingRequest: ActionBindingRequest,
     path: String,
     wrapperCode: String,
     commitHashFilePath: Path,
@@ -64,8 +64,8 @@ private suspend fun createPullRequest(
 ) {
     println("Creating a PR:")
     createPullRequest(
-        branchName = "update-${wrapperRequest.actionCoords.prettyPrint}",
-        prTitle = "feat(actions): update ${wrapperRequest.actionCoords.prettyPrint}",
+        branchName = "update-${actionBindingRequest.actionCoords.prettyPrint}",
+        prTitle = "feat(actions): update ${actionBindingRequest.actionCoords.prettyPrint}",
         prBody = "Created automatically.",
         fileNamesToContents = mapOf(
             path to wrapperCode,
@@ -77,7 +77,7 @@ private suspend fun createPullRequest(
     )
 }
 
-private fun WrapperRequest.generateWrapperForCommit(commitHash: String): Wrapper =
+private fun ActionBindingRequest.generateWrapperForCommit(commitHash: String): Wrapper =
     actionCoords.generateWrapper(
         inputTypings = provideTypes(getCommitHash = { commitHash }),
         fetchMetadataImpl = { fetchMetadata(commitHash = commitHash, useCache = false) },

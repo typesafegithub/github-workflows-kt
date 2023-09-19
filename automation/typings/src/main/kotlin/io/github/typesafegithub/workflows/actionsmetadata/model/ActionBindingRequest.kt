@@ -5,7 +5,7 @@ sealed interface TypingsSource {
     object ActionTypes : TypingsSource
 }
 
-data class WrapperRequest(
+data class ActionBindingRequest(
     val actionCoords: ActionCoords,
     val typingsSource: TypingsSource = TypingsSource.CodeGenerator(),
 )

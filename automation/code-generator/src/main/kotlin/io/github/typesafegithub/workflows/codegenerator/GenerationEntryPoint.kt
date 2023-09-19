@@ -3,7 +3,7 @@ package io.github.typesafegithub.workflows.codegenerator
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
-import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
 import io.github.typesafegithub.workflows.codegenerator.types.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
@@ -95,7 +95,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
     }
 }
 
-private fun WrapperRequest.toMarkdownLinkToKotlinCode(): String {
+private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(): String {
     val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
     return "${actionCoords.version}$typingsMarker: [`${actionCoords.buildActionClassName()}`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${actionCoords.owner.toKotlinPackageName()}/${this.actionCoords.buildActionClassName()}.kt)"
 }

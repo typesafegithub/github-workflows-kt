@@ -1,9 +1,9 @@
 package io.github.typesafegithub.workflows.actionsmetadata
 
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
-import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 
-fun List<WrapperRequest>.addDeprecationInfo(): List<WrapperRequest> =
+fun List<ActionBindingRequest>.addDeprecationInfo(): List<ActionBindingRequest> =
     this.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
         .mapValues { (_, requests) ->
             val maxVersion = requests.maxByOrNull { Version(it.actionCoords.version) }?.actionCoords?.version
@@ -14,7 +14,7 @@ fun List<WrapperRequest>.addDeprecationInfo(): List<WrapperRequest> =
         .flatMap { it.second }
 
 private fun setDeprecatedByVersionForNonNewestVersions(
-    requests: List<WrapperRequest>,
+    requests: List<ActionBindingRequest>,
     maxVersion: String,
 ) = requests.map {
     if (it.actionCoords.version != maxVersion) {

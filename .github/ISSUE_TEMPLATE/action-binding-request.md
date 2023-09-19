@@ -1,7 +1,7 @@
 ---
-name: Action wrapper(s) request
-about: Request adding wrapper(s) for action(s)
-title: "[Action wrapper(s) request] <enter action name(s) here>"
+name: Action bindings(s) request
+about: Request adding bindings(s) for action(s)
+title: "[Action binding(s) request] <enter action name(s) here>"
 labels: enhancement
 assignees: ''
 

@@ -9,7 +9,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpeci
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
-import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -50,13 +50,13 @@ class TypesProvidingTest : FunSpec({
                   - admin
                   - guest
         """.trimIndent()
-        val wrapperRequest = WrapperRequest(
+        val actionBindingRequest = ActionBindingRequest(
             actionCoords = ActionCoords("some-owner", "some-name", "v1"),
             typingsSource = TypingsSource.ActionTypes,
         )
 
         // When
-        val types = wrapperRequest.provideTypes({ actionTypesYml }, { "some-hash" })
+        val types = actionBindingRequest.provideTypes({ actionTypesYml }, { "some-hash" })
 
         // Then
         types shouldBe mapOf(
