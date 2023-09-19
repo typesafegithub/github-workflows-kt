@@ -20,7 +20,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 
-data class Wrapper(
+data class ActionBinding(
     val kotlinCode: String,
     val filePath: String,
 )
@@ -37,10 +37,10 @@ object Properties {
     val CUSTOM_VERSION = "_customVersion"
 }
 
-fun ActionCoords.generateWrapper(
+fun ActionCoords.generateActionBinding(
     inputTypings: Map<String, Typing> = emptyMap(),
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
-): Wrapper {
+): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
     }
@@ -51,9 +51,9 @@ fun ActionCoords.generateWrapper(
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
 
-    val actionWrapperSourceCode = generateActionWrapperSourceCode(metadata, this, inputTypings)
-    return Wrapper(
-        kotlinCode = actionWrapperSourceCode,
+    val actionBindingSourceCode = generateActionBindingSourceCode(metadata, this, inputTypings)
+    return ActionBinding(
+        kotlinCode = actionBindingSourceCode,
         filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
     )
 }
@@ -80,7 +80,7 @@ private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String
     }
 }
 
-private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
+private fun generateActionBindingSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
     val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
         .addFileComment(
             """
@@ -233,7 +233,7 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
             indent()
             inputs.forEach { (key, value) ->
                 val asStringCode = inputTypings.getInputTyping(key).asString()
-                if (!value.shouldBeNonNullInWrapper()) {
+                if (!value.shouldBeNonNullInBinding()) {
                     add("%N?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
                 } else {
                     add("%S to %N$asStringCode,\n", key, key.toCamelCase())
@@ -329,7 +329,7 @@ private fun Metadata.buildCommonConstructorParameters(
     )
 
 private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): ParameterSpec.Builder {
-    if (!input.shouldBeNonNullInWrapper()) {
+    if (!input.shouldBeNonNullInBinding()) {
         defaultValue("null")
     }
     return this
@@ -349,7 +349,7 @@ private fun Map<String, Typing>.getInputTyping(key: String) =
 
 private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords) =
     getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName(), key)
-        .copy(nullable = !input.shouldBeNonNullInWrapper())
+        .copy(nullable = !input.shouldBeNonNullInBinding())
 
 // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
 //            and a shortcoming in KotlinPoet: https://github.com/square/kotlinpoet/issues/887

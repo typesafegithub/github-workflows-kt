@@ -1,14 +1,14 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
-import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
 import java.io.File
 
 /**
- * Suggest newer versions for the wrapper generator
+ * Suggest newer versions for the binding generator
  *
  * You need to set an environment variable
  *  `$ export GITHUB_TOKEN=token`
@@ -25,7 +25,7 @@ suspend fun main() {
     var output: String = ""
     val githubAuthorization = getGithubToken()
 
-    val actionsMap: Map<ActionCoords, List<Version>> = wrappersToGenerate
+    val actionsMap: Map<ActionCoords, List<Version>> = bindingsToGenerate
         .map { it.actionCoords }
         .filter { it.deprecatedByVersion == null }
         .filter { it.isTopLevel }

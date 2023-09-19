@@ -1,13 +1,13 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.Wrapper
+import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.fetchMetadata
-import io.github.typesafegithub.workflows.actionbindinggenerator.generateWrapper
+import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
-import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
@@ -24,26 +24,26 @@ import kotlin.io.path.pathString
 suspend fun main() {
     val githubToken = getGithubToken()
 
-    wrappersToGenerate
+    bindingsToGenerate
         .filter { it.actionCoords.isTopLevel }
-        .forEach { wrapperRequest ->
-            println("➡\uFE0F For action ${wrapperRequest.actionCoords.prettyPrint}")
+        .forEach { actionBindingRequest ->
+            println("➡\uFE0F For action ${actionBindingRequest.actionCoords.prettyPrint}")
 
-            val commitHashFilePath = wrapperRequest.actionCoords.buildCommitHashFilePath()
+            val commitHashFilePath = actionBindingRequest.actionCoords.buildCommitHashFilePath()
             val currentCommitHash = commitHashFilePath.toFile().readText().trim()
 
-            val newestCommitHash = wrapperRequest.actionCoords.fetchCommitHash(githubToken)
-                ?: error("There was a problem fetching commit hash for ${wrapperRequest.actionCoords}")
+            val newestCommitHash = actionBindingRequest.actionCoords.fetchCommitHash(githubToken)
+                ?: error("There was a problem fetching commit hash for ${actionBindingRequest.actionCoords}")
 
-            val (codeCurrent, path) = wrapperRequest.generateWrapperForCommit(currentCommitHash)
-            val (codeNewest, _) = wrapperRequest.generateWrapperForCommit(newestCommitHash)
+            val (codeCurrent, path) = actionBindingRequest.generateBindingForCommit(currentCommitHash)
+            val (codeNewest, _) = actionBindingRequest.generateBindingForCommit(newestCommitHash)
 
             if (codeCurrent != codeNewest) {
                 println("\uD83D\uDEA8 GENERATED CODE CHANGED! $path \uD83D\uDEA8")
                 createPullRequest(
-                    actionBindingRequest = wrapperRequest,
+                    actionBindingRequest = actionBindingRequest,
                     path = path,
-                    wrapperCode = codeNewest,
+                    bindingCode = codeNewest,
                     commitHashFilePath = commitHashFilePath,
                     newCommitHash = newestCommitHash,
                     githubToken = githubToken,
@@ -57,7 +57,7 @@ suspend fun main() {
 private suspend fun createPullRequest(
     actionBindingRequest: ActionBindingRequest,
     path: String,
-    wrapperCode: String,
+    bindingCode: String,
     commitHashFilePath: Path,
     newCommitHash: String,
     githubToken: String,
@@ -68,7 +68,7 @@ private suspend fun createPullRequest(
         prTitle = "feat(actions): update ${actionBindingRequest.actionCoords.prettyPrint}",
         prBody = "Created automatically.",
         fileNamesToContents = mapOf(
-            path to wrapperCode,
+            path to bindingCode,
             commitHashFilePath.pathString to newCommitHash,
         ),
         githubToken = githubToken,
@@ -77,8 +77,8 @@ private suspend fun createPullRequest(
     )
 }
 
-private fun ActionBindingRequest.generateWrapperForCommit(commitHash: String): Wrapper =
-    actionCoords.generateWrapper(
+private fun ActionBindingRequest.generateBindingForCommit(commitHash: String): ActionBinding =
+    actionCoords.generateBinding(
         inputTypings = provideTypes(getCommitHash = { commitHash }),
         fetchMetadataImpl = { fetchMetadata(commitHash = commitHash, useCache = false) },
     )

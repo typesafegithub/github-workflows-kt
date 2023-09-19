@@ -3,8 +3,8 @@ package io.github.typesafegithub.workflows.domain.actions
 import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
 
 /**
- * CustomAction can be used when there is no type-safe wrapper action
- * and a quickly untyped wrapper is needed to fill the blank.
+ * CustomAction can be used when there is no type-safe binding action
+ * and a quickly untyped binding is needed to fill the blank.
  *
  * Consider adding first-class support for your action! See CONTRIBUTING.md.
  */

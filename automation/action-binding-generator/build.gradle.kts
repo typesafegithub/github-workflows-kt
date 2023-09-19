@@ -15,7 +15,7 @@ dependencies {
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
-    exclude("**/wrappersfromunittests/**")
+    exclude("**/bindingsfromunittests/**")
 }
 
 tasks.lintKotlinTest {

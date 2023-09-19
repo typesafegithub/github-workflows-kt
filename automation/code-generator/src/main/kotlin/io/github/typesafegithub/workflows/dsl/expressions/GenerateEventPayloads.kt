@@ -24,7 +24,7 @@ fun main() {
  * Generate type-safe accessors for GitHub Event payloads
  * The payloads depend on the kind of the event: pull request, push, ...
  *
- * We read event payloads from wrapper-generate/src/test/resources/payloads
+ * We read event payloads from binding-generate/src/test/resources/payloads
  * We generate it inside       library/src/main/kotlin/io/github/typesafegithub/workflows/expressions/contexts
  *
  * The JSONs come from https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads

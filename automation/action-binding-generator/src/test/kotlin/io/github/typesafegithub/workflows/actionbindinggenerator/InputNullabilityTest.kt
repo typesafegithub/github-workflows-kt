@@ -5,7 +5,7 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class InputNullabilityTest : FunSpec({
-    context("shouldBeNonNullInWrapper") {
+    context("shouldBeNonNullInBinding") {
         listOf(
             // No info about default value or input being required, so let's assume more freedom here - nullable.
             row(null, null, false),
@@ -25,7 +25,7 @@ class InputNullabilityTest : FunSpec({
                     description = "Some input",
                     default = default,
                     required = required,
-                ).shouldBeNonNullInWrapper() shouldBe result
+                ).shouldBeNonNullInBinding() shouldBe result
             }
         }
     }

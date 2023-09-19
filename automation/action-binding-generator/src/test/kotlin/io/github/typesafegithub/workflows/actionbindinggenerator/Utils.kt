@@ -6,9 +6,9 @@ import io.kotest.matchers.shouldNot
 import io.kotest.matchers.string.contain
 import java.nio.file.Paths
 
-fun Wrapper.shouldMatchFile(path: String) {
+fun ActionBinding.shouldMatchFile(path: String) {
     val expectedFile =
-        Paths.get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/wrappersfromunittests/$path")
+        Paths.get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path")
             .toFile()
     val actualFile = expectedFile.resolveSibling(expectedFile.nameWithoutExtension + "Actual.kt")
     val expectedContent = when {
@@ -31,7 +31,7 @@ fun Wrapper.shouldMatchFile(path: String) {
             // change the package to avoid compilation errors because of duplicate classes / functions
             actualContent.replace("package $packageName", "package $packageName.actual"),
         )
-        fail("The Wrapper's kotlin code in ${actualFile.name} doesn't match ${expectedFile.name}\nSee folder ${expectedFile.parentFile.canonicalPath}")
+        fail("The Binding's kotlin code in ${actualFile.name} doesn't match ${expectedFile.name}\nSee folder ${expectedFile.parentFile.canonicalPath}")
     }
 }
 

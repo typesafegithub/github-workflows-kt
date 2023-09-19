@@ -41,10 +41,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
 
         // when
-        val wrapper = coords.generateWrapper { actionManifest }
+        val binding = coords.generateBinding { actionManifest }
 
         // then
-        wrapper.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
+        binding.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
     }
 
     test("action with various combinations of input parameters describing being required or optional") {
@@ -79,10 +79,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
 
         // when
-        val wrapper = coords.generateWrapper(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
 
         // then
-        wrapper.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
+        binding.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
     }
 
     test("action with non-string inputs") {
@@ -141,7 +141,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
 
         // when
-        val wrapper = coords.generateWrapper(
+        val binding = coords.generateBinding(
             fetchMetadataImpl = { actionManifest },
             inputTypings = mapOf(
                 "baz-goo" to BooleanTyping,
@@ -156,7 +156,7 @@ class GenerationTest : FunSpec({
         )
 
         // then
-        wrapper.shouldMatchFile("ActionWithNonStringInputsV3.kt")
+        binding.shouldMatchFile("ActionWithNonStringInputsV3.kt")
     }
 
     test("action with outputs") {
