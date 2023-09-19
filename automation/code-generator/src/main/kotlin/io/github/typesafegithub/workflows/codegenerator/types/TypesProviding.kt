@@ -15,11 +15,11 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
-import io.github.typesafegithub.workflows.codegenerator.generation.toPascalCase
-import io.github.typesafegithub.workflows.codegenerator.metadata.fetchUri
-import io.github.typesafegithub.workflows.codegenerator.metadata.myYaml
-import io.github.typesafegithub.workflows.codegenerator.metadata.prettyPrint
-import io.github.typesafegithub.workflows.codegenerator.metadata.releasesUrl
+import io.github.typesafegithub.workflows.wrappergenerator.fetchUri
+import io.github.typesafegithub.workflows.wrappergenerator.myYaml
+import io.github.typesafegithub.workflows.wrappergenerator.prettyPrint
+import io.github.typesafegithub.workflows.wrappergenerator.releasesUrl
+import io.github.typesafegithub.workflows.wrappergenerator.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException

@@ -1,7 +1,4 @@
-package io.github.typesafegithub.workflows.codegenerator.generation
-
-import io.github.typesafegithub.workflows.codegenerator.metadata.Input
-import io.github.typesafegithub.workflows.codegenerator.metadata.Metadata
+package io.github.typesafegithub.workflows.wrappergenerator
 
 fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): String? {
     val keys = (inputs.keys - existingTypings).associate {

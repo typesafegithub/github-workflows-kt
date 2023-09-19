@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.codegenerator.metadata
+package io.github.typesafegithub.workflows.wrappergenerator
 
 import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
