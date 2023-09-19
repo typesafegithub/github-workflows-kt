@@ -8,11 +8,9 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterSpec
-import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
 import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
@@ -27,16 +25,16 @@ public data class ActionBinding(
     val filePath: String,
 )
 
-public object Types {
-    public val mapStringString: ParameterizedTypeName = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
-    public val nullableString: TypeName = String::class.asTypeName().copy(nullable = true)
-    public val mapToList: MemberName = MemberName("kotlin.collections", "toList")
-    public val listToArray: MemberName = MemberName("kotlin.collections", "toTypedArray")
+private object Types {
+    val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
+    val nullableString = String::class.asTypeName().copy(nullable = true)
+    val mapToList = MemberName("kotlin.collections", "toList")
+    val listToArray = MemberName("kotlin.collections", "toTypedArray")
 }
 
-public object Properties {
-    public val CUSTOM_INPUTS: String = "_customInputs"
-    public val CUSTOM_VERSION: String = "_customVersion"
+private object Properties {
+    val CUSTOM_INPUTS = "_customInputs"
+    val CUSTOM_VERSION = "_customVersion"
 }
 
 public fun ActionCoords.generateBinding(

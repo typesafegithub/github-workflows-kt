@@ -57,10 +57,6 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Inp
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/InputNullabilityKt {
-	public static final fun shouldBeNonNullInBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/Input;)Z
-}
-
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/Metadata {
 	public static final field Companion Lio/github/typesafegithub/workflows/actionbindinggenerator/Metadata$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -98,15 +94,12 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Met
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/MetadataReadingKt {
-	public static final fun actionYamlUrl (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/lang/String;)Ljava/lang/String;
-	public static final fun actionYmlUrl (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/lang/String;)Ljava/lang/String;
 	public static final fun deleteActionYamlCacheIfObsolete ()V
 	public static final fun fetchMetadata (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;
 	public static synthetic fun fetchMetadata$default (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;
 	public static final fun fetchUri (Ljava/net/URI;)Ljava/lang/String;
 	public static final fun getActionYamlDir ()Ljava/io/File;
 	public static final fun getGitHubUrl (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;)Ljava/lang/String;
-	public static final fun getMyYaml ()Lcom/charleskorn/kaml/Yaml;
 	public static final fun getPrettyPrint (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;)Ljava/lang/String;
 	public static final fun getReleasesUrl (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;)Ljava/lang/String;
 }
@@ -142,35 +135,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Out
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/Properties {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/Properties;
-	public final fun getCUSTOM_INPUTS ()Ljava/lang/String;
-	public final fun getCUSTOM_VERSION ()Ljava/lang/String;
-}
-
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/TextTransformationKt {
-	public static final fun removeTrailingWhitespacesForEachLine (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun toCamelCase (Ljava/lang/String;)Ljava/lang/String;
 	public static final fun toKotlinPackageName (Ljava/lang/String;)Ljava/lang/String;
 	public static final fun toPascalCase (Ljava/lang/String;)Ljava/lang/String;
-}
-
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/Types {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/Types;
-	public final fun getListToArray ()Lcom/squareup/kotlinpoet/MemberName;
-	public final fun getMapStringString ()Lcom/squareup/kotlinpoet/ParameterizedTypeName;
-	public final fun getMapToList ()Lcom/squareup/kotlinpoet/MemberName;
-	public final fun getNullableString ()Lcom/squareup/kotlinpoet/TypeName;
-}
-
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/TypingGenerationKt {
-	public static final fun asString (Lio/github/typesafegithub/workflows/actionsmetadata/model/Typing;)Ljava/lang/String;
-	public static final fun buildCustomType (Lio/github/typesafegithub/workflows/actionsmetadata/model/Typing;Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/lang/String;)Lcom/squareup/kotlinpoet/TypeSpec;
-	public static final fun getClassName (Lio/github/typesafegithub/workflows/actionsmetadata/model/Typing;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/squareup/kotlinpoet/TypeName;
-}
-
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/TypingSuggestionsKt {
-	public static final fun suggestAdditionalTypings (Lio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Ljava/util/Set;)Ljava/lang/String;
-	public static final fun suggestTyping (Lio/github/typesafegithub/workflows/actionbindinggenerator/Input;)Ljava/lang/String;
 }
 

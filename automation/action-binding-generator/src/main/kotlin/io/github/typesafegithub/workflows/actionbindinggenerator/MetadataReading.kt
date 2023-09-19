@@ -35,9 +35,9 @@ public data class Output(
     val description: String = "",
 )
 
-public fun ActionCoords.actionYmlUrl(gitRef: String): String = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
+private fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
 
-public fun ActionCoords.actionYamlUrl(gitRef: String): String = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
+private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
 
 public val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
@@ -81,7 +81,7 @@ private fun ActionCoords.getCommitHashFromFileSystem(): String =
 
 public fun fetchUri(uri: URI): String = uri.toURL().readText()
 
-public val myYaml: Yaml = Yaml(
+private val myYaml = Yaml(
     configuration = Yaml.default.configuration.copy(
         strictMode = false,
     ),

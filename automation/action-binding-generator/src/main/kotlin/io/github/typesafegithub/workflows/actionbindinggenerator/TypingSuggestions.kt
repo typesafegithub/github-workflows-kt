@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
-public fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): String? {
+internal fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): String? {
     val keys = (inputs.keys - existingTypings).associate {
         it to inputs.get(it)!!
     }
@@ -21,7 +21,7 @@ public fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): Stri
     }
 }
 
-public fun Input.suggestTyping(): String? {
+internal fun Input.suggestTyping(): String? {
     val listKeywords = setOf(
         "list of",
         "paths",
