@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.codegenerator.generation
+package io.github.typesafegithub.workflows.wrappergenerator
 
 import java.util.Locale
 

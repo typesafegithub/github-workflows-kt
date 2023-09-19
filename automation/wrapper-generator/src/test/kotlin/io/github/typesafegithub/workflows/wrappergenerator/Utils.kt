@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.codegenerator.generation
+package io.github.typesafegithub.workflows.wrappergenerator
 
 import io.kotest.assertions.fail
 import io.kotest.matchers.shouldBe
@@ -8,7 +8,7 @@ import java.nio.file.Paths
 
 fun Wrapper.shouldMatchFile(path: String) {
     val expectedFile =
-        Paths.get("src/test/kotlin/io/github/typesafegithub/workflows/codegenerator/generation/wrappersfromunittests/$path")
+        Paths.get("src/test/kotlin/io/github/typesafegithub/workflows/wrappergenerator/wrappersfromunittests/$path")
             .toFile()
     val actualFile = expectedFile.resolveSibling(expectedFile.nameWithoutExtension + "Actual.kt")
     val expectedContent = when {

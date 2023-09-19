@@ -1,5 +1,3 @@
-import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
-
 plugins {
     buildsrc.convention.`kotlin-jvm`
 
@@ -20,6 +18,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
 
     implementation(projects.automation.typings)
+    implementation(projects.automation.wrapperGenerator)
 
     testImplementation(projects.library)
 }
@@ -44,16 +43,4 @@ tasks.register<JavaExec>("createActionUpdatePRs") {
     mainClass.set("io.github.typesafegithub.workflows.codegenerator.updating.CreateActionUpdatePRsKt")
     workingDir = rootDir
     dependsOn(tasks.compileKotlin)
-}
-
-fun ConfigurableKtLintTask.kotlinterConfig() {
-    exclude("**/wrappersfromunittests/**")
-}
-
-tasks.lintKotlinTest {
-    kotlinterConfig()
-}
-
-tasks.formatKotlinTest {
-    kotlinterConfig()
 }

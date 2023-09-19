@@ -1,8 +1,8 @@
-package io.github.typesafegithub.workflows.codegenerator.generation.wrappersfromunittests
+package io.github.typesafegithub.workflows.wrappergenerator.wrappersfromunittests
 
+import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithOutputsV3
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithOutputsV3
 
 class ActionWithOutputsV3Test : DescribeSpec({
     it("fields have correct output placeholders") {

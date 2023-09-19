@@ -5,14 +5,14 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
-import io.github.typesafegithub.workflows.codegenerator.generation.buildActionClassName
-import io.github.typesafegithub.workflows.codegenerator.generation.generateWrapper
-import io.github.typesafegithub.workflows.codegenerator.generation.toKotlinPackageName
-import io.github.typesafegithub.workflows.codegenerator.metadata.deleteActionYamlCacheIfObsolete
-import io.github.typesafegithub.workflows.codegenerator.metadata.prettyPrint
 import io.github.typesafegithub.workflows.codegenerator.types.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
+import io.github.typesafegithub.workflows.wrappergenerator.buildActionClassName
+import io.github.typesafegithub.workflows.wrappergenerator.deleteActionYamlCacheIfObsolete
+import io.github.typesafegithub.workflows.wrappergenerator.generateWrapper
+import io.github.typesafegithub.workflows.wrappergenerator.prettyPrint
+import io.github.typesafegithub.workflows.wrappergenerator.toKotlinPackageName
 import java.nio.file.Path
 import java.nio.file.Paths
 

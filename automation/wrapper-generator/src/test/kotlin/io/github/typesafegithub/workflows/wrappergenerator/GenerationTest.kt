@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.codegenerator.generation
+package io.github.typesafegithub.workflows.wrappergenerator
 
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.BooleanTyping
@@ -8,9 +8,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpecialValueTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
-import io.github.typesafegithub.workflows.codegenerator.metadata.Input
-import io.github.typesafegithub.workflows.codegenerator.metadata.Metadata
-import io.github.typesafegithub.workflows.codegenerator.metadata.Output
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.throwable.shouldHaveMessage
