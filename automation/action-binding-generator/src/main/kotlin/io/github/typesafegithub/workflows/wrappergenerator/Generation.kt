@@ -84,8 +84,8 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
     val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
         .addFileComment(
             """
-            This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
-            be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+            This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
+            be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
             generator itself.
             """.trimIndent(),
         )
@@ -316,14 +316,14 @@ private fun Metadata.buildCommonConstructorParameters(
     }.plus(
         ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
             .defaultValue("mapOf()")
-            .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the wrapper")
+            .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the binding")
             .build(),
     ).plus(
         ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
             .defaultValue("null")
             .addKdoc(
                 "Allows overriding action's version, for example to use a specific minor version, " +
-                    "or a newer version that the wrapper doesn't yet know about",
+                    "or a newer version that the binding doesn't yet know about",
             )
             .build(),
     )

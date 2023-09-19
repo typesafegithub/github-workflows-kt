@@ -1,5 +1,5 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
-// be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+// This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
+// be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
     "DataClassPrivateConstructor",
@@ -87,12 +87,12 @@ public data class SetupNodeV2 private constructor(
     @Deprecated("The version property will not be supported after October 1, 2019. Use node-version instead")
     public val version: String? = null,
     /**
-     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
      * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the wrapper doesn't yet know about
+     * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
 ) : RegularAction<SetupNodeV2.Outputs>("actions", "setup-node", _customVersion ?: "v2") {

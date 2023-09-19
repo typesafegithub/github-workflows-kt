@@ -1,5 +1,5 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
-// be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+// This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
+// be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
     "DataClassPrivateConstructor",
@@ -72,12 +72,12 @@ public data class TransifexPullRequestActionV5 private constructor(
      */
     public val labels: List<String>? = null,
     /**
-     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
      * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the wrapper doesn't yet know about
+     * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("c2corg", "transifex-pull-request-action", _customVersion ?: "v5")

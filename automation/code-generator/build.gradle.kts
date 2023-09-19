@@ -18,7 +18,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
 
     implementation(projects.automation.typings)
-    implementation(projects.automation.wrapperGenerator)
+    implementation(projects.automation.actionBindingGenerator)
 
     testImplementation(projects.library)
 }

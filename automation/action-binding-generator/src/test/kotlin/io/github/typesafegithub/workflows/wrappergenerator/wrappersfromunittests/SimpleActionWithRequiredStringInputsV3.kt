@@ -1,9 +1,10 @@
-// This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
-// be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
+// This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
+// be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
 // generator itself.
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.johnsmith
@@ -11,6 +12,7 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -20,55 +22,51 @@ import kotlin.collections.toTypedArray
 
 /**
  * Action: Do something cool
+ * and describe it in multiple lines
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
+ * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
  */
-public data class ActionWithOutputsV3 private constructor(
+public data class SimpleActionWithRequiredStringInputsV3 private constructor(
     /**
      * Short description
      */
     public val fooBar: String,
     /**
-     * Type-unsafe map where you can put any inputs that are not yet supported by the wrapper
+     * Just another input
+     * with multiline description
+     */
+    @Deprecated("this is deprecated")
+    public val bazGoo: String,
+    /**
+     * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
      * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the wrapper doesn't yet know about
+     * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithOutputsV3.Outputs>("john-smith", "action-with-outputs", _customVersion
-        ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs",
+        _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         fooBar: String,
+        bazGoo: String,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar=fooBar, _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(fooBar=fooBar, bazGoo=bazGoo, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo-bar" to fooBar,
+            "baz-goo" to bazGoo,
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
-
-    public class Outputs(
-        stepId: String,
-    ) : Action.Outputs(stepId) {
-        /**
-         * Cool output!
-         */
-        public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
-
-        /**
-         * Another output...
-         */
-        public val looWoz: String = "steps.$stepId.outputs.loo-woz"
-    }
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }
