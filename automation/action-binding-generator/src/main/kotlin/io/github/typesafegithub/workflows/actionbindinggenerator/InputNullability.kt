@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.wrappergenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
 /**
  * [Input.required] is in theory a required field in action's metadata, but in practice a lot of actions don't specify

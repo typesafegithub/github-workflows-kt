@@ -1,6 +1,12 @@
 package io.github.typesafegithub.workflows.codegenerator.types
 
 import com.charleskorn.kaml.Yaml
+import io.github.typesafegithub.workflows.actionbindinggenerator.fetchUri
+import io.github.typesafegithub.workflows.actionbindinggenerator.myYaml
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.releasesUrl
+import io.github.typesafegithub.workflows.actionbindinggenerator.toPascalCase
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionType
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypeEnum
@@ -14,12 +20,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.wrappergenerator.fetchUri
-import io.github.typesafegithub.workflows.wrappergenerator.myYaml
-import io.github.typesafegithub.workflows.wrappergenerator.prettyPrint
-import io.github.typesafegithub.workflows.wrappergenerator.releasesUrl
-import io.github.typesafegithub.workflows.wrappergenerator.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException

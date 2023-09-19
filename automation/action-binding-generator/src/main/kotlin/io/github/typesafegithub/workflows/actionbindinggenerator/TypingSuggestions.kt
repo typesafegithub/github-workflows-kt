@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.wrappergenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
 fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): String? {
     val keys = (inputs.keys - existingTypings).associate {

@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.wrappergenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
@@ -14,11 +14,11 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
+import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUSTOM_INPUTS
+import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUSTOM_VERSION
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
-import io.github.typesafegithub.workflows.wrappergenerator.Properties.CUSTOM_INPUTS
-import io.github.typesafegithub.workflows.wrappergenerator.Properties.CUSTOM_VERSION
 
 data class Wrapper(
     val kotlinCode: String,

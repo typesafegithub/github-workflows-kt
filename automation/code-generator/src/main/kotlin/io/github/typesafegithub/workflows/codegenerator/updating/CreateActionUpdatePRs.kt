@@ -1,7 +1,11 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.Wrapper
+import io.github.typesafegithub.workflows.actionbindinggenerator.fetchMetadata
+import io.github.typesafegithub.workflows.actionbindinggenerator.generateWrapper
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
@@ -10,10 +14,6 @@ import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
 import io.github.typesafegithub.workflows.codegenerator.versions.httpClient
 import io.github.typesafegithub.workflows.codegenerator.versions.json
-import io.github.typesafegithub.workflows.wrappergenerator.Wrapper
-import io.github.typesafegithub.workflows.wrappergenerator.fetchMetadata
-import io.github.typesafegithub.workflows.wrappergenerator.generateWrapper
-import io.github.typesafegithub.workflows.wrappergenerator.prettyPrint
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText

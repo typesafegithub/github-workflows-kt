@@ -1,10 +1,10 @@
 package io.github.typesafegithub.workflows.actionsmetadata
 
 import com.charleskorn.kaml.Yaml
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypes
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
 import kotlinx.serialization.decodeFromString
 import java.nio.file.Files

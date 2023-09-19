@@ -1,10 +1,10 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
 import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
-import io.github.typesafegithub.workflows.wrappergenerator.prettyPrint
 import java.io.File
 
 /**

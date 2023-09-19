@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.wrappergenerator.wrappersfromunittests
+package io.github.typesafegithub.workflows.actionbindinggenerator.wrappersfromunittests
 
 import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithNonStringInputsV3
 import io.kotest.core.spec.style.DescribeSpec

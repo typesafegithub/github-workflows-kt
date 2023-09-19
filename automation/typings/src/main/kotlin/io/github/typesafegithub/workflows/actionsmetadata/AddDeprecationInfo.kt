@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.actionsmetadata
 
-import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
+import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 
 fun List<ActionBindingRequest>.addDeprecationInfo(): List<ActionBindingRequest> =
     this.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }

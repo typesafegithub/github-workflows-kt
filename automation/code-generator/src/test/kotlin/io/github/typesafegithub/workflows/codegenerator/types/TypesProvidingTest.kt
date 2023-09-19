@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.codegenerator.types
 
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.BooleanTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.EnumTyping
@@ -9,7 +10,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpeci
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
