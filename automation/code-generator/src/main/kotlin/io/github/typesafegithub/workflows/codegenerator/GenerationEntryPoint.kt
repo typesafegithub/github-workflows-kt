@@ -52,7 +52,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
             This is a complete list of actions for which the library provides typed bindings, grouped by owners. If your
             action is not on the list, see [Using actions](user-guide/using-actions.md) section.
 
-            Click on a version to see the bindings's code.
+            Click on a version to see the binding's code.
 
             ## Action bindings
 
