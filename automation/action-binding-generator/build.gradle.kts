@@ -4,6 +4,8 @@ plugins {
     buildsrc.convention.`kotlin-jvm`
 
     kotlin("plugin.serialization")
+
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
 }
 
 dependencies {
@@ -12,6 +14,10 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.55.0")
 
     testImplementation(projects.library)
+}
+
+kotlin {
+    explicitApi()
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
