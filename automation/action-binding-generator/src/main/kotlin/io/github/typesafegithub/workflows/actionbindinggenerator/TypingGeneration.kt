@@ -20,7 +20,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 
-fun Typing.getClassName(actionPackageName: String, actionClassName: String, fieldName: String): TypeName =
+public fun Typing.getClassName(actionPackageName: String, actionClassName: String, fieldName: String): TypeName =
     when (this) {
         BooleanTyping -> Boolean::class.asTypeName()
         is EnumTyping -> {
@@ -38,7 +38,7 @@ fun Typing.getClassName(actionPackageName: String, actionClassName: String, fiel
         StringTyping -> String::class.asTypeName()
     }
 
-fun Typing.asString(): String =
+public fun Typing.asString(): String =
     when (this) {
         BooleanTyping -> ".toString()"
         is EnumTyping -> ".stringValue"
@@ -58,7 +58,7 @@ fun Typing.asString(): String =
         else -> ""
     }
 
-fun Typing.buildCustomType(coords: ActionCoords, fieldName: String): TypeSpec? =
+public fun Typing.buildCustomType(coords: ActionCoords, fieldName: String): TypeSpec? =
     when (this) {
         is EnumTyping -> buildEnumCustomType(coords, fieldName)
         is IntegerWithSpecialValueTyping -> buildIntegerWithSpecialValueCustomType(coords, fieldName)

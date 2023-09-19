@@ -2,11 +2,11 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import java.util.Locale
 
-fun String.toKotlinPackageName() =
+public fun String.toKotlinPackageName(): String =
     replace("-", "")
         .lowercase()
 
-fun String.toPascalCase(): String {
+public fun String.toPascalCase(): String {
     val hasOnlyUppercases = none { it in 'a'..'z' }
     val normalizedString = if (hasOnlyUppercases) lowercase() else this
     return normalizedString.replace("+", "-plus-")
@@ -16,8 +16,8 @@ fun String.toPascalCase(): String {
         }
 }
 
-fun String.toCamelCase(): String =
+public fun String.toCamelCase(): String =
     toPascalCase().replaceFirstChar { it.lowercase() }
 
-fun String.removeTrailingWhitespacesForEachLine(): String =
+public fun String.removeTrailingWhitespacesForEachLine(): String =
     lines().joinToString(separator = "\n") { it.trimEnd() }

@@ -15,7 +15,7 @@ import java.time.LocalDate
  */
 
 @Serializable
-data class Metadata(
+public data class Metadata(
     val name: String,
     val description: String,
     val inputs: Map<String, Input> = emptyMap(),
@@ -23,7 +23,7 @@ data class Metadata(
 )
 
 @Serializable
-data class Input(
+public data class Input(
     val description: String = "",
     val default: String? = null,
     val required: Boolean? = null,
@@ -31,21 +31,21 @@ data class Input(
 )
 
 @Serializable
-data class Output(
+public data class Output(
     val description: String = "",
 )
 
-fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
+public fun ActionCoords.actionYmlUrl(gitRef: String): String = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
 
-fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
+public fun ActionCoords.actionYamlUrl(gitRef: String): String = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
 
-val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
+public val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
-val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
+public val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
-val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
+public val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
-fun ActionCoords.fetchMetadata(
+public fun ActionCoords.fetchMetadata(
     commitHash: String = getCommitHashFromFileSystem(),
     useCache: Boolean = true,
     fetchUri: (URI) -> String = ::fetchUri,
@@ -79,17 +79,17 @@ fun ActionCoords.fetchMetadata(
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
 
-fun fetchUri(uri: URI) = uri.toURL().readText()
+public fun fetchUri(uri: URI): String = uri.toURL().readText()
 
-val myYaml = Yaml(
+public val myYaml: Yaml = Yaml(
     configuration = Yaml.default.configuration.copy(
         strictMode = false,
     ),
 )
 
-val actionYamlDir = File("build/action-yaml")
+public val actionYamlDir: File = File("build/action-yaml")
 
-fun deleteActionYamlCacheIfObsolete() {
+public fun deleteActionYamlCacheIfObsolete() {
     val today = LocalDate.now().toString()
     val dateTxt = actionYamlDir.resolve("date.txt")
     val cacheUpToDate = dateTxt.canRead() && dateTxt.readText() == today
