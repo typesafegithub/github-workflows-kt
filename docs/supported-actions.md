@@ -135,7 +135,7 @@ Click on a version to see the binding's code.
 
 ## Statistics
 
-Number of wrappers available:
+Number of bindings available:
 
 * counting by actions: 82
 * counting each version separately: 125
