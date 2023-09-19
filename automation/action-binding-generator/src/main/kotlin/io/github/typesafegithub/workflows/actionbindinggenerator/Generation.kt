@@ -37,7 +37,7 @@ object Properties {
     val CUSTOM_VERSION = "_customVersion"
 }
 
-fun ActionCoords.generateActionBinding(
+fun ActionCoords.generateBinding(
     inputTypings: Map<String, Typing> = emptyMap(),
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
 ): ActionBinding {

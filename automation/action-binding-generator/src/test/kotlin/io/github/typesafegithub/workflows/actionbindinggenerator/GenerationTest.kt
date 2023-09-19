@@ -179,13 +179,13 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
 
         // when
-        val wrapper = coords.generateWrapper { actionManifest }
+        val binding = coords.generateBinding { actionManifest }
 
         // then
-        wrapper.shouldMatchFile("ActionWithOutputsV3.kt")
+        binding.shouldMatchFile("ActionWithOutputsV3.kt")
     }
 
-    test("Detect wrapper request with invalid properties") {
+    test("Detect binding request with invalid properties") {
         // given
         val input = Input("input", "default", required = true)
         val actionManifest = Metadata(
@@ -205,7 +205,7 @@ class GenerationTest : FunSpec({
 
         shouldThrowAny {
             // when
-            coords.generateWrapper(inputTypings) { actionManifest }
+            coords.generateBinding(inputTypings) { actionManifest }
         }.shouldHaveMessage(
             // then
             """
@@ -228,10 +228,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
 
         // when
-        val wrapper = coords.generateWrapper { actionManifest }
+        val binding = coords.generateBinding { actionManifest }
 
         // then
-        wrapper.shouldMatchFile("ActionWithNoInputsV3.kt")
+        binding.shouldMatchFile("ActionWithNoInputsV3.kt")
     }
 
     test("action v2 deprecated by v3") {
@@ -246,10 +246,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
 
         // when
-        val wrapper = coords.generateWrapper { actionManifest }
+        val binding = coords.generateBinding { actionManifest }
 
         // then
-        wrapper.shouldMatchFile("DeprecatedActionV2.kt")
+        binding.shouldMatchFile("DeprecatedActionV2.kt")
     }
 
     test("action with deprecated input resolving to the same Kotlin field name") {
@@ -275,10 +275,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
 
         // when
-        val wrapper = coords.generateWrapper { actionManifest }
+        val binding = coords.generateBinding { actionManifest }
 
         // then
-        wrapper.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
+        binding.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
     }
 
     test("action with ListOfTypings") {
@@ -308,10 +308,10 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-lists", "v3")
 
         // when
-        val wrapper = coords.generateWrapper(inputTypings) { actionManifest }
+        val binding = coords.generateBinding(inputTypings) { actionManifest }
 
         // then
-        wrapper.shouldMatchFile("SimpleActionWithListsV3.kt")
+        binding.shouldMatchFile("SimpleActionWithListsV3.kt")
     }
 
     test("action with inputs sharing type") {
@@ -337,7 +337,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-inputs-sharing-type", "v3")
 
         // when
-        val wrapper = coords.generateWrapper(
+        val binding = coords.generateBinding(
             fetchMetadataImpl = { actionManifest },
             inputTypings = mapOf(
                 "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
@@ -347,6 +347,6 @@ class GenerationTest : FunSpec({
         )
 
         // then
-        wrapper.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
+        binding.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
     }
 })
