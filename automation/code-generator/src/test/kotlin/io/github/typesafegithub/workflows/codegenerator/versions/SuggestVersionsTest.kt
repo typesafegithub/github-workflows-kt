@@ -32,7 +32,7 @@ class SuggestVersionsTest : FunSpec({
         actual shouldBe sortedVersions
     }
 
-    context("Wrappers using major versions") {
+    context("Bindings using major versions") {
 
         test("No available versions") {
             val testCases: Table2<String, String> = table(
@@ -71,7 +71,7 @@ class SuggestVersionsTest : FunSpec({
         }
     }
 
-    context("Wrappers using hardcoded version") {
+    context("Bindings using hardcoded version") {
         test("No available versions") {
             val currentVersion = Version("v2.1.0")
             val testCases = listOf(

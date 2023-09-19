@@ -6,7 +6,7 @@ include(
     "library",
     ":automation:typings",
     ":automation:code-generator",
-    ":automation:wrapper-generator",
+    ":automation:action-binding-generator",
 )
 
 plugins {

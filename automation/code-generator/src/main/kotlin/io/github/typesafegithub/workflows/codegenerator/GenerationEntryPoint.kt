@@ -1,18 +1,18 @@
 package io.github.typesafegithub.workflows.codegenerator
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.buildActionClassName
+import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionYamlCacheIfObsolete
+import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.toKotlinPackageName
+import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
-import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
-import io.github.typesafegithub.workflows.actionsmetadata.wrappersToGenerate
 import io.github.typesafegithub.workflows.codegenerator.types.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
-import io.github.typesafegithub.workflows.wrappergenerator.buildActionClassName
-import io.github.typesafegithub.workflows.wrappergenerator.deleteActionYamlCacheIfObsolete
-import io.github.typesafegithub.workflows.wrappergenerator.generateWrapper
-import io.github.typesafegithub.workflows.wrappergenerator.prettyPrint
-import io.github.typesafegithub.workflows.wrappergenerator.toKotlinPackageName
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -20,24 +20,24 @@ import java.nio.file.Paths
  * Either run this main() function or run this command: ./gradlew :code-generator:run
  */
 fun main() {
-    val listOfWrappersInDocs = Paths.get("docs/supported-actions.md")
+    val listOfBindingsInDocs = Paths.get("docs/supported-actions.md")
 
     // To ensure there are no leftovers from previous generations.
     Paths.get("library/src/gen").toFile().deleteRecursively()
-    listOfWrappersInDocs.toFile().delete()
+    listOfBindingsInDocs.toFile().delete()
     generateEventPayloads()
-    generateWrappers()
-    generateListOfWrappersForDocs(listOfWrappersInDocs)
+    generateBindings()
+    generateListOfBindingsForDocs(listOfBindingsInDocs)
 }
 
-private fun generateWrappers() {
+private fun generateBindings() {
     deleteActionYamlCacheIfObsolete()
     deleteActionTypesYamlCacheIfObsolete()
 
-    wrappersToGenerate.forEach { wrapperRequest ->
-        println("Generating ${wrapperRequest.actionCoords.prettyPrint}")
-        val inputTypings = wrapperRequest.provideTypes()
-        val (code, path) = wrapperRequest.actionCoords.generateWrapper(inputTypings)
+    bindingsToGenerate.forEach { actionBindingRequest ->
+        println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
+        val inputTypings = actionBindingRequest.provideTypes()
+        val (code, path) = actionBindingRequest.actionCoords.generateBinding(inputTypings)
         with(Paths.get(path).toFile()) {
             parentFile.mkdirs()
             writeText(code)
@@ -45,21 +45,21 @@ private fun generateWrappers() {
     }
 }
 
-private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
-    listOfWrappersInDocs.toFile().printWriter().use { writer ->
+private fun generateListOfBindingsForDocs(listOfBindingsInDocs: Path) {
+    listOfBindingsInDocs.toFile().printWriter().use { writer ->
         writer.println(
             """
-            This is a complete list of actions for which the library provides typed wrappers, grouped by owners. If your
+            This is a complete list of actions for which the library provides typed bindings, grouped by owners. If your
             action is not on the list, see [Using actions](user-guide/using-actions.md) section.
 
-            Click on a version to see the wrapper's code.
+            Click on a version to see the binding's code.
 
-            ## Wrappers
+            ## Action bindings
 
             """.trimIndent(),
         )
 
-        wrappersToGenerate
+        bindingsToGenerate
             .groupBy { it.actionCoords.owner }
             .forEach { (owner, ownedActions) ->
                 writer.println("* $owner")
@@ -73,21 +73,21 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
                     }
             }
 
-        val uniqueActionsCount = wrappersToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
-        val uniqueActionsProvidingTypingsCount = wrappersToGenerate
+        val uniqueActionsCount = bindingsToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
+        val uniqueActionsProvidingTypingsCount = bindingsToGenerate
             .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
             .mapValues { (_, versions) -> versions.maxByOrNull { Version(it.actionCoords.version) } }
-            .count { (_, wrapperRequest) -> wrapperRequest?.typingsSource == TypingsSource.ActionTypes }
+            .count { (_, actionBindingRequest) -> actionBindingRequest?.typingsSource == TypingsSource.ActionTypes }
 
         writer.println(
             """
 
             ## Statistics
 
-            Number of wrappers available:
+            Number of bindings available:
 
             * counting by actions: $uniqueActionsCount
-            * counting each version separately: ${wrappersToGenerate.size}
+            * counting each version separately: ${bindingsToGenerate.size}
 
             Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): $uniqueActionsProvidingTypingsCount
             """.trimIndent(),
@@ -95,7 +95,7 @@ private fun generateListOfWrappersForDocs(listOfWrappersInDocs: Path) {
     }
 }
 
-private fun WrapperRequest.toMarkdownLinkToKotlinCode(): String {
+private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(): String {
     val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
     return "${actionCoords.version}$typingsMarker: [`${actionCoords.buildActionClassName()}`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${actionCoords.owner.toKotlinPackageName()}/${this.actionCoords.buildActionClassName()}.kt)"
 }

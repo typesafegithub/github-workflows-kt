@@ -82,7 +82,7 @@ tasks.check {
 pitest {
     junit5PluginVersion.set("1.1.0")
     excludedClasses.set(
-        // Generated action wrappers.
+        // Generated action bindings.
         listOf("io.github.typesafegithub.workflows.actions.*"),
     )
 }

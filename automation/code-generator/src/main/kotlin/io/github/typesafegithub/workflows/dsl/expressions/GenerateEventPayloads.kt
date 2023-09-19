@@ -8,7 +8,7 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
-import io.github.typesafegithub.workflows.wrappergenerator.toPascalCase
+import io.github.typesafegithub.workflows.actionbindinggenerator.toPascalCase
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -24,7 +24,7 @@ fun main() {
  * Generate type-safe accessors for GitHub Event payloads
  * The payloads depend on the kind of the event: pull request, push, ...
  *
- * We read event payloads from wrapper-generate/src/test/resources/payloads
+ * We read event payloads from binding-generate/src/test/resources/payloads
  * We generate it inside       library/src/main/kotlin/io/github/typesafegithub/workflows/expressions/contexts
  *
  * The JSONs come from https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads

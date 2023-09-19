@@ -1,10 +1,10 @@
 package io.github.typesafegithub.workflows.actionsmetadata
 
 import com.charleskorn.kaml.Yaml
+import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypes
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
-import io.github.typesafegithub.workflows.actionsmetadata.model.WrapperRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
 import kotlinx.serialization.decodeFromString
 import java.nio.file.Files
@@ -14,12 +14,12 @@ import kotlin.io.path.name
 import kotlin.io.path.readText
 import kotlin.streams.asSequence
 
-internal fun readActionsMetadata(): List<WrapperRequest> =
+internal fun readActionsMetadata(): List<ActionBindingRequest> =
     readLocalActionTypings()
         .addDeprecationInfo()
         .sortedBy { it.actionCoords.prettyPrint.lowercase() }
 
-private fun readLocalActionTypings(): List<WrapperRequest> {
+private fun readLocalActionTypings(): List<ActionBindingRequest> {
     val actionTypingsDirectory = Path.of("actions")
 
     return Files.walk(actionTypingsDirectory).asSequence()
@@ -33,7 +33,7 @@ private fun readLocalActionTypings(): List<WrapperRequest> {
             val version = pathParts[3]
             val subname = pathParts.subList(4, pathParts.size - 1).joinToString("/")
             val file = pathParts.last()
-            WrapperRequest(
+            ActionBindingRequest(
                 actionCoords = ActionCoords(
                     owner = owner,
                     name = listOfNotNull(name, subname.ifEmpty { null }).joinToString("/"),

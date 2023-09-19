@@ -1,9 +1,9 @@
-This is a complete list of actions for which the library provides typed wrappers, grouped by owners. If your
+This is a complete list of actions for which the library provides typed bindings, grouped by owners. If your
 action is not on the list, see [Using actions](user-guide/using-actions.md) section.
 
-Click on a version to see the wrapper's code.
+Click on a version to see the binding's code.
 
-## Wrappers
+## Action bindings
 
 * 8398a7
     * [action-slack](https://github.com/8398a7/action-slack) - v3: [`ActionSlackV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/8398a7/ActionSlackV3.kt)
@@ -135,7 +135,7 @@ Click on a version to see the wrapper's code.
 
 ## Statistics
 
-Number of wrappers available:
+Number of bindings available:
 
 * counting by actions: 82
 * counting each version separately: 125
