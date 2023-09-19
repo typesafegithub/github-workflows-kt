@@ -84,7 +84,7 @@ private fun generateActionWrapperSourceCode(metadata: Metadata, coords: ActionCo
     val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
         .addFileComment(
             """
-            This file was generated using 'code-generator' module. Don't change it by hand, your changes will
+            This file was generated using 'wrapper-generator' module. Don't change it by hand, your changes will
             be overwritten with the next wrapper code regeneration. Instead, consider introducing changes to the
             generator itself.
             """.trimIndent(),
