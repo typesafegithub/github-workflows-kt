@@ -27,6 +27,7 @@ import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 public data class ActionBinding(
     val kotlinCode: String,
     val filePath: String,
+    val className: String,
 )
 
 private object Types {
@@ -56,9 +57,11 @@ public fun ActionCoords.generateBinding(
     }
 
     val actionBindingSourceCode = generateActionBindingSourceCode(metadata, this, inputTypings)
+    val className = this.buildActionClassName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
-        filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${owner.toKotlinPackageName()}/${this.buildActionClassName()}.kt",
+        filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${owner.toKotlinPackageName()}/$className.kt",
+        className = className,
     )
 }
 
