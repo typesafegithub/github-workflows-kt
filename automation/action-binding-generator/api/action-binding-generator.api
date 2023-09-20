@@ -20,7 +20,3 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Gen
 	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/TextTransformationKt {
-	public static final fun toPascalCase (Ljava/lang/String;)Ljava/lang/String;
-}
-

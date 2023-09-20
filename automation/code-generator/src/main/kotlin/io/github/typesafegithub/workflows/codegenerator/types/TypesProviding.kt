@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.codegenerator.types
 
 import com.charleskorn.kaml.Yaml
-import io.github.typesafegithub.workflows.actionbindinggenerator.toPascalCase
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionType
@@ -19,6 +18,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.metadatareading.fetchUri
 import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 import io.github.typesafegithub.workflows.metadatareading.releasesUrl
+import io.github.typesafegithub.workflows.textutils.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException
