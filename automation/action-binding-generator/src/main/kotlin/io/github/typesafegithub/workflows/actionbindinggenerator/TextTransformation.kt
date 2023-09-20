@@ -2,7 +2,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import java.util.Locale
 
-public fun String.toKotlinPackageName(): String =
+internal fun String.toKotlinPackageName(): String =
     replace("-", "")
         .lowercase()
 

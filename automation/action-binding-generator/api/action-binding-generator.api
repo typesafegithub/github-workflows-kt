@@ -1,14 +1,16 @@
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClassName ()Ljava/lang/String;
 	public final fun getFilePath ()Ljava/lang/String;
 	public final fun getKotlinCode ()Ljava/lang/String;
+	public final fun getPackageName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -19,7 +21,6 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Gen
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/TextTransformationKt {
-	public static final fun toKotlinPackageName (Ljava/lang/String;)Ljava/lang/String;
 	public static final fun toPascalCase (Ljava/lang/String;)Ljava/lang/String;
 }
 
