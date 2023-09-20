@@ -19,6 +19,10 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUST
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
+import io.github.typesafegithub.workflows.metadatareading.Input
+import io.github.typesafegithub.workflows.metadatareading.Metadata
+import io.github.typesafegithub.workflows.metadatareading.fetchMetadata
+import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 
 public data class ActionBinding(
     val kotlinCode: String,

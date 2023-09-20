@@ -1,9 +1,7 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.fetchMetadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
@@ -14,6 +12,8 @@ import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
 import io.github.typesafegithub.workflows.codegenerator.versions.httpClient
 import io.github.typesafegithub.workflows.codegenerator.versions.json
+import io.github.typesafegithub.workflows.metadatareading.fetchMetadata
+import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
