@@ -9,6 +9,7 @@ plugins {
 dependencies {
     implementation(projects.automation.typings)
     implementation(projects.automation.metadataReading)
+    implementation(projects.automation.textUtils)
     implementation("com.squareup:kotlinpoet:1.14.2")
 
     testImplementation(projects.library)

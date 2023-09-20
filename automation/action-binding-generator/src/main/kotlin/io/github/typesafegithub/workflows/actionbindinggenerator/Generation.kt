@@ -23,6 +23,7 @@ import io.github.typesafegithub.workflows.metadatareading.Input
 import io.github.typesafegithub.workflows.metadatareading.Metadata
 import io.github.typesafegithub.workflows.metadatareading.fetchMetadata
 import io.github.typesafegithub.workflows.metadatareading.prettyPrint
+import io.github.typesafegithub.workflows.textutils.toCamelCase
 
 public data class ActionBinding(
     val kotlinCode: String,
