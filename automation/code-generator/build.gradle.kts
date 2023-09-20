@@ -19,6 +19,7 @@ dependencies {
 
     implementation(projects.automation.typings)
     implementation(projects.automation.actionBindingGenerator)
+    implementation(projects.automation.metadataReading)
 
     testImplementation(projects.library)
 }

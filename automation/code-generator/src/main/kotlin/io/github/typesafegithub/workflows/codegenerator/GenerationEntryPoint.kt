@@ -1,9 +1,7 @@
 package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.buildActionClassName
-import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionbindinggenerator.toKotlinPackageName
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
@@ -13,6 +11,8 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.github.typesafegithub.workflows.codegenerator.types.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
+import io.github.typesafegithub.workflows.metadatareading.deleteActionYamlCacheIfObsolete
+import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 import java.nio.file.Path
 import java.nio.file.Paths
 

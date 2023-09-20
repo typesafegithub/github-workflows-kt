@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.metadatareading
 
 import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
@@ -15,7 +15,7 @@ import java.time.LocalDate
  */
 
 @Serializable
-public data class Metadata(
+data class Metadata(
     val name: String,
     val description: String,
     val inputs: Map<String, Input> = emptyMap(),
@@ -23,7 +23,7 @@ public data class Metadata(
 )
 
 @Serializable
-public data class Input(
+data class Input(
     val description: String = "",
     val default: String? = null,
     val required: Boolean? = null,
@@ -31,7 +31,7 @@ public data class Input(
 )
 
 @Serializable
-public data class Output(
+data class Output(
     val description: String = "",
 )
 
@@ -39,13 +39,13 @@ private fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubuserc
 
 private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/${name.substringBefore('/')}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
 
-public val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
+val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
-public val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
+val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
-public val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
+val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
-public fun ActionCoords.fetchMetadata(
+fun ActionCoords.fetchMetadata(
     commitHash: String = getCommitHashFromFileSystem(),
     useCache: Boolean = true,
     fetchUri: (URI) -> String = ::fetchUri,
@@ -79,7 +79,7 @@ public fun ActionCoords.fetchMetadata(
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
 
-public fun fetchUri(uri: URI): String = uri.toURL().readText()
+fun fetchUri(uri: URI): String = uri.toURL().readText()
 
 private val myYaml = Yaml(
     configuration = Yaml.default.configuration.copy(
@@ -87,9 +87,9 @@ private val myYaml = Yaml(
     ),
 )
 
-public val actionYamlDir: File = File("build/action-yaml")
+private val actionYamlDir: File = File("build/action-yaml")
 
-public fun deleteActionYamlCacheIfObsolete() {
+fun deleteActionYamlCacheIfObsolete() {
     val today = LocalDate.now().toString()
     val dateTxt = actionYamlDir.resolve("date.txt")
     val cacheUpToDate = dateTxt.canRead() && dateTxt.readText() == today

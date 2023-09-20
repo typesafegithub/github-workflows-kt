@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
+import io.github.typesafegithub.workflows.metadatareading.Input
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
