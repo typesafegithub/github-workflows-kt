@@ -2,7 +2,6 @@ package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.toKotlinPackageName
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
@@ -75,7 +74,7 @@ private fun generateListOfBindingsForDocs(
                     .forEach { (_, versions) ->
                         val kotlinClasses = versions
                             .sortedBy { Version(it.first.actionCoords.version) }
-                            .joinToString(", ") { it.first.toMarkdownLinkToKotlinCode(it.second.className) }
+                            .joinToString(", ") { it.first.toMarkdownLinkToKotlinCode(it.second.packageName, it.second.className) }
                         writer.println("    * ${versions.first().first.actionCoords.toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
@@ -102,9 +101,9 @@ private fun generateListOfBindingsForDocs(
     }
 }
 
-private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(className: String): String {
+private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(packageName: String, className: String): String {
     val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
-    return "${actionCoords.version}$typingsMarker: [`$className`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${actionCoords.owner.toKotlinPackageName()}/$className.kt)"
+    return "${actionCoords.version}$typingsMarker: [`$className`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt)"
 }
 
 private fun ActionCoords.toMarkdownLinkGithub() =

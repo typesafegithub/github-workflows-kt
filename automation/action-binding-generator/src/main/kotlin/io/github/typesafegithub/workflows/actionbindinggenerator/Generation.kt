@@ -28,6 +28,7 @@ public data class ActionBinding(
     val kotlinCode: String,
     val filePath: String,
     val className: String,
+    val packageName: String,
 )
 
 private object Types {
@@ -58,10 +59,12 @@ public fun ActionCoords.generateBinding(
 
     val actionBindingSourceCode = generateActionBindingSourceCode(metadata, this, inputTypings)
     val className = this.buildActionClassName()
+    val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
-        filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${owner.toKotlinPackageName()}/$className.kt",
+        filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
         className = className,
+        packageName = packageName,
     )
 }
 
