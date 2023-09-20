@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.codegenerator
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.buildActionClassName
+import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.toKotlinPackageName
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
@@ -26,26 +26,33 @@ fun main() {
     Paths.get("library/src/gen").toFile().deleteRecursively()
     listOfBindingsInDocs.toFile().delete()
     generateEventPayloads()
-    generateBindings()
-    generateListOfBindingsForDocs(listOfBindingsInDocs)
+    val requestsAndBindings = generateBindings()
+    generateListOfBindingsForDocs(requestsAndBindings, listOfBindingsInDocs)
 }
 
-private fun generateBindings() {
+private fun generateBindings(): List<Pair<ActionBindingRequest, ActionBinding>> {
     deleteActionYamlCacheIfObsolete()
     deleteActionTypesYamlCacheIfObsolete()
 
-    bindingsToGenerate.forEach { actionBindingRequest ->
+    val requestsAndBindings = bindingsToGenerate.map { actionBindingRequest ->
         println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
         val inputTypings = actionBindingRequest.provideTypes()
-        val (code, path) = actionBindingRequest.actionCoords.generateBinding(inputTypings)
-        with(Paths.get(path).toFile()) {
+        val binding = actionBindingRequest.actionCoords.generateBinding(inputTypings)
+        Pair(actionBindingRequest, binding)
+    }
+    requestsAndBindings.forEach { (_, binding) ->
+        with(Paths.get(binding.filePath).toFile()) {
             parentFile.mkdirs()
-            writeText(code)
+            writeText(binding.kotlinCode)
         }
     }
+    return requestsAndBindings
 }
 
-private fun generateListOfBindingsForDocs(listOfBindingsInDocs: Path) {
+private fun generateListOfBindingsForDocs(
+    requestsAndBindings: List<Pair<ActionBindingRequest, ActionBinding>>,
+    listOfBindingsInDocs: Path,
+) {
     listOfBindingsInDocs.toFile().printWriter().use { writer ->
         writer.println(
             """
@@ -59,17 +66,17 @@ private fun generateListOfBindingsForDocs(listOfBindingsInDocs: Path) {
             """.trimIndent(),
         )
 
-        bindingsToGenerate
-            .groupBy { it.actionCoords.owner }
-            .forEach { (owner, ownedActions) ->
+        requestsAndBindings
+            .groupBy { it.first.actionCoords.owner }
+            .forEach { (owner, ownedRequestsAndBindings) ->
                 writer.println("* $owner")
-                ownedActions
-                    .groupBy { it.actionCoords.name }
+                ownedRequestsAndBindings
+                    .groupBy { it.first.actionCoords.name }
                     .forEach { (_, versions) ->
                         val kotlinClasses = versions
-                            .sortedBy { Version(it.actionCoords.version) }
-                            .joinToString(", ") { it.toMarkdownLinkToKotlinCode() }
-                        writer.println("    * ${versions.first().actionCoords.toMarkdownLinkGithub()} - $kotlinClasses")
+                            .sortedBy { Version(it.first.actionCoords.version) }
+                            .joinToString(", ") { it.first.toMarkdownLinkToKotlinCode(it.second.className) }
+                        writer.println("    * ${versions.first().first.actionCoords.toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
 
@@ -95,9 +102,9 @@ private fun generateListOfBindingsForDocs(listOfBindingsInDocs: Path) {
     }
 }
 
-private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(): String {
+private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(className: String): String {
     val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
-    return "${actionCoords.version}$typingsMarker: [`${actionCoords.buildActionClassName()}`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${actionCoords.owner.toKotlinPackageName()}/${this.actionCoords.buildActionClassName()}.kt)"
+    return "${actionCoords.version}$typingsMarker: [`$className`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/${actionCoords.owner.toKotlinPackageName()}/$className.kt)"
 }
 
 private fun ActionCoords.toMarkdownLinkGithub() =
