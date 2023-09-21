@@ -68,6 +68,18 @@ tasks.formatKotlinMain {
     kotlinterConfig()
 }
 
+fun ConfigurableKtLintTask.kotlinterTestConfig() {
+    exclude { it.file.invariantSeparatorsPath.contains(".github/workflows/") }
+}
+
+tasks.lintKotlinTest {
+    kotlinterTestConfig()
+}
+
+tasks.formatKotlinTest {
+    kotlinterTestConfig()
+}
+
 val validateDuplicatedVersion by tasks.creating<Task> {
     doLast {
         require(
