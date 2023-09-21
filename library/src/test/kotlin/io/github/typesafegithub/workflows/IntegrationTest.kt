@@ -194,7 +194,7 @@ class IntegrationTest : FunSpec({
                     action = CustomAction(
                         actionOwner = "actions",
                         actionName = "checkout",
-                        actionVersion = "v3",
+                        actionVersion = "v4",
                         inputs = mapOf(
                             "repository" to "actions/checkout",
                             "ref" to "v3",
@@ -226,7 +226,7 @@ class IntegrationTest : FunSpec({
                     action = object : RegularAction<Action.Outputs>(
                         actionOwner = "actions",
                         actionName = "checkout",
-                        actionVersion = "v3",
+                        actionVersion = "v4",
                     ) {
                         override fun toYamlArguments() = linkedMapOf(
                             "repository" to "actions/checkout",
