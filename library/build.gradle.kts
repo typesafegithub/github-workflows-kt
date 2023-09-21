@@ -33,6 +33,12 @@ sourceSets {
             setSrcDirs(listOf("src/gen/kotlin"))
         }
     }
+    test {
+        java {
+            // The integration tests read from and write to there.
+            setSrcDirs(listOf("$rootDir/.github/workflows"))
+        }
+    }
 }
 
 tasks.withType<KotlinCompile> {
