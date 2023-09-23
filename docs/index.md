@@ -33,6 +33,8 @@ confidence.
 * **built-in support for over 100 actions** - the most popular actions can be used in a type-safe manner thanks to the
   bundled bindings. For more information, see
   [Supported actions](supported-actions.md)
+* integrates with [github-actions-typing](https://github.com/typesafegithub/github-actions-typing) to use typings
+  provided by action authors
 * and more!
 
 ## 🎥 Video presentation
