@@ -1,10 +1,10 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.1.0")
 @file:Import("_shared.main.kts")
+@file:Import("actions/peterevans/CreateIssueFromFile.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
-import io.github.typesafegithub.workflows.actions.peterevans.CreateIssueFromFileV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Cron
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
@@ -40,7 +40,7 @@ workflow(
         )
         uses(
             name = "Create issue",
-            action = CreateIssueFromFileV4(
+            action = CreateIssueFromFile(
                 title = "New major versions of actions available",
                 contentFilepath = "build/suggestVersions.md",
             )
