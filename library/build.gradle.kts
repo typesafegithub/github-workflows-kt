@@ -33,12 +33,6 @@ sourceSets {
             setSrcDirs(listOf("src/gen/kotlin"))
         }
     }
-    test {
-        resources {
-            // The integration tests read from and write to there.
-            setSrcDirs(listOf("$rootDir/.github/workflows"))
-        }
-    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -47,6 +41,11 @@ tasks.withType<KotlinCompile> {
             "-opt-in=io.github.typesafegithub.workflows.internal.InternalGithubActionsApi",
         )
     }
+}
+
+tasks.test {
+    // The integration tests read from and write to there.
+    inputs.dir("$rootDir/.github/workflows")
 }
 
 kotlin {
