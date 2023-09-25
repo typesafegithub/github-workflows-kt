@@ -45,9 +45,7 @@ tasks.withType<KotlinCompile> {
 
 tasks.test {
     // The integration tests read from and write to there.
-    val githubWorkflowsDir = "$rootDir/.github/workflows"
-    inputs.dir(githubWorkflowsDir)
-    outputs.dir(githubWorkflowsDir)
+    inputs.dir("$rootDir/.github/workflows")
 }
 
 kotlin {
