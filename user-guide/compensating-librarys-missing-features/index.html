@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
     
     
       
@@ -26,10 +26,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
       
       
 
@@ -277,14 +277,16 @@
     
     
     
+    
+    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
+          
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
@@ -648,7 +650,7 @@
 
 <div><h1 id="compensating-librarys-missing-features">Compensating library's missing features</h1>
 <p>You may find yourself willing to use GitHub Actions' feature that is not yet reflected in this library, neither in the
-core workflows/jobs/steps API, nor in the action wrappers. We've thought about it. The library provides several points
+core workflows/jobs/steps API, nor in the action bindings. We've thought about it. The library provides several points
 of extension so that you can keep using it, and in the meantime report the missing feature to us so that we can add it
 to one of the next releases. See the below sections to find your specific case.</p>
 <p>The general approach is that whatever is overridden/customized using the below approaches, takes the precedence over
@@ -671,7 +673,7 @@ needed, especially using basic types like booleans, strings or integers, and fur
 <span class="p">)</span>
 </code></pre></div>
 <h2 id="actions-inputs">Action's inputs</h2>
-<p>Each action wrapper has an extra constructor parameter - <code>_customInputs</code> - which is a map from <code>String</code> to <code>String</code>:</p>
+<p>Each action binding has an extra constructor parameter - <code>_customInputs</code> - which is a map from <code>String</code> to <code>String</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">UploadArtifactV3</span><span class="p">(</span>
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="w">    </span><span class="n">_customInputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapOf</span><span class="p">(</span>
@@ -680,17 +682,17 @@ needed, especially using basic types like booleans, strings or integers, and fur
 <span class="w">    </span><span class="p">),</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>You can use it to set inputs that the wrapper doesn't know about, or to set any custom value if the wrapper's typing is
+<p>You can use it to set inputs that the binding doesn't know about, or to set any custom value if the binding's typing is
 incorrect or faulty.</p>
 <h2 id="actions-version">Action's version</h2>
-<p>Each action wrapper has an extra constructor parameter - <code>_customVersion</code> - which is a string overriding action's
+<p>Each action binding has an extra constructor parameter - <code>_customVersion</code> - which is a string overriding action's
 version:</p>
 <div class="highlight"><pre><span></span><code><span class="n">UploadArtifactV3</span><span class="p">(</span>
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="w">    </span><span class="n">_customVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"v4"</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>It's useful e.g. when the wrapper doesn't keep up with action's versions and the API is fairly compatible, or if you
+<p>It's useful e.g. when the binding doesn't keep up with action's versions and the API is fairly compatible, or if you
 want to use a specific minor version.</p>
 <h2 id="i-still-cannot-customize-what-i-need">I still cannot customize what I need</h2>
 <p>Well, it means we missed something - sorry for that! Please report it via GitHub issues.</p></div>
@@ -731,10 +733,10 @@ want to use a specific minor version.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.1.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.2.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
       
     
   </body>

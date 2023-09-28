@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
     
     
       
@@ -26,10 +26,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
       
       
 
@@ -277,14 +277,16 @@
     
     
     
+    
+    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
+          
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
@@ -403,11 +405,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#typed-wrapper" class="md-nav__link">
-    Typed wrapper
+  <a href="#typed-binding" class="md-nav__link">
+    Typed binding
   </a>
   
-    <nav class="md-nav" aria-label="Typed wrapper">
+    <nav class="md-nav" aria-label="Typed binding">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -437,11 +439,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#untyped-wrapper" class="md-nav__link">
-    Untyped wrapper
+  <a href="#untyped-binding" class="md-nav__link">
+    Untyped binding
   </a>
   
-    <nav class="md-nav" aria-label="Untyped wrapper">
+    <nav class="md-nav" aria-label="Untyped binding">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -702,11 +704,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#typed-wrapper" class="md-nav__link">
-    Typed wrapper
+  <a href="#typed-binding" class="md-nav__link">
+    Typed binding
   </a>
   
-    <nav class="md-nav" aria-label="Typed wrapper">
+    <nav class="md-nav" aria-label="Typed binding">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -736,11 +738,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#untyped-wrapper" class="md-nav__link">
-    Untyped wrapper
+  <a href="#untyped-binding" class="md-nav__link">
+    Untyped binding
   </a>
   
-    <nav class="md-nav" aria-label="Untyped wrapper">
+    <nav class="md-nav" aria-label="Untyped binding">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -802,10 +804,10 @@ These are actions ready to use, grouped by owners. For <code>actions/checkout@v3
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed <a href="https://semver.org/">Semantic Versioning</a> is used to
 version the actions, as <a href="https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management">recommended by GitHub</a>.
-Each new major version means a breaking change, and it usually means that the Kotlin wrapper for the action needs a
+Each new major version means a breaking change, and it usually means that the Kotlin binding for the action needs a
 breaking change as well.</p>
 <h3 id="requirements-for-adding-a-new-action">Requirements for adding a new action</h3>
-<p>An action is eligible to be added to this library (i.e. have its Kotlin wrapper generated and maintained by the library)
+<p>An action is eligible to be added to this library (i.e. have its Kotlin binding generated and maintained by the library)
 if the following conditions are fulfilled:</p>
 <ul>
 <li>follows <a href="https://semver.org/">Semantic Versioning</a>, with exceptions for pre-releases (like <code>v0.2</code>)</li>
@@ -820,12 +822,12 @@ if the following conditions are fulfilled:</p>
 <h2 id="user-defined-actions">User-defined actions</h2>
 <p>If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
 you have two ways to proceed.</p>
-<h3 id="typed-wrapper">Typed wrapper</h3>
+<h3 id="typed-binding">Typed binding</h3>
 <div class="admonition info">
 <p class="admonition-title">When to use this approach</p>
-<p>It lets you create an action wrapper in a similar manner that is provided by the built-in action wrappers in this
+<p>It lets you create an action binding in a similar manner that is provided by the built-in action bindings in this
 library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
-inside <code>toYamlArguments</code>. Use it to have better type-safety when using the wrapper.</p>
+inside <code>toYamlArguments</code>. Use it to have better type-safety when using the binding.</p>
 </div>
 <h4 id="repository-based-actions">Repository based actions</h4>
 <p>In case of a repository based action which most GitHub actions are, inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt"><code>RegularAction</code></a>
@@ -886,7 +888,7 @@ inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob
 <span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">buildOutputObject</span><span class="p">(</span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3 id="untyped-wrapper">Untyped wrapper</h3>
+<h3 id="untyped-binding">Untyped binding</h3>
 <div class="admonition info">
 <p class="admonition-title">When to use this approach</p>
 <p>It omits typing entirely, and both inputs and outputs are referenced using strings. Use it if you don't care about
@@ -967,10 +969,10 @@ use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/l
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.1.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.2.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
       
     
   </body>
