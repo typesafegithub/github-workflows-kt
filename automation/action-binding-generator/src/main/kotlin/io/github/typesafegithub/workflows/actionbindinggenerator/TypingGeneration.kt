@@ -59,21 +59,20 @@ internal fun Typing.asString(): String =
         else -> ""
     }
 
-internal fun Typing.buildCustomType(coords: ActionCoords, fieldName: String): TypeSpec? =
+internal fun Typing.buildCustomType(coords: ActionCoords, fieldName: String, className: String): TypeSpec? =
     when (this) {
-        is EnumTyping -> buildEnumCustomType(coords, fieldName)
-        is IntegerWithSpecialValueTyping -> buildIntegerWithSpecialValueCustomType(coords, fieldName)
-        is ListOfTypings -> typing.buildCustomType(coords, fieldName)
+        is EnumTyping -> buildEnumCustomType(coords, fieldName, className)
+        is IntegerWithSpecialValueTyping -> buildIntegerWithSpecialValueCustomType(coords, fieldName, className)
+        is ListOfTypings -> typing.buildCustomType(coords, fieldName, className)
         else -> null
     }
 
-private fun EnumTyping.buildEnumCustomType(coords: ActionCoords, fieldName: String): TypeSpec {
+private fun EnumTyping.buildEnumCustomType(coords: ActionCoords, fieldName: String, className: String): TypeSpec {
     val itemsNames = itemsNames ?: items.map { it.toPascalCase() }
     val itemsNameMap = items.zip(itemsNames).toMap()
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
-    val actionClassName = coords.buildActionClassName()
-    val sealedClassName = this.getClassName(actionPackageName, actionClassName, fieldName)
+    val sealedClassName = this.getClassName(actionPackageName, className, fieldName)
 
     return TypeSpec.classBuilder(typeName)
         .addModifiers(KModifier.SEALED)
@@ -108,11 +107,14 @@ private fun EnumTyping.buildEnumCustomType(coords: ActionCoords, fieldName: Stri
         .build()
 }
 
-private fun IntegerWithSpecialValueTyping.buildIntegerWithSpecialValueCustomType(coords: ActionCoords, fieldName: String): TypeSpec {
+private fun IntegerWithSpecialValueTyping.buildIntegerWithSpecialValueCustomType(
+    coords: ActionCoords,
+    fieldName: String,
+    className: String,
+): TypeSpec {
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
-    val actionClassName = coords.buildActionClassName()
-    val sealedClassName = this.getClassName(actionPackageName, actionClassName, fieldName)
+    val sealedClassName = this.getClassName(actionPackageName, className, fieldName)
     return TypeSpec.classBuilder(typeName)
         .addModifiers(KModifier.SEALED)
         .primaryConstructor(
