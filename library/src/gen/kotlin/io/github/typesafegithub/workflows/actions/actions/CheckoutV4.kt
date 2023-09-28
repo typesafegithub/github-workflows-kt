@@ -86,7 +86,11 @@ public data class CheckoutV4 private constructor(
      */
     public val clean: Boolean? = null,
     /**
-     * Do a sparse checkout on given patterns. Each pattern should be separated with new lines
+     * Partially clone against a given filter. Overrides sparse-checkout if set.
+     */
+    public val filter: String? = null,
+    /**
+     * Do a sparse checkout on given patterns. Each pattern should be separated with new lines.
      */
     public val sparseCheckout: Boolean? = null,
     /**
@@ -149,6 +153,7 @@ public data class CheckoutV4 private constructor(
         persistCredentials: Boolean? = null,
         path: String? = null,
         clean: Boolean? = null,
+        filter: String? = null,
         sparseCheckout: Boolean? = null,
         sparseCheckoutConeMode: Boolean? = null,
         fetchDepth: CheckoutV4.FetchDepth? = null,
@@ -162,7 +167,7 @@ public data class CheckoutV4 private constructor(
         _customVersion: String? = null,
     ) : this(repository=repository, ref=ref, token=token, sshKey=sshKey,
             sshKnownHosts=sshKnownHosts, sshStrict=sshStrict, persistCredentials=persistCredentials,
-            path=path, clean=clean, sparseCheckout=sparseCheckout,
+            path=path, clean=clean, filter=filter, sparseCheckout=sparseCheckout,
             sparseCheckoutConeMode=sparseCheckoutConeMode, fetchDepth=fetchDepth,
             fetchTags=fetchTags, showProgress=showProgress, lfs=lfs, submodules=submodules,
             setSafeDirectory=setSafeDirectory, githubServerUrl=githubServerUrl,
@@ -180,6 +185,7 @@ public data class CheckoutV4 private constructor(
             persistCredentials?.let { "persist-credentials" to it.toString() },
             path?.let { "path" to it },
             clean?.let { "clean" to it.toString() },
+            filter?.let { "filter" to it },
             sparseCheckout?.let { "sparse-checkout" to it.toString() },
             sparseCheckoutConeMode?.let { "sparse-checkout-cone-mode" to it.toString() },
             fetchDepth?.let { "fetch-depth" to it.integerValue.toString() },
