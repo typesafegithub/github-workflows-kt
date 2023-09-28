@@ -72,7 +72,7 @@ Click on a version to see the binding's code.
     * [git-secret-action](https://github.com/entrostat/git-secret-action) - v4 ✅: [`GitSecretActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/entrostat/GitSecretActionV4.kt)
 * ericcornelissen
     * [git-tag-annotation-action](https://github.com/ericcornelissen/git-tag-annotation-action) - v2 ✅: [`GitTagAnnotationActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/GitTagAnnotationActionV2.kt)
-    * [svgo-action](https://github.com/ericcornelissen/svgo-action) - v3 ✅: [`SvgoActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/SvgoActionV3.kt)
+    * [svgo-action](https://github.com/ericcornelissen/svgo-action) - v3 ✅: [`SvgoActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/SvgoActionV3.kt), v4 ✅: [`SvgoActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ericcornelissen/SvgoActionV4.kt)
 * gautamkrishnar
     * [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow) - v1: [`BlogPostWorkflowV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gautamkrishnar/BlogPostWorkflowV1.kt)
 * github
@@ -138,6 +138,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 82
-* counting each version separately: 125
+* counting each version separately: 126
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
