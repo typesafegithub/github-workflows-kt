@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.ericcornelissen
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/ericcornelissen/svgo-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: SvgoActionV4",
-    replaceWith = ReplaceWith("SvgoActionV4"),
-)
-public data class SvgoActionV3 private constructor(
+public data class SvgoActionV4 private constructor(
     /**
      * The GITHUB_TOKEN secret
      */
@@ -67,7 +61,7 @@ public data class SvgoActionV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SvgoActionV3.Outputs>("ericcornelissen", "svgo-action", _customVersion ?: "v3") {
+) : RegularAction<SvgoActionV4.Outputs>("ericcornelissen", "svgo-action", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         repoToken: String? = null,
