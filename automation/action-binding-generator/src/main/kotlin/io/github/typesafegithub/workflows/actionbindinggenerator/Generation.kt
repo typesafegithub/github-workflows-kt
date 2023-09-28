@@ -58,8 +58,8 @@ public fun ActionCoords.generateBinding(
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
 
-    val actionBindingSourceCode = generateActionBindingSourceCode(metadata, this, inputTypings)
     val className = this.buildActionClassName()
+    val actionBindingSourceCode = generateActionBindingSourceCode(metadata, this, inputTypings, className)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
@@ -91,8 +91,13 @@ private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String
     }
 }
 
-private fun generateActionBindingSourceCode(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): String {
-    val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", coords.buildActionClassName())
+private fun generateActionBindingSourceCode(
+    metadata: Metadata,
+    coords: ActionCoords,
+    inputTypings: Map<String, Typing>,
+    className: String,
+): String {
+    val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", className)
         .addFileComment(
             """
             This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
@@ -100,7 +105,7 @@ private fun generateActionBindingSourceCode(metadata: Metadata, coords: ActionCo
             generator itself.
             """.trimIndent(),
         )
-        .addType(generateActionClass(metadata, coords, inputTypings))
+        .addType(generateActionClass(metadata, coords, inputTypings, className))
         .addSuppressAnnotation(metadata, coords)
         .indent("    ")
         .build()
@@ -126,35 +131,48 @@ private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata, coords: A
     )
 }
 
-private fun generateActionClass(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec {
-    val actionClassName = coords.buildActionClassName()
-    return TypeSpec.classBuilder(actionClassName)
+private fun generateActionClass(
+    metadata: Metadata,
+    coords: ActionCoords,
+    inputTypings: Map<String, Typing>,
+    className: String,
+): TypeSpec {
+    return TypeSpec.classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
-        .inheritsFromRegularAction(coords, metadata)
-        .primaryConstructor(metadata.primaryConstructor(inputTypings, coords))
-        .properties(metadata, coords, inputTypings)
-        .addFunction(metadata.secondaryConstructor(inputTypings, coords))
+        .inheritsFromRegularAction(coords, metadata, className)
+        .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className))
+        .properties(metadata, coords, inputTypings, className)
+        .addFunction(metadata.secondaryConstructor(inputTypings, coords, className))
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings))
-        .addCustomTypes(inputTypings, coords)
+        .addCustomTypes(inputTypings, coords, className)
         .addOutputClassIfNecessary(metadata)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
 }
 
-private fun TypeSpec.Builder.addCustomTypes(typings: Map<String, Typing>, coords: ActionCoords): TypeSpec.Builder {
+private fun TypeSpec.Builder.addCustomTypes(
+    typings: Map<String, Typing>,
+    coords: ActionCoords,
+    className: String,
+): TypeSpec.Builder {
     typings
-        .mapNotNull { (inputName, typing) -> typing.buildCustomType(coords, inputName) }
+        .mapNotNull { (inputName, typing) -> typing.buildCustomType(coords, inputName, className) }
         .distinctBy { it.name }
         .forEach { addType(it) }
     return this
 }
 
-private fun TypeSpec.Builder.properties(metadata: Metadata, coords: ActionCoords, inputTypings: Map<String, Typing>): TypeSpec.Builder {
+private fun TypeSpec.Builder.properties(
+    metadata: Metadata,
+    coords: ActionCoords,
+    inputTypings: Map<String, Typing>,
+    className: String,
+): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         addProperty(
-            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
+            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
                 .initializer(key.toCamelCase())
                 .annotateDeprecated(input)
                 .build(),
@@ -273,7 +291,11 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     return this
 }
 
-private fun TypeSpec.Builder.inheritsFromRegularAction(coords: ActionCoords, metadata: Metadata): TypeSpec.Builder {
+private fun TypeSpec.Builder.inheritsFromRegularAction(
+    coords: ActionCoords,
+    metadata: Metadata,
+    className: String,
+): TypeSpec.Builder {
     val superclass = ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
         .plusParameter(
             if (metadata.outputs.isEmpty()) {
@@ -281,7 +303,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(coords: ActionCoords, met
             } else {
                 ClassName(
                     "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
-                    coords.buildActionClassName(),
+                    className,
                     "Outputs",
                 )
             },
@@ -293,21 +315,29 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(coords: ActionCoords, met
         .addSuperclassConstructorParameter("_customVersion ?: %S", coords.version)
 }
 
-private fun Metadata.primaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
+private fun Metadata.primaryConstructor(
+    inputTypings: Map<String, Typing>,
+    coords: ActionCoords,
+    className: String,
+): FunSpec {
     return FunSpec.constructorBuilder()
         .addModifiers(KModifier.PRIVATE)
-        .addParameters(buildCommonConstructorParameters(inputTypings, coords))
+        .addParameters(buildCommonConstructorParameters(inputTypings, coords, className))
         .build()
 }
 
-private fun Metadata.secondaryConstructor(inputTypings: Map<String, Typing>, coords: ActionCoords): FunSpec {
+private fun Metadata.secondaryConstructor(
+    inputTypings: Map<String, Typing>,
+    coords: ActionCoords,
+    className: String,
+): FunSpec {
     return FunSpec.constructorBuilder()
         .addParameter(
             ParameterSpec.builder("pleaseUseNamedArguments", Unit::class)
                 .addModifiers(KModifier.VARARG)
                 .build(),
         )
-        .addParameters(buildCommonConstructorParameters(inputTypings, coords))
+        .addParameters(buildCommonConstructorParameters(inputTypings, coords, className))
         .callThisConstructor(
             (inputs.keys.map { it.toCamelCase() } + CUSTOM_INPUTS + CUSTOM_VERSION)
                 .map { CodeBlock.of("%N=%N", it, it) },
@@ -318,9 +348,10 @@ private fun Metadata.secondaryConstructor(inputTypings: Map<String, Typing>, coo
 private fun Metadata.buildCommonConstructorParameters(
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
+    className: String,
 ): List<ParameterSpec> =
     inputs.map { (key, input) ->
-        ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords))
+        ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
             .defaultValueIfNullable(input)
             .addKdoc(input.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
             .build()
@@ -358,8 +389,8 @@ private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
 private fun Map<String, Typing>.getInputTyping(key: String) =
     this[key] ?: StringTyping
 
-private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords) =
-    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName(), key)
+private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords, className: String) =
+    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), className, key)
         .copy(nullable = !input.shouldBeNonNullInBinding())
 
 // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
