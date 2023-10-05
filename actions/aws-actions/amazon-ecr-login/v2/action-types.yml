@@ -1,0 +1,20 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  mask-password:
+    type: boolean
+  registries:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+  skip-logout:
+    type: boolean
+  registry-type:
+    type: enum
+    allowed-values:
+    - private
+    - public
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  registry:
+    type: string
