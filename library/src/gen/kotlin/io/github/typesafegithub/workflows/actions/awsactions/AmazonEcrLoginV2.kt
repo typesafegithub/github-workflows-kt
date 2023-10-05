@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.awsactions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -30,11 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecr-login)
  */
-@Deprecated(
-    message = "This action has a newer major version: AmazonEcrLoginV2",
-    replaceWith = ReplaceWith("AmazonEcrLoginV2"),
-)
-public data class AmazonEcrLoginV1 private constructor(
+public data class AmazonEcrLoginV2 private constructor(
     /**
      * Proxy to use for the AWS SDK agent.
      */
@@ -54,7 +48,7 @@ public data class AmazonEcrLoginV1 private constructor(
     /**
      * Which ECR registry type to log into. Options: [private, public]
      */
-    public val registryType: AmazonEcrLoginV1.RegistryType? = null,
+    public val registryType: AmazonEcrLoginV2.RegistryType? = null,
     /**
      * Whether to skip explicit logout of the registries during post-job cleanup. Exists for
      * backward compatibility on self-hosted runners. Not recommended. Options: ['true', 'false']
@@ -69,14 +63,14 @@ public data class AmazonEcrLoginV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<AmazonEcrLoginV1.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
-        "v1") {
+) : RegularAction<AmazonEcrLoginV2.Outputs>("aws-actions", "amazon-ecr-login", _customVersion ?:
+        "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         httpProxy: String? = null,
         maskPassword: Boolean? = null,
         registries: List<String>? = null,
-        registryType: AmazonEcrLoginV1.RegistryType? = null,
+        registryType: AmazonEcrLoginV2.RegistryType? = null,
         skipLogout: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
@@ -101,13 +95,13 @@ public data class AmazonEcrLoginV1 private constructor(
     public sealed class RegistryType(
         public val stringValue: String,
     ) {
-        public object Private : AmazonEcrLoginV1.RegistryType("private")
+        public object Private : AmazonEcrLoginV2.RegistryType("private")
 
-        public object Public : AmazonEcrLoginV1.RegistryType("public")
+        public object Public : AmazonEcrLoginV2.RegistryType("public")
 
         public class Custom(
             customStringValue: String,
-        ) : AmazonEcrLoginV1.RegistryType(customStringValue)
+        ) : AmazonEcrLoginV2.RegistryType(customStringValue)
     }
 
     public class Outputs(

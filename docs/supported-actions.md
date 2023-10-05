@@ -34,7 +34,7 @@ Click on a version to see the binding's code.
 * anothrNick
     * [github-tag-action](https://github.com/anothrNick/github-tag-action) - v1: [`GithubTagActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/anothrnick/GithubTagActionV1.kt)
 * aws-actions
-    * [amazon-ecr-login](https://github.com/aws-actions/amazon-ecr-login) - v1: [`AmazonEcrLoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/AmazonEcrLoginV1.kt)
+    * [amazon-ecr-login](https://github.com/aws-actions/amazon-ecr-login) - v1: [`AmazonEcrLoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/AmazonEcrLoginV1.kt), v2: [`AmazonEcrLoginV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/AmazonEcrLoginV2.kt)
     * [amazon-ecs-deploy-task-definition](https://github.com/aws-actions/amazon-ecs-deploy-task-definition) - v1: [`AmazonEcsDeployTaskDefinitionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/AmazonEcsDeployTaskDefinitionV1.kt)
     * [amazon-ecs-render-task-definition](https://github.com/aws-actions/amazon-ecs-render-task-definition) - v1: [`AmazonEcsRenderTaskDefinitionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/AmazonEcsRenderTaskDefinitionV1.kt)
     * [configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials) - v1: [`ConfigureAwsCredentialsV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/ConfigureAwsCredentialsV1.kt), v2: [`ConfigureAwsCredentialsV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/ConfigureAwsCredentialsV2.kt), v3: [`ConfigureAwsCredentialsV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/ConfigureAwsCredentialsV3.kt), v4: [`ConfigureAwsCredentialsV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/awsactions/ConfigureAwsCredentialsV4.kt)
@@ -138,6 +138,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 82
-* counting each version separately: 126
+* counting each version separately: 127
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
