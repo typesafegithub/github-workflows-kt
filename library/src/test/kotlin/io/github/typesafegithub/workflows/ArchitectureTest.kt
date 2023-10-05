@@ -4,7 +4,7 @@ import com.lemonappdev.konsist.api.KoModifier
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.modifierprovider.withModifier
 import com.lemonappdev.konsist.api.ext.list.properties
-import com.lemonappdev.konsist.api.verify.assertNot
+import com.lemonappdev.konsist.api.verify.assert
 import io.kotest.core.spec.style.FunSpec
 
 class ArchitectureTest : FunSpec({
