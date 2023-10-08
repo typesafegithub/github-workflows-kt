@@ -8,8 +8,13 @@ public open class ExpressionContext(
 
 internal class MapFromLambda<T>(val operation: (String) -> T) : Map<String, T> by emptyMap() {
     override fun containsKey(key: String) = true
+
     override fun get(key: String): T = operation(key)
-    override fun getOrDefault(key: String, defaultValue: T): T = get(key)
+
+    override fun getOrDefault(
+        key: String,
+        defaultValue: T,
+    ): T = get(key)
 }
 
 internal class FakeList(val name: String) : List<String> by emptyList() {

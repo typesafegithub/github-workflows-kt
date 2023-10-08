@@ -10,16 +10,18 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 class JobTest : FunSpec({
     context("outputs") {
         test("should include job outputs") {
-            val job = Job(
-                id = "some-id",
-                name = "Some job",
-                runsOn = RunnerType.UbuntuLatest,
-                steps = listOf(),
-                outputs = object : JobOutputs() {
-                    var output1 by output()
-                    var output2 by output()
-                },
-            )
+            val job =
+                Job(
+                    id = "some-id",
+                    name = "Some job",
+                    runsOn = RunnerType.UbuntuLatest,
+                    steps = listOf(),
+                    outputs =
+                        object : JobOutputs() {
+                            var output1 by output()
+                            var output2 by output()
+                        },
+                )
             job.outputs.output1 = "foo"
             job.outputs.output2 = "foo"
 
@@ -28,15 +30,17 @@ class JobTest : FunSpec({
         }
 
         test("should throw if accessing uninitialized output") {
-            val job = Job(
-                id = "some-id",
-                name = "Some job",
-                runsOn = RunnerType.UbuntuLatest,
-                steps = listOf(),
-                outputs = object : JobOutputs() {
-                    var output1 by output()
-                },
-            )
+            val job =
+                Job(
+                    id = "some-id",
+                    name = "Some job",
+                    runsOn = RunnerType.UbuntuLatest,
+                    steps = listOf(),
+                    outputs =
+                        object : JobOutputs() {
+                            var output1 by output()
+                        },
+                )
 
             shouldThrow<IllegalStateException> {
                 job.outputs.output1
@@ -44,15 +48,17 @@ class JobTest : FunSpec({
         }
 
         test("should throw if initializing output more second time") {
-            val job = Job(
-                id = "some-id",
-                name = "Some job",
-                runsOn = RunnerType.UbuntuLatest,
-                steps = listOf(),
-                outputs = object : JobOutputs() {
-                    var output1 by output()
-                },
-            )
+            val job =
+                Job(
+                    id = "some-id",
+                    name = "Some job",
+                    runsOn = RunnerType.UbuntuLatest,
+                    steps = listOf(),
+                    outputs =
+                        object : JobOutputs() {
+                            var output1 by output()
+                        },
+                )
             job.outputs.output1 = "foo"
 
             shouldThrow<IllegalStateException> {
@@ -102,13 +108,14 @@ class JobTest : FunSpec({
                 id = "Job-1",
                 runsOn = RunnerType.UbuntuLatest,
                 timeoutMinutes = -1,
-                steps = listOf(
-                    CommandStep(
-                        id = "someId",
-                        name = "Some command",
-                        command = "echo 'test!'",
+                steps =
+                    listOf(
+                        CommandStep(
+                            id = "someId",
+                            name = "Some command",
+                            command = "echo 'test!'",
+                        ),
                     ),
-                ),
                 outputs = JobOutputs.EMPTY,
             )
         } shouldHaveMessage "timeout should be positive"

@@ -16,7 +16,8 @@ import io.kotest.matchers.shouldBe
 class TypesProvidingTest : FunSpec({
     test("valid typing provided by action") {
         // Given
-        val actionTypesYml = """
+        val actionTypesYml =
+            """
             inputs:
               name:
                 type: string
@@ -49,25 +50,27 @@ class TypesProvidingTest : FunSpec({
                   - user
                   - admin
                   - guest
-        """.trimIndent()
-        val actionBindingRequest = ActionBindingRequest(
-            actionCoords = ActionCoords("some-owner", "some-name", "v1"),
-            typingsSource = TypingsSource.ActionTypes,
-        )
+            """.trimIndent()
+        val actionBindingRequest =
+            ActionBindingRequest(
+                actionCoords = ActionCoords("some-owner", "some-name", "v1"),
+                typingsSource = TypingsSource.ActionTypes,
+            )
 
         // When
         val types = actionBindingRequest.provideTypes({ actionTypesYml }, { "some-hash" })
 
         // Then
-        types shouldBe mapOf(
-            "name" to StringTyping,
-            "verbose" to BooleanTyping,
-            "retries" to IntegerTyping,
-            "some-float" to FloatTyping,
-            "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
-            "input-files" to ListOfTypings(","),
-            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-            "permissions" to EnumTyping("Permissions", listOf("user", "admin", "guest")),
-        )
+        types shouldBe
+            mapOf(
+                "name" to StringTyping,
+                "verbose" to BooleanTyping,
+                "retries" to IntegerTyping,
+                "some-float" to FloatTyping,
+                "fetch-depth" to IntegerWithSpecialValueTyping("FetchDepth", mapOf("Infinite" to 0)),
+                "input-files" to ListOfTypings(","),
+                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                "permissions" to EnumTyping("Permissions", listOf("user", "admin", "guest")),
+            )
     }
 })

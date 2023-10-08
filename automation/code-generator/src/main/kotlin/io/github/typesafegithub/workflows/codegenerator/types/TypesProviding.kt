@@ -67,14 +67,18 @@ private fun ActionCoords.fetchTypingMetadata(
 
     val commitHash = getCommitHash(this)
     val list = listOf(actionTypesYmlUrl(commitHash), actionTypesYamlUrl(commitHash))
-    val typesMetadataYaml = list.firstNotNullOfOrNull { url ->
-        try {
-            println("  ... types from $url")
-            fetchUri(URI(url))
-        } catch (e: IOException) {
-            null
-        }
-    } ?: error("$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\nCheck release page $releasesUrl")
+    val typesMetadataYaml =
+        list.firstNotNullOfOrNull { url ->
+            try {
+                println("  ... types from $url")
+                fetchUri(URI(url))
+            } catch (e: IOException) {
+                null
+            }
+        } ?: error(
+            "$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\n" +
+                "Check release page $releasesUrl",
+        )
 
     cacheFile.parentFile.mkdirs()
     cacheFile.writeText(typesMetadataYaml)
@@ -106,25 +110,32 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             }
         }
         ActionTypeEnum.Float -> FloatTyping
-        ActionTypeEnum.List -> ListOfTypings(
-            delimiter = separator,
-            typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
-        )
-        ActionTypeEnum.Enum -> EnumTyping(
-            items = allowedValues,
-            typeName = name?.toPascalCase() ?: fieldName.toPascalCase(),
-        )
+        ActionTypeEnum.List ->
+            ListOfTypings(
+                delimiter = separator,
+                typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
+            )
+        ActionTypeEnum.Enum ->
+            EnumTyping(
+                items = allowedValues,
+                typeName = name?.toPascalCase() ?: fieldName.toPascalCase(),
+            )
     }
 
-private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(text: String, default: T): T =
+private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
+    text: String,
+    default: T,
+): T =
     if (text.isNotBlank()) {
         decodeFromString(text)
     } else {
         default
     }
 
-private val myYaml = Yaml(
-    configuration = Yaml.default.configuration.copy(
-        strictMode = false,
-    ),
-)
+private val myYaml =
+    Yaml(
+        configuration =
+            Yaml.default.configuration.copy(
+                strictMode = false,
+            ),
+    )

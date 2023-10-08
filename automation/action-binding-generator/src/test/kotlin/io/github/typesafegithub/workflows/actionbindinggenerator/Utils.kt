@@ -11,10 +11,11 @@ fun ActionBinding.shouldMatchFile(path: String) {
         Paths.get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path")
             .toFile()
     val actualFile = expectedFile.resolveSibling(expectedFile.nameWithoutExtension + "Actual.kt")
-    val expectedContent = when {
-        expectedFile.canRead() -> expectedFile.readText().removeWindowsNewLines()
-        else -> ""
-    }
+    val expectedContent =
+        when {
+            expectedFile.canRead() -> expectedFile.readText().removeWindowsNewLines()
+            else -> ""
+        }
     val actualContent = kotlinCode.removeWindowsNewLines()
 
     filePath shouldBe "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/johnsmith/$path"
@@ -31,9 +32,11 @@ fun ActionBinding.shouldMatchFile(path: String) {
             // change the package to avoid compilation errors because of duplicate classes / functions
             actualContent.replace("package $packageName", "package $packageName.actual"),
         )
-        fail("The Binding's kotlin code in ${actualFile.name} doesn't match ${expectedFile.name}\nSee folder ${expectedFile.parentFile.canonicalPath}")
+        fail(
+            "The Binding's kotlin code in ${actualFile.name} doesn't match ${expectedFile.name}\n" +
+                "See folder ${expectedFile.parentFile.canonicalPath}",
+        )
     }
 }
 
-private fun String.removeWindowsNewLines(): String =
-    replace("\r\n", "\n")
+private fun String.removeWindowsNewLines(): String = replace("\r\n", "\n")

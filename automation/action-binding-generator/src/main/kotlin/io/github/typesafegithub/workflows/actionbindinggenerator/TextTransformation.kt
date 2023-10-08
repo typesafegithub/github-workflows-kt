@@ -4,5 +4,4 @@ internal fun String.toKotlinPackageName(): String =
     replace("-", "")
         .lowercase()
 
-internal fun String.removeTrailingWhitespacesForEachLine() =
-    lines().joinToString(separator = "\n") { it.trimEnd() }
+internal fun String.removeTrailingWhitespacesForEachLine() = lines().joinToString(separator = "\n") { it.trimEnd() }

@@ -40,22 +40,24 @@ class TypingSuggestionsTest : FunSpec({
     }
 
     test("Suggestions") {
-        val inputs = mapOf(
-            "bool" to Input("description 1", default = "true"),
-            "int" to Input("description 2", default = "42"),
-            "list" to Input(description = "labels to set on the Pull Request comma separated"),
-        )
+        val inputs =
+            mapOf(
+                "bool" to Input("description 1", default = "true"),
+                "int" to Input("description 2", default = "42"),
+                "list" to Input(description = "labels to set on the Pull Request comma separated"),
+            )
 
         val actionYaml = Metadata("action", "description", inputs)
 
         actionYaml.suggestAdditionalTypings(setOf("bool", "int", "list")) shouldBe null
 
-        actionYaml.suggestAdditionalTypings(emptySet()) shouldBe """
+        actionYaml.suggestAdditionalTypings(emptySet()) shouldBe
+            """
             |    mapOf(
             |            "bool" to BooleanTyping,
             |            "int" to IntegerTyping,
             |            "list" to ListOfTypings(TODO("please check")),
             |    )
-        """.trimMargin()
+            """.trimMargin()
     }
 })

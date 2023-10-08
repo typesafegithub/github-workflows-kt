@@ -14,12 +14,13 @@ class AddDeprecationInfoTest : FunSpec({
             ActionBindingRequest(ActionCoords("owner", "other-name", "v1")),
             ActionBindingRequest(ActionCoords("owner", "other-name", "v2")),
             ActionBindingRequest(ActionCoords("owner", "other-name", "v3")),
-        ).addDeprecationInfo() shouldBe listOf(
-            ActionBindingRequest(ActionCoords("owner", "name", "v4", deprecatedByVersion = "v5")),
-            ActionBindingRequest(ActionCoords("owner", "name", "v5")),
-            ActionBindingRequest(ActionCoords("owner", "other-name", "v1", deprecatedByVersion = "v3")),
-            ActionBindingRequest(ActionCoords("owner", "other-name", "v2", deprecatedByVersion = "v3")),
-            ActionBindingRequest(ActionCoords("owner", "other-name", "v3")),
-        )
+        ).addDeprecationInfo() shouldBe
+            listOf(
+                ActionBindingRequest(ActionCoords("owner", "name", "v4", deprecatedByVersion = "v5")),
+                ActionBindingRequest(ActionCoords("owner", "name", "v5")),
+                ActionBindingRequest(ActionCoords("owner", "other-name", "v1", deprecatedByVersion = "v3")),
+                ActionBindingRequest(ActionCoords("owner", "other-name", "v2", deprecatedByVersion = "v3")),
+                ActionBindingRequest(ActionCoords("owner", "other-name", "v3")),
+            )
     }
 })

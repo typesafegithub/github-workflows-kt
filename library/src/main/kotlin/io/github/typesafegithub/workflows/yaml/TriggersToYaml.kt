@@ -90,59 +90,62 @@ private fun PullRequestTarget.toMap() =
 
 @Suppress("ComplexMethod")
 @InternalGithubActionsApi
-public fun Trigger.triggerName(): String = when (this) {
-    is PullRequest -> "pull_request"
-    is PullRequestTarget -> "pull_request_target"
-    is Push -> "push"
-    is Schedule -> "schedule"
-    is WorkflowDispatch -> "workflow_dispatch"
-    is BranchProtectionRule -> "branch_protection_rule"
-    is CheckRun -> "check_run"
-    is CheckSuite -> "check_suite"
-    is Create -> "create"
-    is Delete -> "delete"
-    is Deployment -> "deployment"
-    is DeploymentStatus -> "deployment_status"
-    is Discussion -> "discussion"
-    is DiscussionComment -> "discussion_comment"
-    is Fork -> "fork"
-    is Gollum -> "gollum"
-    is IssueComment -> "issue_comment"
-    is Issues -> "issues"
-    is Label -> "label"
-    is MergeGroup -> "merge_group"
-    is Milestone -> "milestone"
-    is PageBuild -> "page_build"
-    is Project -> "project"
-    is ProjectCard -> "project_card"
-    is ProjectColumn -> "project_column"
-    is PublicWorkflow -> "public"
-    is PullRequestReview -> "pull_request_review"
-    is PullRequestReviewComment -> "pull_request_review_comment"
-    is RegistryPackage -> "registry_package"
-    is Release -> "release"
-    is RepositoryDispatch -> "repository_dispatch"
-    is Status -> "status"
-    is Watch -> "watch"
-    is WorkflowCall -> "workflow_call"
-    is WorkflowRun -> "workflow_run"
-}
+public fun Trigger.triggerName(): String =
+    when (this) {
+        is PullRequest -> "pull_request"
+        is PullRequestTarget -> "pull_request_target"
+        is Push -> "push"
+        is Schedule -> "schedule"
+        is WorkflowDispatch -> "workflow_dispatch"
+        is BranchProtectionRule -> "branch_protection_rule"
+        is CheckRun -> "check_run"
+        is CheckSuite -> "check_suite"
+        is Create -> "create"
+        is Delete -> "delete"
+        is Deployment -> "deployment"
+        is DeploymentStatus -> "deployment_status"
+        is Discussion -> "discussion"
+        is DiscussionComment -> "discussion_comment"
+        is Fork -> "fork"
+        is Gollum -> "gollum"
+        is IssueComment -> "issue_comment"
+        is Issues -> "issues"
+        is Label -> "label"
+        is MergeGroup -> "merge_group"
+        is Milestone -> "milestone"
+        is PageBuild -> "page_build"
+        is Project -> "project"
+        is ProjectCard -> "project_card"
+        is ProjectColumn -> "project_column"
+        is PublicWorkflow -> "public"
+        is PullRequestReview -> "pull_request_review"
+        is PullRequestReviewComment -> "pull_request_review_comment"
+        is RegistryPackage -> "registry_package"
+        is Release -> "release"
+        is RepositoryDispatch -> "repository_dispatch"
+        is Status -> "status"
+        is Watch -> "watch"
+        is WorkflowCall -> "workflow_call"
+        is WorkflowRun -> "workflow_run"
+    }
 
-private fun Trigger.toAdditionalYaml(): Any? = when (this) {
-    is Schedule -> toAdditionalYaml()
-    is WorkflowDispatch -> toAdditionalYaml()
-    else -> null
-}
+private fun Trigger.toAdditionalYaml(): Any? =
+    when (this) {
+        is Schedule -> toAdditionalYaml()
+        is WorkflowDispatch -> toAdditionalYaml()
+        else -> null
+    }
 
-private fun Schedule.toAdditionalYaml(): List<Map<String, String>> =
-    triggers.map { mapOf("cron" to it.expression) }
+private fun Schedule.toAdditionalYaml(): List<Map<String, String>> = triggers.map { mapOf("cron" to it.expression) }
 
-private fun WorkflowDispatch.toAdditionalYaml(): Map<String, Any?> = when {
-    inputs.isEmpty() -> emptyMap()
-    else -> mapOf(
-        "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
-    )
-}
+private fun WorkflowDispatch.toAdditionalYaml(): Map<String, Any?> =
+    when {
+        inputs.isEmpty() -> emptyMap()
+        else ->
+            mapOf(
+                "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
+            )
+    }
 
 private fun WorkflowDispatch.Input.toYaml(): Map<String, Any> =
     mapOfNotNullValues(

@@ -10,6 +10,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.kotest.core.spec.style.FunSpec
 import java.util.LinkedHashMap
 
+@Suppress("ktlint:standard:no-consecutive-comments")
 class JobOutputsSnippets : FunSpec({
     test("jobOutputs") {
         workflow(
@@ -17,34 +18,38 @@ class JobOutputsSnippets : FunSpec({
             on = listOf(Push()),
         ) {
             // --8<-- [start:define-job-outputs-1]
-            val myJob = job(
-                id = "my_job",
-                runsOn = RunnerType.UbuntuLatest,
-                outputs = object : JobOutputs() {
-                    var myOutput by output()
-                    var anotherOutput by output()
-                },
-                // --8<-- [end:define-job-outputs-1]
+            val myJob =
+                job(
+                    id = "my_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                    outputs =
+                        object : JobOutputs() {
+                            var myOutput by output()
+                            var anotherOutput by output()
+                        },
+                    // --8<-- [end:define-job-outputs-1]
                 /*
                 // --8<-- [start:define-job-outputs-2]
                 ) { ... }
                 // --8<-- [end:define-job-outputs-2]
                  */
-            ) {
-                class DocTest : RegularAction<DocTest.Outputs>("doc", "test", "v0") {
-                    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf()
-                    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
-                    inner class Outputs(stepId: String) : Action.Outputs(stepId) {
-                        val someStepOutput: String = ""
-                    }
-                }
-                val someStep = uses(action = DocTest())
+                ) {
+                    class DocTest : RegularAction<DocTest.Outputs>("doc", "test", "v0") {
+                        override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf()
 
-                // --8<-- [start:set-job-outputs]
-                jobOutputs.myOutput = someStep.outputs.someStepOutput
-                jobOutputs.anotherOutput = someStep.outputs["custom-output"]
-                // --8<-- [end:set-job-outputs]
-            }
+                        override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+                        inner class Outputs(stepId: String) : Action.Outputs(stepId) {
+                            val someStepOutput: String = ""
+                        }
+                    }
+                    val someStep = uses(action = DocTest())
+
+                    // --8<-- [start:set-job-outputs]
+                    jobOutputs.myOutput = someStep.outputs.someStepOutput
+                    jobOutputs.anotherOutput = someStep.outputs["custom-output"]
+                    // --8<-- [end:set-job-outputs]
+                }
 
             // --8<-- [start:use-job-outputs]
             job(
@@ -54,10 +59,11 @@ class JobOutputsSnippets : FunSpec({
             ) {
                 run(
                     name = "Use outputs",
-                    command = """
+                    command =
+                        """
                         echo ${expr { myJob.outputs.myOutput }}
                         echo ${expr { myJob.outputs.anotherOutput }}
-                    """.trimIndent(),
+                        """.trimIndent(),
                 )
             }
             // --8<-- [end:use-job-outputs]

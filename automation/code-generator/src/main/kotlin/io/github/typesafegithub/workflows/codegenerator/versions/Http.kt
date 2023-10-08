@@ -74,7 +74,10 @@ suspend fun ActionCoords.fetchAvailableVersions(githubToken: String): List<Versi
         .flatMap { url -> fetchGithubRefs(url, githubToken) }
         .versions()
 
-private suspend fun fetchGithubRefs(url: String, githubToken: String): List<GithubRef> =
+private suspend fun fetchGithubRefs(
+    url: String,
+    githubToken: String,
+): List<GithubRef> =
     httpClient.get(urlString = url) {
         bearerAuth(githubToken)
     }.body()

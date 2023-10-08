@@ -14,44 +14,45 @@ class JobBuilderTest : FunSpec({
     context("job builder") {
         test("with custom step arguments") {
             // Given
-            val workflow = workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
-            ) {
-                job(
-                    id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
+            val workflow =
+                workflow(
+                    name = "Test workflow",
+                    on = listOf(Push()),
+                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
                 ) {
-                    run(
-                        name = "Hello world!",
-                        command = "echo 'hello!'",
-                        _customArguments = mapOf("foo0" to true),
-                    )
-                    run(
-                        command = "echo 'hello!'",
-                        _customArguments = mapOf("foo1" to true),
-                    )
-                    uses(
-                        name = "Check out",
-                        action = CheckoutV4(),
-                        _customArguments = mapOf("foo2" to true),
-                    )
-                    uses(
-                        action = CheckoutV4(),
-                        _customArguments = mapOf("foo3" to true),
-                    )
-                    uses(
-                        name = "Set up Java",
-                        action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
-                        _customArguments = mapOf("foo4" to true),
-                    )
-                    uses(
-                        action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
-                        _customArguments = mapOf("foo5" to true),
-                    )
+                    job(
+                        id = "test_job",
+                        runsOn = RunnerType.UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Hello world!",
+                            command = "echo 'hello!'",
+                            _customArguments = mapOf("foo0" to true),
+                        )
+                        run(
+                            command = "echo 'hello!'",
+                            _customArguments = mapOf("foo1" to true),
+                        )
+                        uses(
+                            name = "Check out",
+                            action = CheckoutV4(),
+                            _customArguments = mapOf("foo2" to true),
+                        )
+                        uses(
+                            action = CheckoutV4(),
+                            _customArguments = mapOf("foo3" to true),
+                        )
+                        uses(
+                            name = "Set up Java",
+                            action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
+                            _customArguments = mapOf("foo4" to true),
+                        )
+                        uses(
+                            action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
+                            _customArguments = mapOf("foo5" to true),
+                        )
+                    }
                 }
-            }
 
             // When
             val job = workflow.jobs.first()
@@ -79,14 +80,15 @@ class JobBuilderTest : FunSpec({
 
         test("use 'if'") {
             // When
-            val workflow = workflow(
-                name = "test",
-                on = listOf(Push()),
-            ) {
-                job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
-                    run(command = "ls")
+            val workflow =
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
+                        run(command = "ls")
+                    }
                 }
-            }
 
             // Then
             workflow.jobs[0].condition shouldBe "b"
@@ -94,14 +96,15 @@ class JobBuilderTest : FunSpec({
 
         test("use 'condition'") {
             // When
-            val workflow = workflow(
-                name = "test",
-                on = listOf(Push()),
-            ) {
-                job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
-                    run(command = "ls")
+            val workflow =
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
+                        run(command = "ls")
+                    }
                 }
-            }
 
             // Then
             workflow.jobs[0].condition shouldBe "b"

@@ -19,16 +19,18 @@ import java.io.StringWriter
 import java.util.Optional
 
 internal fun Any.toYaml(): String {
-    val settings = DumpSettings.builder()
-        // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
-        // expressions.
-        .setWidth(Int.MAX_VALUE)
-        .build()
-    val writer = object : StringWriter(), StreamDataWriter {
-        override fun flush() {
-            // no-op
+    val settings =
+        DumpSettings.builder()
+            // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
+            // expressions.
+            .setWidth(Int.MAX_VALUE)
+            .build()
+    val writer =
+        object : StringWriter(), StreamDataWriter {
+            override fun flush() {
+                // no-op
+            }
         }
-    }
     val emitter = Emitter(settings, writer)
     emitter.emit(StreamStartEvent())
     emitter.emit(DocumentStartEvent(false, Optional.empty(), emptyMap()))
@@ -81,15 +83,16 @@ private fun List<*>.listToYaml(emitter: Emitter) {
 }
 
 private fun Any?.scalarToYaml(emitter: Emitter) {
-    val scalarStyle = if (this is String) {
-        if (lines().size > 1) {
-            ScalarStyle.LITERAL
+    val scalarStyle =
+        if (this is String) {
+            if (lines().size > 1) {
+                ScalarStyle.LITERAL
+            } else {
+                ScalarStyle.SINGLE_QUOTED
+            }
         } else {
-            ScalarStyle.SINGLE_QUOTED
+            ScalarStyle.PLAIN
         }
-    } else {
-        ScalarStyle.PLAIN
-    }
     emitter.emit(
         ScalarEvent(Optional.empty(), Optional.empty(), ImplicitTuple(true, true), this.toString(), scalarStyle),
     )

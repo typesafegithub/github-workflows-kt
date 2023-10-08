@@ -70,23 +70,27 @@ public fun ActionCoords.generateBinding(
 }
 
 private fun Metadata.removeDeprecatedInputsIfNameClash(): Metadata {
-    val newInputs = this.inputs.entries
-        .groupBy { (originalKey, _) -> originalKey.toCamelCase() }
-        .mapValues { (_, clashingInputs) ->
-            clashingInputs
-                .find { it.value.deprecationMessage == null }
-                ?: clashingInputs.first()
-        }.values.associateBy({ it.key }, { it.value })
+    val newInputs =
+        this.inputs.entries
+            .groupBy { (originalKey, _) -> originalKey.toCamelCase() }
+            .mapValues { (_, clashingInputs) ->
+                clashingInputs
+                    .find { it.value.deprecationMessage == null }
+                    ?: clashingInputs.first()
+            }.values.associateBy({ it.key }, { it.value })
     return this.copy(inputs = newInputs)
 }
 
-private fun checkPropertiesAreValid(metadata: Metadata, inputTypings: Map<String, Typing>) {
+private fun checkPropertiesAreValid(
+    metadata: Metadata,
+    inputTypings: Map<String, Typing>,
+) {
     val invalidProperties = inputTypings.keys - metadata.inputs.keys
     require(invalidProperties.isEmpty()) {
         """
-            Request contains invalid properties:
-            Available: ${metadata.inputs.keys}
-            Invalid:   $invalidProperties
+        Request contains invalid properties:
+        Available: ${metadata.inputs.keys}
+        Invalid:   $invalidProperties
         """.trimIndent()
     }
 }
@@ -97,24 +101,28 @@ private fun generateActionBindingSourceCode(
     inputTypings: Map<String, Typing>,
     className: String,
 ): String {
-    val fileSpec = FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", className)
-        .addFileComment(
-            """
-            This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
-            be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
-            generator itself.
-            """.trimIndent(),
-        )
-        .addType(generateActionClass(metadata, coords, inputTypings, className))
-        .addSuppressAnnotation(metadata, coords)
-        .indent("    ")
-        .build()
+    val fileSpec =
+        FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", className)
+            .addFileComment(
+                """
+                This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
+                be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
+                generator itself.
+                """.trimIndent(),
+            )
+            .addType(generateActionClass(metadata, coords, inputTypings, className))
+            .addSuppressAnnotation(metadata, coords)
+            .indent("    ")
+            .build()
     return buildString {
         fileSpec.writeTo(this)
     }
 }
 
-private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata, coords: ActionCoords) = apply {
+private fun FileSpec.Builder.addSuppressAnnotation(
+    metadata: Metadata,
+    coords: ActionCoords,
+) = apply {
     val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
     val addSuppressionForDeprecation = isDeprecatedInputUsed || coords.deprecatedByVersion != null
 
@@ -190,14 +198,16 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
         return this
     }
 
-    val stepIdConstructorParameter = ParameterSpec.builder("stepId", String::class)
-        .build()
-    val propertiesFromOutputs = metadata.outputs.map { (key, value) ->
-        PropertySpec.builder(key.toCamelCase(), String::class)
-            .initializer("\"steps.\$stepId.outputs.$key\"")
-            .addKdoc(value.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
+    val stepIdConstructorParameter =
+        ParameterSpec.builder("stepId", String::class)
             .build()
-    }
+    val propertiesFromOutputs =
+        metadata.outputs.map { (key, value) ->
+            PropertySpec.builder(key.toCamelCase(), String::class)
+                .initializer("\"steps.\$stepId.outputs.$key\"")
+                .addKdoc(value.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
+                .build()
+        }
     addType(
         TypeSpec.classBuilder("Outputs")
             .primaryConstructor(
@@ -227,15 +237,16 @@ private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: M
     return this
 }
 
-private fun PropertySpec.Builder.annotateDeprecated(input: Input) = apply {
-    if (input.deprecationMessage != null) {
-        addAnnotation(
-            AnnotationSpec.builder(Deprecated::class.asClassName())
-                .addMember(CodeBlock.of("%S", input.deprecationMessage))
-                .build(),
-        )
+private fun PropertySpec.Builder.annotateDeprecated(input: Input) =
+    apply {
+        if (input.deprecationMessage != null) {
+            addAnnotation(
+                AnnotationSpec.builder(Deprecated::class.asClassName())
+                    .addMember(CodeBlock.of("%S", input.deprecationMessage))
+                    .build(),
+            )
+        }
     }
-}
 
 private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typing>) =
     FunSpec.builder("toYamlArguments")
@@ -296,18 +307,19 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
     metadata: Metadata,
     className: String,
 ): TypeSpec.Builder {
-    val superclass = ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
-        .plusParameter(
-            if (metadata.outputs.isEmpty()) {
-                OutputsBase
-            } else {
-                ClassName(
-                    "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
-                    className,
-                    "Outputs",
-                )
-            },
-        )
+    val superclass =
+        ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
+            .plusParameter(
+                if (metadata.outputs.isEmpty()) {
+                    OutputsBase
+                } else {
+                    ClassName(
+                        "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+                        className,
+                        "Outputs",
+                    )
+                },
+            )
     return this
         .superclass(superclass)
         .addSuperclassConstructorParameter("%S", coords.owner)
@@ -377,27 +389,35 @@ private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): Paramete
     return this
 }
 
-private fun actionKdoc(metadata: Metadata, coords: ActionCoords) =
-    """
+private fun actionKdoc(
+    metadata: Metadata,
+    coords: ActionCoords,
+) = """
        |Action: ${metadata.name.nestedCommentsSanitized}
        |
        |${metadata.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine()}
        |
-       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore('/')}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
+       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore(
+    '/',
+)}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
     """.trimMargin()
 
-private fun Map<String, Typing>.getInputTyping(key: String) =
-    this[key] ?: StringTyping
+private fun Map<String, Typing>.getInputTyping(key: String) = this[key] ?: StringTyping
 
-private fun Map<String, Typing>.getInputType(key: String, input: Input, coords: ActionCoords, className: String) =
-    getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), className, key)
-        .copy(nullable = !input.shouldBeNonNullInBinding())
+private fun Map<String, Typing>.getInputType(
+    key: String,
+    input: Input,
+    coords: ActionCoords,
+    className: String,
+) = getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), className, key)
+    .copy(nullable = !input.shouldBeNonNullInBinding())
 
 // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
 //            and a shortcoming in KotlinPoet: https://github.com/square/kotlinpoet/issues/887
 private val String.nestedCommentsSanitized
-    get() = replace("/*", "/&#42;")
-        .replace("*/", "&#42;/")
-        .replace("`[^`]++`".toRegex()) {
-            it.value.replace("&#42;", "`&#42;`")
-        }
+    get() =
+        replace("/*", "/&#42;")
+            .replace("*/", "&#42;/")
+            .replace("`[^`]++`".toRegex()) {
+                it.value.replace("&#42;", "`&#42;`")
+            }

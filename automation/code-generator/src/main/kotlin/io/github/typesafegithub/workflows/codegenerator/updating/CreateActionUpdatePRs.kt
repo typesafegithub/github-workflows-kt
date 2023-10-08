@@ -32,8 +32,9 @@ suspend fun main() {
             val commitHashFilePath = actionBindingRequest.actionCoords.buildCommitHashFilePath()
             val currentCommitHash = commitHashFilePath.toFile().readText().trim()
 
-            val newestCommitHash = actionBindingRequest.actionCoords.fetchCommitHash(githubToken)
-                ?: error("There was a problem fetching commit hash for ${actionBindingRequest.actionCoords}")
+            val newestCommitHash =
+                actionBindingRequest.actionCoords.fetchCommitHash(githubToken)
+                    ?: error("There was a problem fetching commit hash for ${actionBindingRequest.actionCoords}")
 
             val (codeCurrent, path) = actionBindingRequest.generateBindingForCommit(currentCommitHash)
             val (codeNewest, _) = actionBindingRequest.generateBindingForCommit(newestCommitHash)
@@ -67,10 +68,11 @@ private suspend fun createPullRequest(
         branchName = "update-${actionBindingRequest.actionCoords.prettyPrint}",
         prTitle = "feat(actions): update ${actionBindingRequest.actionCoords.prettyPrint}",
         prBody = "Created automatically.",
-        fileNamesToContents = mapOf(
-            path to bindingCode,
-            commitHashFilePath.pathString to newCommitHash,
-        ),
+        fileNamesToContents =
+            mapOf(
+                path to bindingCode,
+                commitHashFilePath.pathString to newCommitHash,
+            ),
         githubToken = githubToken,
         githubRepoOwner = "typesafegithub",
         githubRepoName = "github-workflows-kt",
@@ -85,12 +87,13 @@ private fun ActionBindingRequest.generateBindingForCommit(commitHash: String): A
 
 private suspend fun ActionCoords.fetchCommitHash(githubToken: String): String? {
     suspend fun fetch(detailsUrl: String): String? {
-        val responseJson = tryFetchingCommitHash(
-            owner = this.owner,
-            name = this.name,
-            detailsUrl = detailsUrl,
-            githubToken = githubToken,
-        )
+        val responseJson =
+            tryFetchingCommitHash(
+                owner = this.owner,
+                name = this.name,
+                detailsUrl = detailsUrl,
+                githubToken = githubToken,
+            )
         return responseJson?.let {
             val response = json.decodeFromString<GithubRef>(it)
 
@@ -121,16 +124,25 @@ private suspend fun ActionCoords.fetchCommitHash(githubToken: String): String? {
         ?: fetch("ref/heads/${version.removePrefix("v")}")
 }
 
-private suspend fun tryFetchingCommitHash(owner: String, name: String, detailsUrl: String, githubToken: String): String? {
+private suspend fun tryFetchingCommitHash(
+    owner: String,
+    name: String,
+    detailsUrl: String,
+    githubToken: String,
+): String? {
     val url = "https://api.github.com/repos/$owner/$name/git/$detailsUrl"
     return fetchGithubUrl(url, githubToken)
 }
 
-private suspend fun fetchGithubUrl(url: String, githubToken: String): String? {
+private suspend fun fetchGithubUrl(
+    url: String,
+    githubToken: String,
+): String? {
     println("    trying $url")
-    val response = httpClient.get(urlString = url) {
-        bearerAuth(githubToken)
-    }
+    val response =
+        httpClient.get(urlString = url) {
+            bearerAuth(githubToken)
+        }
     if (response.status == HttpStatusCode.NotFound) {
         return null
     }

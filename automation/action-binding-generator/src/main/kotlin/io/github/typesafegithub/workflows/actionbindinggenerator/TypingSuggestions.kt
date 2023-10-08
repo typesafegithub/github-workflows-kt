@@ -4,18 +4,21 @@ import io.github.typesafegithub.workflows.metadatareading.Input
 import io.github.typesafegithub.workflows.metadatareading.Metadata
 
 internal fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): String? {
-    val keys = (inputs.keys - existingTypings).associate {
-        it to inputs.get(it)!!
-    }
-
-    val suggestions = keys.mapNotNull { (key, input) ->
-        val typing = input.suggestTyping() ?: return@mapNotNull null
-        key to typing
-    }
-    val formatSuggestions = suggestions
-        .joinToString(separator = "\n", prefix = "    mapOf(\n", postfix = "\n    )") {
-            """            "${it.first}" to ${it.second},"""
+    val keys =
+        (inputs.keys - existingTypings).associate {
+            it to inputs.get(it)!!
         }
+
+    val suggestions =
+        keys.mapNotNull { (key, input) ->
+            val typing = input.suggestTyping() ?: return@mapNotNull null
+            key to typing
+        }
+    val formatSuggestions =
+        suggestions
+            .joinToString(separator = "\n", prefix = "    mapOf(\n", postfix = "\n    )") {
+                """            "${it.first}" to ${it.second},"""
+            }
 
     return if (suggestions.isNotEmpty()) {
         formatSuggestions
@@ -25,14 +28,16 @@ internal fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): St
 }
 
 internal fun Input.suggestTyping(): String? {
-    val listKeywords = setOf(
-        "list of",
-        "paths",
-        "comma separated",
-        "newline separated",
-    )
-    val normalizedDescription = this.description.lowercase()
-        .map { if (it in 'a'..'z') it else ' ' }.joinToString("")
+    val listKeywords =
+        setOf(
+            "list of",
+            "paths",
+            "comma separated",
+            "newline separated",
+        )
+    val normalizedDescription =
+        this.description.lowercase()
+            .map { if (it in 'a'..'z') it else ' ' }.joinToString("")
 
     return when {
         default in listOf("true", "false") -> "BooleanTyping"

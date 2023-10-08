@@ -20,6 +20,5 @@ data class Version(val version: String) : Comparable<Version> {
 
     override fun toString(): String = version
 
-    fun isMajorVersion(): Boolean =
-        version.contains(".").not()
+    fun isMajorVersion(): Boolean = version.contains(".").not()
 }

@@ -16,15 +16,17 @@ class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
             on = listOf(Push()),
             // --8<-- [start:custom-arguments-2]
             // ...
-            _customArguments = mapOf(
-                "dry-run" to true,
-                "some-string-value" to "foobar",
-                "written-by" to listOf("Alice", "Bob"),
-                "concurrency" to mapOf(
-                    "group" to expr("github.ref"),
-                    "cancel-in-progress" to "true",
+            _customArguments =
+                mapOf(
+                    "dry-run" to true,
+                    "some-string-value" to "foobar",
+                    "written-by" to listOf("Alice", "Bob"),
+                    "concurrency" to
+                        mapOf(
+                            "group" to expr("github.ref"),
+                            "cancel-in-progress" to "true",
+                        ),
                 ),
-            ),
         )
         // --8<-- [end:custom-arguments-2]
         {
@@ -41,10 +43,11 @@ class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
             path = emptyList(),
             // --8<-- [start:custom-inputs-2]
             // ...
-            _customInputs = mapOf(
-                "path" to "override-path-value",
-                "answer" to "42",
-            ),
+            _customInputs =
+                mapOf(
+                    "path" to "override-path-value",
+                    "answer" to "42",
+                ),
         )
         // --8<-- [end:custom-inputs-2]
     }

@@ -19,9 +19,10 @@ class UsingActionsSnippets : FunSpec({
         class MyCoolActionV3(
             private val someArgument: String,
         ) : RegularAction<Action.Outputs>("acmecorp", "cool-action", "v3") {
-            override fun toYamlArguments() = linkedMapOf(
-                "some-argument" to someArgument,
-            )
+            override fun toYamlArguments() =
+                linkedMapOf(
+                    "some-argument" to someArgument,
+                )
 
             override fun buildOutputObject(stepId: String) = Outputs(stepId)
         }
@@ -33,9 +34,10 @@ class UsingActionsSnippets : FunSpec({
         class MyCoolActionV3(
             private val someArgument: String,
         ) : RegularAction<MyCoolActionV3.Outputs>("acmecorp", "cool-action", "v3") {
-            override fun toYamlArguments() = linkedMapOf(
-                "some-argument" to someArgument,
-            )
+            override fun toYamlArguments() =
+                linkedMapOf(
+                    "some-argument" to someArgument,
+                )
 
             override fun buildOutputObject(stepId: String) = Outputs(stepId)
 
@@ -68,9 +70,10 @@ class UsingActionsSnippets : FunSpec({
         class MyCoolLocalActionV3(
             private val someArgument: String,
         ) : LocalAction<Action.Outputs>("./.github/actions/cool-action") {
-            override fun toYamlArguments() = linkedMapOf(
-                "some-argument" to someArgument,
-            )
+            override fun toYamlArguments() =
+                linkedMapOf(
+                    "some-argument" to someArgument,
+                )
 
             override fun buildOutputObject(stepId: String) = Outputs(stepId)
         }
@@ -82,9 +85,10 @@ class UsingActionsSnippets : FunSpec({
         class MyCoolDockerActionV3(
             private val someArgument: String,
         ) : DockerAction<Action.Outputs>("alpine", "latest") {
-            override fun toYamlArguments() = linkedMapOf(
-                "some-argument" to someArgument,
-            )
+            override fun toYamlArguments() =
+                linkedMapOf(
+                    "some-argument" to someArgument,
+                )
 
             override fun buildOutputObject(stepId: String) = Outputs(stepId)
         }
@@ -93,15 +97,17 @@ class UsingActionsSnippets : FunSpec({
 
     test("customAction") {
         // --8<-- [start:custom-action]
-        val customAction = CustomAction(
-            actionOwner = "xu-cheng",
-            actionName = "latex-action",
-            actionVersion = "v2",
-            inputs = linkedMapOf(
-                "root_file" to "report.tex",
-                "compiler" to "latexmk",
-            ),
-        )
+        val customAction =
+            CustomAction(
+                actionOwner = "xu-cheng",
+                actionName = "latex-action",
+                actionVersion = "v2",
+                inputs =
+                    linkedMapOf(
+                        "root_file" to "report.tex",
+                        "compiler" to "latexmk",
+                    ),
+            )
         // --8<-- [end:custom-action]
 
         workflow(
@@ -110,10 +116,11 @@ class UsingActionsSnippets : FunSpec({
         ) {
             // --8<-- [start:custom-action-outputs]
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
-                val customActionStep = uses(
-                    name = "Some step with output",
-                    action = customAction,
-                )
+                val customActionStep =
+                    uses(
+                        name = "Some step with output",
+                        action = customAction,
+                    )
 
                 // use your outputs:
                 println(expr(customActionStep.outputs["custom-output"]))
@@ -124,9 +131,10 @@ class UsingActionsSnippets : FunSpec({
 
     test("customLocalAction") {
         // --8<-- [start:custom-local-action]
-        val customAction = CustomLocalAction(
-            actionPath = "./.github/actions/setup-build-env",
-        )
+        val customAction =
+            CustomLocalAction(
+                actionPath = "./.github/actions/setup-build-env",
+            )
         // --8<-- [end:custom-local-action]
 
         workflow(
@@ -144,10 +152,11 @@ class UsingActionsSnippets : FunSpec({
 
     test("customDockerAction") {
         // --8<-- [start:custom-docker-action]
-        val customAction = CustomDockerAction(
-            actionImage = "alpine",
-            actionTag = "latest",
-        )
+        val customAction =
+            CustomDockerAction(
+                actionImage = "alpine",
+                actionTag = "latest",
+            )
         // --8<-- [end:custom-docker-action]
 
         workflow(

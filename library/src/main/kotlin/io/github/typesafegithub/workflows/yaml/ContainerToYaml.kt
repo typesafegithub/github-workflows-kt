@@ -15,40 +15,44 @@ internal fun Container.toYaml(): Map<String, Any?> =
         "credentials" to credentials?.toYaml(),
     ) + _customArguments
 
-private fun Credentials.toYaml(): Map<String, Any?> = mapOf(
-    "username" to username,
-    "password" to password,
-)
+private fun Credentials.toYaml(): Map<String, Any?> =
+    mapOf(
+        "username" to username,
+        "password" to password,
+    )
 
-internal fun VolumeMapping.toYaml(): String = buildString {
-    if (source != null) {
-        append(source)
-        append(':')
+internal fun VolumeMapping.toYaml(): String =
+    buildString {
+        if (source != null) {
+            append(source)
+            append(':')
+        }
+
+        append(target)
+
+        if (isReadOnly) append(":ro")
     }
 
-    append(target)
+internal fun PortMapping.toYaml(): String =
+    buildString {
+        append(host)
 
-    if (isReadOnly) append(":ro")
-}
+        if (container != null) {
+            append(':')
+            append(container)
+        }
 
-internal fun PortMapping.toYaml(): String = buildString {
-    append(host)
-
-    if (container != null) {
-        append(':')
-        append(container)
+        val protocol = protocol.toYaml()
+        if (protocol.isNotEmpty()) {
+            append('/')
+            append(protocol)
+        }
     }
 
-    val protocol = protocol.toYaml()
-    if (protocol.isNotEmpty()) {
-        append('/')
-        append(protocol)
+private fun PortMapping.Protocol.toYaml(): String =
+    when (this) {
+        is PortMapping.Protocol.Custom -> value
+        PortMapping.Protocol.All -> ""
+        PortMapping.Protocol.TCP -> "tcp"
+        PortMapping.Protocol.UDP -> "udp"
     }
-}
-
-private fun PortMapping.Protocol.toYaml(): String = when (this) {
-    is PortMapping.Protocol.Custom -> value
-    PortMapping.Protocol.All -> ""
-    PortMapping.Protocol.TCP -> "tcp"
-    PortMapping.Protocol.UDP -> "udp"
-}

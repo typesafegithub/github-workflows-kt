@@ -25,13 +25,14 @@ suspend fun main() {
     var output: String = ""
     val githubAuthorization = getGithubToken()
 
-    val actionsMap: Map<ActionCoords, List<Version>> = bindingsToGenerate
-        .map { it.actionCoords }
-        .filter { it.deprecatedByVersion == null }
-        .filter { it.isTopLevel }
-        .groupBy { ActionCoords(it.owner, it.name, version = "*") }
-        .mapKeys { it.key.copy(version = it.value.last().version) }
-        .mapValues { (_, value) -> value.map { Version(it.version) } }
+    val actionsMap: Map<ActionCoords, List<Version>> =
+        bindingsToGenerate
+            .map { it.actionCoords }
+            .filter { it.deprecatedByVersion == null }
+            .filter { it.isTopLevel }
+            .groupBy { ActionCoords(it.owner, it.name, version = "*") }
+            .mapKeys { it.key.copy(version = it.value.last().version) }
+            .mapValues { (_, value) -> value.map { Version(it.version) } }
 
     for ((coords, existingVersions) in actionsMap) {
         val available = coords.fetchAvailableVersions(githubAuthorization)
@@ -59,17 +60,22 @@ fun List<GithubRef>.versions(): List<Version> =
         Version(version)
     }
 
-fun suggestNewerVersion(existingVersions: List<Version>, availableVersions: List<Version>): String? {
+fun suggestNewerVersion(
+    existingVersions: List<Version>,
+    availableVersions: List<Version>,
+): String? {
     if (availableVersions.isEmpty()) {
         return null
     }
 
-    val maxExisting = existingVersions.maxOrNull()
-        ?: error("Invalid call existingVersions=$existingVersions availableVersions=$availableVersions")
+    val maxExisting =
+        existingVersions.maxOrNull()
+            ?: error("Invalid call existingVersions=$existingVersions availableVersions=$availableVersions")
 
-    val majorVersions = availableVersions
-        .filter { it.isMajorVersion() }
-        .sorted()
+    val majorVersions =
+        availableVersions
+            .filter { it.isMajorVersion() }
+            .sorted()
 
     val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
     return "new version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }

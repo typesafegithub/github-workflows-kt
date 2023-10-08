@@ -34,46 +34,51 @@ suspend fun createPullRequest(
     println(branchName)
     println(fileNamesToContents)
 
-    val prCreationContext = PrCreationContext(
-        httpClient = httpClient,
-        githubRepoOwner = githubRepoOwner,
-        githubRepoName = githubRepoName,
-        githubToken = githubToken,
-    )
+    val prCreationContext =
+        PrCreationContext(
+            httpClient = httpClient,
+            githubRepoOwner = githubRepoOwner,
+            githubRepoName = githubRepoName,
+            githubToken = githubToken,
+        )
     val getHeadResponse = prCreationContext.getHead(baseBranch = baseBranch)
     println("Commit SHA: ${getHeadResponse.`object`.sha}")
     val getCommitResponse = prCreationContext.getCommit(sha = getHeadResponse.`object`.sha)
     println("Tree SHA: ${getCommitResponse.tree.sha}")
 
-    val fileNamesToBlobShas = fileNamesToContents.mapValues { (_, value) ->
-        val uploadBlobResponse = prCreationContext.uploadBlob(utf8Contents = value)
-        uploadBlobResponse.sha
-    }
+    val fileNamesToBlobShas =
+        fileNamesToContents.mapValues { (_, value) ->
+            val uploadBlobResponse = prCreationContext.uploadBlob(utf8Contents = value)
+            uploadBlobResponse.sha
+        }
     println(fileNamesToBlobShas)
 
-    val createTreeResponse = prCreationContext.createTree(
-        baseTree = getCommitResponse.tree.sha,
-        fileNamesToBlobShas = fileNamesToBlobShas,
-    )
+    val createTreeResponse =
+        prCreationContext.createTree(
+            baseTree = getCommitResponse.tree.sha,
+            fileNamesToBlobShas = fileNamesToBlobShas,
+        )
     println("New tree SHA: ${createTreeResponse.sha}")
 
-    val createCommitResponse = prCreationContext.createCommit(
-        message = prTitle,
-        treeSha = createTreeResponse.sha,
-        parentCommitSha = getHeadResponse.`object`.sha,
-        authorName = "github-actions[bot]",
-        authorEmail = "41898282+github-actions[bot]@users.noreply.github.com",
-        date = Instant.now(),
-    )
+    val createCommitResponse =
+        prCreationContext.createCommit(
+            message = prTitle,
+            treeSha = createTreeResponse.sha,
+            parentCommitSha = getHeadResponse.`object`.sha,
+            authorName = "github-actions[bot]",
+            authorEmail = "41898282+github-actions[bot]@users.noreply.github.com",
+            date = Instant.now(),
+        )
     println("New commit SHA: ${createCommitResponse.sha}")
 
     prCreationContext.createRef(name = "refs/heads/$branchName", sha = createCommitResponse.sha)
-    val createPullRequestResponse = prCreationContext.createPullRequest(
-        title = prTitle,
-        body = prBody,
-        head = branchName,
-        base = baseBranch,
-    )
+    val createPullRequestResponse =
+        prCreationContext.createPullRequest(
+            title = prTitle,
+            body = prBody,
+            head = branchName,
+            base = baseBranch,
+        )
     println("PR created at: https://github.com/$githubRepoOwner/$githubRepoName/pull/${createPullRequestResponse.number}")
 
     return createPullRequestResponse.number
@@ -104,8 +109,7 @@ private data class GetCommitResponse(
     val tree: ObjectWithSha,
 )
 
-private suspend fun PrCreationContext.getCommit(sha: String): GetCommitResponse =
-    gitHubApiRequest(urlSuffix = "/git/commits/$sha")
+private suspend fun PrCreationContext.getCommit(sha: String): GetCommitResponse = gitHubApiRequest(urlSuffix = "/git/commits/$sha")
 
 @Serializable
 private data class UploadBlobRequest(
@@ -140,21 +144,25 @@ private data class TreeItem(
     val sha: String,
 )
 
-private suspend fun PrCreationContext.createTree(baseTree: String, fileNamesToBlobShas: Map<String, String>): ObjectWithSha =
+private suspend fun PrCreationContext.createTree(
+    baseTree: String,
+    fileNamesToBlobShas: Map<String, String>,
+): ObjectWithSha =
     gitHubApiRequest(urlSuffix = "/git/trees") {
         method = HttpMethod.Post
         contentType(ContentType(contentType = "application", contentSubtype = "vnd.github+json"))
         setBody(
             CreateTreeRequest(
                 baseTree = baseTree,
-                tree = fileNamesToBlobShas.map { (key, value) ->
-                    TreeItem(
-                        path = key,
-                        sha = value,
-                        mode = "100644",
-                        type = "blob",
-                    )
-                },
+                tree =
+                    fileNamesToBlobShas.map { (key, value) ->
+                        TreeItem(
+                            path = key,
+                            sha = value,
+                            mode = "100644",
+                            type = "blob",
+                        )
+                    },
             ),
         )
     }
@@ -190,11 +198,12 @@ private suspend fun PrCreationContext.createCommit(
                 message = message,
                 parents = listOf(parentCommitSha),
                 tree = treeSha,
-                author = Author(
-                    name = authorName,
-                    email = authorEmail,
-                    date = date.toString(),
-                ),
+                author =
+                    Author(
+                        name = authorName,
+                        email = authorEmail,
+                        date = date.toString(),
+                    ),
             ),
         )
     }
@@ -205,7 +214,10 @@ private data class CreateRefRequest(
     val sha: String,
 )
 
-private suspend fun PrCreationContext.createRef(name: String, sha: String): Unit =
+private suspend fun PrCreationContext.createRef(
+    name: String,
+    sha: String,
+): Unit =
     gitHubApiRequest(urlSuffix = "/git/refs") {
         method = HttpMethod.Post
         contentType(ContentType(contentType = "application", contentSubtype = "vnd.github+json"))

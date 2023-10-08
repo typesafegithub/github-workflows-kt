@@ -16,7 +16,11 @@ public open class JobOutputs {
 
     public inner class Ref : ReadWriteProperty<JobOutputs, String> {
         private var initialized: Boolean = false
-        override fun getValue(thisRef: JobOutputs, property: KProperty<*>): String {
+
+        override fun getValue(
+            thisRef: JobOutputs,
+            property: KProperty<*>,
+        ): String {
             val key = property.name
             check(initialized) {
                 "output '$key' must be initialized"
@@ -24,7 +28,11 @@ public open class JobOutputs {
             return "needs.${job.id}.outputs.$key"
         }
 
-        override fun setValue(thisRef: JobOutputs, property: KProperty<*>, value: String) {
+        override fun setValue(
+            thisRef: JobOutputs,
+            property: KProperty<*>,
+            value: String,
+        ) {
             val key = property.name
             check(!initialized) {
                 "Value for output '$key' can be assigned only once!"
