@@ -30,9 +30,10 @@ private fun ActionType.toTyping(fieldName: String): Typing =
             }
         }
         ActionTypeEnum.Float -> FloatTyping
-        ActionTypeEnum.List -> ListOfTypings(
-            delimiter = separator,
-            typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
-        )
+        ActionTypeEnum.List ->
+            ListOfTypings(
+                delimiter = separator,
+                typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
+            )
         ActionTypeEnum.Enum -> EnumTyping(typeName = name, items = allowedValues)
     }

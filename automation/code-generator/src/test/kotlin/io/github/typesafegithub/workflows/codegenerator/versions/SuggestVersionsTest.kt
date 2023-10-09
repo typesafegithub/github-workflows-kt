@@ -12,39 +12,41 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 class SuggestVersionsTest : FunSpec({
-    fun String.versions(): List<Version> =
-        split(", ").filter { it.isNotBlank() }.map { Version(it) }
+    fun String.versions(): List<Version> = split(", ").filter { it.isNotBlank() }.map { Version(it) }
 
     test("Compare versions") {
-        val sortedVersions = listOf(
-            "v1.0.0",
-            "v1.0.9",
-            "v1.0.12",
-            "v1.2.0",
-            "v1.9.0",
-            "v1.13.1",
-            "v9.0.0",
-            "v12.0.0",
-        )
-        val actual = sortedVersions
-            .shuffled()
-            .sortedBy { Version(it) }
+        val sortedVersions =
+            listOf(
+                "v1.0.0",
+                "v1.0.9",
+                "v1.0.12",
+                "v1.2.0",
+                "v1.9.0",
+                "v1.13.1",
+                "v9.0.0",
+                "v12.0.0",
+            )
+        val actual =
+            sortedVersions
+                .shuffled()
+                .sortedBy { Version(it) }
         actual shouldBe sortedVersions
     }
 
     context("Bindings using major versions") {
 
         test("No available versions") {
-            val testCases: Table2<String, String> = table(
-                headers("currentVersions", "availableVersions"),
-                row("v2", ""),
-                row("v2", "v1, v1.1.1"),
-                row("v2", "v2, v2.0.1, v2.1.0"),
-                row("v2", "v2, v2.0.1, v3.0.0"),
-                row("v2, v3", "v1, v1.1.1, v2, v2.0.1, v3, v3.0.0, v3.4.0"),
-                row("v3, v2", "v1.1.1, v2.0.1, v3.0.0, v3.4.0"),
-                row("v12", "v9"),
-            )
+            val testCases: Table2<String, String> =
+                table(
+                    headers("currentVersions", "availableVersions"),
+                    row("v2", ""),
+                    row("v2", "v1, v1.1.1"),
+                    row("v2", "v2, v2.0.1, v2.1.0"),
+                    row("v2", "v2, v2.0.1, v3.0.0"),
+                    row("v2, v3", "v1, v1.1.1, v2, v2.0.1, v3, v3.0.0, v3.4.0"),
+                    row("v3, v2", "v1.1.1, v2.0.1, v3.0.0, v3.4.0"),
+                    row("v12", "v9"),
+                )
             testCases.forAll { current, available ->
                 suggestNewerVersion(current.versions(), available.versions()) shouldBe null
             }
@@ -74,13 +76,14 @@ class SuggestVersionsTest : FunSpec({
     context("Bindings using hardcoded version") {
         test("No available versions") {
             val currentVersion = Version("v2.1.0")
-            val testCases = listOf(
-                "",
-                "v2.1.0",
-                "v1.1.0, v1.2.0",
-                "v1.1.0, v2.0.0",
-                "v1.1.0, v2.1.0",
-            )
+            val testCases =
+                listOf(
+                    "",
+                    "v2.1.0",
+                    "v1.1.0, v1.2.0",
+                    "v1.1.0, v2.0.0",
+                    "v1.1.0, v2.1.0",
+                )
             testCases.forAll { available ->
                 suggestNewerVersion(listOf(currentVersion), available.versions()) shouldBe null
             }

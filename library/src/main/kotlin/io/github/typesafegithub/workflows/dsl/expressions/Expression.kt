@@ -13,5 +13,4 @@ public fun expr(value: String): String = "\${{ ${value.removePrefix("$")} }}"
  * https://docs.github.com/en/actions/learn-github-actions/expressions#about-expressions
  * https://docs.github.com/en/actions/learn-github-actions/contexts
  */
-public fun expr(expression: Contexts.() -> String): String =
-    with(Contexts) { expr(expression()) }
+public fun expr(expression: Contexts.() -> String): String = with(Contexts) { expr(expression()) }

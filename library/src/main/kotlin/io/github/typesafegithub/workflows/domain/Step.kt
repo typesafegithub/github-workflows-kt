@@ -30,13 +30,13 @@ public data class CommandStep(
     val workingDirectory: String? = null,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : Step(
-    id = id,
-    condition = condition,
-    continueOnError = continueOnError,
-    timeoutMinutes = timeoutMinutes,
-    env = env,
-    _customArguments = _customArguments,
-)
+        id = id,
+        condition = condition,
+        continueOnError = continueOnError,
+        timeoutMinutes = timeoutMinutes,
+        env = env,
+        _customArguments = _customArguments,
+    )
 
 @Suppress("LongParameterList")
 public open class ActionStep<out OUTPUTS : Outputs>(
@@ -50,11 +50,11 @@ public open class ActionStep<out OUTPUTS : Outputs>(
     override val outputs: OUTPUTS,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : Step(
-    id = id,
-    condition = condition,
-    continueOnError = continueOnError,
-    timeoutMinutes = timeoutMinutes,
-    env = env,
-    _customArguments = _customArguments,
-),
+        id = id,
+        condition = condition,
+        continueOnError = continueOnError,
+        timeoutMinutes = timeoutMinutes,
+        env = env,
+        _customArguments = _customArguments,
+    ),
     WithOutputs<OUTPUTS>

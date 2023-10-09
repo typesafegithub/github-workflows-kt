@@ -4,6 +4,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
 
 public abstract class Action<out OUTPUTS : Outputs> {
     public abstract fun toYamlArguments(): LinkedHashMap<String, String>
+
     public abstract fun buildOutputObject(stepId: String): OUTPUTS
 
     internal abstract val usesString: String

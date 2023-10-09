@@ -33,12 +33,13 @@ private fun generateBindings(): List<Pair<ActionBindingRequest, ActionBinding>> 
     deleteActionYamlCacheIfObsolete()
     deleteActionTypesYamlCacheIfObsolete()
 
-    val requestsAndBindings = bindingsToGenerate.map { actionBindingRequest ->
-        println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
-        val inputTypings = actionBindingRequest.provideTypes()
-        val binding = actionBindingRequest.actionCoords.generateBinding(inputTypings)
-        Pair(actionBindingRequest, binding)
-    }
+    val requestsAndBindings =
+        bindingsToGenerate.map { actionBindingRequest ->
+            println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
+            val inputTypings = actionBindingRequest.provideTypes()
+            val binding = actionBindingRequest.actionCoords.generateBinding(inputTypings)
+            Pair(actionBindingRequest, binding)
+        }
     requestsAndBindings.forEach { (_, binding) ->
         with(Paths.get(binding.filePath).toFile()) {
             parentFile.mkdirs()
@@ -72,18 +73,20 @@ private fun generateListOfBindingsForDocs(
                 ownedRequestsAndBindings
                     .groupBy { it.first.actionCoords.name }
                     .forEach { (_, versions) ->
-                        val kotlinClasses = versions
-                            .sortedBy { Version(it.first.actionCoords.version) }
-                            .joinToString(", ") { it.first.toMarkdownLinkToKotlinCode(it.second.packageName, it.second.className) }
+                        val kotlinClasses =
+                            versions
+                                .sortedBy { Version(it.first.actionCoords.version) }
+                                .joinToString(", ") { it.first.toMarkdownLinkToKotlinCode(it.second.packageName, it.second.className) }
                         writer.println("    * ${versions.first().first.actionCoords.toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
 
         val uniqueActionsCount = bindingsToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
-        val uniqueActionsProvidingTypingsCount = bindingsToGenerate
-            .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
-            .mapValues { (_, versions) -> versions.maxByOrNull { Version(it.actionCoords.version) } }
-            .count { (_, actionBindingRequest) -> actionBindingRequest?.typingsSource == TypingsSource.ActionTypes }
+        val uniqueActionsProvidingTypingsCount =
+            bindingsToGenerate
+                .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
+                .mapValues { (_, versions) -> versions.maxByOrNull { Version(it.actionCoords.version) } }
+                .count { (_, actionBindingRequest) -> actionBindingRequest?.typingsSource == TypingsSource.ActionTypes }
 
         writer.println(
             """
@@ -101,10 +104,17 @@ private fun generateListOfBindingsForDocs(
     }
 }
 
-private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(packageName: String, className: String): String {
+private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(
+    packageName: String,
+    className: String,
+): String {
     val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
-    return "${actionCoords.version}$typingsMarker: [`$className`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt)"
+    return "${actionCoords.version}$typingsMarker: [`$className`](" +
+        "https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/" +
+        "typesafegithub/workflows/actions/$packageName/$className.kt)"
 }
 
 private fun ActionCoords.toMarkdownLinkGithub() =
-    "[$name](https://github.com/$owner/${name.substringBefore('/')}${if ("/" in name) "/tree/$version/${name.substringAfter('/')}" else ""})"
+    "[$name](https://github.com/$owner/${name.substringBefore(
+        '/',
+    )}${if ("/" in name) "/tree/$version/${name.substringAfter('/')}" else ""})"

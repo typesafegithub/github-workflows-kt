@@ -13,5 +13,4 @@ internal fun Path.findGitRoot(): Path {
         } ?: error("could not find a git root from ${this.absolute()}")
 }
 
-internal fun Path.relativeToAbsolute(base: Path): Path =
-    absolute().relativeTo(base.absolute())
+internal fun Path.relativeToAbsolute(base: Path): Path = absolute().relativeTo(base.absolute())

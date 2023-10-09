@@ -10,12 +10,13 @@ class ContainerTest : FunSpec({
         test("required arguments") {
             Container.healthCheck(
                 command = "test 'command'",
-            ) shouldBe listOf(
-                "--health-cmd \"test 'command'\"",
-                "--health-interval 2s",
-                "--health-timeout 2s",
-                "--health-retries 30",
-            )
+            ) shouldBe
+                listOf(
+                    "--health-cmd \"test 'command'\"",
+                    "--health-interval 2s",
+                    "--health-timeout 2s",
+                    "--health-retries 30",
+                )
         }
 
         test("all arguments") {
@@ -24,25 +25,27 @@ class ContainerTest : FunSpec({
                 intervalSeconds = 25,
                 timeoutSeconds = 99,
                 retries = 42,
-            ) shouldBe listOf(
-                "--health-cmd \"test 'command'\"",
-                "--health-interval 25s",
-                "--health-timeout 99s",
-                "--health-retries 42",
-            )
+            ) shouldBe
+                listOf(
+                    "--health-cmd \"test 'command'\"",
+                    "--health-interval 25s",
+                    "--health-timeout 99s",
+                    "--health-retries 42",
+                )
         }
 
         test("escapes double quotes in command") {
             Container.healthCheck(
                 command = "test \"command\"",
-            ) shouldBe listOf(
-                """
+            ) shouldBe
+                listOf(
+                    """
                     --health-cmd "test "'"'"command"'"'""
-                """.trimIndent(),
-                "--health-interval 2s",
-                "--health-timeout 2s",
-                "--health-retries 30",
-            )
+                    """.trimIndent(),
+                    "--health-interval 2s",
+                    "--health-timeout 2s",
+                    "--health-retries 30",
+                )
         }
 
         test("throws on invalid arguments") {

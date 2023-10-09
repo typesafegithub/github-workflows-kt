@@ -12,8 +12,7 @@ import io.github.typesafegithub.workflows.domain.Shell.Python
 import io.github.typesafegithub.workflows.domain.Shell.Sh
 import io.github.typesafegithub.workflows.domain.Step
 
-internal fun List<Step>.stepsToYaml(): List<Map<String, Any?>> =
-    this.map { it.toYaml() }
+internal fun List<Step>.stepsToYaml(): List<Map<String, Any?>> = this.map { it.toYaml() }
 
 private fun Step.toYaml() =
     when (this) {

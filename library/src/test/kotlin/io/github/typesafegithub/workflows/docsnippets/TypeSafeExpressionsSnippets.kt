@@ -1,4 +1,4 @@
-@file:Suppress("VariableNaming")
+@file:Suppress("VariableNaming", "ktlint:standard:property-naming")
 
 package io.github.typesafegithub.workflows.docsnippets
 
@@ -48,15 +48,17 @@ class TypeSafeExpressionsSnippets : FunSpec({
                 id = "job0",
                 runsOn = RunnerType.UbuntuLatest,
                 // --8<-- [start:custom-environment-variables-2]
-                env = linkedMapOf(
-                    GREETING to "World",
-                ),
+                env =
+                    linkedMapOf(
+                        GREETING to "World",
+                    ),
             ) {
                 run(
                     name = "Custom environment variable",
-                    env = linkedMapOf(
-                        FIRST_NAME to "Patrick",
-                    ),
+                    env =
+                        linkedMapOf(
+                            FIRST_NAME to "Patrick",
+                        ),
                     command = "echo $GREETING $FIRST_NAME",
                 )
             }
@@ -78,10 +80,11 @@ class TypeSafeExpressionsSnippets : FunSpec({
             job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
                 run(
                     name = "Encrypted secret",
-                    env = linkedMapOf(
-                        SECRET to expr { SUPER_SECRET },
-                        TOKEN to expr { secrets.GITHUB_TOKEN },
-                    ),
+                    env =
+                        linkedMapOf(
+                            SECRET to expr { SUPER_SECRET },
+                            TOKEN to expr { secrets.GITHUB_TOKEN },
+                        ),
                     command = "echo secret=$SECRET token=$TOKEN",
                 )
             }

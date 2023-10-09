@@ -9,17 +9,18 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 @Suppress("unused")
 class ScheduleTest : FunSpec({
     context("Cron") {
-        val validCronExpressions = listOf(
-            Cron() to "* * * * *",
-            Cron(minute = "1", hour = "2", dayMonth = "3", month = "4", dayWeek = "5")
-                to "1 2 3 4 5",
-            Cron(minute = "1,4,5", hour = "4-6", dayMonth = "10-20/2", month = "6,8", dayWeek = "1/3")
-                to "1,4,5 4-6 10-20/2 6,8 1/3",
-            Cron(dayWeek = "MON")
-                to "* * * * MON",
-            Cron(month = "JAN")
-                to "* * * JAN *",
-        )
+        val validCronExpressions =
+            listOf(
+                Cron() to "* * * * *",
+                Cron(minute = "1", hour = "2", dayMonth = "3", month = "4", dayWeek = "5")
+                    to "1 2 3 4 5",
+                Cron(minute = "1,4,5", hour = "4-6", dayMonth = "10-20/2", month = "6,8", dayWeek = "1/3")
+                    to "1,4,5 4-6 10-20/2 6,8 1/3",
+                Cron(dayWeek = "MON")
+                    to "* * * * MON",
+                Cron(month = "JAN")
+                    to "* * * JAN *",
+            )
 
         test("valid expressions") {
             validCronExpressions.forAll { (cron, expected) ->

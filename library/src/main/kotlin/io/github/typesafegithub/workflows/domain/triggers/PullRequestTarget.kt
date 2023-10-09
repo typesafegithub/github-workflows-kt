@@ -15,7 +15,6 @@ public data class PullRequestTarget(
     val pathsIgnore: List<String>? = null,
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
-
     init {
         require(!(branches != null && branchesIgnore != null)) {
             "Cannot define both 'branches' and 'branchesIgnore'!"

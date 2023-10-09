@@ -21,7 +21,11 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import io.github.typesafegithub.workflows.textutils.toPascalCase
 
-internal fun Typing.getClassName(actionPackageName: String, actionClassName: String, fieldName: String): TypeName =
+internal fun Typing.getClassName(
+    actionPackageName: String,
+    actionClassName: String,
+    fieldName: String,
+): TypeName =
     when (this) {
         BooleanTyping -> Boolean::class.asTypeName()
         is EnumTyping -> {
@@ -34,8 +38,9 @@ internal fun Typing.getClassName(actionPackageName: String, actionClassName: Str
             val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
             ClassName("io.github.typesafegithub.workflows.actions.$actionPackageName", "$actionClassName.$typeName")
         }
-        is ListOfTypings -> List::class.asClassName()
-            .parameterizedBy(typing.getClassName(actionPackageName, actionClassName, fieldName))
+        is ListOfTypings ->
+            List::class.asClassName()
+                .parameterizedBy(typing.getClassName(actionPackageName, actionClassName, fieldName))
         StringTyping -> String::class.asTypeName()
     }
 
@@ -47,19 +52,24 @@ internal fun Typing.asString(): String =
         IntegerTyping -> ".toString()"
         is IntegerWithSpecialValueTyping -> ".integerValue.toString()"
         is ListOfTypings -> {
-            val mapValue: String = when (typing) {
-                is StringTyping -> ""
-                is IntegerTyping -> " { it.toString() }"
-                is EnumTyping -> " { it.stringValue }"
-                is IntegerWithSpecialValueTyping -> " { it.integerValue.toString() }"
-                else -> error("ListOfTypings: typing=$typing is not supported")
-            }
+            val mapValue: String =
+                when (typing) {
+                    is StringTyping -> ""
+                    is IntegerTyping -> " { it.toString() }"
+                    is EnumTyping -> " { it.stringValue }"
+                    is IntegerWithSpecialValueTyping -> " { it.integerValue.toString() }"
+                    else -> error("ListOfTypings: typing=$typing is not supported")
+                }
             ".joinToString(\"${if (delimiter == "\n") "\\n" else delimiter}\")$mapValue"
         }
         else -> ""
     }
 
-internal fun Typing.buildCustomType(coords: ActionCoords, fieldName: String, className: String): TypeSpec? =
+internal fun Typing.buildCustomType(
+    coords: ActionCoords,
+    fieldName: String,
+    className: String,
+): TypeSpec? =
     when (this) {
         is EnumTyping -> buildEnumCustomType(coords, fieldName, className)
         is IntegerWithSpecialValueTyping -> buildIntegerWithSpecialValueCustomType(coords, fieldName, className)
@@ -67,7 +77,11 @@ internal fun Typing.buildCustomType(coords: ActionCoords, fieldName: String, cla
         else -> null
     }
 
-private fun EnumTyping.buildEnumCustomType(coords: ActionCoords, fieldName: String, className: String): TypeSpec {
+private fun EnumTyping.buildEnumCustomType(
+    coords: ActionCoords,
+    fieldName: String,
+    className: String,
+): TypeSpec {
     val itemsNames = itemsNames ?: items.map { it.toPascalCase() }
     val itemsNameMap = items.zip(itemsNames).toMap()
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
@@ -84,9 +98,10 @@ private fun EnumTyping.buildEnumCustomType(coords: ActionCoords, fieldName: Stri
         .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
         .addTypes(
             this.items.map {
-                val itemName = itemsNameMap[it]?.let {
-                    if (it == "Custom") "CustomEnum" else it
-                } ?: error("FIXME: key=$it absent from $itemsNameMap")
+                val itemName =
+                    itemsNameMap[it]?.let {
+                        if (it == "Custom") "CustomEnum" else it
+                    } ?: error("FIXME: key=$it absent from $itemsNameMap")
                 TypeSpec.objectBuilder(itemName)
                     .superclass(sealedClassName)
                     .addSuperclassConstructorParameter("%S", it)

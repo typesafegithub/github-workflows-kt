@@ -71,12 +71,13 @@ public fun Workflow.writeToFile(
         "targetFileName must not be null"
     }
 
-    val yaml = generateYaml(
-        addConsistencyCheck = addConsistencyCheck,
-        useGitDiff = true,
-        gitRootDir = gitRootDir,
-        preamble,
-    )
+    val yaml =
+        generateYaml(
+            addConsistencyCheck = addConsistencyCheck,
+            useGitDiff = true,
+            gitRootDir = gitRootDir,
+            preamble,
+        )
 
     gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName).toFile().let {
         it.parentFile.mkdirs()
@@ -99,76 +100,85 @@ private fun Workflow.generateYaml(
     gitRootDir: Path?,
     preamble: Preamble?,
 ): String {
-    val sourceFilePath = gitRootDir?.let {
-        sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
-    }
-
-    val jobsWithConsistencyCheck = if (addConsistencyCheck) {
-        check(gitRootDir != null && sourceFile != null) {
-            "consistency check requires a valid sourceFile and Git root directory"
+    val sourceFilePath =
+        gitRootDir?.let {
+            sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
         }
 
-        checkNotNull(targetFileName) {
-            "consistency check requires a targetFileName"
-        }
-
-        val targetFilePath = gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName)
-            .relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
-
-        val consistencyCheckJob = this.toBuilder().job(
-            id = "check_yaml_consistency",
-            name = "Check YAML consistency",
-            runsOn = UbuntuLatest,
-            condition = yamlConsistencyJobCondition,
-        ) {
-            uses(name = "Check out", action = CheckoutV4())
-            if (useGitDiff) {
-                run(
-                    name = "Execute script",
-                    command = "rm '$targetFilePath' " +
-                        "&& '$sourceFilePath'",
-                )
-                run(
-                    name = "Consistency check",
-                    command = "git diff --exit-code '$targetFilePath'",
-                )
-            } else {
-                run(
-                    name = "Consistency check",
-                    command = "diff -u '$targetFilePath' " +
-                        "<('$sourceFilePath')",
-                )
+    val jobsWithConsistencyCheck =
+        if (addConsistencyCheck) {
+            check(gitRootDir != null && sourceFile != null) {
+                "consistency check requires a valid sourceFile and Git root directory"
             }
-        }
-        listOf(consistencyCheckJob) + jobs.map {
-            it.copy(needs = it.needs + consistencyCheckJob)
-        }
-    } else {
-        jobs
-    }
 
-    val originalPreamble = commentify(
-        if (sourceFilePath != null) {
-            """
-            This file was generated using Kotlin DSL ($sourceFilePath).
-            If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            Generated with https://github.com/typesafegithub/github-workflows-kt
-            """.trimIndent()
+            checkNotNull(targetFileName) {
+                "consistency check requires a targetFileName"
+            }
+
+            val targetFilePath =
+                gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName)
+                    .relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
+
+            val consistencyCheckJob =
+                this.toBuilder().job(
+                    id = "check_yaml_consistency",
+                    name = "Check YAML consistency",
+                    runsOn = UbuntuLatest,
+                    condition = yamlConsistencyJobCondition,
+                ) {
+                    uses(name = "Check out", action = CheckoutV4())
+                    if (useGitDiff) {
+                        run(
+                            name = "Execute script",
+                            command =
+                                "rm '$targetFilePath' " +
+                                    "&& '$sourceFilePath'",
+                        )
+                        run(
+                            name = "Consistency check",
+                            command = "git diff --exit-code '$targetFilePath'",
+                        )
+                    } else {
+                        run(
+                            name = "Consistency check",
+                            command =
+                                "diff -u '$targetFilePath' " +
+                                    "<('$sourceFilePath')",
+                        )
+                    }
+                }
+            listOf(consistencyCheckJob) +
+                jobs.map {
+                    it.copy(needs = it.needs + consistencyCheckJob)
+                }
         } else {
-            """
-            This file was generated using a Kotlin DSL.
-            If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
-            Generated with https://github.com/typesafegithub/github-workflows-kt
-            """.trimIndent()
-        },
-    )
+            jobs
+        }
 
-    val computedPreamble = when (preamble) {
-        is Just -> commentify(preamble.content)
-        is WithOriginalAfter -> commentify(preamble.content) + originalPreamble
-        is WithOriginalBefore -> originalPreamble + commentify(preamble.content)
-        null -> originalPreamble
-    }
+    val originalPreamble =
+        commentify(
+            if (sourceFilePath != null) {
+                """
+                This file was generated using Kotlin DSL ($sourceFilePath).
+                If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+                Generated with https://github.com/typesafegithub/github-workflows-kt
+                """.trimIndent()
+            } else {
+                """
+                This file was generated using a Kotlin DSL.
+                If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
+                Generated with https://github.com/typesafegithub/github-workflows-kt
+                """.trimIndent()
+            },
+        )
+
+    val computedPreamble =
+        when (preamble) {
+            is Just -> commentify(preamble.content)
+            is WithOriginalAfter -> commentify(preamble.content) + originalPreamble
+            is WithOriginalBefore -> originalPreamble + commentify(preamble.content)
+            null -> originalPreamble
+        }
 
     val workflowToBeSerialized = this.toYamlInternal(jobsWithConsistencyCheck)
     val workflowAsYaml = workflowToBeSerialized.toYaml()
@@ -184,12 +194,13 @@ private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map
         "name" to name,
         "on" to on.triggersToYaml(),
         "permissions" to permissions?.mapToYaml(),
-        "concurrency" to concurrency?.let {
-            mapOf(
-                "group" to it.group,
-                "cancel-in-progress" to it.cancelInProgress,
-            )
-        },
+        "concurrency" to
+            concurrency?.let {
+                mapOf(
+                    "group" to it.group,
+                    "cancel-in-progress" to it.cancelInProgress,
+                )
+            },
         "env" to env.ifEmpty { null },
         *_customArguments.toList().toTypedArray(),
         "jobs" to jobsWithConsistencyCheck.jobsToYaml(),

@@ -12,8 +12,7 @@ import kotlin.reflect.full.declaredMemberProperties
 class PayloadTest : FunSpec({
     val payloads = File("src/test/resources/payloads")
 
-    fun KClass<*>.properties(): List<String> =
-        declaredMemberProperties.map { it.name }.sorted()
+    fun KClass<*>.properties(): List<String> = declaredMemberProperties.map { it.name }.sorted()
 
     test("Runner context") {
         val context = RunnerContext::class

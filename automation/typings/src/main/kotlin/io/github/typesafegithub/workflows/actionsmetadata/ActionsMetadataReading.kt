@@ -34,17 +34,20 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
             val subname = pathParts.subList(4, pathParts.size - 1).joinToString("/")
             val file = pathParts.last()
             ActionBindingRequest(
-                actionCoords = ActionCoords(
-                    owner = owner,
-                    name = listOfNotNull(name, subname.ifEmpty { null }).joinToString("/"),
-                    version = version,
-                    deprecatedByVersion = null, // It's set in postprocessing.
-                ),
-                typingsSource = buildTypingsSource(
-                    path = it,
-                    fileName = file,
-                    actionTypingsDirectory = actionTypingsDirectory,
-                ),
+                actionCoords =
+                    ActionCoords(
+                        owner = owner,
+                        name = listOfNotNull(name, subname.ifEmpty { null }).joinToString("/"),
+                        version = version,
+                        // It's set in postprocessing.
+                        deprecatedByVersion = null,
+                    ),
+                typingsSource =
+                    buildTypingsSource(
+                        path = it,
+                        fileName = file,
+                        actionTypingsDirectory = actionTypingsDirectory,
+                    ),
             )
         }.toList()
 }
@@ -55,21 +58,24 @@ private fun buildTypingsSource(
     actionTypingsDirectory: Path,
 ) = when (fileName) {
     "action-types.yml" -> {
-        val typings = try {
-            myYaml.decodeFromString<ActionTypes>(path.readText())
-        } catch (e: Exception) {
-            println("There was a problem parsing action typing: $path")
-            throw e
-        }
+        val typings =
+            try {
+                myYaml.decodeFromString<ActionTypes>(path.readText())
+            } catch (e: Exception) {
+                println("There was a problem parsing action typing: $path")
+                throw e
+            }
         TypingsSource.CodeGenerator(inputTypings = typings.toTypesMap())
     }
     "typings-hosted-by-action" -> TypingsSource.ActionTypes
     else -> error("An unexpected file found in $actionTypingsDirectory: '$fileName'")
 }
 
-private val myYaml = Yaml(
-    configuration = Yaml.default.configuration.copy(
-        // Don't allow any unknown keys, to keep the YAMLs minimal.
-        strictMode = true,
-    ),
-)
+private val myYaml =
+    Yaml(
+        configuration =
+            Yaml.default.configuration.copy(
+                // Don't allow any unknown keys, to keep the YAMLs minimal.
+                strictMode = true,
+            ),
+    )

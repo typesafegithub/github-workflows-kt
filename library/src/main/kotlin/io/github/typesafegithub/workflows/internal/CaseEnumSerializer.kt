@@ -23,16 +23,19 @@ internal open class CaseEnumSerializer<T : Enum<T>>(
     serialName: String,
     private val values: Array<T>,
 ) : KSerializer<T> {
-
-    override val descriptor: SerialDescriptor = buildSerialDescriptor(serialName, SerialKind.ENUM) {
-        values.forEach {
-            val fqn = "$serialName.${it.name}"
-            val enumMemberDescriptor = buildSerialDescriptor(fqn, StructureKind.OBJECT)
-            element(snakeCaseOf(it.name), enumMemberDescriptor)
+    override val descriptor: SerialDescriptor =
+        buildSerialDescriptor(serialName, SerialKind.ENUM) {
+            values.forEach {
+                val fqn = "$serialName.${it.name}"
+                val enumMemberDescriptor = buildSerialDescriptor(fqn, StructureKind.OBJECT)
+                element(snakeCaseOf(it.name), enumMemberDescriptor)
+            }
         }
-    }
 
-    override fun serialize(encoder: Encoder, value: T) {
+    override fun serialize(
+        encoder: Encoder,
+        value: T,
+    ) {
         val index = values.indexOf(value)
         if (index == -1) {
             throw SerializationException(

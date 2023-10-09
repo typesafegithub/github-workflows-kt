@@ -22,7 +22,7 @@ class GettingStartedSnippets : FunSpec({
 
         // --8<-- [end:getting-started-1]
          */
-        @Suppress("VariableNaming")
+        @Suppress("VariableNaming", "ktlint:standard:property-naming")
         val __FILE__ = File("")
         // --8<-- [start:getting-started-3]
 

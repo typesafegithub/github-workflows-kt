@@ -12,5 +12,4 @@ fun String.toPascalCase(): String {
         }
 }
 
-fun String.toCamelCase() =
-    toPascalCase().replaceFirstChar { it.lowercase() }
+fun String.toCamelCase() = toPascalCase().replaceFirstChar { it.lowercase() }

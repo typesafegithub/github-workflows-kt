@@ -28,20 +28,22 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
         "name" to name,
         "runs-on" to runsOn.toYaml(),
         "permissions" to permissions?.mapToYaml(),
-        "concurrency" to concurrency?.let {
-            mapOf(
-                "group" to it.group,
-                "cancel-in-progress" to it.cancelInProgress,
-            )
-        },
+        "concurrency" to
+            concurrency?.let {
+                mapOf(
+                    "group" to it.group,
+                    "cancel-in-progress" to it.cancelInProgress,
+                )
+            },
         "needs" to needs.ifEmpty { null }?.map { it.id },
         "env" to env.ifEmpty { null },
         "if" to condition,
-        "strategy" to strategyMatrix?.let {
-            mapOf(
-                "matrix" to it,
-            )
-        },
+        "strategy" to
+            strategyMatrix?.let {
+                mapOf(
+                    "matrix" to it,
+                )
+            },
         "timeout-minutes" to timeoutMinutes,
         "outputs" to outputs.outputMapping.ifEmpty { null },
         "container" to container?.toYaml(),
@@ -54,10 +56,11 @@ public fun RunnerType.toYaml(): Any =
     when (this) {
         is Custom -> runsOn
         is Labelled -> labels.toList()
-        is RunnerType.Group -> mapOfNotNullValues(
-            "group" to name,
-            "labels" to labels?.toList(),
-        )
+        is RunnerType.Group ->
+            mapOfNotNullValues(
+                "group" to name,
+                "labels" to labels?.toList(),
+            )
         UbuntuLatest -> "ubuntu-latest"
         WindowsLatest -> "windows-latest"
         MacOSLatest -> "macos-latest"

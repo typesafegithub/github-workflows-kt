@@ -31,23 +31,24 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
 ) : HasCustomArguments {
-    private var job = Job<OUTPUT>(
-        id = id,
-        name = name,
-        runsOn = runsOn,
-        needs = needs,
-        condition = condition,
-        env = env,
-        steps = emptyList(),
-        strategyMatrix = strategyMatrix,
-        permissions = permissions,
-        timeoutMinutes = timeoutMinutes,
-        concurrency = concurrency,
-        container = container,
-        services = services,
-        outputs = jobOutputs,
-        _customArguments = _customArguments,
-    )
+    private var job =
+        Job<OUTPUT>(
+            id = id,
+            name = name,
+            runsOn = runsOn,
+            needs = needs,
+            condition = condition,
+            env = env,
+            steps = emptyList(),
+            strategyMatrix = strategyMatrix,
+            permissions = permissions,
+            timeoutMinutes = timeoutMinutes,
+            concurrency = concurrency,
+            container = container,
+            services = services,
+            outputs = jobOutputs,
+            _customArguments = _customArguments,
+        )
 
     public fun run(
         @Suppress("UNUSED_PARAMETER")
@@ -69,18 +70,19 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             "Either 'if' or 'condition' have to be set, not both!"
         }
 
-        val newStep = CommandStep(
-            id = "step-${job.steps.size}",
-            name = name,
-            command = command,
-            env = env,
-            condition = `if` ?: condition,
-            continueOnError = continueOnError,
-            timeoutMinutes = timeoutMinutes,
-            shell = shell,
-            workingDirectory = workingDirectory,
-            _customArguments = _customArguments,
-        )
+        val newStep =
+            CommandStep(
+                id = "step-${job.steps.size}",
+                name = name,
+                command = command,
+                env = env,
+                condition = `if` ?: condition,
+                continueOnError = continueOnError,
+                timeoutMinutes = timeoutMinutes,
+                shell = shell,
+                workingDirectory = workingDirectory,
+                _customArguments = _customArguments,
+            )
         job = job.copy(steps = job.steps + newStep)
         return newStep
     }
@@ -103,17 +105,18 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         require(!(`if` != null && condition != null)) {
             "Either 'if' or 'condition' have to be set, not both!"
         }
-        val newStep = ActionStep(
-            id = stepId,
-            name = name,
-            action = action,
-            env = env,
-            condition = `if` ?: condition,
-            continueOnError = continueOnError,
-            timeoutMinutes = timeoutMinutes,
-            outputs = action.buildOutputObject(stepId),
-            _customArguments = _customArguments,
-        )
+        val newStep =
+            ActionStep(
+                id = stepId,
+                name = name,
+                action = action,
+                env = env,
+                condition = `if` ?: condition,
+                continueOnError = continueOnError,
+                timeoutMinutes = timeoutMinutes,
+                outputs = action.buildOutputObject(stepId),
+                _customArguments = _customArguments,
+            )
         job = job.copy(steps = job.steps + newStep)
         return newStep
     }

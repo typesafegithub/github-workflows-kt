@@ -8,15 +8,17 @@ class CustomActionTest : FunSpec({
 
     test("custom action") {
         // given
-        val customAction = CustomAction(
-            actionOwner = "xu-cheng",
-            actionName = "latex-action",
-            actionVersion = "v2",
-            inputs = linkedMapOf(
-                "root_file" to "report.tex",
-                "compiler" to "latexmk",
-            ),
-        )
+        val customAction =
+            CustomAction(
+                actionOwner = "xu-cheng",
+                actionName = "latex-action",
+                actionVersion = "v2",
+                inputs =
+                    linkedMapOf(
+                        "root_file" to "report.tex",
+                        "compiler" to "latexmk",
+                    ),
+            )
 
         // given
         val outputs = customAction.buildOutputObject("someStepId")

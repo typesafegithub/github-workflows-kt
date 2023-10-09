@@ -21,7 +21,9 @@ data class ActionType(
     @SerialName("list-item")
     val listItem: ActionType? = null,
 ) {
-    init { validateType() }
+    init {
+        validateType()
+    }
 }
 
 @Serializable

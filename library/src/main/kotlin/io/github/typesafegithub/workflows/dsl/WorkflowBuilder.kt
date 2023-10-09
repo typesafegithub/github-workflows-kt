@@ -26,18 +26,19 @@ public class WorkflowBuilder(
     permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any?>,
 ) {
-    internal var workflow = Workflow(
-        name = name,
-        on = on,
-        env = env,
-        sourceFile = sourceFile,
-        targetFileName = targetFileName,
-        jobs = jobs,
-        permissions = permissions,
-        concurrency = concurrency,
-        yamlConsistencyJobCondition = yamlConsistencyJobCondition,
-        _customArguments = _customArguments,
-    )
+    internal var workflow =
+        Workflow(
+            name = name,
+            on = on,
+            env = env,
+            sourceFile = sourceFile,
+            targetFileName = targetFileName,
+            jobs = jobs,
+            permissions = permissions,
+            concurrency = concurrency,
+            yamlConsistencyJobCondition = yamlConsistencyJobCondition,
+            _customArguments = _customArguments,
+        )
 
     @Suppress("LongParameterList")
     public fun <OUTPUT : JobOutputs> job(
@@ -63,22 +64,23 @@ public class WorkflowBuilder(
         require(!(`if` != null && condition != null)) {
             "Either 'if' or 'condition' have to be set, not both!"
         }
-        val jobBuilder = JobBuilder(
-            id = id,
-            name = name,
-            runsOn = runsOn,
-            needs = needs,
-            condition = `if` ?: condition,
-            env = env,
-            strategyMatrix = strategyMatrix,
-            permissions = permissions,
-            timeoutMinutes = timeoutMinutes,
-            concurrency = concurrency,
-            container = container,
-            services = services,
-            jobOutputs = outputs,
-            _customArguments = _customArguments,
-        )
+        val jobBuilder =
+            JobBuilder(
+                id = id,
+                name = name,
+                runsOn = runsOn,
+                needs = needs,
+                condition = `if` ?: condition,
+                env = env,
+                strategyMatrix = strategyMatrix,
+                permissions = permissions,
+                timeoutMinutes = timeoutMinutes,
+                concurrency = concurrency,
+                container = container,
+                services = services,
+                jobOutputs = outputs,
+                _customArguments = _customArguments,
+            )
         jobBuilder.block()
         val newJob = jobBuilder.build()
 
@@ -164,17 +166,18 @@ public fun workflow(
         "There are no triggers defined!"
     }
 
-    val workflowBuilder = WorkflowBuilder(
-        name = name,
-        on = on,
-        env = env,
-        sourceFile = sourceFile,
-        targetFileName = targetFileName,
-        permissions = permissions,
-        concurrency = concurrency,
-        yamlConsistencyJobCondition = yamlConsistencyJobCondition,
-        _customArguments = _customArguments,
-    )
+    val workflowBuilder =
+        WorkflowBuilder(
+            name = name,
+            on = on,
+            env = env,
+            sourceFile = sourceFile,
+            targetFileName = targetFileName,
+            permissions = permissions,
+            concurrency = concurrency,
+            yamlConsistencyJobCondition = yamlConsistencyJobCondition,
+            _customArguments = _customArguments,
+        )
     workflowBuilder.block()
 
     require(workflowBuilder.workflow.jobs.isNotEmpty()) {
@@ -186,15 +189,17 @@ public fun workflow(
 }
 
 private fun List<Job<*>>.requireUniqueJobIds() {
-    val countPerJobName = this
-        .map { it.id }
-        .groupBy { it }
-        .mapValues { it.value.count() }
+    val countPerJobName =
+        this
+            .map { it.id }
+            .groupBy { it }
+            .mapValues { it.value.count() }
 
     require(countPerJobName.none { it.value > 1 }) {
-        val duplicatedJobNames = countPerJobName
-            .filter { it.value > 1 }
-            .map { it.key }
+        val duplicatedJobNames =
+            countPerJobName
+                .filter { it.value > 1 }
+                .map { it.key }
         "Duplicated job names: $duplicatedJobNames"
     }
 }

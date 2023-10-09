@@ -10,7 +10,6 @@ public data class WorkflowDispatch(
     val inputs: Map<String, Input> = emptyMap(),
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
-
     @Serializable
     public enum class Type {
         @SerialName("choice")
