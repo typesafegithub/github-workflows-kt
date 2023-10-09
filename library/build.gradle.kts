@@ -24,7 +24,7 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     testImplementation("com.github.tschuchortdev:kotlin-compile-testing:1.5.0")
-    testImplementation("com.lemonappdev:konsist:0.12.2")
+    testImplementation("com.lemonappdev:konsist:0.13.0")
     testImplementation(kotlin("reflect"))
 }
 
