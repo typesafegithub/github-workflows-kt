@@ -43,7 +43,7 @@ Click on a version to see the binding's code.
 * Azure
     * [docker-login](https://github.com/Azure/docker-login) - v1: [`DockerLoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/DockerLoginV1.kt)
     * [login](https://github.com/Azure/login) - v1: [`LoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/LoginV1.kt)
-    * [webapps-deploy](https://github.com/Azure/webapps-deploy) - v2: [`WebappsDeployV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/WebappsDeployV2.kt)
+    * [webapps-deploy](https://github.com/Azure/webapps-deploy) - v2: [`WebappsDeployV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/WebappsDeployV2.kt), v3: [`WebappsDeployV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/WebappsDeployV3.kt)
 * bahmutov
     * [npm-install](https://github.com/bahmutov/npm-install) - v1: [`NpmInstallV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/bahmutov/NpmInstallV1.kt)
 * Borales
@@ -138,6 +138,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 82
-* counting each version separately: 127
+* counting each version separately: 128
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15

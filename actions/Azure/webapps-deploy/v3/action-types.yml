@@ -1,0 +1,23 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  app-name:
+    type: string
+  publish-profile:
+    type: string
+  slot-name:
+    type: string
+  package:
+    type: string
+  images:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+  configuration-file:
+    type: string
+  startup-command:
+    type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  webapp-url:
+    type: string

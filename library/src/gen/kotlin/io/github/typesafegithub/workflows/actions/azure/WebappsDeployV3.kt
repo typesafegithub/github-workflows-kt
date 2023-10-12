@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.azure
@@ -12,7 +11,6 @@ package io.github.typesafegithub.workflows.actions.azure
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,11 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/Azure/webapps-deploy)
  */
-@Deprecated(
-    message = "This action has a newer major version: WebappsDeployV3",
-    replaceWith = ReplaceWith("WebappsDeployV3"),
-)
-public data class WebappsDeployV2 private constructor(
+public data class WebappsDeployV3 private constructor(
     /**
      * Name of the Azure Web App
      */
@@ -72,6 +66,22 @@ public data class WebappsDeployV2 private constructor(
      */
     public val resourceGroupName: String? = null,
     /**
+     * Enter deployment type (JAR, WAR, EAR, ZIP, Static)
+     */
+    public val type: String? = null,
+    /**
+     * Target path in the web app. For ex. '/home/site/wwwroot'
+     */
+    public val targetPath: String? = null,
+    /**
+     * Delete existing files target directory before deploying
+     */
+    public val clean: String? = null,
+    /**
+     * Restart the app service after deployment
+     */
+    public val restart: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -80,7 +90,7 @@ public data class WebappsDeployV2 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<WebappsDeployV2.Outputs>("Azure", "webapps-deploy", _customVersion ?: "v2") {
+) : RegularAction<WebappsDeployV3.Outputs>("Azure", "webapps-deploy", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         appName: String,
@@ -91,12 +101,16 @@ public data class WebappsDeployV2 private constructor(
         configurationFile: String? = null,
         startupCommand: String? = null,
         resourceGroupName: String? = null,
+        type: String? = null,
+        targetPath: String? = null,
+        clean: String? = null,
+        restart: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(appName=appName, publishProfile=publishProfile, slotName=slotName, `package`=`package`,
             images=images, configurationFile=configurationFile, startupCommand=startupCommand,
-            resourceGroupName=resourceGroupName, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            resourceGroupName=resourceGroupName, type=type, targetPath=targetPath, clean=clean,
+            restart=restart, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -109,6 +123,10 @@ public data class WebappsDeployV2 private constructor(
             configurationFile?.let { "configuration-file" to it },
             startupCommand?.let { "startup-command" to it },
             resourceGroupName?.let { "resource-group-name" to it },
+            type?.let { "type" to it },
+            targetPath?.let { "target-path" to it },
+            clean?.let { "clean" to it },
+            restart?.let { "restart" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
