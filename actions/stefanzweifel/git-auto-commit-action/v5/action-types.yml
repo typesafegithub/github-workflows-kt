@@ -1,0 +1,42 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  commit_message:
+    type: string
+  branch:
+    type: string
+  commit_options:
+    type: string
+  add_options:
+    type: string
+  status_options:
+    type: string
+  file_pattern:
+    type: string
+  repository:
+    type: string
+  commit_user_name:
+    type: string
+  commit_user_email:
+    type: string
+  commit_author:
+    type: string
+  tagging_message:
+    type: string
+  push_options:
+    type: string
+  skip_dirty_check:
+    type: boolean
+  skip_fetch:
+    type: boolean
+  skip_checkout:
+    type: boolean
+  disable_globbing:
+    type: boolean
+  create_branch:
+    type: boolean
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  changes_detected:
+    type: string
+  commit_hash:
+    type: string

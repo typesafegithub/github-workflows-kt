@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.stefanzweifel
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/stefanzweifel/git-auto-commit-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: GitAutoCommitActionV5",
-    replaceWith = ReplaceWith("GitAutoCommitActionV5"),
-)
-public data class GitAutoCommitActionV4 private constructor(
+public data class GitAutoCommitActionV5 private constructor(
     /**
      * Commit message
      */
@@ -120,8 +114,8 @@ public data class GitAutoCommitActionV4 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<GitAutoCommitActionV4.Outputs>("stefanzweifel", "git-auto-commit-action",
-        _customVersion ?: "v4") {
+) : RegularAction<GitAutoCommitActionV5.Outputs>("stefanzweifel", "git-auto-commit-action",
+        _customVersion ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         commitMessage: String? = null,

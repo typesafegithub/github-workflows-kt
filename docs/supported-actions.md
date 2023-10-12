@@ -121,7 +121,7 @@ Click on a version to see the binding's code.
 * softprops
     * [action-gh-release](https://github.com/softprops/action-gh-release) - v1: [`ActionGhReleaseV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/softprops/ActionGhReleaseV1.kt)
 * stefanzweifel
-    * [git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action) - v4: [`GitAutoCommitActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/stefanzweifel/GitAutoCommitActionV4.kt)
+    * [git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action) - v4: [`GitAutoCommitActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/stefanzweifel/GitAutoCommitActionV4.kt), v5: [`GitAutoCommitActionV5`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/stefanzweifel/GitAutoCommitActionV5.kt)
 * subosito
     * [flutter-action](https://github.com/subosito/flutter-action) - v2: [`FlutterActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/subosito/FlutterActionV2.kt)
 * supercharge
@@ -138,6 +138,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 82
-* counting each version separately: 128
+* counting each version separately: 129
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
