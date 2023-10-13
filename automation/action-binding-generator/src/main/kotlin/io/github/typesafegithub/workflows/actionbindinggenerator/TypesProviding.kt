@@ -14,8 +14,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import io.github.typesafegithub.workflows.metadatareading.fetchUri
-import io.github.typesafegithub.workflows.metadatareading.prettyPrint
-import io.github.typesafegithub.workflows.metadatareading.releasesUrl
 import io.github.typesafegithub.workflows.textutils.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -70,10 +68,7 @@ private fun ActionCoords.fetchTypingMetadata(
             } catch (e: IOException) {
                 null
             }
-        } ?: error(
-            "$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\n" +
-                "Check release page $releasesUrl",
-        )
+        } ?: return null
 
     cacheFile.parentFile.mkdirs()
     cacheFile.writeText(typesMetadataYaml)
