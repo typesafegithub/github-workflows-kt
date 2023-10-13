@@ -81,11 +81,18 @@ internal fun getCommitHash(actionCoords: ActionCoords): String? =
             if (it.exists()) it.readText().trim() else null
         }
 
-internal fun getLocalTypings(actionCoords: ActionCoords): String? =
-    Path.of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "action-types.yml")
-        .toFile().let {
-            if (it.exists()) it.readText() else null
-        }
+internal fun getLocalTypings(actionCoords: ActionCoords): String? {
+    val pathBeforeVersion = Path.of("actions", actionCoords.owner, actionCoords.name.split("/").first(), actionCoords.version)
+    val subnames = actionCoords.name.split("/").drop(1).joinToString("/")
+    val fullPath = if (subnames.isNotEmpty()) {
+        pathBeforeVersion.resolve(subnames).resolve("action-types.yml")
+    } else {
+        pathBeforeVersion.resolve("action-types.yml")
+    }
+    return fullPath.toFile().let {
+        if (it.exists()) it.readText() else null
+    }
+}
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
     return inputs.mapValues { (key, value) ->
@@ -133,7 +140,7 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
 private val myYaml =
     Yaml(
         configuration =
-            Yaml.default.configuration.copy(
-                strictMode = false,
-            ),
+        Yaml.default.configuration.copy(
+            strictMode = false,
+        ),
     )
