@@ -50,7 +50,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
 
         // when
-        val binding = coords.generateBinding { actionManifest }
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
 
         // then
         binding.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
@@ -212,7 +212,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
 
         // when
-        val binding = coords.generateBinding { actionManifest }
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
 
         // then
         binding.shouldMatchFile("ActionWithOutputsV3.kt")
@@ -241,7 +241,7 @@ class GenerationTest : FunSpec({
 
         shouldThrowAny {
             // when
-            coords.generateBinding(inputTypings) { actionManifest }
+            coords.generateBinding(fetchMetadataImpl = { actionManifest }, inputTypings = inputTypings)
         }.shouldHaveMessage(
             // then
             """
@@ -265,7 +265,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
 
         // when
-        val binding = coords.generateBinding { actionManifest }
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
 
         // then
         binding.shouldMatchFile("ActionWithNoInputsV3.kt")
@@ -284,7 +284,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
 
         // when
-        val binding = coords.generateBinding { actionManifest }
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
 
         // then
         binding.shouldMatchFile("DeprecatedActionV2.kt")
@@ -317,7 +317,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
 
         // when
-        val binding = coords.generateBinding { actionManifest }
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
 
         // then
         binding.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
@@ -355,7 +355,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-lists", "v3")
 
         // when
-        val binding = coords.generateBinding(inputTypings) { actionManifest }
+        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest }, inputTypings = inputTypings)
 
         // then
         binding.shouldMatchFile("SimpleActionWithListsV3.kt")

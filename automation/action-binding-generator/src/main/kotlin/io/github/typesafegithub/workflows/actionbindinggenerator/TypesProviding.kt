@@ -1,7 +1,6 @@
-package io.github.typesafegithub.workflows.codegenerator.types
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import com.charleskorn.kaml.Yaml
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionType
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypeEnum
@@ -14,10 +13,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpeci
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
-import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.metadatareading.fetchUri
-import io.github.typesafegithub.workflows.metadatareading.prettyPrint
-import io.github.typesafegithub.workflows.metadatareading.releasesUrl
 import io.github.typesafegithub.workflows.textutils.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -26,20 +22,17 @@ import java.net.URI
 import java.nio.file.Path
 import java.time.LocalDate
 
-fun ActionBindingRequest.provideTypes(
+internal fun ActionCoords.provideTypes(
     fetchUri: (URI) -> String = ::fetchUri,
-    getCommitHash: (ActionCoords) -> String = ::getCommitHash,
+    getCommitHash: (ActionCoords) -> String? = ::getCommitHash,
 ): Map<String, Typing> =
-    when (typingsSource) {
-        is TypingsSource.CodeGenerator -> (typingsSource as TypingsSource.CodeGenerator).inputTypings
-        TypingsSource.ActionTypes ->
-            this@provideTypes.actionCoords
-                .fetchTypingMetadata(fetchUri, getCommitHash).toTypesMap()
-    }
+    getLocalTypings(this)?.let { myYaml.decodeFromString<ActionTypes>(it).toTypesMap() }
+        ?: this.fetchTypingMetadata(fetchUri, getCommitHash)?.toTypesMap()
+        ?: emptyMap()
 
-val actionTypesYamlDir = File("build/action-types-yaml")
+private val actionTypesYamlDir: File = File("build/action-types-yaml")
 
-fun deleteActionTypesYamlCacheIfObsolete() {
+public fun deleteActionTypesYamlCacheIfObsolete() {
     val today = LocalDate.now().toString()
     val dateTxt = actionTypesYamlDir.resolve("date.txt")
     val cacheUpToDate = dateTxt.canRead() && dateTxt.readText() == today
@@ -57,15 +50,15 @@ private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githu
 
 private fun ActionCoords.fetchTypingMetadata(
     fetchUri: (URI) -> String = ::fetchUri,
-    getCommitHash: (ActionCoords) -> String = ::getCommitHash,
-): ActionTypes {
+    getCommitHash: (ActionCoords) -> String? = ::getCommitHash,
+): ActionTypes? {
     val cacheFile = actionTypesYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
     if (cacheFile.canRead()) {
         println("  ... types from cache: $cacheFile")
         return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
     }
 
-    val commitHash = getCommitHash(this)
+    val commitHash = getCommitHash(this) ?: return null
     val list = listOf(actionTypesYmlUrl(commitHash), actionTypesYamlUrl(commitHash))
     val typesMetadataYaml =
         list.firstNotNullOfOrNull { url ->
@@ -75,19 +68,32 @@ private fun ActionCoords.fetchTypingMetadata(
             } catch (e: IOException) {
                 null
             }
-        } ?: error(
-            "$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\n" +
-                "Check release page $releasesUrl",
-        )
+        } ?: return null
 
     cacheFile.parentFile.mkdirs()
     cacheFile.writeText(typesMetadataYaml)
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
 
-internal fun getCommitHash(actionCoords: ActionCoords) =
+internal fun getCommitHash(actionCoords: ActionCoords): String? =
     Path.of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "commit-hash.txt")
-        .toFile().readText().trim()
+        .toFile().let {
+            if (it.exists()) it.readText().trim() else null
+        }
+
+internal fun getLocalTypings(actionCoords: ActionCoords): String? {
+    val pathBeforeVersion = Path.of("actions", actionCoords.owner, actionCoords.name.split("/").first(), actionCoords.version)
+    val subnames = actionCoords.name.split("/").drop(1).joinToString("/")
+    val fullPath =
+        if (subnames.isNotEmpty()) {
+            pathBeforeVersion.resolve(subnames).resolve("action-types.yml")
+        } else {
+            pathBeforeVersion.resolve("action-types.yml")
+        }
+    return fullPath.toFile().let {
+        if (it.exists()) it.readText() else null
+    }
+}
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
     return inputs.mapValues { (key, value) ->

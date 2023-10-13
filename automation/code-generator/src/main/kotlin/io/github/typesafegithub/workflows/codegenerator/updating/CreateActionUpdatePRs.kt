@@ -6,7 +6,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
-import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
@@ -81,7 +80,7 @@ private suspend fun createPullRequest(
 
 private fun ActionBindingRequest.generateBindingForCommit(commitHash: String): ActionBinding =
     actionCoords.generateBinding(
-        inputTypings = provideTypes(getCommitHash = { commitHash }),
+        commitHash = commitHash,
         fetchMetadataImpl = { fetchMetadata(commitHash = commitHash, useCache = false) },
     )
 
