@@ -1,14 +1,13 @@
 package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
-import io.github.typesafegithub.workflows.codegenerator.types.deleteActionTypesYamlCacheIfObsolete
-import io.github.typesafegithub.workflows.codegenerator.types.provideTypes
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
 import io.github.typesafegithub.workflows.metadatareading.deleteActionYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.metadatareading.prettyPrint
@@ -36,8 +35,7 @@ private fun generateBindings(): List<Pair<ActionBindingRequest, ActionBinding>> 
     val requestsAndBindings =
         bindingsToGenerate.map { actionBindingRequest ->
             println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
-            val inputTypings = actionBindingRequest.provideTypes()
-            val binding = actionBindingRequest.actionCoords.generateBinding(inputTypings)
+            val binding = actionBindingRequest.actionCoords.generateBinding()
             Pair(actionBindingRequest, binding)
         }
     requestsAndBindings.forEach { (_, binding) ->

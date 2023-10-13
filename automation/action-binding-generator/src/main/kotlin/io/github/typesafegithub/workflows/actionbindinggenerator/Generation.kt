@@ -24,6 +24,7 @@ import io.github.typesafegithub.workflows.metadatareading.Metadata
 import io.github.typesafegithub.workflows.metadatareading.fetchMetadata
 import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 import io.github.typesafegithub.workflows.textutils.toCamelCase
+import java.nio.file.Path
 
 public data class ActionBinding(
     val kotlinCode: String,
@@ -45,8 +46,9 @@ private object Properties {
 }
 
 public fun ActionCoords.generateBinding(
-    inputTypings: Map<String, Typing> = emptyMap(),
     fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
+    commitHash: String? = getCommitHashFromFileSystem(),
+    inputTypings: Map<String, Typing> = provideTypes(getCommitHash = { commitHash }),
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
@@ -421,3 +423,7 @@ private val String.nestedCommentsSanitized
             .replace("`[^`]++`".toRegex()) {
                 it.value.replace("&#42;", "`&#42;`")
             }
+
+private fun ActionCoords.getCommitHashFromFileSystem(): String? =
+    Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile()
+        .let { if (it.exists()) it.readText().trim() else null }

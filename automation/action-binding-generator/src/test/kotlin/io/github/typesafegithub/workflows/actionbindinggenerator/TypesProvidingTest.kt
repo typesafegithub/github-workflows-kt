@@ -1,6 +1,5 @@
-package io.github.typesafegithub.workflows.codegenerator.types
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.BooleanTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.EnumTyping
@@ -9,7 +8,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpecialValueTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -51,14 +49,10 @@ class TypesProvidingTest : FunSpec({
                   - admin
                   - guest
             """.trimIndent()
-        val actionBindingRequest =
-            ActionBindingRequest(
-                actionCoords = ActionCoords("some-owner", "some-name", "v1"),
-                typingsSource = TypingsSource.ActionTypes,
-            )
+        val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
         // When
-        val types = actionBindingRequest.provideTypes({ actionTypesYml }, { "some-hash" })
+        val types = actionCoord.provideTypes({ actionTypesYml }, { "some-hash" })
 
         // Then
         types shouldBe

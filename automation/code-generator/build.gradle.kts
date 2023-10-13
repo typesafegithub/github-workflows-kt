@@ -7,7 +7,6 @@ plugins {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.55.0")
     implementation("com.squareup:kotlinpoet:1.14.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 

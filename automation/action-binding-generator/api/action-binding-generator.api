@@ -16,7 +16,11 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Act
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/GenerationKt {
-	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
-	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/util/Map;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionsmetadata/model/ActionCoords;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+}
+
+public final class io/github/typesafegithub/workflows/actionbindinggenerator/TypesProvidingKt {
+	public static final fun deleteActionTypesYamlCacheIfObsolete ()V
 }
 
