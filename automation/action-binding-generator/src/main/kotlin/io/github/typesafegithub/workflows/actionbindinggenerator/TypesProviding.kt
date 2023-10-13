@@ -84,11 +84,12 @@ internal fun getCommitHash(actionCoords: ActionCoords): String? =
 internal fun getLocalTypings(actionCoords: ActionCoords): String? {
     val pathBeforeVersion = Path.of("actions", actionCoords.owner, actionCoords.name.split("/").first(), actionCoords.version)
     val subnames = actionCoords.name.split("/").drop(1).joinToString("/")
-    val fullPath = if (subnames.isNotEmpty()) {
-        pathBeforeVersion.resolve(subnames).resolve("action-types.yml")
-    } else {
-        pathBeforeVersion.resolve("action-types.yml")
-    }
+    val fullPath =
+        if (subnames.isNotEmpty()) {
+            pathBeforeVersion.resolve(subnames).resolve("action-types.yml")
+        } else {
+            pathBeforeVersion.resolve("action-types.yml")
+        }
     return fullPath.toFile().let {
         if (it.exists()) it.readText() else null
     }
@@ -140,7 +141,7 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
 private val myYaml =
     Yaml(
         configuration =
-        Yaml.default.configuration.copy(
-            strictMode = false,
-        ),
+            Yaml.default.configuration.copy(
+                strictMode = false,
+            ),
     )
