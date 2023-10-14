@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.typesafegithub"
-version = "1.3.1-SNAPSHOT"
+version = "1.3.1"
 
 dependencies {
     implementation("com.squareup:kotlinpoet:1.14.2")
