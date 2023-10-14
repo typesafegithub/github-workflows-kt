@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.textutils
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe

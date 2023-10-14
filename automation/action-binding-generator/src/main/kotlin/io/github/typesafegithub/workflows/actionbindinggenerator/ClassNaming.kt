@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.textutils.toPascalCase
 import java.util.Locale
 
 internal fun ActionCoords.buildActionClassName(): String {

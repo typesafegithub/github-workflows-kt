@@ -1,8 +1,8 @@
-package io.github.typesafegithub.workflows.textutils
+package io.github.typesafegithub.workflows.dsl.expressions
 
 import java.util.Locale
 
-fun String.toPascalCase(): String {
+internal fun String.toPascalCase(): String {
     val hasOnlyUppercases = none { it in 'a'..'z' }
     val normalizedString = if (hasOnlyUppercases) lowercase() else this
     return normalizedString.replace("+", "-plus-")
@@ -12,4 +12,4 @@ fun String.toPascalCase(): String {
         }
 }
 
-fun String.toCamelCase() = toPascalCase().replaceFirstChar { it.lowercase() }
+internal fun String.toCamelCase(): String = toPascalCase().replaceFirstChar { it.lowercase() }
