@@ -4,7 +4,7 @@ import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
-import io.github.typesafegithub.workflows.metadatareading.prettyPrint
+import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
 import java.io.File
 
 /**
