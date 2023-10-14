@@ -38,18 +38,30 @@ workflow(
 
         // From here, there are steps performing deployments. Before, it's only about building and testing.
 
-        uses(
-            name = "Publish to Sonatype",
-            action = GradleBuildActionV2(
-                arguments = ":library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
-            )
+        val libraries = listOf(
+            // The order is intended here - the library will once depend on the generator,
+            // so the generator needs to go first.
+            ":automation:action-binding-generator",
+            ":library",
         )
-        uses(
-            name = "Wait until library present in Maven Central",
-            action = GradleBuildActionV2(
-                arguments = ":library:waitUntilLibraryPresentInMavenCentral",
+
+        libraries.forEach { library ->
+            uses(
+                name = "Publish '$library' to Sonatype",
+                action = GradleBuildActionV2(
+                    arguments = "$library:publishToSonatype $library:closeAndReleaseSonatypeStagingRepository",
+                ),
             )
-        )
+        }
+
+        libraries.forEach { library ->
+            uses(
+                name = "Wait until '$library' present in Maven Central",
+                action = GradleBuildActionV2(
+                    arguments = "$library:waitUntilLibraryPresentInMavenCentral",
+                ),
+            )
+        }
 
         deployDocs()
     }
