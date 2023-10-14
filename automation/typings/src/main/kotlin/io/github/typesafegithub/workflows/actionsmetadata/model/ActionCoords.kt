@@ -13,4 +13,4 @@ data class ActionCoords(
  */
 val ActionCoords.isTopLevel: Boolean get() = "/" !in name
 
-internal val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
+val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"

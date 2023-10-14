@@ -8,9 +8,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpecialValueTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
-import io.github.typesafegithub.workflows.metadatareading.Input
-import io.github.typesafegithub.workflows.metadatareading.Metadata
-import io.github.typesafegithub.workflows.metadatareading.Output
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.throwable.shouldHaveMessage
@@ -50,7 +47,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(metadata = actionManifest)
 
         // then
         binding.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
@@ -95,7 +92,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(metadata = actionManifest)
 
         // then
         binding.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
@@ -170,7 +167,7 @@ class GenerationTest : FunSpec({
         // when
         val binding =
             coords.generateBinding(
-                fetchMetadataImpl = { actionManifest },
+                metadata = actionManifest,
                 inputTypings =
                     mapOf(
                         "baz-goo" to BooleanTyping,
@@ -212,7 +209,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(metadata = actionManifest)
 
         // then
         binding.shouldMatchFile("ActionWithOutputsV3.kt")
@@ -241,7 +238,7 @@ class GenerationTest : FunSpec({
 
         shouldThrowAny {
             // when
-            coords.generateBinding(fetchMetadataImpl = { actionManifest }, inputTypings = inputTypings)
+            coords.generateBinding(metadata = actionManifest, inputTypings = inputTypings)
         }.shouldHaveMessage(
             // then
             """
@@ -265,7 +262,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(metadata = actionManifest)
 
         // then
         binding.shouldMatchFile("ActionWithNoInputsV3.kt")
@@ -284,7 +281,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(metadata = actionManifest)
 
         // then
         binding.shouldMatchFile("DeprecatedActionV2.kt")
@@ -317,7 +314,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest })
+        val binding = coords.generateBinding(metadata = actionManifest)
 
         // then
         binding.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
@@ -355,7 +352,7 @@ class GenerationTest : FunSpec({
         val coords = ActionCoords("john-smith", "simple-action-with-lists", "v3")
 
         // when
-        val binding = coords.generateBinding(fetchMetadataImpl = { actionManifest }, inputTypings = inputTypings)
+        val binding = coords.generateBinding(metadata = actionManifest, inputTypings = inputTypings)
 
         // then
         binding.shouldMatchFile("SimpleActionWithListsV3.kt")
@@ -391,7 +388,7 @@ class GenerationTest : FunSpec({
         // when
         val binding =
             coords.generateBinding(
-                fetchMetadataImpl = { actionManifest },
+                metadata = actionManifest,
                 inputTypings =
                     mapOf(
                         "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),

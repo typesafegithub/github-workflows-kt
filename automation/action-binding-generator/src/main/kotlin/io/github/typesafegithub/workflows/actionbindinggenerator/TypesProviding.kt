@@ -13,7 +13,6 @@ import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpeci
 import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
-import io.github.typesafegithub.workflows.metadatareading.fetchUri
 import io.github.typesafegithub.workflows.textutils.toPascalCase
 import kotlinx.serialization.decodeFromString
 import java.io.File

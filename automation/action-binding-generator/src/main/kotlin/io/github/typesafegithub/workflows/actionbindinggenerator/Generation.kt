@@ -19,10 +19,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUST
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
-import io.github.typesafegithub.workflows.metadatareading.Input
-import io.github.typesafegithub.workflows.metadatareading.Metadata
-import io.github.typesafegithub.workflows.metadatareading.fetchMetadata
-import io.github.typesafegithub.workflows.metadatareading.prettyPrint
 import io.github.typesafegithub.workflows.textutils.toCamelCase
 import java.nio.file.Path
 
@@ -46,22 +42,26 @@ private object Properties {
 }
 
 public fun ActionCoords.generateBinding(
-    fetchMetadataImpl: ActionCoords.() -> Metadata = { fetchMetadata() },
     commitHash: String? = getCommitHashFromFileSystem(),
+    useCache: Boolean = true,
+    metadata: Metadata =
+        commitHash?.let {
+            this.fetchMetadata(commitHash = it, useCache = useCache)
+        } ?: this.fetchMetadata(useCache = useCache),
     inputTypings: Map<String, Typing> = provideTypes(getCommitHash = { commitHash }),
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
     }
 
-    val metadata = fetchMetadataImpl().removeDeprecatedInputsIfNameClash()
-    checkPropertiesAreValid(metadata, inputTypings)
-    metadata.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
+    val metadataProcessed = metadata.removeDeprecatedInputsIfNameClash()
+    checkPropertiesAreValid(metadataProcessed, inputTypings)
+    metadataProcessed.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
 
     val className = this.buildActionClassName()
-    val actionBindingSourceCode = generateActionBindingSourceCode(metadata, this, inputTypings, className)
+    val actionBindingSourceCode = generateActionBindingSourceCode(metadataProcessed, this, inputTypings, className)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
