@@ -7,7 +7,6 @@ include(
     ":automation:typings",
     ":automation:code-generator",
     ":automation:action-binding-generator",
-    ":automation:text-utils",
 )
 
 plugins {

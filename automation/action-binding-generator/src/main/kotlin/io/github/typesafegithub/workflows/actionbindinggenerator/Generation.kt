@@ -19,7 +19,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUST
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
 import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
-import io.github.typesafegithub.workflows.textutils.toCamelCase
 import java.nio.file.Path
 
 public data class ActionBinding(
