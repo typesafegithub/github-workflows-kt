@@ -1,16 +1,16 @@
-package io.github.typesafegithub.workflows.actionsmetadata.model
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ActionTypes(
+internal data class ActionTypes(
     val inputs: Map<String, ActionType> = emptyMap(),
     val outputs: Map<String, ActionType> = emptyMap(),
 )
 
 @Serializable
-data class ActionType(
+internal data class ActionType(
     val type: ActionTypeEnum,
     val name: String? = null,
     @SerialName("named-values")
@@ -27,7 +27,7 @@ data class ActionType(
 }
 
 @Serializable
-enum class ActionTypeEnum {
+internal enum class ActionTypeEnum {
     @SerialName("string")
     String,
 
@@ -47,7 +47,7 @@ enum class ActionTypeEnum {
     Enum,
 }
 
-fun ActionType.validateType() {
+internal fun ActionType.validateType() {
     if (type == ActionTypeEnum.List) {
         check(separator.isNotEmpty() && listItem != null) {
             "Invalid type $this: needs a separator and a listItem"

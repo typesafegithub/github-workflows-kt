@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import com.charleskorn.kaml.Yaml
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -48,8 +47,6 @@ private fun ActionCoords.actionYamlUrl(gitRef: String) =
 internal val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
 internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
-
-internal val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
 internal fun ActionCoords.fetchMetadata(
     commitHash: String = getCommitHashFromFileSystem(),

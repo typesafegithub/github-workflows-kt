@@ -1,15 +1,15 @@
 package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
-import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
 import java.nio.file.Path
 import java.nio.file.Paths

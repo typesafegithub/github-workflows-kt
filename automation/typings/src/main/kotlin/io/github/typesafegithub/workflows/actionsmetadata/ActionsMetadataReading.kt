@@ -1,17 +1,13 @@
 package io.github.typesafegithub.workflows.actionsmetadata
 
-import com.charleskorn.kaml.Yaml
+import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypes
 import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
-import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
-import kotlinx.serialization.decodeFromString
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.isRegularFile
 import kotlin.io.path.name
-import kotlin.io.path.readText
 import kotlin.streams.asSequence
 
 internal fun readActionsMetadata(): List<ActionBindingRequest> =
@@ -44,7 +40,6 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
                     ),
                 typingsSource =
                     buildTypingsSource(
-                        path = it,
                         fileName = file,
                         actionTypingsDirectory = actionTypingsDirectory,
                     ),
@@ -53,29 +48,14 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
 }
 
 private fun buildTypingsSource(
-    path: Path,
     fileName: String,
     actionTypingsDirectory: Path,
 ) = when (fileName) {
     "action-types.yml" -> {
-        val typings =
-            try {
-                myYaml.decodeFromString<ActionTypes>(path.readText())
-            } catch (e: Exception) {
-                println("There was a problem parsing action typing: $path")
-                throw e
-            }
-        TypingsSource.CodeGenerator(inputTypings = typings.toTypesMap())
+        // TODO: the empty map is just a placeholder value - the typings are fetched in another place.
+        //  It should be eventually removed.
+        TypingsSource.CodeGenerator(inputTypings = emptyMap())
     }
     "typings-hosted-by-action" -> TypingsSource.ActionTypes
     else -> error("An unexpected file found in $actionTypingsDirectory: '$fileName'")
 }
-
-private val myYaml =
-    Yaml(
-        configuration =
-            Yaml.default.configuration.copy(
-                // Don't allow any unknown keys, to keep the YAMLs minimal.
-                strictMode = true,
-            ),
-    )

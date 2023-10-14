@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

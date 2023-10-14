@@ -1,18 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import com.charleskorn.kaml.Yaml
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionType
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypeEnum
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionTypes
-import io.github.typesafegithub.workflows.actionsmetadata.model.BooleanTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.EnumTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.FloatTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpecialValueTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
-import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException

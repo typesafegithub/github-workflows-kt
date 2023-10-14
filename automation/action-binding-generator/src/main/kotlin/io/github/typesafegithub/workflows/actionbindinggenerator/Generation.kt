@@ -16,9 +16,6 @@ import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUSTOM_INPUTS
 import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUSTOM_VERSION
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 import java.nio.file.Path
 
 public data class ActionBinding(
@@ -293,7 +290,7 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     if (coords.deprecatedByVersion == null) {
         return this
     }
-    val newerClass = coords.copy(version = coords.deprecatedByVersion!!)
+    val newerClass = coords.copy(version = coords.deprecatedByVersion)
     addAnnotation(
         AnnotationSpec.builder(Deprecated::class)
             .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")

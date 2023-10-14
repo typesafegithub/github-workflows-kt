@@ -1,6 +1,6 @@
-package io.github.typesafegithub.workflows.actionsmetadata.model
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
-data class ActionCoords(
+public data class ActionCoords(
     val owner: String,
     val name: String,
     val version: String,
@@ -11,6 +11,6 @@ data class ActionCoords(
  * A top-level action is an action with its `action.y(a)ml` file in the repository root, as opposed to actions stored
  * in subdirectories.
  */
-val ActionCoords.isTopLevel: Boolean get() = "/" !in name
+public val ActionCoords.isTopLevel: Boolean get() = "/" !in name
 
-val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
+public val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"

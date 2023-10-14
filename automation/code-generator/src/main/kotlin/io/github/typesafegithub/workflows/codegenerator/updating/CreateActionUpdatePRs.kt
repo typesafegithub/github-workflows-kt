@@ -1,12 +1,12 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.isTopLevel
+import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.model.isTopLevel
-import io.github.typesafegithub.workflows.actionsmetadata.model.prettyPrint
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
