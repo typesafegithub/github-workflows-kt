@@ -8,7 +8,6 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.automation.typings)
     implementation("com.squareup:kotlinpoet:1.14.2")
     implementation("com.charleskorn.kaml:kaml:0.55.0")
 

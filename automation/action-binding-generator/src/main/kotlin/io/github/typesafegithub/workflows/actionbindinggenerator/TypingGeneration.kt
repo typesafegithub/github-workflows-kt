@@ -10,15 +10,6 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.model.BooleanTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.EnumTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.FloatTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.IntegerWithSpecialValueTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.ListOfTypings
-import io.github.typesafegithub.workflows.actionsmetadata.model.StringTyping
-import io.github.typesafegithub.workflows.actionsmetadata.model.Typing
 
 internal fun Typing.getClassName(
     actionPackageName: String,

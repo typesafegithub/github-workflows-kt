@@ -1,10 +1,10 @@
-package io.github.typesafegithub.workflows.actionsmetadata.model
+package io.github.typesafegithub.workflows.actionbindinggenerator
 
-sealed interface Typing
+public sealed interface Typing
 
-object BooleanTyping : Typing
+internal object BooleanTyping : Typing
 
-data class EnumTyping(
+internal data class EnumTyping(
     /**
      * Custom type name when used in Kotlin code.
      * Null means that the type name should be inferred from the input name.
@@ -21,11 +21,11 @@ data class EnumTyping(
     val itemsNames: List<String>? = null,
 ) : Typing
 
-object FloatTyping : Typing
+internal object FloatTyping : Typing
 
-object IntegerTyping : Typing
+internal object IntegerTyping : Typing
 
-data class IntegerWithSpecialValueTyping(
+internal data class IntegerWithSpecialValueTyping(
     /**
      * Custom type name when used in Kotlin code.
      * Null means that the type name should be inferred from the input name.
@@ -34,9 +34,9 @@ data class IntegerWithSpecialValueTyping(
     val specialValues: Map<String, Int>,
 ) : Typing
 
-data class ListOfTypings(
+internal data class ListOfTypings(
     val delimiter: String,
     val typing: Typing = StringTyping,
 ) : Typing
 
-object StringTyping : Typing
+internal object StringTyping : Typing
