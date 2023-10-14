@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.1")
 @file:Import("_shared.main.kts")
 @file:Import("actions/peterevans/create-issue-from-file.main.kts")
 
