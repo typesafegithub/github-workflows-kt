@@ -49,7 +49,7 @@ workflow(
             uses(
                 name = "Publish '$library' to Sonatype",
                 action = GradleBuildActionV2(
-                    arguments = "$library:publishToSonatype $library:closeAndReleaseSonatypeStagingRepository",
+                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
                 ),
             )
         }

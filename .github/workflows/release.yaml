@@ -52,12 +52,12 @@ jobs:
       name: 'Publish '':automation:action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:action-binding-generator:publishToSonatype :automation:action-binding-generator:closeAndReleaseSonatypeStagingRepository'
+        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository'
     - id: 'step-5'
       name: 'Publish '':library'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':library:publishToSonatype :library:closeAndReleaseSonatypeStagingRepository'
+        arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository'
     - id: 'step-6'
       name: 'Wait until '':automation:action-binding-generator'' present in Maven Central'
       uses: 'gradle/gradle-build-action@v2'
