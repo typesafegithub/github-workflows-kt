@@ -12,7 +12,7 @@ plugins {
     id("info.solidsoft.pitest") version "1.15.0"
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
 
-    id("org.jetbrains.dokka") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.10"
 }
 
 group = "io.github.typesafegithub"
