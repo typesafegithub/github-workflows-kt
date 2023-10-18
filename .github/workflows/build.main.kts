@@ -41,7 +41,7 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-        needs = buildJobs,
+//        needs = buildJobs,
         env = linkedMapOf(
             "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
             "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),

@@ -62,8 +62,6 @@ jobs:
     name: 'Publish snapshot'
     runs-on: 'ubuntu-latest'
     needs:
-    - 'build-for-UbuntuLatest'
-    - 'build-for-Windows2022'
     - 'check_yaml_consistency'
     env:
       SIGNING_KEY: '${{ secrets.SIGNING_KEY }}'
