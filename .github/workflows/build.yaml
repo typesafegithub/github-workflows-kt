@@ -83,12 +83,12 @@ jobs:
       name: 'Publish '':automation:action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --debug'
+        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository'
     - id: 'step-3'
       name: 'Publish '':library'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository --debug'
+        arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository'
   build_docs:
     name: 'Build docs'
     runs-on: 'ubuntu-latest'
