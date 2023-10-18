@@ -43,6 +43,8 @@ workflow(
         runsOn = UbuntuLatest,
         needs = buildJobs,
         env = linkedMapOf(
+            "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
+            "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
         ),
