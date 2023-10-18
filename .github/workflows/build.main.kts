@@ -21,7 +21,7 @@ workflow(
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    val buildJobs = listOf(UbuntuLatest, Windows2022).map { runnerType ->
+    listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
@@ -41,7 +41,6 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-//        needs = buildJobs,
         env = linkedMapOf(
             "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
             "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
