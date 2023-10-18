@@ -20,7 +20,7 @@ workflow(
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
+    val buildJobs = listOf(UbuntuLatest, Windows2022).associateWith { runnerType ->
         job(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
@@ -32,6 +32,25 @@ workflow(
                 action = GradleBuildActionV2(
                     arguments = "build",
                 )
+            )
+        }
+    }
+
+    job(
+        id = "publish-snapshot",
+        name = "Publish snapshot",
+        runsOn = UbuntuLatest,
+        needs = listOf(buildJobs[UbuntuLatest]!!),
+    ) {
+        uses(action = CheckoutV4())
+        setupJava()
+
+        libraries.forEach { library ->
+            uses(
+                name = "Publish '$library' to Sonatype",
+                action = GradleBuildActionV2(
+                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
+                ),
             )
         }
     }
