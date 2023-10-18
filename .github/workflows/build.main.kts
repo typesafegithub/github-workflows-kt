@@ -21,7 +21,7 @@ workflow(
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    val buildJobs = listOf(UbuntuLatest, Windows2022).associateWith { runnerType ->
+    val buildJobs = listOf(UbuntuLatest, Windows2022).map { runnerType ->
         job(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
@@ -41,7 +41,7 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-        needs = listOf(buildJobs[UbuntuLatest]!!),
+        needs = buildJobs,
         env = linkedMapOf(
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
