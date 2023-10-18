@@ -8,8 +8,8 @@ plugins {
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
 }
 
-group = "io.github.typesafegithub"
-version = "1.3.2-SNAPSHOT"
+group = rootProject.group
+version = rootProject.version
 
 dependencies {
     implementation("com.squareup:kotlinpoet:1.14.2")

@@ -15,8 +15,8 @@ plugins {
     id("org.jetbrains.dokka") version "1.9.10"
 }
 
-group = "io.github.typesafegithub"
-version = "1.3.2-SNAPSHOT"
+group = rootProject.group
+version = rootProject.version
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.7")

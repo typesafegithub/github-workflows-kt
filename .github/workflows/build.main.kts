@@ -9,6 +9,7 @@ import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
@@ -32,6 +33,31 @@ workflow(
                 action = GradleBuildActionV2(
                     arguments = "build",
                 )
+            )
+        }
+    }
+
+    job(
+        id = "publish-snapshot",
+        name = "Publish snapshot",
+        runsOn = UbuntuLatest,
+        condition = expr { "${github.ref} == 'refs/heads/main'" },
+        env = linkedMapOf(
+            "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
+            "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
+            "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
+            "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
+        ),
+    ) {
+        uses(action = CheckoutV4())
+        setupJava()
+
+        libraries.forEach { library ->
+            uses(
+                name = "Publish '$library' to Sonatype",
+                action = GradleBuildActionV2(
+                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
+                ),
             )
         }
     }

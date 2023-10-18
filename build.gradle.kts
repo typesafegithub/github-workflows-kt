@@ -5,6 +5,9 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0" // Needs to be applied to the root project.
 }
 
+group = "io.github.typesafegithub"
+version = "1.3.2-SNAPSHOT"
+
 nexusPublishing {
     repositories {
         sonatype {

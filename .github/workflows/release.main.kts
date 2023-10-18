@@ -38,13 +38,6 @@ workflow(
 
         // From here, there are steps performing deployments. Before, it's only about building and testing.
 
-        val libraries = listOf(
-            // The order is intended here - the library will once depend on the generator,
-            // so the generator needs to go first.
-            ":automation:action-binding-generator",
-            ":library",
-        )
-
         libraries.forEach { library ->
             uses(
                 name = "Publish '$library' to Sonatype",
