@@ -42,6 +42,7 @@ public fun ActionCoords.generateBinding(
     useCache: Boolean = true,
     metadata: Metadata = this.fetchMetadata(metadataRevision, useCache = useCache),
     inputTypings: Map<String, Typing> = provideTypes(metadataRevision),
+    generateForScript: Boolean = false,
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
@@ -53,8 +54,9 @@ public fun ActionCoords.generateBinding(
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
 
-    val className = this.buildActionClassName()
-    val actionBindingSourceCode = generateActionBindingSourceCode(metadataProcessed, this, inputTypings, className)
+    val className = this.buildActionClassName(includeVersion = !generateForScript)
+    val actionBindingSourceCode =
+        generateActionBindingSourceCode(metadataProcessed, this, inputTypings, className, generateForScript = generateForScript)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
@@ -95,21 +97,33 @@ private fun generateActionBindingSourceCode(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
+    generateForScript: Boolean,
 ): String {
     val fileSpec =
-        FileSpec.builder("io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}", className)
-            .addFileComment(
-                """
-                This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
-                be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
-                generator itself.
-                """.trimIndent(),
-            )
-            .addType(generateActionClass(metadata, coords, inputTypings, className))
+        FileSpec.builder(
+            if (generateForScript) "" else "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+            className,
+        )
+            .apply {
+                if (!generateForScript) {
+                    addFileComment(
+                        """
+                        This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
+                        be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
+                        generator itself.
+                        """.trimIndent(),
+                    )
+                }
+            }
+            .addType(generateActionClass(metadata, coords, inputTypings, className, generateForScript = generateForScript))
             .addSuppressAnnotation(metadata, coords)
             .indent("    ")
             .build()
     return buildString {
+        if (generateForScript) {
+            appendLine("#!/usr/bin/env kotlin")
+            appendLine("@file:DependsOn(\"io.github.typesafegithub:github-workflows-kt:$LIBRARY_VERSION\")")
+        }
         fileSpec.writeTo(this)
     }
 }
@@ -139,12 +153,13 @@ private fun generateActionClass(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
+    generateForScript: Boolean,
 ): TypeSpec {
     return TypeSpec.classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
-        .inheritsFromRegularAction(coords, metadata, className)
+        .inheritsFromRegularAction(coords, metadata, className, generateForScript = generateForScript)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className))
         .properties(metadata, coords, inputTypings, className)
         .addFunction(metadata.secondaryConstructor(inputTypings, coords, className))
@@ -301,6 +316,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
     coords: ActionCoords,
     metadata: Metadata,
     className: String,
+    generateForScript: Boolean,
 ): TypeSpec.Builder {
     val superclass =
         ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
@@ -309,7 +325,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
                     OutputsBase
                 } else {
                     ClassName(
-                        "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+                        if (generateForScript) "" else "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
                         className,
                         "Outputs",
                     )
