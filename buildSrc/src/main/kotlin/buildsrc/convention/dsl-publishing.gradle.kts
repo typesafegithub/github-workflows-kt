@@ -64,7 +64,7 @@ publishing {
 }
 
 signing {
-    if (!project.version.toString().endsWith("-SNAPSHOT") && !project.findProperty("suppressSigning")?.toString().toBoolean()) {
+    if (!project.version.toString().endsWith("-SNAPSHOT")) {
         sign(publishing.publications["mavenJava"])
     }
 
