@@ -38,9 +38,27 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Act
 	public static final fun isTopLevel (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;)Z
 }
 
+public final class io/github/typesafegithub/workflows/actionbindinggenerator/CommitHash : io/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/CommitHash;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/CommitHash;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/CommitHash;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/actionbindinggenerator/FromLockfile : io/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/FromLockfile;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/GenerationKt {
-	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Ljava/lang/String;ZLio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Ljava/util/Map;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
-	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Ljava/lang/String;ZLio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision;ZLio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Ljava/util/Map;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision;ZLio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/Input {
@@ -118,6 +136,16 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Met
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/MetadataReadingKt {
 	public static final fun deleteActionYamlCacheIfObsolete ()V
+}
+
+public abstract interface class io/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision {
+}
+
+public final class io/github/typesafegithub/workflows/actionbindinggenerator/NewestForVersion : io/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/NewestForVersion;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/Output {

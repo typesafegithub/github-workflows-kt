@@ -38,13 +38,10 @@ private object Properties {
 }
 
 public fun ActionCoords.generateBinding(
-    commitHash: String? = getCommitHashFromFileSystem(),
+    metadataRevision: MetadataRevision,
     useCache: Boolean = true,
-    metadata: Metadata =
-        commitHash?.let {
-            this.fetchMetadata(commitHash = it, useCache = useCache)
-        } ?: this.fetchMetadata(useCache = useCache),
-    inputTypings: Map<String, Typing> = provideTypes(getCommitHash = { commitHash }),
+    metadata: Metadata = this.fetchMetadata(metadataRevision, useCache = useCache),
+    inputTypings: Map<String, Typing> = provideTypes(metadataRevision),
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"

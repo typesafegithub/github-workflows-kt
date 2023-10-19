@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionTypesYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
@@ -35,7 +36,7 @@ private fun generateBindings(): List<Pair<ActionBindingRequest, ActionBinding>> 
     val requestsAndBindings =
         bindingsToGenerate.map { actionBindingRequest ->
             println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
-            val binding = actionBindingRequest.actionCoords.generateBinding()
+            val binding = actionBindingRequest.actionCoords.generateBinding(metadataRevision = FromLockfile)
             Pair(actionBindingRequest, binding)
         }
     requestsAndBindings.forEach { (_, binding) ->

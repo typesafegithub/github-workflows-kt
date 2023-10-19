@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.codegenerator.updating
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.isTopLevel
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
@@ -79,7 +80,7 @@ private suspend fun createPullRequest(
 
 private fun ActionBindingRequest.generateBindingForCommit(commitHash: String): ActionBinding =
     actionCoords.generateBinding(
-        commitHash = commitHash,
+        metadataRevision = CommitHash(commitHash),
         useCache = false,
     )
 

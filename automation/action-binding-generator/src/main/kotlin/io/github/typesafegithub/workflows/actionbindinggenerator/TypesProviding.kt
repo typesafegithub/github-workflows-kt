@@ -9,11 +9,11 @@ import java.nio.file.Path
 import java.time.LocalDate
 
 internal fun ActionCoords.provideTypes(
+    metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-    getCommitHash: (ActionCoords) -> String? = ::getCommitHash,
 ): Map<String, Typing> =
     getLocalTypings(this)?.let { myYaml.decodeFromString<ActionTypes>(it).toTypesMap() }
-        ?: this.fetchTypingMetadata(fetchUri, getCommitHash)?.toTypesMap()
+        ?: this.fetchTypingMetadata(metadataRevision, fetchUri)?.toTypesMap()
         ?: emptyMap()
 
 private val actionTypesYamlDir: File = File("build/action-types-yaml")
@@ -35,8 +35,8 @@ private fun ActionCoords.actionTypesYmlUrl(gitRef: String) = "https://raw.github
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yaml"
 
 private fun ActionCoords.fetchTypingMetadata(
+    metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-    getCommitHash: (ActionCoords) -> String? = ::getCommitHash,
 ): ActionTypes? {
     val cacheFile = actionTypesYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
     if (cacheFile.canRead()) {
@@ -44,8 +44,13 @@ private fun ActionCoords.fetchTypingMetadata(
         return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
     }
 
-    val commitHash = getCommitHash(this) ?: return null
-    val list = listOf(actionTypesYmlUrl(commitHash), actionTypesYamlUrl(commitHash))
+    val gitRef =
+        when (metadataRevision) {
+            is CommitHash -> metadataRevision.value
+            NewestForVersion -> this.version
+            FromLockfile -> getCommitHash(this)
+        } ?: return null
+    val list = listOf(actionTypesYmlUrl(gitRef), actionTypesYamlUrl(gitRef))
     val typesMetadataYaml =
         list.firstNotNullOfOrNull { url ->
             try {
