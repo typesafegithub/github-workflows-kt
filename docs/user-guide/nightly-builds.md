@@ -1,20 +1,16 @@
 # Nightly builds
 
-Sometimes you may want to test a change that has been already merged to `main` or other branch, but not yet officially
-released. In this case, you can use JitPack to request building the desired version of the library on demand:
+Sometimes you may want to test a change that has been already merged to `main`, but not yet officially released. In this
+case, you can use snapshots published for each commit to the `main` branch.
 
-https://jitpack.io/#typesafegithub/github-workflows-kt
-
-To use the newest, bleeding-edge version from `main` branch, replace your scripts' preamble with:
+To use a given "snapshot" version, e.g. `1.3.2-SNAPSHOT`, replace your scripts' preamble with:
 
 ```kotlin
-@file:Repository("https://jitpack.io")
-@file:DependsOn("com.github.typesafegithub:github-workflows-kt:main-SNAPSHOT")
+@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-SNAPSHOT")
 ```
 
-Remember that the version `main-SNAPSHOT` may return a different build of the library each time because `main` branch
-gets new commits over time. If it's important to you to have more stability, consider e.g. pinning your dependency to a
-specific commit. See the above link on JitPack to learn multiple ways how JitPack can refer to the library's versions.
-
-JitPack lazily builds the library on demand, so it may happen that you will wait for the dependency resolution until the
-build is done. It usually takes up to several minutes, and you can preview the progress on JitPack.
+Remember that requesting version `1.3.2-SNAPSHOT`, if it's being actively developed, may return a different build of the
+library each time it's requested. It can also happen occasionally that the snapshot doesn't correspond to any commit on
+the `main` branch, and instead some PR that wasn't yet merged. That's why the snapshots are meant to quickly check
+something simple that wasn't yet released, not for depending on such unstable version constantly.
