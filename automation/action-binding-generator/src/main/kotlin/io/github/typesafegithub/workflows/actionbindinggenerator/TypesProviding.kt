@@ -70,16 +70,15 @@ private fun ActionCoords.fetchTypingMetadata(
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
 
-private fun ActionCoords.fetchFromTypingsMaintainedWithLibrary(
-    fetchUri: (URI) -> String = ::fetchUri,
-): ActionTypes? {
+private fun ActionCoords.fetchFromTypingsMaintainedWithLibrary(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? {
     val url = actionTypesMaintainedWithLibraryUrl()
-    val typesMetadataYml = try {
-        println("  ... types from $url")
-        fetchUri(URI(url))
-    } catch (e: IOException) {
-        null
-    } ?: return null
+    val typesMetadataYml =
+        try {
+            println("  ... types from $url")
+            fetchUri(URI(url))
+        } catch (e: IOException) {
+            null
+        } ?: return null
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
