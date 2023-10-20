@@ -410,44 +410,46 @@ class GenerationTest : FunSpec({
         val actionManifest =
             Metadata(
                 name =
-                """
+                    """
                     Do something cool
                     and describe it in multiple lines
                     """.trimIndent(),
                 description = "This is a test description that should be put in the KDoc comment for a class",
                 inputs =
-                mapOf(
-                    "foo-bar" to
-                        Input(
-                            description = "Short description",
-                            required = true,
-                            default = null,
-                        ),
-                    "baz-goo" to
-                        Input(
-                            description =
-                            """
+                    mapOf(
+                        "foo-bar" to
+                            Input(
+                                description = "Short description",
+                                required = true,
+                                default = null,
+                            ),
+                        "baz-goo" to
+                            Input(
+                                description =
+                                    """
                                     Just another input
                                     with multiline description
                                     """.trimIndent(),
-                            deprecationMessage = "this is deprecated",
-                            required = true,
-                            default = null,
-                        ),
-                ),
+                                deprecationMessage = "this is deprecated",
+                                required = true,
+                                default = null,
+                            ),
+                    ),
             )
         val coords = ActionCoords("john-smith", "action-for-script", "v3")
 
         // when
-        val binding = coords.generateBinding(
-            metadataRevision = FromLockfile,
-            metadata = actionManifest,
-            generateForScript = true,
-        )
+        val binding =
+            coords.generateBinding(
+                metadataRevision = FromLockfile,
+                metadata = actionManifest,
+                generateForScript = true,
+            )
 
         // then
         //language=kotlin
-        binding.kotlinCode shouldBe """
+        binding.kotlinCode shouldBe
+            """
             #!/usr/bin/env kotlin
             @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-SNAPSHOT")
             @file:Suppress(
@@ -517,6 +519,6 @@ class GenerationTest : FunSpec({
                 override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
             }
 
-        """.trimIndent()
+            """.trimIndent()
     }
 })
