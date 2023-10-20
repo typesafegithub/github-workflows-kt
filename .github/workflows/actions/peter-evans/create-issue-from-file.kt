@@ -1,8 +1,3 @@
-#!/usr/bin/env kotlin
-// This file was generated using 'action-binding-generator' module. Don't change it by hand, your changes will
-// be overwritten with the next binding code regeneration. Instead, consider introducing changes to the
-// generator itself.
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.1")
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
