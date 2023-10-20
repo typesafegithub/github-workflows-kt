@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class GenerationTest : FunSpec({
@@ -402,5 +403,120 @@ class GenerationTest : FunSpec({
 
         // then
         binding.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
+    }
+
+    test("action binding generated to be used from a script") {
+        // given
+        val actionManifest =
+            Metadata(
+                name =
+                """
+                    Do something cool
+                    and describe it in multiple lines
+                    """.trimIndent(),
+                description = "This is a test description that should be put in the KDoc comment for a class",
+                inputs =
+                mapOf(
+                    "foo-bar" to
+                        Input(
+                            description = "Short description",
+                            required = true,
+                            default = null,
+                        ),
+                    "baz-goo" to
+                        Input(
+                            description =
+                            """
+                                    Just another input
+                                    with multiline description
+                                    """.trimIndent(),
+                            deprecationMessage = "this is deprecated",
+                            required = true,
+                            default = null,
+                        ),
+                ),
+            )
+        val coords = ActionCoords("john-smith", "action-for-script", "v3")
+
+        // when
+        val binding = coords.generateBinding(
+            metadataRevision = FromLockfile,
+            metadata = actionManifest,
+            generateForScript = true,
+        )
+
+        // then
+        //language=kotlin
+        binding.kotlinCode shouldBe """
+            #!/usr/bin/env kotlin
+            @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-SNAPSHOT")
+            @file:Suppress(
+                "DataClassPrivateConstructor",
+                "UNUSED_PARAMETER",
+                "DEPRECATION",
+            )
+
+            import io.github.typesafegithub.workflows.domain.actions.Action
+            import io.github.typesafegithub.workflows.domain.actions.RegularAction
+            import java.util.LinkedHashMap
+            import kotlin.Deprecated
+            import kotlin.String
+            import kotlin.Suppress
+            import kotlin.Unit
+            import kotlin.collections.Map
+            import kotlin.collections.toList
+            import kotlin.collections.toTypedArray
+
+            /**
+             * Action: Do something cool
+             * and describe it in multiple lines
+             *
+             * This is a test description that should be put in the KDoc comment for a class
+             *
+             * [Action on GitHub](https://github.com/john-smith/action-for-script)
+             */
+            public data class ActionForScript private constructor(
+                /**
+                 * Short description
+                 */
+                public val fooBar: String,
+                /**
+                 * Just another input
+                 * with multiline description
+                 */
+                @Deprecated("this is deprecated")
+                public val bazGoo: String,
+                /**
+                 * Type-unsafe map where you can put any inputs that are not yet supported by the binding
+                 */
+                public val _customInputs: Map<String, String> = mapOf(),
+                /**
+                 * Allows overriding action's version, for example to use a specific minor version, or a newer
+                 * version that the binding doesn't yet know about
+                 */
+                public val _customVersion: String? = null,
+            ) : RegularAction<Action.Outputs>("john-smith", "action-for-script", _customVersion ?: "v3") {
+                public constructor(
+                    vararg pleaseUseNamedArguments: Unit,
+                    fooBar: String,
+                    bazGoo: String,
+                    _customInputs: Map<String, String> = mapOf(),
+                    _customVersion: String? = null,
+                ) : this(fooBar=fooBar, bazGoo=bazGoo, _customInputs=_customInputs,
+                        _customVersion=_customVersion)
+
+                @Suppress("SpreadOperator")
+                override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+                    *listOfNotNull(
+                        "foo-bar" to fooBar,
+                        "baz-goo" to bazGoo,
+                        *_customInputs.toList().toTypedArray(),
+                    ).toTypedArray()
+                )
+
+                override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+            }
+
+        """.trimIndent()
     }
 })
