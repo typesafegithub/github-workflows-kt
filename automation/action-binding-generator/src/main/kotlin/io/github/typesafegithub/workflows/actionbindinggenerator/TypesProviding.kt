@@ -14,6 +14,7 @@ internal fun ActionCoords.provideTypes(
 ): Map<String, Typing> =
     getLocalTypings(this)?.let { myYaml.decodeFromString<ActionTypes>(it).toTypesMap() }
         ?: this.fetchTypingMetadata(metadataRevision, fetchUri)?.toTypesMap()
+        ?: this.fetchFromTypingsMaintainedWithLibrary(fetchUri)?.toTypesMap()
         ?: emptyMap()
 
 private val actionTypesYamlDir: File = File("build/action-types-yaml")
@@ -31,6 +32,9 @@ public fun deleteActionTypesYamlCacheIfObsolete() {
 }
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yml"
+
+private fun ActionCoords.actionTypesMaintainedWithLibraryUrl() =
+    "https://raw.githubusercontent.com/typesafegithub/github-workflows-kt/main/actions/$owner/$name/$version/action-types.yml"
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yaml"
 
@@ -64,6 +68,18 @@ private fun ActionCoords.fetchTypingMetadata(
     cacheFile.parentFile.mkdirs()
     cacheFile.writeText(typesMetadataYaml)
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
+}
+
+private fun ActionCoords.fetchFromTypingsMaintainedWithLibrary(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? {
+    val url = actionTypesMaintainedWithLibraryUrl()
+    val typesMetadataYml =
+        try {
+            println("  ... types from $url")
+            fetchUri(URI(url))
+        } catch (e: IOException) {
+            null
+        } ?: return null
+    return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
 internal fun getCommitHash(actionCoords: ActionCoords): String? =
