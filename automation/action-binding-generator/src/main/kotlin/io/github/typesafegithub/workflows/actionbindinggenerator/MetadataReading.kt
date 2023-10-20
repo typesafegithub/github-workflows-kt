@@ -49,7 +49,7 @@ internal val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
 internal fun ActionCoords.fetchMetadata(
-    commitHash: String = getCommitHashFromFileSystem(),
+    metadataRevision: MetadataRevision,
     useCache: Boolean = true,
     fetchUri: (URI) -> String = ::fetchUri,
 ): Metadata {
@@ -61,7 +61,13 @@ internal fun ActionCoords.fetchMetadata(
         }
     }
 
-    val list = listOf(actionYmlUrl(commitHash), actionYamlUrl(commitHash))
+    val gitRef =
+        when (metadataRevision) {
+            is CommitHash -> metadataRevision.value
+            NewestForVersion -> this.version
+            FromLockfile -> this.getCommitHashFromFileSystem()
+        }
+    val list = listOf(actionYmlUrl(gitRef), actionYamlUrl(gitRef))
     val metadataYaml =
         list.firstNotNullOfOrNull { url ->
             try {
