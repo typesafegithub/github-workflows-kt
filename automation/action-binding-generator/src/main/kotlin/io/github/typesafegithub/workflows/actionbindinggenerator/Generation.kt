@@ -104,26 +104,18 @@ private fun generateActionBindingSourceCode(
             if (generateForScript) "" else "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
             className,
         )
-            .apply {
-                if (!generateForScript) {
-                    addFileComment(
-                        """
-                        This file was generated using action-binding-generator. Don't change it by hand, otherwise your
-                        changes will be overwritten with the next binding code regeneration.
-                        See https://github.com/typesafegithub/github-workflows-kt for more info.
-                        """.trimIndent(),
-                    )
-                }
-            }
+            .addFileComment(
+                """
+                This file was generated using action-binding-generator. Don't change it by hand, otherwise your
+                changes will be overwritten with the next binding code regeneration.
+                See https://github.com/typesafegithub/github-workflows-kt for more info.
+                """.trimIndent(),
+            )
             .addType(generateActionClass(metadata, coords, inputTypings, className, generateForScript = generateForScript))
             .addSuppressAnnotation(metadata, coords)
             .indent("    ")
             .build()
     return buildString {
-        if (generateForScript) {
-            appendLine("#!/usr/bin/env kotlin")
-            appendLine("@file:DependsOn(\"io.github.typesafegithub:github-workflows-kt:$LIBRARY_VERSION\")")
-        }
         fileSpec.writeTo(this)
     }
 }
