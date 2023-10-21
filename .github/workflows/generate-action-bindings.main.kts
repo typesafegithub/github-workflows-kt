@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-@file:DependsOn("io.github.typesafegithub:action-binding-generator:1.3.2-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:action-binding-generator:1.3.2-20231021.093813-11")
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.NewestForVersion

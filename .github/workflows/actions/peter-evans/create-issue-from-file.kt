@@ -1,3 +1,6 @@
+// This file was generated using action-binding-generator. Don't change it by hand, otherwise your
+// changes will be overwritten with the next binding code regeneration.
+// See https://github.com/typesafegithub/github-workflows-kt for more info.
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
