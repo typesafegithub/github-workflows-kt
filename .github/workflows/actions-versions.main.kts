@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.1")
 @file:Import("_shared.main.kts")
-@file:Import("actions/peterevans/create-issue-from-file.main.kts")
+@file:Import("actions/peter-evans/create-issue-from-file.kt")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
