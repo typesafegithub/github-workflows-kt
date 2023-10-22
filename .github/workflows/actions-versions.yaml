@@ -17,9 +17,12 @@ jobs:
       name: 'Check out'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
+      name: 'Generate action bindings'
+      run: '.github/workflows/generate-action-bindings.main.kts'
+    - id: 'step-2'
       name: 'Execute script'
       run: 'rm ''.github/workflows/actions-versions.yaml'' && ''.github/workflows/actions-versions.main.kts'''
-    - id: 'step-2'
+    - id: 'step-3'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/actions-versions.yaml'''
   updates-available:
