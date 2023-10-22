@@ -14,6 +14,7 @@ import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
 import java.nio.file.Path
 import kotlin.io.path.absolute
+import kotlin.io.path.exists
 import kotlin.io.path.invariantSeparatorsPathString
 
 /**
@@ -93,6 +94,8 @@ private fun commentify(preamble: String): String {
         .joinToString("\n", postfix = "\n\n") { "# $it".trimEnd() }
 }
 
+private const val GENERATE_ACTION_BINDINGS_SCRIPT_NAME = "generate-action-bindings.main.kts"
+
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(
     addConsistencyCheck: Boolean,
@@ -127,6 +130,14 @@ private fun Workflow.generateYaml(
                     condition = yamlConsistencyJobCondition,
                 ) {
                     uses(name = "Check out", action = CheckoutV4())
+
+                    if (sourceFile.parent?.resolve(GENERATE_ACTION_BINDINGS_SCRIPT_NAME)?.exists() == true) {
+                        run(
+                            name = "Generate action bindings",
+                            command = ".github/workflows/$GENERATE_ACTION_BINDINGS_SCRIPT_NAME",
+                        )
+                    }
+
                     if (useGitDiff) {
                         run(
                             name = "Execute script",
