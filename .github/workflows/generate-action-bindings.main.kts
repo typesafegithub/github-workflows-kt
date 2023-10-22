@@ -12,7 +12,7 @@ val actions = listOf(
 )
 
 actions.forEach { action ->
-    Path("generated").resolve(action.owner).resolve("${action.name}.kt").let {
+    Path(".github").resolve("workflows").resolve("generated").resolve(action.owner).resolve("${action.name}.kt").let {
         it.parent.toFile().mkdirs()
         val binding = action.generateBinding(
             metadataRevision = NewestForVersion,
