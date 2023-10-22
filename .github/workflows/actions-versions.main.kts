@@ -2,7 +2,7 @@
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-20231022.100333-12")
 //@file:Import("_shared.main.kts")
-@file:Import("actions/peter-evans/create-issue-from-file.kt")
+@file:Import("generated/peter-evans/create-issue-from-file.kt")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
