@@ -80,6 +80,10 @@ workflow(
     ) {
         uses(action = CheckoutV4())
         run(
+            name = "Generate action bindings",
+            command = "generate-action-bindings.main.kts",
+        )
+        run(
             command = """
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
@@ -105,6 +109,10 @@ workflow(
             ),
         )
         run(command = "cd .github/workflows")
+        run(
+            name = "Generate action bindings",
+            command = "generate-action-bindings.main.kts",
+        )
         run(
             name = "Regenerate all workflow YAMLs",
             command = """

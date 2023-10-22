@@ -113,6 +113,9 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
+      name: 'Generate action bindings'
+      run: 'generate-action-bindings.main.kts'
+    - id: 'step-2'
       run: |-
         find -name *.main.kts -print0 | while read -d $'\0' file
         do
@@ -137,6 +140,9 @@ jobs:
     - id: 'step-2'
       run: 'cd .github/workflows'
     - id: 'step-3'
+      name: 'Generate action bindings'
+      run: 'generate-action-bindings.main.kts'
+    - id: 'step-4'
       name: 'Regenerate all workflow YAMLs'
       run: |-
         find -name "*.main.kts" -print0 | while read -d $'\0' file
@@ -144,6 +150,6 @@ jobs:
             echo "Regenerating $file..."
             ($file)
         done
-    - id: 'step-4'
+    - id: 'step-5'
       name: 'Check if some file is different after regeneration'
       run: 'git diff --exit-code .'
