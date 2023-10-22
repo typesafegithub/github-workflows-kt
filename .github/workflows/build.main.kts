@@ -81,7 +81,7 @@ workflow(
         uses(action = CheckoutV4())
         run(
             name = "Generate action bindings",
-            command = "./generate-action-bindings.main.kts",
+            command = ".github/workflows/generate-action-bindings.main.kts",
         )
         run(
             command = """
@@ -111,7 +111,7 @@ workflow(
         run(command = "cd .github/workflows")
         run(
             name = "Generate action bindings",
-            command = "./generate-action-bindings.main.kts",
+            command = ".github/workflows/generate-action-bindings.main.kts",
         )
         run(
             name = "Regenerate all workflow YAMLs",
