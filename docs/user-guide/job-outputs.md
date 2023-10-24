@@ -5,7 +5,7 @@ are).
 
 First, define `outputs` parameter in `job` function, inheriting from `JobOutputs`:
 
-```kotlin hl_lines="4-7"
+```kotlin
 --8<-- "JobOutputsSnippets.kt:define-job-outputs-1"
 --8<-- "JobOutputsSnippets.kt:define-job-outputs-2"
 ```
@@ -18,6 +18,6 @@ To set an output from within the job, use `jobOutputs`, and then an appropriate 
 
 and then use job's output from another job this way:
 
-```kotlin hl_lines="9-10"
+```kotlin
 --8<-- "JobOutputsSnippets.kt:use-job-outputs"
 ```
