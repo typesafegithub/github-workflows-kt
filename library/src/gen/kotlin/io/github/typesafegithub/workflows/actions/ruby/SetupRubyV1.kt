@@ -74,8 +74,7 @@ public data class SetupRubyV1 private constructor(
      * which only work
      * on GitHub-hosted runners or self-hosted runners with a very similar image to the ones used by
      * GitHub runners.
-     * The default is to detect this automatically based on the OS, OS version and
-     * $RUNNER_TOOL_CACHE.
+     * The default is to detect this automatically based on the OS, OS version and architecture.
      */
     public val selfHosted: Boolean? = null,
     /**
