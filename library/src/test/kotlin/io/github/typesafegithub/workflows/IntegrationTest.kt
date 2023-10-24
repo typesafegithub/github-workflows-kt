@@ -205,7 +205,7 @@ class IntegrationTest : FunSpec({
                             inputs =
                                 mapOf(
                                     "repository" to "actions/checkout",
-                                    "ref" to "v3",
+                                    "ref" to "v4",
                                     "path" to "./.github/actions/checkout",
                                 ),
                         ),
@@ -218,7 +218,7 @@ class IntegrationTest : FunSpec({
                             actionPath = "./.github/actions/checkout",
                             inputs =
                                 mapOf(
-                                    "clean" to "false",
+                                    "clean" to "true",
                                 ),
                         ),
                 )
