@@ -32,4 +32,16 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
                 ActionCoords(owner = "typesafegithub", name = "github-actions-typing", version = "d34db33f"),
             )
     }
+
+    // TEST: nested actions, i.e. where names have some "/"
+
+    // TEST: steps that don't have "uses"
+
+    // TEST: steps using other kinds of actions, like Docker-based or local ones
+
+    // TEST: malformed YAML
+
+    // TEST: no jobs
+
+    // TEST: multiple versions of the same action
 })
