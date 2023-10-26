@@ -1,0 +1,36 @@
+# See https://github.com/typesafegithub/github-actions-typing
+inputs:
+  always-auth:
+    type: boolean
+  node-version:
+    type: string
+  node-version-file:
+    type: string
+  architecture:
+    type: string
+  check-latest:
+    type: boolean
+  registry-url:
+    type: string
+  scope:
+    type: string
+  token:
+    type: string
+  cache:
+    type: enum
+    name: PackageManager
+    allowed-values:
+    - npm
+    - yarn
+    - pnpm
+  cache-dependency-path:
+    type: list
+    separator: "\n"
+    list-item:
+      type: string
+# Please check those outputs's description and set a proper type. 'string' is just set by default
+outputs:
+  cache-hit:
+    type: string
+  node-version:
+    type: string
