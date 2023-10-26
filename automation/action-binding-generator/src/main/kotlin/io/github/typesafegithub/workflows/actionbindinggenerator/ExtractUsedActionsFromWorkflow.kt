@@ -4,18 +4,20 @@ import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 
 internal fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> {
-    val myYaml = Yaml(
-        configuration =
-        Yaml.default.configuration.copy(
-            strictMode = false,
-        ),
-    )
+    val myYaml =
+        Yaml(
+            configuration =
+                Yaml.default.configuration.copy(
+                    strictMode = false,
+                ),
+        )
     val parsedWorkflow = myYaml.decodeFromString<Workflow>(manifest)
-    val usesStrings = parsedWorkflow.jobs.flatMap {
-        it.value.steps.mapNotNull { step ->
-            step.uses
+    val usesStrings =
+        parsedWorkflow.jobs.flatMap {
+            it.value.steps.mapNotNull { step ->
+                step.uses
+            }
         }
-    }
 
     return usesStrings
         .map {
