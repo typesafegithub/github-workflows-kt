@@ -36,12 +36,14 @@ public fun Workflow.toYaml(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
+    generateActionBindings: Boolean = false,
 ): String {
     return generateYaml(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = false,
         gitRootDir = gitRootDir,
         preamble,
+        generateActionBindings = generateActionBindings,
     )
 }
 
@@ -63,6 +65,7 @@ public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
+    generateActionBindings: Boolean = false,
 ) {
     checkNotNull(gitRootDir) {
         "gitRootDir must be specified explicitly when sourceFile is null"
@@ -78,6 +81,7 @@ public fun Workflow.writeToFile(
             useGitDiff = true,
             gitRootDir = gitRootDir,
             preamble,
+            generateActionBindings = generateActionBindings,
         )
 
     gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName).toFile().let {
@@ -102,6 +106,7 @@ private fun Workflow.generateYaml(
     useGitDiff: Boolean,
     gitRootDir: Path?,
     preamble: Preamble?,
+    generateActionBindings: Boolean,
 ): String {
     val sourceFilePath =
         gitRootDir?.let {
@@ -131,7 +136,9 @@ private fun Workflow.generateYaml(
                 ) {
                     uses(name = "Check out", action = CheckoutV4())
 
-                    if (sourceFile.parent?.resolve(GENERATE_ACTION_BINDINGS_SCRIPT_NAME)?.exists() == true) {
+                    if (generateActionBindings &&
+                        sourceFile.parent?.resolve(GENERATE_ACTION_BINDINGS_SCRIPT_NAME)?.exists() == true
+                    ) {
                         run(
                             name = "Generate action bindings",
                             command = ".github/workflows/$GENERATE_ACTION_BINDINGS_SCRIPT_NAME",
