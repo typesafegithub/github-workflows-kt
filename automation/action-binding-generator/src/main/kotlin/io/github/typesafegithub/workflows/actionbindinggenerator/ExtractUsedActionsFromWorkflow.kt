@@ -3,7 +3,9 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 
-internal fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> {
+// TODO: cover edge cases in scope of https://github.com/typesafegithub/github-workflows-kt/issues/941
+//  See TODOs in unit tests.
+public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> {
     val myYaml =
         Yaml(
             configuration =
@@ -19,13 +21,14 @@ internal fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords
             }
         }
 
-    return usesStrings
-        .map {
-            val (owner, name, version) = it.split('/', '@')
-            ActionCoords(
-                owner = owner,
-                name = name,
-                version = version,
-            )
-        }
+    return usesStrings.map { it.toActionCoords() }
+}
+
+private fun String.toActionCoords(): ActionCoords {
+    val (owner, name, version) = this.split('/', '@')
+    return ActionCoords(
+        owner = owner,
+        name = name,
+        version = version,
+    )
 }

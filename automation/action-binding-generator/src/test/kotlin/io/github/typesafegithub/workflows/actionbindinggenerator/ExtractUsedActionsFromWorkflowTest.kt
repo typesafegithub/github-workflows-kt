@@ -33,15 +33,15 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
             )
     }
 
-    // TEST: nested actions, i.e. where names have some "/"
+    // TODO nested actions, i.e. where names have some "/"
 
-    // TEST: steps that don't have "uses"
+    // TODO: steps that don't have "uses"
 
-    // TEST: steps using other kinds of actions, like Docker-based or local ones
+    // TODO: steps using other kinds of actions, like Docker-based or local ones
 
-    // TEST: malformed YAML
+    // TODO: malformed YAML
 
-    // TEST: no jobs
+    // TODO: no jobs
 
-    // TEST: multiple versions of the same action
+    // TODO: multiple versions of the same action
 })

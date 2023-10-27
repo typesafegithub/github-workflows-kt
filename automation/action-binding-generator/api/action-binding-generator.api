@@ -49,6 +49,10 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Com
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/github/typesafegithub/workflows/actionbindinggenerator/ExtractUsedActionsFromWorkflowKt {
+	public static final fun extractUsedActionsFromWorkflow (Ljava/lang/String;)Ljava/util/List;
+}
+
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/FromLockfile : io/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/FromLockfile;
 	public fun equals (Ljava/lang/Object;)Z
