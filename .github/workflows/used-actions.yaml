@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # List used actions below, as subsequent "- uses" items:
-      - uses: peter-evans/create-issue-from-file@v3
+      - uses: peter-evans/create-issue-from-file@v4
