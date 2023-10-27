@@ -82,9 +82,9 @@ jobs:
       name: 'check-if-snapshot'
       run: |-
         if [[ `./gradlew properties | grep version | grep "SNAPSHOT"` ]]; then
-            echo "is-snapshot=true"
+            echo "is-snapshot=true" >> $GITHUB_OUTPUT
         else
-            echo "is-snapshot=false"
+            echo "is-snapshot=false" >> $GITHUB_OUTPUT
         fi
     - id: 'step-3'
       name: 'Publish '':automation:action-binding-generator'' to Sonatype'

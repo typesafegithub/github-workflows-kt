@@ -59,9 +59,9 @@ workflow(
             name = checkIfSnapshotStepName,
             command = """
                 if [[ `./gradlew properties | grep version | grep "SNAPSHOT"` ]]; then
-                    echo "$isSnapshotOutputName=true"
+                    echo "$isSnapshotOutputName=true" >> ${'$'}GITHUB_OUTPUT
                 else
-                    echo "$isSnapshotOutputName=false"
+                    echo "$isSnapshotOutputName=false" >> ${'$'}GITHUB_OUTPUT
                 fi
             """.trimIndent()
         )
