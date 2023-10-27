@@ -79,25 +79,15 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      name: 'check-if-snapshot'
-      run: |-
-        if [[ `./gradlew properties | grep version | grep "SNAPSHOT"` ]]; then
-            echo "is-snapshot=true" >> $GITHUB_OUTPUT
-        else
-            echo "is-snapshot=false" >> $GITHUB_OUTPUT
-        fi
-    - id: 'step-3'
       name: 'Publish '':automation:action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository'
-      if: '${{ steps.check-if-snapshot.outputs.is-snapshot == ''true'' }}'
-    - id: 'step-4'
+    - id: 'step-3'
       name: 'Publish '':library'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository'
-      if: '${{ steps.check-if-snapshot.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'
     runs-on: 'ubuntu-latest'

@@ -52,24 +52,9 @@ workflow(
         uses(action = CheckoutV4())
         setupJava()
 
-        val checkIfSnapshotStepName = "check-if-snapshot"
-        val isSnapshotOutputName = "is-snapshot"
-
-        run(
-            name = checkIfSnapshotStepName,
-            command = """
-                if [[ `./gradlew properties | grep version | grep "SNAPSHOT"` ]]; then
-                    echo "$isSnapshotOutputName=true" >> ${'$'}GITHUB_OUTPUT
-                else
-                    echo "$isSnapshotOutputName=false" >> ${'$'}GITHUB_OUTPUT
-                fi
-            """.trimIndent()
-        )
-
         libraries.forEach { library ->
             uses(
                 name = "Publish '$library' to Sonatype",
-                condition = expr("steps.$checkIfSnapshotStepName.outputs.$isSnapshotOutputName == 'true'"),
                 action = GradleBuildActionV2(
                     arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
                 ),
