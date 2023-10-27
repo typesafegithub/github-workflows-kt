@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-20231022.100333-12")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-20231027.055707-19")
 //@file:Import("_shared.main.kts")
 @file:Import("generated/peter-evans/create-issue-from-file.kt")
 
@@ -60,4 +60,4 @@ workflow(
             )
         )
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)

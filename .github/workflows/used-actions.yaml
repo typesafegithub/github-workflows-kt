@@ -1,0 +1,9 @@
+on:
+  push:
+    branches: [this-branch-must-never-be-created]
+
+jobs:
+  some-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/create-issue-from-file@v4
