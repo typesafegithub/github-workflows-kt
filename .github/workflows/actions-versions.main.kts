@@ -1,7 +1,6 @@
 #!/usr/bin/env kotlin
-@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.3.2-20231027.055707-19")
-//@file:Import("_shared.main.kts")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
+@file:Import("_shared.main.kts")
 @file:Import("generated/peter-evans/create-issue-from-file.kt")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
@@ -24,27 +23,15 @@ workflow(
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__.toPath(),
-    yamlConsistencyJobCondition = expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }
-    // Inlining temporarily
-    //disableScheduledJobInForks,
+    yamlConsistencyJobCondition = disableScheduledJobInForks,
 ) {
     job(
         id = "updates-available",
         runsOn = UbuntuLatest,
-        condition = expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }
-        // Inlining temporarily
-        //disableScheduledJobInForks,
+        condition = disableScheduledJobInForks,
     ) {
         uses(action = CheckoutV4())
-//        setupJava()
-        // Inlining temporarily
-        uses(
-            name = "Set up JDK",
-            action = SetupJavaV3(
-                javaVersion = "11",
-                distribution = SetupJavaV3.Distribution.Zulu,
-            )
-        )
+        setupJava()
         uses(
             name = "Run suggestVersions",
             env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
