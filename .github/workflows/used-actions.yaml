@@ -1,0 +1,14 @@
+# This workflow isn't meant to be run. It exists solely for the purpose of using it with
+# https://github.com/typesafegithub/github-workflows-kt. Thanks to defining used actions this way, the library can
+# generate type-safe bindings, and dependency updating bots like Renovate or Dependabot can update actions' versions.
+
+on:
+  push:
+    branches: [this-branch-must-never-be-created]
+
+jobs:
+  some-job:
+    runs-on: ubuntu-latest
+    steps:
+      # List used actions below, as subsequent "- uses" items:
+      - uses: peter-evans/create-issue-from-file@v4
