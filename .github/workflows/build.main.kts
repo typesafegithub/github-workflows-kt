@@ -34,7 +34,10 @@ workflow(
             ),
         )
         run(
-            command = "echo 'is-snapshot: ${expr("steps.check-if-snapshot.outputs.is-snapshot")}'",
+            command = "echo 'is-snapshot: ${'$'}{{ steps.check-if-snapshot.outputs.is-snapshot }}'",
+        )
+        run(
+            command = "cat \$GITHUB_OUTPUT",
         )
         run(
             command = "echo 'It's a snapshot!'",
