@@ -51,10 +51,17 @@ workflow(
     ) {
         uses(action = CheckoutV4())
         setupJava()
+        val setIsSnapshotVersionFlag = uses(
+            name = "Check if snapshot version is set",
+            action = GradleBuildActionV2(
+                arguments = "setIsSnapshotFlagInGithubOutput",
+            ),
+        )
 
         libraries.forEach { library ->
             uses(
                 name = "Publish '$library' to Sonatype",
+                condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
                 action = GradleBuildActionV2(
                     arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
                 ),
