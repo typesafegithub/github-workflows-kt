@@ -25,6 +25,7 @@ workflow(
         id = "testing",
         runsOn = UbuntuLatest,
     ) {
+        uses(action = CheckoutV4())
         setupJava()
         uses(
             name = "check-if-snapshot",

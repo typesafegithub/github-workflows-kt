@@ -28,18 +28,20 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
+      uses: 'actions/checkout@v4'
+    - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v3'
       with:
         java-version: '11'
         distribution: 'zulu'
-    - id: 'step-1'
+    - id: 'step-2'
       name: 'check-if-snapshot'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: 'setIsSnapshotFlagInGithubOutput'
-    - id: 'step-2'
-      run: 'echo ''is-snapshot: ${{ steps.check-if-snapshot.outputs.is-snapshot }}'''
     - id: 'step-3'
+      run: 'echo ''is-snapshot: ${{ steps.check-if-snapshot.outputs.is-snapshot }}'''
+    - id: 'step-4'
       run: 'echo ''It''s a snapshot!'''
       if: '${{ steps.check-if-snapshot.outputs.is-snapshot }}'
