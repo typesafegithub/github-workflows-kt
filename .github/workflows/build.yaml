@@ -79,15 +79,22 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
+      name: 'Check if snapshot version is set'
+      uses: 'gradle/gradle-build-action@v2'
+      with:
+        arguments: 'setIsSnapshotFlagInGithubOutput'
+    - id: 'step-3'
       name: 'Publish '':automation:action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository'
-    - id: 'step-3'
+      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
+    - id: 'step-4'
       name: 'Publish '':library'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository'
+      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'
     runs-on: 'ubuntu-latest'
