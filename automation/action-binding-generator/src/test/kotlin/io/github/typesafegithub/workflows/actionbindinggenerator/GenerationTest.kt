@@ -463,7 +463,6 @@ class GenerationTest : FunSpec({
                 "DEPRECATION",
             )
 
-            import io.github.typesafegithub.workflows.actions.johnsmith.ActionForScript.BazGoo
             import io.github.typesafegithub.workflows.domain.actions.Action
             import io.github.typesafegithub.workflows.domain.actions.RegularAction
             import java.util.LinkedHashMap
