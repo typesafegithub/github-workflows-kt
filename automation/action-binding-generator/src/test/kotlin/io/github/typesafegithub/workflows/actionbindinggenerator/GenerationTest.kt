@@ -445,9 +445,9 @@ class GenerationTest : FunSpec({
                 metadata = actionManifest,
                 generateForScript = true,
                 inputTypings =
-                mapOf(
-                    "baz-goo" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
-                ),
+                    mapOf(
+                        "baz-goo" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                    ),
             )
 
         // then
