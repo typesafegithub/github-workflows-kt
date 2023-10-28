@@ -54,8 +54,6 @@ fun JobBuilder<*>.deployDocs() {
 }
 
 val libraries = listOf(
-    // The order is intended here - the library will once depend on the generator,
-    // so the generator needs to go first.
-    ":automation:action-binding-generator",
     ":library",
+    ":automation:action-binding-generator",
 )

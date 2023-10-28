@@ -2,7 +2,7 @@
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-name: 'Release'
+name: 'Release '
 on:
   push:
     tags:
@@ -49,25 +49,25 @@ jobs:
       with:
         python-version: '3.8'
     - id: 'step-4'
-      name: 'Publish '':automation:action-binding-generator'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
-      with:
-        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository'
-    - id: 'step-5'
       name: 'Publish '':library'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository'
-    - id: 'step-6'
-      name: 'Wait until '':automation:action-binding-generator'' present in Maven Central'
+    - id: 'step-5'
+      name: 'Publish '':automation:action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:action-binding-generator:waitUntilLibraryPresentInMavenCentral'
-    - id: 'step-7'
+        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository'
+    - id: 'step-6'
       name: 'Wait until '':library'' present in Maven Central'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:waitUntilLibraryPresentInMavenCentral'
+    - id: 'step-7'
+      name: 'Wait until '':automation:action-binding-generator'' present in Maven Central'
+      uses: 'gradle/gradle-build-action@v2'
+      with:
+        arguments: ':automation:action-binding-generator:waitUntilLibraryPresentInMavenCentral'
     - id: 'step-8'
       run: 'pip install -r docs/requirements.txt'
     - id: 'step-9'
