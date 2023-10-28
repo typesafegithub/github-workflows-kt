@@ -34,7 +34,16 @@ workflow(
             ),
         )
         run(
-            command = "echo 'is-snapshot: ${'$'}{{ steps.check-if-snapshot.outputs.is-snapshot }}'",
+            name = "check-if-snapshot-2",
+            command = """
+                echo "is-snapshot-2=true" >> ${'$'}GITHUB_OUTPUT
+            """.trimIndent()
+        )
+        run(
+            command = """
+                echo 'is-snapshot: ${'$'}{{ steps.check-if-snapshot.outputs.is-snapshot }}'
+                echo 'is-snapshot: ${'$'}{{ steps.check-if-snapshot-2.outputs.is-snapshot-2 }}'
+                """.trimIndent(),
         )
         run(
             command = """
