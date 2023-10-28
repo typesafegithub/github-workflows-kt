@@ -44,7 +44,11 @@ workflow(
         )
         run(
             command = "echo 'It's a snapshot!'",
-            condition = expr("steps.check-if-snapshot.outputs.is-snapshot"),
+            condition = expr("steps.check-if-snapshot.outputs.is-snapshot == 'true'"),
+        )
+        run(
+            command = "echo 'It's NOT a snapshot!'",
+            condition = expr("steps.check-if-snapshot.outputs.is-snapshot == 'false'"),
         )
     }
 }.writeToFile()
