@@ -444,6 +444,10 @@ class GenerationTest : FunSpec({
                 metadataRevision = FromLockfile,
                 metadata = actionManifest,
                 generateForScript = true,
+                inputTypings =
+                mapOf(
+                    "baz-goo" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                ),
             )
 
         // then
@@ -459,6 +463,7 @@ class GenerationTest : FunSpec({
                 "DEPRECATION",
             )
 
+            import io.github.typesafegithub.workflows.actions.johnsmith.ActionForScript.BazGoo
             import io.github.typesafegithub.workflows.domain.actions.Action
             import io.github.typesafegithub.workflows.domain.actions.RegularAction
             import java.util.LinkedHashMap
@@ -488,7 +493,7 @@ class GenerationTest : FunSpec({
                  * with multiline description
                  */
                 @Deprecated("this is deprecated")
-                public val bazGoo: String,
+                public val bazGoo: ActionForScript.BazGoo,
                 /**
                  * Type-unsafe map where you can put any inputs that are not yet supported by the binding
                  */
@@ -502,7 +507,7 @@ class GenerationTest : FunSpec({
                 public constructor(
                     vararg pleaseUseNamedArguments: Unit,
                     fooBar: String,
-                    bazGoo: String,
+                    bazGoo: ActionForScript.BazGoo,
                     _customInputs: Map<String, String> = mapOf(),
                     _customVersion: String? = null,
                 ) : this(fooBar=fooBar, bazGoo=bazGoo, _customInputs=_customInputs,
@@ -512,12 +517,22 @@ class GenerationTest : FunSpec({
                 override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
                     *listOfNotNull(
                         "foo-bar" to fooBar,
-                        "baz-goo" to bazGoo,
+                        "baz-goo" to bazGoo.stringValue,
                         *_customInputs.toList().toTypedArray(),
                     ).toTypedArray()
                 )
 
                 override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+
+                public sealed class BazGoo(
+                    public val stringValue: String,
+                ) {
+                    public object HelloWorld : ActionForScript.BazGoo("helloworld")
+
+                    public class Custom(
+                        customStringValue: String,
+                    ) : ActionForScript.BazGoo(customStringValue)
+                }
             }
 
             """.trimIndent()
