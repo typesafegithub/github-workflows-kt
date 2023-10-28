@@ -11,4 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # List used actions below, as subsequent "- uses" items:
+      - uses: gradle/wrapper-validation-action@v1
       - uses: peter-evans/create-issue-from-file@v4
