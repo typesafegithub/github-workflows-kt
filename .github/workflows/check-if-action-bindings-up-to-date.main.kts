@@ -1,9 +1,9 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 @file:Import("_shared.main.kts")
+@file:Import("generated/actions/checkout.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -26,11 +26,11 @@ workflow(
             id = "check-on-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
-            uses(action = CheckoutV4())
+            uses(action = Checkout())
             setupJava()
             uses(
                 name = "Generate action bindings",
-                action = GradleBuildActionV2(
+                action = GradleBuildAction(
                     arguments = ":automation:code-generator:run",
                 )
             )

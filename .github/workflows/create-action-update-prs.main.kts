@@ -1,10 +1,9 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 @file:Import("_shared.main.kts")
+@file:Import("generated/actions/checkout.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
-import io.github.typesafegithub.workflows.actions.peterevans.CreateIssueFromFileV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Cron
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
@@ -29,12 +28,12 @@ workflow(
         runsOn = UbuntuLatest,
         condition = disableScheduledJobInForks,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         setupJava()
         uses(
             name = "Run logic",
             env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
-            action = GradleBuildActionV2(
+            action = GradleBuildAction(
                 arguments = "createActionUpdatePRs",
             )
         )

@@ -1,9 +1,9 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 @file:Import("_shared.main.kts")
+@file:Import("generated/actions/checkout.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -25,11 +25,11 @@ workflow(
         id = "release",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         setupJava()
         uses(
             name = "Build",
-            action = GradleBuildActionV2(
+            action = GradleBuildAction(
                 arguments = "build",
             )
         )
@@ -41,7 +41,7 @@ workflow(
         libraries.forEach { library ->
             uses(
                 name = "Publish '$library' to Sonatype",
-                action = GradleBuildActionV2(
+                action = GradleBuildAction(
                     arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
                 ),
             )
@@ -50,7 +50,7 @@ workflow(
         libraries.forEach { library ->
             uses(
                 name = "Wait until '$library' present in Maven Central",
-                action = GradleBuildActionV2(
+                action = GradleBuildAction(
                     arguments = "$library:waitUntilLibraryPresentInMavenCentral",
                 ),
             )
