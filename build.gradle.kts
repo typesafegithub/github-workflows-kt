@@ -23,7 +23,7 @@ val setIsSnapshotFlagInGithubOutput by tasks.registering {
         val filePath = System.getenv("GITHUB_OUTPUT") ?: error("Expected GITHUB_OUTPUT variable to be set!")
         val isSnapshot = project.version.toString().endsWith("-SNAPSHOT")
         println("Before: ${File(filePath).readText()}")
-        File(filePath).appendText("is-snapshot=$isSnapshot")
+        File(filePath).appendText("is-snapshot=$isSnapshot\n")
         println("After: ${File(filePath).readText()}")
     }
 }
