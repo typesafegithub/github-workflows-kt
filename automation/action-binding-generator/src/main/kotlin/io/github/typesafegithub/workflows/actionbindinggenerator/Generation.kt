@@ -117,6 +117,14 @@ private fun generateActionBindingSourceCode(
             .build()
     return buildString {
         fileSpec.writeTo(this)
+    }.let {
+        if (generateForScript) {
+            it.lines()
+                .filter { !it.startsWith("import io.github.typesafegithub.workflows.actions.") }
+                .joinToString(separator = "\n")
+        } else {
+            it
+        }
     }
 }
 
