@@ -25,6 +25,7 @@ workflow(
         id = "testing",
         runsOn = UbuntuLatest,
     ) {
+        setupJava()
         uses(
             name = "check-if-snapshot",
             action = GradleBuildActionV2(
