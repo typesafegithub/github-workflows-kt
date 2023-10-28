@@ -27,7 +27,7 @@ workflow(
     ) {
         uses(action = CheckoutV4())
         setupJava()
-        uses(
+        val checkIfSnapshot = uses(
             name = "check-if-snapshot",
             action = GradleBuildActionV2(
                 arguments = "setIsSnapshotFlagInGithubOutput",
@@ -41,7 +41,7 @@ workflow(
         )
         run(
             command = """
-                echo 'is-snapshot: ${'$'}{{ steps.check-if-snapshot.outputs.is-snapshot }}'
+                echo 'is-snapshot: ${'$'}{{ steps.${checkIfSnapshot.id}.outputs.is-snapshot }}'
                 echo 'is-snapshot: ${'$'}{{ steps.check-if-snapshot-2.outputs.is-snapshot-2 }}'
                 """.trimIndent(),
         )
@@ -53,11 +53,11 @@ workflow(
         )
         run(
             command = "echo 'It's a snapshot!'",
-            condition = expr("steps.check-if-snapshot.outputs.is-snapshot == 'true'"),
+            condition = expr("steps.${checkIfSnapshot.id}.outputs.is-snapshot == 'true'"),
         )
         run(
             command = "echo 'It's NOT a snapshot!'",
-            condition = expr("steps.check-if-snapshot.outputs.is-snapshot == 'false'"),
+            condition = expr("steps.${checkIfSnapshot.id}.outputs.is-snapshot == 'false'"),
         )
     }
 }.writeToFile()

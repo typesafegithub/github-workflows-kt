@@ -45,7 +45,7 @@ jobs:
       run: 'echo "is-snapshot-2=true" >> $GITHUB_OUTPUT'
     - id: 'step-4'
       run: |-
-        echo 'is-snapshot: ${{ steps.check-if-snapshot.outputs.is-snapshot }}'
+        echo 'is-snapshot: ${{ steps.step-2.outputs.is-snapshot }}'
         echo 'is-snapshot: ${{ steps.check-if-snapshot-2.outputs.is-snapshot-2 }}'
     - id: 'step-5'
       run: |-
@@ -53,7 +53,7 @@ jobs:
         echo $GITHUB_OUTPUT
     - id: 'step-6'
       run: 'echo ''It''s a snapshot!'''
-      if: '${{ steps.check-if-snapshot.outputs.is-snapshot == ''true'' }}'
+      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-7'
       run: 'echo ''It''s NOT a snapshot!'''
-      if: '${{ steps.check-if-snapshot.outputs.is-snapshot == ''false'' }}'
+      if: '${{ steps.step-2.outputs.is-snapshot == ''false'' }}'
