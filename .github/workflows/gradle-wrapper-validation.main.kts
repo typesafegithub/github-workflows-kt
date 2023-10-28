@@ -1,5 +1,6 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
+@file:Import("generated/actions/checkout.kt")
 @file:Import("generated/gradle/wrapper-validation-action.kt")
 
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -25,10 +26,10 @@ workflow(
         id = "validation",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         uses(
             name = "Validate wrapper",
             action = WrapperValidationAction(),
         )
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)

@@ -38,4 +38,4 @@ workflow(
             )
         )
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)

@@ -1,6 +1,7 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 @file:Import("_shared.main.kts")
+@file:Import("generated/actions/checkout.kt")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -17,10 +18,10 @@ workflow(
         id = "release-docs",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         setupJava()
         setupPython()
 
         deployDocs()
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)

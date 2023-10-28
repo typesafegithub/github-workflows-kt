@@ -58,4 +58,4 @@ workflow(
 
         deployDocs()
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)

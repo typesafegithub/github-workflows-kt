@@ -135,4 +135,4 @@ workflow(
             command = "git diff --exit-code .",
         )
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)
