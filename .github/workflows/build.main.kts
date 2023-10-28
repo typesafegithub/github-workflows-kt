@@ -52,11 +52,11 @@ workflow(
                 """.trimIndent(),
         )
         run(
-            command = "echo 'It's a snapshot!'",
+            command = "echo 'It is a snapshot!'",
             condition = expr("steps.${checkIfSnapshot.id}.outputs.is-snapshot == 'true'"),
         )
         run(
-            command = "echo 'It's NOT a snapshot!'",
+            command = "echo 'It is NOT a snapshot!'",
             condition = expr("steps.${checkIfSnapshot.id}.outputs.is-snapshot == 'false'"),
         )
     }

@@ -52,8 +52,8 @@ jobs:
         cat $GITHUB_OUTPUT
         echo $GITHUB_OUTPUT
     - id: 'step-6'
-      run: 'echo ''It''s a snapshot!'''
+      run: 'echo ''It is a snapshot!'''
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-7'
-      run: 'echo ''It''s NOT a snapshot!'''
+      run: 'echo ''It is NOT a snapshot!'''
       if: '${{ steps.step-2.outputs.is-snapshot == ''false'' }}'
