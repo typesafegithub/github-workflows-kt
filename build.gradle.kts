@@ -17,3 +17,11 @@ nexusPublishing {
     }
     packageGroup.set("io.github.typesafegithub")
 }
+
+val setIsSnapshotFlagInGithubOutput by tasks.registering {
+    doLast {
+        val filePath = System.getenv("GITHUB_OUTPUT") ?: error("Expected GITHUB_OUTPUT variable to be set!")
+        val isSnapshot = project.version.toString().endsWith("-SNAPSHOT")
+        File(filePath).appendText("is-snapshot=$isSnapshot")
+    }
+}

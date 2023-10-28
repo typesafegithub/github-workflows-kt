@@ -25,8 +25,18 @@ workflow(
         id = "testing",
         runsOn = UbuntuLatest,
     ) {
+        uses(
+            name = "check-if-snapshot",
+            action = GradleBuildActionV2(
+                arguments = "setIsSnapshotFlagInGithubOutput",
+            ),
+        )
         run(
-            command = "echo ${'$'}GITHUB_OUTPUT"
+            command = "echo 'is-snapshot: ${expr("steps.check-if-snapshot.outputs.is-snapshot")}'",
+        )
+        run(
+            command = "echo 'It's a snapshot!'",
+            condition = expr("steps.check-if-snapshot.outputs.is-snapshot"),
         )
     }
 }.writeToFile()

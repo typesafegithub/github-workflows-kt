@@ -28,4 +28,12 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      run: 'echo $GITHUB_OUTPUT'
+      name: 'check-if-snapshot'
+      uses: 'gradle/gradle-build-action@v2'
+      with:
+        arguments: 'setIsSnapshotFlagInGithubOutput'
+    - id: 'step-1'
+      run: 'echo ''is-snapshot: ${{ steps.check-if-snapshot.outputs.is-snapshot }}'''
+    - id: 'step-2'
+      run: 'echo ''It''s a snapshot!'''
+      if: '${{ steps.check-if-snapshot.outputs.is-snapshot }}'
