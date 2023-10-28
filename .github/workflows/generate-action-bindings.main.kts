@@ -8,7 +8,7 @@ import java.io.File
 import kotlin.io.path.Path
 
 val actions = extractUsedActionsFromWorkflow(
-    manifest = File(".github/workflows/used-actions.yaml").readText(),
+    manifest = File(".github/workflows/_used-actions.yaml").readText(),
 )
 
 actions.forEach { action ->
