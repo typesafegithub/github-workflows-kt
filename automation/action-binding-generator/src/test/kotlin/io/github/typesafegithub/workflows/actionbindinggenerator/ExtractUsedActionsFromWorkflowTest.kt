@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class ExtractUsedActionsFromWorkflowTest : FunSpec({
-    test("parses valid manifest") {
+    test("parses valid manifest just with 'uses' steps") {
         // Given
         val manifest =
             """
@@ -33,9 +33,34 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
             )
     }
 
-    // TODO nested actions, i.e. where names have some "/"
+    test("workflow with not only with 'uses' steps") {
+        // Given
+        val manifest =
+            """
+            on:
+              push:
 
-    // TODO: steps that don't have "uses"
+            jobs:
+              some-job:
+                runs-on: ubuntu-latest
+                steps:
+                  - uses: actions/checkout@v3
+                  - run: echo "Hello world!"
+                  - uses: actions/setup-java@main
+            """.trimIndent()
+
+        // When
+        val actionCoords = extractUsedActionsFromWorkflow(manifest)
+
+        // Then
+        actionCoords shouldBe
+            listOf(
+                ActionCoords(owner = "actions", name = "checkout", version = "v3"),
+                ActionCoords(owner = "actions", name = "setup-java", version = "main"),
+            )
+    }
+
+    // TODO nested actions, i.e. where names have some "/"
 
     // TODO: steps using other kinds of actions, like Docker-based or local ones
 

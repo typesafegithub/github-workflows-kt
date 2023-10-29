@@ -14,5 +14,5 @@ internal data class Job(
 
 @Serializable
 internal data class Step(
-    val uses: String?,
+    val uses: String? = null,
 )
