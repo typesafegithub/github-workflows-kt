@@ -3,7 +3,6 @@
 @file:Import("_shared.main.kts")
 @file:Import("generated/actions/checkout.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.workflow

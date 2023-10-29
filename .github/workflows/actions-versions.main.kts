@@ -2,9 +2,9 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 @file:Import("_shared.main.kts")
 @file:Import("generated/actions/checkout.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
 @file:Import("generated/peter-evans/create-issue-from-file.kt")
 
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Cron
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
@@ -34,7 +34,7 @@ workflow(
         uses(
             name = "Run suggestVersions",
             env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
-            action = GradleBuildActionV2(
+            action = GradleBuildAction(
                 arguments = "suggestVersions",
             )
         )
