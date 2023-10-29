@@ -33,7 +33,7 @@ fun JobBuilder<*>.deployDocs() {
     )
     uses(
         name = "Generate API docs",
-        action = GradleBuildActionV2(
+        action = GradleBuildAction(
             arguments = ":library:dokkaHtml",
         ),
     )
