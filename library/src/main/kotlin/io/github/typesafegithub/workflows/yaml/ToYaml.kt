@@ -141,7 +141,7 @@ private fun Workflow.generateYaml(
                     ) {
                         run(
                             name = "Generate action bindings",
-                            command = ".github/workflows/$GENERATE_ACTION_BINDINGS_SCRIPT_NAME",
+                            command = ".github/workflows/$GENERATE_ACTION_BINDINGS_SCRIPT_NAME \"$targetFileName\"",
                         )
                     }
 
