@@ -1,10 +1,10 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
 @file:Import("_shared.main.kts")
+@file:Import("generated/actions/checkout.kt")
+@file:Import("generated/actions/setup-java.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -26,11 +26,11 @@ workflow(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
         ) {
-            uses(action = CheckoutV4())
+            uses(action = Checkout())
             setupJava()
             uses(
                 name = "Build",
-                action = GradleBuildActionV2(
+                action = GradleBuildAction(
                     arguments = "build",
                 )
             )
@@ -49,11 +49,11 @@ workflow(
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
         ),
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         setupJava()
         val setIsSnapshotVersionFlag = uses(
             name = "Check if snapshot version is set",
-            action = GradleBuildActionV2(
+            action = GradleBuildAction(
                 arguments = "setIsSnapshotFlagInGithubOutput",
             ),
         )
@@ -62,7 +62,7 @@ workflow(
             uses(
                 name = "Publish '$library' to Sonatype",
                 condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
-                action = GradleBuildActionV2(
+                action = GradleBuildAction(
                     arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
                 ),
             )
@@ -74,7 +74,7 @@ workflow(
         name = "Build docs",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         setupPython()
         run(command = "pip install -r docs/requirements.txt")
         run(command = "mkdocs build --site-dir public")
@@ -85,7 +85,7 @@ workflow(
         name = "Build Kotlin scripts",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         run(
             name = "Generate action bindings",
             command = ".github/workflows/generate-action-bindings.main.kts",
@@ -106,13 +106,13 @@ workflow(
         name = "Run consistency check on all GitHub workflows",
         runsOn = UbuntuLatest,
     ) {
-        uses(action = CheckoutV4())
+        uses(action = Checkout())
         uses(
             name = "Set up Java in proper version",
-            action = SetupJavaV3(
+            action = SetupJava(
                 javaVersion = "17",
-                distribution = SetupJavaV3.Distribution.Zulu,
-                cache = SetupJavaV3.BuildPlatform.Gradle,
+                distribution = SetupJava.Distribution.Zulu,
+                cache = SetupJava.BuildPlatform.Gradle,
             ),
         )
         run(command = "cd .github/workflows")
@@ -135,4 +135,4 @@ workflow(
             command = "git diff --exit-code .",
         )
     }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)

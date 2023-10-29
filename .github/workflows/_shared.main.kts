@@ -1,24 +1,24 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
+@file:Import("generated/actions/setup-java.kt")
+@file:Import("generated/actions/setup-python.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/JamesIves/github-pages-deploy-action.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
-import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
-import io.github.typesafegithub.workflows.actions.jamesives.GithubPagesDeployActionV4
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 
 fun JobBuilder<*>.setupJava() =
     uses(
         name = "Set up JDK",
-        action = SetupJavaV3(
+        action = SetupJava(
             javaVersion = "11",
-            distribution = SetupJavaV3.Distribution.Zulu,
+            distribution = SetupJava.Distribution.Zulu,
         )
     )
 
 fun JobBuilder<*>.setupPython() =
-    uses(action = SetupPythonV4(pythonVersion = "3.8"))
+    uses(action = SetupPython(pythonVersion = "3.8"))
 
 val disableScheduledJobInForks =
     expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }
@@ -33,7 +33,7 @@ fun JobBuilder<*>.deployDocs() {
     )
     uses(
         name = "Generate API docs",
-        action = GradleBuildActionV2(
+        action = GradleBuildAction(
             arguments = ":library:dokkaHtml",
         ),
     )
@@ -47,7 +47,7 @@ fun JobBuilder<*>.deployDocs() {
     )
     uses(
         name = "Deploy merged docs to GitHub Pages",
-        action = GithubPagesDeployActionV4(
+        action = GithubPagesDeployAction(
             folder = "$directoryToDeploy",
         ),
     )
