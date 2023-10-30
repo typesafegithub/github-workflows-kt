@@ -1,6 +1,9 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.0")
+@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.4.1-20231029.193015-11")
 @file:Import("_shared.main.kts")
+@file:Import("setup-java.main.kts")
+@file:Import("setup-python.main.kts")
 @file:Import("generated/actions/checkout.kt")
 @file:Import("generated/actions/setup-java.kt")
 @file:Import("generated/gradle/gradle-build-action.kt")
@@ -125,8 +128,10 @@ workflow(
             command = """
             find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
             do
-                echo "Regenerating ${'$'}file..."
-                (${'$'}file)
+                if [ -x "${'$'}file" ]; then
+                    echo "Regenerating ${'$'}file..."
+                    (${'$'}file)
+                fi
             done
             """.trimIndent(),
         )
