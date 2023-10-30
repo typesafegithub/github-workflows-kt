@@ -128,8 +128,10 @@ workflow(
             command = """
             find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
             do
-                echo "Regenerating ${'$'}file..."
-                (${'$'}file)
+                if [ -x "${'$'}file" ]; then
+                    echo "Regenerating ${'$'}file..."
+                    (${'$'}file)
+                fi
             done
             """.trimIndent(),
         )
