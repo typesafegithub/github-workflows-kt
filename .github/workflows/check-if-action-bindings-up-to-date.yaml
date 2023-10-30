@@ -19,7 +19,7 @@ jobs:
       uses: 'actions/checkout@v4'
     - id: 'step-1'
       name: 'Generate action bindings'
-      run: '.github/workflows/generate-action-bindings.main.kts'
+      run: '.github/workflows/generate-action-bindings.main.kts "check-if-action-bindings-up-to-date.yaml"'
     - id: 'step-2'
       name: 'Execute script'
       run: 'rm ''.github/workflows/check-if-action-bindings-up-to-date.yaml'' && ''.github/workflows/check-if-action-bindings-up-to-date.main.kts'''

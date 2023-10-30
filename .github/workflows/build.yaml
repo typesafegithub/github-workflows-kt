@@ -18,7 +18,7 @@ jobs:
       uses: 'actions/checkout@v4'
     - id: 'step-1'
       name: 'Generate action bindings'
-      run: '.github/workflows/generate-action-bindings.main.kts'
+      run: '.github/workflows/generate-action-bindings.main.kts "build.yaml"'
     - id: 'step-2'
       name: 'Execute script'
       run: 'rm ''.github/workflows/build.yaml'' && ''.github/workflows/build.main.kts'''
