@@ -13,15 +13,11 @@ jobs:
     - id: 'step-0'
       name: 'Check out'
       uses: 'actions/checkout@v4'
-      with:
-        repository: 'actions/checkout'
-        ref: 'v4'
-        path: './.github/actions/checkout'
     - id: 'step-1'
-      name: 'Check out again'
-      uses: './.github/actions/checkout'
+      name: 'Run local action'
+      uses: './.github/workflows/test-local-action'
       with:
-        clean: 'true'
+        name: 'Rocky'
     - id: 'step-2'
       name: 'Run alpine'
       uses: 'docker://alpine:latest'

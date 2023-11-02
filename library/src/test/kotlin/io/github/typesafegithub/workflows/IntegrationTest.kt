@@ -202,23 +202,17 @@ class IntegrationTest : FunSpec({
                             actionOwner = "actions",
                             actionName = "checkout",
                             actionVersion = "v4",
-                            inputs =
-                                mapOf(
-                                    "repository" to "actions/checkout",
-                                    "ref" to "v4",
-                                    "path" to "./.github/actions/checkout",
-                                ),
                         ),
                 )
 
                 uses(
-                    name = "Check out again",
+                    name = "Run local action",
                     action =
                         CustomLocalAction(
-                            actionPath = "./.github/actions/checkout",
+                            actionPath = "./.github/workflows/test-local-action",
                             inputs =
                                 mapOf(
-                                    "clean" to "true",
+                                    "name" to "Rocky",
                                 ),
                         ),
                 )
