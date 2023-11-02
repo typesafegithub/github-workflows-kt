@@ -202,12 +202,6 @@ class IntegrationTest : FunSpec({
                             actionOwner = "actions",
                             actionName = "checkout",
                             actionVersion = "v4",
-                            inputs =
-                                mapOf(
-                                    "repository" to "actions/checkout",
-                                    "ref" to "v4",
-                                    "path" to "./.github/actions/checkout",
-                                ),
                         ),
                 )
 
