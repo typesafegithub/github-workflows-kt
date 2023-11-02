@@ -8,4 +8,5 @@ runs:
   using: "composite"
   steps:
     - name: Print greeting
+      shell: bash
       run: echo 'Hello ${{ inputs.name }}!'
