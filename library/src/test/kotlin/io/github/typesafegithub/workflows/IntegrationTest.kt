@@ -212,13 +212,13 @@ class IntegrationTest : FunSpec({
                 )
 
                 uses(
-                    name = "Check out again",
+                    name = "Run local action",
                     action =
                         CustomLocalAction(
-                            actionPath = "./.github/actions/checkout",
+                            actionPath = "./.github/workflows/test-local-action",
                             inputs =
                                 mapOf(
-                                    "clean" to "true",
+                                    "name" to "Rocky",
                                 ),
                         ),
                 )

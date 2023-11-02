@@ -1,0 +1,11 @@
+name: Test local action
+description: I'm a simple local action used in integration tests!
+inputs:
+  name:
+    description: Name to be used in the greeting.
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Print greeting
+      run: echo 'Hello ${{ inputs.name }}!'
