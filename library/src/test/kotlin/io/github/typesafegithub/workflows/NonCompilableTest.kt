@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalCompilerApi::class)
+
 package io.github.typesafegithub.workflows
 
+import com.tschuchort.compiletesting.JvmCompilationResult
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.KotlinCompilation.ExitCode.COMPILATION_ERROR
 import com.tschuchort.compiletesting.SourceFile
@@ -7,6 +10,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.intellij.lang.annotations.Language
+import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 
 class NonCompilableTest : FunSpec({
     test("job nested inside a job") {
@@ -85,7 +89,7 @@ class NonCompilableTest : FunSpec({
 
 private fun compile(
     @Language("kotlin") code: String,
-): KotlinCompilation.Result =
+): JvmCompilationResult =
     KotlinCompilation().apply {
         sources =
             listOf(
