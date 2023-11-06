@@ -45,7 +45,6 @@ public final class io/github/typesafegithub/workflows/domain/CommandStep : io/gi
 
 public final class io/github/typesafegithub/workflows/domain/Concurrency {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/Concurrency$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Z)V
 	public synthetic fun <init> (Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -57,7 +56,6 @@ public final class io/github/typesafegithub/workflows/domain/Concurrency {
 	public final fun getGroup ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/Concurrency;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/Concurrency$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -523,7 +521,6 @@ public abstract class io/github/typesafegithub/workflows/domain/actions/RegularA
 public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -533,7 +530,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/BranchProt
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -554,7 +550,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/BranchProt
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -564,7 +559,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun :
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -585,7 +579,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$C
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -595,7 +588,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -616,7 +608,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite
 public final class io/github/typesafegithub/workflows/domain/triggers/Create : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Create$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -626,7 +617,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Create : i
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Create;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Create$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -646,7 +636,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Create$Com
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Cron {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Cron$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Cron;
@@ -655,7 +644,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Cron {
 	public final fun getExpression ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Cron;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Cron$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -676,7 +664,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Cron$Compa
 public final class io/github/typesafegithub/workflows/domain/triggers/Delete : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Delete$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -686,7 +673,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Delete : i
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Delete;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Delete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -707,7 +693,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Delete$Com
 public final class io/github/typesafegithub/workflows/domain/triggers/Deployment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Deployment$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -717,7 +702,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Deployment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Deployment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -738,7 +722,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 public final class io/github/typesafegithub/workflows/domain/triggers/DeploymentStatus : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/DeploymentStatus$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -748,7 +731,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/DeploymentStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/DeploymentStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -769,7 +751,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 public final class io/github/typesafegithub/workflows/domain/triggers/Discussion : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Discussion$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -779,7 +760,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Discussion;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -800,7 +780,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -810,7 +789,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -831,7 +809,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 public final class io/github/typesafegithub/workflows/domain/triggers/Fork : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Fork$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -841,7 +818,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Fork : io/
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Fork;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Fork$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -862,7 +838,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Fork$Compa
 public final class io/github/typesafegithub/workflows/domain/triggers/Gollum : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Gollum$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -872,7 +847,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Gollum : i
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Gollum;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Gollum$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -893,7 +867,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Gollum$Com
 public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -903,7 +876,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/IssueComme
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -924,7 +896,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/IssueComme
 public final class io/github/typesafegithub/workflows/domain/triggers/Issues : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Issues$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -934,7 +905,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Issues : i
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Issues;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Issues$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -955,7 +925,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Issues$Com
 public final class io/github/typesafegithub/workflows/domain/triggers/Label : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Label$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -965,7 +934,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Label : io
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Label;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Label$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -986,7 +954,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Label$Comp
 public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -996,7 +963,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1017,7 +983,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup
 public final class io/github/typesafegithub/workflows/domain/triggers/Milestone : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Milestone$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1027,7 +992,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Milestone 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Milestone;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1048,7 +1012,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$
 public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PageBuild$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1058,7 +1021,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PageBuild;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1079,7 +1041,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild$
 public final class io/github/typesafegithub/workflows/domain/triggers/Project : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Project$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1089,7 +1050,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Project : 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Project;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Project$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1110,7 +1070,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Project$Co
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1120,7 +1079,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCar
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1141,7 +1099,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCar
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1151,7 +1108,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCol
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1172,7 +1128,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCol
 public final class io/github/typesafegithub/workflows/domain/triggers/PublicWorkflow : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PublicWorkflow$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1182,7 +1137,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PublicWork
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PublicWorkflow;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PublicWorkflow$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1203,7 +1157,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PublicWork
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/List;
@@ -1223,7 +1176,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1272,7 +1224,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1282,7 +1233,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1303,7 +1253,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1313,7 +1262,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1334,7 +1282,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/List;
@@ -1354,7 +1301,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1403,7 +1349,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 public final class io/github/typesafegithub/workflows/domain/triggers/Push : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Push$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/List;
@@ -1425,7 +1370,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Push : io/
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Push;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Push$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1446,7 +1390,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Push$Compa
 public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1456,7 +1399,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPa
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1477,7 +1419,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPa
 public final class io/github/typesafegithub/workflows/domain/triggers/Release : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Release$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1487,7 +1428,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Release : 
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Release;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Release$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1508,7 +1448,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Release$Co
 public final class io/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1518,7 +1457,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Repository
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1558,7 +1496,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ScheduleKt
 public final class io/github/typesafegithub/workflows/domain/triggers/Status : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Status$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1568,7 +1505,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Status : i
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Status;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Status$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1592,7 +1528,6 @@ public abstract class io/github/typesafegithub/workflows/domain/triggers/Trigger
 public final class io/github/typesafegithub/workflows/domain/triggers/Watch : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Watch$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1602,7 +1537,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Watch : io
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Watch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Watch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1623,7 +1557,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Watch$Comp
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1633,7 +1566,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1654,7 +1586,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Ljava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1666,7 +1597,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1686,7 +1616,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ZLio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;ZLio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;Ljava/util/List;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ZLio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getDefault ()Ljava/lang/String;
@@ -1694,7 +1623,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public final fun getOptions ()Ljava/util/List;
 	public final fun getRequired ()Z
 	public final fun getType ()Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1730,7 +1658,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/Map;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
@@ -1740,7 +1667,6 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRu
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
