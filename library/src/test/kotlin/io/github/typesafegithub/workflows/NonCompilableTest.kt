@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCompilerApi::class)
+
 package io.github.typesafegithub.workflows
 
 import com.tschuchort.compiletesting.JvmCompilationResult
@@ -10,7 +12,6 @@ import io.kotest.matchers.string.shouldContain
 import org.intellij.lang.annotations.Language
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 
-@OptIn(ExperimentalCompilerApi::class)
 class NonCompilableTest : FunSpec({
     test("job nested inside a job") {
         val compilationResult =
@@ -86,7 +87,6 @@ class NonCompilableTest : FunSpec({
     }
 })
 
-@OptIn(ExperimentalCompilerApi::class)
 private fun compile(
     @Language("kotlin") code: String,
 ): JvmCompilationResult =
