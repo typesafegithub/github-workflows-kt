@@ -141,6 +141,4 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
     // TODO nested actions, i.e. where names have some "/"
 
     // TODO: steps using other kinds of actions, like Docker-based or local ones
-
-    // TODO: multiple versions of the same action
 })
