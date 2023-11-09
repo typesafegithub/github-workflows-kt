@@ -144,11 +144,3 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
     } else {
         default
     }
-
-private val myYaml =
-    Yaml(
-        configuration =
-            Yaml.default.configuration.copy(
-                strictMode = false,
-            ),
-    )

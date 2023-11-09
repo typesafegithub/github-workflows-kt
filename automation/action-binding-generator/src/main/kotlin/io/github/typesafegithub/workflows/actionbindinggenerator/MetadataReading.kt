@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
-import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -93,14 +92,6 @@ private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()
-
-private val myYaml =
-    Yaml(
-        configuration =
-            Yaml.default.configuration.copy(
-                strictMode = false,
-            ),
-    )
 
 private val actionYamlDir: File = File("build/action-yaml")
 

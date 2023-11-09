@@ -1,33 +1,30 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
-import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 
-// TODO: cover edge cases in scope of https://github.com/typesafegithub/github-workflows-kt/issues/941
-//  See TODOs in unit tests.
 public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> {
-    val myYaml =
-        Yaml(
-            configuration =
-                Yaml.default.configuration.copy(
-                    strictMode = false,
-                ),
-        )
-    val parsedWorkflow =
-        try {
-            myYaml.decodeFromString<Workflow>(manifest)
-        } catch (e: Throwable) {
-            throw IllegalArgumentException("The YAML is invalid: ${e.message}")
+    val parsedWorkflow = parseWorkflow(manifest)
+    val usesStrings = extractUsesStrings(parsedWorkflow)
+    return usesStrings
+        .map { it.toActionCoords() }
+        .also { assertSingleVersionForEachAction(it) }
+}
+
+private fun extractUsesStrings(parsedWorkflow: Workflow) =
+    parsedWorkflow.jobs?.flatMap {
+        it.value.steps.mapNotNull { step ->
+            step.uses
         }
-    val usesStrings =
-        parsedWorkflow.jobs?.flatMap {
-            it.value.steps.mapNotNull { step ->
-                step.uses
-            }
-        } ?: emptyList()
+    } ?: emptyList()
 
-    val actionCoords = usesStrings.map { it.toActionCoords() }
+private fun parseWorkflow(manifest: String) =
+    try {
+        myYaml.decodeFromString<Workflow>(manifest)
+    } catch (e: Throwable) {
+        throw IllegalArgumentException("The YAML is invalid: ${e.message}")
+    }
 
+private fun assertSingleVersionForEachAction(actionCoords: List<ActionCoords>) {
     val actionsWithMultipleVersions =
         actionCoords
             .groupingBy { "${it.owner}/${it.name}" }
@@ -37,6 +34,4 @@ public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> 
     if (actionsWithMultipleVersions.isNotEmpty()) {
         throw IllegalArgumentException("Multiple versions defined for actions: $actionsWithMultipleVersions")
     }
-
-    return actionCoords
 }
