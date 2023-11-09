@@ -37,6 +37,32 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
             )
     }
 
+    test("nested actions") {
+        // Given
+        val manifest =
+            """
+            on:
+              push:
+
+            jobs:
+              some-job:
+                runs-on: ubuntu-latest
+                steps:
+                  - uses: actions/checkout@v3
+                  - uses: actions/cache/restore@v5
+            """.trimIndent()
+
+        // When
+        val actionCoords = extractUsedActionsFromWorkflow(manifest)
+
+        // Then
+        actionCoords shouldBe
+            listOf(
+                ActionCoords(owner = "actions", name = "checkout", version = "v3"),
+                ActionCoords(owner = "actions", name = "cache/restore", version = "v5"),
+            )
+    }
+
     test("workflow with not only 'uses' steps") {
         // Given
         val manifest =
@@ -137,8 +163,4 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
             it.message should startWith("The YAML is invalid:")
         }
     }
-
-    // TODO nested actions, i.e. where names have some "/"
-
-    // TODO: steps using other kinds of actions, like Docker-based or local ones
 })

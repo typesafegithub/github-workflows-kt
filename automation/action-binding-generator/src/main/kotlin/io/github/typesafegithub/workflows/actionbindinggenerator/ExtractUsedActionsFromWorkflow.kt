@@ -40,12 +40,3 @@ public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> 
 
     return actionCoords
 }
-
-private fun String.toActionCoords(): ActionCoords {
-    val (owner, name, version) = this.split('/', '@')
-    return ActionCoords(
-        owner = owner,
-        name = name,
-        version = version,
-    )
-}

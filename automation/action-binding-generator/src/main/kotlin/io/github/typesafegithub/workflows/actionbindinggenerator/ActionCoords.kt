@@ -14,3 +14,13 @@ public data class ActionCoords(
 public val ActionCoords.isTopLevel: Boolean get() = "/" !in name
 
 public val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
+
+internal fun String.toActionCoords(): ActionCoords {
+    val (ownerAndName, version) = this.split('@')
+    val (owner, name) = ownerAndName.split('/', limit = 2)
+    return ActionCoords(
+        owner = owner,
+        name = name,
+        version = version,
+    )
+}
