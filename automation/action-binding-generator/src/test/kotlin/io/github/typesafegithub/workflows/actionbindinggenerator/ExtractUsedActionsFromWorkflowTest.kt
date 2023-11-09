@@ -104,6 +104,10 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
                   - uses: actions/checkout@v3
                   - uses: actions/setup-java@v4
                   - uses: actions/checkout@v5
+              another-job:
+                runs-on: ubuntu-latest
+                steps:
+                  - uses: actions/setup-java@v4
             """.trimIndent()
 
         // Then

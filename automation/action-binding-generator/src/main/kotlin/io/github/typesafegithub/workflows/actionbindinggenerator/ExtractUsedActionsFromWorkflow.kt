@@ -27,8 +27,8 @@ private fun parseWorkflow(manifest: String) =
 private fun assertSingleVersionForEachAction(actionCoords: List<ActionCoords>) {
     val actionsWithMultipleVersions =
         actionCoords
-            .groupingBy { "${it.owner}/${it.name}" }
-            .eachCount()
+            .groupBy { "${it.owner}/${it.name}" }
+            .mapValues { it.value.toSet().size }
             .filterValues { it > 1 }
             .keys
     if (actionsWithMultipleVersions.isNotEmpty()) {
