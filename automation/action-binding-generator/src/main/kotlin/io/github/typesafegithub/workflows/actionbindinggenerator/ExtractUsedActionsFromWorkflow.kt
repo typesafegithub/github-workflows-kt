@@ -13,11 +13,12 @@ public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> 
                     strictMode = false,
                 ),
         )
-    val parsedWorkflow = try {
-        myYaml.decodeFromString<Workflow>(manifest)
-    } catch (e: Throwable) {
-        throw IllegalArgumentException("The YAML is invalid: ${e.message}")
-    }
+    val parsedWorkflow =
+        try {
+            myYaml.decodeFromString<Workflow>(manifest)
+        } catch (e: Throwable) {
+            throw IllegalArgumentException("The YAML is invalid: ${e.message}")
+        }
     val usesStrings =
         parsedWorkflow.jobs?.flatMap {
             it.value.steps.mapNotNull { step ->
@@ -27,11 +28,12 @@ public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> 
 
     val actionCoords = usesStrings.map { it.toActionCoords() }
 
-    val actionsWithMultipleVersions = actionCoords
-        .groupingBy { "${it.owner}/${it.name}" }
-        .eachCount()
-        .filterValues { it > 1 }
-        .keys
+    val actionsWithMultipleVersions =
+        actionCoords
+            .groupingBy { "${it.owner}/${it.name}" }
+            .eachCount()
+            .filterValues { it > 1 }
+            .keys
     if (actionsWithMultipleVersions.isNotEmpty()) {
         throw IllegalArgumentException("Multiple versions defined for actions: $actionsWithMultipleVersions")
     }
