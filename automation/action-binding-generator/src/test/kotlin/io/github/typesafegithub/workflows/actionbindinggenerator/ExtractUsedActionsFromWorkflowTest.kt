@@ -1,7 +1,11 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.startWith
+import java.lang.IllegalArgumentException
 
 class ExtractUsedActionsFromWorkflowTest : FunSpec({
     test("parses valid manifest just with 'uses' steps") {
@@ -33,7 +37,33 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
             )
     }
 
-    test("workflow with not only with 'uses' steps") {
+    test("nested actions") {
+        // Given
+        val manifest =
+            """
+            on:
+              push:
+
+            jobs:
+              some-job:
+                runs-on: ubuntu-latest
+                steps:
+                  - uses: actions/checkout@v3
+                  - uses: actions/cache/restore@v5
+            """.trimIndent()
+
+        // When
+        val actionCoords = extractUsedActionsFromWorkflow(manifest)
+
+        // Then
+        actionCoords shouldBe
+            listOf(
+                ActionCoords(owner = "actions", name = "checkout", version = "v3"),
+                ActionCoords(owner = "actions", name = "cache/restore", version = "v5"),
+            )
+    }
+
+    test("workflow with not only 'uses' steps") {
         // Given
         val manifest =
             """
@@ -60,13 +90,77 @@ class ExtractUsedActionsFromWorkflowTest : FunSpec({
             )
     }
 
-    // TODO nested actions, i.e. where names have some "/"
+    test("multiple versions of the same action") {
+        // Given
+        val manifest =
+            """
+            on:
+              push:
 
-    // TODO: steps using other kinds of actions, like Docker-based or local ones
+            jobs:
+              some-job:
+                runs-on: ubuntu-latest
+                steps:
+                  - uses: actions/checkout@v3
+                  - uses: actions/setup-java@v4
+                  - uses: actions/checkout@v5
+            """.trimIndent()
 
-    // TODO: malformed YAML
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            extractUsedActionsFromWorkflow(manifest)
+        }.also {
+            it.message should startWith("Multiple versions defined for actions: [actions/checkout]")
+        }
+    }
 
-    // TODO: no jobs
+    test("workflow with zero jobs") {
+        // Given
+        val manifest =
+            """
+            on:
+              push:
 
-    // TODO: multiple versions of the same action
+            jobs:
+            """.trimIndent()
+
+        // When
+        val actionCoords = extractUsedActionsFromWorkflow(manifest)
+
+        // Then
+        actionCoords shouldBe emptyList()
+    }
+
+    test("workflow with no 'jobs' key") {
+        // Given
+        val manifest =
+            """
+            on:
+              push:
+            """.trimIndent()
+
+        // When
+        val actionCoords = extractUsedActionsFromWorkflow(manifest)
+
+        // Then
+        actionCoords shouldBe emptyList()
+    }
+
+    test("malformed YAML") {
+        // Given
+        val manifest =
+            """
+            on:--
+              push:
+            """.trimIndent()
+
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            extractUsedActionsFromWorkflow(manifest)
+        }.also {
+            it.message should startWith("The YAML is invalid:")
+        }
+    }
 })
