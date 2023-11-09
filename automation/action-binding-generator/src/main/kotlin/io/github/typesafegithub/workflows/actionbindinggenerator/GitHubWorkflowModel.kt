@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class Workflow(
-    val jobs: Map<String, Job>,
+    val jobs: Map<String, Job>? = emptyMap(),
 )
 
 @Serializable

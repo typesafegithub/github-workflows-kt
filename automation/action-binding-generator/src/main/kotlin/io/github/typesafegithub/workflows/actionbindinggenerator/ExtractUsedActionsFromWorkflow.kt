@@ -13,15 +13,30 @@ public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> 
                     strictMode = false,
                 ),
         )
-    val parsedWorkflow = myYaml.decodeFromString<Workflow>(manifest)
+    val parsedWorkflow = try {
+        myYaml.decodeFromString<Workflow>(manifest)
+    } catch (e: Throwable) {
+        throw IllegalArgumentException("The YAML is invalid: ${e.message}")
+    }
     val usesStrings =
-        parsedWorkflow.jobs.flatMap {
+        parsedWorkflow.jobs?.flatMap {
             it.value.steps.mapNotNull { step ->
                 step.uses
             }
-        }
+        } ?: emptyList()
 
-    return usesStrings.map { it.toActionCoords() }
+    val actionCoords = usesStrings.map { it.toActionCoords() }
+
+    val actionsWithMultipleVersions = actionCoords
+        .groupingBy { "${it.owner}/${it.name}" }
+        .eachCount()
+        .filterValues { it > 1 }
+        .keys
+    if (actionsWithMultipleVersions.isNotEmpty()) {
+        throw IllegalArgumentException("Multiple versions defined for actions: $actionsWithMultipleVersions")
+    }
+
+    return actionCoords
 }
 
 private fun String.toActionCoords(): ActionCoords {
