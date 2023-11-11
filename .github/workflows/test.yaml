@@ -7,3 +7,5 @@ jobs:
     steps:
     - id: 'step-0'
       run: 'echo Hello!'
+    - id: 'step-1'
+      run: '.github/workflows/test.main.kts'
