@@ -1,4 +1,4 @@
-#!/usr/bin/env kotlin
+#!/usr/bin/env kotlin -verbose
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.5.0")
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
