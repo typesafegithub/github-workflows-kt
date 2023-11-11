@@ -5,6 +5,9 @@ jobs:
   build:
     runs-on: 'ubuntu-latest'
     steps:
+    - id: 'step--1'
+      name: 'Check out'
+      uses: 'actions/checkout@v4'
     - id: 'step-0'
       run: 'echo Hello!'
     - id: 'step-1'
