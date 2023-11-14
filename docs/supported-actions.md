@@ -20,7 +20,7 @@ Click on a version to see the binding's code.
     * [create-release](https://github.com/actions/create-release) - v1: [`CreateReleaseV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CreateReleaseV1.kt)
     * [download-artifact](https://github.com/actions/download-artifact) - v2: [`DownloadArtifactV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/DownloadArtifactV2.kt), v3: [`DownloadArtifactV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/DownloadArtifactV3.kt)
     * [first-interaction](https://github.com/actions/first-interaction) - v1: [`FirstInteractionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/FirstInteractionV1.kt)
-    * [github-script](https://github.com/actions/github-script) - v6: [`GithubScriptV6`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/GithubScriptV6.kt)
+    * [github-script](https://github.com/actions/github-script) - v6: [`GithubScriptV6`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/GithubScriptV6.kt), v7: [`GithubScriptV7`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/GithubScriptV7.kt)
     * [labeler](https://github.com/actions/labeler) - v4: [`LabelerV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/LabelerV4.kt)
     * [setup-dotnet](https://github.com/actions/setup-dotnet) - v2: [`SetupDotnetV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/SetupDotnetV2.kt), v3: [`SetupDotnetV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/SetupDotnetV3.kt)
     * [setup-go](https://github.com/actions/setup-go) - v3: [`SetupGoV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/SetupGoV3.kt), v4: [`SetupGoV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/SetupGoV4.kt)
@@ -138,6 +138,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 82
-* counting each version separately: 130
+* counting each version separately: 131
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
