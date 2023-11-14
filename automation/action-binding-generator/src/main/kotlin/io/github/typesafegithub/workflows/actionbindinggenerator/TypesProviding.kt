@@ -11,9 +11,10 @@ import java.time.LocalDate
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
+    useCache: Boolean = true,
 ): Map<String, Typing> =
     getLocalTypings(this)?.let { myYaml.decodeFromString<ActionTypes>(it).toTypesMap() }
-        ?: this.fetchTypingMetadata(metadataRevision, fetchUri)?.toTypesMap()
+        ?: this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
         ?: this.fetchFromTypingsMaintainedWithLibrary(fetchUri)?.toTypesMap()
         ?: emptyMap()
 
@@ -41,11 +42,14 @@ private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githu
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
+    useCache: Boolean,
 ): ActionTypes? {
     val cacheFile = actionTypesYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
-    if (cacheFile.canRead()) {
-        println("  ... types from cache: $cacheFile")
-        return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
+    if (useCache) {
+        if (cacheFile.canRead()) {
+            println("  ... types from cache: $cacheFile")
+            return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
+        }
     }
 
     val gitRef =
@@ -65,8 +69,11 @@ private fun ActionCoords.fetchTypingMetadata(
             }
         } ?: return null
 
-    cacheFile.parentFile.mkdirs()
-    cacheFile.writeText(typesMetadataYaml)
+    if (useCache) {
+        cacheFile.parentFile.mkdirs()
+        cacheFile.writeText(typesMetadataYaml)
+    }
+
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
 
