@@ -61,6 +61,14 @@ public data class BrowserslistUpdateActionV2 private constructor(
      */
     public val labels: List<String>? = null,
     /**
+     * Users to associate to the pull request reviewers list
+     */
+    public val reviewers: String? = null,
+    /**
+     * Teams to associate to the pull request reviewers list
+     */
+    public val teams: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -81,11 +89,13 @@ public data class BrowserslistUpdateActionV2 private constructor(
         title: String? = null,
         body: String? = null,
         labels: List<String>? = null,
+        reviewers: String? = null,
+        teams: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(githubToken=githubToken, branch=branch, baseBranch=baseBranch, directory=directory,
-            commitMessage=commitMessage, title=title, body=body, labels=labels,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            commitMessage=commitMessage, title=title, body=body, labels=labels, reviewers=reviewers,
+            teams=teams, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -98,6 +108,8 @@ public data class BrowserslistUpdateActionV2 private constructor(
             title?.let { "title" to it },
             body?.let { "body" to it },
             labels?.let { "labels" to it.joinToString(",") },
+            reviewers?.let { "reviewers" to it },
+            teams?.let { "teams" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
