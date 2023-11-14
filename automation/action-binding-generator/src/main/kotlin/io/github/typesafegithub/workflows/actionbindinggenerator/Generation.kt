@@ -41,7 +41,7 @@ public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     useCache: Boolean = true,
     metadata: Metadata = this.fetchMetadata(metadataRevision, useCache = useCache),
-    inputTypings: Map<String, Typing> = provideTypes(metadataRevision),
+    inputTypings: Map<String, Typing> = provideTypes(metadataRevision, useCache = useCache),
     generateForScript: Boolean = false,
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {

@@ -44,7 +44,7 @@ class TypesProvidingTest : FunSpec({
         val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
         // When
-        val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash")) { actionTypesYml }
+        val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
         // Then
         types shouldBe
