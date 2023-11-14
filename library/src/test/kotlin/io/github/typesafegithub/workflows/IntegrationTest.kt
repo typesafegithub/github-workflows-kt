@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.GithubScriptV6
+import io.github.typesafegithub.workflows.actions.actions.GithubScriptV7
 import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
@@ -844,7 +844,7 @@ class IntegrationTest : FunSpec({
                     val scriptStep =
                         uses(
                             action =
-                                GithubScriptV6(
+                                GithubScriptV7(
                                     script =
                                         """
                                         core.setOutput("key", "value")
