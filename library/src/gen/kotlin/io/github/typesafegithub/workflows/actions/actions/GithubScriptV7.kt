@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -30,11 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/github-script)
  */
-@Deprecated(
-    message = "This action has a newer major version: GithubScriptV7",
-    replaceWith = ReplaceWith("GithubScriptV7"),
-)
-public data class GithubScriptV6 private constructor(
+public data class GithubScriptV7 private constructor(
     /**
      * The script to run
      */
@@ -53,13 +47,13 @@ public data class GithubScriptV6 private constructor(
      */
     public val userAgent: String? = null,
     /**
-     * A comma-separated list of API previews to accept
+     * A comma-separated list of GraphQL API previews to accept
      */
     public val previews: List<String>? = null,
     /**
      * Either "string" or "json" (default "json")—how the result will be encoded
      */
-    public val resultEncoding: GithubScriptV6.Encoding? = null,
+    public val resultEncoding: GithubScriptV7.Encoding? = null,
     /**
      * The number of times to retry a request
      */
@@ -70,6 +64,11 @@ public data class GithubScriptV6 private constructor(
      */
     public val retryExemptStatusCodes: List<Int>? = null,
     /**
+     * An optional GitHub REST API URL to connect to a different GitHub instance. For example,
+     * https://my.github-enterprise-server.com/api/v3
+     */
+    public val baseUrl: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -78,7 +77,7 @@ public data class GithubScriptV6 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<GithubScriptV6.Outputs>("actions", "github-script", _customVersion ?: "v6") {
+) : RegularAction<GithubScriptV7.Outputs>("actions", "github-script", _customVersion ?: "v7") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         script: String,
@@ -86,15 +85,16 @@ public data class GithubScriptV6 private constructor(
         debug: Boolean? = null,
         userAgent: String? = null,
         previews: List<String>? = null,
-        resultEncoding: GithubScriptV6.Encoding? = null,
+        resultEncoding: GithubScriptV7.Encoding? = null,
         retries: Int? = null,
         retryExemptStatusCodes: List<Int>? = null,
+        baseUrl: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(script=script, githubToken=githubToken, debug=debug, userAgent=userAgent,
             previews=previews, resultEncoding=resultEncoding, retries=retries,
-            retryExemptStatusCodes=retryExemptStatusCodes, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            retryExemptStatusCodes=retryExemptStatusCodes, baseUrl=baseUrl,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -108,6 +108,7 @@ public data class GithubScriptV6 private constructor(
             retries?.let { "retries" to it.toString() },
             retryExemptStatusCodes?.let { "retry-exempt-status-codes" to it.joinToString(",") {
                     it.toString() } },
+            baseUrl?.let { "base-url" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -117,13 +118,13 @@ public data class GithubScriptV6 private constructor(
     public sealed class Encoding(
         public val stringValue: kotlin.String,
     ) {
-        public object String : GithubScriptV6.Encoding("string")
+        public object String : GithubScriptV7.Encoding("string")
 
-        public object Json : GithubScriptV6.Encoding("json")
+        public object Json : GithubScriptV7.Encoding("json")
 
         public class Custom(
             customStringValue: kotlin.String,
-        ) : GithubScriptV6.Encoding(customStringValue)
+        ) : GithubScriptV7.Encoding(customStringValue)
     }
 
     public class Outputs(

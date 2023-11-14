@@ -15,7 +15,7 @@ jobs:
       scriptResult: '${{ steps.step-0.outputs.result }}'
     steps:
     - id: 'step-0'
-      uses: 'actions/github-script@v6'
+      uses: 'actions/github-script@v7'
       with:
         script: |-
           core.setOutput("key", "value")
