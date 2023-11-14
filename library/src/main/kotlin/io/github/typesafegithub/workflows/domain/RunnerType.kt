@@ -26,20 +26,26 @@ public sealed interface RunnerType {
 
     // "Latest" labels
     public object UbuntuLatest : RunnerType
+
     public object WindowsLatest : RunnerType
+
     public object MacOSLatest : RunnerType
 
     // Windows runners
     public object Windows2022 : RunnerType
+
     public object Windows2019 : RunnerType
+
     public object Windows2016 : RunnerType
 
     // Ubuntu runners
     public object Ubuntu2004 : RunnerType
+
     public object Ubuntu1804 : RunnerType
 
     // macOS runners
     public object MacOS11 : RunnerType
+
     public object MacOS1015 : RunnerType
 
     public companion object {

@@ -68,8 +68,11 @@ public data class PortMapping(
 
     public sealed interface Protocol {
         public data class Custom(val value: String) : Protocol
+
         public object All : Protocol
+
         public object TCP : Protocol
+
         public object UDP : Protocol
     }
 }

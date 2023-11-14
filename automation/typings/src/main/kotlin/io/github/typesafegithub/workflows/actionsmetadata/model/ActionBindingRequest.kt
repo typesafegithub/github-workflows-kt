@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.Typing
 
 sealed interface TypingsSource {
     data class CodeGenerator(val inputTypings: Map<String, Typing> = emptyMap()) : TypingsSource
+
     object ActionTypes : TypingsSource
 }
 
