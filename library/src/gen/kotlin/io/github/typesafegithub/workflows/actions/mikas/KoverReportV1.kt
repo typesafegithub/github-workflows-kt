@@ -16,6 +16,7 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
+import kotlin.collections.List
 import kotlin.collections.Map
 import kotlin.collections.toList
 import kotlin.collections.toTypedArray
@@ -31,7 +32,7 @@ public data class KoverReportV1 private constructor(
     /**
      * Path to the generated kover report xml file
      */
-    public val path: String,
+    public val path: List<String>,
     /**
      * Github personal token to add commits to the pull request
      */
@@ -68,7 +69,7 @@ public data class KoverReportV1 private constructor(
 ) : RegularAction<KoverReportV1.Outputs>("mi-kas", "kover-report", _customVersion ?: "v1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        path: String,
+        path: List<String>,
         token: String,
         title: String? = null,
         updateComment: Boolean? = null,
@@ -85,7 +86,7 @@ public data class KoverReportV1 private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "path" to path,
+            "path" to path.joinToString("\n"),
             "token" to token,
             title?.let { "title" to it },
             updateComment?.let { "update-comment" to it.toString() },
