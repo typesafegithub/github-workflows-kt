@@ -4,8 +4,8 @@ public abstract class AbstractResult internal constructor(
     private val value: String
 ) {
 
-    public fun eq(status: Status): String = "$value == $status"
-    public fun neq(status: Status): String = "$value != $status"
+    public infix fun eq(status: Status): String = "$value == $status"
+    public infix fun neq(status: Status): String = "$value != $status"
 
     override fun toString(): String = value
 
