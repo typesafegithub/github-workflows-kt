@@ -12,7 +12,13 @@ public sealed class Step(
     public open val continueOnError: Boolean? = null,
     public open val timeoutMinutes: Int? = null,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
-) : HasCustomArguments
+) : HasCustomArguments {
+    public inner class Conclusion : AbstractResult("steps.$id.conclusion")
+    public inner class Outcome : AbstractResult("steps.$id.outcome")
+
+    public val conclusion: Conclusion get() = Conclusion()
+    public val outcome: Outcome get() = Outcome()
+}
 
 public interface WithOutputs<out T> {
     public val outputs: T

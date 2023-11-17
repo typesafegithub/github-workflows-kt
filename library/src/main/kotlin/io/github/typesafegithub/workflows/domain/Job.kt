@@ -33,4 +33,8 @@ public data class Job<OUTPUT : JobOutputs>(
         }
         outputs.job = this
     }
+
+    public inner class Result : AbstractResult("needs.$id.result")
+
+    public val result: Result get() = Result()
 }
