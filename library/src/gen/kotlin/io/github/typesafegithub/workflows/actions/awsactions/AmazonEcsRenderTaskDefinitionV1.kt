@@ -54,12 +54,12 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
      * Create/Override options inside logConfiguration. Each variable is of the form key=value, you
      * can specify multiple variables with multi-line YAML strings.
      */
-    public val logConfigurationOptions: String? = null,
+    public val logConfigurationOptions: List<String>? = null,
     /**
      * Create/Override options inside dockerLabels. Each variable is key=value, you can specify
      * multiple variables with multi-line YAML.
      */
-    public val dockerLabels: String? = null,
+    public val dockerLabels: List<String>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -78,8 +78,8 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
         image: String,
         environmentVariables: List<String>? = null,
         logConfigurationLogDriver: String? = null,
-        logConfigurationOptions: String? = null,
-        dockerLabels: String? = null,
+        logConfigurationOptions: List<String>? = null,
+        dockerLabels: List<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(taskDefinition=taskDefinition, containerName=containerName, image=image,
@@ -96,8 +96,8 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
             "image" to image,
             environmentVariables?.let { "environment-variables" to it.joinToString("\n") },
             logConfigurationLogDriver?.let { "log-configuration-log-driver" to it },
-            logConfigurationOptions?.let { "log-configuration-options" to it },
-            dockerLabels?.let { "docker-labels" to it },
+            logConfigurationOptions?.let { "log-configuration-options" to it.joinToString("\n") },
+            dockerLabels?.let { "docker-labels" to it.joinToString("\n") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
