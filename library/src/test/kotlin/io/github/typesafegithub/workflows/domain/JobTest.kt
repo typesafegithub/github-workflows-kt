@@ -16,23 +16,24 @@ class JobTest : FunSpec({
             name = "some-workflow",
             on = listOf(WorkflowDispatch()),
         ) {
-            val job = job(
-                id = "some-id",
-                runsOn = RunnerType.UbuntuLatest,
-            ) {
-                val step0 = run(command = "")
-                step0.outcome.toString() shouldBe "steps.step-0.outcome"
-                step0.outcome.eq(Status.Failure) shouldBe "steps.step-0.outcome == 'failure'"
-                step0.outcome.eq(Status.Cancelled) shouldBe "steps.step-0.outcome == 'cancelled'"
-                step0.outcome.eq(Status.Skipped) shouldBe "steps.step-0.outcome == 'skipped'"
-                step0.outcome.eq(Status.Success) shouldBe "steps.step-0.outcome == 'success'"
-                val step1 = run(command = "")
-                step1.conclusion.toString() shouldBe "steps.step-1.conclusion"
-                step1.conclusion.eq(Status.Failure) shouldBe "steps.step-1.conclusion == 'failure'"
-                step1.conclusion.eq(Status.Cancelled) shouldBe "steps.step-1.conclusion == 'cancelled'"
-                step1.conclusion.eq(Status.Skipped) shouldBe "steps.step-1.conclusion == 'skipped'"
-                step1.conclusion.eq(Status.Success) shouldBe "steps.step-1.conclusion == 'success'"
-            }
+            val job =
+                job(
+                    id = "some-id",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    val step0 = run(command = "")
+                    step0.outcome.toString() shouldBe "steps.step-0.outcome"
+                    step0.outcome.eq(Status.Failure) shouldBe "steps.step-0.outcome == 'failure'"
+                    step0.outcome.eq(Status.Cancelled) shouldBe "steps.step-0.outcome == 'cancelled'"
+                    step0.outcome.eq(Status.Skipped) shouldBe "steps.step-0.outcome == 'skipped'"
+                    step0.outcome.eq(Status.Success) shouldBe "steps.step-0.outcome == 'success'"
+                    val step1 = run(command = "")
+                    step1.conclusion.toString() shouldBe "steps.step-1.conclusion"
+                    step1.conclusion.eq(Status.Failure) shouldBe "steps.step-1.conclusion == 'failure'"
+                    step1.conclusion.eq(Status.Cancelled) shouldBe "steps.step-1.conclusion == 'cancelled'"
+                    step1.conclusion.eq(Status.Skipped) shouldBe "steps.step-1.conclusion == 'skipped'"
+                    step1.conclusion.eq(Status.Success) shouldBe "steps.step-1.conclusion == 'success'"
+                }
             job.result.toString() shouldBe "needs.some-id.result"
             job.result.eq(Status.Failure) shouldBe "needs.some-id.result == 'failure'"
             job.result.eq(Status.Cancelled) shouldBe "needs.some-id.result == 'cancelled'"
