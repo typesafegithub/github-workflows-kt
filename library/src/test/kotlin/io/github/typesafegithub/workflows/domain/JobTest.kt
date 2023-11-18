@@ -14,11 +14,11 @@ class JobTest : FunSpec({
     test("step.outcome step.conclusion job.result") {
         workflow(
             name = "some-workflow",
-            on = listOf(WorkflowDispatch())
+            on = listOf(WorkflowDispatch()),
         ) {
             val job = job(
                 id = "some-id",
-                runsOn = RunnerType.UbuntuLatest
+                runsOn = RunnerType.UbuntuLatest,
             ) {
                 val step0 = run(command = "")
                 step0.outcome.toString() shouldBe "steps.step-0.outcome"
@@ -39,7 +39,6 @@ class JobTest : FunSpec({
             job.result.eq(Status.Skipped) shouldBe "needs.some-id.result == 'skipped'"
             job.result.eq(Status.Success) shouldBe "needs.some-id.result == 'success'"
         }
-
     }
     context("outputs") {
         test("should include job outputs") {
