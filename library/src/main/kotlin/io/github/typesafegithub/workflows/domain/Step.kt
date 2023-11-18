@@ -14,6 +14,7 @@ public sealed class Step(
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : HasCustomArguments {
     public inner class Conclusion : AbstractResult("steps.$id.conclusion")
+
     public inner class Outcome : AbstractResult("steps.$id.outcome")
 
     public val conclusion: Conclusion get() = Conclusion()

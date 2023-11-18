@@ -1,10 +1,10 @@
 package io.github.typesafegithub.workflows.domain
 
 public abstract class AbstractResult internal constructor(
-    private val value: String
+    private val value: String,
 ) {
-
     public infix fun eq(status: Status): String = "$value == $status"
+
     public infix fun neq(status: Status): String = "$value != $status"
 
     override fun toString(): String = value
@@ -13,7 +13,8 @@ public abstract class AbstractResult internal constructor(
         Success,
         Failure,
         Cancelled,
-        Skipped;
+        Skipped,
+        ;
 
         override fun toString(): String = "'${name.lowercase()}'"
     }
