@@ -12,7 +12,7 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    implementation("com.squareup:kotlinpoet:1.14.2")
+    implementation("com.squareup:kotlinpoet:1.15.1")
     implementation("com.charleskorn.kaml:kaml:0.55.0")
 
     testImplementation(projects.library)
