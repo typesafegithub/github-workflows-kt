@@ -118,11 +118,6 @@ fun generateObjectTypes(
         .build()
 }
 
-fun FileSpec.Builder.addTypes(types: Iterable<TypeSpec>) =
-    apply {
-        types.forEach { addType(it) }
-    }
-
 fun payloadClassName(
     key: String,
     filename: String,
