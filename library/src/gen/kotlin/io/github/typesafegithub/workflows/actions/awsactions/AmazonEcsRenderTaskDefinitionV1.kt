@@ -47,6 +47,20 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
      */
     public val environmentVariables: List<String>? = null,
     /**
+     * Create/Override logDriver inside logConfiguration
+     */
+    public val logConfigurationLogDriver: String? = null,
+    /**
+     * Create/Override options inside logConfiguration. Each variable is of the form key=value, you
+     * can specify multiple variables with multi-line YAML strings.
+     */
+    public val logConfigurationOptions: List<String>? = null,
+    /**
+     * Create/Override options inside dockerLabels. Each variable is key=value, you can specify
+     * multiple variables with multi-line YAML.
+     */
+    public val dockerLabels: List<String>? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -63,11 +77,16 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
         containerName: String,
         image: String,
         environmentVariables: List<String>? = null,
+        logConfigurationLogDriver: String? = null,
+        logConfigurationOptions: List<String>? = null,
+        dockerLabels: List<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(taskDefinition=taskDefinition, containerName=containerName, image=image,
-            environmentVariables=environmentVariables, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            environmentVariables=environmentVariables,
+            logConfigurationLogDriver=logConfigurationLogDriver,
+            logConfigurationOptions=logConfigurationOptions, dockerLabels=dockerLabels,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -76,6 +95,9 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
             "container-name" to containerName,
             "image" to image,
             environmentVariables?.let { "environment-variables" to it.joinToString("\n") },
+            logConfigurationLogDriver?.let { "log-configuration-log-driver" to it },
+            logConfigurationOptions?.let { "log-configuration-options" to it.joinToString("\n") },
+            dockerLabels?.let { "docker-labels" to it.joinToString("\n") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

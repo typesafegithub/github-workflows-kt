@@ -104,6 +104,10 @@ Click on a version to see the binding's code.
     * [kover-report](https://github.com/mi-kas/kover-report) - v1 ✅: [`KoverReportV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/mikas/KoverReportV1.kt)
 * microsoft
     * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1 ✅: [`SetupMsbuildV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/microsoft/SetupMsbuildV1.kt)
+* nexus-actions
+    * [create-nexus-staging-repo](https://github.com/nexus-actions/create-nexus-staging-repo) - v1 ✅: [`CreateNexusStagingRepoV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nexusactions/CreateNexusStagingRepoV1.kt)
+    * [drop-nexus-staging-repo](https://github.com/nexus-actions/drop-nexus-staging-repo) - v1 ✅: [`DropNexusStagingRepoV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nexusactions/DropNexusStagingRepoV1.kt)
+    * [release-nexus-staging-repo](https://github.com/nexus-actions/release-nexus-staging-repo) - v1 ✅: [`ReleaseNexusStagingRepoV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nexusactions/ReleaseNexusStagingRepoV1.kt)
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nobrayner/DiscordWebhookV1.kt)
 * peaceiris
@@ -137,7 +141,7 @@ Click on a version to see the binding's code.
 
 Number of bindings available:
 
-* counting by actions: 82
-* counting each version separately: 131
+* counting by actions: 85
+* counting each version separately: 134
 
-Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 15
+Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
