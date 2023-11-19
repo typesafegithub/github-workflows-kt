@@ -19,7 +19,7 @@ Legend:
 | Job containers                              | ✅       |                                                                          |
 | Docker actions                              | ✅       |                                                                          |
 | Local actions                               | ✅       |                                                                          |
-| `outcome` context                           | ❌       | [#296](https://github.com/typesafegithub/github-workflows-kt/issues/296) |
+| `outcome` context                           | ✅       |                                                                          |
 | Permissions                                 | ✅       |                                                                          |
 | Public actions                              | ✅       |                                                                          |
 | `runner` context                            | ✅       |                                                                          |

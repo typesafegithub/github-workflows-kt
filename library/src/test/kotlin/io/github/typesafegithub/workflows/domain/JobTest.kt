@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.domain
 
+import io.github.typesafegithub.workflows.domain.AbstractResult.Status
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
@@ -8,6 +9,20 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 
 class JobTest : FunSpec({
+    test("job.result") {
+        val job =
+            Job(
+                id = "some-id",
+                runsOn = RunnerType.UbuntuLatest,
+                steps = listOf(),
+                outputs = JobOutputs.EMPTY,
+            )
+        job.result.toString() shouldBe "needs.some-id.result"
+        job.result eq Status.Failure shouldBe "needs.some-id.result == 'failure'"
+        job.result eq Status.Cancelled shouldBe "needs.some-id.result == 'cancelled'"
+        job.result eq Status.Skipped shouldBe "needs.some-id.result == 'skipped'"
+        job.result eq Status.Success shouldBe "needs.some-id.result == 'success'"
+    }
     context("outputs") {
         test("should include job outputs") {
             val job =
@@ -27,6 +42,12 @@ class JobTest : FunSpec({
 
             job.outputs.output1 shouldBe "needs.some-id.outputs.output1"
             job.outputs.output2 shouldBe "needs.some-id.outputs.output2"
+
+            job.result.toString() shouldBe "needs.some-id.result"
+            job.result eq Status.Failure shouldBe "needs.some-id.result == 'failure'"
+            job.result eq Status.Cancelled shouldBe "needs.some-id.result == 'cancelled'"
+            job.result eq Status.Skipped shouldBe "needs.some-id.result == 'skipped'"
+            job.result eq Status.Success shouldBe "needs.some-id.result == 'success'"
         }
 
         test("should throw if accessing uninitialized output") {
