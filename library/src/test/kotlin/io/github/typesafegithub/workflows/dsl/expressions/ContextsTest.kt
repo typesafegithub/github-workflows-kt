@@ -7,22 +7,20 @@ import io.kotest.matchers.shouldBe
 @Suppress("VariableNaming", "ktlint:standard:property-naming")
 class ContextsTest : FunSpec({
 
-    val dollar = '$'.toString()
-
     test("Environment variables") {
         assertSoftly {
             val DAY_OF_WEEK by Contexts.env
-            "$DAY_OF_WEEK == 'Monday'" shouldBe "${dollar}DAY_OF_WEEK == 'Monday'"
+            "$DAY_OF_WEEK == 'Monday'" shouldBe "\$DAY_OF_WEEK == 'Monday'"
 
             "${Contexts.env.CI} == true && ${Contexts.env.GITHUB_ACTIONS} == true" shouldBe
-                "${dollar}CI == true && ${dollar}GITHUB_ACTIONS == true"
+                "\$CI == true && \$GITHUB_ACTIONS == true"
         }
     }
 
     test("Environment variables from expressions") {
         val GREETING by Contexts.env
-        expr { GREETING } shouldBe "$dollar{{ GREETING }}"
-        expr { env.GITHUB_ACTIONS } shouldBe "$dollar{{ GITHUB_ACTIONS }}"
+        expr { GREETING } shouldBe "\${{ GREETING }}"
+        expr { env.GITHUB_ACTIONS } shouldBe "\${{ GITHUB_ACTIONS }}"
     }
 
     test("Secrets") {
