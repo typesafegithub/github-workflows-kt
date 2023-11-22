@@ -15,6 +15,21 @@ public val ActionCoords.isTopLevel: Boolean get() = "/" !in name
 
 public val ActionCoords.prettyPrint: String get() = "$owner/$name@$version"
 
+/**
+ * For most actions, it's the same as [ActionCoords.name].
+ * For actions that aren't executed from the root of the repo, it returns the repo name.
+ */
+public val ActionCoords.repoName: String get() =
+    name.substringBefore("/")
+
+/**
+ * For most actions, it's empty.
+ * For actions that aren't executed from the root of the repo, it returns the path relative to the repo root where the
+ * action lives.
+ */
+public val ActionCoords.subName: String get() =
+    if (isTopLevel) "" else name.substringAfter("/")
+
 internal fun String.toActionCoords(): ActionCoords {
     val (ownerAndName, version) = this.split('@')
     val (owner, name) = ownerAndName.split('/', limit = 2)
