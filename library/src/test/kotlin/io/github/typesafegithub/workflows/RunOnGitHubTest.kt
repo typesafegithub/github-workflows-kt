@@ -32,10 +32,11 @@ class RunOnGitHubTest : FunSpec({
         val trivialWorkflow =
             workflow(
                 name = "Integration tests",
-                on = listOf(
-                    Push(branches = listOf("main")),
-                    PullRequest(),
-                ),
+                on =
+                    listOf(
+                        Push(branches = listOf("main")),
+                        PullRequest(),
+                    ),
                 sourceFile = Path.of("../.github/workflows/Integration tests.main.kts"),
             ) {
                 val GREETING by Contexts.env
