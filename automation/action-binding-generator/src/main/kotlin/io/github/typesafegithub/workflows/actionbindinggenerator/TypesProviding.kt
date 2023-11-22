@@ -36,7 +36,8 @@ private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesFromCatalog() =
-    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/main/typings/$owner/$name/$version/action-types.yml"
+    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+        "main/typings/$owner/$repoName/$version/$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesMaintainedWithLibraryUrl() =
     "https://raw.githubusercontent.com/typesafegithub/github-workflows-kt/main/actions/$owner/$repoName/$version/$subName/action-types.yml"
