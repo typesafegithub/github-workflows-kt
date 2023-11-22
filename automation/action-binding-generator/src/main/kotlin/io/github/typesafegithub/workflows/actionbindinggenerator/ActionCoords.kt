@@ -28,7 +28,7 @@ public val ActionCoords.repoName: String get() =
  * action lives.
  */
 public val ActionCoords.subName: String get() =
-    name.substringAfter("/")
+    if (isTopLevel) "" else name.substringAfter("/")
 
 internal fun String.toActionCoords(): ActionCoords {
     val (ownerAndName, version) = this.split('@')
