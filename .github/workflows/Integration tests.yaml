@@ -1,0 +1,112 @@
+# This file was generated using Kotlin DSL (.github/workflows/Integration tests.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/typesafegithub/github-workflows-kt
+
+name: 'Integration tests'
+on:
+  push:
+    branches:
+    - 'main'
+  pull_request: {}
+jobs:
+  test_job_1:
+    runs-on: 'ubuntu-latest'
+    permissions:
+      actions: 'read'
+      checks: 'write'
+      contents: 'none'
+    env:
+      $GREETING: 'World'
+    outputs:
+      scriptKey: '${{ steps.step-15.outputs.key }}'
+      scriptKey2: '${{ steps.step-15.outputs.key2 }}'
+      scriptResult: '${{ steps.step-15.outputs.result }}'
+    steps:
+    - id: 'step-0'
+      name: 'Hello world!'
+      run: 'echo ''hello!'''
+    - id: 'step-1'
+      name: 'Hello world! Multiline command with pipes'
+      run: |-
+        less test.txt \
+        | grep -P "foobar" \
+        | sort \
+        > result.txt
+    - id: 'step-2'
+      name: 'Check out'
+      uses: 'actions/checkout@v4'
+    - id: 'step-3'
+      name: 'Run local action'
+      uses: './.github/workflows/test-local-action'
+      with:
+        name: 'Rocky'
+    - id: 'step-4'
+      name: 'Run alpine'
+      uses: 'docker://alpine:latest'
+    - id: 'step-5'
+      name: 'Check out again'
+      uses: 'actions/checkout@v4'
+      with:
+        repository: 'actions/checkout'
+        ref: 'v3'
+        path: './.github/actions/checkout'
+        clean: 'false'
+    - id: 'step-6'
+      name: 'Run local action'
+      uses: './.github/workflows/test-local-action'
+      with:
+        name: 'Balboa'
+    - id: 'step-7'
+      name: 'Run alpine'
+      uses: 'docker://alpine:latest'
+    - id: 'step-8'
+      uses: 'actions/setup-python@v4'
+    - id: 'step-9'
+      name: 'Some step consuming other step''s output'
+      uses: 'actions/checkout@v4'
+      with:
+        ssh-key: '${{ steps.step-8.outputs.python-version }}'
+        path: '${{ steps.step-8.outputs.my-unsafe-output }}'
+    - id: 'step-10'
+      name: 'Custom environment variable'
+      env:
+        $FIRST_NAME: 'Patrick'
+      run: 'echo $GREETING $FIRST_NAME'
+    - id: 'step-11'
+      name: 'Encrypted secret'
+      env:
+        $SECRET: '${{ secrets.SUPER_SECRET }}'
+        $TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      run: 'echo secret=$SECRET token=$TOKEN'
+    - id: 'step-12'
+      name: 'RunnerContext create temp directory'
+      run: 'mkdir ${{ runner.temp }}/build_logs'
+    - id: 'step-13'
+      name: 'GitHubContext echo sha'
+      run: 'echo ${{ github.sha }} ev ${{ github.event.release.url }}'
+    - id: 'step-14'
+      name: 'Default environment variable'
+      run: 'action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY'
+      if: '${{ always() }}'
+    - id: 'step-15'
+      uses: 'actions/github-script@v7'
+      with:
+        script: |-
+          core.setOutput("key", "value")
+          core.setOutput("key2", "value2")
+          return "return"
+  test_job_2:
+    runs-on: 'ubuntu-latest'
+    needs:
+    - 'test_job_1'
+    if: '${{ always() }}'
+    steps:
+    - id: 'step-0'
+      name: 'Hello world, again!'
+      run: 'echo ''hello again!'''
+    - id: 'step-1'
+      name: 'use output of script'
+      run: |-
+        echo ${{ needs.test_job_1.outputs.scriptKey }}
+        echo ${{ needs.test_job_1.outputs.scriptKey2 }}
+        echo ${{ needs.test_job_1.outputs.scriptResult }}
