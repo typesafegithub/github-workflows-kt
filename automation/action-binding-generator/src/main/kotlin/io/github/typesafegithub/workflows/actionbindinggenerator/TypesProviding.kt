@@ -13,8 +13,8 @@ internal fun ActionCoords.provideTypes(
     fetchUri: (URI) -> String = ::fetchUri,
     useCache: Boolean = true,
 ): Map<String, Typing> =
-    getLocalTypings(this)?.let { myYaml.decodeFromString<ActionTypes>(it).toTypesMap() }
-        ?: this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
+    this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
+        ?: this.fetchFromTypingsFromCatalog(fetchUri)?.toTypesMap()
         ?: this.fetchFromTypingsMaintainedWithLibrary(fetchUri)?.toTypesMap()
         ?: emptyMap()
 
@@ -34,6 +34,10 @@ public fun deleteActionTypesYamlCacheIfObsolete() {
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yml"
+
+private fun ActionCoords.actionTypesFromCatalog() =
+    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+        "main/typings/$owner/$repoName/$version/$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesMaintainedWithLibraryUrl() =
     "https://raw.githubusercontent.com/typesafegithub/github-workflows-kt/main/actions/$owner/$repoName/$version/$subName/action-types.yml"
@@ -79,8 +83,16 @@ private fun ActionCoords.fetchTypingMetadata(
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
 }
 
-private fun ActionCoords.fetchFromTypingsMaintainedWithLibrary(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? {
-    val url = actionTypesMaintainedWithLibraryUrl()
+private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? =
+    fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
+
+private fun ActionCoords.fetchFromTypingsMaintainedWithLibrary(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? =
+    fetchTypingsFromUrl(url = actionTypesMaintainedWithLibraryUrl(), fetchUri = fetchUri)
+
+private fun fetchTypingsFromUrl(
+    url: String,
+    fetchUri: (URI) -> String,
+): ActionTypes? {
     val typesMetadataYml =
         try {
             println("  ... types from $url")
