@@ -32,12 +32,14 @@ public fun deleteActionTypesYamlCacheIfObsolete() {
     }
 }
 
-private fun ActionCoords.actionTypesYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yml"
+private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
+    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesMaintainedWithLibraryUrl() =
-    "https://raw.githubusercontent.com/typesafegithub/github-workflows-kt/main/actions/$owner/$name/$version/action-types.yml"
+    "https://raw.githubusercontent.com/typesafegithub/github-workflows-kt/main/actions/$owner/$repoName/$version/$subName/action-types.yml"
 
-private fun ActionCoords.actionTypesYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef/action-types.yaml"
+private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
+    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yaml"
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,

@@ -35,6 +35,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Act
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/ActionCoordsKt {
 	public static final fun getPrettyPrint (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;)Ljava/lang/String;
+	public static final fun getRepoName (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;)Ljava/lang/String;
+	public static final fun getSubName (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;)Ljava/lang/String;
 	public static final fun isTopLevel (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;)Z
 }
 
