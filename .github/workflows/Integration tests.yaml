@@ -4,7 +4,9 @@
 
 name: 'Integration tests'
 on:
-  push: {}
+  push:
+    branches:
+    - 'main'
   pull_request: {}
 jobs:
   test_job_1:
@@ -50,10 +52,10 @@ jobs:
         path: './.github/actions/checkout'
         clean: 'false'
     - id: 'step-6'
-      name: 'Check out again'
-      uses: './.github/actions/checkout'
+      name: 'Run local action'
+      uses: './.github/workflows/test-local-action'
       with:
-        clean: 'false'
+        name: 'Balboa'
     - id: 'step-7'
       name: 'Run alpine'
       uses: 'docker://alpine:latest'
@@ -81,7 +83,7 @@ jobs:
       run: 'mkdir ${{ runner.temp }}/build_logs'
     - id: 'step-13'
       name: 'GitHubContext echo sha'
-      run: 'echo ${{ github.sha }} event ${{ github.event.release.url }}'
+      run: 'echo ${{ github.sha }} ev ${{ github.event.release.url }}'
     - id: 'step-14'
       name: 'Default environment variable'
       run: 'action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY'

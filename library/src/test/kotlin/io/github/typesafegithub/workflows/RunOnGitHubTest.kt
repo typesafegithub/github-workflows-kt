@@ -32,7 +32,10 @@ class RunOnGitHubTest : FunSpec({
         val trivialWorkflow =
             workflow(
                 name = "Integration tests",
-                on = listOf(Push(), PullRequest()),
+                on = listOf(
+                    Push(branches = listOf("main")),
+                    PullRequest(),
+                ),
                 sourceFile = Path.of("../.github/workflows/Integration tests.main.kts"),
             ) {
                 val GREETING by Contexts.env
@@ -130,14 +133,14 @@ class RunOnGitHubTest : FunSpec({
                         )
 
                         uses(
-                            name = "Check out again",
+                            name = "Run local action",
                             action =
                                 object : LocalAction<Action.Outputs>(
-                                    actionPath = "./.github/actions/checkout",
+                                    actionPath = "./.github/workflows/test-local-action",
                                 ) {
                                     override fun toYamlArguments() =
                                         linkedMapOf(
-                                            "clean" to "false",
+                                            "name" to "Balboa",
                                         )
 
                                     override fun buildOutputObject(stepId: String) = Action.Outputs(stepId)
@@ -191,7 +194,7 @@ class RunOnGitHubTest : FunSpec({
                         )
                         run(
                             name = "GitHubContext echo sha",
-                            command = "echo " + expr { github.sha } + " event " + expr { github.eventRelease.release.url },
+                            command = "echo " + expr { github.sha } + " ev " + expr { github.eventRelease.release.url },
                         )
                         run(
                             name = "Default environment variable",
