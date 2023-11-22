@@ -13,8 +13,7 @@ internal fun ActionCoords.provideTypes(
     fetchUri: (URI) -> String = ::fetchUri,
     useCache: Boolean = true,
 ): Map<String, Typing> =
-    getLocalTypings(this)?.let { myYaml.decodeFromString<ActionTypes>(it).toTypesMap() }
-        ?: this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
+    this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
         ?: this.fetchFromTypingsFromCatalog(fetchUri)?.toTypesMap()
         ?: this.fetchFromTypingsMaintainedWithLibrary(fetchUri)?.toTypesMap()
         ?: emptyMap()
