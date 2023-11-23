@@ -39,7 +39,7 @@ public data class BuildPushActionV5 private constructor(
     /**
      * List of annotation to set to the image
      */
-    public val annotations: String? = null,
+    public val annotations: List<String>? = null,
     /**
      * List of attestation parameters (e.g., type=sbom,generator=image)
      */
@@ -128,7 +128,7 @@ public data class BuildPushActionV5 private constructor(
     /**
      * List of secret env vars to expose to the build (e.g., key=envname, MY_SECRET=MY_ENV_VAR)
      */
-    public val secretEnvs: String? = null,
+    public val secretEnvs: List<String>? = null,
     /**
      * List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)
      */
@@ -172,7 +172,7 @@ public data class BuildPushActionV5 private constructor(
         vararg pleaseUseNamedArguments: Unit,
         addHosts: List<String>? = null,
         allow: List<String>? = null,
-        annotations: String? = null,
+        annotations: List<String>? = null,
         attests: List<String>? = null,
         buildArgs: List<String>? = null,
         buildContexts: List<String>? = null,
@@ -194,7 +194,7 @@ public data class BuildPushActionV5 private constructor(
         push: Boolean? = null,
         sbom: Boolean? = null,
         secrets: List<String>? = null,
-        secretEnvs: String? = null,
+        secretEnvs: List<String>? = null,
         secretFiles: List<String>? = null,
         shmSize: String? = null,
         ssh: List<String>? = null,
@@ -219,7 +219,7 @@ public data class BuildPushActionV5 private constructor(
         *listOfNotNull(
             addHosts?.let { "add-hosts" to it.joinToString("\n") },
             allow?.let { "allow" to it.joinToString("\n") },
-            annotations?.let { "annotations" to it },
+            annotations?.let { "annotations" to it.joinToString("\n") },
             attests?.let { "attests" to it.joinToString(",") },
             buildArgs?.let { "build-args" to it.joinToString("\n") },
             buildContexts?.let { "build-contexts" to it.joinToString("\n") },
@@ -241,7 +241,7 @@ public data class BuildPushActionV5 private constructor(
             push?.let { "push" to it.toString() },
             sbom?.let { "sbom" to it.toString() },
             secrets?.let { "secrets" to it.joinToString("\n") },
-            secretEnvs?.let { "secret-envs" to it },
+            secretEnvs?.let { "secret-envs" to it.joinToString("\n") },
             secretFiles?.let { "secret-files" to it.joinToString("\n") },
             shmSize?.let { "shm-size" to it },
             ssh?.let { "ssh" to it.joinToString("\n") },
