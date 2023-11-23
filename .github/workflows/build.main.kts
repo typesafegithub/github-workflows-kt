@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.5.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.6.0")
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
 @file:Import("setup-python.main.kts")
