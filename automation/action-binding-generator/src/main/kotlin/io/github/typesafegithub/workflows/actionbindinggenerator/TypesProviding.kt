@@ -15,7 +15,6 @@ internal fun ActionCoords.provideTypes(
 ): Map<String, Typing> =
     this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
         ?: this.fetchFromTypingsFromCatalog(fetchUri)?.toTypesMap()
-        ?: this.fetchFromTypingsMaintainedWithLibrary(fetchUri)?.toTypesMap()
         ?: emptyMap()
 
 private val actionTypesYamlDir: File = File("build/action-types-yaml")
@@ -38,9 +37,6 @@ private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
 private fun ActionCoords.actionTypesFromCatalog() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
         "main/typings/$owner/$repoName/$version/$subName/action-types.yml"
-
-private fun ActionCoords.actionTypesMaintainedWithLibraryUrl() =
-    "https://raw.githubusercontent.com/typesafegithub/github-workflows-kt/main/actions/$owner/$repoName/$version/$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yaml"
@@ -86,9 +82,6 @@ private fun ActionCoords.fetchTypingMetadata(
 private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? =
     fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
 
-private fun ActionCoords.fetchFromTypingsMaintainedWithLibrary(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? =
-    fetchTypingsFromUrl(url = actionTypesMaintainedWithLibraryUrl(), fetchUri = fetchUri)
-
 private fun fetchTypingsFromUrl(
     url: String,
     fetchUri: (URI) -> String,
@@ -108,20 +101,6 @@ internal fun getCommitHash(actionCoords: ActionCoords): String? =
         .toFile().let {
             if (it.exists()) it.readText().trim() else null
         }
-
-internal fun getLocalTypings(actionCoords: ActionCoords): String? {
-    val pathBeforeVersion = Path.of("actions", actionCoords.owner, actionCoords.name.split("/").first(), actionCoords.version)
-    val subnames = actionCoords.name.split("/").drop(1).joinToString("/")
-    val fullPath =
-        if (subnames.isNotEmpty()) {
-            pathBeforeVersion.resolve(subnames).resolve("action-types.yml")
-        } else {
-            pathBeforeVersion.resolve("action-types.yml")
-        }
-    return fullPath.toFile().let {
-        if (it.exists()) it.readText() else null
-    }
-}
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
     return inputs.mapValues { (key, value) ->
