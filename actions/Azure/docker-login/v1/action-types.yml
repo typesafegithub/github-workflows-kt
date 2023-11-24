@@ -1,8 +1,0 @@
-# See https://github.com/typesafegithub/github-actions-typing
-inputs:
-  username:
-    type: string
-  password:
-    type: string
-  login-server:
-    type: string
