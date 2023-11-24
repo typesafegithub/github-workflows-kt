@@ -3,7 +3,6 @@ package io.github.typesafegithub.workflows.actionsmetadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.isRegularFile
@@ -20,7 +19,7 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
 
     return Files.walk(actionTypingsDirectory).asSequence()
         .filter { it.isRegularFile() }
-        .filter { it.name !in setOf("commit-hash.txt", "action") }
+        .filter { it.name == "action" }
         .map {
             val pathParts = it.toFile().invariantSeparatorsPath.split("/")
             // pathParts[0] is "actions" directory
@@ -28,7 +27,6 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
             val name = pathParts[2]
             val version = pathParts[3]
             val subname = pathParts.subList(4, pathParts.size - 1).joinToString("/")
-            val file = pathParts.last()
             ActionBindingRequest(
                 actionCoords =
                     ActionCoords(
@@ -38,24 +36,6 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
                         // It's set in postprocessing.
                         deprecatedByVersion = null,
                     ),
-                typingsSource =
-                    buildTypingsSource(
-                        fileName = file,
-                        actionTypingsDirectory = actionTypingsDirectory,
-                    ),
             )
         }.toList()
-}
-
-private fun buildTypingsSource(
-    fileName: String,
-    actionTypingsDirectory: Path,
-) = when (fileName) {
-    "action-types.yml" -> {
-        // TODO: the empty map is just a placeholder value - the typings are fetched in another place.
-        //  It should be eventually removed.
-        TypingsSource.CodeGenerator(inputTypings = emptyMap())
-    }
-    "typings-hosted-by-action" -> TypingsSource.ActionTypes
-    else -> error("An unexpected file found in $actionTypingsDirectory: '$fileName'")
 }
