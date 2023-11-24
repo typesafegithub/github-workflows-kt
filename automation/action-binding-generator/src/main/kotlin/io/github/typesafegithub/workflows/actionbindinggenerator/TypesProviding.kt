@@ -12,7 +12,7 @@ internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
     useCache: Boolean = true,
-): Map<String, Typing> =
+): Pair<Map<String, Typing>, TypingInferredSource> =
     this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
         ?: this.fetchFromTypingsFromCatalog(fetchUri)?.toTypesMap()
         ?: emptyMap()
