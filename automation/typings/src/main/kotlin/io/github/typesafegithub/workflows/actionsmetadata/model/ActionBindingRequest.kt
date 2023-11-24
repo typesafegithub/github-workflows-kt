@@ -11,5 +11,4 @@ sealed interface TypingsSource {
 
 data class ActionBindingRequest(
     val actionCoords: ActionCoords,
-    val typingsSource: TypingsSource = TypingsSource.CodeGenerator(),
 )
