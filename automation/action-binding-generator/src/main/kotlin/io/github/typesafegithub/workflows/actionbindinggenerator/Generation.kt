@@ -23,6 +23,7 @@ public data class ActionBinding(
     val filePath: String,
     val className: String,
     val packageName: String,
+    val typingActualSource: TypingActualSource?,
 )
 
 private object Types {
@@ -41,7 +42,7 @@ public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     useCache: Boolean = true,
     metadata: Metadata = this.fetchMetadata(metadataRevision, useCache = useCache),
-    inputTypings: Map<String, Typing> = provideTypes(metadataRevision, useCache = useCache),
+    inputTypings: Pair<Map<String, Typing>, TypingActualSource?> = provideTypes(metadataRevision, useCache = useCache),
     generateForScript: Boolean = false,
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
@@ -49,20 +50,21 @@ public fun ActionCoords.generateBinding(
     }
 
     val metadataProcessed = metadata.removeDeprecatedInputsIfNameClash()
-    checkPropertiesAreValid(metadataProcessed, inputTypings)
-    metadataProcessed.suggestAdditionalTypings(inputTypings.keys)?.let { formatSuggestions ->
+    checkPropertiesAreValid(metadataProcessed, inputTypings.first)
+    metadataProcessed.suggestAdditionalTypings(inputTypings.first.keys)?.let { formatSuggestions ->
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
 
     val className = this.buildActionClassName(includeVersion = !generateForScript)
     val actionBindingSourceCode =
-        generateActionBindingSourceCode(metadataProcessed, this, inputTypings, className, generateForScript = generateForScript)
+        generateActionBindingSourceCode(metadataProcessed, this, inputTypings.first, className, generateForScript = generateForScript)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
         filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
         className = className,
         packageName = packageName,
+        typingActualSource = inputTypings.second,
     )
 }
 

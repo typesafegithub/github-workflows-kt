@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
-public enum class TypingInferredSource {
+public enum class TypingActualSource {
     ACTION,
     TYPING_CATALOG,
+    CACHE,
 }

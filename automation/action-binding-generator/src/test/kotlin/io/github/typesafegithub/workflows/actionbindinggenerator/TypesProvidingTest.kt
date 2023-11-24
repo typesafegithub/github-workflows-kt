@@ -47,7 +47,7 @@ class TypesProvidingTest : FunSpec({
         val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
         // Then
-        types shouldBe
+        types.first shouldBe
             mapOf(
                 "name" to StringTyping,
                 "verbose" to BooleanTyping,
