@@ -1,6 +1,0 @@
-# See https://github.com/typesafegithub/github-actions-typing
-inputs:
-  hugo-version:
-    type: string
-  extended:
-    type: boolean
