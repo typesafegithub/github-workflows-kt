@@ -20,7 +20,7 @@ private fun readLocalActionTypings(): List<ActionBindingRequest> {
 
     return Files.walk(actionTypingsDirectory).asSequence()
         .filter { it.isRegularFile() }
-        .filter { it.name !in setOf("commit-hash.txt") }
+        .filter { it.name !in setOf("commit-hash.txt", "action") }
         .map {
             val pathParts = it.toFile().invariantSeparatorsPath.split("/")
             // pathParts[0] is "actions" directory
