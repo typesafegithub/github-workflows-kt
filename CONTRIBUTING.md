@@ -31,8 +31,8 @@ However, it's also pretty easy to add support for it yourself! In case of troubl
   * create a first file: `commit-hash.txt`. It contains a full commit hash of the commit in the action's repo from which
     the metadata should be fetched. It improves reproducibility of builds in this repository. Check the hash by
     following the branch/tag corresponding to `<version>`
-  * create a second file: `action`. It's just a marker file so that the code generator knows that it should generate a
-    binding for an action with coordinates corresponding to this directory's path
+  * create a second file: `action`. It should be empty. It's just a marker file so that the code generator knows that it
+    should generate a binding for an action with coordinates corresponding to this directory's path
   * run `./gradlew :automation:code-generator:run` to (re)generate various files
   * check if everything builds fine using `./gradlew build` and create the commit and the PR
 
