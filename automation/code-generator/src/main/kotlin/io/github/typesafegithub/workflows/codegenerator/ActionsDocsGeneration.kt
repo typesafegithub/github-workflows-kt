@@ -2,9 +2,8 @@ package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
-import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
+import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.actionsmetadata.model.TypingsSource
 import io.github.typesafegithub.workflows.actionsmetadata.model.Version
 import java.nio.file.Paths
 
@@ -32,17 +31,20 @@ internal fun generateListOfBindingsForDocs(requestsAndBindings: List<Pair<Action
                         val kotlinClasses =
                             versions
                                 .sortedBy { Version(it.first.actionCoords.version) }
-                                .joinToString(", ") { it.first.toMarkdownLinkToKotlinCode(it.second.packageName, it.second.className) }
+                                .joinToString(", ") { it.toMarkdownLinkToKotlinCode(it.second.packageName, it.second.className) }
                         writer.println("    * ${versions.first().first.actionCoords.toMarkdownLinkGithub()} - $kotlinClasses")
                     }
             }
 
-        val uniqueActionsCount = bindingsToGenerate.groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
+        val uniqueActionsCount =
+            requestsAndBindings
+                .map { it.first }
+                .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
         val uniqueActionsProvidingTypingsCount =
-            bindingsToGenerate
-                .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
-                .mapValues { (_, versions) -> versions.maxByOrNull { Version(it.actionCoords.version) } }
-                .count { (_, actionBindingRequest) -> actionBindingRequest?.typingsSource == TypingsSource.ActionTypes }
+            requestsAndBindings
+                .groupBy { "${it.first.actionCoords.owner}/${it.first.actionCoords.name}" }
+                .mapValues { (_, versions) -> versions.maxByOrNull { Version(it.first.actionCoords.version) } }
+                .count { (_, requestAndBinding) -> requestAndBinding?.second?.typingActualSource == TypingActualSource.ACTION }
 
         writer.println(
             """
@@ -52,7 +54,7 @@ internal fun generateListOfBindingsForDocs(requestsAndBindings: List<Pair<Action
             Number of bindings available:
 
             * counting by actions: $uniqueActionsCount
-            * counting each version separately: ${bindingsToGenerate.size}
+            * counting each version separately: ${requestsAndBindings.size}
 
             Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): $uniqueActionsProvidingTypingsCount
             """.trimIndent(),
@@ -66,12 +68,12 @@ internal fun deleteListOfBindingsInDocs() {
 
 private val listOfBindingsInDocs = Paths.get("docs/supported-actions.md")
 
-private fun ActionBindingRequest.toMarkdownLinkToKotlinCode(
+private fun Pair<ActionBindingRequest, ActionBinding>.toMarkdownLinkToKotlinCode(
     packageName: String,
     className: String,
 ): String {
-    val typingsMarker = if (typingsSource == TypingsSource.ActionTypes) " ✅" else ""
-    return "${actionCoords.version}$typingsMarker: [`$className`](" +
+    val typingsMarker = if (this.second.typingActualSource == TypingActualSource.ACTION) " ✅" else ""
+    return "${this.first.actionCoords.version}$typingsMarker: [`$className`](" +
         "https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/" +
         "typesafegithub/workflows/actions/$packageName/$className.kt)"
 }

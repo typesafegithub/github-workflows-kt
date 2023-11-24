@@ -1,6 +1,9 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import com.charleskorn.kaml.Yaml
+import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.CACHE
+import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.TYPING_CATALOG
 import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.IOException
@@ -12,10 +15,13 @@ internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
     useCache: Boolean = true,
-): Map<String, Typing> =
-    this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)?.toTypesMap()
-        ?: this.fetchFromTypingsFromCatalog(fetchUri)?.toTypesMap()
-        ?: emptyMap()
+): Pair<Map<String, Typing>, TypingActualSource?> =
+    (
+        this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)
+            ?: this.fetchFromTypingsFromCatalog(fetchUri)
+    )
+        ?.let { Pair(it.first.toTypesMap(), it.second) }
+        ?: Pair(emptyMap(), null)
 
 private val actionTypesYamlDir: File = File("build/action-types-yaml")
 
@@ -45,12 +51,12 @@ private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
     useCache: Boolean,
-): ActionTypes? {
+): Pair<ActionTypes, TypingActualSource>? {
     val cacheFile = actionTypesYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
     if (useCache) {
         if (cacheFile.canRead()) {
             println("  ... types from cache: $cacheFile")
-            return myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes())
+            return Pair(myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes()), CACHE)
         }
     }
 
@@ -76,11 +82,11 @@ private fun ActionCoords.fetchTypingMetadata(
         cacheFile.writeText(typesMetadataYaml)
     }
 
-    return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes())
+    return Pair(myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }
 
-private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): ActionTypes? =
-    fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
+private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): Pair<ActionTypes, TypingActualSource>? =
+    fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)?.let { Pair(it, TYPING_CATALOG) }
 
 private fun fetchTypingsFromUrl(
     url: String,

@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.ACTION
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -163,15 +164,18 @@ class GenerationTest : FunSpec({
                 metadataRevision = FromLockfile,
                 metadata = actionManifest,
                 inputTypings =
-                    mapOf(
-                        "baz-goo" to BooleanTyping,
-                        "bin-kin" to BooleanTyping,
-                        "int-pint" to IntegerTyping,
-                        "flo-pint" to FloatTyping,
-                        "boo-zoo" to ListOfTypings(","),
-                        "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
-                        "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
-                        "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                    Pair(
+                        mapOf(
+                            "baz-goo" to BooleanTyping,
+                            "bin-kin" to BooleanTyping,
+                            "int-pint" to IntegerTyping,
+                            "flo-pint" to FloatTyping,
+                            "boo-zoo" to ListOfTypings(","),
+                            "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
+                            "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
+                            "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                        ),
+                        ACTION,
                     ),
             )
 
@@ -223,10 +227,13 @@ class GenerationTest : FunSpec({
                     ),
             )
         val inputTypings =
-            mapOf(
-                "check-latest" to BooleanTyping,
-                "foo-bar" to BooleanTyping,
-                "bazGoo" to BooleanTyping,
+            Pair(
+                mapOf(
+                    "check-latest" to BooleanTyping,
+                    "foo-bar" to BooleanTyping,
+                    "bazGoo" to BooleanTyping,
+                ),
+                ACTION,
             )
         val coords = ActionCoords("actions", "setup-node", "v2")
 
@@ -333,19 +340,22 @@ class GenerationTest : FunSpec({
                     ),
             )
         val inputTypings =
-            mapOf(
-                "list-strings" to ListOfTypings(",", StringTyping),
-                "list-ints" to ListOfTypings(",", IntegerTyping),
-                "list-enums" to
-                    ListOfTypings(
-                        delimiter = ",",
-                        typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
-                    ),
-                "list-int-special" to
-                    ListOfTypings(
-                        delimiter = ",",
-                        typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
-                    ),
+            Pair(
+                mapOf(
+                    "list-strings" to ListOfTypings(",", StringTyping),
+                    "list-ints" to ListOfTypings(",", IntegerTyping),
+                    "list-enums" to
+                        ListOfTypings(
+                            delimiter = ",",
+                            typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
+                        ),
+                    "list-int-special" to
+                        ListOfTypings(
+                            delimiter = ",",
+                            typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
+                        ),
+                ),
+                ACTION,
             )
         val coords = ActionCoords("john-smith", "simple-action-with-lists", "v3")
 
@@ -394,10 +404,13 @@ class GenerationTest : FunSpec({
                 metadataRevision = FromLockfile,
                 metadata = actionManifest,
                 inputTypings =
-                    mapOf(
-                        "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                        "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                        "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                    Pair(
+                        mapOf(
+                            "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                            "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                            "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                        ),
+                        ACTION,
                     ),
             )
 
@@ -445,8 +458,11 @@ class GenerationTest : FunSpec({
                 metadata = actionManifest,
                 generateForScript = true,
                 inputTypings =
-                    mapOf(
-                        "baz-goo" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                    Pair(
+                        mapOf(
+                            "baz-goo" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                        ),
+                        ACTION,
                     ),
             )
 
