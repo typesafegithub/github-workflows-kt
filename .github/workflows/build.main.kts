@@ -65,7 +65,7 @@ workflow(
                 name = "Publish '$library' to Sonatype",
                 condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
                 action = GradleBuildAction(
-                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository",
+                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
                 ),
             )
         }
