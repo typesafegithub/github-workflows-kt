@@ -19,9 +19,13 @@ nexusPublishing {
 }
 
 val setIsSnapshotFlagInGithubOutput by tasks.registering {
+    // This property of a project needs to be resolved before the 'doLast' block because otherwise, Gradle
+    // configuration cache cannot be used.
+    val version = version
+
     doLast {
         val filePath = System.getenv("GITHUB_OUTPUT") ?: error("Expected GITHUB_OUTPUT variable to be set!")
-        val isSnapshot = project.version.toString().endsWith("-SNAPSHOT")
+        val isSnapshot = version.toString().endsWith("-SNAPSHOT")
         File(filePath).appendText("is-snapshot=$isSnapshot\n")
     }
 }
