@@ -50,7 +50,6 @@ public fun ActionCoords.generateBinding(
     }
 
     val metadataProcessed = metadata.removeDeprecatedInputsIfNameClash()
-    checkPropertiesAreValid(metadataProcessed, inputTypings.first)
     metadataProcessed.suggestAdditionalTypings(inputTypings.first.keys)?.let { formatSuggestions ->
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
@@ -78,20 +77,6 @@ private fun Metadata.removeDeprecatedInputsIfNameClash(): Metadata {
                     ?: clashingInputs.first()
             }.values.associateBy({ it.key }, { it.value })
     return this.copy(inputs = newInputs)
-}
-
-private fun checkPropertiesAreValid(
-    metadata: Metadata,
-    inputTypings: Map<String, Typing>,
-) {
-    val invalidProperties = inputTypings.keys - metadata.inputs.keys
-    require(invalidProperties.isEmpty()) {
-        """
-        Request contains invalid properties:
-        Available: ${metadata.inputs.keys}
-        Invalid:   $invalidProperties
-        """.trimIndent()
-    }
 }
 
 private fun generateActionBindingSourceCode(
