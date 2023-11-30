@@ -22,7 +22,7 @@ dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.1")
 
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     testImplementation("dev.zacsweers.kctfork:core:0.4.0")
     testImplementation("com.lemonappdev:konsist:0.13.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
