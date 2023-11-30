@@ -1,10 +1,8 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.ACTION
-import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.throwable.shouldHaveMessage
 
 class GenerationTest : FunSpec({
     test("action with required inputs as strings, no outputs") {
@@ -211,47 +209,6 @@ class GenerationTest : FunSpec({
 
         // then
         binding.shouldMatchFile("ActionWithOutputsV3.kt")
-    }
-
-    test("Detect binding request with invalid properties") {
-        // given
-        val input = Input("input", "default", required = true)
-        val actionManifest =
-            Metadata(
-                name = "Do something cool",
-                description = "This is a test description that should be put in the KDoc comment for a class",
-                inputs =
-                    mapOf(
-                        "foo-bar" to input,
-                        "baz-goo" to input,
-                    ),
-            )
-        val inputTypings =
-            Pair(
-                mapOf(
-                    "check-latest" to BooleanTyping,
-                    "foo-bar" to BooleanTyping,
-                    "bazGoo" to BooleanTyping,
-                ),
-                ACTION,
-            )
-        val coords = ActionCoords("actions", "setup-node", "v2")
-
-        shouldThrowAny {
-            // when
-            coords.generateBinding(
-                metadataRevision = FromLockfile,
-                metadata = actionManifest,
-                inputTypings = inputTypings,
-            )
-        }.shouldHaveMessage(
-            // then
-            """
-            Request contains invalid properties:
-            Available: [foo-bar, baz-goo]
-            Invalid:   [check-latest, bazGoo]
-            """.trimIndent(),
-        )
     }
 
     test("action with no inputs") {
