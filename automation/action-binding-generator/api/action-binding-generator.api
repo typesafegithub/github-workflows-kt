@@ -69,8 +69,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Gen
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/GenerationKt {
-	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision;ZLio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Lkotlin/Pair;Z)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
-	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision;ZLio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Lkotlin/Pair;ZILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Lkotlin/Pair;Z)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
+	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/Metadata;Lkotlin/Pair;ZILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/ActionBinding;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/Input {
@@ -142,10 +142,6 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Met
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/MetadataReadingKt {
-	public static final fun deleteActionYamlCacheIfObsolete ()V
-}
-
 public abstract interface class io/github/typesafegithub/workflows/actionbindinggenerator/MetadataRevision {
 }
 
@@ -185,16 +181,11 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Out
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/TypesProvidingKt {
-	public static final fun deleteActionTypesYamlCacheIfObsolete ()V
-}
-
 public abstract interface class io/github/typesafegithub/workflows/actionbindinggenerator/Typing {
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/TypingActualSource : java/lang/Enum {
 	public static final field ACTION Lio/github/typesafegithub/workflows/actionbindinggenerator/TypingActualSource;
-	public static final field CACHE Lio/github/typesafegithub/workflows/actionbindinggenerator/TypingActualSource;
 	public static final field TYPING_CATALOG Lio/github/typesafegithub/workflows/actionbindinggenerator/TypingActualSource;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/TypingActualSource;

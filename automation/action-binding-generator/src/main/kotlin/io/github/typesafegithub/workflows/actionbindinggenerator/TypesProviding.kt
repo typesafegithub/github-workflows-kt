@@ -2,40 +2,22 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.ACTION
-import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.CACHE
 import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.TYPING_CATALOG
 import kotlinx.serialization.decodeFromString
-import java.io.File
 import java.io.IOException
 import java.net.URI
 import java.nio.file.Path
-import java.time.LocalDate
 
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-    useCache: Boolean = true,
 ): Pair<Map<String, Typing>, TypingActualSource?> =
     (
-        this.fetchTypingMetadata(metadataRevision, fetchUri, useCache = useCache)
+        this.fetchTypingMetadata(metadataRevision, fetchUri)
             ?: this.fetchFromTypingsFromCatalog(fetchUri)
     )
         ?.let { Pair(it.first.toTypesMap(), it.second) }
         ?: Pair(emptyMap(), null)
-
-private val actionTypesYamlDir: File = File("build/action-types-yaml")
-
-public fun deleteActionTypesYamlCacheIfObsolete() {
-    val today = LocalDate.now().toString()
-    val dateTxt = actionTypesYamlDir.resolve("date.txt")
-    val cacheUpToDate = dateTxt.canRead() && dateTxt.readText() == today
-
-    if (!cacheUpToDate) {
-        actionTypesYamlDir.deleteRecursively()
-        actionTypesYamlDir.mkdir()
-        dateTxt.writeText(today)
-    }
-}
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yml"
@@ -50,16 +32,7 @@ private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-    useCache: Boolean,
 ): Pair<ActionTypes, TypingActualSource>? {
-    val cacheFile = actionTypesYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
-    if (useCache) {
-        if (cacheFile.canRead()) {
-            println("  ... types from cache: $cacheFile")
-            return Pair(myYaml.decodeFromStringOrDefaultIfEmpty(cacheFile.readText(), ActionTypes()), CACHE)
-        }
-    }
-
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
@@ -76,11 +49,6 @@ private fun ActionCoords.fetchTypingMetadata(
                 null
             }
         } ?: return null
-
-    if (useCache) {
-        cacheFile.parentFile.mkdirs()
-        cacheFile.writeText(typesMetadataYaml)
-    }
 
     return Pair(myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }

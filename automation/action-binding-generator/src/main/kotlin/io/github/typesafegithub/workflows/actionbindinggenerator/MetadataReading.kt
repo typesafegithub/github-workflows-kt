@@ -2,11 +2,9 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
-import java.io.File
 import java.io.IOException
 import java.net.URI
 import java.nio.file.Path
-import java.time.LocalDate
 
 /**
  * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
@@ -49,17 +47,8 @@ internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$
 
 internal fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
-    useCache: Boolean = true,
     fetchUri: (URI) -> String = ::fetchUri,
 ): Metadata {
-    if (useCache) {
-        val cacheFile = actionYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
-        if (cacheFile.canRead()) {
-            println("  ... from cache: $cacheFile")
-            return myYaml.decodeFromString(cacheFile.readText())
-        }
-    }
-
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
@@ -80,11 +69,6 @@ internal fun ActionCoords.fetchMetadata(
                 "Check release page $releasesUrl",
         )
 
-    if (useCache) {
-        val cacheFile = actionYamlDir.resolve("$owner-${name.replace('/', '_')}-$version.yml")
-        cacheFile.parentFile.mkdirs()
-        cacheFile.writeText(metadataYaml)
-    }
     return myYaml.decodeFromString(metadataYaml)
 }
 
@@ -92,17 +76,3 @@ private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()
-
-private val actionYamlDir: File = File("build/action-yaml")
-
-public fun deleteActionYamlCacheIfObsolete() {
-    val today = LocalDate.now().toString()
-    val dateTxt = actionYamlDir.resolve("date.txt")
-    val cacheUpToDate = dateTxt.canRead() && dateTxt.readText() == today
-
-    if (!cacheUpToDate) {
-        actionYamlDir.deleteRecursively()
-        actionYamlDir.mkdirs()
-        dateTxt.writeText(today)
-    }
-}

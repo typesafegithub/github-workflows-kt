@@ -2,8 +2,6 @@ package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.FromLockfile
-import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionTypesYamlCacheIfObsolete
-import io.github.typesafegithub.workflows.actionbindinggenerator.deleteActionYamlCacheIfObsolete
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
 import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
@@ -24,9 +22,6 @@ fun main() {
 }
 
 private fun generateBindings(): List<Pair<ActionBindingRequest, ActionBinding>> {
-    deleteActionYamlCacheIfObsolete()
-    deleteActionTypesYamlCacheIfObsolete()
-
     val requestsAndBindings =
         bindingsToGenerate.map { actionBindingRequest ->
             println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")

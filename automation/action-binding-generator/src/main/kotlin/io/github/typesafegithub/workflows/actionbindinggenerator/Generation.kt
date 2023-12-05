@@ -40,9 +40,8 @@ private object Properties {
 
 public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
-    useCache: Boolean = true,
-    metadata: Metadata = this.fetchMetadata(metadataRevision, useCache = useCache),
-    inputTypings: Pair<Map<String, Typing>, TypingActualSource?> = provideTypes(metadataRevision, useCache = useCache),
+    metadata: Metadata = this.fetchMetadata(metadataRevision),
+    inputTypings: Pair<Map<String, Typing>, TypingActualSource?> = provideTypes(metadataRevision),
     generateForScript: Boolean = false,
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
