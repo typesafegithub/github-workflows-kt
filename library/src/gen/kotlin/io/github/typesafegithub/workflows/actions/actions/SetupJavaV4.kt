@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,26 +26,26 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-java)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupJavaV4",
-    replaceWith = ReplaceWith("SetupJavaV4"),
-)
-public data class SetupJavaV2 private constructor(
+public data class SetupJavaV4 private constructor(
     /**
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported
      * syntax in README file
      */
-    public val javaVersion: String,
+    public val javaVersion: String? = null,
+    /**
+     * The path to the `.java-version` file. See examples of supported syntax in README file
+     */
+    public val javaVersionFile: String? = null,
     /**
      * Java distribution. See the list of supported distributions in README file
      */
-    public val distribution: SetupJavaV2.Distribution,
+    public val distribution: SetupJavaV4.Distribution,
     /**
      * The package type (jdk, jre, jdk+fx, jre+fx)
      */
-    public val javaPackage: SetupJavaV2.JavaPackage? = null,
+    public val javaPackage: SetupJavaV4.JavaPackage? = null,
     /**
-     * The architecture of the package
+     * The architecture of the package (defaults to the action runner's architecture)
      */
     public val architecture: String? = null,
     /**
@@ -90,14 +88,38 @@ public data class SetupJavaV2 private constructor(
      */
     public val gpgPassphrase: String? = null,
     /**
-     * Name of the build platform to cache dependencies. It can be "maven" or "gradle".
+     * Name of the build platform to cache dependencies. It can be "maven", "gradle" or "sbt".
      */
-    public val cache: SetupJavaV2.BuildPlatform? = null,
+    public val cache: SetupJavaV4.BuildPlatform? = null,
+    /**
+     * The path to a dependency file: pom.xml, build.gradle, build.sbt, etc. This option can be used
+     * with the `cache` option. If this option is omitted, the action searches for the dependency file
+     * in the entire repository. This option supports wildcards and a list of file names for caching
+     * multiple dependencies.
+     */
+    public val cacheDependencyPath: String? = null,
     /**
      * Workaround to pass job status to post job step. This variable is not intended for manual
      * setting
      */
     public val jobStatus: String? = null,
+    /**
+     * The token used to authenticate when fetching version manifests hosted on github.com, such as
+     * for the Microsoft Build of OpenJDK. When running this action on github.com, the default value is
+     * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
+     * experiencing rate limiting.
+     */
+    public val token: String? = null,
+    /**
+     * Name of Maven Toolchain ID if the default name of "${distribution}_${java-version}" is not
+     * wanted. See examples of supported syntax in Advanced Usage file
+     */
+    public val mvnToolchainId: String? = null,
+    /**
+     * Name of Maven Toolchain Vendor if the default name of "${distribution}" is not wanted. See
+     * examples of supported syntax in Advanced Usage file
+     */
+    public val mvnToolchainVendor: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -107,12 +129,13 @@ public data class SetupJavaV2 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SetupJavaV2.Outputs>("actions", "setup-java", _customVersion ?: "v2") {
+) : RegularAction<SetupJavaV4.Outputs>("actions", "setup-java", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        javaVersion: String,
-        distribution: SetupJavaV2.Distribution,
-        javaPackage: SetupJavaV2.JavaPackage? = null,
+        javaVersion: String? = null,
+        javaVersionFile: String? = null,
+        distribution: SetupJavaV4.Distribution,
+        javaPackage: SetupJavaV4.JavaPackage? = null,
         architecture: String? = null,
         jdkFile: String? = null,
         checkLatest: Boolean? = null,
@@ -123,21 +146,29 @@ public data class SetupJavaV2 private constructor(
         overwriteSettings: Boolean? = null,
         gpgPrivateKey: String? = null,
         gpgPassphrase: String? = null,
-        cache: SetupJavaV2.BuildPlatform? = null,
+        cache: SetupJavaV4.BuildPlatform? = null,
+        cacheDependencyPath: String? = null,
         jobStatus: String? = null,
+        token: String? = null,
+        mvnToolchainId: String? = null,
+        mvnToolchainVendor: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(javaVersion=javaVersion, distribution=distribution, javaPackage=javaPackage,
-            architecture=architecture, jdkFile=jdkFile, checkLatest=checkLatest, serverId=serverId,
-            serverUsername=serverUsername, serverPassword=serverPassword, settingsPath=settingsPath,
+    ) : this(javaVersion=javaVersion, javaVersionFile=javaVersionFile, distribution=distribution,
+            javaPackage=javaPackage, architecture=architecture, jdkFile=jdkFile,
+            checkLatest=checkLatest, serverId=serverId, serverUsername=serverUsername,
+            serverPassword=serverPassword, settingsPath=settingsPath,
             overwriteSettings=overwriteSettings, gpgPrivateKey=gpgPrivateKey,
-            gpgPassphrase=gpgPassphrase, cache=cache, jobStatus=jobStatus,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            gpgPassphrase=gpgPassphrase, cache=cache, cacheDependencyPath=cacheDependencyPath,
+            jobStatus=jobStatus, token=token, mvnToolchainId=mvnToolchainId,
+            mvnToolchainVendor=mvnToolchainVendor, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "java-version" to javaVersion,
+            javaVersion?.let { "java-version" to it },
+            javaVersionFile?.let { "java-version-file" to it },
             "distribution" to distribution.stringValue,
             javaPackage?.let { "java-package" to it.stringValue },
             architecture?.let { "architecture" to it },
@@ -151,7 +182,11 @@ public data class SetupJavaV2 private constructor(
             gpgPrivateKey?.let { "gpg-private-key" to it },
             gpgPassphrase?.let { "gpg-passphrase" to it },
             cache?.let { "cache" to it.stringValue },
+            cacheDependencyPath?.let { "cache-dependency-path" to it },
             jobStatus?.let { "job-status" to it },
+            token?.let { "token" to it },
+            mvnToolchainId?.let { "mvn-toolchain-id" to it },
+            mvnToolchainVendor?.let { "mvn-toolchain-vendor" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -161,51 +196,55 @@ public data class SetupJavaV2 private constructor(
     public sealed class Distribution(
         public val stringValue: String,
     ) {
-        public object Adopt : SetupJavaV2.Distribution("adopt")
+        public object Adopt : SetupJavaV4.Distribution("adopt")
 
-        public object AdoptHotspot : SetupJavaV2.Distribution("adopt-hotspot")
+        public object AdoptHotspot : SetupJavaV4.Distribution("adopt-hotspot")
 
-        public object AdoptOpenj9 : SetupJavaV2.Distribution("adopt-openj9")
+        public object AdoptOpenj9 : SetupJavaV4.Distribution("adopt-openj9")
 
-        public object Liberica : SetupJavaV2.Distribution("liberica")
+        public object Corretto : SetupJavaV4.Distribution("corretto")
 
-        public object Microsoft : SetupJavaV2.Distribution("microsoft")
+        public object Liberica : SetupJavaV4.Distribution("liberica")
 
-        public object Temurin : SetupJavaV2.Distribution("temurin")
+        public object Microsoft : SetupJavaV4.Distribution("microsoft")
 
-        public object Zulu : SetupJavaV2.Distribution("zulu")
+        public object Temurin : SetupJavaV4.Distribution("temurin")
+
+        public object Zulu : SetupJavaV4.Distribution("zulu")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJavaV2.Distribution(customStringValue)
+        ) : SetupJavaV4.Distribution(customStringValue)
     }
 
     public sealed class JavaPackage(
         public val stringValue: String,
     ) {
-        public object Jdk : SetupJavaV2.JavaPackage("jdk")
+        public object Jdk : SetupJavaV4.JavaPackage("jdk")
 
-        public object Jre : SetupJavaV2.JavaPackage("jre")
+        public object Jre : SetupJavaV4.JavaPackage("jre")
 
-        public object JdkPlusFx : SetupJavaV2.JavaPackage("jdk+fx")
+        public object JdkPlusFx : SetupJavaV4.JavaPackage("jdk+fx")
 
-        public object JrePlusFx : SetupJavaV2.JavaPackage("jre+fx")
+        public object JrePlusFx : SetupJavaV4.JavaPackage("jre+fx")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJavaV2.JavaPackage(customStringValue)
+        ) : SetupJavaV4.JavaPackage(customStringValue)
     }
 
     public sealed class BuildPlatform(
         public val stringValue: String,
     ) {
-        public object Maven : SetupJavaV2.BuildPlatform("maven")
+        public object Maven : SetupJavaV4.BuildPlatform("maven")
 
-        public object Gradle : SetupJavaV2.BuildPlatform("gradle")
+        public object Gradle : SetupJavaV4.BuildPlatform("gradle")
+
+        public object Sbt : SetupJavaV4.BuildPlatform("sbt")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJavaV2.BuildPlatform(customStringValue)
+        ) : SetupJavaV4.BuildPlatform(customStringValue)
     }
 
     public class Outputs(
@@ -225,5 +264,10 @@ public data class SetupJavaV2 private constructor(
          * Path to where the java environment has been installed (same as $JAVA_HOME)
          */
         public val path: String = "steps.$stepId.outputs.path"
+
+        /**
+         * A boolean value to indicate an exact match was found for the primary key
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
     }
 }

@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -26,6 +28,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-java)
  */
+@Deprecated(
+    message = "This action has a newer major version: SetupJavaV4",
+    replaceWith = ReplaceWith("SetupJavaV4"),
+)
 public data class SetupJavaV3 private constructor(
     /**
      * The Java version to set up. Takes a whole or semver Java version. See examples of supported

@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows.dsl
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4.Distribution.Adopt
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.kotest.assertions.throwables.shouldThrow
@@ -44,11 +44,11 @@ class JobBuilderTest : FunSpec({
                         )
                         uses(
                             name = "Set up Java",
-                            action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
+                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
                             _customArguments = mapOf("foo4" to true),
                         )
                         uses(
-                            action = SetupJavaV3(distribution = Adopt, javaVersion = "11"),
+                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
                             _customArguments = mapOf("foo5" to true),
                         )
                     }
