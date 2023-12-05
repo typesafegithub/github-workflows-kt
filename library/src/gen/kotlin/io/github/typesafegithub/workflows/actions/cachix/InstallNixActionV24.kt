@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.cachix
@@ -12,7 +11,7 @@ package io.github.typesafegithub.workflows.actions.cachix
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,11 +27,15 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: InstallNixActionV24",
-    replaceWith = ReplaceWith("InstallNixActionV24"),
-)
-public data class InstallNixActionV18 private constructor(
+public data class InstallNixActionV24 private constructor(
+    /**
+     * Gets appended to `/etc/nix/nix.conf` if passed.
+     */
+    public val extraNixConfig: String? = null,
+    /**
+     * Configure nix to pull from github using the given github token.
+     */
+    public val githubAccessToken: String? = null,
     /**
      * Installation URL that will contain a script to install Nix.
      */
@@ -46,9 +49,9 @@ public data class InstallNixActionV18 private constructor(
      */
     public val nixPath: String? = null,
     /**
-     * gets appended to `/etc/nix/nix.conf` if passed.
+     * Enable KVM for hardware-accelerated virtualization on Linux, if available.
      */
-    public val extraNixConfig: String? = null,
+    public val enableKvm: Boolean? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -58,26 +61,30 @@ public data class InstallNixActionV18 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v18") {
+) : RegularAction<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v24") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
+        extraNixConfig: String? = null,
+        githubAccessToken: String? = null,
         installUrl: String? = null,
         installOptions: List<String>? = null,
         nixPath: String? = null,
-        extraNixConfig: String? = null,
+        enableKvm: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(installUrl=installUrl, installOptions=installOptions, nixPath=nixPath,
-            extraNixConfig=extraNixConfig, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+    ) : this(extraNixConfig=extraNixConfig, githubAccessToken=githubAccessToken,
+            installUrl=installUrl, installOptions=installOptions, nixPath=nixPath,
+            enableKvm=enableKvm, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
+            extraNixConfig?.let { "extra_nix_config" to it },
+            githubAccessToken?.let { "github_access_token" to it },
             installUrl?.let { "install_url" to it },
             installOptions?.let { "install_options" to it.joinToString("\n") },
             nixPath?.let { "nix_path" to it },
-            extraNixConfig?.let { "extra_nix_config" to it },
+            enableKvm?.let { "enable_kvm" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
