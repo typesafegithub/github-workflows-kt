@@ -81,7 +81,7 @@ Click on a version to see the binding's code.
     * [codeql-action/init](https://github.com/github/codeql-action/tree/v2/init) - v2: [`CodeqlActionInitV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/github/CodeqlActionInitV2.kt)
     * [codeql-action/upload-sarif](https://github.com/github/codeql-action/tree/v2/upload-sarif) - v2: [`CodeqlActionUploadSarifV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/github/CodeqlActionUploadSarifV2.kt)
 * google-github-actions
-    * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV0.kt), v1: [`AuthV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV1.kt)
+    * [auth](https://github.com/google-github-actions/auth) - v0: [`AuthV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV0.kt), v1: [`AuthV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV1.kt), v2: [`AuthV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/AuthV2.kt)
     * [setup-gcloud](https://github.com/google-github-actions/setup-gcloud) - v0: [`SetupGcloudV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/SetupGcloudV0.kt), v1: [`SetupGcloudV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlegithubactions/SetupGcloudV1.kt)
 * GoogleCloudPlatform
     * [github-actions](https://github.com/GoogleCloudPlatform/github-actions) - v0: [`GithubActionsV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlecloudplatform/GithubActionsV0.kt), v1: [`GithubActionsV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/googlecloudplatform/GithubActionsV1.kt)
@@ -142,6 +142,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 136
+* counting each version separately: 137
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18

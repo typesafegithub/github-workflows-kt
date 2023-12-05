@@ -32,8 +32,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/google-github-actions/auth)
  */
 @Deprecated(
-    message = "This action has a newer major version: AuthV1",
-    replaceWith = ReplaceWith("AuthV1"),
+    message = "This action has a newer major version: AuthV2",
+    replaceWith = ReplaceWith("AuthV2"),
 )
 public data class AuthV0 private constructor(
     /**

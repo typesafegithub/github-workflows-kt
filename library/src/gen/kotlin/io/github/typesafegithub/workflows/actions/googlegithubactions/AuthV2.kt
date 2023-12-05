@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.googlegithubactions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -31,11 +29,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/google-github-actions/auth)
  */
-@Deprecated(
-    message = "This action has a newer major version: AuthV2",
-    replaceWith = ReplaceWith("AuthV2"),
-)
-public data class AuthV1 private constructor(
+public data class AuthV2 private constructor(
     /**
      * ID of the default project to use for future API calls and invocations. If
      * unspecified, this action will attempt to extract the value from other
@@ -100,12 +94,19 @@ public data class AuthV1 private constructor(
      * tokens, specify "access_token". For OIDC tokens, specify "id_token". To
      * skip token generation, leave this value empty.
      */
-    public val tokenFormat: AuthV1.TokenFormat? = null,
+    public val tokenFormat: AuthV2.TokenFormat? = null,
     /**
      * List of additional service account emails or unique identities to use for
      * impersonation in the chain.
      */
     public val delegates: List<String>? = null,
+    /**
+     * The Google Cloud universe to use for constructing API endpoints. The
+     * default universe is "googleapis.com", which corresponds to
+     * https://cloud.google.com. Trusted Partner Cloud and Google Distributed
+     * Hosted Cloud should set this to their universe address.
+     */
+    public val universe: String? = null,
     /**
      * If true, the action will remove any created credentials from the
      * filesystem upon completion. This only applies if "create_credentials_file"
@@ -166,7 +167,7 @@ public data class AuthV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<AuthV1.Outputs>("google-github-actions", "auth", _customVersion ?: "v1") {
+) : RegularAction<AuthV2.Outputs>("google-github-actions", "auth", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         projectId: String? = null,
@@ -176,8 +177,9 @@ public data class AuthV1 private constructor(
         credentialsJson: String? = null,
         createCredentialsFile: Boolean? = null,
         exportEnvironmentVariables: Boolean? = null,
-        tokenFormat: AuthV1.TokenFormat? = null,
+        tokenFormat: AuthV2.TokenFormat? = null,
         delegates: List<String>? = null,
+        universe: String? = null,
         cleanupCredentials: Boolean? = null,
         accessTokenLifetime: String? = null,
         accessTokenScopes: List<String>? = null,
@@ -193,7 +195,7 @@ public data class AuthV1 private constructor(
             serviceAccount=serviceAccount, audience=audience, credentialsJson=credentialsJson,
             createCredentialsFile=createCredentialsFile,
             exportEnvironmentVariables=exportEnvironmentVariables, tokenFormat=tokenFormat,
-            delegates=delegates, cleanupCredentials=cleanupCredentials,
+            delegates=delegates, universe=universe, cleanupCredentials=cleanupCredentials,
             accessTokenLifetime=accessTokenLifetime, accessTokenScopes=accessTokenScopes,
             accessTokenSubject=accessTokenSubject, retries=retries, backoff=backoff,
             backoffLimit=backoffLimit, idTokenAudience=idTokenAudience,
@@ -212,6 +214,7 @@ public data class AuthV1 private constructor(
             exportEnvironmentVariables?.let { "export_environment_variables" to it.toString() },
             tokenFormat?.let { "token_format" to it.stringValue },
             delegates?.let { "delegates" to it.joinToString(",") },
+            universe?.let { "universe" to it },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },
             accessTokenLifetime?.let { "access_token_lifetime" to it },
             accessTokenScopes?.let { "access_token_scopes" to it.joinToString(",") },
@@ -230,13 +233,13 @@ public data class AuthV1 private constructor(
     public sealed class TokenFormat(
         public val stringValue: String,
     ) {
-        public object AccessToken : AuthV1.TokenFormat("access_token")
+        public object AccessToken : AuthV2.TokenFormat("access_token")
 
-        public object IdToken : AuthV1.TokenFormat("id_token")
+        public object IdToken : AuthV2.TokenFormat("id_token")
 
         public class Custom(
             customStringValue: String,
-        ) : AuthV1.TokenFormat(customStringValue)
+        ) : AuthV2.TokenFormat(customStringValue)
     }
 
     public class Outputs(
@@ -254,16 +257,16 @@ public data class AuthV1 private constructor(
         public val credentialsFilePath: String = "steps.$stepId.outputs.credentials_file_path"
 
         /**
+         * The intermediate authentication token, which could be used to call other
+         * Google Cloud APIs, depending on how you configured IAM.
+         */
+        public val authToken: String = "steps.$stepId.outputs.auth_token"
+
+        /**
          * The Google Cloud access token for calling other Google Cloud APIs. This is
          * only available when "token_format" is "access_token".
          */
         public val accessToken: String = "steps.$stepId.outputs.access_token"
-
-        /**
-         * The RFC3339 UTC "Zulu" format timestamp for the access token. This is only
-         * available when "token_format" is "access_token".
-         */
-        public val accessTokenExpiration: String = "steps.$stepId.outputs.access_token_expiration"
 
         /**
          * The Google Cloud ID token. This is only available when "token_format" is
