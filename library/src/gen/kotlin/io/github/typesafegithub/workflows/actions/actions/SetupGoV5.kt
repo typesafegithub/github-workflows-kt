@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,13 +26,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-go)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupGoV5",
-    replaceWith = ReplaceWith("SetupGoV5"),
-)
-public data class SetupGoV3 private constructor(
+public data class SetupGoV5 private constructor(
     /**
-     * The Go version to download (if necessary) and use. Supports semver spec and ranges.
+     * The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure
+     * to enclose this option in single quotation marks.
      */
     public val goVersion: String? = null,
     /**
@@ -47,7 +42,7 @@ public data class SetupGoV3 private constructor(
      */
     public val checkLatest: Boolean? = null,
     /**
-     * Used to pull node distributions from go-versions. Since there's a default, this is typically
+     * Used to pull Go distributions from go-versions. Since there's a default, this is typically
      * not supplied by the user. When running this action on github.com, the default value is
      * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
      * experiencing rate limiting.
@@ -65,7 +60,7 @@ public data class SetupGoV3 private constructor(
      * Target architecture for Go to use. Examples: x86, x64. Will use system architecture by
      * default.
      */
-    public val architecture: SetupGoV3.Architecture? = null,
+    public val architecture: SetupGoV5.Architecture? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -75,7 +70,7 @@ public data class SetupGoV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SetupGoV3.Outputs>("actions", "setup-go", _customVersion ?: "v3") {
+) : RegularAction<SetupGoV5.Outputs>("actions", "setup-go", _customVersion ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         goVersion: String? = null,
@@ -84,7 +79,7 @@ public data class SetupGoV3 private constructor(
         token: String? = null,
         cache: Boolean? = null,
         cacheDependencyPath: String? = null,
-        architecture: SetupGoV3.Architecture? = null,
+        architecture: SetupGoV5.Architecture? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(goVersion=goVersion, goVersionFile=goVersionFile, checkLatest=checkLatest, token=token,
@@ -110,13 +105,13 @@ public data class SetupGoV3 private constructor(
     public sealed class Architecture(
         public val stringValue: String,
     ) {
-        public object X86 : SetupGoV3.Architecture("x86")
+        public object X86 : SetupGoV5.Architecture("x86")
 
-        public object X64 : SetupGoV3.Architecture("x64")
+        public object X64 : SetupGoV5.Architecture("x64")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupGoV3.Architecture(customStringValue)
+        ) : SetupGoV5.Architecture(customStringValue)
     }
 
     public class Outputs(
