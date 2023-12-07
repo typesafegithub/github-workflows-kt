@@ -24,7 +24,7 @@ https://github.com/orgs/community/discussions/15904. However, we only got
 [this answer](https://github.com/orgs/community/discussions/15904#discussioncomment-3304548) saying YAML won't go
 anywhere soon and there are no plans of providing an alternative way.
 
-## Why do we need ([github-actions-typing](https://github.com/typesafegithub/github-actions-typing))? Shouldn't it be done by GitHub?
+## Why do we need [github-actions-typing](https://github.com/typesafegithub/github-actions-typing)? Shouldn't it be done by GitHub?
 
 Yes, ideally it should. We've tried contacting GitHub and encouraging them to either introduce this mechanism as a
 first-party thing, or acknowledge this third-party tool to be recommended by GitHub.
