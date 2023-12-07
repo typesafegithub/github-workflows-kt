@@ -34,7 +34,7 @@ public data class MetadataActionV5 private constructor(
     /**
      * List of Docker images to use as base name for tags
      */
-    public val images: List<String>,
+    public val images: List<String>? = null,
     /**
      * List of tags as key-value pair attributes
      */
@@ -48,6 +48,10 @@ public data class MetadataActionV5 private constructor(
      */
     public val labels: List<String>? = null,
     /**
+     * List of custom annotations
+     */
+    public val annotations: List<String>? = null,
+    /**
      * Separator to use for tags output (default \n)
      */
     public val sepTags: String? = null,
@@ -55,6 +59,10 @@ public data class MetadataActionV5 private constructor(
      * Separator to use for labels output (default \n)
      */
     public val sepLabels: String? = null,
+    /**
+     * Separator to use for annotations output (default \n)
+     */
+    public val sepAnnotations: List<String>? = null,
     /**
      * Bake target name (default docker-metadata-action)
      */
@@ -76,30 +84,35 @@ public data class MetadataActionV5 private constructor(
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         context: MetadataActionV5.Context? = null,
-        images: List<String>,
+        images: List<String>? = null,
         tags: List<String>? = null,
         flavor: List<String>? = null,
         labels: List<String>? = null,
+        annotations: List<String>? = null,
         sepTags: String? = null,
         sepLabels: String? = null,
+        sepAnnotations: List<String>? = null,
         bakeTarget: String? = null,
         githubToken: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(context=context, images=images, tags=tags, flavor=flavor, labels=labels,
-            sepTags=sepTags, sepLabels=sepLabels, bakeTarget=bakeTarget, githubToken=githubToken,
+            annotations=annotations, sepTags=sepTags, sepLabels=sepLabels,
+            sepAnnotations=sepAnnotations, bakeTarget=bakeTarget, githubToken=githubToken,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             context?.let { "context" to it.stringValue },
-            "images" to images.joinToString("\n"),
+            images?.let { "images" to it.joinToString("\n") },
             tags?.let { "tags" to it.joinToString("\n") },
             flavor?.let { "flavor" to it.joinToString("\n") },
             labels?.let { "labels" to it.joinToString("\n") },
+            annotations?.let { "annotations" to it.joinToString("\n") },
             sepTags?.let { "sep-tags" to it },
             sepLabels?.let { "sep-labels" to it },
+            sepAnnotations?.let { "sep-annotations" to it.joinToString("\n") },
             bakeTarget?.let { "bake-target" to it },
             githubToken?.let { "github-token" to it },
             *_customInputs.toList().toTypedArray(),
@@ -139,13 +152,33 @@ public data class MetadataActionV5 private constructor(
         public val labels: String = "steps.$stepId.outputs.labels"
 
         /**
-         * Bake definiton file
+         * Generated annotations
          */
-        public val bakeFile: String = "steps.$stepId.outputs.bake-file"
+        public val annotations: String = "steps.$stepId.outputs.annotations"
 
         /**
          * JSON output of tags and labels
          */
         public val json: String = "steps.$stepId.outputs.json"
+
+        /**
+         * Bake definition file with tags
+         */
+        public val bakeFileTags: String = "steps.$stepId.outputs.bake-file-tags"
+
+        /**
+         * Bake definition file with labels
+         */
+        public val bakeFileLabels: String = "steps.$stepId.outputs.bake-file-labels"
+
+        /**
+         * Bake definiton file with annotations
+         */
+        public val bakeFileAnnotations: String = "steps.$stepId.outputs.bake-file-annotations"
+
+        /**
+         * Bake definition file with tags and labels
+         */
+        public val bakeFile: String = "steps.$stepId.outputs.bake-file"
     }
 }
