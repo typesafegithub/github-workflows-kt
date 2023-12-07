@@ -29,8 +29,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/actions/setup-python)
  */
 @Deprecated(
-    message = "This action has a newer major version: SetupPythonV4",
-    replaceWith = ReplaceWith("SetupPythonV4"),
+    message = "This action has a newer major version: SetupPythonV5",
+    replaceWith = ReplaceWith("SetupPythonV5"),
 )
 public data class SetupPythonV2 private constructor(
     /**

@@ -2,7 +2,7 @@ package io.github.typesafegithub.workflows
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.GithubScriptV7
-import io.github.typesafegithub.workflows.actions.actions.SetupPythonV4
+import io.github.typesafegithub.workflows.actions.actions.SetupPythonV5
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
@@ -161,7 +161,7 @@ class RunOnGitHubTest : FunSpec({
                                 },
                         )
 
-                        val addAndCommit = uses(action = SetupPythonV4())
+                        val addAndCommit = uses(action = SetupPythonV5())
 
                         uses(
                             name = "Some step consuming other step's output",

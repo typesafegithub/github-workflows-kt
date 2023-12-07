@@ -60,7 +60,7 @@ jobs:
       name: 'Run alpine'
       uses: 'docker://alpine:latest'
     - id: 'step-8'
-      uses: 'actions/setup-python@v4'
+      uses: 'actions/setup-python@v5'
     - id: 'step-9'
       name: 'Some step consuming other step''s output'
       uses: 'actions/checkout@v4'
