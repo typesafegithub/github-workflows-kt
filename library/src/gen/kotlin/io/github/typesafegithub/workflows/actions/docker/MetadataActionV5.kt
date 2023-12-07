@@ -50,7 +50,7 @@ public data class MetadataActionV5 private constructor(
     /**
      * List of custom annotations
      */
-    public val annotations: String? = null,
+    public val annotations: List<String>? = null,
     /**
      * Separator to use for tags output (default \n)
      */
@@ -62,7 +62,7 @@ public data class MetadataActionV5 private constructor(
     /**
      * Separator to use for annotations output (default \n)
      */
-    public val sepAnnotations: String? = null,
+    public val sepAnnotations: List<String>? = null,
     /**
      * Bake target name (default docker-metadata-action)
      */
@@ -88,10 +88,10 @@ public data class MetadataActionV5 private constructor(
         tags: List<String>? = null,
         flavor: List<String>? = null,
         labels: List<String>? = null,
-        annotations: String? = null,
+        annotations: List<String>? = null,
         sepTags: String? = null,
         sepLabels: String? = null,
-        sepAnnotations: String? = null,
+        sepAnnotations: List<String>? = null,
         bakeTarget: String? = null,
         githubToken: String? = null,
         _customInputs: Map<String, String> = mapOf(),
@@ -109,10 +109,10 @@ public data class MetadataActionV5 private constructor(
             tags?.let { "tags" to it.joinToString("\n") },
             flavor?.let { "flavor" to it.joinToString("\n") },
             labels?.let { "labels" to it.joinToString("\n") },
-            annotations?.let { "annotations" to it },
+            annotations?.let { "annotations" to it.joinToString("\n") },
             sepTags?.let { "sep-tags" to it },
             sepLabels?.let { "sep-labels" to it },
-            sepAnnotations?.let { "sep-annotations" to it },
+            sepAnnotations?.let { "sep-annotations" to it.joinToString("\n") },
             bakeTarget?.let { "bake-target" to it },
             githubToken?.let { "github-token" to it },
             *_customInputs.toList().toTypedArray(),
