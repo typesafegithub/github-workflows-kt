@@ -22,7 +22,7 @@ import kotlin.collections.toTypedArray
 /**
  * Action: Azure Login
  *
- * Authenticate to Azure and run your Az CLI or Az PowerShell based Actions or scripts. github.com/Azure/Actions
+ * Authenticate to Azure and run your Azure CLI or Azure PowerShell based actions or scripts.
  *
  * [Action on GitHub](https://github.com/Azure/login)
  */
@@ -44,7 +44,7 @@ public data class LoginV1 private constructor(
      */
     public val subscriptionId: String? = null,
     /**
-     * Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
+     * Set this value to true to enable Azure PowerShell Login in addition to Azure CLI login
      */
     public val enableAzPSSession: Boolean? = null,
     /**
@@ -53,13 +53,18 @@ public data class LoginV1 private constructor(
      */
     public val environment: LoginV1.Environment? = null,
     /**
-     * Set this value to true to enable support for accessing tenants without subscriptions
+     * Set this value to true to enable support for accessing tenants without subscriptions
      */
     public val allowNoSubscriptions: Boolean? = null,
     /**
      * Provide audience field for access-token. Default value is api://AzureADTokenExchange
      */
     public val audience: String? = null,
+    /**
+     * The type of authentication. Supported values are SERVICE_PRINCIPAL, IDENTITY. Default value
+     * is SERVICE_PRINCIPAL
+     */
+    public val authType: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -80,11 +85,12 @@ public data class LoginV1 private constructor(
         environment: LoginV1.Environment? = null,
         allowNoSubscriptions: Boolean? = null,
         audience: String? = null,
+        authType: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(creds=creds, clientId=clientId, tenantId=tenantId, subscriptionId=subscriptionId,
             enableAzPSSession=enableAzPSSession, environment=environment,
-            allowNoSubscriptions=allowNoSubscriptions, audience=audience,
+            allowNoSubscriptions=allowNoSubscriptions, audience=audience, authType=authType,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -98,6 +104,7 @@ public data class LoginV1 private constructor(
             environment?.let { "environment" to it.stringValue },
             allowNoSubscriptions?.let { "allow-no-subscriptions" to it.toString() },
             audience?.let { "audience" to it },
+            authType?.let { "auth-type" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
