@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,16 +27,17 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/setup-dotnet)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupDotnetV4",
-    replaceWith = ReplaceWith("SetupDotnetV4"),
-)
-public data class SetupDotnetV2 private constructor(
+public data class SetupDotnetV4 private constructor(
     /**
      * Optional SDK version(s) to use. If not provided, will install global.json version when
-     * available. Examples: 2.2.104, 3.1, 3.1.x
+     * available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
      */
     public val dotnetVersion: String? = null,
+    /**
+     * Optional quality of the build. The possible values are: daily, signed, validated, preview,
+     * ga.
+     */
+    public val dotnetQuality: SetupDotnetV4.DotNetQuality? = null,
     /**
      * Optional global.json location, if your global.json isn't located in the root of the repo.
      */
@@ -59,10 +58,14 @@ public data class SetupDotnetV2 private constructor(
      */
     public val configFile: String? = null,
     /**
-     * Whether prerelease versions should be matched with non-exact versions (for example
-     * 5.0.0-preview.6 being matched by 5, 5.0, 5.x or 5.0.x). Defaults to false if not provided.
+     * Optional input to enable caching of the NuGet global-packages folder
      */
-    public val includePrerelease: Boolean? = null,
+    public val cache: Boolean? = null,
+    /**
+     * Used to specify the path to a dependency file: packages.lock.json. Supports wildcards or a
+     * list of file names for caching multiple dependencies.
+     */
+    public val cacheDependencyPath: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -72,33 +75,70 @@ public data class SetupDotnetV2 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("actions", "setup-dotnet", _customVersion ?: "v2") {
+) : RegularAction<SetupDotnetV4.Outputs>("actions", "setup-dotnet", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         dotnetVersion: String? = null,
+        dotnetQuality: SetupDotnetV4.DotNetQuality? = null,
         globalJsonFile: String? = null,
         sourceUrl: String? = null,
         owner: String? = null,
         configFile: String? = null,
-        includePrerelease: Boolean? = null,
+        cache: Boolean? = null,
+        cacheDependencyPath: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(dotnetVersion=dotnetVersion, globalJsonFile=globalJsonFile, sourceUrl=sourceUrl,
-            owner=owner, configFile=configFile, includePrerelease=includePrerelease,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(dotnetVersion=dotnetVersion, dotnetQuality=dotnetQuality,
+            globalJsonFile=globalJsonFile, sourceUrl=sourceUrl, owner=owner, configFile=configFile,
+            cache=cache, cacheDependencyPath=cacheDependencyPath, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             dotnetVersion?.let { "dotnet-version" to it },
+            dotnetQuality?.let { "dotnet-quality" to it.stringValue },
             globalJsonFile?.let { "global-json-file" to it },
             sourceUrl?.let { "source-url" to it },
             owner?.let { "owner" to it },
             configFile?.let { "config-file" to it },
-            includePrerelease?.let { "include-prerelease" to it.toString() },
+            cache?.let { "cache" to it.toString() },
+            cacheDependencyPath?.let { "cache-dependency-path" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public sealed class DotNetQuality(
+        public val stringValue: String,
+    ) {
+        public object Daily : SetupDotnetV4.DotNetQuality("daily")
+
+        public object Signed : SetupDotnetV4.DotNetQuality("signed")
+
+        public object Validated : SetupDotnetV4.DotNetQuality("validated")
+
+        public object Preview : SetupDotnetV4.DotNetQuality("preview")
+
+        public object Ga : SetupDotnetV4.DotNetQuality("ga")
+
+        public class Custom(
+            customStringValue: String,
+        ) : SetupDotnetV4.DotNetQuality(customStringValue)
+    }
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * A boolean value to indicate if a cache was hit.
+         */
+        public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
+        /**
+         * Contains the installed by action .NET SDK version for reuse.
+         */
+        public val dotnetVersion: String = "steps.$stepId.outputs.dotnet-version"
+    }
 }
