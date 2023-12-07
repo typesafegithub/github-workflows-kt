@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/labeler)
  */
-@Deprecated(
-    message = "This action has a newer major version: LabelerV5",
-    replaceWith = ReplaceWith("LabelerV5"),
-)
-public data class LabelerV4 private constructor(
+public data class LabelerV5 private constructor(
     /**
      * The GitHub token used to manage labels
      */
@@ -63,7 +57,7 @@ public data class LabelerV4 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<LabelerV4.Outputs>("actions", "labeler", _customVersion ?: "v4") {
+) : RegularAction<LabelerV5.Outputs>("actions", "labeler", _customVersion ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         repoToken: String? = null,
