@@ -64,7 +64,7 @@ public data class LoginV1 private constructor(
      * The type of authentication. Supported values are SERVICE_PRINCIPAL, IDENTITY. Default value
      * is SERVICE_PRINCIPAL
      */
-    public val authType: String? = null,
+    public val authType: LoginV1.AuthType? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -85,7 +85,7 @@ public data class LoginV1 private constructor(
         environment: LoginV1.Environment? = null,
         allowNoSubscriptions: Boolean? = null,
         audience: String? = null,
-        authType: String? = null,
+        authType: LoginV1.AuthType? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(creds=creds, clientId=clientId, tenantId=tenantId, subscriptionId=subscriptionId,
@@ -104,7 +104,7 @@ public data class LoginV1 private constructor(
             environment?.let { "environment" to it.stringValue },
             allowNoSubscriptions?.let { "allow-no-subscriptions" to it.toString() },
             audience?.let { "audience" to it },
-            authType?.let { "auth-type" to it },
+            authType?.let { "auth-type" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -127,5 +127,17 @@ public data class LoginV1 private constructor(
         public class Custom(
             customStringValue: String,
         ) : LoginV1.Environment(customStringValue)
+    }
+
+    public sealed class AuthType(
+        public val stringValue: String,
+    ) {
+        public object ServicePrincipal : LoginV1.AuthType("SERVICE_PRINCIPAL")
+
+        public object Identity : LoginV1.AuthType("IDENTITY")
+
+        public class Custom(
+            customStringValue: String,
+        ) : LoginV1.AuthType(customStringValue)
     }
 }
