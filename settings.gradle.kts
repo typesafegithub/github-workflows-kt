@@ -4,9 +4,9 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 
 include(
     "library",
+    "action-binding-generator",
     ":automation:typings",
     ":automation:code-generator",
-    ":automation:action-binding-generator",
 )
 
 plugins {
