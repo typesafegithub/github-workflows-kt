@@ -82,9 +82,9 @@ val validateDuplicatedVersion by tasks.creating<Task> {
                 .contains("  version: $version")
         ) { "Library version stated in the docs should be equal to $version!" }
         require(
-            rootDir.resolve("automation/action-binding-generator/src/main/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/LibraryVersion.kt").readText()
+            rootDir.resolve("action-binding-generator/src/main/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/LibraryVersion.kt").readText()
                 .contains("internal const val LIBRARY_VERSION = \"$version\"")
-        ) { "Library version stated in automation/action-binding-generator/src/main/.../LibraryVersion.kt should be equal to $version!" }
+        ) { "Library version stated in action-binding-generator/src/main/.../LibraryVersion.kt should be equal to $version!" }
         require(
             rootDir.resolve("library/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
                 .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
