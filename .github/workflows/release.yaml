@@ -57,20 +57,20 @@ jobs:
       with:
         arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
     - id: 'step-5'
-      name: 'Publish '':automation:action-binding-generator'' to Sonatype'
+      name: 'Publish '':action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+        arguments: ':action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
     - id: 'step-6'
       name: 'Wait until '':library'' present in Maven Central'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':library:waitUntilLibraryPresentInMavenCentral'
     - id: 'step-7'
-      name: 'Wait until '':automation:action-binding-generator'' present in Maven Central'
+      name: 'Wait until '':action-binding-generator'' present in Maven Central'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:action-binding-generator:waitUntilLibraryPresentInMavenCentral'
+        arguments: ':action-binding-generator:waitUntilLibraryPresentInMavenCentral'
     - id: 'step-8'
       run: 'pip install -r docs/requirements.txt'
     - id: 'step-9'

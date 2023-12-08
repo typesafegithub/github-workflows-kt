@@ -93,10 +93,10 @@ jobs:
         arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-4'
-      name: 'Publish '':automation:action-binding-generator'' to Sonatype'
+      name: 'Publish '':action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':automation:action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+        arguments: ':action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'

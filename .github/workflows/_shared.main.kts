@@ -8,5 +8,5 @@ val disableScheduledJobInForks =
 
 val libraries = listOf(
     ":library",
-    ":automation:action-binding-generator",
+    ":action-binding-generator",
 )
