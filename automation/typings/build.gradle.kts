@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.automation.actionBindingGenerator)
+    implementation(projects.actionBindingGenerator)
 }
