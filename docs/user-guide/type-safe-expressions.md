@@ -161,4 +161,4 @@ There are more `github.event` payloads that we currently do not support: https:/
 
 We feel what we have is a pretty good start, but if you need an additional feature, you can [create an issue](https://github.com/typesafegithub/github-workflows-kt/issues)
 
-Or maybe have a look how this type-safe feature is implemented in [io.github.typesafegithub.workflows.dsl.expressions](https://github.com/typesafegithub/github-workflows-kt/tree/main/library/src/main/kotlin/io/github/typesafegithub/workflows/dsl/expressions) and [submit a pull request 🙏🏻](https://github.com/typesafegithub/github-workflows-kt/pulls)
+Or maybe have a look how this type-safe feature is implemented in [io.github.typesafegithub.workflows.dsl.expressions](https://github.com/typesafegithub/github-workflows-kt/tree/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/dsl/expressions) and [submit a pull request 🙏🏻](https://github.com/typesafegithub/github-workflows-kt/pulls)

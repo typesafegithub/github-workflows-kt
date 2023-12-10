@@ -29,7 +29,7 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.snippets:
       base_path:
-        - library/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets
+        - github-workflows-kt/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets
       check_paths: True
       dedent_subsections: True
   - admonition

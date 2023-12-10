@@ -7,7 +7,7 @@ your possibilities.
 ## Built-in actions
 
 Take a look here: [Supported actions](../supported-actions.md).
-These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt)
+These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt)
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to
 version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
@@ -42,7 +42,7 @@ you have two ways to proceed.
 
 #### Repository based actions
 
-In case of a repository based action which most GitHub actions are, inherit from [`RegularAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt)
+In case of a repository based action which most GitHub actions are, inherit from [`RegularAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt)
 and in case of actions without explicit outputs, use the `Actions.Outputs` class as type argument:
 
 ```kotlin
@@ -65,7 +65,7 @@ Once you've got your action, it's now as simple as using it like this:
 #### Local actions
 
 In case of a local action you have available in your repository or cloned from a private repository,
-inherit from [`LocalAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/LocalAction.kt) instead:
+inherit from [`LocalAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/LocalAction.kt) instead:
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:local-action"
@@ -73,7 +73,7 @@ inherit from [`LocalAction`](https://github.com/typesafegithub/github-workflows-
 
 #### Published Docker actions
 
-In case of a published Docker action, inherit from [`DockerAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/DockerAction.kt) instead:
+In case of a published Docker action, inherit from [`DockerAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/DockerAction.kt) instead:
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:docker-action"
@@ -88,7 +88,7 @@ In case of a published Docker action, inherit from [`DockerAction`](https://gith
 
 #### Repository based actions
 
-In case of a repository based action which most GitHub actions are, use a [`CustomAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomAction.kt):
+In case of a repository based action which most GitHub actions are, use a [`CustomAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomAction.kt):
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-action"
@@ -103,7 +103,7 @@ If your custom action has outputs, you can access them, albeit in a type-unsafe 
 #### Local actions
 
 In case of a local action you have available in your repository or cloned from a private repository,
-use a [`CustomLocalAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomLocalAction.kt) instead:
+use a [`CustomLocalAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomLocalAction.kt) instead:
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-local-action"
@@ -111,7 +111,7 @@ use a [`CustomLocalAction`](https://github.com/typesafegithub/github-workflows-k
 
 #### Published Docker actions
 
-In case of a published Docker action, use a [`CustomDockerAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomDockerAction.kt) instead:
+In case of a published Docker action, use a [`CustomDockerAction`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomDockerAction.kt) instead:
 
 ```kotlin
 --8<-- "UsingActionsSnippets.kt:custom-docker-action"
