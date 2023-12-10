@@ -49,7 +49,7 @@ private val EXPRESSIONS = "io.github.typesafegithub.workflows.dsl.expressions"
 private val PACKAGE = "$EXPRESSIONS.contexts"
 private val resourcesDir = File("automation/code-generator/src/main/resources/payloads")
 
-private val kotlinGenDir = File("library/src/gen/kotlin")
+private val kotlinGenDir = File("github-workflows-kt/src/gen/kotlin")
 
 // ClassNames
 private val fakeList = ClassName(EXPRESSIONS, "FakeList")
