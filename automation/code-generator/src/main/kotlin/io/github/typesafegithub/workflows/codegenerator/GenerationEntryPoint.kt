@@ -14,7 +14,7 @@ import java.nio.file.Paths
  */
 fun main() {
     // To ensure there are no leftovers from previous generations.
-    Paths.get("library/src/gen").toFile().deleteRecursively()
+    Paths.get("github-workflows-kt/src/gen").toFile().deleteRecursively()
     deleteListOfBindingsInDocs()
     generateEventPayloads()
     val requestsAndBindings = generateBindings()
