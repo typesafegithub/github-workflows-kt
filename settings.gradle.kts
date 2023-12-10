@@ -1,9 +1,9 @@
-rootProject.name = "github-workflows-kt"
+rootProject.name = "github-workflows-kt-monorepo"
 
 apply(from = "./buildSrc/repositories.settings.gradle.kts")
 
 include(
-    "library",
+    "github-workflows-kt",
     "action-binding-generator",
     ":automation:typings",
     ":automation:code-generator",
