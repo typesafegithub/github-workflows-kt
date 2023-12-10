@@ -14,8 +14,6 @@ version = rootProject.version
 dependencies {
     implementation("com.squareup:kotlinpoet:1.15.3")
     implementation("com.charleskorn.kaml:kaml:0.56.0")
-
-    testImplementation(projects.library)
 }
 
 kotlin {
