@@ -1,4 +1,4 @@
-rootProject.name = "github-workflows-kt-monorepo"
+rootProject.name = "github-workflows-kt-root"
 
 apply(from = "./buildSrc/repositories.settings.gradle.kts")
 
