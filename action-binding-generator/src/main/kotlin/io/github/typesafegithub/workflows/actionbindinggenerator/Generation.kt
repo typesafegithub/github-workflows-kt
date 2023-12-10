@@ -59,7 +59,7 @@ public fun ActionCoords.generateBinding(
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
-        filePath = "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
+        filePath = "github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
         className = className,
         packageName = packageName,
         typingActualSource = inputTypings.second,
