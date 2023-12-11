@@ -2,7 +2,7 @@ import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
 
 plugins {
     buildsrc.convention.`kotlin-jvm`
-    buildsrc.convention.`action-binding-generator-publishing`
+    buildsrc.convention.publishing
     kotlin("plugin.serialization")
 
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2"
