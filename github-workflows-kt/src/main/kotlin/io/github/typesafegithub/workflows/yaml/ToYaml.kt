@@ -7,8 +7,8 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.dsl.toBuilder
-import io.github.typesafegithub.workflows.internal.findGitRoot
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
+import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
