@@ -87,12 +87,18 @@ jobs:
       with:
         arguments: 'setIsSnapshotFlagInGithubOutput'
     - id: 'step-3'
+      name: 'Publish '':shared-internal'' to Sonatype'
+      uses: 'gradle/gradle-build-action@v2'
+      with:
+        arguments: ':shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
+    - id: 'step-4'
       name: 'Publish '':github-workflows-kt'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
-    - id: 'step-4'
+    - id: 'step-5'
       name: 'Publish '':action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
