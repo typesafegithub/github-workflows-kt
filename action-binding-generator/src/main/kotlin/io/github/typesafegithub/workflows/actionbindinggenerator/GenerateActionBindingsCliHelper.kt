@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
-import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.div
 
@@ -25,21 +24,23 @@ public fun generateActionBindings(
             else -> error("At most one argument is supported!")
         }
 
+    val githubWorkflowsDir = sourceFile.findGitRoot() / ".github" / "workflows"
+
     val allUsedActions =
         extractUsedActionsFromWorkflow(
-            manifest = File(".github/workflows/_used-actions.yaml").readText(),
+            manifest = (githubWorkflowsDir / "_used-actions.yaml").toFile().readText(),
         )
 
     val actionsToGenerateBindingsFor =
         workflowYamlFileName?.let {
             val actionsUsedInRequestedWorkflow =
                 extractUsedActionsFromWorkflow(
-                    manifest = File(".github/workflows/$workflowYamlFileName").readText(),
+                    manifest = (githubWorkflowsDir / workflowYamlFileName).toFile().readText(),
                 )
             allUsedActions.intersect(actionsUsedInRequestedWorkflow.toSet())
         } ?: allUsedActions
 
-    val generatedDir = sourceFile.findGitRoot() / ".github" / "workflows" / "generated"
+    val generatedDir = githubWorkflowsDir / "generated"
 
     actionsToGenerateBindingsFor.forEach { action ->
         (generatedDir / action.owner / "${action.name}.kt").let {
