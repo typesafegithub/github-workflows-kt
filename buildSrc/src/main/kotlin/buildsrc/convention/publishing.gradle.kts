@@ -9,7 +9,7 @@ plugins {
 
 val githubUser = "typesafegithub"
 val repositoryName = "github-workflows-kt"
-val mavenLibraryName = "action-binding-generator"
+val mavenLibraryName = project.name
 
 publishing {
     publications {
@@ -19,7 +19,7 @@ publishing {
 
             pom {
                 name.set(mavenLibraryName)
-                description.set("A companion library for github-workflows-kt for generating Kotlin bindings for any GitHub action.")
+                description.set("Authoring GitHub Actions workflows in Kotlin.")
                 url.set("https://github.com/$githubUser/$repositoryName")
 
                 licenses {

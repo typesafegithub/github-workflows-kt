@@ -3,7 +3,7 @@ import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
 
 plugins {
     buildsrc.convention.`kotlin-jvm`
-    buildsrc.convention.`dsl-publishing`
+    buildsrc.convention.publishing
 
     kotlin("plugin.serialization")
 
