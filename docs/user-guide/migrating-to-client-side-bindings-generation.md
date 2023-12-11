@@ -65,7 +65,7 @@ We're going to stop using the bundled classes in favor of generating the binding
 
    import io.github.typesafegithub.workflows.actionbindinggenerator.generateActionBindings
 
-   generateActionBindings(args)
+   generateActionBindings(args, __FILE__.toPath())
    ```
    and make this file executable (`chmod +x <path-to-file>` on Linux/Unix).  
    This file has two roles:
