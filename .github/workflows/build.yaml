@@ -71,7 +71,6 @@ jobs:
       SIGNING_PASSWORD: '${{ secrets.SIGNING_PASSWORD }}'
       ORG_GRADLE_PROJECT_sonatypeUsername: '${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}'
       ORG_GRADLE_PROJECT_sonatypePassword: '${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}'
-    if: '${{ github.ref == ''refs/heads/main'' }}'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
@@ -91,19 +90,16 @@ jobs:
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
-      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-4'
       name: 'Publish '':github-workflows-kt'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
-      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-5'
       name: 'Publish '':action-binding-generator'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
         arguments: ':action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
-      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'
     runs-on: 'ubuntu-latest'
