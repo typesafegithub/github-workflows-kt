@@ -7,6 +7,6 @@ val disableScheduledJobInForks =
     expr { "${github.repository_owner} == 'typesafegithub' || ${github.event_name} != 'schedule'" }
 
 val libraries = listOf(
-    ":library",
+    ":github-workflows-kt",
     ":action-binding-generator",
 )

@@ -25,7 +25,7 @@ fun JobBuilder<*>.deployDocs() {
     )
     run(
         name = "Copy Dokka output to Mkdocs output",
-        command = "cp -r library/build/dokka/html/* $directoryToDeploy/api-docs",
+        command = "cp -r github-workflows-kt/build/dokka/html/* $directoryToDeploy/api-docs",
     )
     uses(
         name = "Deploy merged docs to GitHub Pages",

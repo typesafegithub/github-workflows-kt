@@ -18,7 +18,7 @@ fun ActionBinding.shouldMatchFile(path: String) {
         }
     val actualContent = kotlinCode.removeWindowsNewLines()
 
-    filePath shouldBe "library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/johnsmith/$path"
+    filePath shouldBe "github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/johnsmith/$path"
 
     val packageName = "io.github.typesafegithub.workflows.actions.johnsmith"
     expectedContent shouldNot contain("package $packageName.actual")

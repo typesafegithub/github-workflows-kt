@@ -87,10 +87,10 @@ jobs:
       with:
         arguments: 'setIsSnapshotFlagInGithubOutput'
     - id: 'step-3'
-      name: 'Publish '':library'' to Sonatype'
+      name: 'Publish '':github-workflows-kt'' to Sonatype'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+        arguments: ':github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-4'
       name: 'Publish '':action-binding-generator'' to Sonatype'

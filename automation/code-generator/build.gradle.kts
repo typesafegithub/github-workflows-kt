@@ -19,7 +19,7 @@ dependencies {
     implementation(projects.automation.typings)
     implementation(projects.actionBindingGenerator)
 
-    testImplementation(projects.library)
+    testImplementation(projects.githubWorkflowsKt)
 }
 
 application {

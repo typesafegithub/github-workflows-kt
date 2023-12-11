@@ -24,7 +24,7 @@ fun main() {
  * The payloads depend on the kind of the event: pull request, push, ...
  *
  * We read event payloads from binding-generate/src/test/resources/payloads
- * We generate it inside       library/src/main/kotlin/io/github/typesafegithub/workflows/expressions/contexts
+ * We generate it inside       github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/expressions/contexts
  *
  * The JSONs come from https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
  * Feel free to add any payload you might need from that page
@@ -49,7 +49,7 @@ private val EXPRESSIONS = "io.github.typesafegithub.workflows.dsl.expressions"
 private val PACKAGE = "$EXPRESSIONS.contexts"
 private val resourcesDir = File("automation/code-generator/src/main/resources/payloads")
 
-private val kotlinGenDir = File("library/src/gen/kotlin")
+private val kotlinGenDir = File("github-workflows-kt/src/gen/kotlin")
 
 // ClassNames
 private val fakeList = ClassName(EXPRESSIONS, "FakeList")
