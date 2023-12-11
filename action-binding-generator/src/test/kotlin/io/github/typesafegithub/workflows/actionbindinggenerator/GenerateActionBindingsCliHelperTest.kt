@@ -44,7 +44,7 @@ class GenerateActionBindingsCliHelperTest : FunSpec({
         val generatedFiles =
             generatedDir.walk().toList()
                 .filter { it.isFile }
-                .map { it.absolutePath.removePrefix(mockGitRootDir.absolutePath) }
+                .map { it.absoluteFile.invariantSeparatorsPath.removePrefix(mockGitRootDir.absoluteFile.invariantSeparatorsPath) }
                 .sorted()
         generatedFiles shouldBe
             listOf(
