@@ -74,7 +74,7 @@ private fun Pair<ActionBindingRequest, ActionBinding>.toMarkdownLinkToKotlinCode
 ): String {
     val typingsMarker = if (this.second.typingActualSource == TypingActualSource.ACTION) " ✅" else ""
     return "${this.first.actionCoords.version}$typingsMarker: [`$className`](" +
-        "https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/library/src/gen/kotlin/io/github/" +
+        "https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/" +
         "typesafegithub/workflows/actions/$packageName/$className.kt)"
 }
 
