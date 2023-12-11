@@ -40,10 +40,8 @@ public fun generateActionBindings(
             allUsedActions.intersect(actionsUsedInRequestedWorkflow.toSet())
         } ?: allUsedActions
 
-    val generatedDir = githubWorkflowsDir / "generated"
-
     actionsToGenerateBindingsFor.forEach { action ->
-        (generatedDir / action.owner / "${action.name}.kt").let {
+        (githubWorkflowsDir / "generated" / action.owner / "${action.name}.kt").let {
             it.parent.toFile().mkdirs()
             val binding =
                 action.generateBinding(
