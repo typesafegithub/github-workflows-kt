@@ -14,7 +14,10 @@ import kotlin.io.path.div
  * @param sourceFile Path to the script where this function is called from. Typically a result of an expression like
  * [__FILE__.toPath()].
  */
-public fun generateActionBindings(args: Array<String>, sourceFile: Path) {
+public fun generateActionBindings(
+    args: Array<String>,
+    sourceFile: Path,
+) {
     val workflowYamlFileName: String? =
         when {
             args.isEmpty() -> null
