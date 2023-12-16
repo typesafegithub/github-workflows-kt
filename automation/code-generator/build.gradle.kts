@@ -15,6 +15,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio")
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("io.arrow-kt:arrow-fx-coroutines:1.2.1")
 
     implementation(projects.automation.typings)
     implementation(projects.actionBindingGenerator)
