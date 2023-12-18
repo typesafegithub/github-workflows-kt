@@ -31,8 +31,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
  */
 @Deprecated(
-    message = "This action has a newer major version: SetupGcloudV1",
-    replaceWith = ReplaceWith("SetupGcloudV1"),
+    message = "This action has a newer major version: SetupGcloudV2",
+    replaceWith = ReplaceWith("SetupGcloudV2"),
 )
 public data class SetupGcloudV0 private constructor(
     /**

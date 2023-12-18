@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.googlegithubactions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -30,11 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupGcloudV2",
-    replaceWith = ReplaceWith("SetupGcloudV2"),
-)
-public data class SetupGcloudV1 private constructor(
+public data class SetupGcloudV2 private constructor(
     /**
      * Skip installation of the gcloud SDK and use the system-supplied version
      * instead. The "version" input will be ignored.
@@ -57,7 +51,7 @@ public data class SetupGcloudV1 private constructor(
     /**
      * List of Cloud SDK components to install
      */
-    public val installComponents: List<SetupGcloudV1.Component>? = null,
+    public val installComponents: List<SetupGcloudV2.Component>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -67,13 +61,13 @@ public data class SetupGcloudV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("google-github-actions", "setup-gcloud", _customVersion ?: "v1") {
+) : RegularAction<Action.Outputs>("google-github-actions", "setup-gcloud", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         skipInstall: Boolean? = null,
         version: String? = null,
         projectId: String? = null,
-        installComponents: List<SetupGcloudV1.Component>? = null,
+        installComponents: List<SetupGcloudV2.Component>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(skipInstall=skipInstall, version=version, projectId=projectId,
@@ -97,72 +91,72 @@ public data class SetupGcloudV1 private constructor(
     public sealed class Component(
         public val stringValue: String,
     ) {
-        public object Alpha : SetupGcloudV1.Component("alpha")
+        public object Alpha : SetupGcloudV2.Component("alpha")
 
-        public object AnthosAuth : SetupGcloudV1.Component("anthos-auth")
+        public object AnthosAuth : SetupGcloudV2.Component("anthos-auth")
 
-        public object Appctl : SetupGcloudV1.Component("appctl")
+        public object Appctl : SetupGcloudV2.Component("appctl")
 
-        public object AppEngineGo : SetupGcloudV1.Component("app-engine-go")
+        public object AppEngineGo : SetupGcloudV2.Component("app-engine-go")
 
-        public object AppEngineJava : SetupGcloudV1.Component("app-engine-java")
+        public object AppEngineJava : SetupGcloudV2.Component("app-engine-java")
 
-        public object AppEnginePython : SetupGcloudV1.Component("app-engine-python")
+        public object AppEnginePython : SetupGcloudV2.Component("app-engine-python")
 
-        public object AppEnginePythonExtras : SetupGcloudV1.Component("app-engine-python-extras")
+        public object AppEnginePythonExtras : SetupGcloudV2.Component("app-engine-python-extras")
 
-        public object Beta : SetupGcloudV1.Component("beta")
+        public object Beta : SetupGcloudV2.Component("beta")
 
-        public object Bigtable : SetupGcloudV1.Component("bigtable")
+        public object Bigtable : SetupGcloudV2.Component("bigtable")
 
-        public object Bq : SetupGcloudV1.Component("bq")
+        public object Bq : SetupGcloudV2.Component("bq")
 
-        public object BundledPython3Unix : SetupGcloudV1.Component("bundled-python3-unix")
+        public object BundledPython3Unix : SetupGcloudV2.Component("bundled-python3-unix")
 
-        public object Cbt : SetupGcloudV1.Component("cbt")
+        public object Cbt : SetupGcloudV2.Component("cbt")
 
-        public object CloudBuildLocal : SetupGcloudV1.Component("cloud-build-local")
+        public object CloudBuildLocal : SetupGcloudV2.Component("cloud-build-local")
 
-        public object CloudDatastoreEmulator : SetupGcloudV1.Component("cloud-datastore-emulator")
+        public object CloudDatastoreEmulator : SetupGcloudV2.Component("cloud-datastore-emulator")
 
-        public object CloudFirestoreEmulator : SetupGcloudV1.Component("cloud-firestore-emulator")
+        public object CloudFirestoreEmulator : SetupGcloudV2.Component("cloud-firestore-emulator")
 
-        public object CloudSpannerEmulator : SetupGcloudV1.Component("cloud-spanner-emulator")
+        public object CloudSpannerEmulator : SetupGcloudV2.Component("cloud-spanner-emulator")
 
-        public object CloudSqlProxy : SetupGcloudV1.Component("cloud_sql_proxy")
+        public object CloudSqlProxy : SetupGcloudV2.Component("cloud_sql_proxy")
 
-        public object ConfigConnector : SetupGcloudV1.Component("config-connector")
+        public object ConfigConnector : SetupGcloudV2.Component("config-connector")
 
-        public object Core : SetupGcloudV1.Component("core")
+        public object Core : SetupGcloudV2.Component("core")
 
-        public object Datalab : SetupGcloudV1.Component("datalab")
+        public object Datalab : SetupGcloudV2.Component("datalab")
 
-        public object DockerCredentialGcr : SetupGcloudV1.Component("docker-credential-gcr")
+        public object DockerCredentialGcr : SetupGcloudV2.Component("docker-credential-gcr")
 
-        public object Gsutil : SetupGcloudV1.Component("gsutil")
+        public object Gsutil : SetupGcloudV2.Component("gsutil")
 
-        public object Kpt : SetupGcloudV1.Component("kpt")
+        public object Kpt : SetupGcloudV2.Component("kpt")
 
-        public object Kubectl : SetupGcloudV1.Component("kubectl")
+        public object Kubectl : SetupGcloudV2.Component("kubectl")
 
-        public object KubectlOidc : SetupGcloudV1.Component("kubectl-oidc")
+        public object KubectlOidc : SetupGcloudV2.Component("kubectl-oidc")
 
-        public object Kustomize : SetupGcloudV1.Component("kustomize")
+        public object Kustomize : SetupGcloudV2.Component("kustomize")
 
-        public object LocalExtract : SetupGcloudV1.Component("local-extract")
+        public object LocalExtract : SetupGcloudV2.Component("local-extract")
 
-        public object Minikube : SetupGcloudV1.Component("minikube")
+        public object Minikube : SetupGcloudV2.Component("minikube")
 
-        public object Nomos : SetupGcloudV1.Component("nomos")
+        public object Nomos : SetupGcloudV2.Component("nomos")
 
-        public object Pkg : SetupGcloudV1.Component("pkg")
+        public object Pkg : SetupGcloudV2.Component("pkg")
 
-        public object PubsubEmulator : SetupGcloudV1.Component("pubsub-emulator")
+        public object PubsubEmulator : SetupGcloudV2.Component("pubsub-emulator")
 
-        public object Skaffold : SetupGcloudV1.Component("skaffold")
+        public object Skaffold : SetupGcloudV2.Component("skaffold")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupGcloudV1.Component(customStringValue)
+        ) : SetupGcloudV2.Component(customStringValue)
     }
 }
