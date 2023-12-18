@@ -6,7 +6,6 @@ include(
     "github-workflows-kt",
     "action-binding-generator",
     "shared-internal",
-    ":automation:typings",
     ":automation:code-generator",
 )
 

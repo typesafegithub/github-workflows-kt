@@ -1,8 +1,8 @@
-package io.github.typesafegithub.workflows.actionsmetadata
+package io.github.typesafegithub.workflows.codegenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
+import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.isRegularFile

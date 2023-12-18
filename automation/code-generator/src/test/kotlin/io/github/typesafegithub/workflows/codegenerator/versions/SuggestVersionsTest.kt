@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
-import io.github.typesafegithub.workflows.actionsmetadata.model.Version
+import io.github.typesafegithub.workflows.codegenerator.model.Version
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.Table2
