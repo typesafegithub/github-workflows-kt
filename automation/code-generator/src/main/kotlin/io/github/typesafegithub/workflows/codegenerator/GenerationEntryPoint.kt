@@ -5,8 +5,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
-import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
+import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
 import java.nio.file.Paths
 

@@ -6,8 +6,8 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.isTopLevel
 import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
-import io.github.typesafegithub.workflows.actionsmetadata.bindingsToGenerate
-import io.github.typesafegithub.workflows.actionsmetadata.model.ActionBindingRequest
+import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
+import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
 import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
