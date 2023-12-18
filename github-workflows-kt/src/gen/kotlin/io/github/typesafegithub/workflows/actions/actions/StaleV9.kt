@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
+import kotlin.Float
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -30,11 +29,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/stale)
  */
-@Deprecated(
-    message = "This action has a newer major version: StaleV9",
-    replaceWith = ReplaceWith("StaleV9"),
-)
-public data class StaleV6 private constructor(
+public data class StaleV9 private constructor(
     /**
      * Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
      */
@@ -63,7 +58,7 @@ public data class StaleV6 private constructor(
      * The number of days old an issue or a pull request can be before marking it stale. Set to -1
      * to never mark issues or pull requests as stale automatically.
      */
-    public val daysBeforeStale: Int? = null,
+    public val daysBeforeStale: Float? = null,
     /**
      * The number of days old an issue can be before marking it stale. Set to -1 to never mark
      * issues as stale automatically. Override "days-before-stale" option regarding only the issues.
@@ -74,7 +69,7 @@ public data class StaleV6 private constructor(
      * pull requests as stale automatically. Override "days-before-stale" option regarding only the
      * pull requests.
      */
-    public val daysBeforePrStale: StaleV6.Days? = null,
+    public val daysBeforePrStale: StaleV9.Days? = null,
     /**
      * The number of days to wait to close an issue or a pull request after it being marked stale.
      * Set to -1 to never close stale issues or pull requests.
@@ -84,13 +79,13 @@ public data class StaleV6 private constructor(
      * The number of days to wait to close an issue after it being marked stale. Set to -1 to never
      * close stale issues. Override "days-before-close" option regarding only the issues.
      */
-    public val daysBeforeIssueClose: StaleV6.Days? = null,
+    public val daysBeforeIssueClose: StaleV9.Days? = null,
     /**
      * The number of days to wait to close a pull request after it being marked stale. Set to -1 to
      * never close stale pull requests. Override "days-before-close" option regarding only the pull
      * requests.
      */
-    public val daysBeforePrClose: StaleV6.Days? = null,
+    public val daysBeforePrClose: StaleV9.Days? = null,
     /**
      * The label to apply when an issue is stale.
      */
@@ -107,7 +102,7 @@ public data class StaleV6 private constructor(
     /**
      * The reason to use when closing an issue.
      */
-    public val closeIssueReason: StaleV6.CloseIssueReason? = null,
+    public val closeIssueReason: StaleV9.CloseIssueReason? = null,
     /**
      * The label to apply when a pull request is stale.
      */
@@ -264,13 +259,15 @@ public data class StaleV6 private constructor(
      */
     public val enableStatistics: Boolean? = null,
     /**
-     * A comma delimited list of labels to add when a stale issue or pull request receives activity
-     * and has the stale-issue-label or stale-pr-label removed from it.
+     * A comma delimited list of labels to add when an issue or pull request becomes unstale.
      */
     public val labelsToAddWhenUnstale: List<String>? = null,
     /**
-     * A comma delimited list of labels to remove when a stale issue or pull request receives
-     * activity and has the stale-issue-label or stale-pr-label removed from it.
+     * A comma delimited list of labels to remove when an issue or pull request becomes stale.
+     */
+    public val labelsToRemoveWhenStale: List<String>? = null,
+    /**
+     * A comma delimited list of labels to remove when an issue or pull request becomes unstale.
      */
     public val labelsToRemoveWhenUnstale: List<String>? = null,
     /**
@@ -300,7 +297,7 @@ public data class StaleV6 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<StaleV6.Outputs>("actions", "stale", _customVersion ?: "v6") {
+) : RegularAction<StaleV9.Outputs>("actions", "stale", _customVersion ?: "v9") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         repoToken: String? = null,
@@ -308,16 +305,16 @@ public data class StaleV6 private constructor(
         stalePrMessage: String? = null,
         closeIssueMessage: String? = null,
         closePrMessage: String? = null,
-        daysBeforeStale: Int? = null,
+        daysBeforeStale: Float? = null,
         daysBeforeIssueStale: String? = null,
-        daysBeforePrStale: StaleV6.Days? = null,
+        daysBeforePrStale: StaleV9.Days? = null,
         daysBeforeClose: Int? = null,
-        daysBeforeIssueClose: StaleV6.Days? = null,
-        daysBeforePrClose: StaleV6.Days? = null,
+        daysBeforeIssueClose: StaleV9.Days? = null,
+        daysBeforePrClose: StaleV9.Days? = null,
         staleIssueLabel: String? = null,
         closeIssueLabel: String? = null,
         exemptIssueLabels: List<String>? = null,
-        closeIssueReason: StaleV6.CloseIssueReason? = null,
+        closeIssueReason: StaleV9.CloseIssueReason? = null,
         stalePrLabel: String? = null,
         closePrLabel: String? = null,
         exemptPrLabels: List<String>? = null,
@@ -350,6 +347,7 @@ public data class StaleV6 private constructor(
         exemptDraftPr: Boolean? = null,
         enableStatistics: Boolean? = null,
         labelsToAddWhenUnstale: List<String>? = null,
+        labelsToRemoveWhenStale: List<String>? = null,
         labelsToRemoveWhenUnstale: List<String>? = null,
         ignoreUpdates: Boolean? = null,
         ignoreIssueUpdates: Boolean? = null,
@@ -381,6 +379,7 @@ public data class StaleV6 private constructor(
             exemptAllIssueAssignees=exemptAllIssueAssignees,
             exemptAllPrAssignees=exemptAllPrAssignees, exemptDraftPr=exemptDraftPr,
             enableStatistics=enableStatistics, labelsToAddWhenUnstale=labelsToAddWhenUnstale,
+            labelsToRemoveWhenStale=labelsToRemoveWhenStale,
             labelsToRemoveWhenUnstale=labelsToRemoveWhenUnstale, ignoreUpdates=ignoreUpdates,
             ignoreIssueUpdates=ignoreIssueUpdates, ignorePrUpdates=ignorePrUpdates,
             includeOnlyAssigned=includeOnlyAssigned, _customInputs=_customInputs,
@@ -436,6 +435,7 @@ public data class StaleV6 private constructor(
             exemptDraftPr?.let { "exempt-draft-pr" to it.toString() },
             enableStatistics?.let { "enable-statistics" to it.toString() },
             labelsToAddWhenUnstale?.let { "labels-to-add-when-unstale" to it.joinToString(",") },
+            labelsToRemoveWhenStale?.let { "labels-to-remove-when-stale" to it.joinToString(",") },
             labelsToRemoveWhenUnstale?.let { "labels-to-remove-when-unstale" to it.joinToString(",")
                     },
             ignoreUpdates?.let { "ignore-updates" to it.toString() },
@@ -453,21 +453,21 @@ public data class StaleV6 private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : StaleV6.Days(requestedValue)
+        ) : StaleV9.Days(requestedValue)
 
-        public object Never : StaleV6.Days(-1)
+        public object Never : StaleV9.Days(-1)
     }
 
     public sealed class CloseIssueReason(
         public val stringValue: String,
     ) {
-        public object Completed : StaleV6.CloseIssueReason("completed")
+        public object Completed : StaleV9.CloseIssueReason("completed")
 
-        public object NotPlanned : StaleV6.CloseIssueReason("not_planned")
+        public object NotPlanned : StaleV9.CloseIssueReason("not_planned")
 
         public class Custom(
             customStringValue: String,
-        ) : StaleV6.CloseIssueReason(customStringValue)
+        ) : StaleV9.CloseIssueReason(customStringValue)
     }
 
     public class Outputs(

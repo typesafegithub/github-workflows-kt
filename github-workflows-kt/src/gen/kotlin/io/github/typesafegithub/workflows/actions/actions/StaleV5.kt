@@ -31,8 +31,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/actions/stale)
  */
 @Deprecated(
-    message = "This action has a newer major version: StaleV8",
-    replaceWith = ReplaceWith("StaleV8"),
+    message = "This action has a newer major version: StaleV9",
+    replaceWith = ReplaceWith("StaleV9"),
 )
 public data class StaleV5 private constructor(
     /**
