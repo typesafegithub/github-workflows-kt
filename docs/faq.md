@@ -49,6 +49,13 @@ You can work around it in two ways:
 Here's a ticket on the JetBrains side:
 [\[KT-42101\] Scripts: @file:Import() in kotlin-main-kts uses a stale cache](https://youtrack.jetbrains.com/issue/KT-42101).
 
+## I'm getting an unexpected change in the resulting YAML, in the path to the script in the consistency check job. Why?
+
+You're most likely affected by another bug related to stale cache. See the previous FAQ item for workarounds.
+
+Here's a ticket on the JetBrains side:
+[\[KT-64367\] Script: stale cache used if __FILE__ is different](https://youtrack.jetbrains.com/issue/KT-64367)
+
 ## I'm having problems editing the Kotlin-based workflows in IntelliJ. Why?
 
 Depending on the complexity of your workflows, you may stumble upon some rough edges in how IntelliJ supports Kotlin
