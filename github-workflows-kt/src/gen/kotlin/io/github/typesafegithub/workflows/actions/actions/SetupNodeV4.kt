@@ -38,8 +38,8 @@ public data class SetupNodeV4 private constructor(
      */
     public val nodeVersion: String? = null,
     /**
-     * File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version,
-     * .tool-versions.
+     * File containing the version Spec of the version to use.  Examples: package.json, .nvmrc,
+     * .node-version, .tool-versions.
      */
     public val nodeVersionFile: String? = null,
     /**
