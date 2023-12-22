@@ -90,7 +90,7 @@ jobs:
       name: 'Generate API docs'
       uses: 'gradle/gradle-build-action@v2'
       with:
-        arguments: ':library:dokkaHtml --no-configuration-cache'
+        arguments: ':github-workflows-kt:dokkaHtml --no-configuration-cache'
     - id: 'step-13'
       name: 'Prepare target directory for API docs'
       run: 'mkdir -p to-gh-pages/api-docs'

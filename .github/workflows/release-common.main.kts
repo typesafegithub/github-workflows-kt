@@ -16,7 +16,7 @@ fun JobBuilder<*>.deployDocs() {
     uses(
         name = "Generate API docs",
         action = GradleBuildAction(
-            arguments = ":library:dokkaHtml --no-configuration-cache",
+            arguments = ":github-workflows-kt:dokkaHtml --no-configuration-cache",
         ),
     )
     run(
