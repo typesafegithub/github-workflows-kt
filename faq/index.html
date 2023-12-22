@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.45e1311d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -581,6 +581,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#im-getting-an-unexpected-change-in-the-resulting-yaml-in-the-path-to-the-script-in-the-consistency-check-job-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      I'm getting an unexpected change in the resulting YAML, in the path to the script in the consistency check job. Why?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#im-having-problems-editing-the-kotlin-based-workflows-in-intellij-why" class="md-nav__link">
     <span class="md-ellipsis">
       I'm having problems editing the Kotlin-based workflows in IntelliJ. Why?
@@ -691,6 +700,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#im-getting-an-unexpected-change-in-the-resulting-yaml-in-the-path-to-the-script-in-the-consistency-check-job-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      I'm getting an unexpected change in the resulting YAML, in the path to the script in the consistency check job. Why?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#im-having-problems-editing-the-kotlin-based-workflows-in-intellij-why" class="md-nav__link">
     <span class="md-ellipsis">
       I'm having problems editing the Kotlin-based workflows in IntelliJ. Why?
@@ -757,6 +775,10 @@ changes in the imported scripts make the Kotlin compiler reuse the cached JAR.</
 </ul>
 <p>Here's a ticket on the JetBrains side:
 <a href="https://youtrack.jetbrains.com/issue/KT-42101">[KT-42101] Scripts: @file:Import() in kotlin-main-kts uses a stale cache</a>.</p>
+<h2 id="im-getting-an-unexpected-change-in-the-resulting-yaml-in-the-path-to-the-script-in-the-consistency-check-job-why">I'm getting an unexpected change in the resulting YAML, in the path to the script in the consistency check job. Why?</h2>
+<p>You're most likely affected by another bug related to stale cache. See the previous FAQ item for workarounds.</p>
+<p>Here's a ticket on the JetBrains side:
+<a href="https://youtrack.jetbrains.com/issue/KT-64367">[KT-64367] Script: stale cache used if <strong>FILE</strong> is different</a></p>
 <h2 id="im-having-problems-editing-the-kotlin-based-workflows-in-intellij-why">I'm having problems editing the Kotlin-based workflows in IntelliJ. Why?</h2>
 <p>Depending on the complexity of your workflows, you may stumble upon some rough edges in how IntelliJ supports Kotlin
 scripting. It's lagging behind the support provided by Kotlin itself.</p>
@@ -820,7 +842,7 @@ scripting. It's lagging behind the support provided by Kotlin itself.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.7.0"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.8.0"}</script>
     
     
       <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>

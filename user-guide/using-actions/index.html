@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.45e1311d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -897,7 +897,7 @@ The library comes bundled with some popular actions, but you can consume any act
 your possibilities.</p>
 <h2 id="built-in-actions">Built-in actions</h2>
 <p>Take a look here: <a href="../../supported-actions/">Supported actions</a>.
-These are actions ready to use, grouped by owners. For <code>actions/checkout@v3</code>, there's <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt"><code>CheckoutV3</code></a>
+These are actions ready to use, grouped by owners. For <code>actions/checkout@v3</code>, there's <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt"><code>CheckoutV3</code></a>
 accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
 version, a separate class exists. It's because it's assumed <a href="https://semver.org/">Semantic Versioning</a> is used to
 version the actions, as <a href="https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management">recommended by GitHub</a>.
@@ -927,7 +927,7 @@ library, i.e. a class that takes some constructor arguments with types of your c
 inside <code>toYamlArguments</code>. Use it to have better type-safety when using the binding.</p>
 </div>
 <h4 id="repository-based-actions">Repository based actions</h4>
-<p>In case of a repository based action which most GitHub actions are, inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt"><code>RegularAction</code></a>
+<p>In case of a repository based action which most GitHub actions are, inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/RegularAction.kt"><code>RegularAction</code></a>
 and in case of actions without explicit outputs, use the <code>Actions.Outputs</code> class as type argument:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyCoolActionV3</span><span class="p">(</span>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">someArgument</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
@@ -964,7 +964,7 @@ and in case of actions without explicit outputs, use the <code>Actions.Outputs</
 </code></pre></div>
 <h4 id="local-actions">Local actions</h4>
 <p>In case of a local action you have available in your repository or cloned from a private repository,
-inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/LocalAction.kt"><code>LocalAction</code></a> instead:</p>
+inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/LocalAction.kt"><code>LocalAction</code></a> instead:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyCoolLocalActionV3</span><span class="p">(</span>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">someArgument</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
 <span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">LocalAction</span><span class="o">&lt;</span><span class="n">Action</span><span class="p">.</span><span class="na">Outputs</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"./.github/actions/cool-action"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -977,7 +977,7 @@ inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob
 <span class="p">}</span>
 </code></pre></div>
 <h4 id="published-docker-actions">Published Docker actions</h4>
-<p>In case of a published Docker action, inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/DockerAction.kt"><code>DockerAction</code></a> instead:</p>
+<p>In case of a published Docker action, inherit from <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/domain/actions/DockerAction.kt"><code>DockerAction</code></a> instead:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyCoolDockerActionV3</span><span class="p">(</span>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">someArgument</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
 <span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DockerAction</span><span class="o">&lt;</span><span class="n">Action</span><span class="p">.</span><span class="na">Outputs</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"alpine"</span><span class="p">,</span><span class="w"> </span><span class="s">"latest"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -997,7 +997,7 @@ types because you're in the middle of experimenting. It's also more convenient t
 generator.</p>
 </div>
 <h4 id="repository-based-actions_1">Repository based actions</h4>
-<p>In case of a repository based action which most GitHub actions are, use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomAction.kt"><code>CustomAction</code></a>:</p>
+<p>In case of a repository based action which most GitHub actions are, use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomAction.kt"><code>CustomAction</code></a>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">customAction</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="n">CustomAction</span><span class="p">(</span>
 <span class="w">        </span><span class="n">actionOwner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"xu-cheng"</span><span class="p">,</span>
@@ -1024,14 +1024,14 @@ generator.</p>
 </code></pre></div>
 <h4 id="local-actions_1">Local actions</h4>
 <p>In case of a local action you have available in your repository or cloned from a private repository,
-use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomLocalAction.kt"><code>CustomLocalAction</code></a> instead:</p>
+use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomLocalAction.kt"><code>CustomLocalAction</code></a> instead:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">customAction</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="n">CustomLocalAction</span><span class="p">(</span>
 <span class="w">        </span><span class="n">actionPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"./.github/actions/setup-build-env"</span><span class="p">,</span>
 <span class="w">    </span><span class="p">)</span>
 </code></pre></div>
 <h4 id="published-docker-actions_1">Published Docker actions</h4>
-<p>In case of a published Docker action, use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/library/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomDockerAction.kt"><code>CustomDockerAction</code></a> instead:</p>
+<p>In case of a published Docker action, use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/main/kotlin/io/github/typesafegithub/workflows/actions/CustomDockerAction.kt"><code>CustomDockerAction</code></a> instead:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">customAction</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="n">CustomDockerAction</span><span class="p">(</span>
 <span class="w">        </span><span class="n">actionImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"alpine"</span><span class="p">,</span>
@@ -1084,7 +1084,7 @@ use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/l
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.7.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.8.0"}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
