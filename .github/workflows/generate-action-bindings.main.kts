@@ -3,4 +3,4 @@
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.generateActionBindings
 
-generateActionBindings(args)
+generateActionBindings(args = args, sourceFile = __FILE__.toPath())
