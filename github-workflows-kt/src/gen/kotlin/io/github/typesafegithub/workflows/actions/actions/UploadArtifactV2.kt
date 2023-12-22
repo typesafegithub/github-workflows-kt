@@ -30,8 +30,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/actions/upload-artifact)
  */
 @Deprecated(
-    message = "This action has a newer major version: UploadArtifactV3",
-    replaceWith = ReplaceWith("UploadArtifactV3"),
+    message = "This action has a newer major version: UploadArtifactV4",
+    replaceWith = ReplaceWith("UploadArtifactV4"),
 )
 public data class UploadArtifactV2 private constructor(
     /**

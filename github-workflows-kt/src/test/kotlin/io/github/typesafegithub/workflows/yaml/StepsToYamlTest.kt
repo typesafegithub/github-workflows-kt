@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION") // Use deprecated action versions, to not have to update them.
+
 package io.github.typesafegithub.workflows.yaml
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4

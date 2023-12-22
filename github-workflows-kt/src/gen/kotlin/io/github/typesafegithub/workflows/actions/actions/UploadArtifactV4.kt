@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -12,7 +11,6 @@ package io.github.typesafegithub.workflows.actions.actions
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -29,11 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/upload-artifact)
  */
-@Deprecated(
-    message = "This action has a newer major version: UploadArtifactV4",
-    replaceWith = ReplaceWith("UploadArtifactV4"),
-)
-public data class UploadArtifactV3 private constructor(
+public data class UploadArtifactV4 private constructor(
     /**
      * Artifact name
      */
@@ -49,12 +43,20 @@ public data class UploadArtifactV3 private constructor(
      *   error: Fail the action with an error message
      *   ignore: Do not output any warnings or errors, the action does not fail
      */
-    public val ifNoFilesFound: UploadArtifactV3.BehaviorIfNoFilesFound? = null,
+    public val ifNoFilesFound: UploadArtifactV4.BehaviorIfNoFilesFound? = null,
     /**
      * Duration after which artifact will expire in days. 0 means using default retention.
      * Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
      */
-    public val retentionDays: UploadArtifactV3.RetentionPeriod? = null,
+    public val retentionDays: UploadArtifactV4.RetentionPeriod? = null,
+    /**
+     * The level of compression for Zlib to be applied to the artifact archive. The value can range
+     * from 0 to 9: - 0: No compression - 1: Best speed - 6: Default compression (same as GNU Gzip) -
+     * 9: Best compression Higher levels will result in better compression, but will take longer to
+     * complete. For large files that are not easily compressed, a value of 0 is recommended for
+     * significantly faster uploads.
+     */
+    public val compressionLevel: UploadArtifactV4.CompressionLevel? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -64,17 +66,19 @@ public data class UploadArtifactV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("actions", "upload-artifact", _customVersion ?: "v3") {
+) : RegularAction<UploadArtifactV4.Outputs>("actions", "upload-artifact", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         name: String? = null,
         path: List<String>,
-        ifNoFilesFound: UploadArtifactV3.BehaviorIfNoFilesFound? = null,
-        retentionDays: UploadArtifactV3.RetentionPeriod? = null,
+        ifNoFilesFound: UploadArtifactV4.BehaviorIfNoFilesFound? = null,
+        retentionDays: UploadArtifactV4.RetentionPeriod? = null,
+        compressionLevel: UploadArtifactV4.CompressionLevel? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(name=name, path=path, ifNoFilesFound=ifNoFilesFound, retentionDays=retentionDays,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            compressionLevel=compressionLevel, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -83,24 +87,25 @@ public data class UploadArtifactV3 private constructor(
             "path" to path.joinToString("\n"),
             ifNoFilesFound?.let { "if-no-files-found" to it.stringValue },
             retentionDays?.let { "retention-days" to it.integerValue.toString() },
+            compressionLevel?.let { "compression-level" to it.integerValue.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class BehaviorIfNoFilesFound(
         public val stringValue: String,
     ) {
-        public object Warn : UploadArtifactV3.BehaviorIfNoFilesFound("warn")
+        public object Warn : UploadArtifactV4.BehaviorIfNoFilesFound("warn")
 
-        public object Error : UploadArtifactV3.BehaviorIfNoFilesFound("error")
+        public object Error : UploadArtifactV4.BehaviorIfNoFilesFound("error")
 
-        public object Ignore : UploadArtifactV3.BehaviorIfNoFilesFound("ignore")
+        public object Ignore : UploadArtifactV4.BehaviorIfNoFilesFound("ignore")
 
         public class Custom(
             customStringValue: String,
-        ) : UploadArtifactV3.BehaviorIfNoFilesFound(customStringValue)
+        ) : UploadArtifactV4.BehaviorIfNoFilesFound(customStringValue)
     }
 
     public sealed class RetentionPeriod(
@@ -108,8 +113,36 @@ public data class UploadArtifactV3 private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : UploadArtifactV3.RetentionPeriod(requestedValue)
+        ) : UploadArtifactV4.RetentionPeriod(requestedValue)
 
-        public object Default : UploadArtifactV3.RetentionPeriod(0)
+        public object Default : UploadArtifactV4.RetentionPeriod(0)
+    }
+
+    public sealed class CompressionLevel(
+        public val integerValue: Int,
+    ) {
+        public class Value(
+            requestedValue: Int,
+        ) : UploadArtifactV4.CompressionLevel(requestedValue)
+
+        public object NoCompression : UploadArtifactV4.CompressionLevel(0)
+
+        public object BestSpeed : UploadArtifactV4.CompressionLevel(1)
+
+        public object DefaultCompression : UploadArtifactV4.CompressionLevel(6)
+
+        public object BestCompression : UploadArtifactV4.CompressionLevel(9)
+    }
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * A unique identifier for the artifact that was just uploaded. Empty if artifact upload
+         * failed.
+         * This ID can be used as input to other APIs to download, delete or get more information
+         * about an artifact: https://docs.github.com/en/rest/actions/artifacts
+         */
+        public val artifactId: String = "steps.$stepId.outputs.artifact-id"
     }
 }
