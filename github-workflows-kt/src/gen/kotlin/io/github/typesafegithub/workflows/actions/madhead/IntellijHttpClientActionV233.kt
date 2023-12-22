@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.madhead
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -30,11 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/madhead/intellij-http-client-action)
  */
-@Deprecated(
-    message = "This action has a newer major version: IntellijHttpClientActionV233",
-    replaceWith = ReplaceWith("IntellijHttpClientActionV233"),
-)
-public data class IntellijHttpClientActionV231 private constructor(
+public data class IntellijHttpClientActionV233 private constructor(
     /**
      * HTTP file paths
      */
@@ -72,13 +66,17 @@ public data class IntellijHttpClientActionV231 private constructor(
      */
     public val privateEnvVariables: List<String>? = null,
     /**
+     * Proxy setting in format 'scheme://login:password@host:port'
+     */
+    public val proxy: String? = null,
+    /**
      * Enables Docker mode. Treat 'localhost' as 'host.docker.internal'
      */
     public val dockerMode: Boolean? = null,
     /**
      * Logging level. One of 'BASIC' (default), 'HEADERS', or 'VERBOSE'
      */
-    public val logLevel: IntellijHttpClientActionV231.LogLevel? = null,
+    public val logLevel: IntellijHttpClientActionV233.LogLevel? = null,
     /**
      * Creates report about execution in JUnit XML Format. Puts it in folder 'reports' in the
      * current directory
@@ -94,7 +92,7 @@ public data class IntellijHttpClientActionV231 private constructor(
      */
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?:
-        "v231") {
+        "v233") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         files: List<String>,
@@ -106,14 +104,15 @@ public data class IntellijHttpClientActionV231 private constructor(
         envVariables: List<String>? = null,
         privateEnvFile: String? = null,
         privateEnvVariables: List<String>? = null,
+        proxy: String? = null,
         dockerMode: Boolean? = null,
-        logLevel: IntellijHttpClientActionV231.LogLevel? = null,
+        logLevel: IntellijHttpClientActionV233.LogLevel? = null,
         report: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(files=files, socketTimeout=socketTimeout, connectTimeout=connectTimeout,
             insecure=insecure, env=env, envFile=envFile, envVariables=envVariables,
-            privateEnvFile=privateEnvFile, privateEnvVariables=privateEnvVariables,
+            privateEnvFile=privateEnvFile, privateEnvVariables=privateEnvVariables, proxy=proxy,
             dockerMode=dockerMode, logLevel=logLevel, report=report, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
@@ -129,6 +128,7 @@ public data class IntellijHttpClientActionV231 private constructor(
             envVariables?.let { "env_variables" to it.joinToString("\n") },
             privateEnvFile?.let { "private_env_file" to it },
             privateEnvVariables?.let { "private_env_variables" to it.joinToString("\n") },
+            proxy?.let { "proxy" to it },
             dockerMode?.let { "docker_mode" to it.toString() },
             logLevel?.let { "log_level" to it.stringValue },
             report?.let { "report" to it.toString() },
@@ -141,14 +141,14 @@ public data class IntellijHttpClientActionV231 private constructor(
     public sealed class LogLevel(
         public val stringValue: String,
     ) {
-        public object Basic : IntellijHttpClientActionV231.LogLevel("BASIC")
+        public object Basic : IntellijHttpClientActionV233.LogLevel("BASIC")
 
-        public object Headers : IntellijHttpClientActionV231.LogLevel("HEADERS")
+        public object Headers : IntellijHttpClientActionV233.LogLevel("HEADERS")
 
-        public object Verbose : IntellijHttpClientActionV231.LogLevel("VERBOSE")
+        public object Verbose : IntellijHttpClientActionV233.LogLevel("VERBOSE")
 
         public class Custom(
             customStringValue: String,
-        ) : IntellijHttpClientActionV231.LogLevel(customStringValue)
+        ) : IntellijHttpClientActionV233.LogLevel(customStringValue)
     }
 }

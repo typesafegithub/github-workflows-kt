@@ -31,8 +31,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/madhead/intellij-http-client-action)
  */
 @Deprecated(
-    message = "This action has a newer major version: IntellijHttpClientActionV231",
-    replaceWith = ReplaceWith("IntellijHttpClientActionV231"),
+    message = "This action has a newer major version: IntellijHttpClientActionV233",
+    replaceWith = ReplaceWith("IntellijHttpClientActionV233"),
 )
 public data class IntellijHttpClientActionV0 private constructor(
     /**
