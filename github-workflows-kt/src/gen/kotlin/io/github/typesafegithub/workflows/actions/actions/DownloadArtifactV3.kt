@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -11,6 +12,7 @@ package io.github.typesafegithub.workflows.actions.actions
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -26,6 +28,10 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/actions/download-artifact)
  */
+@Deprecated(
+    message = "This action has a newer major version: DownloadArtifactV4",
+    replaceWith = ReplaceWith("DownloadArtifactV4"),
+)
 public data class DownloadArtifactV3 private constructor(
     /**
      * Artifact name

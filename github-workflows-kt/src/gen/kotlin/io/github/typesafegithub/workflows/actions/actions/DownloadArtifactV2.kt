@@ -29,8 +29,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/actions/download-artifact)
  */
 @Deprecated(
-    message = "This action has a newer major version: DownloadArtifactV3",
-    replaceWith = ReplaceWith("DownloadArtifactV3"),
+    message = "This action has a newer major version: DownloadArtifactV4",
+    replaceWith = ReplaceWith("DownloadArtifactV4"),
 )
 public data class DownloadArtifactV2 private constructor(
     /**
