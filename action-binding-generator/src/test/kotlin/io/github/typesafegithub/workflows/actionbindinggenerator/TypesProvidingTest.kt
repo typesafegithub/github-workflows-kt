@@ -2,9 +2,11 @@ package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import java.io.IOException
+import java.net.URI
 
 class TypesProvidingTest : FunSpec({
-    test("valid typing provided by action") {
+    test("parses all allowed elements of valid typing") {
         // Given
         val actionTypesYml =
             """
@@ -58,5 +60,122 @@ class TypesProvidingTest : FunSpec({
                 "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
                 "permissions" to EnumTyping("Permissions", listOf("user", "admin", "guest")),
             )
+    }
+
+    context("order of using typings from various sources") {
+        val hostedByActionYml = "inputs:\n  hosted-by-action-yml:\n    type: string"
+        val hostedByActionYaml = "inputs:\n  hosted-by-action-yaml:\n    type: string"
+        val storedInTypingCatalog = "inputs:\n  stored-in-typing-catalog:\n    type: string"
+
+        test("only hosted by the action (.yml)") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash//action-types.yml") -> hostedByActionYml
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+        }
+
+        test("only hosted by the action (.yaml)") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash//action-types.yaml") -> hostedByActionYaml
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(mapOf("hosted-by-action-yaml" to StringTyping), TypingActualSource.ACTION)
+        }
+
+        test("only hosted by the action, both extensions") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash//action-types.yml") -> hostedByActionYml
+                    URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash//action-types.yaml") -> hostedByActionYaml
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+        }
+
+        test("only stored in typing catalog") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI(
+                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/v3//action-types.yml",
+                    ),
+                    -> storedInTypingCatalog
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(mapOf("stored-in-typing-catalog" to StringTyping), TypingActualSource.TYPING_CATALOG)
+        }
+
+        test("hosted by action and stored in typing catalog") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI(
+                        "https://raw.githubusercontent.com/some-owner/some-name/" +
+                            "some-hash//action-types.yml",
+                    ),
+                    -> hostedByActionYml
+                    URI(
+                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/v3//action-types.yml",
+                    ),
+                    -> storedInTypingCatalog
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+        }
+
+        test("no typings at all") {
+            // Given
+            val fetchUri: (URI) -> String = { throw IOException() }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(emptyMap(), null)
+        }
     }
 })
