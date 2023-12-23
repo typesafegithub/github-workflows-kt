@@ -63,9 +63,37 @@ class TypesProvidingTest : FunSpec({
     }
 
     context("order of using typings from various sources") {
-        val hostedByActionYml = "inputs:\n  hosted-by-action-yml:\n    type: string"
-        val hostedByActionYaml = "inputs:\n  hosted-by-action-yaml:\n    type: string"
-        val storedInTypingCatalog = "inputs:\n  stored-in-typing-catalog:\n    type: string"
+        val hostedByActionYml =
+            """
+            inputs:
+              hosted-by-action-yml:
+                type: string
+            """.trimIndent()
+        val hostedByActionYaml =
+            """
+            inputs:
+              hosted-by-action-yaml:
+                type: string
+            """.trimIndent()
+        val storedInTypingCatalog =
+            """
+            inputs:
+              stored-in-typing-catalog:
+                type: string
+            """.trimIndent()
+        val metadata =
+            """
+            "versionsWithTypings":
+            - "v2"
+            - "v3"
+            - "v4"
+            """.trimIndent()
+        val storedInTypingCatalogForOlderVersion =
+            """
+            inputs:
+              stored-in-typing-catalog-for-older-version:
+                type: string
+            """.trimIndent()
 
         test("only hosted by the action (.yml)") {
             // Given
@@ -164,6 +192,53 @@ class TypesProvidingTest : FunSpec({
 
             // Then
             types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+        }
+
+        test("only stored in typing catalog for older version") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI(
+                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/metadata.yml",
+                    ),
+                    -> metadata
+                    URI(
+                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/v4//action-types.yml",
+                    ),
+                    -> storedInTypingCatalogForOlderVersion
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v6")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(mapOf("stored-in-typing-catalog-for-older-version" to StringTyping), TypingActualSource.TYPING_CATALOG)
+        }
+
+        test("metadata available but no version available") {
+            // Given
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI(
+                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/metadata.yml",
+                    ),
+                    -> metadata
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(emptyMap(), null)
         }
 
         test("no typings at all") {
