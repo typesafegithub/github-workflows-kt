@@ -80,6 +80,7 @@ public class WorkflowBuilder(
                 services = services,
                 jobOutputs = outputs,
                 _customArguments = _customArguments,
+                workflowBuilder = this,
             )
         jobBuilder.block()
         val newJob = jobBuilder.build()

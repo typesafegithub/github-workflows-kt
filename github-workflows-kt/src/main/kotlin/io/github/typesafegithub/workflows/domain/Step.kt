@@ -45,6 +45,27 @@ public data class CommandStep(
         _customArguments = _customArguments,
     )
 
+public data class KotlinLogicStep(
+    override val id: String,
+    val name: String? = null,
+    val command: String,
+    override val env: LinkedHashMap<String, String> = linkedMapOf(),
+    override val condition: String? = null,
+    override val continueOnError: Boolean? = null,
+    override val timeoutMinutes: Int? = null,
+    val shell: Shell? = null,
+    val workingDirectory: String? = null,
+    override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
+    val logic: () -> Unit,
+) : Step(
+        id = id,
+        condition = condition,
+        continueOnError = continueOnError,
+        timeoutMinutes = timeoutMinutes,
+        env = env,
+        _customArguments = _customArguments,
+    )
+
 @Suppress("LongParameterList")
 public open class ActionStep<out OUTPUTS : Outputs>(
     override val id: String,

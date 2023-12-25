@@ -4,6 +4,7 @@ import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
+import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -878,5 +879,50 @@ class IntegrationTest : FunSpec({
                   run: 'echo ''Hello!'''
 
             """.trimIndent()
+    }
+
+    test("toYaml() - calling Kotlin logic step") {
+        // Given
+        var state = "The step wasn't run"
+
+        val myWorkflow =
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    run(name = "Step with Kotlin code in lambda") {
+                        state = "The step was run!"
+                    }
+                }
+            }
+
+        // When
+        val yaml = myWorkflow.toYaml(preamble = Just(""), addConsistencyCheck = false)
+        val kotlinLogicStep =
+            myWorkflow
+                .jobs
+                .first { it.id == "test" }
+                .steps
+                .first() as KotlinLogicStep
+        kotlinLogicStep.logic()
+
+        // Then
+        yaml shouldBe
+            """
+            name: 'test'
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: 'ubuntu-latest'
+                steps:
+                - id: 'step-0'
+                  name: 'Step with Kotlin code in lambda'
+                  run: 'GHWKT_RUN_STEP=''test:step-0'' .github/workflows/some_workflow.main.kts'
+
+            """.trimIndent()
+        state shouldBe "The step was run!"
     }
 })

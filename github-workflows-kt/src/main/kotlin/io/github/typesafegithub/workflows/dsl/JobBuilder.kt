@@ -6,12 +6,14 @@ import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
 import kotlinx.serialization.Contextual
+import kotlin.io.path.name
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
@@ -30,6 +32,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val services: Map<String, Container> = emptyMap(),
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
+    private val workflowBuilder: WorkflowBuilder,
 ) : HasCustomArguments {
     private var job =
         Job<OUTPUT>(
@@ -75,6 +78,48 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 id = "step-${job.steps.size}",
                 name = name,
                 command = command,
+                env = env,
+                condition = `if` ?: condition,
+                continueOnError = continueOnError,
+                timeoutMinutes = timeoutMinutes,
+                shell = shell,
+                workingDirectory = workingDirectory,
+                _customArguments = _customArguments,
+            )
+        job = job.copy(steps = job.steps + newStep)
+        return newStep
+    }
+
+    public fun run(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
+        name: String? = null,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
+        `if`: String? = null,
+        condition: String? = null,
+        continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
+        shell: Shell? = null,
+        workingDirectory: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
+        logic: () -> Unit,
+    ): KotlinLogicStep {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
+        val id = "step-${job.steps.size}"
+
+        val newStep =
+            KotlinLogicStep(
+                id = id,
+                name = name,
+                // TODO: infer path to the script in a generic way, using sourceFile's full path
+                command =
+                    "GHWKT_RUN_STEP='${this.id}:$id' " +
+                        ".github/workflows/${workflowBuilder.workflow.sourceFile?.name}",
+                logic = logic,
                 env = env,
                 condition = `if` ?: condition,
                 continueOnError = continueOnError,
