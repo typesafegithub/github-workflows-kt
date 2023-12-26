@@ -436,6 +436,7 @@ class GenerationTest : FunSpec({
                 "DEPRECATION",
             )
 
+            import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
             import io.github.typesafegithub.workflows.domain.actions.Action
             import io.github.typesafegithub.workflows.domain.actions.RegularAction
             import java.util.LinkedHashMap
@@ -455,6 +456,7 @@ class GenerationTest : FunSpec({
              *
              * [Action on GitHub](https://github.com/john-smith/action-for-script)
              */
+            @ExperimentalClientSideBindings
             public data class ActionForScript private constructor(
                 /**
                  * Short description

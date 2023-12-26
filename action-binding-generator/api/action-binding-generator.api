@@ -192,3 +192,6 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/Typ
 	public static fun values ()[Lio/github/typesafegithub/workflows/actionbindinggenerator/TypingActualSource;
 }
 
+public abstract interface annotation class io/github/typesafegithub/workflows/actionbindinggenerator/annotations/ExperimentalClientSideBindings : java/lang/annotation/Annotation {
+}
+

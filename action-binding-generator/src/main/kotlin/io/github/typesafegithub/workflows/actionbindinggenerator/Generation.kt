@@ -143,6 +143,11 @@ private fun generateActionClass(
 ): TypeSpec {
     return TypeSpec.classBuilder(className)
         .addModifiers(KModifier.DATA)
+        .apply {
+            if (generateForScript) {
+                addExperimentalAnnotation()
+            }
+        }
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
         .inheritsFromRegularAction(coords, metadata, className, generateForScript = generateForScript)
@@ -154,6 +159,13 @@ private fun generateActionClass(
         .addOutputClassIfNecessary(metadata)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
+}
+
+private fun TypeSpec.Builder.addExperimentalAnnotation() {
+    addAnnotation(
+        AnnotationSpec.builder(ClassName("io.github.typesafegithub.workflows.annotations", "ExperimentalClientSideBindings"))
+            .build(),
+    )
 }
 
 private fun TypeSpec.Builder.addCustomTypes(
