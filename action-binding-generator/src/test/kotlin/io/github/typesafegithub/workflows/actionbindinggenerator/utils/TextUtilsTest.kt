@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.utils
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -29,6 +29,17 @@ class TextUtilsTest : FunSpec({
         ).forEach { (input, output) ->
             test("should convert '$input' to '$output'") {
                 input.toCamelCase() shouldBe output
+            }
+        }
+    }
+
+    context("toKotlinPackageName") {
+        listOf(
+            "some-name" to "somename",
+            "SomeName" to "somename",
+        ).forEach { (input, output) ->
+            test("should convert '$input' to '$output'") {
+                input.toKotlinPackageName() shouldBe output
             }
         }
     }

@@ -1,5 +1,12 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.metadata
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException

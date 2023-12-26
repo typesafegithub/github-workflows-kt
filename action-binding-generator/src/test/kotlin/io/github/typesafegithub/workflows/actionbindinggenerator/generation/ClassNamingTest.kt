@@ -1,5 +1,6 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

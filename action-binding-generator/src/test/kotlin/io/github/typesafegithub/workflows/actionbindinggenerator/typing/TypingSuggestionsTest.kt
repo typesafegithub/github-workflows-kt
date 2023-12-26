@@ -1,5 +1,7 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe

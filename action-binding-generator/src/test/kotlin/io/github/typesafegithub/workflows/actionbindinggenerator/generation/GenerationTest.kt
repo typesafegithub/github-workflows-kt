@@ -1,6 +1,19 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Output
+import io.github.typesafegithub.workflows.actionbindinggenerator.shouldMatchFile
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.BooleanTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.EnumTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.FloatTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerWithSpecialValueTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

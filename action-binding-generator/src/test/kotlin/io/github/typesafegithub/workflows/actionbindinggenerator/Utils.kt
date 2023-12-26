@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.kotest.assertions.fail
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNot

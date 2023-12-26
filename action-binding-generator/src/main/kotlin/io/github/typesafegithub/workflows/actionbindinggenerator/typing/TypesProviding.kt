@@ -1,8 +1,19 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 import com.charleskorn.kaml.Yaml
-import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.ACTION
-import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource.TYPING_CATALOG
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.repoName
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException

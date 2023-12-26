@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.metadata
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.row

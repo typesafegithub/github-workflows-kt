@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
@@ -14,8 +14,26 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
-import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUSTOM_INPUTS
-import io.github.typesafegithub.workflows.actionbindinggenerator.Properties.CUSTOM_VERSION
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_INPUTS
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_VERSION
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.shouldBeNonNullInBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.Typing
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.asString
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.buildCustomType
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.getClassName
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.provideTypes
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.suggestAdditionalTypings
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.removeTrailingWhitespacesForEachLine
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCase
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
 import java.nio.file.Path
 
 public data class ActionBinding(

@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.isTopLevel
-import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.isTopLevel
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
 import io.github.typesafegithub.workflows.codegenerator.model.Version
 import java.io.File

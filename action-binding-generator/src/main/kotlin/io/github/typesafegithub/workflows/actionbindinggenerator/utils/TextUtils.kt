@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.utils
 
 import java.util.Locale
 
@@ -13,3 +13,9 @@ internal fun String.toPascalCase(): String {
 }
 
 internal fun String.toCamelCase(): String = toPascalCase().replaceFirstChar { it.lowercase() }
+
+internal fun String.toKotlinPackageName(): String =
+    replace("-", "")
+        .lowercase()
+
+internal fun String.removeTrailingWhitespacesForEachLine() = lines().joinToString(separator = "\n") { it.trimEnd() }
