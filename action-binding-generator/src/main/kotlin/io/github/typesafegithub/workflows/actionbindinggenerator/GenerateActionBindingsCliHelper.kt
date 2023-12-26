@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import java.nio.file.Path
 import kotlin.io.path.div
@@ -13,6 +14,7 @@ import kotlin.io.path.div
  * @param sourceFile Path to the script where this function is called from. Typically a result of an expression like
  * [__FILE__.toPath()].
  */
+@ExperimentalClientSideBindings
 public fun generateActionBindings(
     args: Array<String>,
     sourceFile: Path,

@@ -1,9 +1,11 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.annotations.ExperimentalClientSideBindings
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 
+@OptIn(ExperimentalClientSideBindings::class)
 class GenerateActionBindingsCliHelperTest : FunSpec({
     test("${::generateActionBindings.name} - smoke test") {
         // given
