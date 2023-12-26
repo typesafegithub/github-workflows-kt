@@ -27,5 +27,9 @@ workflow(
         run(name = "Kotlin command") {
             println("Hello from Kotlin command!")
         }
+        run(name = "Another kotlin command") {
+            println("This should run faster because the script is already compiled")
+            println(('a'..'z').joinToString())
+        }
     }
 }.writeToFile()

@@ -32,3 +32,6 @@ jobs:
     - id: 'step-2'
       name: 'Kotlin command'
       run: 'GHWKT_RUN_STEP=''test_job:step-2'' .github/workflows/test_workflow.main.kts'
+    - id: 'step-3'
+      name: 'Another kotlin command'
+      run: 'GHWKT_RUN_STEP=''test_job:step-3'' .github/workflows/test_workflow.main.kts'
