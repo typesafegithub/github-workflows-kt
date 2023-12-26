@@ -43,7 +43,6 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-        condition = expr { "${github.ref} == 'refs/heads/main'" },
         env = linkedMapOf(
             "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
             "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
