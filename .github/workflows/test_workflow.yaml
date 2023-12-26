@@ -25,8 +25,10 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
+      uses: 'actions/checkout@v4'
+    - id: 'step-1'
       name: 'Regular command'
       run: 'echo ''Hello from regular command!'''
-    - id: 'step-1'
+    - id: 'step-2'
       name: 'Kotlin command'
-      run: 'GHWKT_RUN_STEP=''test_job:step-1'' .github/workflows/test_workflow.main.kts'
+      run: 'GHWKT_RUN_STEP=''test_job:step-2'' .github/workflows/test_workflow.main.kts'
