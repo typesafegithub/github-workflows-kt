@@ -115,7 +115,6 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             KotlinLogicStep(
                 id = id,
                 name = name,
-                // TODO: infer path to the script in a generic way, using sourceFile's full path
                 command =
                     "GHWKT_RUN_STEP='${this.id}:$id' " +
                         ".github/workflows/${workflowBuilder.workflow.sourceFile?.name}",

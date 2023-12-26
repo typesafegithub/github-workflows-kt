@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.yaml
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.Job
+import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -67,6 +68,19 @@ public fun Workflow.writeToFile(
     preamble: Preamble? = null,
     generateActionBindings: Boolean = false,
 ) {
+    val runStepEnvVar: String? = System.getenv("GHWKT_RUN_STEP")
+
+    if (runStepEnvVar != null) {
+        val (jobId, stepId) = runStepEnvVar.split(":")
+        val kotlinLogicStep =
+            this.jobs
+                .first { it.id == jobId }
+                .steps
+                .first { it.id == stepId } as KotlinLogicStep
+        kotlinLogicStep.logic()
+        return
+    }
+
     checkNotNull(gitRootDir) {
         "gitRootDir must be specified explicitly when sourceFile is null"
     }
