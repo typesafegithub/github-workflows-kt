@@ -1,5 +1,8 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.toActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
 import kotlinx.serialization.decodeFromString
 
 public fun extractUsedActionsFromWorkflow(manifest: String): List<ActionCoords> {

@@ -1,4 +1,7 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.typing
+
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 
 internal fun Metadata.suggestAdditionalTypings(existingTypings: Set<String>): String? {
     val keys =

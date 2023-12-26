@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 private fun ActionType.toTyping(fieldName: String): Typing =
     when (this.type) {

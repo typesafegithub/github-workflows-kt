@@ -1,10 +1,10 @@
 package io.github.typesafegithub.workflows.codegenerator
 
 import arrow.fx.coroutines.parMap
-import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.FromLockfile
-import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.dsl.expressions.generateEventPayloads
 import java.nio.file.Paths

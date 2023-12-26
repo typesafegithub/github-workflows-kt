@@ -1,11 +1,11 @@
 package io.github.typesafegithub.workflows.codegenerator.updating
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.CommitHash
-import io.github.typesafegithub.workflows.actionbindinggenerator.generateBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.isTopLevel
-import io.github.typesafegithub.workflows.actionbindinggenerator.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.isTopLevel
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
 import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef

@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows.codegenerator
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.ActionBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.codegenerator.model.Version
 import java.nio.file.Paths

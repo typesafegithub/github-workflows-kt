@@ -1,6 +1,7 @@
-package io.github.typesafegithub.workflows.actionbindinggenerator
+package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.annotations.ExperimentalClientSideBindings
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import java.nio.file.Path
 import kotlin.io.path.div
