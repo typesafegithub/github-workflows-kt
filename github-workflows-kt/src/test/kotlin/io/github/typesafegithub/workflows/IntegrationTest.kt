@@ -881,9 +881,10 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - calling Kotlin logic step") {
+    test("writeToFile() - calling Kotlin logic step") {
         // Given
-        var state = "The step wasn't run"
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
+        var callCount = 0
 
         val myWorkflow =
             workflow(
@@ -893,23 +894,28 @@ class IntegrationTest : FunSpec({
             ) {
                 job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                     run(name = "Step with Kotlin code in lambda") {
-                        state = "The step was run!"
+                        callCount++
                     }
                 }
             }
 
         // When
-        val yaml = myWorkflow.toYaml(preamble = Just(""), addConsistencyCheck = false)
-        val kotlinLogicStep =
-            myWorkflow
-                .jobs
-                .first { it.id == "test" }
-                .steps
-                .first() as KotlinLogicStep
-        kotlinLogicStep.logic()
+        // Writing the YAML
+        myWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+            gitRootDir = gitRootDir,
+        )
+        // During runtime
+        myWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+            gitRootDir = gitRootDir,
+            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-0" else null }
+        )
 
         // Then
-        yaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             name: 'test'
             on:
@@ -923,6 +929,6 @@ class IntegrationTest : FunSpec({
                   run: 'GHWKT_RUN_STEP=''test:step-0'' .github/workflows/some_workflow.main.kts'
 
             """.trimIndent()
-        state shouldBe "The step was run!"
+        callCount shouldBe 1
     }
 })
