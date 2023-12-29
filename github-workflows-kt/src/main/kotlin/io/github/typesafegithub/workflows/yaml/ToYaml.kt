@@ -67,7 +67,7 @@ public fun Workflow.writeToFile(
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
     generateActionBindings: Boolean = false,
-    getenv: (String) -> String? = { System.getenv(it) }
+    getenv: (String) -> String? = { System.getenv(it) },
 ) {
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
 

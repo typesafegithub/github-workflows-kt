@@ -3048,8 +3048,8 @@ public final class io/github/typesafegithub/workflows/yaml/Preamble$WithOriginal
 public final class io/github/typesafegithub/workflows/yaml/ToYamlKt {
 	public static final fun toYaml (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;Z)Ljava/lang/String;
 	public static synthetic fun toYaml$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;ZILjava/lang/Object;)Ljava/lang/String;
-	public static final fun writeToFile (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;Z)V
-	public static synthetic fun writeToFile$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;ZILjava/lang/Object;)V
+	public static final fun writeToFile (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;ZLkotlin/jvm/functions/Function1;)V
+	public static synthetic fun writeToFile$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public final class io/github/typesafegithub/workflows/yaml/TriggersToYamlKt {

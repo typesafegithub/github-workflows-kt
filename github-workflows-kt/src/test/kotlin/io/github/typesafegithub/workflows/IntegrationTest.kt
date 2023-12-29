@@ -4,7 +4,6 @@ import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
 import io.github.typesafegithub.workflows.domain.Concurrency
-import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -912,7 +911,7 @@ class IntegrationTest : FunSpec({
             preamble = Just(""),
             addConsistencyCheck = false,
             gitRootDir = gitRootDir,
-            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-1" else null }
+            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-1" else null },
         )
 
         // Then
