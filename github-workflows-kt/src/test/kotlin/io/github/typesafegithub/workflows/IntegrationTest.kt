@@ -893,6 +893,7 @@ class IntegrationTest : FunSpec({
                 sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
             ) {
                 job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
                     run(name = "Step with Kotlin code in lambda") {
                         callCount++
                     }
@@ -911,7 +912,7 @@ class IntegrationTest : FunSpec({
             preamble = Just(""),
             addConsistencyCheck = false,
             gitRootDir = gitRootDir,
-            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-0" else null }
+            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-1" else null }
         )
 
         // Then
@@ -925,10 +926,30 @@ class IntegrationTest : FunSpec({
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
+                  uses: 'actions/checkout@v4'
+                - id: 'step-1'
                   name: 'Step with Kotlin code in lambda'
-                  run: 'GHWKT_RUN_STEP=''test:step-0'' .github/workflows/some_workflow.main.kts'
+                  run: 'GHWKT_RUN_STEP=''test:step-1'' .github/workflows/some_workflow.main.kts'
 
             """.trimIndent()
         callCount shouldBe 1
+    }
+
+    test("writeToFile() - calling Kotlin logic step without prior checkout") {
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    run(name = "Step with Kotlin code in lambda") {
+                    }
+                    uses(action = CheckoutV4())
+                }
+            }
+        }
     }
 })

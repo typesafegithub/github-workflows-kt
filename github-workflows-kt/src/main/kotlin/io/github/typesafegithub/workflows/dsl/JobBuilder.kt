@@ -109,6 +109,9 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         require(!(`if` != null && condition != null)) {
             "Either 'if' or 'condition' have to be set, not both!"
         }
+        require(job.steps.filterIsInstance<ActionStep<*>>().any { "/checkout@" in it.action.usesString }) {
+            "Please check out the code prior to using Kotlin-based 'run' block!"
+        }
         val id = "step-${job.steps.size}"
 
         val newStep =
