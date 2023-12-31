@@ -112,15 +112,16 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         require(job.steps.filterIsInstance<ActionStep<*>>().any { "/checkout@" in it.action.usesString }) {
             "Please check out the code prior to using Kotlin-based 'run' block!"
         }
+        val sourceFile =
+            workflowBuilder.workflow.sourceFile
+                ?: throw IllegalArgumentException("sourceFile needs to be set when using Kotlin-based 'run' block!")
         val id = "step-${job.steps.size}"
 
         val newStep =
             KotlinLogicStep(
                 id = id,
                 name = name,
-                command =
-                    "GHWKT_RUN_STEP='${this.id}:$id' " +
-                        ".github/workflows/${workflowBuilder.workflow.sourceFile?.name}",
+                command = "GHWKT_RUN_STEP='${this.id}:$id' .github/workflows/${sourceFile.name}",
                 logic = logic,
                 env = env,
                 condition = `if` ?: condition,

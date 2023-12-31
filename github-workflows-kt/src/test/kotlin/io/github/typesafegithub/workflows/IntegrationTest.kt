@@ -949,6 +949,27 @@ class IntegrationTest : FunSpec({
                     uses(action = CheckoutV4())
                 }
             }
+        }.also {
+            it.message shouldBe "Please check out the code prior to using Kotlin-based 'run' block!"
+        }
+    }
+
+    test("writeToFile() - calling Kotlin logic step without setting sourceFile") {
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
+                    run(name = "Step with Kotlin code in lambda") {
+                    }
+                }
+            }
+        }.also {
+            it.message shouldBe "sourceFile needs to be set when using Kotlin-based 'run' block!"
         }
     }
 })
