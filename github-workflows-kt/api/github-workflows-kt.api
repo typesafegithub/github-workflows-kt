@@ -1,6 +1,9 @@
 public abstract interface annotation class io/github/typesafegithub/workflows/annotations/ExperimentalClientSideBindings : java/lang/annotation/Annotation {
 }
 
+public abstract interface annotation class io/github/typesafegithub/workflows/annotations/ExperimentalKotlinLogicStep : java/lang/annotation/Annotation {
+}
+
 public abstract class io/github/typesafegithub/workflows/domain/AbstractResult {
 	public final fun eq (Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;)Ljava/lang/String;
 	public final fun neq (Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;)Ljava/lang/String;

@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
+import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -18,6 +19,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 
+@OptIn(ExperimentalKotlinLogicStep::class)
 @Suppress("LargeClass")
 class IntegrationTest : FunSpec({
 

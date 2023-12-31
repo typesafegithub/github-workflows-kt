@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.dsl
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
@@ -90,6 +91,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
+    @ExperimentalKotlinLogicStep
     public fun run(
         @Suppress("UNUSED_PARAMETER")
         vararg pleaseUseNamedArguments: Unit,
