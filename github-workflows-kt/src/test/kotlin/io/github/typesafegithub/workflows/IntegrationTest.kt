@@ -936,6 +936,34 @@ class IntegrationTest : FunSpec({
         callCount shouldBe 1
     }
 
+    test("toYaml() - calling Kotlin logic step") {
+        // Given
+        val myWorkflow =
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
+                    run(name = "Step with Kotlin code in lambda") {
+                    }
+                }
+            }
+
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            myWorkflow.toYaml(
+                preamble = Just(""),
+                addConsistencyCheck = false,
+                gitRootDir = gitRootDir,
+            )
+        }.also {
+            it.message shouldBe "toYaml() currently doesn't support steps with Kotlin-based 'run' blocks!"
+        }
+    }
+
     test("writeToFile() - calling Kotlin logic step without prior checkout") {
         // Then
         shouldThrow<IllegalArgumentException> {

@@ -39,6 +39,10 @@ public fun Workflow.toYaml(
     preamble: Preamble? = null,
     generateActionBindings: Boolean = false,
 ): String {
+    require(this.jobs.all { it.steps.none { it is KotlinLogicStep } }) {
+        "toYaml() currently doesn't support steps with Kotlin-based 'run' blocks!"
+    }
+
     return generateYaml(
         addConsistencyCheck = addConsistencyCheck,
         useGitDiff = false,
