@@ -123,6 +123,9 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             KotlinLogicStep(
                 id = id,
                 name = name,
+                // Because of the current architecture, it's hard to make this command work properly if the sourceFile
+                // isn't in .github/workflows directory. It's the most common use case, though, so for now this
+                // simplified implementation is used.
                 command = "GHWKT_RUN_STEP='${this.id}:$id' .github/workflows/${sourceFile.name}",
                 logic = logic,
                 env = env,
