@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
+import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -18,6 +19,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 
+@OptIn(ExperimentalKotlinLogicStep::class)
 @Suppress("LargeClass")
 class IntegrationTest : FunSpec({
 
@@ -878,5 +880,126 @@ class IntegrationTest : FunSpec({
                   run: 'echo ''Hello!'''
 
             """.trimIndent()
+    }
+
+    test("writeToFile() - calling Kotlin logic step") {
+        // Given
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
+        var callCount = 0
+
+        val myWorkflow =
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
+                    run(name = "Step with Kotlin code in lambda") {
+                        callCount++
+                    }
+                }
+            }
+
+        // When
+        // Writing the YAML
+        myWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+            gitRootDir = gitRootDir,
+        )
+        // During runtime
+        myWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+            gitRootDir = gitRootDir,
+            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-1" else null },
+        )
+
+        // Then
+        targetTempFile.readText() shouldBe
+            """
+            name: 'test'
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: 'ubuntu-latest'
+                steps:
+                - id: 'step-0'
+                  uses: 'actions/checkout@v4'
+                - id: 'step-1'
+                  name: 'Step with Kotlin code in lambda'
+                  run: 'GHWKT_RUN_STEP=''test:step-1'' .github/workflows/some_workflow.main.kts'
+
+            """.trimIndent()
+        callCount shouldBe 1
+    }
+
+    test("toYaml() - calling Kotlin logic step") {
+        // Given
+        val myWorkflow =
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
+                    run(name = "Step with Kotlin code in lambda") {
+                    }
+                }
+            }
+
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            myWorkflow.toYaml(
+                preamble = Just(""),
+                addConsistencyCheck = false,
+                gitRootDir = gitRootDir,
+            )
+        }.also {
+            it.message shouldBe "toYaml() currently doesn't support steps with Kotlin-based 'run' blocks!"
+        }
+    }
+
+    test("writeToFile() - calling Kotlin logic step without prior checkout") {
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    run(name = "Step with Kotlin code in lambda") {
+                    }
+                    uses(action = CheckoutV4())
+                }
+            }
+        }.also {
+            it.message shouldBe "Please check out the code prior to using Kotlin-based 'run' block!"
+        }
+    }
+
+    test("writeToFile() - calling Kotlin logic step without setting sourceFile") {
+        // Then
+        shouldThrow<IllegalArgumentException> {
+            // When
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
+                    run(name = "Step with Kotlin code in lambda") {
+                    }
+                }
+            }
+        }.also {
+            it.message shouldBe "sourceFile needs to be set when using Kotlin-based 'run' block!"
+        }
     }
 })

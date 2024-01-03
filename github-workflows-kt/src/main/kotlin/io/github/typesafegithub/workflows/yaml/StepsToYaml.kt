@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.yaml
 
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
+import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.Shell.Bash
 import io.github.typesafegithub.workflows.domain.Shell.Cmd
@@ -18,6 +19,7 @@ private fun Step.toYaml() =
     when (this) {
         is ActionStep<*> -> toYaml()
         is CommandStep -> toYaml()
+        is KotlinLogicStep -> toYaml()
     }
 
 private fun ActionStep<*>.toYaml(): Map<String, Any?> =
@@ -33,6 +35,19 @@ private fun ActionStep<*>.toYaml(): Map<String, Any?> =
     ) + _customArguments
 
 private fun CommandStep.toYaml(): Map<String, Any?> =
+    mapOfNotNullValues(
+        "id" to id,
+        "name" to name,
+        "env" to env.ifEmpty { null },
+        "continue-on-error" to continueOnError,
+        "timeout-minutes" to timeoutMinutes,
+        "shell" to shell?.toYaml(),
+        "working-directory" to workingDirectory,
+        "run" to command,
+        "if" to condition,
+    ) + _customArguments
+
+private fun KotlinLogicStep.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,

@@ -1,17 +1,20 @@
 package io.github.typesafegithub.workflows.dsl
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
+import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
 import kotlinx.serialization.Contextual
+import kotlin.io.path.name
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
@@ -30,6 +33,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val services: Map<String, Container> = emptyMap(),
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
+    private val workflowBuilder: WorkflowBuilder,
 ) : HasCustomArguments {
     private var job =
         Job<OUTPUT>(
@@ -75,6 +79,55 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 id = "step-${job.steps.size}",
                 name = name,
                 command = command,
+                env = env,
+                condition = `if` ?: condition,
+                continueOnError = continueOnError,
+                timeoutMinutes = timeoutMinutes,
+                shell = shell,
+                workingDirectory = workingDirectory,
+                _customArguments = _customArguments,
+            )
+        job = job.copy(steps = job.steps + newStep)
+        return newStep
+    }
+
+    @ExperimentalKotlinLogicStep
+    public fun run(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
+        name: String? = null,
+        env: LinkedHashMap<String, String> = linkedMapOf(),
+        @SuppressWarnings("FunctionParameterNaming")
+        `if`: String? = null,
+        condition: String? = null,
+        continueOnError: Boolean? = null,
+        timeoutMinutes: Int? = null,
+        shell: Shell? = null,
+        workingDirectory: String? = null,
+        @SuppressWarnings("FunctionParameterNaming")
+        _customArguments: Map<String, @Contextual Any> = mapOf(),
+        logic: () -> Unit,
+    ): KotlinLogicStep {
+        require(!(`if` != null && condition != null)) {
+            "Either 'if' or 'condition' have to be set, not both!"
+        }
+        require(job.steps.filterIsInstance<ActionStep<*>>().any { "/checkout@" in it.action.usesString }) {
+            "Please check out the code prior to using Kotlin-based 'run' block!"
+        }
+        val sourceFile =
+            workflowBuilder.workflow.sourceFile
+                ?: throw IllegalArgumentException("sourceFile needs to be set when using Kotlin-based 'run' block!")
+        val id = "step-${job.steps.size}"
+
+        val newStep =
+            KotlinLogicStep(
+                id = id,
+                name = name,
+                // Because of the current architecture, it's hard to make this command work properly if the sourceFile
+                // isn't in .github/workflows directory. It's the most common use case, though, so for now this
+                // simplified implementation is used.
+                command = "GHWKT_RUN_STEP='${this.id}:$id' .github/workflows/${sourceFile.name}",
+                logic = logic,
                 env = env,
                 condition = `if` ?: condition,
                 continueOnError = continueOnError,

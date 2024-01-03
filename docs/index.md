@@ -29,7 +29,7 @@ confidence.
 * **no duplication** - don't repeat yourself! Share common configuration using constant values, or define your own
   functions to encapsulate logic
 * **fully featured language** - use the full power of Kotlin to generate workflows dynamically, randomly generate data,
-  or add custom validation
+  or add custom validation. Defining workflow logic in Kotlin is currently experimental
 * **built-in support for over 100 actions** - the most popular actions can be used in a type-safe manner thanks to the
   bundled bindings. For more information, see
   [Supported actions](supported-actions.md)
