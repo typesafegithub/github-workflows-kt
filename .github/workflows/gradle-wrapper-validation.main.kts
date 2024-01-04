@@ -1,14 +1,16 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.8.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.9.0")
 @file:Import("generated/actions/checkout.kt")
 @file:Import("generated/gradle/wrapper-validation-action.kt")
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
+@OptIn(ExperimentalClientSideBindings::class)
 workflow(
     name = "Validate Gradle wrapper",
     on = listOf(
