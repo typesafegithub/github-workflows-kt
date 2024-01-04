@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.8.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.9.0")
 @file:Import("setup-java.main.kts")
 @file:Import("generated/actions/checkout.kt")
 @file:Import("generated/gradle/gradle-build-action.kt")
