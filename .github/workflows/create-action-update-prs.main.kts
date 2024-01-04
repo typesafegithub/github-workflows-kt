@@ -5,6 +5,7 @@
 @file:Import("generated/actions/checkout.kt")
 @file:Import("generated/gradle/gradle-build-action.kt")
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Cron
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
@@ -13,6 +14,7 @@ import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
+@OptIn(ExperimentalClientSideBindings::class)
 workflow(
     name = "Create action update PRs",
     on = listOf(

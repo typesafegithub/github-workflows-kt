@@ -3,8 +3,10 @@
 @file:Import("generated/gradle/gradle-build-action.kt")
 @file:Import("generated/JamesIves/github-pages-deploy-action.kt")
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 
+@OptIn(ExperimentalClientSideBindings::class)
 fun JobBuilder<*>.deployDocs() {
     run(command = "pip install -r docs/requirements.txt")
 

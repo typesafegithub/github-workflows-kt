@@ -5,11 +5,13 @@
 @file:Import("setup-python.main.kts")
 @file:Import("generated/actions/checkout.kt")
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
+@OptIn(ExperimentalClientSideBindings::class)
 workflow(
     name = "Release docs",
     on = listOf(WorkflowDispatch()),
