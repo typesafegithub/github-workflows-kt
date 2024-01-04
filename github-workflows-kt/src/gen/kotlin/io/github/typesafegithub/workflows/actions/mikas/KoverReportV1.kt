@@ -36,7 +36,7 @@ public data class KoverReportV1 private constructor(
     /**
      * Github personal token to add commits to the pull request
      */
-    public val token: String,
+    public val token: String? = null,
     /**
      * Title for the pull request comment
      */
@@ -70,7 +70,7 @@ public data class KoverReportV1 private constructor(
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         path: List<String>,
-        token: String,
+        token: String? = null,
         title: String? = null,
         updateComment: Boolean? = null,
         minCoverageOverall: Int? = null,
@@ -87,7 +87,7 @@ public data class KoverReportV1 private constructor(
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "path" to path.joinToString("\n"),
-            "token" to token,
+            token?.let { "token" to it },
             title?.let { "title" to it },
             updateComment?.let { "update-comment" to it.toString() },
             minCoverageOverall?.let { "min-coverage-overall" to it.toString() },
