@@ -39,7 +39,7 @@ public data class SetupRubyV1 private constructor(
      * is used.
      * For 'latest', `gem update --system` is run to update to the latest compatible RubyGems
      * version.
-     * Ruby head/master builds and Ruby 2.2 and earlier will not be updated.
+     * Ruby head/master builds will not be updated.
      * Similarly, if a version number is given, `gem update --system <version>` is run to update to
      * that version of RubyGems, as long as that version is newer than the one provided by default.
      */
