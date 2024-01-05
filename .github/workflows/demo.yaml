@@ -4,9 +4,7 @@
 
 name: 'My workflow'
 on:
-  push:
-    branches:
-    - 'main'
+  pull_request: {}
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
