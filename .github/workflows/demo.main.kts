@@ -9,7 +9,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.io.File
 import java.time.LocalDate
-import java.time.Period
+import java.time.temporal.ChronoUnit
 
 workflow(
     name = "My workflow",
@@ -43,7 +43,7 @@ workflow(
                 .map { LocalDate.parse(it) }
                 .filter { it < today }
                 .forEach {
-                    val diff = Period.between(it, today).days
+                    val diff = ChronoUnit.DAYS.between(it, today)
                     println("$it is in the past ($diff days ago)")
                 }
         }
