@@ -13,7 +13,7 @@ version = rootProject.version
 
 dependencies {
     implementation("com.squareup:kotlinpoet:1.15.3")
-    implementation("com.charleskorn.kaml:kaml:0.56.0")
+    implementation("com.charleskorn.kaml:kaml:0.57.0")
     implementation(projects.sharedInternal)
 
     testImplementation(projects.githubWorkflowsKt)
