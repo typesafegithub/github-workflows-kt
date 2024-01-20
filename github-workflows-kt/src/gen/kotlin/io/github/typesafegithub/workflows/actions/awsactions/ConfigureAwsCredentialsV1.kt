@@ -28,6 +28,30 @@ import kotlin.collections.toTypedArray
  * Configure AWS credential and region environment variables for use with the AWS CLI and AWS SDKs
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
+ *
+ * @param audience The audience to use for the OIDC provider
+ * @param awsAccessKeyId AWS Access Key ID. This input is required if running in the GitHub hosted
+ * environment. It is optional if running in a self-hosted environment that already has AWS
+ * credentials, for example on an EC2 instance.
+ * @param awsSecretAccessKey AWS Secret Access Key. This input is required if running in the GitHub
+ * hosted environment. It is optional if running in a self-hosted environment that already has AWS
+ * credentials, for example on an EC2 instance.
+ * @param awsSessionToken AWS Session Token
+ * @param awsRegion AWS Region, e.g. us-east-2
+ * @param maskAwsAccountId Whether to set the AWS account ID for these credentials as a secret
+ * value, so that it is masked in logs. Valid values are 'true' and 'false'. Defaults to true
+ * @param roleToAssume Use the provided credentials to assume an IAM role and configure the Actions
+ * environment with the assumed role credentials rather than with the provided credentials
+ * @param webIdentityTokenFile Use the web identity token file from the provided file system path in
+ * order to assume an IAM role using a web identity. E.g., from within an Amazon EKS worker node
+ * @param roleDurationSeconds Role duration in seconds (default: 6 hours)
+ * @param roleSessionName Role session name (default: GitHubActions)
+ * @param roleExternalId The external ID of the role to assume
+ * @param roleSkipSessionTagging Skip session tagging during role assumption
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: ConfigureAwsCredentialsV4",

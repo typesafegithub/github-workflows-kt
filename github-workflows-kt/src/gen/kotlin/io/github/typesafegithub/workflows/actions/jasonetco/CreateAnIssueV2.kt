@@ -26,6 +26,16 @@ import kotlin.collections.toTypedArray
  * Creates a new issue using a template with front matter.
  *
  * [Action on GitHub](https://github.com/JasonEtco/create-an-issue)
+ *
+ * @param assignees GitHub handle of the user(s) to assign the issue (comma-separated)
+ * @param milestone Number of the milestone to assign the issue to
+ * @param filename The name of the file to use as the issue template
+ * @param updateExisting Update an open existing issue with the same title if it exists
+ * @param searchExisting Existing types of issues to search for (comma-separated)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CreateAnIssueV2 private constructor(
     /**

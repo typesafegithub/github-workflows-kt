@@ -26,6 +26,53 @@ import kotlin.collections.toTypedArray
  * Caches .gradle folder (dependencies, local build cache, ...)
  *
  * [Action on GitHub](https://github.com/burrunan/gradle-cache-action)
+ *
+ * @param jobId A job identifier to avoid cache pollution from different jobs
+ * @param buildRootDirectory Relative path under $GITHUB_WORKSPACE where Git repository is placed
+ * @param homeDirectory Overrides the location of $HOME (e.g. to avoid use of /root when running in
+ * Docker)
+ * @param gradleVersion (wrapper | or explicit version) Caches often depend on the Gradle version,
+ * so this parameter sets the ID to use for cache keys. It does not affect the Gradle version used for
+ * build
+ * @param readOnly Configures caches for read-only opreration (e.g. to save GitHub Actions storage
+ * limit)
+ * @param saveGeneratedGradleJars Enables caching of
+ * $HOME/.gradle/caches/&#42;.&#42;/generated-gradle-jars
+ * @param saveLocalBuildCache Enables caching of $HOME/.gradle/caches/build-cache-1
+ * @param multiCacheEnabled Adds com.github.burrunan.multi-cache plugin to settings.gradle so GitHub
+ * Actions cache can be used in parallel with Gradle remote build cache
+ * @param multiCacheVersion Configures com.github.burrunan.multi-cache version to use
+ * @param multiCacheRepository Configures repository where com.github.burrunan.multi-cache can be
+ * located
+ * @param multiCacheGroupIdFilter Configures group id for selecting only
+ * com.github.burrunan.multi-cache artifacts (it enables Gradle to use custom repository for
+ * multi-cache only)
+ * @param saveGradleDependenciesCache Enables caching of ~/.gradle/caches/modules-*
+ * @param executionOnlyCaches Activates only the caches that are relevant for executing gradle
+ * command.
+ * This is helpful when build job executes multiple gradle commands sequentially.
+ * Then the caching is implemented in the very first one, and the subsequent should be marked
+ * with execution-only-caches: true
+ * @param remoteBuildCacheProxyEnabled Activates a remote cache that proxies requests to GitHub
+ * Actions cache
+ * @param gradleDependenciesCacheKey Extra files to take into account for ~/.gradle/caches
+ * dependencies
+ * @param saveMavenDependenciesCache Enables caching of ~/.m2/repository/
+ * @param mavenLocalIgnorePaths Specifies ignored paths in the Maven Local repository (e.g. the
+ * artifacts of the current project)
+ * @param debug Shows extra logging to debug the action
+ * @param concurrent Enables concurent cache download and upload (disabled by default for better log
+ * output)
+ * @param arguments Gradle arguments to pass (optionally multiline)
+ * @param properties Extra Gradle properties (multiline) which would be passed as -Pname=value
+ * arguments
+ * @param gradleBuildScanReport Publishes Gradle Build Scan URL to job report.
+ * @param gradleDistributionSha256SumWarning Enables warning when distributionSha256Sum property is
+ * missing in gradle-wrapper.properties
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class GradleCacheActionV1 private constructor(
     /**

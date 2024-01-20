@@ -26,6 +26,32 @@ import kotlin.collections.toTypedArray
  * Automatically commit changes made in your workflow run directly to your repo
  *
  * [Action on GitHub](https://github.com/EndBug/add-and-commit)
+ *
+ * @param add Arguments for the git add command
+ * @param authorName The name of the user that will be displayed as the author of the commit
+ * @param authorEmail The email of the user that will be displayed as the author of the commit
+ * @param commit Additional arguments for the git commit command
+ * @param committerName The name of the custom committer you want to use
+ * @param committerEmail The email of the custom committer you want to use
+ * @param cwd The directory where your repository is located. You should use actions/checkout first
+ * to set it up
+ * @param defaultAuthor How the action should fill missing author name or email.
+ * @param message The message for the commit
+ * @param newBranch The name of the branch to create.
+ * @param pathspecErrorHandling The way the action should handle pathspec errors from the add and
+ * remove commands.
+ * @param pull Arguments for the git pull command. By default, the action does not pull.
+ * @param push Whether to push the commit and, if any, its tags to the repo. It can also be used to
+ * set the git push arguments (more info in the README)
+ * @param remove Arguments for the git rm command
+ * @param tag Arguments for the git tag command (the tag name always needs to be the first word not
+ * preceded by a hyphen)
+ * @param githubToken The token used to make requests to the GitHub API. It's NOT used to make
+ * commits and should not be changed.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: AddAndCommitV9",

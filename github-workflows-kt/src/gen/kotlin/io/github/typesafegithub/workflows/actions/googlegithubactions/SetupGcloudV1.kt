@@ -29,6 +29,22 @@ import kotlin.collections.toTypedArray
  * Adds the `gcloud` CLI command to the $PATH.
  *
  * [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
+ *
+ * @param skipInstall Skip installation of the gcloud SDK and use the system-supplied version
+ * instead. The "version" input will be ignored.
+ * @param version Version or version constraint of the gcloud SDK to install. If
+ * unspecified, it will accept any installed version of the gcloud SDK. If
+ * set to "latest", it will download the latest available SDK. If set to a
+ * version constraint, it will download the latest available version that
+ * matches the constraint. Examples: "290.0.1" or ">= 197.0.1".
+ * @param projectId ID of the Google Cloud project. If provided, this will configure gcloud to
+ * use this project ID by default for commands. Individual commands can still
+ * override the project using the --project flag which takes precedence.
+ * @param installComponents List of Cloud SDK components to install
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SetupGcloudV2",

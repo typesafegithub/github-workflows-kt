@@ -29,6 +29,22 @@ import kotlin.collections.toTypedArray
  * Public registry
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecr-login)
+ *
+ * @param httpProxy Proxy to use for the AWS SDK agent.
+ * @param maskPassword Mask the docker password to prevent it being printed to action logs if debug
+ * logging is enabled. NOTE: This will prevent the Docker password output from being shared between
+ * separate jobs. Options: ['true', 'false']
+ * @param registries A comma-delimited list of AWS account IDs that are associated with the ECR
+ * Private registries. If you do not specify a registry, the default ECR Private registry is assumed.
+ * If 'public' is given as input to 'registry-type', this input is ignored.
+ * @param registryType Which ECR registry type to log into. Options: [private, public]
+ * @param skipLogout Whether to skip explicit logout of the registries during post-job cleanup.
+ * Exists for backward compatibility on self-hosted runners. Not recommended. Options: ['true',
+ * 'false']
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: AmazonEcrLoginV2",

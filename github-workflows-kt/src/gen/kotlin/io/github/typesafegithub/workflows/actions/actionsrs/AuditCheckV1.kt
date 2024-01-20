@@ -24,6 +24,12 @@ import kotlin.collections.toTypedArray
  * Run cargo audit and check for security advisories
  *
  * [Action on GitHub](https://github.com/actions-rs/audit-check)
+ *
+ * @param token GitHub Actions token
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class AuditCheckV1 private constructor(
     /**

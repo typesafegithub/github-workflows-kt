@@ -25,6 +25,27 @@ import kotlin.collections.toTypedArray
  * A GitHub action to report workflow and job status to a Discord Webhook
  *
  * [Action on GitHub](https://github.com/nobrayner/discord-webhook)
+ *
+ * @param githubToken GitHub Token
+ * @param discordWebhook The WebHook URL to call. Should be stored in Secrets on the Repository
+ * @param username Overrides the current username of the webhook
+ * @param avatarUrl Overrides the current avatar of the webhook
+ * @param title Overrides the default title. Include the status in the title by adding the
+ * {{STATUS}} placeholder.
+ * @param description The message to display. Include the status in the description by adding the
+ * {{STATUS}} placeholder
+ * @param includeDetails Whether or not to include the individual job status breakdown of the
+ * Workflow run
+ * @param colorSuccess Overrides the default success color. Any valid hex-color-code. E.g. #17cf48,
+ * 17cf48, 0x17cf48
+ * @param colorFailure Overrides the default failure color. Any valid hex-color-code. E.g. #17cf48,
+ * 17cf48, 0x17cf48
+ * @param colorCancelled Overrides the default cancelled color. Any valid hex-color-code. E.g.
+ * #17cf48, 17cf48, 0x17cf48
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class DiscordWebhookV1 private constructor(
     /**

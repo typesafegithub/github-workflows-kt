@@ -25,6 +25,22 @@ import kotlin.collections.toTypedArray
  * Fetches translations from transifex and proposes a pull request to merge these.
  *
  * [Action on GitHub](https://github.com/c2corg/transifex-pull-request-action)
+ *
+ * @param transifexToken Transifex token
+ * @param transifexOrganisation Transifex organisation
+ * @param transifexProject Transifex project
+ * @param transifexResource Transifex resource
+ * @param output Folder where to output files
+ * @param locales A list of locales to fetch, separated by commas
+ * @param githubToken Github secret
+ * @param branch Branch used for pull request
+ * @param baseBranch The target branch into which the pull request will be merged
+ * @param transform Transformation to apply to translation files. One of `none` or `po-to-json`
+ * @param labels Labels to associate to the pull request
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class TransifexPullRequestActionV5 private constructor(
     /**

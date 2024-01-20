@@ -25,6 +25,18 @@ import kotlin.collections.toTypedArray
  * One-stop shop for working with semantic versions in your workflows
  *
  * [Action on GitHub](https://github.com/madhead/semver-utils)
+ *
+ * @param version A version to process
+ * @param compareTo A version to compare with, if any
+ * @param diffWith A version to diff with. If not specified, the version will be diffed with the
+ * `compare-to` input. If `compare-to` is not specified either, nothing happens.
+ * @param satisfies A range to check against
+ * @param identifier An identifier to pass to the semver's inc function
+ * @param lenient Do not fail on incorrect input
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SemverUtilsV3 private constructor(
     /**

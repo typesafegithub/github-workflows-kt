@@ -26,6 +26,47 @@ import kotlin.collections.toTypedArray
  * Installs, configures and starts an Android Emulator directly on macOS virtual machines.
  *
  * [Action on GitHub](https://github.com/ReactiveCircus/android-emulator-runner)
+ *
+ * @param apiLevel API level of the platform and system image - e.g. 23 for Android Marshmallow, 29
+ * for Android 10
+ * @param target target of the system image - default, google_apis, google_apis_playstore, aosp_atd,
+ * google_atd, android-wear, android-wear-cn, android-tv or google-tv
+ * @param arch CPU architecture of the system image - x86, x86_64 or arm64-v8a
+ * @param profile hardware profile used for creating the AVD - e.g. `Nexus 6`
+ * @param cores the number of cores to use for the emulator
+ * @param ramSize size of RAM to use for this AVD, in KB or MB, denoted with K or M. - e.g. `2048M`
+ * @param heapSize size of heap to use for this AVD in MB. - e.g. `512M`
+ * @param sdcardPathOrSize path to the SD card image for this AVD or the size of a new SD card image
+ * to create for this AVD, in KB or MB, denoted with K or M. - e.g. `path/to/sdcard`, or `1000M`
+ * @param diskSize disk size to use for this AVD. Either in bytes or KB, MB or GB, when denoted with
+ * K, M or G
+ * @param avdName custom AVD name used for creating the Android Virtual Device
+ * @param forceAvdCreation whether to force create the AVD by overwriting an existing AVD with the
+ * same name as `avd-name` - `true` or `false`
+ * @param emulatorBootTimeout Emulator boot timeout in seconds. If it takes longer to boot, the
+ * action would fail - e.g. `300` for 5 minutes
+ * @param emulatorOptions command-line options used when launching the emulator - e.g.
+ * `-no-window -no-snapshot -camera-back emulated`
+ * @param disableAnimations whether to disable animations - true or false
+ * @param disableSpellchecker whether to disable the Android spell checker framework, a common
+ * source of flakiness in text fields - `true` or `false`
+ * @param disableLinuxHwAccel whether to disable hardware acceleration on Linux machines - `true` or
+ * `false` or `auto`
+ * @param enableHwKeyboard whether to enable hardware keyboard - `true` or `false`.
+ * @param emulatorBuild build number of a specific version of the emulator binary to use - e.g.
+ * `6061023` for emulator v29.3.0.0
+ * @param workingDirectory A custom working directory - e.g. `./android` if your root Gradle project
+ * is under the `./android` sub-directory within your repository
+ * @param ndk version of NDK to install - e.g. 21.0.6113669
+ * @param cmake version of CMake to install - e.g. 3.10.2.4988404
+ * @param channel Channel to download the SDK components from - `stable`, `beta`, `dev`, `canary`
+ * @param script custom script to run - e.g. `./gradlew connectedCheck`
+ * @param preEmulatorLaunchScript custom script to run after creating the AVD and before launching
+ * the emulator - e.g. `./adjust-emulator-configs.sh`
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class AndroidEmulatorRunnerV2 private constructor(
     /**

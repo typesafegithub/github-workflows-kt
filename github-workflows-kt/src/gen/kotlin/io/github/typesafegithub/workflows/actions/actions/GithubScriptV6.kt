@@ -29,6 +29,21 @@ import kotlin.collections.toTypedArray
  * Run simple scripts using the GitHub client
  *
  * [Action on GitHub](https://github.com/actions/github-script)
+ *
+ * @param script The script to run
+ * @param githubToken The GitHub token used to create an authenticated client
+ * @param debug Whether to tell the GitHub client to log details of its requests. true or false.
+ * Default is to run in debug mode when the GitHub Actions step debug logging is turned on.
+ * @param userAgent An optional user-agent string
+ * @param previews A comma-separated list of API previews to accept
+ * @param resultEncoding Either "string" or "json" (default "json")—how the result will be encoded
+ * @param retries The number of times to retry a request
+ * @param retryExemptStatusCodes A comma separated list of status codes that will NOT be retried
+ * e.g. "400,500". No effect unless `retries` is set
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: GithubScriptV7",

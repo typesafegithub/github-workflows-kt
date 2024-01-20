@@ -26,6 +26,23 @@ import kotlin.collections.toTypedArray
  * Install the Rust toolchain
  *
  * [Action on GitHub](https://github.com/actions-rs/toolchain)
+ *
+ * @param toolchain Rust toolchain name.
+ *
+ * See https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification
+ *
+ * If this is not given, the action will try and install the version specified in the
+ * `rust-toolchain` file.
+ * @param target Target triple to install for this toolchain
+ * @param default Set installed toolchain as default
+ * @param override Set installed toolchain as an override for a directory
+ * @param profile Name of the group of components to be installed for a new toolchain
+ * @param components Comma-separated list of components to be additionally installed for a new
+ * toolchain
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ToolchainV1 private constructor(
     /**

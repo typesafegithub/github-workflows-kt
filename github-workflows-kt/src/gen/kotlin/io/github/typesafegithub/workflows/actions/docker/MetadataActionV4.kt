@@ -27,6 +27,20 @@ import kotlin.collections.toTypedArray
  * GitHub Action to extract metadata (tags, labels) for Docker
  *
  * [Action on GitHub](https://github.com/docker/metadata-action)
+ *
+ * @param context Where to get context data. Allowed options are "workflow"  (default), "git".
+ * @param images List of Docker images to use as base name for tags
+ * @param tags List of tags as key-value pair attributes
+ * @param flavor Flavors to apply
+ * @param labels List of custom labels
+ * @param sepTags Separator to use for tags output (default \n)
+ * @param sepLabels Separator to use for labels output (default \n)
+ * @param bakeTarget Bake target name (default docker-metadata-action)
+ * @param githubToken GitHub Token as provided by secrets
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: MetadataActionV5",

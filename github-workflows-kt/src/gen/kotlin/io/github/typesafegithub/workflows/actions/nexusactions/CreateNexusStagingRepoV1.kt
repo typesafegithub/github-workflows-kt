@@ -24,6 +24,18 @@ import kotlin.collections.toTypedArray
  * Creates a new staging repo on https://oss.sonatype.org/
  *
  * [Action on GitHub](https://github.com/nexus-actions/create-nexus-staging-repo)
+ *
+ * @param username Your Sonatype username, same the Sonatype Jira one
+ * @param password Your Sonatype password, same the Sonatype Jira one
+ * @param stagingProfileId Your staging profile ID. You can get it at
+ * https://oss.sonatype.org/#stagingProfiles;$staginProfileId
+ * @param description A description to identify the newly created repository
+ * @param baseUrl The url of your nexus repository, defaults to OSSRH
+ * (https://oss.sonatype.org/service/local/)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CreateNexusStagingRepoV1 private constructor(
     /**

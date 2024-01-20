@@ -25,6 +25,19 @@ import kotlin.collections.toTypedArray
  * Automatically format Java files using Google Java Style
  *
  * [Action on GitHub](https://github.com/axel-op/googlejavaformat-action)
+ *
+ * @param args Arguments for the Google Java Format executable
+ * @param files Pattern to match the files to be formatted
+ * @param filesExcluded Pattern to match the files to be ignored by this action
+ * @param skipCommit By default, this action commits any change made to the files. Set to "true" to
+ * skip this commit.
+ * @param version Version of Google Java Format to use
+ * @param githubToken If provided, will be used to authenticate the calls to the GitHub API.
+ * @param commitMessage This message will be used for commits made by this action
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class GooglejavaformatActionV3 private constructor(
     /**

@@ -27,6 +27,45 @@ import kotlin.collections.toTypedArray
  * Configures AWS credentials for use in subsequent steps in a GitHub Action workflow
  *
  * [Action on GitHub](https://github.com/aws-actions/configure-aws-credentials)
+ *
+ * @param awsRegion AWS Region, e.g. us-east-2
+ * @param roleToAssume The Amazon Resource Name (ARN) of the role to assume. Use the provided
+ * credentials to assume an IAM role and configure the Actions environment with the assumed role
+ * credentials rather than with the provided credentials.
+ * @param awsAccessKeyId AWS Access Key ID. Provide this key if you want to assume a role using
+ * access keys rather than a web identity token.
+ * @param awsSecretAccessKey AWS Secret Access Key. Required if aws-access-key-id is provided.
+ * @param awsSessionToken AWS Session Token.
+ * @param webIdentityTokenFile Use the web identity token file from the provided file system path in
+ * order to assume an IAM role using a web identity, e.g. from within an Amazon EKS worker node.
+ * @param roleChaining Use existing credentials from the environment to assume a new role, rather
+ * than providing credentials as input.
+ * @param audience The audience to use for the OIDC provider
+ * @param httpProxy Proxy to use for the AWS SDK agent
+ * @param maskAwsAccountId Whether to mask the AWS account ID for these credentials as a secret
+ * value. By default the account ID will not be masked
+ * @param roleDurationSeconds Role duration in seconds. Default is one hour.
+ * @param roleExternalId The external ID of the role to assume.
+ * @param roleSessionName Role session name (default: GitHubActions)
+ * @param roleSkipSessionTagging Skip session tagging during role assumption
+ * @param inlineSessionPolicy Define an inline session policy to use when assuming a role
+ * @param managedSessionPolicies Define a list of managed session policies to use when assuming a
+ * role
+ * @param outputCredentials Whether to set credentials as step output
+ * @param unsetCurrentCredentials Whether to unset the existing credentials in your runner. May be
+ * useful if you run this action multiple times in the same job
+ * @param disableRetry Whether to disable the retry and backoff mechanism when the assume role call
+ * fails. By default the retry mechanism is enabled
+ * @param retryMaxAttempts The maximum number of attempts it will attempt to retry the assume role
+ * call. By default it will retry 12 times
+ * @param specialCharactersWorkaround Some environments do not support special characters in
+ * AWS_SECRET_ACCESS_KEY. This option will retry fetching credentials until the secret access key does
+ * not contain special characters. This option overrides disable-retry and retry-max-attempts. This
+ * option is disabled by default
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ConfigureAwsCredentialsV4 private constructor(
     /**

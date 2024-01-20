@@ -27,6 +27,25 @@ import kotlin.collections.toTypedArray
  * IntelliJ HTTP Client CLI GitHub Action – Run Requests and Tests on CI
  *
  * [Action on GitHub](https://github.com/madhead/intellij-http-client-action)
+ *
+ * @param files HTTP file paths
+ * @param socketTimeout Number of milliseconds for socket read
+ * @param connectTimeout Number of milliseconds for connection
+ * @param insecure Allow insecure SSL connections
+ * @param env Name of the environment in config file
+ * @param envFile Name of the public environment file
+ * @param envVariables Public environment variables ('key=value')
+ * @param privateEnvFile Name of the private environment file
+ * @param privateEnvVariables Private environment variables ('key=value')
+ * @param proxy Proxy setting in format 'scheme://login:password@host:port'
+ * @param dockerMode Enables Docker mode. Treat 'localhost' as 'host.docker.internal'
+ * @param logLevel Logging level. One of 'BASIC' (default), 'HEADERS', or 'VERBOSE'
+ * @param report Creates report about execution in JUnit XML Format. Puts it in folder 'reports' in
+ * the current directory
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class IntellijHttpClientActionV233 private constructor(
     /**

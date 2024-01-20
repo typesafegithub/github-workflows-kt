@@ -26,6 +26,21 @@ import kotlin.collections.toTypedArray
  * updates.
  *
  * [Action on GitHub](https://github.com/c2corg/browserslist-update-action)
+ *
+ * @param githubToken GitHub secret
+ * @param branch The pull request branch name
+ * @param baseBranch The target branch into which the pull request will be merged
+ * @param directory For monorepos, directory to switch to
+ * @param commitMessage The message to use when committing changes
+ * @param title The title of the pull request
+ * @param body The body of the pull request
+ * @param labels Labels to associate to the pull request
+ * @param reviewers Users to associate to the pull request reviewers list
+ * @param teams Teams to associate to the pull request reviewers list
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class BrowserslistUpdateActionV2 private constructor(
     /**

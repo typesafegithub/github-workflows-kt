@@ -28,6 +28,21 @@ import kotlin.collections.toTypedArray
  * Upload a build artifact that can be used by subsequent workflow steps
  *
  * [Action on GitHub](https://github.com/actions/upload-artifact)
+ *
+ * @param name Artifact name
+ * @param path A file, directory or wildcard pattern that describes what to upload
+ * @param ifNoFilesFound The desired behavior if no files are found using the provided path.
+ * Available Options:
+ *   warn: Output a warning but do not fail the action
+ *   error: Fail the action with an error message
+ *   ignore: Do not output any warnings or errors, the action does not fail
+ * @param retentionDays Duration after which artifact will expire in days. 0 means using default
+ * retention.
+ * Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: UploadArtifactV4",

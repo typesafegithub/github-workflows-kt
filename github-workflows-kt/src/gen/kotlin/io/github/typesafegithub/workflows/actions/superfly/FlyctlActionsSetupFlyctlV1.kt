@@ -24,6 +24,13 @@ import kotlin.collections.toTypedArray
  * Installs the flyctl CLI tool to enable deploying and managing Fly apps
  *
  * [Action on GitHub](https://github.com/superfly/flyctl-actions/tree/v1/setup-flyctl)
+ *
+ * @param version Version of the flyctl CLI to install. If unspecified or set to "latest",
+ * the latest version for the target platform will be installed. Example: "0.0.306".
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class FlyctlActionsSetupFlyctlV1 private constructor(
     /**

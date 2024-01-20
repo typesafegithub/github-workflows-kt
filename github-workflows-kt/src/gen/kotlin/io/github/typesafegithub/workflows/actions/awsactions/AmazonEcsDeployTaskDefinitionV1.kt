@@ -26,6 +26,30 @@ import kotlin.collections.toTypedArray
  * Registers an Amazon ECS task definition, and deploys it to an ECS service
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecs-deploy-task-definition)
+ *
+ * @param taskDefinition The path to the ECS task definition file to register
+ * @param service The name of the ECS service to deploy to. The action will only register the task
+ * definition if no service is given.
+ * @param cluster The name of the ECS service's cluster.  Will default to the 'default' cluster
+ * @param waitForServiceStability Whether to wait for the ECS service to reach stable state after
+ * deploying the new task definition. Valid value is "true". Will default to not waiting.
+ * @param waitForMinutes How long to wait for the ECS service to reach stable state, in minutes
+ * (default: 30 minutes, max: 6 hours). For CodeDeploy deployments, any wait time configured in the
+ * CodeDeploy deployment group will be added to this value.
+ * @param codedeployAppspec The path to the AWS CodeDeploy AppSpec file, if the ECS service uses the
+ * CODE_DEPLOY deployment controller. Will default to 'appspec.yaml'.
+ * @param codedeployApplication The name of the AWS CodeDeploy application, if the ECS service uses
+ * the CODE_DEPLOY deployment controller. Will default to 'AppECS-{cluster}-{service}'.
+ * @param codedeployDeploymentGroup The name of the AWS CodeDeploy deployment group, if the ECS
+ * service uses the CODE_DEPLOY deployment controller. Will default to 'DgpECS-{cluster}-{service}'.
+ * @param codedeployDeploymentDescription A description of the deployment, if the ECS service uses
+ * the CODE_DEPLOY deployment controller.
+ * @param forceNewDeployment Whether to force a new deployment of the service. Valid value is
+ * "true". Will default to not force a new deployment.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class AmazonEcsDeployTaskDefinitionV1 private constructor(
     /**

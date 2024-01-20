@@ -24,6 +24,14 @@ import kotlin.collections.toTypedArray
  * Attempt to automatically build code
  *
  * [Action on GitHub](https://github.com/github/codeql-action/tree/v2/autobuild)
+ *
+ * @param workingDirectory Run the autobuilder using this path (relative to $GITHUB_WORKSPACE) as
+ * working directory. If this input is not set, the autobuilder runs with $GITHUB_WORKSPACE as its
+ * working directory.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CodeqlActionAutobuildV2 private constructor(
     public val token: String? = null,

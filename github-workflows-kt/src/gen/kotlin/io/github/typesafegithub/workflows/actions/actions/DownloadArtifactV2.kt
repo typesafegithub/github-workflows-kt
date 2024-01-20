@@ -27,6 +27,13 @@ import kotlin.collections.toTypedArray
  * action
  *
  * [Action on GitHub](https://github.com/actions/download-artifact)
+ *
+ * @param name Artifact name
+ * @param path Destination path
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: DownloadArtifactV4",

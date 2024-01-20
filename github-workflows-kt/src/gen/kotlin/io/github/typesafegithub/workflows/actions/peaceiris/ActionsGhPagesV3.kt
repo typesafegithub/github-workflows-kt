@@ -27,6 +27,33 @@ import kotlin.collections.toTypedArray
  * Static-Site-Generators-friendly.
  *
  * [Action on GitHub](https://github.com/peaceiris/actions-gh-pages)
+ *
+ * @param deployKey Set a SSH private key from repository secret value for pushing to the remote
+ * branch.
+ * @param githubToken Set a generated GITHUB_TOKEN for pushing to the remote branch.
+ * @param personalToken Set a personal access token for pushing to the remote branch.
+ * @param publishBranch Set a target branch for deployment.
+ * @param publishDir Set an input directory for deployment.
+ * @param destinationDir Set an destination subdirectory for deployment.
+ * @param externalRepository Set an external repository (owner/repo).
+ * @param allowEmptyCommit If empty commits should be made to the publication branch
+ * @param keepFiles If existing files in the publish branch should be not removed before deploying
+ * @param forceOrphan Keep only the latest commit on a GitHub Pages branch
+ * @param userName Set Git user.name
+ * @param userEmail Set Git user.email
+ * @param commitMessage Set a custom commit message with a triggered commit hash
+ * @param fullCommitMessage Set a custom full commit message without a triggered commit hash
+ * @param tagName Set tag name
+ * @param tagMessage Set tag message
+ * @param enableJekyll Enable the GitHub Pages built-in Jekyll
+ * @param disableNojekyll An alias for enable_jekyll to disable adding .nojekyll file to a
+ * publishing branch
+ * @param cname Set custom domain
+ * @param excludeAssets Set files or directories to exclude from a publish directory.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionsGhPagesV3 private constructor(
     /**

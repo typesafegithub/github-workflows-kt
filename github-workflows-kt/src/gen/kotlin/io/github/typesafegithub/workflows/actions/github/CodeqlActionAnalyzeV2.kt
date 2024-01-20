@@ -26,6 +26,50 @@ import kotlin.collections.toTypedArray
  * Finalize CodeQL database
  *
  * [Action on GitHub](https://github.com/github/codeql-action/tree/v2/analyze)
+ *
+ * @param checkName The name of the check run to add text to.
+ * @param output The path of the directory in which to save the SARIF results
+ * @param upload Upload the SARIF file to Code Scanning. Defaults to 'always' which uploads the
+ * SARIF file to Code Scanning for successful and failed runs. 'failure-only' only uploads debugging
+ * information to Code Scanning if the workflow run fails, for users post-processing the SARIF file
+ * before uploading it to Code Scanning. 'never' avoids uploading the SARIF file to Code Scanning, even
+ * if the code scanning run fails. This is not recommended for external users since it complicates
+ * debugging.
+ * @param cleanupLevel Level of cleanup to perform on CodeQL databases at the end of the analyze
+ * step. This should either be 'none' to skip cleanup, or be a valid argument for the --mode flag of
+ * the CodeQL CLI command 'codeql database cleanup' as documented at
+ * https://codeql.github.com/docs/codeql-cli/manual/database-cleanup
+ * @param ram The amount of memory in MB that can be used by CodeQL for database finalization and
+ * query execution. By default, this action will use the same amount of memory as previously set in the
+ * "init" action. If the "init" action also does not have an explicit "ram" input, this action will use
+ * most of the memory available in the system (which for GitHub-hosted runners is 6GB for Linux, 5.5GB
+ * for Windows, and 13GB for macOS).
+ * @param addSnippets Specify whether or not to add code snippets to the output sarif file.
+ * @param skipQueries If this option is set, the CodeQL database will be built but no queries will
+ * be run on it. Thus, no results will be produced.
+ * @param threads The number of threads that can be used by CodeQL for database finalization and
+ * query execution. By default, this action will use the same number of threads as previously set in
+ * the "init" action. If the "init" action also does not have an explicit "threads" input, this action
+ * will use all the hardware threads available in the system (which for GitHub-hosted runners is 2 for
+ * Linux and Windows and 3 for macOS).
+ * @param checkoutPath The path at which the analyzed repository was checked out. Used to relativize
+ * any absolute paths in the uploaded SARIF file.
+ * @param ref The ref where results will be uploaded. If not provided, the Action will use the
+ * GITHUB_REF environment variable. If provided, the sha input must be provided as well. This input is
+ * not available in pull requests from forks.
+ * @param sha The sha of the HEAD of the ref where results will be uploaded. If not provided, the
+ * Action will use the GITHUB_SHA environment variable. If provided, the ref input must be provided as
+ * well. This input is not available in pull requests from forks.
+ * @param category String used by Code Scanning for matching the analyses
+ * @param uploadDatabase Whether to upload the resulting CodeQL database
+ * @param waitForProcessing If true, the Action will wait for the uploaded SARIF to be processed
+ * before completing.
+ * @param expectError [Internal] It is an error to use this input outside of integration testing of
+ * the codeql-action.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CodeqlActionAnalyzeV2 private constructor(
     /**

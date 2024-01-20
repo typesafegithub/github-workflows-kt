@@ -28,6 +28,17 @@ import kotlin.collections.toTypedArray
  * Automatically run SVGO with GitHub Actions
  *
  * [Action on GitHub](https://github.com/ericcornelissen/svgo-action)
+ *
+ * @param repoToken The GITHUB_TOKEN secret
+ * @param dryRun Run the action in dry mode (i.e. do not write optimized SVGs)
+ * @param ignore A glob of SVGs that should not be optimized
+ * @param strict Fail the Action run even in the event of a recoverable error
+ * @param svgoConfig The path of the configuration file for SVGO
+ * @param svgoVersion The SVGO version to be used (`2`, `3`, or from `project`)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SvgoActionV4",

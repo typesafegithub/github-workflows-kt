@@ -26,6 +26,25 @@ import kotlin.collections.toTypedArray
  * Keeps Gradle Wrapper script in your projects up-to-date
  *
  * [Action on GitHub](https://github.com/gradle-update/update-gradle-wrapper-action)
+ *
+ * @param repoToken Access token for the repository, e.g. `{{ secrets.GITHUB_TOKEN }}`.
+ * @param reviewers List of users to request a review from (comma or newline-separated).
+ * @param teamReviewers List of teams to request a review from (comma or newline-separated).
+ * @param labels List of labels to set on the Pull Request (comma or newline-separated).
+ * @param baseBranch Base branch where the action will run and update the Gradle Wrapper.
+ * @param targetBranch Branch to create the Pull Request against.
+ * @param setDistributionChecksum Whether to set the `distributionSha256Sum` property in
+ * `gradle-wrapper.properties`.
+ * @param paths List of paths where to search for Gradle Wrapper files (comma or newline-separated).
+ * @param pathsIgnore List of paths to be excluded when searching for Gradle Wrapper files (comma or
+ * newline-separated).
+ * @param releaseChannel Gradle release channel to be used (either `stable` or `release-candidate`).
+ * @param mergeMethod Which merge method to use for auto-merge (either `MERGE`, `REBASE`, or
+ * `SQUASH`).  If unset, auto-merge will not be enabled on opened PRs.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class UpdateGradleWrapperActionV1 private constructor(
     /**

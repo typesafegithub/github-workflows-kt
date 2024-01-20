@@ -26,6 +26,24 @@ import kotlin.collections.toTypedArray
  * Set up Docker Buildx
  *
  * [Action on GitHub](https://github.com/docker/setup-buildx-action)
+ *
+ * @param version Buildx version. (eg. v0.3.0)
+ * @param driver Sets the builder driver to be used
+ * @param driverOpts List of additional driver-specific options. (eg. image=moby/buildkit:master)
+ * @param buildkitdFlags Flags for buildkitd daemon
+ * @param install Sets up docker build command as an alias to docker buildx build
+ * @param use Switch to this builder instance
+ * @param endpoint Optional address for docker socket or context from `docker context ls`
+ * @param platforms Fixed platforms for current node. If not empty, values take priority over the
+ * detected ones
+ * @param config BuildKit config file
+ * @param configInline Inline BuildKit config
+ * @param append Append additional nodes to the builder
+ * @param cleanup Cleanup temp files and remove builder at the end of a job
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SetupBuildxActionV3 private constructor(
     /**

@@ -26,6 +26,30 @@ import kotlin.collections.toTypedArray
  * Uses the git branch as the docker tag and pushes the container
  *
  * [Action on GitHub](https://github.com/elgohr/Publish-Docker-Github-Action)
+ *
+ * @param name The name of the image you would like to push
+ * @param username The login username for the registry
+ * @param password The login password for the registry
+ * @param registry Use registry for pushing to a custom registry
+ * @param snapshot Use snapshot to push an additional image
+ * @param defaultBranch Set the default branch of your repository (default: master)
+ * @param dockerfile Use dockerfile when you would like to explicitly build a Dockerfile
+ * @param workdir Use workdir when you would like to change the directory for building
+ * @param context Use context when you would like to change the Docker build context.
+ * @param buildargs Use buildargs when you want to pass a list of environment variables as
+ * build-args
+ * @param buildoptions Use buildoptions when you want to configure options for building
+ * @param cache Use cache when you have big images, that you would only like to build partially
+ * @param tags Use tags when you want to bring your own tags (separated by comma)
+ * @param tagNames Use tag_names when you want to push tags/release by their git name
+ * @param tagSemver Push semver docker tags. e.g. image:1.2.3, image:1.2, image:1
+ * @param noPush Set no_push to true if you want to prevent the action from pushing to a registry
+ * (default: false)
+ * @param platforms Use platforms for building multi-arch images
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class PublishDockerGithubActionV5 private constructor(
     /**

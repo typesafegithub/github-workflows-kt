@@ -26,6 +26,32 @@ import kotlin.collections.toTypedArray
  * GitHub Action for Semantic Release
  *
  * [Action on GitHub](https://github.com/cycjimmy/semantic-release-action)
+ *
+ * @param semanticVersion Specify specifying version range for semantic-release. If no version range
+ * is specified, latest version will be used by default
+ * @param branches The branches on which releases should happen. It will override the branches
+ * attribute in your configuration file. Support for semantic-release above v16. See
+ * https://semantic-release.gitbook.io/semantic-release/usage/configuration#branches for more
+ * information.
+ * @param branch The branch on which releases should happen. It will override the branch attribute
+ * in your configuration file. If the attribute is not configured on both sides, the default is master.
+ * Support for semantic-release older than v16.
+ * @param extraPlugins Extra plugins for pre-install. You can also specify specifying version range
+ * for the extra plugins if you prefer.
+ * @param dryRun Whether to run semantic release in `dry-run` mode. It will override the dryRun
+ * attribute in your configuration file
+ * @param ci Whether to run semantic release with CI support (default: true). It will override the
+ * ci attribute in your configuration file
+ * @param extends One or several sharable configurations,
+ * https://semantic-release.gitbook.io/semantic-release/usage/configuration#extends
+ * @param workingDirectory Specify another working directory for semantic release. Default one is
+ * provided by github.
+ * @param tagFormat The default tag format on semantic-release is v{version}. You can override that
+ * behavior using this option.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SemanticReleaseActionV4 private constructor(
     /**

@@ -25,6 +25,16 @@ import kotlin.collections.toTypedArray
  * Helps set up MSBuild into PATH for later usage.
  *
  * [Action on GitHub](https://github.com/microsoft/setup-msbuild)
+ *
+ * @param vswherePath Folder location of where vswhere.exe is located if a self-hosted agent
+ * @param vsVersion Version of Visual Studio to search; defaults to latest if not specified
+ * @param vsPrerelease Enable searching for pre-release versions of Visual Studio/MSBuild
+ * @param msbuildArchitecture The preferred processor architecture of MSBuild. Can be either "x86",
+ * "x64", or "arm64". "x64" is only available from Visual Studio version 17.0 and later.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SetupMsbuildV1 private constructor(
     /**

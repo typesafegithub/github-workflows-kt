@@ -26,6 +26,30 @@ import kotlin.collections.toTypedArray
  * Github Action for creating Github Releases
  *
  * [Action on GitHub](https://github.com/softprops/action-gh-release)
+ *
+ * @param body Note-worthy description of changes in release
+ * @param bodyPath Path to load note-worthy description of changes in release from
+ * @param name Gives the release a custom name. Defaults to tag name
+ * @param tagName Gives a tag name. Defaults to github.GITHUB_REF
+ * @param draft Creates a draft release. Defaults to false
+ * @param prerelease Identify the release as a prerelease. Defaults to false
+ * @param files Newline-delimited list of path globs for asset files to upload
+ * @param failOnUnmatchedFiles Fails if any of the `files` globs match nothing. Defaults to false
+ * @param repository Repository to make releases against, in <owner>/<repo> format
+ * @param token Authorized secret GitHub Personal Access Token. Defaults to github.token
+ * @param targetCommitish Commitish value that determines where the Git tag is created from. Can be
+ * any branch or commit SHA.
+ * @param discussionCategoryName If specified, a discussion of the specified category is created and
+ * linked to the release. The value must be a category that already exists in the repository. If there
+ * is already a discussion linked to the release, this parameter is ignored.
+ * @param generateReleaseNotes Whether to automatically generate the name and body for this release.
+ * If name is specified, the specified name will be used; otherwise, a name will be automatically
+ * generated. If body is specified, the body will be pre-pended to the automatically generated notes.
+ * @param appendBody Append to existing body instead of overwriting it. Default is false.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionGhReleaseV1 private constructor(
     /**

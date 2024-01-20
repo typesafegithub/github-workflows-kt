@@ -27,6 +27,26 @@ import kotlin.collections.toTypedArray
  * Deploy Web Apps/Containerized Web Apps to Azure. github.com/Azure/Actions
  *
  * [Action on GitHub](https://github.com/Azure/webapps-deploy)
+ *
+ * @param appName Name of the Azure Web App
+ * @param publishProfile Applies to Web Apps(Windows and Linux) and Web App Containers(linux). Multi
+ * container scenario not supported. Publish profile (*.publishsettings) file contents with Web Deploy
+ * secrets
+ * @param slotName Enter an existing Slot other than the Production slot
+ * @param package Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a
+ * folder to deploy
+ * @param images Applies to Web App Containers only: Specify the fully qualified container image(s)
+ * name. For example, 'myregistry.azurecr.io/nginx:latest' or 'python:3.7.2-alpine/'. For
+ * multi-container scenario multiple container image names can be provided (multi-line separated)
+ * @param configurationFile Applies to Web App Containers only: Path of the Docker-Compose file.
+ * Should be a fully qualified path or relative to the default working directory. Required for
+ * multi-container scenario
+ * @param startupCommand Enter the start up command. For ex. dotnet run or dotnet run
+ * @param resourceGroupName Enter the resource group name of the web app
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: WebappsDeployV3",

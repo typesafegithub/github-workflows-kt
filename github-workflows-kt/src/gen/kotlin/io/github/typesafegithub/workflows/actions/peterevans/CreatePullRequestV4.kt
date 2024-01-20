@@ -28,6 +28,41 @@ import kotlin.collections.toTypedArray
  * Creates a pull request for changes to your repository in the actions workspace
  *
  * [Action on GitHub](https://github.com/peter-evans/create-pull-request)
+ *
+ * @param token GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
+ * @param path Relative path under $GITHUB_WORKSPACE to the repository. Defaults to
+ * $GITHUB_WORKSPACE.
+ * @param addPaths A comma or newline-separated list of file paths to commit. Paths should follow
+ * git's pathspec syntax. Defaults to adding all new and modified files.
+ * @param commitMessage The message to use when committing changes.
+ * @param committer The committer name and email address in the format `Display Name
+ * <email@address.com>`. Defaults to the GitHub Actions bot user.
+ * @param author The author name and email address in the format `Display Name <email@address.com>`.
+ * Defaults to the user who triggered the workflow run.
+ * @param signoff Add `Signed-off-by` line by the committer at the end of the commit log message.
+ * @param branch The pull request branch name.
+ * @param deleteBranch Delete the `branch` when closing pull requests, and when undeleted after
+ * merging. Recommend `true`.
+ * @param branchSuffix The branch suffix type when using the alternative branching strategy.
+ * @param base The pull request base branch. Defaults to the branch checked out in the workflow.
+ * @param pushToFork A fork of the checked out parent repository to which the pull request branch
+ * will be pushed. e.g. `owner/repo-fork`. The pull request will be created to merge the fork's branch
+ * into the parent's base.
+ * @param title The title of the pull request.
+ * @param body The body of the pull request.
+ * @param labels A comma or newline separated list of labels.
+ * @param assignees A comma or newline separated list of assignees (GitHub usernames).
+ * @param reviewers A comma or newline separated list of reviewers (GitHub usernames) to request a
+ * review from.
+ * @param teamReviewers A comma or newline separated list of GitHub teams to request a review from.
+ * Note that a `repo` scoped Personal Access Token (PAT) may be required.
+ * @param milestone The number of the milestone to associate the pull request with.
+ * @param draft Create a draft pull request. It is not possible to change draft status after
+ * creation except through the web interface
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: CreatePullRequestV5",

@@ -26,6 +26,26 @@ import kotlin.collections.toTypedArray
  * ⤵️ Create pull request
  *
  * [Action on GitHub](https://github.com/repo-sync/pull-request)
+ *
+ * @param destinationRepository Repository (user/repo) to create the pull request in, falls back to
+ * checkout repository or triggered repository
+ * @param sourceBranch Branch name to pull from, default is triggered branch
+ * @param destinationBranch Branch name to sync to in this repo, default is master
+ * @param prTitle Pull request title
+ * @param prBody Pull request body
+ * @param prTemplate Pull request template
+ * @param prReviewer Pull request reviewers, comma-separated list (no spaces)
+ * @param prAssignee Pull request assignees, comma-separated list (no spaces)
+ * @param prLabel Pull request labels, comma-separated list (no spaces)
+ * @param prMilestone Pull request milestone
+ * @param prDraft Draft pull request
+ * @param prAllowEmpty Create PR even if no changes
+ * @param githubToken GitHub token secret
+ * @param debug Bash set -x debugging mode
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class PullRequestV2 private constructor(
     /**
