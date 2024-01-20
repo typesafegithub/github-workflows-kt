@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -40,16 +38,13 @@ import kotlin.collections.toTypedArray
  * @param failOnCacheMiss Fail the workflow if cache entry is not found
  * @param lookupOnly Check if a cache entry exists for the given input(s) (key, restore-keys)
  * without downloading the cache
+ * @param saveAlways Run the post step to save the cache even if another step before fails
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: CacheV4",
-    replaceWith = ReplaceWith("CacheV4"),
-)
-public data class CacheV3 private constructor(
+public data class CacheV4 private constructor(
     /**
      * A list of files, directories, and wildcard patterns to cache and restore
      */
@@ -82,6 +77,10 @@ public data class CacheV3 private constructor(
      */
     public val lookupOnly: Boolean? = null,
     /**
+     * Run the post step to save the cache even if another step before fails
+     */
+    public val saveAlways: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -90,7 +89,7 @@ public data class CacheV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<CacheV3.Outputs>("actions", "cache", _customVersion ?: "v3") {
+) : RegularAction<CacheV4.Outputs>("actions", "cache", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         path: List<String>,
@@ -100,11 +99,13 @@ public data class CacheV3 private constructor(
         enableCrossOsArchive: Boolean? = null,
         failOnCacheMiss: Boolean? = null,
         lookupOnly: Boolean? = null,
+        saveAlways: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(path=path, key=key, restoreKeys=restoreKeys, uploadChunkSize=uploadChunkSize,
             enableCrossOsArchive=enableCrossOsArchive, failOnCacheMiss=failOnCacheMiss,
-            lookupOnly=lookupOnly, _customInputs=_customInputs, _customVersion=_customVersion)
+            lookupOnly=lookupOnly, saveAlways=saveAlways, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -116,6 +117,7 @@ public data class CacheV3 private constructor(
             enableCrossOsArchive?.let { "enableCrossOsArchive" to it.toString() },
             failOnCacheMiss?.let { "fail-on-cache-miss" to it.toString() },
             lookupOnly?.let { "lookup-only" to it.toString() },
+            saveAlways?.let { "save-always" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

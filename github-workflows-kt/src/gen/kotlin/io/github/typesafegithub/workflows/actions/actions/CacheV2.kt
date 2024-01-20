@@ -40,8 +40,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: CacheV3",
-    replaceWith = ReplaceWith("CacheV3"),
+    message = "This action has a newer major version: CacheV4",
+    replaceWith = ReplaceWith("CacheV4"),
 )
 public data class CacheV2 private constructor(
     /**
