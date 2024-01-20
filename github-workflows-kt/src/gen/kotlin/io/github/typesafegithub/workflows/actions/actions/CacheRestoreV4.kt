@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,8 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -24,19 +21,18 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- * Action: Cache
+ * Action: Restore Cache
  *
- * Cache artifacts like dependencies and build outputs to improve workflow execution time
+ * Restore Cache artifacts like dependencies and build outputs to improve workflow execution time
  *
- * [Action on GitHub](https://github.com/actions/cache)
+ * [Action on GitHub](https://github.com/actions/cache/tree/v4/restore)
  *
- * @param path A list of files, directories, and wildcard patterns to cache and restore
- * @param key An explicit key for restoring and saving the cache
+ * @param path A list of files, directories, and wildcard patterns to restore
+ * @param key An explicit key for restoring the cache
  * @param restoreKeys An ordered list of keys to use for restoring stale cache if no cache hit
  * occurred for key. Note `cache-hit` returns false in this case.
- * @param uploadChunkSize The chunk size used to split up large files during upload, in bytes
- * @param enableCrossOsArchive An optional boolean when enabled, allows windows runners to save or
- * restore caches that can be restored or saved respectively on other platforms
+ * @param enableCrossOsArchive An optional boolean when enabled, allows windows runners to restore
+ * caches that were saved on other platforms
  * @param failOnCacheMiss Fail the workflow if cache entry is not found
  * @param lookupOnly Check if a cache entry exists for the given input(s) (key, restore-keys)
  * without downloading the cache
@@ -45,17 +41,13 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: CacheV4",
-    replaceWith = ReplaceWith("CacheV4"),
-)
-public data class CacheV3 private constructor(
+public data class CacheRestoreV4 private constructor(
     /**
-     * A list of files, directories, and wildcard patterns to cache and restore
+     * A list of files, directories, and wildcard patterns to restore
      */
     public val path: List<String>,
     /**
-     * An explicit key for restoring and saving the cache
+     * An explicit key for restoring the cache
      */
     public val key: String,
     /**
@@ -64,12 +56,8 @@ public data class CacheV3 private constructor(
      */
     public val restoreKeys: List<String>? = null,
     /**
-     * The chunk size used to split up large files during upload, in bytes
-     */
-    public val uploadChunkSize: Int? = null,
-    /**
-     * An optional boolean when enabled, allows windows runners to save or restore caches that can
-     * be restored or saved respectively on other platforms
+     * An optional boolean when enabled, allows windows runners to restore caches that were saved on
+     * other platforms
      */
     public val enableCrossOsArchive: Boolean? = null,
     /**
@@ -90,21 +78,20 @@ public data class CacheV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<CacheV3.Outputs>("actions", "cache", _customVersion ?: "v3") {
+) : RegularAction<CacheRestoreV4.Outputs>("actions", "cache/restore", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         path: List<String>,
         key: String,
         restoreKeys: List<String>? = null,
-        uploadChunkSize: Int? = null,
         enableCrossOsArchive: Boolean? = null,
         failOnCacheMiss: Boolean? = null,
         lookupOnly: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(path=path, key=key, restoreKeys=restoreKeys, uploadChunkSize=uploadChunkSize,
-            enableCrossOsArchive=enableCrossOsArchive, failOnCacheMiss=failOnCacheMiss,
-            lookupOnly=lookupOnly, _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(path=path, key=key, restoreKeys=restoreKeys, enableCrossOsArchive=enableCrossOsArchive,
+            failOnCacheMiss=failOnCacheMiss, lookupOnly=lookupOnly, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -112,7 +99,6 @@ public data class CacheV3 private constructor(
             "path" to path.joinToString("\n"),
             "key" to key,
             restoreKeys?.let { "restore-keys" to it.joinToString("\n") },
-            uploadChunkSize?.let { "upload-chunk-size" to it.toString() },
             enableCrossOsArchive?.let { "enableCrossOsArchive" to it.toString() },
             failOnCacheMiss?.let { "fail-on-cache-miss" to it.toString() },
             lookupOnly?.let { "lookup-only" to it.toString() },
@@ -129,5 +115,16 @@ public data class CacheV3 private constructor(
          * A boolean value to indicate an exact match was found for the primary key
          */
         public val cacheHit: String = "steps.$stepId.outputs.cache-hit"
+
+        /**
+         * A resolved cache key for which cache match was attempted
+         */
+        public val cachePrimaryKey: String = "steps.$stepId.outputs.cache-primary-key"
+
+        /**
+         * Key of the cache that was restored, it could either be the primary key on cache-hit or a
+         * partial/complete match of one of the restore keys
+         */
+        public val cacheMatchedKey: String = "steps.$stepId.outputs.cache-matched-key"
     }
 }

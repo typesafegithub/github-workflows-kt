@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.actions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -28,7 +26,7 @@ import kotlin.collections.toTypedArray
  *
  * Save Cache artifacts like dependencies and build outputs to improve workflow execution time
  *
- * [Action on GitHub](https://github.com/actions/cache/tree/v3/save)
+ * [Action on GitHub](https://github.com/actions/cache/tree/v4/save)
  *
  * @param path A list of files, directories, and wildcard patterns to cache
  * @param key An explicit key for saving the cache
@@ -40,11 +38,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: CacheSaveV4",
-    replaceWith = ReplaceWith("CacheSaveV4"),
-)
-public data class CacheSaveV3 private constructor(
+public data class CacheSaveV4 private constructor(
     /**
      * A list of files, directories, and wildcard patterns to cache
      */
@@ -71,7 +65,7 @@ public data class CacheSaveV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("actions", "cache/save", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("actions", "cache/save", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         path: List<String>,
