@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.cachix
@@ -12,7 +11,7 @@ package io.github.typesafegithub.workflows.actions.cachix
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
+import kotlin.Boolean
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -33,16 +32,13 @@ import kotlin.collections.toTypedArray
  * @param installUrl Installation URL that will contain a script to install Nix.
  * @param installOptions Additional installer flags passed to the installer script.
  * @param nixPath Set NIX_PATH environment variable.
+ * @param enableKvm Enable KVM for hardware-accelerated virtualization on Linux, if available.
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: InstallNixActionV25",
-    replaceWith = ReplaceWith("InstallNixActionV25"),
-)
-public data class InstallNixActionV20 private constructor(
+public data class InstallNixActionV25 private constructor(
     /**
      * Gets appended to `/etc/nix/nix.conf` if passed.
      */
@@ -64,6 +60,10 @@ public data class InstallNixActionV20 private constructor(
      */
     public val nixPath: String? = null,
     /**
+     * Enable KVM for hardware-accelerated virtualization on Linux, if available.
+     */
+    public val enableKvm: Boolean? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -72,7 +72,7 @@ public data class InstallNixActionV20 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v20") {
+) : RegularAction<Action.Outputs>("cachix", "install-nix-action", _customVersion ?: "v25") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         extraNixConfig: String? = null,
@@ -80,11 +80,12 @@ public data class InstallNixActionV20 private constructor(
         installUrl: String? = null,
         installOptions: List<String>? = null,
         nixPath: String? = null,
+        enableKvm: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(extraNixConfig=extraNixConfig, githubAccessToken=githubAccessToken,
             installUrl=installUrl, installOptions=installOptions, nixPath=nixPath,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            enableKvm=enableKvm, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -94,6 +95,7 @@ public data class InstallNixActionV20 private constructor(
             installUrl?.let { "install_url" to it },
             installOptions?.let { "install_options" to it.joinToString("\n") },
             nixPath?.let { "nix_path" to it },
+            enableKvm?.let { "enable_kvm" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

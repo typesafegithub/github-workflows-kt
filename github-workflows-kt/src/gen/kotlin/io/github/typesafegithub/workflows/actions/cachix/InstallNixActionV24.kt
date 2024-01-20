@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.cachix
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -38,6 +40,10 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
+@Deprecated(
+    message = "This action has a newer major version: InstallNixActionV25",
+    replaceWith = ReplaceWith("InstallNixActionV25"),
+)
 public data class InstallNixActionV24 private constructor(
     /**
      * Gets appended to `/etc/nix/nix.conf` if passed.
