@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:action-binding-generator:1.9.0")
+@file:DependsOn("io.github.typesafegithub:action-binding-generator:1.10.0")
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateActionBindings
