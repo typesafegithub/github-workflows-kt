@@ -25,6 +25,16 @@ import kotlin.collections.toTypedArray
  * Install npm dependencies with caching
  *
  * [Action on GitHub](https://github.com/bahmutov/npm-install)
+ *
+ * @param workingDirectory Working directory to specify subfolder in which dependencies are defined
+ * @param useLockFile Option to enable or disable use of a lock file (package-lock.json/yarn.lock)
+ * @param useRollingCache Option to enable restoring a cache that doesn't exactly match the
+ * lockfile, and expire once a month to keep it from only growing larger
+ * @param installCommand Custom install command to use
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class NpmInstallV1 private constructor(
     /**

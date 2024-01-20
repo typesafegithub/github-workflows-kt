@@ -30,6 +30,83 @@ import kotlin.collections.toTypedArray
  * Federation or service account keys.
  *
  * [Action on GitHub](https://github.com/google-github-actions/auth)
+ *
+ * @param projectId ID of the default project to use for future API calls and invocations. If
+ * unspecified, this action will attempt to extract the value from other
+ * inputs such as "service_account" or "credentials_json".
+ * @param workloadIdentityProvider The full identifier of the Workload Identity Provider, including
+ * the
+ * project number, pool name, and provider name. If provided, this must be
+ * the full identifier which includes all parts, for example:
+ * "projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider".
+ * This is mutually exclusive with "credentials_json".
+ * @param serviceAccount Email address or unique identifier of the Google Cloud service account for
+ * which to generate credentials. This is required if
+ * "workload_identity_provider" is specified.
+ * @param audience The value for the audience (aud) parameter in GitHub's generated OIDC
+ * token. This value defaults to the value of "workload_identity_provider",
+ * which is also the default value Google Cloud expects for the audience
+ * parameter on the token.
+ * @param credentialsJson The Google Cloud JSON service account key to use for authentication. This
+ * is mutually exclusive with "workload_identity_provider".
+ * @param createCredentialsFile If true, the action will securely generate a credentials file which
+ * can be
+ * used for authentication via gcloud and Google Cloud SDKs.
+ * @param exportEnvironmentVariables If true, the action will export common environment variables
+ * which are
+ * known to be consumed by popular downstream libraries and tools, including:
+ *
+ * - CLOUDSDK_PROJECT
+ * - CLOUDSDK_CORE_PROJECT
+ * - GCP_PROJECT
+ * - GCLOUD_PROJECT
+ * - GOOGLE_CLOUD_PROJECT
+ *
+ * If "create_credentials_file" is true, additional environment variables are
+ * exported:
+ *
+ * - CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
+ * - GOOGLE_APPLICATION_CREDENTIALS
+ * - GOOGLE_GHA_CREDS_PATH
+ *
+ * If false, the action will not export any environment variables, meaning
+ * future steps are unlikely to be automatically authenticated to Google
+ * Cloud.
+ * @param tokenFormat Output format for the generated authentication token. For OAuth 2.0 access
+ * tokens, specify "access_token". For OIDC tokens, specify "id_token". To
+ * skip token generation, leave this value empty.
+ * @param delegates List of additional service account emails or unique identities to use for
+ * impersonation in the chain.
+ * @param cleanupCredentials If true, the action will remove any created credentials from the
+ * filesystem upon completion. This only applies if "create_credentials_file"
+ * is true.
+ * @param accessTokenLifetime Desired lifetime duration of the access token, in seconds. This must
+ * be
+ * specified as the number of seconds with a trailing "s" (e.g. 30s). This is
+ * only valid when "token_format" is "access_token".
+ * @param accessTokenScopes List of OAuth 2.0 access scopes to be included in the generated token.
+ * This is only valid when "token_format" is "access_token".
+ * @param accessTokenSubject Email address of a user to impersonate for Domain-Wide Delegation
+ * Access
+ * tokens created for Domain-Wide Delegation cannot have a lifetime beyond 1
+ * hour. This is only valid when "token_format" is "access_token".
+ * @param retries Number of times to retry a failed authentication attempt. This is useful
+ * for automated pipelines that may execute before IAM permissions are fully propogated.
+ * @param backoff Delay time before trying another authentication attempt. This
+ * is implemented using a fibonacci backoff method (e.g. 1-1-2-3-5).
+ * This value defaults to 100 milliseconds when retries are greater than 0.
+ * @param backoffLimit Limits the retry backoff to the specified value.
+ * @param idTokenAudience The audience (aud) for the generated Google Cloud ID Token. This is only
+ * valid when "token_format" is "id_token".
+ * @param idTokenIncludeEmail Optional parameter of whether to include the service account email in
+ * the
+ * generated token. If true, the token will contain "email" and
+ * "email_verified" claims. This is only valid when "token_format" is
+ * "id_token".
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: AuthV2",

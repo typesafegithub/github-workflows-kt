@@ -26,6 +26,28 @@ import kotlin.collections.toTypedArray
  * action
  *
  * [Action on GitHub](https://github.com/actions/download-artifact)
+ *
+ * @param name Name of the artifact to download. If unspecified, all artifacts for the run are
+ * downloaded.
+ * @param path Destination path. Supports basic tilde expansion. Defaults to $GITHUB_WORKSPACE
+ * @param pattern A glob pattern matching the artifacts that should be downloaded. Ignored if name
+ * is specified.
+ * @param mergeMultiple When multiple artifacts are matched, this changes the behavior of the
+ * destination directories. If true, the downloaded artifacts will be in the same directory specified
+ * by path. If false, the downloaded artifacts will be extracted into individual named directories
+ * within the specified path.
+ * @param githubToken The GitHub token used to authenticate with the GitHub API. This is required
+ * when downloading artifacts from a different repository or from a different workflow run. If this is
+ * not specified, the action will attempt to download artifacts from the current repository and the
+ * current workflow run.
+ * @param repository The repository owner and the repository name joined together by "/". If
+ * github-token is specified, this is the repository that artifacts will be downloaded from.
+ * @param runId The id of the workflow run where the desired download artifact was uploaded from. If
+ * github-token is specified, this is the run that artifacts will be downloaded from.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class DownloadArtifactV4 private constructor(
     /**

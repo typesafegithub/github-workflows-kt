@@ -25,6 +25,17 @@ import kotlin.collections.toTypedArray
  * Setup your runner with Flutter environment
  *
  * [Action on GitHub](https://github.com/subosito/flutter-action)
+ *
+ * @param flutterVersion The Flutter version to make available on the path
+ * @param channel The Flutter build release channel
+ * @param cache Cache the Flutter SDK
+ * @param cacheKey Identifier for the Flutter SDK cache
+ * @param cachePath Flutter SDK cache path
+ * @param architecture The architecture of Flutter SDK executable (x64 or arm64)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class FlutterActionV2 private constructor(
     /**

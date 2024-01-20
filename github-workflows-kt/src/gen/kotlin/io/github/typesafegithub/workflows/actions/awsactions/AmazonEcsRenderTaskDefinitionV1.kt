@@ -26,6 +26,22 @@ import kotlin.collections.toTypedArray
  * file, creating a new file.
  *
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecs-render-task-definition)
+ *
+ * @param taskDefinition The path to the ECS task definition JSON file
+ * @param containerName The name of the container defined in the containerDefinitions section of the
+ * ECS task definition
+ * @param image The URI of the container image to insert into the ECS task definition
+ * @param environmentVariables Variables to add to the container. Each variable is of the form
+ * KEY=value, you can specify multiple variables with multi-line YAML strings.
+ * @param logConfigurationLogDriver Create/Override logDriver inside logConfiguration
+ * @param logConfigurationOptions Create/Override options inside logConfiguration. Each variable is
+ * of the form key=value, you can specify multiple variables with multi-line YAML strings.
+ * @param dockerLabels Create/Override options inside dockerLabels. Each variable is key=value, you
+ * can specify multiple variables with multi-line YAML.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
     /**

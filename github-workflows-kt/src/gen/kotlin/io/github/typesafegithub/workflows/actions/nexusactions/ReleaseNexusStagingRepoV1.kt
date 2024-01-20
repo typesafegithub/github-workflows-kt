@@ -25,6 +25,19 @@ import kotlin.collections.toTypedArray
  * Closes and releases a staged repo, with a given ID, on https://oss.sonatype.org/.
  *
  * [Action on GitHub](https://github.com/nexus-actions/release-nexus-staging-repo)
+ *
+ * @param username Your Sonatype username, same the Sonatype Jira one.
+ * @param password Your Sonatype password, same the Sonatype Jira one.
+ * @param stagingRepositoryId The ID of the staged repository to close and release.
+ * @param description The description to use for the closed repository
+ * @param baseUrl The url of your nexus repository, defaults to OSSRH
+ * (https://oss.sonatype.org/service/local/)
+ * @param closeOnly This option disable the auto-release process, you will have to do it manually on
+ * https://oss.sonatype.org/.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ReleaseNexusStagingRepoV1 private constructor(
     /**

@@ -27,6 +27,31 @@ import kotlin.collections.toTypedArray
  * to the PATH.
  *
  * [Action on GitHub](https://github.com/actions/setup-node)
+ *
+ * @param alwaysAuth Set always-auth in npmrc.
+ * @param nodeVersion Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
+ * @param nodeVersionFile File containing the version Spec of the version to use.  Examples:
+ * package.json, .nvmrc, .node-version, .tool-versions.
+ * @param architecture Target architecture for Node to use. Examples: x86, x64. Will use system
+ * architecture by default.
+ * @param checkLatest Set this option if you want the action to check for the latest available
+ * version that satisfies the version spec.
+ * @param registryUrl Optional registry to set up for auth. Will set the registry in a project level
+ * .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
+ * @param scope Optional scope for authenticating against scoped registries. Will fall back to the
+ * repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
+ * @param token Used to pull node distributions from node-versions. Since there's a default, this is
+ * typically not supplied by the user. When running this action on github.com, the default value is
+ * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
+ * experiencing rate limiting.
+ * @param cache Used to specify a package manager for caching in the default directory. Supported
+ * values: npm, yarn, pnpm.
+ * @param cacheDependencyPath Used to specify the path to a dependency file: package-lock.json,
+ * yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SetupNodeV4 private constructor(
     /**

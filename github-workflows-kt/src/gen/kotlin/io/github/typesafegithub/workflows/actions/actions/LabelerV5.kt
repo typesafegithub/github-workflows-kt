@@ -26,6 +26,16 @@ import kotlin.collections.toTypedArray
  * Automatically label new pull requests based on the paths of files being changed
  *
  * [Action on GitHub](https://github.com/actions/labeler)
+ *
+ * @param repoToken The GitHub token used to manage labels
+ * @param configurationPath The path for the label configurations
+ * @param syncLabels Whether or not to remove labels when matching files are reverted
+ * @param dot Whether or not to auto-include paths starting with dot (e.g. `.github`)
+ * @param prNumber The pull request number(s)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class LabelerV5 private constructor(
     /**

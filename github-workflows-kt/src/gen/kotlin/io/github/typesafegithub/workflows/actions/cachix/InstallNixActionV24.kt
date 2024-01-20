@@ -26,6 +26,17 @@ import kotlin.collections.toTypedArray
  * Installs Nix on GitHub Actions for the supported platforms: Linux and macOS.
  *
  * [Action on GitHub](https://github.com/cachix/install-nix-action)
+ *
+ * @param extraNixConfig Gets appended to `/etc/nix/nix.conf` if passed.
+ * @param githubAccessToken Configure nix to pull from github using the given github token.
+ * @param installUrl Installation URL that will contain a script to install Nix.
+ * @param installOptions Additional installer flags passed to the installer script.
+ * @param nixPath Set NIX_PATH environment variable.
+ * @param enableKvm Enable KVM for hardware-accelerated virtualization on Linux, if available.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class InstallNixActionV24 private constructor(
     /**

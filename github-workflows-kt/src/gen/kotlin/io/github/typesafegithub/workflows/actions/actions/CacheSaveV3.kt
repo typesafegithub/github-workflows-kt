@@ -27,6 +27,16 @@ import kotlin.collections.toTypedArray
  * Save Cache artifacts like dependencies and build outputs to improve workflow execution time
  *
  * [Action on GitHub](https://github.com/actions/cache/tree/v3/save)
+ *
+ * @param path A list of files, directories, and wildcard patterns to cache
+ * @param key An explicit key for saving the cache
+ * @param uploadChunkSize The chunk size used to split up large files during upload, in bytes
+ * @param enableCrossOsArchive An optional boolean when enabled, allows windows runners to save
+ * caches that can be restored on other platforms
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CacheSaveV3 private constructor(
     /**

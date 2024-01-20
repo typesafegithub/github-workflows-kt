@@ -27,6 +27,25 @@ import kotlin.collections.toTypedArray
  * Setup a Go environment and add it to the PATH
  *
  * [Action on GitHub](https://github.com/actions/setup-go)
+ *
+ * @param goVersion The Go version to download (if necessary) and use. Supports semver spec and
+ * ranges.
+ * @param goVersionFile Path to the go.mod or go.work file.
+ * @param checkLatest Set this option to true if you want the action to always check for the latest
+ * available version that satisfies the version spec
+ * @param token Used to pull node distributions from go-versions. Since there's a default, this is
+ * typically not supplied by the user. When running this action on github.com, the default value is
+ * sufficient. When running on GHES, you can pass a personal access token for github.com if you are
+ * experiencing rate limiting.
+ * @param cache Used to specify whether caching is needed. Set to true, if you'd like to enable
+ * caching.
+ * @param cacheDependencyPath Used to specify the path to a dependency file - go.sum
+ * @param architecture Target architecture for Go to use. Examples: x86, x64. Will use system
+ * architecture by default.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SetupGoV5",

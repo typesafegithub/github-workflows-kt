@@ -28,6 +28,63 @@ import kotlin.collections.toTypedArray
  * WSL Setup GitHub Action
  *
  * [Action on GitHub](https://github.com/Vampire/setup-wsl)
+ *
+ * @param distribution The WSL distribution to install, update, or configure.
+ * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
+ * They use the same WSL distribution ID, so the second that is used will not be installed
+ * as the first one will be found as already installed by WSL distribution ID.
+ * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
+ * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
+ * @param useCache Whether to use the cache for the downloaded distribution installer.
+ * This saves time in subsequent runs, jobs, or workflows but consumes space from
+ * the available cache space of the repository.
+ * Refer to https://github.com/marketplace/actions/cache for current usage limits.
+ * Default is 'true' if the cache feature is available.
+ * Default is 'false' if the cache feature is not available, for example because it was disabled on
+ * a GitHub Enterprise instance.
+ * @param wslConf The content that will be written to /etc/wsl.conf of the installed distribution.
+ * This can be used to adjust various settings as documented at
+ * https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configuration-settings-for-wslconf.
+ * This can also be used if the distribution is installed already.
+ * @param setAsDefault Whether to set the distribution as default WSL distribution.
+ * This can also be used if the distribution is installed already.
+ * Default is 'true' if the distribution is going to be installed.
+ * Default is 'false' if the distribution is only getting configured, updated, or additional
+ * packages installed.
+ * The first installed WSL distribution is automatically the default one, independently of this
+ * input.
+ * @param update Whether to update the distribution after installation.
+ * This can also be used if the distribution is installed already.
+ * @param additionalPackages Space separated list of additional packages to install after
+ * distribution installation.
+ * This can also be used if the distribution is installed already.
+ * @param wslShellUser The distribution user that should be used to execute run-step scripts with
+ * wsl-shell wrapper scripts
+ * that are created or updated by the current action invocation. If no value is given, the default
+ * user of
+ * the distribution at script execution time is used.
+ * @param wslShellCommand The command that is used in the wsl-shell wrapper scripts to execute the
+ * run-step script.
+ * The name of the wrapper scripts will be derived from the first word in this input prefixed with
+ * 'wsl-'.
+ * This means that for the default value, the wrapper scripts will start with 'wsl-bash'.
+ * The run-step script file will be given as additional parameter in single quotes after the given
+ * string,
+ * separated with one space character. The latter point is important, if you need to escape this
+ * space character.
+ * If the given string contains at least once the sequence '{0}', all occurrences of it will be
+ * replaced by the
+ * run-step script file without any quotes or anything and it will not be given as additional
+ * parameter.
+ * This can be used if the script file is needed within the shell command opposed to as additional
+ * parameter.
+ * This input can also be used if the distribution is installed already to change the wrapper
+ * scripts or generate
+ * additional ones for other shells.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SetupWslV2",

@@ -25,6 +25,16 @@ import kotlin.collections.toTypedArray
  * GitHub Action to login against a Docker registry
  *
  * [Action on GitHub](https://github.com/docker/login-action)
+ *
+ * @param registry Server address of Docker registry. If not set then will default to Docker Hub
+ * @param username Username used to log against the Docker registry
+ * @param password Password or personal access token used to log against the Docker registry
+ * @param ecr Specifies whether the given registry is ECR (auto, true or false)
+ * @param logout Log out from the Docker registry at the end of a job
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class LoginActionV3 private constructor(
     /**

@@ -24,6 +24,14 @@ import kotlin.collections.toTypedArray
  * Reveal the secrets committed into your repo
  *
  * [Action on GitHub](https://github.com/entrostat/git-secret-action)
+ *
+ * @param gpgPrivateKey The GPG private key to use, you can export this using the command:
+ * gpg --armour --export-secret-keys KEY_ID
+ * @param gpgPrivateKeyPassphrase The passphrase for the private key, if any
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class GitSecretActionV4 private constructor(
     /**

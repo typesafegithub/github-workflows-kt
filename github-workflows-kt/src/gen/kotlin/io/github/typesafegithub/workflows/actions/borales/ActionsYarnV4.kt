@@ -24,6 +24,13 @@ import kotlin.collections.toTypedArray
  * Wraps the yarn CLI to enable common yarn commands
  *
  * [Action on GitHub](https://github.com/Borales/actions-yarn)
+ *
+ * @param cmd Yarn command
+ * @param dir Yarn sub-folder (if needed)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionsYarnV4 private constructor(
     /**

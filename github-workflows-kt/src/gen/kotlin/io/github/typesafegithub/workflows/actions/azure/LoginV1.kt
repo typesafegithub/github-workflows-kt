@@ -25,6 +25,26 @@ import kotlin.collections.toTypedArray
  * Authenticate to Azure and run your Azure CLI or Azure PowerShell based actions or scripts.
  *
  * [Action on GitHub](https://github.com/Azure/login)
+ *
+ * @param creds Paste output of `az ad sp create-for-rbac` as value of secret variable:
+ * AZURE_CREDENTIALS
+ * @param clientId ClientId of the Azure Service principal created.
+ * @param tenantId TenantId of the Azure Service principal created.
+ * @param subscriptionId Azure subscriptionId
+ * @param enableAzPSSession Set this value to true to enable Azure PowerShell Login in addition to
+ * Azure CLI login
+ * @param environment Name of the environment. Supported values are azurecloud, azurestack,
+ * azureusgovernment, azurechinacloud, azuregermancloud. Default being azurecloud
+ * @param allowNoSubscriptions Set this value to true to enable support for accessing tenants
+ * without subscriptions
+ * @param audience Provide audience field for access-token. Default value is
+ * api://AzureADTokenExchange
+ * @param authType The type of authentication. Supported values are SERVICE_PRINCIPAL, IDENTITY.
+ * Default value is SERVICE_PRINCIPAL
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class LoginV1 private constructor(
     /**

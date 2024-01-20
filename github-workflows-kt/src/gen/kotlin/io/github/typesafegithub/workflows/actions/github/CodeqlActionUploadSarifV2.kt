@@ -25,6 +25,28 @@ import kotlin.collections.toTypedArray
  * Upload the analysis results
  *
  * [Action on GitHub](https://github.com/github/codeql-action/tree/v2/upload-sarif)
+ *
+ * @param sarifFile The SARIF file or directory of SARIF files to be uploaded to GitHub code
+ * scanning.
+ * See
+ * https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github#uploading-a-code-scanning-analysis-with-github-actions
+ * for information on the maximum number of results and maximum file size supported by code
+ * scanning.
+ * @param checkoutPath The path at which the analyzed repository was checked out. Used to relativize
+ * any absolute paths in the uploaded SARIF file.
+ * @param ref The ref where results will be uploaded. If not provided, the Action will use the
+ * GITHUB_REF environment variable. If provided, the sha input must be provided as well. This input is
+ * not available in pull requests from forks.
+ * @param sha The sha of the HEAD of the ref where results will be uploaded. If not provided, the
+ * Action will use the GITHUB_SHA environment variable. If provided, the ref input must be provided as
+ * well. This input is not available in pull requests from forks.
+ * @param category String used by Code Scanning for matching the analyses
+ * @param waitForProcessing If true, the Action will wait for the uploaded SARIF to be processed
+ * before completing.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CodeqlActionUploadSarifV2 private constructor(
     /**

@@ -25,6 +25,34 @@ import kotlin.collections.toTypedArray
  * You can notify slack of GitHub Actions.
  *
  * [Action on GitHub](https://github.com/8398a7/action-slack)
+ *
+ * @param status Specify success or failure or cancelled or custom.
+ * @param fields You can choose the items you want to add to the fields at the time of notification.
+ * If you have more than one, please enter it in csv format.
+ * e.g. commit,repo
+ * @param customPayload json payload
+ * refs
+ * https://github.com/slackapi/node-slack-sdk/blob/v5.0.0/packages/webhook/src/IncomingWebhook.ts#L91-L106)
+ * @param mention Specify channel or here or `user_id`.
+ * refs: https://api.slack.com/reference/surfaces/formatting#mentioning-users
+ * @param ifMention Specify success or failure or cancelled or custom or always.
+ * Multiple statuses can be specified in csv format.
+ * e.g. success,failure
+ * @param authorName User name for slack notification.
+ * @param text You can overwrite text.
+ * @param username override the legacy integration's default name.
+ * @param iconEmoji an emoji code string to use in place of the default icon.
+ * @param iconUrl an icon image URL string to use in place of the default icon.
+ * @param channel override the legacy integration's default channel. This should be an ID, such as
+ * C8UJ12P4P.
+ * @param jobName Use this if you want to overwrite the job name.
+ * @param githubToken Use this if you wish to use a different GitHub token than the one provided by
+ * the workflow.
+ * @param githubBaseUrl Specify if you want to use GitHub Enterprise.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionSlackV3 private constructor(
     /**

@@ -24,6 +24,14 @@ import kotlin.collections.toTypedArray
  * Greet new contributors when they create their first issue or open their first pull request
  *
  * [Action on GitHub](https://github.com/actions/first-interaction)
+ *
+ * @param repoToken Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
+ * @param issueMessage Comment to post on an individual's first issue
+ * @param prMessage Comment to post on an individual's first pull request
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class FirstInteractionV1 private constructor(
     /**

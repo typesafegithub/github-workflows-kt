@@ -27,6 +27,27 @@ import kotlin.collections.toTypedArray
  * in your readme!
  *
  * [Action on GitHub](https://github.com/anmol098/waka-readme-stats)
+ *
+ * @param ghToken GitHub access token with Repo scope
+ * @param wakatimeApiKey Your Wakatime API Key
+ * @param showOs Show the list of OS Worked on In dev metrics
+ * @param showProjects Show the list of projects worked on in dev metrics
+ * @param showEditors Show the Editors used in dev metrics
+ * @param showTimezone Show the time zone in the dev metrics
+ * @param showCommit Shows the number of commit graph in the dev metrics
+ * @param showLanguage Show the Coding language used in dev metrics
+ * @param showLinesOfCode Show the Total Lines of code written Badge till date
+ * @param showLanguagePerRepo Show language or framework used across different repository
+ * @param showDaysOfWeek show day of week you are most productive
+ * @param showProfileViews Shows the current profile views
+ * @param showShortInfo Shows the short facts
+ * @param locale Show stats in your own language
+ * @param commitByMe Git commit with your own name and email
+ * @param ignoredRepos Repos you don't want to be counted
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class WakaReadmeStatsV4 private constructor(
     /**

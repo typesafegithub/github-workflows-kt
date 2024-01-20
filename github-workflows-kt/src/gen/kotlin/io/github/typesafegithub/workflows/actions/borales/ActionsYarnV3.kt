@@ -26,6 +26,14 @@ import kotlin.collections.toTypedArray
  * Wraps the yarn CLI to enable common yarn commands
  *
  * [Action on GitHub](https://github.com/Borales/actions-yarn)
+ *
+ * @param cmd Yarn command
+ * @param authToken NPM_AUTH_TOKEN
+ * @param registryUrl NPM_REGISTRY_URL
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: ActionsYarnV4",

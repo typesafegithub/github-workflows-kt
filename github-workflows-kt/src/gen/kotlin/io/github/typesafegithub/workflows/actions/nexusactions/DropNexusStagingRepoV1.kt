@@ -24,6 +24,16 @@ import kotlin.collections.toTypedArray
  * Drops a staged repo, with a given ID, on https://oss.sonatype.org/.
  *
  * [Action on GitHub](https://github.com/nexus-actions/drop-nexus-staging-repo)
+ *
+ * @param username Your Sonatype username, same the Sonatype Jira one.
+ * @param password Your Sonatype password, same the Sonatype Jira one.
+ * @param stagingRepositoryId The ID of the staged repository to drop.
+ * @param baseUrl The url of your nexus repository, defaults to OSSRH
+ * (https://oss.sonatype.org/service/local/)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class DropNexusStagingRepoV1 private constructor(
     /**

@@ -27,6 +27,72 @@ import kotlin.collections.toTypedArray
  * Set up CodeQL
  *
  * [Action on GitHub](https://github.com/github/codeql-action/tree/v2/init)
+ *
+ * @param tools URL of CodeQL tools
+ * @param languages The languages to be analysed
+ * @param token GitHub token to use for authenticating with this instance of GitHub. To download
+ * custom packs from multiple registries, use the registries input.
+ * @param registries Use this input only when you need to download CodeQL packages from another
+ * instance of GitHub. If you only need to download packages from this GitHub instance, use the token
+ * input instead.
+ *
+ * A YAML string that defines the list of GitHub container registries to use for downloading packs.
+ * The string is in the following form (the | is required on the first line):
+ *
+ * registries: |
+ *     - url: https://containers.GHEHOSTNAME1/v2/
+ *       packages:
+ *         - my-company/&#42;
+ *         - my-company2/&#42;
+ *       token: \$\{{ secrets.GHEHOSTNAME1_TOKEN }}
+ *
+ *     - url: https://ghcr.io/v2/
+ *       packages: &#42;/&#42;
+ *       token: \$\{{ secrets.GHCR_TOKEN }}
+ *
+ * The `url` property contains the URL to the container registry you want to connect to.
+ *
+ * The `packages` property contains a single glob string or a list of glob strings, specifying which
+ * packages should be retrieved from this particular container registry. Order is important. Earlier
+ * entries will match before later entries.
+ *
+ * The `token` property contains a connection token for this registry.    required: false
+ * @param configFile Path of the config file to use
+ * @param dbLocation Path where CodeQL databases should be created. If not specified, a temporary
+ * directory will be used.
+ * @param queries Comma-separated list of additional queries to run. By default, this overrides the
+ * same setting in a configuration file; prefix with "+" to use both sets of queries.
+ * @param packs [Experimental] Comma-separated list of packs to run. Reference a pack in the format
+ * `scope/name[@version]`. If `version` is not specified, then the latest version of the pack is used.
+ * By default, this overrides the same setting in a configuration file; prefix with "+" to use both
+ * sets of packs.
+ * This input is only available in single-language analyses. To use packs in multi-language
+ * analyses, you must specify packs in the codeql-config.yml file.
+ * @param externalRepositoryToken A token for fetching external config files and queries if they
+ * reside in a private repository in the same GitHub instance that is running this action.
+ * @param setupPythonDependencies Try to auto-install your python dependencies
+ * @param sourceRoot Path of the root source code directory, relative to $GITHUB_WORKSPACE.
+ * @param ram The amount of memory in MB that can be used by CodeQL extractors. By default, CodeQL
+ * extractors will use most of the memory available in the system (which for GitHub-hosted runners is
+ * 6GB for Linux, 5.5GB for Windows, and 13GB for macOS). This input also sets the amount of memory
+ * that can later be used by the "analyze" action.
+ * @param threads The number of threads that can be used by CodeQL extractors. By default, CodeQL
+ * extractors will use all the hardware threads available in the system (which for GitHub-hosted
+ * runners is 2 for Linux and Windows and 3 for macOS). This input also sets the number of threads that
+ * can later be used by the "analyze" action.
+ * @param debug Enable debugging mode. This will result in more output being produced which may be
+ * useful when debugging certain issues. Debugging mode is enabled automatically when step debug
+ * logging is turned on.
+ * @param debugArtifactName The name of the artifact to store debugging information in. This is only
+ * used when debug mode is enabled.
+ * @param debugDatabaseName The name of the database uploaded to the debugging artifact. This is
+ * only used when debug mode is enabled.
+ * @param trapCaching Explicitly enable or disable TRAP caching rather than respecting the feature
+ * flag for it.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CodeqlActionInitV2 private constructor(
     /**

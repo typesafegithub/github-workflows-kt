@@ -28,6 +28,40 @@ import kotlin.collections.toTypedArray
  * Build and push Docker images with Buildx
  *
  * [Action on GitHub](https://github.com/docker/build-push-action)
+ *
+ * @param addHosts List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
+ * @param allow List of extra privileged entitlement (e.g., network.host,security.insecure)
+ * @param buildArgs List of build-time variables
+ * @param buildContexts List of additional build contexts (e.g., name=path)
+ * @param builder Builder instance
+ * @param cacheFrom List of external cache sources for buildx (e.g., user/app:cache,
+ * type=local,src=path/to/dir)
+ * @param cacheTo List of cache export destinations for buildx (e.g., user/app:cache,
+ * type=local,dest=path/to/dir)
+ * @param cgroupParent Optional parent cgroup for the container used in the build
+ * @param context Build's context is the set of files located in the specified PATH or URL
+ * @param file Path to the Dockerfile
+ * @param labels List of metadata for an image
+ * @param load Load is a shorthand for --output=type=docker
+ * @param network Set the networking mode for the RUN instructions during build
+ * @param noCache Do not use cache when building the image
+ * @param outputs List of output destinations (format: type=local,dest=path)
+ * @param platforms List of target platforms for build
+ * @param pull Always attempt to pull all referenced images
+ * @param push Push is a shorthand for --output=type=registry
+ * @param secrets List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
+ * @param secretFiles List of secret files to expose to the build (e.g., key=filename,
+ * MY_SECRET=./secret.txt)
+ * @param shmSize Size of /dev/shm (e.g., 2g)
+ * @param ssh List of SSH agent socket or keys to expose to the build
+ * @param tags List of tags
+ * @param target Sets the target stage to build
+ * @param ulimit Ulimit options (e.g., nofile=1024:1024)
+ * @param githubToken GitHub Token used to authenticate against a repository for Git context
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: BuildPushActionV5",

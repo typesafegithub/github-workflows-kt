@@ -26,6 +26,18 @@ import kotlin.collections.toTypedArray
  * An action to create an issue using content from a file
  *
  * [Action on GitHub](https://github.com/peter-evans/create-issue-from-file)
+ *
+ * @param token The GitHub authentication token
+ * @param repository The target GitHub repository
+ * @param issueNumber The issue number of an existing issue to update
+ * @param title The title of the issue
+ * @param contentFilepath The file path to the issue content
+ * @param labels A comma or newline-separated list of labels
+ * @param assignees A comma or newline-separated list of assignees (GitHub usernames)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CreateIssueFromFileV4 private constructor(
     /**

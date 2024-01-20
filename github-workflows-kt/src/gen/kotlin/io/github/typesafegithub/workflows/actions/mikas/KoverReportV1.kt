@@ -27,6 +27,21 @@ import kotlin.collections.toTypedArray
  * Github action that publishes the Kover code coverage report as a comment in pull requests
  *
  * [Action on GitHub](https://github.com/mi-kas/kover-report)
+ *
+ * @param path Path to the generated kover report xml file
+ * @param token Github personal token to add commits to the pull request
+ * @param title Title for the pull request comment
+ * @param updateComment Update the coverage report comment instead of creating a new one. Requires
+ * title to be set.
+ * @param minCoverageOverall The minimum code coverage that is required to pass for overall project
+ * @param minCoverageChangedFiles The minimum code coverage that is required to pass for changed
+ * files
+ * @param coverageCounterType Report counter type (`INSTRUCTION``, `LINE` or `BRANCH`) to calculate
+ * coverage metrics.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class KoverReportV1 private constructor(
     /**

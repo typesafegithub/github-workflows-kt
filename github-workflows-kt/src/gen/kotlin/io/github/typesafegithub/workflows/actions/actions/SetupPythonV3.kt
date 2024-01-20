@@ -27,6 +27,20 @@ import kotlin.collections.toTypedArray
  * Set up a specific version of Python and add the command-line tools to the PATH.
  *
  * [Action on GitHub](https://github.com/actions/setup-python)
+ *
+ * @param pythonVersion Version range or exact version of a Python version to use, using SemVer's
+ * version range syntax.
+ * @param cache Used to specify a package manager for caching in the default directory. Supported
+ * values: pip, pipenv, poetry.
+ * @param architecture The target architecture (x86, x64) of the Python interpreter.
+ * @param token Used to pull python distributions from actions/python-versions. Since there's a
+ * default, this is typically not supplied by the user.
+ * @param cacheDependencyPath Used to specify the path to dependency files. Supports wildcards or a
+ * list of file names for caching multiple dependencies.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SetupPythonV5",

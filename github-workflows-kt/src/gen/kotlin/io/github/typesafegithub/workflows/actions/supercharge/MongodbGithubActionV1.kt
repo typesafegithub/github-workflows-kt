@@ -25,6 +25,17 @@ import kotlin.collections.toTypedArray
  * Start a MongoDB server (on default port 27017 or a custom port)
  *
  * [Action on GitHub](https://github.com/supercharge/mongodb-github-action)
+ *
+ * @param mongodbVersion MongoDB version to use (default "latest")
+ * @param mongodbReplicaSet MongoDB replica set name (no replica set by default)
+ * @param mongodbPort MongoDB port to use (default 27017)
+ * @param mongodbDb MongoDB db to create (default: none)
+ * @param mongodbUsername MongoDB root username (default: none)
+ * @param mongodbPassword MongoDB root password (default: none)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class MongodbGithubActionV1 private constructor(
     /**

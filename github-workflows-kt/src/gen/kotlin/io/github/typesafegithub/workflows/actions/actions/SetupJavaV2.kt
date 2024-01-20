@@ -27,6 +27,33 @@ import kotlin.collections.toTypedArray
  * Set up a specific version of the Java JDK and add the command-line tools to the PATH
  *
  * [Action on GitHub](https://github.com/actions/setup-java)
+ *
+ * @param javaVersion The Java version to set up. Takes a whole or semver Java version. See examples
+ * of supported syntax in README file
+ * @param distribution Java distribution. See the list of supported distributions in README file
+ * @param javaPackage The package type (jdk, jre, jdk+fx, jre+fx)
+ * @param architecture The architecture of the package
+ * @param jdkFile Path to where the compressed JDK is located
+ * @param checkLatest Set this option if you want the action to check for the latest available
+ * version that satisfies the version spec
+ * @param serverId ID of the distributionManagement repository in the pom.xml file. Default is
+ * `github`
+ * @param serverUsername Environment variable name for the username for authentication to the Apache
+ * Maven repository. Default is $GITHUB_ACTOR
+ * @param serverPassword Environment variable name for password or token for authentication to the
+ * Apache Maven repository. Default is $GITHUB_TOKEN
+ * @param settingsPath Path to where the settings.xml file will be written. Default is ~/.m2.
+ * @param overwriteSettings Overwrite the settings.xml file if it exists. Default is "true".
+ * @param gpgPrivateKey GPG private key to import. Default is empty string.
+ * @param gpgPassphrase Environment variable name for the GPG private key passphrase. Default is
+ * $GPG_PASSPHRASE.
+ * @param cache Name of the build platform to cache dependencies. It can be "maven" or "gradle".
+ * @param jobStatus Workaround to pass job status to post job step. This variable is not intended
+ * for manual setting
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SetupJavaV4",

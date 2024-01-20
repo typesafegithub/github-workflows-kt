@@ -30,6 +30,121 @@ import kotlin.collections.toTypedArray
  * Close issues and pull requests with no recent activity
  *
  * [Action on GitHub](https://github.com/actions/stale)
+ *
+ * @param repoToken Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
+ * @param staleIssueMessage The message to post on the issue when tagging it. If none provided, will
+ * not mark issues stale.
+ * @param stalePrMessage The message to post on the pull request when tagging it. If none provided,
+ * will not mark pull requests stale.
+ * @param closeIssueMessage The message to post on the issue when closing it. If none provided, will
+ * not comment when closing an issue.
+ * @param closePrMessage The message to post on the pull request when closing it. If none provided,
+ * will not comment when closing a pull requests.
+ * @param daysBeforeStale The number of days old an issue or a pull request can be before marking it
+ * stale. Set to -1 to never mark issues or pull requests as stale automatically.
+ * @param daysBeforeIssueStale The number of days old an issue can be before marking it stale. Set
+ * to -1 to never mark issues as stale automatically. Override "days-before-stale" option regarding
+ * only the issues.
+ * @param daysBeforePrStale The number of days old a pull request can be before marking it stale.
+ * Set to -1 to never mark pull requests as stale automatically. Override "days-before-stale" option
+ * regarding only the pull requests.
+ * @param daysBeforeClose The number of days to wait to close an issue or a pull request after it
+ * being marked stale. Set to -1 to never close stale issues or pull requests.
+ * @param daysBeforeIssueClose The number of days to wait to close an issue after it being marked
+ * stale. Set to -1 to never close stale issues. Override "days-before-close" option regarding only the
+ * issues.
+ * @param daysBeforePrClose The number of days to wait to close a pull request after it being marked
+ * stale. Set to -1 to never close stale pull requests. Override "days-before-close" option regarding
+ * only the pull requests.
+ * @param staleIssueLabel The label to apply when an issue is stale.
+ * @param closeIssueLabel The label to apply when an issue is closed.
+ * @param exemptIssueLabels The labels that mean an issue is exempt from being marked stale.
+ * Separate multiple labels with commas (eg. "label1,label2").
+ * @param closeIssueReason The reason to use when closing an issue.
+ * @param stalePrLabel The label to apply when a pull request is stale.
+ * @param closePrLabel The label to apply when a pull request is closed.
+ * @param exemptPrLabels The labels that mean a pull request is exempt from being marked as stale.
+ * Separate multiple labels with commas (eg. "label1,label2").
+ * @param exemptMilestones The milestones that mean an issue or a pull request is exempt from being
+ * marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2").
+ * @param exemptIssueMilestones The milestones that mean an issue is exempt from being marked as
+ * stale. Separate multiple milestones with commas (eg. "milestone1,milestone2"). Override
+ * "exempt-milestones" option regarding only the issues.
+ * @param exemptPrMilestones The milestones that mean a pull request is exempt from being marked as
+ * stale. Separate multiple milestones with commas (eg. "milestone1,milestone2"). Override
+ * "exempt-milestones" option regarding only the pull requests.
+ * @param exemptAllMilestones Exempt all issues and pull requests with milestones from being marked
+ * as stale. Default to false.
+ * @param exemptAllIssueMilestones Exempt all issues with milestones from being marked as stale.
+ * Override "exempt-all-milestones" option regarding only the issues.
+ * @param exemptAllPrMilestones Exempt all pull requests with milestones from being marked as stale.
+ * Override "exempt-all-milestones" option regarding only the pull requests.
+ * @param onlyLabels Only issues or pull requests with all of these labels are checked if stale.
+ * Defaults to `` (disabled) and can be a comma-separated list of labels.
+ * @param anyOfLabels Only issues or pull requests with at least one of these labels are checked if
+ * stale. Defaults to `` (disabled) and can be a comma-separated list of labels.
+ * @param anyOfIssueLabels Only issues with at least one of these labels are checked if stale.
+ * Defaults to `` (disabled) and can be a comma-separated list of labels. Override "any-of-labels"
+ * option regarding only the issues.
+ * @param anyOfPrLabels Only pull requests with at least one of these labels are checked if stale.
+ * Defaults to `` (disabled) and can be a comma-separated list of labels. Override "any-of-labels"
+ * option regarding only the pull requests.
+ * @param onlyIssueLabels Only issues with all of these labels are checked if stale. Defaults to
+ * `[]` (disabled) and can be a comma-separated list of labels. Override "only-labels" option regarding
+ * only the issues.
+ * @param onlyPrLabels Only pull requests with all of these labels are checked if stale. Defaults to
+ * `[]` (disabled) and can be a comma-separated list of labels. Override "only-labels" option regarding
+ * only the pull requests.
+ * @param operationsPerRun The maximum number of operations per run, used to control rate limiting
+ * (GitHub API CRUD related).
+ * @param removeStaleWhenUpdated Remove stale labels from issues and pull requests when they are
+ * updated or commented on.
+ * @param removeIssueStaleWhenUpdated Remove stale labels from issues when they are updated or
+ * commented on. Override "remove-stale-when-updated" option regarding only the issues.
+ * @param removePrStaleWhenUpdated Remove stale labels from pull requests when they are updated or
+ * commented on. Override "remove-stale-when-updated" option regarding only the pull requests.
+ * @param debugOnly Run the processor in debug mode without actually performing any operations on
+ * live issues.
+ * @param ascending The order to get issues or pull requests. Defaults to false, which is
+ * descending.
+ * @param deleteBranch Delete the git branch after closing a stale pull request.
+ * @param startDate The date used to skip the stale action on issue/pull request created before it
+ * (ISO 8601 or RFC 2822).
+ * @param exemptAssignees The assignees which exempt an issue or a pull request from being marked as
+ * stale. Separate multiple assignees with commas (eg. "user1,user2").
+ * @param exemptIssueAssignees The assignees which exempt an issue from being marked as stale.
+ * Separate multiple assignees with commas (eg. "user1,user2"). Override "exempt-assignees" option
+ * regarding only the issues.
+ * @param exemptPrAssignees The assignees which exempt a pull request from being marked as stale.
+ * Separate multiple assignees with commas (eg. "user1,user2"). Override "exempt-assignees" option
+ * regarding only the pull requests.
+ * @param exemptAllAssignees Exempt all issues and pull requests with assignees from being marked as
+ * stale. Default to false.
+ * @param exemptAllIssueAssignees Exempt all issues with assignees from being marked as stale.
+ * Override "exempt-all-assignees" option regarding only the issues.
+ * @param exemptAllPrAssignees Exempt all pull requests with assignees from being marked as stale.
+ * Override "exempt-all-assignees" option regarding only the pull requests.
+ * @param exemptDraftPr Exempt draft pull requests from being marked as stale. Default to false.
+ * @param enableStatistics Display some statistics at the end regarding the stale workflow (only
+ * when the logs are enabled).
+ * @param labelsToAddWhenUnstale A comma delimited list of labels to add when an issue or pull
+ * request becomes unstale.
+ * @param labelsToRemoveWhenStale A comma delimited list of labels to remove when an issue or pull
+ * request becomes stale.
+ * @param labelsToRemoveWhenUnstale A comma delimited list of labels to remove when an issue or pull
+ * request becomes unstale.
+ * @param ignoreUpdates Any update (update/comment) can reset the stale idle time on the issues and
+ * pull requests.
+ * @param ignoreIssueUpdates Any update (update/comment) can reset the stale idle time on the
+ * issues. Override "ignore-updates" option regarding only the issues.
+ * @param ignorePrUpdates Any update (update/comment) can reset the stale idle time on the pull
+ * requests. Override "ignore-updates" option regarding only the pull requests.
+ * @param includeOnlyAssigned Only the issues or the pull requests with an assignee will be marked
+ * as stale automatically.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: StaleV9",

@@ -28,6 +28,36 @@ import kotlin.collections.toTypedArray
  * to remote repository.
  *
  * [Action on GitHub](https://github.com/stefanzweifel/git-auto-commit-action)
+ *
+ * @param commitMessage Commit message
+ * @param branch Git branch name, where changes should be pushed too. Required if Action is used on
+ * the `pull_request` event
+ * @param commitOptions Commit options (eg. --no-verify)
+ * @param addOptions Add options (eg. -u)
+ * @param statusOptions Status options (eg. --untracked-files=no)
+ * @param filePattern File pattern used for `git add`. For example `src/`&#42;`.js`
+ * @param repository Local file path to the git repository. Defaults to the current directory (`.`)
+ * @param commitUserName Name used for the commit user
+ * @param commitUserEmail Email address used for the commit user
+ * @param commitAuthor Value used for the commit author. Defaults to the username of whoever
+ * triggered this workflow run.
+ * @param taggingMessage Message used to create a new git tag with the commit. Keep this empty, if
+ * no tag should be created.
+ * @param pushOptions Push options (eg. --force)
+ * @param skipDirtyCheck Skip the check if the git repository is dirty and always try to create a
+ * commit.
+ * @param skipFetch Skip the call to git-fetch.
+ * @param skipCheckout Skip the call to git-checkout.
+ * @param disableGlobbing Stop the shell from expanding filenames
+ * (https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html)
+ * @param createBranch Create new branch with the name of `branch`-input in local and remote
+ * repository, if it doesn't exist yet.
+ * @param internalGitBinary Internal use only! Path to git binary used to check if git is available.
+ * (Don't change this!)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: GitAutoCommitActionV5",

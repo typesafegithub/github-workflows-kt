@@ -27,6 +27,57 @@ import kotlin.collections.toTypedArray
  * GitHub Action that uploads coverage reports for your repository to codecov.io
  *
  * [Action on GitHub](https://github.com/codecov/codecov-action)
+ *
+ * @param token Repository upload token - get it from codecov.io. Required only for private
+ * repositories
+ * @param file Path to coverage file to upload
+ * @param files Comma-separated list of files to upload
+ * @param directory Directory to search for coverage reports.
+ * @param flags Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
+ * @param fullReport Specify the path of a full Codecov report to re-upload
+ * @param commitParent The commit SHA of the parent for which you are uploading coverage. If not
+ * present, the parent will be determined using the API of your repository provider.  When using the
+ * repository providers API, the parent is determined via finding the closest ancestor to the commit.
+ * @param dryRun Don't upload files to Codecov
+ * @param envVars Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
+ * @param failCiIfError Specify whether or not CI build should fail if Codecov runs into an error
+ * during upload
+ * @param functionalities Comma-separated list, see the README for options and their usage. Options
+ * include `network`, `fixes`, `search`.
+ * @param gcov Run with gcov support
+ * @param gcovArgs Extra arguments to pass to gcov
+ * @param gcovExecutable gcov executable to run. Defaults to gcov
+ * @param gcovIgnore Paths to ignore during gcov gathering
+ * @param gcovInclude Paths to include during gcov gathering
+ * @param moveCoverageToTrash Move discovered coverage reports to the trash
+ * @param name User defined upload name. Visible in Codecov UI
+ * @param networkFilter Specify a filter on the files listed in the network section of the Codecov
+ * report. Useful for upload-specific path fixing
+ * @param networkPrefix Specify a prefix on files listed in the network section of the Codecov
+ * report. Useful to help resolve path fixing
+ * @param os Override the assumed OS. Options are aarch64 | alpine | linux | macos | windows.
+ * @param overrideBranch Specify the branch name
+ * @param overrideBuild Specify the build number
+ * @param overrideCommit Specify the commit SHA
+ * @param overridePr Specify the pull request number
+ * @param overrideTag Specify the git tag
+ * @param rootDir Used when not in git/hg project to identify project root directory
+ * @param slug Specify the slug manually (Enterprise use)
+ * @param swift Run with swift coverage support
+ * @param swiftProject Specify the swift project to speed up coverage conversion
+ * @param upstreamProxy The upstream http proxy server to connect through
+ * @param url Change the upload host (Enterprise use)
+ * @param verbose Specify whether the Codecov output should be verbose
+ * @param version Specify which version of the Codecov Uploader should be used. Defaults to `latest`
+ * @param workingDirectory Directory in which to execute codecov.sh
+ * @param xcode Run with xcode support
+ * @param xcodeArchivePath Specify the xcode archive path. Likely specified as the -resultBundlePath
+ * and should end in .xcresult
+ * @param xtraArgs Add additional uploader args that may be missing in the Action
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CodecovActionV3 private constructor(
     /**

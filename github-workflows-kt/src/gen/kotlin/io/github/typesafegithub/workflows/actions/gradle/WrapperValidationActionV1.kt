@@ -27,6 +27,18 @@ import kotlin.collections.toTypedArray
  * Validates Gradle Wrapper JAR Files
  *
  * [Action on GitHub](https://github.com/gradle/wrapper-validation-action)
+ *
+ * @param minWrapperCount Minimum number expected gradle-wrapper.jar files found in the repository.
+ * Non-negative number. Higher number is useful in monorepos where each project might have their own
+ * wrapper.
+ * @param allowSnapshots Allow Gradle snapshot versions during checksum verification. Boolean, true
+ * or false.
+ * @param allowChecksums Accept arbitrary user-defined checksums as valid. Comma separated list of
+ * SHA256 checksums (lowercase hex).
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class WrapperValidationActionV1 private constructor(
     /**

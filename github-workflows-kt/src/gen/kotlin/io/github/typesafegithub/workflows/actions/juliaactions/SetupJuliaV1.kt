@@ -25,6 +25,17 @@ import kotlin.collections.toTypedArray
  * Setup a Julia environment and add it to the PATH
  *
  * [Action on GitHub](https://github.com/julia-actions/setup-julia)
+ *
+ * @param version The Julia version to download (if necessary) and use. Example: 1.0.4
+ * @param includeAllPrereleases Include prereleases when matching the Julia version to available
+ * versions.
+ * @param arch Architecture of the Julia binaries. Defaults to the architecture of the runner
+ * executing the job.
+ * @param showVersioninfo Display InteractiveUtils.versioninfo() after installing
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SetupJuliaV1 private constructor(
     /**

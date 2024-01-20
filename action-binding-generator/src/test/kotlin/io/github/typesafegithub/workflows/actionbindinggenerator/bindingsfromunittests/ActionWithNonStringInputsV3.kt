@@ -28,6 +28,20 @@ import kotlin.collections.toTypedArray
  * This is a test description that should be put in the KDoc comment for a class
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-non-string-inputs)
+ *
+ * @param fooBar Short description
+ * @param bazGoo First boolean input!
+ * @param binKin Boolean and nullable
+ * @param intPint Integer
+ * @param floPint Float
+ * @param booZoo List of strings
+ * @param finBin Enumeration
+ * @param gooZen Integer with special value
+ * @param bahEnum Enum with custom naming
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionWithNonStringInputsV3 private constructor(
     /**

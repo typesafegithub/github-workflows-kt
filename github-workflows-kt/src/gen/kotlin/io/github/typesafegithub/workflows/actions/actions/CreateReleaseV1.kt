@@ -25,6 +25,25 @@ import kotlin.collections.toTypedArray
  * Create a release for a tag in your repository
  *
  * [Action on GitHub](https://github.com/actions/create-release)
+ *
+ * @param tagName The name of the tag. This should come from the webhook payload,
+ * `github.GITHUB_REF` when a user pushes a new tag
+ * @param releaseName The name of the release. For example, `Release v1.0.1`
+ * @param body Text describing the contents of the tag.
+ * @param bodyPath Path to file with information about the tag.
+ * @param draft `true` to create a draft (unpublished) release, `false` to create a published one.
+ * Default: `false`
+ * @param prerelease `true` to identify the release as a prerelease. `false` to identify the release
+ * as a full release. Default: `false`
+ * @param commitish Any branch or commit SHA the Git tag is created from, unused if the Git tag
+ * already exists. Default: SHA of current commit
+ * @param owner Owner of the repository if it is not the current one
+ * @param repo Repository on which to release.  Used only if you want to create the release on
+ * another repo
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CreateReleaseV1 private constructor(
     /**

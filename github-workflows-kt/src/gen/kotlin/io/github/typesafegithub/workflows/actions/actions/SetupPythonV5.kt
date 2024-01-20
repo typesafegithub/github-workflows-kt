@@ -26,6 +26,28 @@ import kotlin.collections.toTypedArray
  * Set up a specific version of Python and add the command-line tools to the PATH.
  *
  * [Action on GitHub](https://github.com/actions/setup-python)
+ *
+ * @param pythonVersion Version range or exact version of Python or PyPy to use, using SemVer's
+ * version range syntax. Reads from .python-version if unset.
+ * @param pythonVersionFile File containing the Python version to use. Example: .python-version
+ * @param cache Used to specify a package manager for caching in the default directory. Supported
+ * values: pip, pipenv, poetry.
+ * @param architecture The target architecture (x86, x64) of the Python or PyPy interpreter.
+ * @param checkLatest Set this option if you want the action to check for the latest available
+ * version that satisfies the version spec.
+ * @param token The token used to authenticate when fetching Python distributions from
+ * https://github.com/actions/python-versions. When running this action on github.com, the default
+ * value is sufficient. When running on GHES, you can pass a personal access token for github.com if
+ * you are experiencing rate limiting.
+ * @param cacheDependencyPath Used to specify the path to dependency files. Supports wildcards or a
+ * list of file names for caching multiple dependencies.
+ * @param updateEnvironment Set this option if you want the action to update environment variables.
+ * @param allowPrereleases When 'true', a version range passed to 'python-version' input will match
+ * prerelease versions if no GA versions are found. Only 'x.y' version range is supported for CPython.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class SetupPythonV5 private constructor(
     /**

@@ -26,6 +26,17 @@ import kotlin.collections.toTypedArray
  * Run clippy and annotate the diff with errors and warnings
  *
  * [Action on GitHub](https://github.com/actions-rs/clippy-check)
+ *
+ * @param token GitHub token
+ * @param toolchain Toolchain to use (without the `+` sign, ex. `nightly`)
+ * @param args Arguments for the cargo command
+ * @param useCross Use cross instead of cargo
+ * @param name Display name of the created GitHub check. Must be unique across several
+ * actions-rs/clippy-check invocations.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ClippyCheckV1 private constructor(
     /**

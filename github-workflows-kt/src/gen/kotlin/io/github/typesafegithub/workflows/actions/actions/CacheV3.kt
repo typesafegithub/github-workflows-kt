@@ -27,6 +27,21 @@ import kotlin.collections.toTypedArray
  * Cache artifacts like dependencies and build outputs to improve workflow execution time
  *
  * [Action on GitHub](https://github.com/actions/cache)
+ *
+ * @param path A list of files, directories, and wildcard patterns to cache and restore
+ * @param key An explicit key for restoring and saving the cache
+ * @param restoreKeys An ordered list of keys to use for restoring stale cache if no cache hit
+ * occurred for key. Note `cache-hit` returns false in this case.
+ * @param uploadChunkSize The chunk size used to split up large files during upload, in bytes
+ * @param enableCrossOsArchive An optional boolean when enabled, allows windows runners to save or
+ * restore caches that can be restored or saved respectively on other platforms
+ * @param failOnCacheMiss Fail the workflow if cache entry is not found
+ * @param lookupOnly Check if a cache entry exists for the given input(s) (key, restore-keys)
+ * without downloading the cache
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class CacheV3 private constructor(
     /**

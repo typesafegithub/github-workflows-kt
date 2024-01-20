@@ -29,6 +29,37 @@ import kotlin.collections.toTypedArray
  * Adds the `gcloud` CLI command to the $PATH.
  *
  * [Action on GitHub](https://github.com/google-github-actions/setup-gcloud)
+ *
+ * @param version Version of the gcloud SDK to install. If unspecified or set to "latest",
+ * the latest available gcloud SDK version for the target platform will be
+ * installed. Example: "290.0.1".
+ * @param serviceAccountEmail Service account email address to use for authentication. This is
+ * required
+ * for legacy .p12 keys but can be omitted for .json keys. This is usually of
+ * the format <name>@<project-id>.iam.gserviceaccount.com.
+ * @param serviceAccountKey Service account key to use for authentication. This should be the JSON
+ * formatted private key which can be exported from the Cloud Console. The
+ * value can be raw or base64-encoded.
+ * @param projectId ID of the Google Cloud project. If provided, this will configure gcloud to
+ * use this project ID by default for commands. Individual commands can still
+ * override the project using the --project flag which takes precedence.
+ * @param installComponents List of Cloud SDK components to install
+ * @param exportDefaultCredentials Export the provided credentials as Google Default Application
+ * Credentials.
+ * This will make the credentials available to later steps via the
+ * GOOGLE_APPLICATION_CREDENTIALS environment variable. Future steps that
+ * consume Default Application Credentials will automatically detect and use
+ * these credentials.
+ * @param credentialsFilePath The path and name of the file to which to write the shared default
+ * credentials. This option is only valid when
+ * export_default_credentials=true. By default, the credentials will be
+ * written to a new file in the root of GITHUB_WORKSPACE.
+ * @param cleanupCredentials If true, the action will remove any generated credentials from the
+ * filesystem upon completion.
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     message = "This action has a newer major version: SetupGcloudV2",

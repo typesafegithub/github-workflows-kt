@@ -24,6 +24,12 @@ import kotlin.collections.toTypedArray
  * Get the annotation associated with a git tag
  *
  * [Action on GitHub](https://github.com/ericcornelissen/git-tag-annotation-action)
+ *
+ * @param tag tag of interest (defaults to the GITHUB_REF environment variable)
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class GitTagAnnotationActionV2 private constructor(
     /**

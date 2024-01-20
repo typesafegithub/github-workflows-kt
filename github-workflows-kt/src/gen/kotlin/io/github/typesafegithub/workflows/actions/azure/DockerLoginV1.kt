@@ -24,6 +24,14 @@ import kotlin.collections.toTypedArray
  * Log in to Azure Container Registry (ACR) or any private docker container registry
  *
  * [Action on GitHub](https://github.com/Azure/docker-login)
+ *
+ * @param username Container registry username
+ * @param password Container registry password
+ * @param loginServer Container registry server url
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class DockerLoginV1 private constructor(
     /**
