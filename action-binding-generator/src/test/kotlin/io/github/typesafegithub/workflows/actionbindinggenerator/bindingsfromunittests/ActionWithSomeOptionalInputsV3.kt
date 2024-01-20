@@ -24,6 +24,16 @@ import kotlin.collections.toTypedArray
  * This is a test description that should be put in the KDoc comment for a class
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-some-optional-inputs)
+ *
+ * @param fooBar Required is default, default is set
+ * @param bazGoo Required is default, default is null
+ * @param zooDar Required is false, default is set
+ * @param cooPoo Required is false, default is default
+ * @param package Required is true, default is default
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionWithSomeOptionalInputsV3 private constructor(
     /**

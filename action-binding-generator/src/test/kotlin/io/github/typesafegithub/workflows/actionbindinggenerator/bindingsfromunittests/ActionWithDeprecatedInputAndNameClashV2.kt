@@ -24,6 +24,12 @@ import kotlin.collections.toTypedArray
  * Description
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-deprecated-input-and-name-clash)
+ *
+ * @param fooBar Foo bar - new
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
+ * the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor
+ * version, or a newer version that the binding doesn't yet know about
  */
 public data class ActionWithDeprecatedInputAndNameClashV2 private constructor(
     /**
