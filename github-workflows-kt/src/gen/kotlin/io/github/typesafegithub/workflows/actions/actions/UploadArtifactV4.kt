@@ -42,6 +42,9 @@ import kotlin.collections.toTypedArray
  * as GNU Gzip) - 9: Best compression Higher levels will result in better compression, but will take
  * longer to complete. For large files that are not easily compressed, a value of 0 is recommended for
  * significantly faster uploads.
+ * @param overwrite If true, an artifact with a matching name will be deleted before a new one is
+ * uploaded. If false, the action will fail if an artifact for the given name already exists. Does not
+ * fail if the artifact does not exist.
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -78,6 +81,12 @@ public data class UploadArtifactV4 private constructor(
      */
     public val compressionLevel: UploadArtifactV4.CompressionLevel? = null,
     /**
+     * If true, an artifact with a matching name will be deleted before a new one is uploaded. If
+     * false, the action will fail if an artifact for the given name already exists. Does not fail if
+     * the artifact does not exist.
+     */
+    public val overwrite: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -94,10 +103,11 @@ public data class UploadArtifactV4 private constructor(
         ifNoFilesFound: UploadArtifactV4.BehaviorIfNoFilesFound? = null,
         retentionDays: UploadArtifactV4.RetentionPeriod? = null,
         compressionLevel: UploadArtifactV4.CompressionLevel? = null,
+        overwrite: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(name=name, path=path, ifNoFilesFound=ifNoFilesFound, retentionDays=retentionDays,
-            compressionLevel=compressionLevel, _customInputs=_customInputs,
+            compressionLevel=compressionLevel, overwrite=overwrite, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -108,6 +118,7 @@ public data class UploadArtifactV4 private constructor(
             ifNoFilesFound?.let { "if-no-files-found" to it.stringValue },
             retentionDays?.let { "retention-days" to it.integerValue.toString() },
             compressionLevel?.let { "compression-level" to it.integerValue.toString() },
+            overwrite?.let { "overwrite" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
