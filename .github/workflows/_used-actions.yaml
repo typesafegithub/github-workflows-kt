@@ -17,4 +17,4 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - uses: gradle/gradle-build-action@v2
       - uses: JamesIves/github-pages-deploy-action@v4
-      - uses: peter-evans/create-issue-from-file@v4
+      - uses: peter-evans/create-issue-from-file@v5
