@@ -44,7 +44,7 @@ jobs:
         distribution: 'zulu'
     - id: 'step-2'
       name: 'Build'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'build'
     - id: 'step-3'
@@ -53,32 +53,32 @@ jobs:
         python-version: '3.8'
     - id: 'step-4'
       name: 'Publish '':shared-internal'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
     - id: 'step-5'
       name: 'Publish '':github-workflows-kt'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
     - id: 'step-6'
       name: 'Publish '':action-binding-generator'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
     - id: 'step-7'
       name: 'Wait until '':shared-internal'' present in Maven Central'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':shared-internal:waitUntilLibraryPresentInMavenCentral'
     - id: 'step-8'
       name: 'Wait until '':github-workflows-kt'' present in Maven Central'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':github-workflows-kt:waitUntilLibraryPresentInMavenCentral'
     - id: 'step-9'
       name: 'Wait until '':action-binding-generator'' present in Maven Central'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':action-binding-generator:waitUntilLibraryPresentInMavenCentral'
     - id: 'step-10'
@@ -88,7 +88,7 @@ jobs:
       run: 'mkdocs build --site-dir to-gh-pages'
     - id: 'step-12'
       name: 'Generate API docs'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':github-workflows-kt:dokkaHtml --no-configuration-cache'
     - id: 'step-13'

@@ -40,7 +40,7 @@ jobs:
         distribution: 'zulu'
     - id: 'step-2'
       name: 'Build'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'build'
   build-for-Windows2022:
@@ -58,7 +58,7 @@ jobs:
         distribution: 'zulu'
     - id: 'step-2'
       name: 'Build'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'build'
   publish-snapshot:
@@ -83,24 +83,24 @@ jobs:
         distribution: 'zulu'
     - id: 'step-2'
       name: 'Check if snapshot version is set'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'setIsSnapshotFlagInGithubOutput'
     - id: 'step-3'
       name: 'Publish '':shared-internal'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-4'
       name: 'Publish '':github-workflows-kt'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
     - id: 'step-5'
       name: 'Publish '':action-binding-generator'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
       if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
