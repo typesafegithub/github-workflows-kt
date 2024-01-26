@@ -41,7 +41,7 @@ jobs:
         distribution: 'zulu'
     - id: 'step-2'
       name: 'Generate action bindings'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':automation:code-generator:run'
     - id: 'step-3'
@@ -62,7 +62,7 @@ jobs:
         distribution: 'zulu'
     - id: 'step-2'
       name: 'Generate action bindings'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: ':automation:code-generator:run'
     - id: 'step-3'

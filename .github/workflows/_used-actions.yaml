@@ -15,6 +15,6 @@ jobs:
       - uses: actions/setup-java@v4
       - uses: actions/setup-python@v5
       - uses: gradle/wrapper-validation-action@v1
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3
       - uses: JamesIves/github-pages-deploy-action@v4
       - uses: peter-evans/create-issue-from-file@v5
