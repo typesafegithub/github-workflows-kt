@@ -57,6 +57,13 @@ import kotlin.collections.toTypedArray
  * on GitHub-hosted runners or self-hosted runners with a very similar image to the ones used by
  * GitHub runners.
  * The default is to detect this automatically based on the OS, OS version and architecture.
+ * @param windowsToolchain This input allows to override the default toolchain setup on Windows.
+ * The default setting ('default') installs a toolchain based on the selected Ruby.
+ * Specifically, it installs MSYS2 if not already there and installs mingw/ucrt/mswin build tools
+ * and packages.
+ * It also sets environment variables using 'ridk' or 'vcvars64.bat' based on the selected Ruby.
+ * At present, the only other setting than 'default' is 'none', which only adds Ruby to PATH.
+ * No build tools or packages are installed, nor are any ENV setting changed to activate them.
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -116,6 +123,16 @@ public data class SetupRubyV1 private constructor(
      */
     public val selfHosted: Boolean? = null,
     /**
+     * This input allows to override the default toolchain setup on Windows.
+     * The default setting ('default') installs a toolchain based on the selected Ruby.
+     * Specifically, it installs MSYS2 if not already there and installs mingw/ucrt/mswin build
+     * tools and packages.
+     * It also sets environment variables using 'ridk' or 'vcvars64.bat' based on the selected Ruby.
+     * At present, the only other setting than 'default' is 'none', which only adds Ruby to PATH.
+     * No build tools or packages are installed, nor are any ENV setting changed to activate them.
+     */
+    public val windowsToolchain: SetupRubyV1.WindowsToolchain? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -134,11 +151,13 @@ public data class SetupRubyV1 private constructor(
         workingDirectory: String? = null,
         cacheVersion: String? = null,
         selfHosted: Boolean? = null,
+        windowsToolchain: SetupRubyV1.WindowsToolchain? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(rubyVersion=rubyVersion, rubygems=rubygems, bundler=bundler, bundlerCache=bundlerCache,
             workingDirectory=workingDirectory, cacheVersion=cacheVersion, selfHosted=selfHosted,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            windowsToolchain=windowsToolchain, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -150,11 +169,24 @@ public data class SetupRubyV1 private constructor(
             workingDirectory?.let { "working-directory" to it },
             cacheVersion?.let { "cache-version" to it },
             selfHosted?.let { "self-hosted" to it.toString() },
+            windowsToolchain?.let { "windows-toolchain" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public sealed class WindowsToolchain(
+        public val stringValue: String,
+    ) {
+        public object Default : SetupRubyV1.WindowsToolchain("default")
+
+        public object None : SetupRubyV1.WindowsToolchain("none")
+
+        public class Custom(
+            customStringValue: String,
+        ) : SetupRubyV1.WindowsToolchain(customStringValue)
+    }
 
     public class Outputs(
         stepId: String,
