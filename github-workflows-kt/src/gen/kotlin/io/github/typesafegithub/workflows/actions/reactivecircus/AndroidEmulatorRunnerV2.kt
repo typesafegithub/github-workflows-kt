@@ -23,7 +23,7 @@ import kotlin.collections.toTypedArray
 /**
  * Action: Android Emulator Runner
  *
- * Installs, configures and starts an Android Emulator directly on macOS virtual machines.
+ * Installs, configures and starts an Android Emulator directly on hardware-accelerated runners.
  *
  * [Action on GitHub](https://github.com/ReactiveCircus/android-emulator-runner)
  *
