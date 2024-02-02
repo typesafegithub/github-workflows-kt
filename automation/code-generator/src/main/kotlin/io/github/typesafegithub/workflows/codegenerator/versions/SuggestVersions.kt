@@ -77,10 +77,13 @@ fun ActionCoords.suggestNewerVersion(
             .filter { it.isMajorVersion() }
             .sorted()
 
-    val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
-        .map { "$it ([diff](${this.buildGitHubComparisonUrl(maxExisting, it)}))" }
+    val newerMajorVersions =
+        majorVersions.filter { it > maxExisting }.sorted()
+            .map { "$it ([diff](${this.buildGitHubComparisonUrl(maxExisting, it)}))" }
     return "new version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
 }
 
-private fun ActionCoords.buildGitHubComparisonUrl(version1: Version, version2: Version): String =
-    "https://github.com/${this.owner}/${this.name}/compare/$version1...$version2#files_bucket"
+private fun ActionCoords.buildGitHubComparisonUrl(
+    version1: Version,
+    version2: Version,
+): String = "https://github.com/${this.owner}/${this.name}/compare/$version1...$version2#files_bucket"
