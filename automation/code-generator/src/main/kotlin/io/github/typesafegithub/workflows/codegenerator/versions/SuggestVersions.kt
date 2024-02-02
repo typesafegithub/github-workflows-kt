@@ -36,7 +36,7 @@ suspend fun main() {
 
     for ((coords, existingVersions) in actionsMap) {
         val available = coords.fetchAvailableVersions(githubAuthorization)
-        suggestNewerVersion(existingVersions, available)?.let { message ->
+        coords.suggestNewerVersion(existingVersions, available)?.let { message ->
             val outputForAction = "$message for ${coords.prettyPrint}"
             println(outputForAction)
             output += "$outputForAction\n"
@@ -60,7 +60,7 @@ fun List<GithubRef>.versions(): List<Version> =
         Version(version)
     }
 
-fun suggestNewerVersion(
+fun ActionCoords.suggestNewerVersion(
     existingVersions: List<Version>,
     availableVersions: List<Version>,
 ): String? {
@@ -78,5 +78,9 @@ fun suggestNewerVersion(
             .sorted()
 
     val newerMajorVersions = majorVersions.filter { it > maxExisting }.sorted()
+        .map { "$it ([diff](${this.buildGitHubComparisonUrl(maxExisting, it)}))" }
     return "new version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
 }
+
+private fun ActionCoords.buildGitHubComparisonUrl(version1: Version, version2: Version): String =
+    "https://github.com/${this.owner}/${this.name}/compare/$version1...$version2#files_bucket"
