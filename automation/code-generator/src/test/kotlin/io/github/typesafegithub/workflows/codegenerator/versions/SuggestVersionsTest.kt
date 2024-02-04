@@ -1,6 +1,10 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Output
 import io.github.typesafegithub.workflows.codegenerator.model.Version
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
@@ -55,24 +59,67 @@ class SuggestVersionsTest : FunSpec({
         }
 
         test("New major version") {
-            assertSoftly {
+            @Suppress("UNUSED_PARAMETER")
+            fun ActionCoords.fetchMeta(metadataRevision: MetadataRevision): Metadata {
+                assert(owner == "test-owner")
+                assert(name == "test-name")
+                return when (this.version) {
+                    "v1" ->
+                        Metadata(
+                            name = "Test",
+                            description = "Test",
+                            inputs =
+                                mapOf(
+                                    "some-input" to Input(),
+                                    "input-will-be-removed-in-v2" to Input(),
+                                ),
+                            outputs =
+                                mapOf(
+                                    "some-outputs" to Output(),
+                                    "outputs-will-be-removed-in-v2" to Output(),
+                                ),
+                        )
+                    "v2", "v3", "v9", "v12" ->
+                        Metadata(
+                            name = "Test",
+                            description = "Test",
+                            inputs =
+                                mapOf(
+                                    "some-input" to Input(),
+                                    "new-input-in-v2" to Input(),
+                                ),
+                            outputs =
+                                mapOf(
+                                    "some-outputs" to Output(),
+                                    "new-input-in-v2" to Output(),
+                                ),
+                        )
+                    else -> error("No mocked response for version ${this.version}")
+                }
+            }
 
+            assertSoftly {
                 testCoords.suggestNewerVersion(
                     "v1".versions(),
                     "v1, v1.1.1, v2, v2.0.1, v3, v3.1.1".versions(),
+                    fetchMeta = ActionCoords::fetchMeta,
                 ) shouldBe "new version(s) available: [" +
-                    "v2 ([diff](https://github.com/test-owner/test-name/compare/v1...v2#files_bucket)), " +
-                    "v3 ([diff](https://github.com/test-owner/test-name/compare/v1...v3#files_bucket))]"
+                    "v2 (added inputs: [new-input-in-v2], removed inputs: [input-will-be-removed-in-v2], " +
+                    "added outputs: [new-input-in-v2], removed outputs: [outputs-will-be-removed-in-v2]), " +
+                    "v3 (added inputs: [new-input-in-v2], removed inputs: [input-will-be-removed-in-v2], " +
+                    "added outputs: [new-input-in-v2], removed outputs: [outputs-will-be-removed-in-v2])]"
 
                 testCoords.suggestNewerVersion(
                     "v2".versions(),
                     "v1.1.1, v2, v2.0.1, v3, v3.1.1".versions(),
-                ) shouldBe "new version(s) available: [v3 ([diff](https://github.com/test-owner/test-name/compare/v2...v3#files_bucket))]"
+                    fetchMeta = ActionCoords::fetchMeta,
+                ) shouldBe "new version(s) available: [v3 (added inputs: [], removed inputs: [], added outputs: [], removed outputs: [])]"
 
                 testCoords.suggestNewerVersion(
                     "v9".versions(),
                     "v12, v12.0.1".versions(),
-                ) shouldBe "new version(s) available: [v12 ([diff](https://github.com/test-owner/test-name/compare/v9...v12#files_bucket))]"
+                    fetchMeta = ActionCoords::fetchMeta,
+                ) shouldBe "new version(s) available: [v12 (added inputs: [], removed inputs: [], added outputs: [], removed outputs: [])]"
             }
         }
     }

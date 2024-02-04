@@ -52,7 +52,7 @@ internal val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
 internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
-internal fun ActionCoords.fetchMetadata(
+public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
 ): Metadata {
