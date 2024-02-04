@@ -1,8 +1,13 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.isTopLevel
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
+import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
 import io.github.typesafegithub.workflows.codegenerator.model.Version
 import java.io.File
@@ -63,6 +68,7 @@ fun List<GithubRef>.versions(): List<Version> =
 fun ActionCoords.suggestNewerVersion(
     existingVersions: List<Version>,
     availableVersions: List<Version>,
+    fetchMeta: ActionCoords.(MetadataRevision) -> Metadata = { this.fetchMetadata(it) },
 ): String? {
     if (availableVersions.isEmpty()) {
         return null
@@ -77,13 +83,18 @@ fun ActionCoords.suggestNewerVersion(
             .filter { it.isMajorVersion() }
             .sorted()
 
+    val metadata by lazy { this.copy(version = maxExisting.version).fetchMeta(FromLockfile) }
+
     val newerMajorVersions =
         majorVersions.filter { it > maxExisting }.sorted()
-            .map { "$it ([diff](${this.buildGitHubComparisonUrl(maxExisting, it)}))" }
+            .map {
+                val thisMetadata = this@suggestNewerVersion.copy(version = it.version).fetchMeta(NewestForVersion)
+                val addedInputs = thisMetadata.inputs.keys - metadata.inputs.keys
+                val removedInputs = metadata.inputs.keys - thisMetadata.inputs.keys
+                val addedOutputs = thisMetadata.outputs.keys - metadata.outputs.keys
+                val removedOutputs = metadata.outputs.keys - thisMetadata.outputs.keys
+                "$it (added inputs: $addedInputs, removed inputs: $removedInputs, " +
+                    "added outputs: $addedOutputs, removed outputs: $removedOutputs)"
+            }
     return "new version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
 }
-
-private fun ActionCoords.buildGitHubComparisonUrl(
-    version1: Version,
-    version2: Version,
-): String = "https://github.com/${this.owner}/${this.name}/compare/$version1...$version2#files_bucket"
