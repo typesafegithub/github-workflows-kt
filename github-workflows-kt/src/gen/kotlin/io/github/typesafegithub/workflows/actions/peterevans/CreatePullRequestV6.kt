@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.peterevans
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -30,6 +28,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/peter-evans/create-pull-request)
  *
  * @param token GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
+ * @param gitToken The Personal Access Token (PAT) that the action will use for git operations.
+ * Defaults to the value of `token`.
  * @param path Relative path under $GITHUB_WORKSPACE to the repository. Defaults to
  * $GITHUB_WORKSPACE.
  * @param addPaths A comma or newline-separated list of file paths to commit. Paths should follow
@@ -41,8 +41,8 @@ import kotlin.collections.toTypedArray
  * Defaults to the user who triggered the workflow run.
  * @param signoff Add `Signed-off-by` line by the committer at the end of the commit log message.
  * @param branch The pull request branch name.
- * @param deleteBranch Delete the `branch` when closing pull requests, and when undeleted after
- * merging. Recommend `true`.
+ * @param deleteBranch Delete the `branch` if it doesn't have an active pull request associated with
+ * it.
  * @param branchSuffix The branch suffix type when using the alternative branching strategy.
  * @param base The pull request base branch. Defaults to the branch checked out in the workflow.
  * @param pushToFork A fork of the checked out parent repository to which the pull request branch
@@ -66,15 +66,16 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: CreatePullRequestV6",
-    replaceWith = ReplaceWith("CreatePullRequestV6"),
-)
-public data class CreatePullRequestV5 private constructor(
+public data class CreatePullRequestV6 private constructor(
     /**
      * GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
      */
     public val token: String? = null,
+    /**
+     * The Personal Access Token (PAT) that the action will use for git operations. Defaults to the
+     * value of `token`.
+     */
+    public val gitToken: String? = null,
     /**
      * Relative path under $GITHUB_WORKSPACE to the repository. Defaults to $GITHUB_WORKSPACE.
      */
@@ -107,8 +108,7 @@ public data class CreatePullRequestV5 private constructor(
      */
     public val branch: String? = null,
     /**
-     * Delete the `branch` when closing pull requests, and when undeleted after merging. Recommend
-     * `true`.
+     * Delete the `branch` if it doesn't have an active pull request associated with it.
      */
     public val deleteBranch: Boolean? = null,
     /**
@@ -172,11 +172,12 @@ public data class CreatePullRequestV5 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<CreatePullRequestV5.Outputs>("peter-evans", "create-pull-request", _customVersion
-        ?: "v5") {
+) : RegularAction<CreatePullRequestV6.Outputs>("peter-evans", "create-pull-request", _customVersion
+        ?: "v6") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         token: String? = null,
+        gitToken: String? = null,
         path: String? = null,
         addPaths: List<String>? = null,
         commitMessage: String? = null,
@@ -199,17 +200,19 @@ public data class CreatePullRequestV5 private constructor(
         draft: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(token=token, path=path, addPaths=addPaths, commitMessage=commitMessage,
-            committer=committer, author=author, signoff=signoff, branch=branch,
-            deleteBranch=deleteBranch, branchSuffix=branchSuffix, base=base, pushToFork=pushToFork,
-            title=title, body=body, bodyPath=bodyPath, labels=labels, assignees=assignees,
-            reviewers=reviewers, teamReviewers=teamReviewers, milestone=milestone, draft=draft,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(token=token, gitToken=gitToken, path=path, addPaths=addPaths,
+            commitMessage=commitMessage, committer=committer, author=author, signoff=signoff,
+            branch=branch, deleteBranch=deleteBranch, branchSuffix=branchSuffix, base=base,
+            pushToFork=pushToFork, title=title, body=body, bodyPath=bodyPath, labels=labels,
+            assignees=assignees, reviewers=reviewers, teamReviewers=teamReviewers,
+            milestone=milestone, draft=draft, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             token?.let { "token" to it },
+            gitToken?.let { "git-token" to it },
             path?.let { "path" to it },
             addPaths?.let { "add-paths" to it.joinToString("\n") },
             commitMessage?.let { "commit-message" to it },
