@@ -65,8 +65,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: CreatePullRequestV5",
-    replaceWith = ReplaceWith("CreatePullRequestV5"),
+    message = "This action has a newer major version: CreatePullRequestV6",
+    replaceWith = ReplaceWith("CreatePullRequestV6"),
 )
 public data class CreatePullRequestV4 private constructor(
     /**
