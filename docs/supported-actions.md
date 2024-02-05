@@ -86,7 +86,7 @@ Click on a version to see the binding's code.
 * gradle-update
     * [update-gradle-wrapper-action](https://github.com/gradle-update/update-gradle-wrapper-action) - v1: [`UpdateGradleWrapperActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradleupdate/UpdateGradleWrapperActionV1.kt)
 * gradle
-    * [gradle-build-action](https://github.com/gradle/gradle-build-action) - v2: [`GradleBuildActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV2.kt)
+    * [gradle-build-action](https://github.com/gradle/gradle-build-action) - v2: [`GradleBuildActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV2.kt), v3: [`GradleBuildActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV3.kt)
     * [wrapper-validation-action](https://github.com/gradle/wrapper-validation-action) - v1: [`WrapperValidationActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV1.kt)
 * JamesIves
     * [github-pages-deploy-action](https://github.com/JamesIves/github-pages-deploy-action) - v4: [`GithubPagesDeployActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/jamesives/GithubPagesDeployActionV4.kt)
@@ -140,6 +140,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 84
-* counting each version separately: 149
+* counting each version separately: 150
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
