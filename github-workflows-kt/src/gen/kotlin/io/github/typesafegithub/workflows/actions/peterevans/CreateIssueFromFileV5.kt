@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.peterevans
@@ -12,7 +11,6 @@ package io.github.typesafegithub.workflows.actions.peterevans
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -41,11 +39,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: CreateIssueFromFileV5",
-    replaceWith = ReplaceWith("CreateIssueFromFileV5"),
-)
-public data class CreateIssueFromFileV4 private constructor(
+public data class CreateIssueFromFileV5 private constructor(
     /**
      * The GitHub authentication token
      */
@@ -83,8 +77,8 @@ public data class CreateIssueFromFileV4 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<CreateIssueFromFileV4.Outputs>("peter-evans", "create-issue-from-file",
-        _customVersion ?: "v4") {
+) : RegularAction<CreateIssueFromFileV5.Outputs>("peter-evans", "create-issue-from-file",
+        _customVersion ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         token: String? = null,
