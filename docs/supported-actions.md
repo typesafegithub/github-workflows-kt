@@ -47,7 +47,7 @@ Click on a version to see the binding's code.
 * bahmutov
     * [npm-install](https://github.com/bahmutov/npm-install) - v1: [`NpmInstallV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/bahmutov/NpmInstallV1.kt)
 * Borales
-    * [actions-yarn](https://github.com/Borales/actions-yarn) - v3: [`ActionsYarnV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/borales/ActionsYarnV3.kt), v4: [`ActionsYarnV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/borales/ActionsYarnV4.kt)
+    * [actions-yarn](https://github.com/Borales/actions-yarn) - v3: [`ActionsYarnV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/borales/ActionsYarnV3.kt), v4: [`ActionsYarnV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/borales/ActionsYarnV4.kt), v5: [`ActionsYarnV5`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/borales/ActionsYarnV5.kt)
 * burrunan
     * [gradle-cache-action](https://github.com/burrunan/gradle-cache-action) - v1 ✅: [`GradleCacheActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/burrunan/GradleCacheActionV1.kt)
 * c2corg
@@ -140,6 +140,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 84
-* counting each version separately: 150
+* counting each version separately: 151
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18

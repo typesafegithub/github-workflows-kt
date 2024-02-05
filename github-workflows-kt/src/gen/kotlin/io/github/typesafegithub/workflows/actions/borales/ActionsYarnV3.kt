@@ -36,8 +36,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: ActionsYarnV4",
-    replaceWith = ReplaceWith("ActionsYarnV4"),
+    message = "This action has a newer major version: ActionsYarnV5",
+    replaceWith = ReplaceWith("ActionsYarnV5"),
 )
 public data class ActionsYarnV3 private constructor(
     /**
