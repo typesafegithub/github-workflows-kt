@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.microsoft
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -38,11 +36,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupMsbuildV2",
-    replaceWith = ReplaceWith("SetupMsbuildV2"),
-)
-public data class SetupMsbuildV1 private constructor(
+public data class SetupMsbuildV2 private constructor(
     /**
      * Folder location of where vswhere.exe is located if a self-hosted agent
      */
@@ -59,7 +53,7 @@ public data class SetupMsbuildV1 private constructor(
      * The preferred processor architecture of MSBuild. Can be either "x86", "x64", or "arm64".
      * "x64" is only available from Visual Studio version 17.0 and later.
      */
-    public val msbuildArchitecture: SetupMsbuildV1.Architecture? = null,
+    public val msbuildArchitecture: SetupMsbuildV2.Architecture? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -69,13 +63,13 @@ public data class SetupMsbuildV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SetupMsbuildV1.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v1") {
+) : RegularAction<SetupMsbuildV2.Outputs>("microsoft", "setup-msbuild", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         vswherePath: String? = null,
         vsVersion: String? = null,
         vsPrerelease: Boolean? = null,
-        msbuildArchitecture: SetupMsbuildV1.Architecture? = null,
+        msbuildArchitecture: SetupMsbuildV2.Architecture? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(vswherePath=vswherePath, vsVersion=vsVersion, vsPrerelease=vsPrerelease,
@@ -98,15 +92,15 @@ public data class SetupMsbuildV1 private constructor(
     public sealed class Architecture(
         public val stringValue: String,
     ) {
-        public object X86 : SetupMsbuildV1.Architecture("x86")
+        public object X86 : SetupMsbuildV2.Architecture("x86")
 
-        public object X64 : SetupMsbuildV1.Architecture("x64")
+        public object X64 : SetupMsbuildV2.Architecture("x64")
 
-        public object Arm64 : SetupMsbuildV1.Architecture("arm64")
+        public object Arm64 : SetupMsbuildV2.Architecture("arm64")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupMsbuildV1.Architecture(customStringValue)
+        ) : SetupMsbuildV2.Architecture(customStringValue)
     }
 
     public class Outputs(
