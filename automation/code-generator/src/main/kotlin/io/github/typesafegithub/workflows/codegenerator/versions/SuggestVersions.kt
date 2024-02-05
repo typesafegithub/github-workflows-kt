@@ -42,7 +42,7 @@ suspend fun main() {
     for ((coords, existingVersions) in actionsMap) {
         val available = coords.fetchAvailableVersions(githubAuthorization)
         coords.suggestNewerVersion(existingVersions, available)?.let { message ->
-            val outputForAction = "$message for ${coords.prettyPrint}"
+            val outputForAction = "# ${coords.prettyPrint}\n$message"
             println(outputForAction)
             output += "$outputForAction\n"
         }
@@ -93,8 +93,18 @@ fun ActionCoords.suggestNewerVersion(
                 val removedInputs = metadata.inputs.keys - thisMetadata.inputs.keys
                 val addedOutputs = thisMetadata.outputs.keys - metadata.outputs.keys
                 val removedOutputs = metadata.outputs.keys - thisMetadata.outputs.keys
-                "$it (added inputs: $addedInputs, removed inputs: $removedInputs, " +
-                    "added outputs: $addedOutputs, removed outputs: $removedOutputs)"
+                """
+                * $it ([diff](${this.buildGitHubComparisonUrl(maxExisting, it)}))
+                  * added inputs: $addedInputs
+                  * removed inputs: $removedInputs
+                  * added outputs: $addedOutputs
+                  * removed outputs: $removedOutputs
+                """.trimIndent()
             }
-    return "new version(s) available: $newerMajorVersions".takeIf { newerMajorVersions.isNotEmpty() }
+    return newerMajorVersions.joinToString("\n").takeIf { newerMajorVersions.isNotEmpty() }
 }
+
+private fun ActionCoords.buildGitHubComparisonUrl(
+    version1: Version,
+    version2: Version,
+): String = "https://github.com/${this.owner}/${this.name}/compare/$version1...$version2#files_bucket"
