@@ -101,7 +101,7 @@ Click on a version to see the binding's code.
 * mi-kas
     * [kover-report](https://github.com/mi-kas/kover-report) - v1 ✅: [`KoverReportV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/mikas/KoverReportV1.kt)
 * microsoft
-    * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1 ✅: [`SetupMsbuildV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/microsoft/SetupMsbuildV1.kt)
+    * [setup-msbuild](https://github.com/microsoft/setup-msbuild) - v1 ✅: [`SetupMsbuildV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/microsoft/SetupMsbuildV1.kt), v2 ✅: [`SetupMsbuildV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/microsoft/SetupMsbuildV2.kt)
 * nexus-actions
     * [create-nexus-staging-repo](https://github.com/nexus-actions/create-nexus-staging-repo) - v1 ✅: [`CreateNexusStagingRepoV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nexusactions/CreateNexusStagingRepoV1.kt)
     * [drop-nexus-staging-repo](https://github.com/nexus-actions/drop-nexus-staging-repo) - v1 ✅: [`DropNexusStagingRepoV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nexusactions/DropNexusStagingRepoV1.kt)
@@ -140,6 +140,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 84
-* counting each version separately: 153
+* counting each version separately: 154
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
