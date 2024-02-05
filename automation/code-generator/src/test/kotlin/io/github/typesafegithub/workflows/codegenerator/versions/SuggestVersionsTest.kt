@@ -103,23 +103,45 @@ class SuggestVersionsTest : FunSpec({
                     "v1".versions(),
                     "v1, v1.1.1, v2, v2.0.1, v3, v3.1.1".versions(),
                     fetchMeta = ActionCoords::fetchMeta,
-                ) shouldBe "new version(s) available: [" +
-                    "v2 (added inputs: [new-input-in-v2], removed inputs: [input-will-be-removed-in-v2], " +
-                    "added outputs: [new-input-in-v2], removed outputs: [outputs-will-be-removed-in-v2]), " +
-                    "v3 (added inputs: [new-input-in-v2], removed inputs: [input-will-be-removed-in-v2], " +
-                    "added outputs: [new-input-in-v2], removed outputs: [outputs-will-be-removed-in-v2])]"
+                ) shouldBe
+                    """
+                    * v2 ([diff](https://github.com/test-owner/test-name/compare/v1...v2#files_bucket))
+                      * added inputs: [new-input-in-v2]
+                      * removed inputs: [input-will-be-removed-in-v2]
+                      * added outputs: [new-input-in-v2]
+                      * removed outputs: [outputs-will-be-removed-in-v2]
+                    * v3 ([diff](https://github.com/test-owner/test-name/compare/v1...v3#files_bucket))
+                      * added inputs: [new-input-in-v2]
+                      * removed inputs: [input-will-be-removed-in-v2]
+                      * added outputs: [new-input-in-v2]
+                      * removed outputs: [outputs-will-be-removed-in-v2]
+                    """.trimIndent()
 
                 testCoords.suggestNewerVersion(
                     "v2".versions(),
                     "v1.1.1, v2, v2.0.1, v3, v3.1.1".versions(),
                     fetchMeta = ActionCoords::fetchMeta,
-                ) shouldBe "new version(s) available: [v3 (added inputs: [], removed inputs: [], added outputs: [], removed outputs: [])]"
+                ) shouldBe
+                    """
+                    * v3 ([diff](https://github.com/test-owner/test-name/compare/v2...v3#files_bucket))
+                      * added inputs: []
+                      * removed inputs: []
+                      * added outputs: []
+                      * removed outputs: []
+                    """.trimIndent()
 
                 testCoords.suggestNewerVersion(
                     "v9".versions(),
                     "v12, v12.0.1".versions(),
                     fetchMeta = ActionCoords::fetchMeta,
-                ) shouldBe "new version(s) available: [v12 (added inputs: [], removed inputs: [], added outputs: [], removed outputs: [])]"
+                ) shouldBe
+                    """
+                    * v12 ([diff](https://github.com/test-owner/test-name/compare/v9...v12#files_bucket))
+                      * added inputs: []
+                      * removed inputs: []
+                      * added outputs: []
+                      * removed outputs: []
+                    """.trimIndent()
             }
         }
     }
