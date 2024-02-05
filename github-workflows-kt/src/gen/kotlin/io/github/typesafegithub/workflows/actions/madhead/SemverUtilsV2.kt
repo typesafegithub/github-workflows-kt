@@ -39,8 +39,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: SemverUtilsV3",
-    replaceWith = ReplaceWith("SemverUtilsV3"),
+    message = "This action has a newer major version: SemverUtilsV4",
+    replaceWith = ReplaceWith("SemverUtilsV4"),
 )
 public data class SemverUtilsV2 private constructor(
     /**

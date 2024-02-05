@@ -97,7 +97,7 @@ Click on a version to see the binding's code.
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1 ✅: [`CheckGradleVersionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/CheckGradleVersionV1.kt)
     * [intellij-http-client-action](https://github.com/madhead/intellij-http-client-action) - v0 ✅: [`IntellijHttpClientActionV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/IntellijHttpClientActionV0.kt), v231 ✅: [`IntellijHttpClientActionV231`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/IntellijHttpClientActionV231.kt), v233 ✅: [`IntellijHttpClientActionV233`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/IntellijHttpClientActionV233.kt)
-    * [semver-utils](https://github.com/madhead/semver-utils) - v2 ✅: [`SemverUtilsV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/SemverUtilsV2.kt), v3 ✅: [`SemverUtilsV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/SemverUtilsV3.kt)
+    * [semver-utils](https://github.com/madhead/semver-utils) - v2 ✅: [`SemverUtilsV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/SemverUtilsV2.kt), v3 ✅: [`SemverUtilsV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/SemverUtilsV3.kt), v4 ✅: [`SemverUtilsV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/SemverUtilsV4.kt)
 * mi-kas
     * [kover-report](https://github.com/mi-kas/kover-report) - v1 ✅: [`KoverReportV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/mikas/KoverReportV1.kt)
 * microsoft
@@ -140,6 +140,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 84
-* counting each version separately: 152
+* counting each version separately: 153
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18

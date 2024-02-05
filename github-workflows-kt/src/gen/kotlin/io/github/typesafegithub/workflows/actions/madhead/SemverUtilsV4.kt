@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.madhead
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -40,11 +38,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: SemverUtilsV4",
-    replaceWith = ReplaceWith("SemverUtilsV4"),
-)
-public data class SemverUtilsV3 private constructor(
+public data class SemverUtilsV4 private constructor(
     /**
      * A version to process
      */
@@ -79,7 +73,7 @@ public data class SemverUtilsV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SemverUtilsV3.Outputs>("madhead", "semver-utils", _customVersion ?: "v3") {
+) : RegularAction<SemverUtilsV4.Outputs>("madhead", "semver-utils", _customVersion ?: "v4") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         version: String,
