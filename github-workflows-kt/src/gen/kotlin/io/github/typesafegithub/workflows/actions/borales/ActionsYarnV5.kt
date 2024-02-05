@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.borales
@@ -12,7 +11,6 @@ package io.github.typesafegithub.workflows.actions.borales
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -34,11 +32,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: ActionsYarnV5",
-    replaceWith = ReplaceWith("ActionsYarnV5"),
-)
-public data class ActionsYarnV4 private constructor(
+public data class ActionsYarnV5 private constructor(
     /**
      * Yarn command
      */
@@ -56,7 +50,7 @@ public data class ActionsYarnV4 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v4") {
+) : RegularAction<Action.Outputs>("Borales", "actions-yarn", _customVersion ?: "v5") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         cmd: String,
