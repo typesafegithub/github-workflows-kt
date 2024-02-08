@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.googlegithubactions
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -217,16 +219,19 @@ public data class AuthV2 private constructor(
      * for automated pipelines that may execute before IAM permissions are fully
      * propogated.
      */
+    @Deprecated("This field is no longer used and will be removed in a future release.")
     public val retries: Int? = null,
     /**
      * Delay time before trying another authentication attempt. This is
      * implemented using a fibonacci backoff method (e.g. 1-1-2-3-5). The default
      * value is 250 milliseconds.
      */
+    @Deprecated("This field is no longer used and will be removed in a future release.")
     public val backoff: Int? = null,
     /**
      * Limits the retry backoff to the specified value.
      */
+    @Deprecated("This field is no longer used and will be removed in a future release.")
     public val backoffLimit: Int? = null,
     /**
      * The audience (aud) for the generated Google Cloud ID Token. This is only
