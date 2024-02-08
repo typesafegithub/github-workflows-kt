@@ -93,7 +93,9 @@ public data class WrapperValidationActionV2 private constructor(
         stepId: String,
     ) : Action.Outputs(stepId) {
         /**
-         * The path of the Gradle Wrapper(s) JAR that failed validation.
+         * The path of the Gradle Wrapper(s) JAR that failed validation. Path is a
+         * platform-dependent relative path to git repository root. Multiple paths are separated by a |
+         * character.
          */
         public val failedWrapper: String = "steps.$stepId.outputs.failed-wrapper"
     }
