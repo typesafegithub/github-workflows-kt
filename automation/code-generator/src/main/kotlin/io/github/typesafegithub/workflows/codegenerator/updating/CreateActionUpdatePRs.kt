@@ -18,7 +18,9 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import java.nio.file.Path
+import kotlin.io.path.Path
 import kotlin.io.path.pathString
+import kotlin.io.path.readText
 
 suspend fun main() {
     val githubToken = getGithubToken()
@@ -35,7 +37,8 @@ suspend fun main() {
                 actionBindingRequest.actionCoords.fetchCommitHash(githubToken)
                     ?: error("There was a problem fetching commit hash for ${actionBindingRequest.actionCoords}")
 
-            val (codeCurrent, path) = actionBindingRequest.generateBindingForCommit(currentCommitHash)
+            val (_, path) = actionBindingRequest.generateBindingForCommit(currentCommitHash)
+            val codeCurrent = Path(path).readText()
             val (codeNewest, _) = actionBindingRequest.generateBindingForCommit(newestCommitHash)
 
             if (codeCurrent != codeNewest) {
