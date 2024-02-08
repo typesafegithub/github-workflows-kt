@@ -172,7 +172,7 @@ public data class GradleBuildActionV3 private constructor(
     /**
      * Indicate that you agree to the Build Scan® terms of service. This input value must be "yes".
      */
-    public val buildScanTermsOfServiceAgree: Boolean? = null,
+    public val buildScanTermsOfServiceAgree: String? = null,
     /**
      * Gradle command line arguments (supports multi-line input)
      */
@@ -228,7 +228,7 @@ public data class GradleBuildActionV3 private constructor(
         artifactRetentionDays: Int? = null,
         buildScanPublish: Boolean? = null,
         buildScanTermsOfServiceUrl: String? = null,
-        buildScanTermsOfServiceAgree: Boolean? = null,
+        buildScanTermsOfServiceAgree: String? = null,
         arguments: String? = null,
         buildRootDirectory: String? = null,
         generateJobSummary: Boolean? = null,
@@ -272,8 +272,7 @@ public data class GradleBuildActionV3 private constructor(
             artifactRetentionDays?.let { "artifact-retention-days" to it.toString() },
             buildScanPublish?.let { "build-scan-publish" to it.toString() },
             buildScanTermsOfServiceUrl?.let { "build-scan-terms-of-service-url" to it },
-            buildScanTermsOfServiceAgree?.let { "build-scan-terms-of-service-agree" to it.toString()
-                    },
+            buildScanTermsOfServiceAgree?.let { "build-scan-terms-of-service-agree" to it },
             arguments?.let { "arguments" to it },
             buildRootDirectory?.let { "build-root-directory" to it },
             generateJobSummary?.let { "generate-job-summary" to it.toString() },
