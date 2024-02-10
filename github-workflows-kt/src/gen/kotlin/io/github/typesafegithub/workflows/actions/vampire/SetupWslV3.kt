@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.vampire
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -86,11 +84,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupWslV3",
-    replaceWith = ReplaceWith("SetupWslV3"),
-)
-public data class SetupWslV1 private constructor(
+public data class SetupWslV3 private constructor(
     /**
      * The WSL distribution to install, update, or configure.
      * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
@@ -99,7 +93,7 @@ public data class SetupWslV1 private constructor(
      * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
      * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
      */
-    public val distribution: SetupWslV1.Distribution? = null,
+    public val distribution: SetupWslV3.Distribution? = null,
     /**
      * Whether to use the cache for the downloaded distribution installer.
      * This saves time in subsequent runs, jobs, or workflows but consumes space from
@@ -174,10 +168,10 @@ public data class SetupWslV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SetupWslV1.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v1") {
+) : RegularAction<SetupWslV3.Outputs>("Vampire", "setup-wsl", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        distribution: SetupWslV1.Distribution? = null,
+        distribution: SetupWslV3.Distribution? = null,
         useCache: Boolean? = null,
         wslConf: String? = null,
         setAsDefault: Boolean? = null,
@@ -212,25 +206,25 @@ public data class SetupWslV1 private constructor(
     public sealed class Distribution(
         public val stringValue: String,
     ) {
-        public object Alpine : SetupWslV1.Distribution("Alpine")
+        public object Alpine : SetupWslV3.Distribution("Alpine")
 
-        public object Debian : SetupWslV1.Distribution("Debian")
+        public object Debian : SetupWslV3.Distribution("Debian")
 
-        public object KaliLinux : SetupWslV1.Distribution("kali-linux")
+        public object KaliLinux : SetupWslV3.Distribution("kali-linux")
 
-        public object OpenSUSELeap152 : SetupWslV1.Distribution("openSUSE-Leap-15.2")
+        public object OpenSUSELeap152 : SetupWslV3.Distribution("openSUSE-Leap-15.2")
 
-        public object Ubuntu2204 : SetupWslV1.Distribution("Ubuntu-22.04")
+        public object Ubuntu2204 : SetupWslV3.Distribution("Ubuntu-22.04")
 
-        public object Ubuntu2004 : SetupWslV1.Distribution("Ubuntu-20.04")
+        public object Ubuntu2004 : SetupWslV3.Distribution("Ubuntu-20.04")
 
-        public object Ubuntu1804 : SetupWslV1.Distribution("Ubuntu-18.04")
+        public object Ubuntu1804 : SetupWslV3.Distribution("Ubuntu-18.04")
 
-        public object Ubuntu1604 : SetupWslV1.Distribution("Ubuntu-16.04")
+        public object Ubuntu1604 : SetupWslV3.Distribution("Ubuntu-16.04")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupWslV1.Distribution(customStringValue)
+        ) : SetupWslV3.Distribution(customStringValue)
     }
 
     public class Outputs(

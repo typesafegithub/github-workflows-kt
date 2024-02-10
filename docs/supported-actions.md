@@ -134,13 +134,13 @@ Click on a version to see the binding's code.
 * typesafegithub
     * [github-actions-typing](https://github.com/typesafegithub/github-actions-typing) - v0 ✅: [`GithubActionsTypingV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/typesafegithub/GithubActionsTypingV0.kt), v1 ✅: [`GithubActionsTypingV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/typesafegithub/GithubActionsTypingV1.kt)
 * Vampire
-    * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1 ✅: [`SetupWslV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/vampire/SetupWslV1.kt), v2 ✅: [`SetupWslV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/vampire/SetupWslV2.kt)
+    * [setup-wsl](https://github.com/Vampire/setup-wsl) - v1 ✅: [`SetupWslV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/vampire/SetupWslV1.kt), v2 ✅: [`SetupWslV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/vampire/SetupWslV2.kt), v3 ✅: [`SetupWslV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/vampire/SetupWslV3.kt)
 
 ## Statistics
 
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 157
+* counting each version separately: 158
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
