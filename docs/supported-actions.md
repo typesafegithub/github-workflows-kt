@@ -86,6 +86,7 @@ Click on a version to see the binding's code.
 * gradle-update
     * [update-gradle-wrapper-action](https://github.com/gradle-update/update-gradle-wrapper-action) - v1: [`UpdateGradleWrapperActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradleupdate/UpdateGradleWrapperActionV1.kt)
 * gradle
+    * [actions/setup-gradle](https://github.com/gradle/actions/tree/v3/setup-gradle) - v3: [`ActionsSetupGradleV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/ActionsSetupGradleV3.kt)
     * [gradle-build-action](https://github.com/gradle/gradle-build-action) - v2: [`GradleBuildActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV2.kt), v3: [`GradleBuildActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV3.kt)
     * [wrapper-validation-action](https://github.com/gradle/wrapper-validation-action) - v1: [`WrapperValidationActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV1.kt), v2: [`WrapperValidationActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV2.kt)
 * JamesIves
@@ -139,7 +140,7 @@ Click on a version to see the binding's code.
 
 Number of bindings available:
 
-* counting by actions: 84
-* counting each version separately: 156
+* counting by actions: 85
+* counting each version separately: 157
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
