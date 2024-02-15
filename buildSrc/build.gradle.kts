@@ -14,7 +14,7 @@ dependencies {
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.5")
     implementation("org.jmailen.gradle:kotlinter-gradle:4.2.0")
 
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.7.3"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
     implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
 }
 
