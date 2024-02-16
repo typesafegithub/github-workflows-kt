@@ -20,7 +20,7 @@ version = rootProject.version
 
 dependencies {
     implementation("org.snakeyaml:snakeyaml-engine:2.7")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3")
     implementation(projects.sharedInternal)
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
