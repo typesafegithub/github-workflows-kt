@@ -23,7 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3")
     implementation(projects.sharedInternal)
 
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     testImplementation("dev.zacsweers.kctfork:core:0.4.0")
     testImplementation("com.lemonappdev:konsist:0.13.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
