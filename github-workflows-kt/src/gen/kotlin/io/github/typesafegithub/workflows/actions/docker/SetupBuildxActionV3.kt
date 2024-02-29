@@ -39,6 +39,7 @@ import kotlin.collections.toTypedArray
  * @param config BuildKit config file
  * @param configInline Inline BuildKit config
  * @param append Append additional nodes to the builder
+ * @param cacheBinary Cache buildx binary to GitHub Actions cache backend
  * @param cleanup Cleanup temp files and remove builder at the end of a job
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
@@ -91,6 +92,10 @@ public data class SetupBuildxActionV3 private constructor(
      */
     public val append: String? = null,
     /**
+     * Cache buildx binary to GitHub Actions cache backend
+     */
+    public val cacheBinary: Boolean? = null,
+    /**
      * Cleanup temp files and remove builder at the end of a job
      */
     public val cleanup: Boolean? = null,
@@ -118,13 +123,14 @@ public data class SetupBuildxActionV3 private constructor(
         config: String? = null,
         configInline: String? = null,
         append: String? = null,
+        cacheBinary: Boolean? = null,
         cleanup: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(version=version, driver=driver, driverOpts=driverOpts, buildkitdFlags=buildkitdFlags,
             install=install, use=use, endpoint=endpoint, platforms=platforms, config=config,
-            configInline=configInline, append=append, cleanup=cleanup, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            configInline=configInline, append=append, cacheBinary=cacheBinary, cleanup=cleanup,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -140,6 +146,7 @@ public data class SetupBuildxActionV3 private constructor(
             config?.let { "config" to it },
             configInline?.let { "config-inline" to it },
             append?.let { "append" to it },
+            cacheBinary?.let { "cache-binary" to it.toString() },
             cleanup?.let { "cleanup" to it.toString() },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
