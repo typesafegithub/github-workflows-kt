@@ -28,15 +28,15 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/codecov/codecov-action)
  *
- * @param token Repository upload token - get it from codecov.io. Required only for private
- * repositories
+ * @param token Repository Codecov token. Used to authorize report uploads
  * @param codecovYmlPath Specify the path to the Codecov YML
  * @param commitParent Override to specify the parent commit SHA
  * @param directory Directory to search for coverage reports.
- * @param disableSearch Disable search for coverage files. This is helpful when specifying what
- * files you want to upload with the --file option.
  * @param disableFileFixes Disable file fixes to ignore common lines from coverage (e.g. blank lines
  * or empty brackets)
+ * @param disableSearch Disable search for coverage files. This is helpful when specifying what
+ * files you want to upload with the --file option.
+ * @param disableSafeDirectory Disable setting safe directory. Set to true to disable.
  * @param dryRun Don't upload files to Codecov
  * @param envVars Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
  * @param exclude Folders to exclude from search
@@ -45,6 +45,7 @@ import kotlin.collections.toTypedArray
  * @param file Path to coverage file to upload
  * @param files Comma-separated list of files to upload
  * @param flags Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
+ * @param gitService Override the git_service (e.g. github_enterprise)
  * @param handleNoReportsFound Raise no exceptions when no coverage reports found
  * @param jobCode The job code
  * @param name User defined upload name. Visible in Codecov UI
@@ -72,7 +73,7 @@ import kotlin.collections.toTypedArray
  */
 public data class CodecovActionV4 private constructor(
     /**
-     * Repository upload token - get it from codecov.io. Required only for private repositories
+     * Repository Codecov token. Used to authorize report uploads
      */
     public val token: String? = null,
     /**
@@ -88,14 +89,18 @@ public data class CodecovActionV4 private constructor(
      */
     public val directory: String? = null,
     /**
+     * Disable file fixes to ignore common lines from coverage (e.g. blank lines or empty brackets)
+     */
+    public val disableFileFixes: Boolean? = null,
+    /**
      * Disable search for coverage files. This is helpful when specifying what files you want to
      * upload with the --file option.
      */
     public val disableSearch: Boolean? = null,
     /**
-     * Disable file fixes to ignore common lines from coverage (e.g. blank lines or empty brackets)
+     * Disable setting safe directory. Set to true to disable.
      */
-    public val disableFileFixes: Boolean? = null,
+    public val disableSafeDirectory: String? = null,
     /**
      * Don't upload files to Codecov
      */
@@ -124,6 +129,10 @@ public data class CodecovActionV4 private constructor(
      * Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
      */
     public val flags: List<String>? = null,
+    /**
+     * Override the git_service (e.g. github_enterprise)
+     */
+    public val gitService: String? = null,
     /**
      * Raise no exceptions when no coverage reports found
      */
@@ -216,8 +225,9 @@ public data class CodecovActionV4 private constructor(
         codecovYmlPath: String? = null,
         commitParent: String? = null,
         directory: String? = null,
-        disableSearch: Boolean? = null,
         disableFileFixes: Boolean? = null,
+        disableSearch: Boolean? = null,
+        disableSafeDirectory: String? = null,
         dryRun: Boolean? = null,
         envVars: List<String>? = null,
         exclude: List<String>? = null,
@@ -225,6 +235,7 @@ public data class CodecovActionV4 private constructor(
         `file`: String? = null,
         files: List<String>? = null,
         flags: List<String>? = null,
+        gitService: String? = null,
         handleNoReportsFound: Boolean? = null,
         jobCode: String? = null,
         name: String? = null,
@@ -247,15 +258,15 @@ public data class CodecovActionV4 private constructor(
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(token=token, codecovYmlPath=codecovYmlPath, commitParent=commitParent,
-            directory=directory, disableSearch=disableSearch, disableFileFixes=disableFileFixes,
-            dryRun=dryRun, envVars=envVars, exclude=exclude, failCiIfError=failCiIfError,
-            `file`=`file`, files=files, flags=flags, handleNoReportsFound=handleNoReportsFound,
-            jobCode=jobCode, name=name, os=os, overrideBranch=overrideBranch,
-            overrideBuild=overrideBuild, overrideBuildUrl=overrideBuildUrl,
-            overrideCommit=overrideCommit, overridePr=overridePr, plugin=plugin, plugins=plugins,
-            reportCode=reportCode, rootDir=rootDir, slug=slug, url=url,
-            useLegacyUploadEndpoint=useLegacyUploadEndpoint, verbose=verbose, version=version,
-            workingDirectory=workingDirectory, _customInputs=_customInputs,
+            directory=directory, disableFileFixes=disableFileFixes, disableSearch=disableSearch,
+            disableSafeDirectory=disableSafeDirectory, dryRun=dryRun, envVars=envVars,
+            exclude=exclude, failCiIfError=failCiIfError, `file`=`file`, files=files, flags=flags,
+            gitService=gitService, handleNoReportsFound=handleNoReportsFound, jobCode=jobCode,
+            name=name, os=os, overrideBranch=overrideBranch, overrideBuild=overrideBuild,
+            overrideBuildUrl=overrideBuildUrl, overrideCommit=overrideCommit, overridePr=overridePr,
+            plugin=plugin, plugins=plugins, reportCode=reportCode, rootDir=rootDir, slug=slug,
+            url=url, useLegacyUploadEndpoint=useLegacyUploadEndpoint, verbose=verbose,
+            version=version, workingDirectory=workingDirectory, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -265,8 +276,9 @@ public data class CodecovActionV4 private constructor(
             codecovYmlPath?.let { "codecov_yml_path" to it },
             commitParent?.let { "commit_parent" to it },
             directory?.let { "directory" to it },
-            disableSearch?.let { "disable_search" to it.toString() },
             disableFileFixes?.let { "disable_file_fixes" to it.toString() },
+            disableSearch?.let { "disable_search" to it.toString() },
+            disableSafeDirectory?.let { "disable_safe_directory" to it },
             dryRun?.let { "dry_run" to it.toString() },
             envVars?.let { "env_vars" to it.joinToString(",") },
             exclude?.let { "exclude" to it.joinToString(",") },
@@ -274,6 +286,7 @@ public data class CodecovActionV4 private constructor(
             `file`?.let { "file" to it },
             files?.let { "files" to it.joinToString(",") },
             flags?.let { "flags" to it.joinToString(",") },
+            gitService?.let { "git_service" to it },
             handleNoReportsFound?.let { "handle_no_reports_found" to it.toString() },
             jobCode?.let { "job_code" to it },
             name?.let { "name" to it },
