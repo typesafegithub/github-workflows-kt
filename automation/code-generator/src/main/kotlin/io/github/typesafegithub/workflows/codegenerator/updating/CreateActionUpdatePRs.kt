@@ -18,6 +18,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import java.nio.file.Path
+import java.time.Instant
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
 import kotlin.io.path.readText
@@ -67,7 +68,7 @@ private suspend fun createPullRequest(
 ) {
     println("Creating a PR:")
     createPullRequest(
-        branchName = "update-${actionBindingRequest.actionCoords.prettyPrint}",
+        branchName = "update-${actionBindingRequest.actionCoords.prettyPrint}-${Instant.now().toEpochMilli()}",
         prTitle = "feat(actions): update ${actionBindingRequest.actionCoords.prettyPrint}",
         prBody = "Created automatically.",
         fileNamesToContents =
