@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.12.0")
-@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/gradle/actions/setup-gradle.kt")
 @file:Import("generated/JamesIves/github-pages-deploy-action.kt")
 
 import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
@@ -15,11 +15,10 @@ fun JobBuilder<*>.deployDocs() {
         name = "Build Mkdocs docs",
         command = "mkdocs build --site-dir $directoryToDeploy",
     )
-    uses(
+    uses(action = ActionsSetupGradle())
+    run(
         name = "Generate API docs",
-        action = GradleBuildAction(
-            arguments = ":github-workflows-kt:dokkaHtml --no-configuration-cache",
-        ),
+        command = "./gradlew :github-workflows-kt:dokkaHtml --no-configuration-cache",
     )
     run(
         name = "Prepare target directory for API docs",

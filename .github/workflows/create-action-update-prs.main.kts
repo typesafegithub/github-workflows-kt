@@ -3,7 +3,7 @@
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
 @file:Import("generated/actions/checkout.kt")
-@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/gradle/actions/setup-gradle.kt")
 
 import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -33,12 +33,11 @@ workflow(
     ) {
         uses(action = Checkout())
         setupJava()
-        uses(
+        uses(action = ActionsSetupGradle())
+        run(
             name = "Run logic",
             env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
-            action = GradleBuildAction(
-                arguments = "createActionUpdatePRs",
-            )
+            command = "./gradlew createActionUpdatePRs",
         )
     }
 }.writeToFile(generateActionBindings = true)

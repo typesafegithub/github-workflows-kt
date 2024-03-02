@@ -5,7 +5,7 @@
 @file:Import("setup-python.main.kts")
 @file:Import("generated/actions/checkout.kt")
 @file:Import("generated/actions/setup-java.kt")
-@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/gradle/actions/setup-gradle.kt")
 
 import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -32,11 +32,10 @@ workflow(
         ) {
             uses(action = Checkout())
             setupJava()
-            uses(
+            uses(action = ActionsSetupGradle())
+            run(
                 name = "Build",
-                action = GradleBuildAction(
-                    arguments = "build",
-                )
+                command = "./gradlew build",
             )
         }
     }
@@ -55,20 +54,17 @@ workflow(
     ) {
         uses(action = Checkout())
         setupJava()
-        val setIsSnapshotVersionFlag = uses(
+        uses(action = ActionsSetupGradle())
+        val setIsSnapshotVersionFlag = run(
             name = "Check if snapshot version is set",
-            action = GradleBuildAction(
-                arguments = "setIsSnapshotFlagInGithubOutput",
-            ),
+            command = "./gradlew setIsSnapshotFlagInGithubOutput",
         )
 
         libraries.forEach { library ->
-            uses(
+            run(
                 name = "Publish '$library' to Sonatype",
                 condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
-                action = GradleBuildAction(
-                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
-                ),
+                command = "./gradlew $library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
             )
         }
     }

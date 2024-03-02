@@ -39,10 +39,10 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
+      uses: 'gradle/actions/setup-gradle@v3'
+    - id: 'step-3'
       name: 'Build'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'build'
+      run: './gradlew build'
   build-for-Windows2022:
     runs-on: 'windows-2022'
     needs:
@@ -57,10 +57,10 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
+      uses: 'gradle/actions/setup-gradle@v3'
+    - id: 'step-3'
       name: 'Build'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'build'
+      run: './gradlew build'
   publish-snapshot:
     name: 'Publish snapshot'
     runs-on: 'ubuntu-latest'
@@ -82,28 +82,22 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      name: 'Check if snapshot version is set'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'setIsSnapshotFlagInGithubOutput'
+      uses: 'gradle/actions/setup-gradle@v3'
     - id: 'step-3'
-      name: 'Publish '':shared-internal'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: ':shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
-      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
+      name: 'Check if snapshot version is set'
+      run: './gradlew setIsSnapshotFlagInGithubOutput'
     - id: 'step-4'
-      name: 'Publish '':github-workflows-kt'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: ':github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
-      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
+      name: 'Publish '':shared-internal'' to Sonatype'
+      run: './gradlew :shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
     - id: 'step-5'
+      name: 'Publish '':github-workflows-kt'' to Sonatype'
+      run: './gradlew :github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
+    - id: 'step-6'
       name: 'Publish '':action-binding-generator'' to Sonatype'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: ':action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
-      if: '${{ steps.step-2.outputs.is-snapshot == ''true'' }}'
+      run: './gradlew :action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'
     runs-on: 'ubuntu-latest'
