@@ -1,6 +1,8 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.12.0")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.6.0-RC")
+@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+@file:Repository("https://repo.maven.apache.org/maven2/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.12.1-20240302.085603-1")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
