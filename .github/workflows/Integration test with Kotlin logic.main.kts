@@ -16,7 +16,7 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 import kotlinx.datetime.Clock
 
 workflow(
-    name = "Build",
+    name = "Integration test with Kotlin logic",
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
