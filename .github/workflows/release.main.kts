@@ -5,7 +5,7 @@
 @file:Import("setup-java.main.kts")
 @file:Import("setup-python.main.kts")
 @file:Import("generated/actions/checkout.kt")
-@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/gradle/actions/setup-gradle.kt")
 
 import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -32,11 +32,10 @@ workflow(
     ) {
         uses(action = Checkout())
         setupJava()
-        uses(
+        uses(action = ActionsSetupGradle())
+        run(
             name = "Build",
-            action = GradleBuildAction(
-                arguments = "build",
-            )
+            command = "./gradlew build",
         )
 
         setupPython()
@@ -44,20 +43,16 @@ workflow(
         // From here, there are steps performing deployments. Before, it's only about building and testing.
 
         libraries.forEach { library ->
-            uses(
+            run(
                 name = "Publish '$library' to Sonatype",
-                action = GradleBuildAction(
-                    arguments = "$library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
-                ),
+                command = "./gradlew $library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
             )
         }
 
         libraries.forEach { library ->
-            uses(
+            run(
                 name = "Wait until '$library' present in Maven Central",
-                action = GradleBuildAction(
-                    arguments = "$library:waitUntilLibraryPresentInMavenCentral",
-                ),
+                command = "./gradlew $library:waitUntilLibraryPresentInMavenCentral",
             )
         }
 

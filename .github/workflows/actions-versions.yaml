@@ -40,13 +40,13 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
+      uses: 'gradle/actions/setup-gradle@v3'
+    - id: 'step-3'
       name: 'Run suggestVersions'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'suggestVersions'
       env:
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-    - id: 'step-3'
+      run: './gradlew suggestVersions'
+    - id: 'step-4'
       name: 'Create issue'
       uses: 'peter-evans/create-issue-from-file@v5'
       with:

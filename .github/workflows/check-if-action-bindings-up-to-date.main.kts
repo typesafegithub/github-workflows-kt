@@ -2,7 +2,7 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.12.0")
 @file:Import("setup-java.main.kts")
 @file:Import("generated/actions/checkout.kt")
-@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/gradle/actions/setup-gradle.kt")
 
 import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -30,11 +30,10 @@ workflow(
         ) {
             uses(action = Checkout())
             setupJava()
-            uses(
+            uses(action = ActionsSetupGradle())
+            run(
                 name = "Generate action bindings",
-                action = GradleBuildAction(
-                    arguments = ":automation:code-generator:run",
-                )
+                command = "./gradlew :automation:code-generator:run",
             )
             run(
                 name = "Fail if there are any changes in the generated action bindings or their list in the docs",
