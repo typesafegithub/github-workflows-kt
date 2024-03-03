@@ -930,7 +930,7 @@ class IntegrationTest : FunSpec({
                   uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Step with Kotlin code in lambda'
-                  run: 'GHWKT_RUN_STEP=''test:step-1'' .github/workflows/some_workflow.main.kts'
+                  run: 'GHWKT_RUN_STEP=''test:step-1'' ''.github/workflows/some_workflow.main.kts'''
 
             """.trimIndent()
         callCount shouldBe 1
