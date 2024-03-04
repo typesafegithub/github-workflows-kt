@@ -12,7 +12,7 @@ plugins {
     id("info.solidsoft.pitest") version "1.15.0"
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.14.0"
 
-    id("org.jetbrains.dokka") version "1.9.10"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = rootProject.group
