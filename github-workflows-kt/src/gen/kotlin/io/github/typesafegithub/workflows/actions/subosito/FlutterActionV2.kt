@@ -30,6 +30,7 @@ import kotlin.collections.toTypedArray
  * @param channel The Flutter build release channel
  * @param cache Cache the Flutter SDK
  * @param cacheKey Identifier for the Flutter SDK cache
+ * @param pubCacheKey Identifier for the Dart .pub-cache cache
  * @param cachePath Flutter SDK cache path
  * @param architecture The architecture of Flutter SDK executable (x64 or arm64)
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
@@ -55,6 +56,10 @@ public data class FlutterActionV2 private constructor(
      */
     public val cacheKey: String? = null,
     /**
+     * Identifier for the Dart .pub-cache cache
+     */
+    public val pubCacheKey: String? = null,
+    /**
      * Flutter SDK cache path
      */
     public val cachePath: String? = null,
@@ -78,13 +83,14 @@ public data class FlutterActionV2 private constructor(
         channel: FlutterActionV2.Channel? = null,
         cache: Boolean? = null,
         cacheKey: String? = null,
+        pubCacheKey: String? = null,
         cachePath: String? = null,
         architecture: FlutterActionV2.Architecture? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(flutterVersion=flutterVersion, channel=channel, cache=cache, cacheKey=cacheKey,
-            cachePath=cachePath, architecture=architecture, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            pubCacheKey=pubCacheKey, cachePath=cachePath, architecture=architecture,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -93,6 +99,7 @@ public data class FlutterActionV2 private constructor(
             channel?.let { "channel" to it.stringValue },
             cache?.let { "cache" to it.toString() },
             cacheKey?.let { "cache-key" to it },
+            pubCacheKey?.let { "pub-cache-key" to it },
             cachePath?.let { "cache-path" to it },
             architecture?.let { "architecture" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
@@ -143,5 +150,9 @@ public data class FlutterActionV2 private constructor(
         public val version: String = "steps.$stepId.outputs.VERSION"
 
         public val architecture: String = "steps.$stepId.outputs.ARCHITECTURE"
+
+        public val pubCacheKey: String = "steps.$stepId.outputs.PUB-CACHE-KEY"
+
+        public val pubCachePath: String = "steps.$stepId.outputs.PUB-CACHE-PATH"
     }
 }
