@@ -32,6 +32,7 @@ import kotlin.collections.toTypedArray
  * @param cacheKey Identifier for the Flutter SDK cache
  * @param pubCacheKey Identifier for the Dart .pub-cache cache
  * @param cachePath Flutter SDK cache path
+ * @param pubCachePath Flutter pub cache path
  * @param architecture The architecture of Flutter SDK executable (x64 or arm64)
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
@@ -64,6 +65,10 @@ public data class FlutterActionV2 private constructor(
      */
     public val cachePath: String? = null,
     /**
+     * Flutter pub cache path
+     */
+    public val pubCachePath: String? = null,
+    /**
      * The architecture of Flutter SDK executable (x64 or arm64)
      */
     public val architecture: FlutterActionV2.Architecture? = null,
@@ -85,12 +90,13 @@ public data class FlutterActionV2 private constructor(
         cacheKey: String? = null,
         pubCacheKey: String? = null,
         cachePath: String? = null,
+        pubCachePath: String? = null,
         architecture: FlutterActionV2.Architecture? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(flutterVersion=flutterVersion, channel=channel, cache=cache, cacheKey=cacheKey,
-            pubCacheKey=pubCacheKey, cachePath=cachePath, architecture=architecture,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            pubCacheKey=pubCacheKey, cachePath=cachePath, pubCachePath=pubCachePath,
+            architecture=architecture, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -101,6 +107,7 @@ public data class FlutterActionV2 private constructor(
             cacheKey?.let { "cache-key" to it },
             pubCacheKey?.let { "pub-cache-key" to it },
             cachePath?.let { "cache-path" to it },
+            pubCachePath?.let { "pub-cache-path" to it },
             architecture?.let { "architecture" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
