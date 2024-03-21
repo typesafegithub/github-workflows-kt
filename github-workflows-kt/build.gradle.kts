@@ -25,7 +25,7 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     testImplementation("dev.zacsweers.kctfork:core:0.4.0")
-    testImplementation("com.lemonappdev:konsist:0.13.0")
+    testImplementation("com.lemonappdev:konsist:0.14.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
