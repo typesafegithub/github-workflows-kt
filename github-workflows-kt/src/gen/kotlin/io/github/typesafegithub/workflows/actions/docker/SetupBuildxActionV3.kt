@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.docker
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -30,17 +32,19 @@ import kotlin.collections.toTypedArray
  * @param version Buildx version. (eg. v0.3.0)
  * @param driver Sets the builder driver to be used
  * @param driverOpts List of additional driver-specific options. (eg. image=moby/buildkit:master)
- * @param buildkitdFlags Flags for buildkitd daemon
+ * @param buildkitdFlags BuildKit daemon flags
+ * @param buildkitdConfig BuildKit daemon config file
+ * @param buildkitdConfigInline Inline BuildKit daemon config
  * @param install Sets up docker build command as an alias to docker buildx build
  * @param use Switch to this builder instance
  * @param endpoint Optional address for docker socket or context from `docker context ls`
  * @param platforms Fixed platforms for current node. If not empty, values take priority over the
  * detected ones
- * @param config BuildKit config file
- * @param configInline Inline BuildKit config
  * @param append Append additional nodes to the builder
  * @param cacheBinary Cache buildx binary to GitHub Actions cache backend
  * @param cleanup Cleanup temp files and remove builder at the end of a job
+ * @param config BuildKit daemon config file
+ * @param configInline Inline BuildKit daemon config
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -60,9 +64,17 @@ public data class SetupBuildxActionV3 private constructor(
      */
     public val driverOpts: List<String>? = null,
     /**
-     * Flags for buildkitd daemon
+     * BuildKit daemon flags
      */
     public val buildkitdFlags: String? = null,
+    /**
+     * BuildKit daemon config file
+     */
+    public val buildkitdConfig: String? = null,
+    /**
+     * Inline BuildKit daemon config
+     */
+    public val buildkitdConfigInline: String? = null,
     /**
      * Sets up docker build command as an alias to docker buildx build
      */
@@ -80,14 +92,6 @@ public data class SetupBuildxActionV3 private constructor(
      */
     public val platforms: List<String>? = null,
     /**
-     * BuildKit config file
-     */
-    public val config: String? = null,
-    /**
-     * Inline BuildKit config
-     */
-    public val configInline: String? = null,
-    /**
      * Append additional nodes to the builder
      */
     public val append: String? = null,
@@ -99,6 +103,16 @@ public data class SetupBuildxActionV3 private constructor(
      * Cleanup temp files and remove builder at the end of a job
      */
     public val cleanup: Boolean? = null,
+    /**
+     * BuildKit daemon config file
+     */
+    @Deprecated("Use buildkitd-config instead")
+    public val config: String? = null,
+    /**
+     * Inline BuildKit daemon config
+     */
+    @Deprecated("Use buildkitd-config-inline instead")
+    public val configInline: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -116,20 +130,23 @@ public data class SetupBuildxActionV3 private constructor(
         driver: String? = null,
         driverOpts: List<String>? = null,
         buildkitdFlags: String? = null,
+        buildkitdConfig: String? = null,
+        buildkitdConfigInline: String? = null,
         install: Boolean? = null,
         use: Boolean? = null,
         endpoint: String? = null,
         platforms: List<String>? = null,
-        config: String? = null,
-        configInline: String? = null,
         append: String? = null,
         cacheBinary: Boolean? = null,
         cleanup: Boolean? = null,
+        config: String? = null,
+        configInline: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(version=version, driver=driver, driverOpts=driverOpts, buildkitdFlags=buildkitdFlags,
-            install=install, use=use, endpoint=endpoint, platforms=platforms, config=config,
-            configInline=configInline, append=append, cacheBinary=cacheBinary, cleanup=cleanup,
+            buildkitdConfig=buildkitdConfig, buildkitdConfigInline=buildkitdConfigInline,
+            install=install, use=use, endpoint=endpoint, platforms=platforms, append=append,
+            cacheBinary=cacheBinary, cleanup=cleanup, config=config, configInline=configInline,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -139,15 +156,17 @@ public data class SetupBuildxActionV3 private constructor(
             driver?.let { "driver" to it },
             driverOpts?.let { "driver-opts" to it.joinToString("\n") },
             buildkitdFlags?.let { "buildkitd-flags" to it },
+            buildkitdConfig?.let { "buildkitd-config" to it },
+            buildkitdConfigInline?.let { "buildkitd-config-inline" to it },
             install?.let { "install" to it.toString() },
             use?.let { "use" to it.toString() },
             endpoint?.let { "endpoint" to it },
             platforms?.let { "platforms" to it.joinToString(",") },
-            config?.let { "config" to it },
-            configInline?.let { "config-inline" to it },
             append?.let { "append" to it },
             cacheBinary?.let { "cache-binary" to it.toString() },
             cleanup?.let { "cleanup" to it.toString() },
+            config?.let { "config" to it },
+            configInline?.let { "config-inline" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
