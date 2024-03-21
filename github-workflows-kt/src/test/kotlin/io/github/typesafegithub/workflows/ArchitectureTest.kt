@@ -12,7 +12,7 @@ class ArchitectureTest : FunSpec({
         Konsist.scopeFromProduction()
             .classes()
             .withModifier(KoModifier.DATA)
-            .properties(includeNested = true, includeLocal = true)
+            .properties(includeNested = true)
             .assertTrue { it.hasValModifier }
     }
 })
