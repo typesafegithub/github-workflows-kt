@@ -42,7 +42,7 @@ Click on a version to see the binding's code.
     * [googlejavaformat-action](https://github.com/axel-op/googlejavaformat-action) - v3: [`GooglejavaformatActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/axelop/GooglejavaformatActionV3.kt)
 * Azure
     * [docker-login](https://github.com/Azure/docker-login) - v1: [`DockerLoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/DockerLoginV1.kt)
-    * [login](https://github.com/Azure/login) - v1: [`LoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/LoginV1.kt)
+    * [login](https://github.com/Azure/login) - v1: [`LoginV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/LoginV1.kt), v2: [`LoginV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/LoginV2.kt)
     * [webapps-deploy](https://github.com/Azure/webapps-deploy) - v2: [`WebappsDeployV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/WebappsDeployV2.kt), v3: [`WebappsDeployV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/azure/WebappsDeployV3.kt)
 * bahmutov
     * [npm-install](https://github.com/bahmutov/npm-install) - v1: [`NpmInstallV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/bahmutov/NpmInstallV1.kt)
@@ -141,6 +141,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 158
+* counting each version separately: 159
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18

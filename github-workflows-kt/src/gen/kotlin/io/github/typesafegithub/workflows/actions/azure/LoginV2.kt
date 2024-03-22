@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.azure
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -48,11 +46,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: LoginV2",
-    replaceWith = ReplaceWith("LoginV2"),
-)
-public data class LoginV1 private constructor(
+public data class LoginV2 private constructor(
     /**
      * Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
      */
@@ -77,7 +71,7 @@ public data class LoginV1 private constructor(
      * Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment,
      * azurechinacloud, azuregermancloud. Default being azurecloud
      */
-    public val environment: LoginV1.Environment? = null,
+    public val environment: LoginV2.Environment? = null,
     /**
      * Set this value to true to enable support for accessing tenants without subscriptions
      */
@@ -90,7 +84,7 @@ public data class LoginV1 private constructor(
      * The type of authentication. Supported values are SERVICE_PRINCIPAL, IDENTITY. Default value
      * is SERVICE_PRINCIPAL
      */
-    public val authType: LoginV1.AuthType? = null,
+    public val authType: LoginV2.AuthType? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -100,7 +94,7 @@ public data class LoginV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("Azure", "login", _customVersion ?: "v1") {
+) : RegularAction<Action.Outputs>("Azure", "login", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         creds: String? = null,
@@ -108,10 +102,10 @@ public data class LoginV1 private constructor(
         tenantId: String? = null,
         subscriptionId: String? = null,
         enableAzPSSession: Boolean? = null,
-        environment: LoginV1.Environment? = null,
+        environment: LoginV2.Environment? = null,
         allowNoSubscriptions: Boolean? = null,
         audience: String? = null,
-        authType: LoginV1.AuthType? = null,
+        authType: LoginV2.AuthType? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(creds=creds, clientId=clientId, tenantId=tenantId, subscriptionId=subscriptionId,
@@ -140,30 +134,30 @@ public data class LoginV1 private constructor(
     public sealed class Environment(
         public val stringValue: String,
     ) {
-        public object Azurecloud : LoginV1.Environment("azurecloud")
+        public object Azurecloud : LoginV2.Environment("azurecloud")
 
-        public object Azurestack : LoginV1.Environment("azurestack")
+        public object Azurestack : LoginV2.Environment("azurestack")
 
-        public object Azureusgovernment : LoginV1.Environment("azureusgovernment")
+        public object Azureusgovernment : LoginV2.Environment("azureusgovernment")
 
-        public object Azurechinacloud : LoginV1.Environment("azurechinacloud")
+        public object Azurechinacloud : LoginV2.Environment("azurechinacloud")
 
-        public object Azuregermancloud : LoginV1.Environment("azuregermancloud")
+        public object Azuregermancloud : LoginV2.Environment("azuregermancloud")
 
         public class Custom(
             customStringValue: String,
-        ) : LoginV1.Environment(customStringValue)
+        ) : LoginV2.Environment(customStringValue)
     }
 
     public sealed class AuthType(
         public val stringValue: String,
     ) {
-        public object ServicePrincipal : LoginV1.AuthType("SERVICE_PRINCIPAL")
+        public object ServicePrincipal : LoginV2.AuthType("SERVICE_PRINCIPAL")
 
-        public object Identity : LoginV1.AuthType("IDENTITY")
+        public object Identity : LoginV2.AuthType("IDENTITY")
 
         public class Custom(
             customStringValue: String,
-        ) : LoginV1.AuthType(customStringValue)
+        ) : LoginV2.AuthType(customStringValue)
     }
 }
