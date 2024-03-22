@@ -39,8 +39,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: InstallNixActionV25",
-    replaceWith = ReplaceWith("InstallNixActionV25"),
+    message = "This action has a newer major version: InstallNixActionV26",
+    replaceWith = ReplaceWith("InstallNixActionV26"),
 )
 public data class InstallNixActionV22 private constructor(
     /**
