@@ -7,6 +7,7 @@ include(
     "action-binding-generator",
     "shared-internal",
     ":automation:code-generator",
+    ":checkout",
 )
 
 plugins {
