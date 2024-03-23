@@ -3,7 +3,7 @@ plugins {
     buildsrc.convention.publishing
 }
 
-version = "0.0.1"
+version = "v4"
 
 dependencies {
     implementation("io.github.typesafegithub:github-workflows-kt:1.12.0")

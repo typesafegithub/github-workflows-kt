@@ -3,7 +3,7 @@
   "component": {
     "group": "github-workflows-kt-monorepo",
     "module": "checkout",
-    "version": "0.0.1",
+    "version": "v4",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -36,13 +36,13 @@
       ],
       "files": [
         {
-          "name": "checkout-0.0.1.jar",
-          "url": "checkout-0.0.1.jar",
+          "name": "checkout-v4.jar",
+          "url": "checkout-v4.jar",
           "size": 9550,
-          "sha512": "cd4b25f51e8f84ab82cd5750625ca973e5877185faac744e3078bcae4077cd681cacf6235e60b0f95cf59a96651c8f1e50a6aec1d394a94a147d713f9c68bf3d",
-          "sha256": "335cc66944dcfe95d2bdc3410304451a8f846f1c2c0eb39e4d16928b728d83eb",
-          "sha1": "1b464fb7b9bafcc679943de445af760a79880716",
-          "md5": "0094b08dd3c3a3429f131da62a8b20bc"
+          "sha512": "8b8a1cec8f901e85c06afdef40af60f1705833584a6620ba02d3fc5491093cc95e6583224a569bc9edd1122c252238be2e45fddb7fa2e29bc089c7f49bd31c39",
+          "sha256": "57dd2af69bc92f3fcd0260cee59b7697b9df74b547c0ed73d87cb216451d5cb0",
+          "sha1": "46300f9d4978c733d8fc67c5a18cf085768ac14e",
+          "md5": "d8cece9d009281993436c2c121bfde4a"
         }
       ]
     },
@@ -75,13 +75,13 @@
       ],
       "files": [
         {
-          "name": "checkout-0.0.1.jar",
-          "url": "checkout-0.0.1.jar",
+          "name": "checkout-v4.jar",
+          "url": "checkout-v4.jar",
           "size": 9550,
-          "sha512": "cd4b25f51e8f84ab82cd5750625ca973e5877185faac744e3078bcae4077cd681cacf6235e60b0f95cf59a96651c8f1e50a6aec1d394a94a147d713f9c68bf3d",
-          "sha256": "335cc66944dcfe95d2bdc3410304451a8f846f1c2c0eb39e4d16928b728d83eb",
-          "sha1": "1b464fb7b9bafcc679943de445af760a79880716",
-          "md5": "0094b08dd3c3a3429f131da62a8b20bc"
+          "sha512": "8b8a1cec8f901e85c06afdef40af60f1705833584a6620ba02d3fc5491093cc95e6583224a569bc9edd1122c252238be2e45fddb7fa2e29bc089c7f49bd31c39",
+          "sha256": "57dd2af69bc92f3fcd0260cee59b7697b9df74b547c0ed73d87cb216451d5cb0",
+          "sha1": "46300f9d4978c733d8fc67c5a18cf085768ac14e",
+          "md5": "d8cece9d009281993436c2c121bfde4a"
         }
       ]
     }

@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>github-workflows-kt-monorepo</groupId>
   <artifactId>checkout</artifactId>
-  <version>0.0.1</version>
+  <version>v4</version>
   <name>checkout</name>
   <description>Authoring GitHub Actions workflows in Kotlin.</description>
   <url>https://github.com/typesafegithub/github-workflows-kt</url>
