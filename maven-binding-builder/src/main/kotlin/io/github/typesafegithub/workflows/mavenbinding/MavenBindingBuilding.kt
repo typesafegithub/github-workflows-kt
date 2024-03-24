@@ -73,6 +73,7 @@ fun generateBinding(): ActionBinding {
 
 fun createJarFile(contents: Path): ByteArrayOutputStream =
     ByteArrayOutputStream().also { byteArrayOutputStream ->
+        // TODO use https://github.com/srikanth-lingala/zip4j to avoid boilerplate
         ZipOutputStream(byteArrayOutputStream).use { zipOutputStream ->
             contents.listDirectoryEntries().forEach { file ->
                 if (file.isDirectory()) {
