@@ -28,9 +28,7 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 import kotlin.io.path.writeText
-import kotlin.time.measureTime
 import kotlin.time.measureTimedValue
-
 
 fun buildMavenBinding(binding: ActionBinding): Path {
     val compilationInput = createTempDirectory()
@@ -41,31 +39,37 @@ fun buildMavenBinding(binding: ActionBinding): Path {
     sourceFilePath.createParentDirectories()
     sourceFilePath.writeText(binding.kotlinCode)
 
-    val args = K2JVMCompilerArguments().apply {
-        destination = compilationOutput.toString()
-        classpath = System.getProperty("java.class.path")
-        freeArgs = listOf(sourceFilePath.toString())
-        noStdlib = true
-        noReflect = true
-        includeRuntime = false
-    }
-    val compilerMessageCollector = PrintingMessageCollector(
-        System.out, MessageRenderer.GRADLE_STYLE, false,
-    )
-    val exitCode = K2JVMCompiler().exec(
-        messageCollector = compilerMessageCollector,
-        services = Services.EMPTY,
-        arguments = args,
-    )
+    val args =
+        K2JVMCompilerArguments().apply {
+            destination = compilationOutput.toString()
+            classpath = System.getProperty("java.class.path")
+            freeArgs = listOf(sourceFilePath.toString())
+            noStdlib = true
+            noReflect = true
+            includeRuntime = false
+        }
+    val compilerMessageCollector =
+        PrintingMessageCollector(
+            System.out,
+            MessageRenderer.GRADLE_STYLE,
+            false,
+        )
+    val exitCode =
+        K2JVMCompiler().exec(
+            messageCollector = compilerMessageCollector,
+            services = Services.EMPTY,
+            arguments = args,
+        )
     return compilationOutput
 }
 
 fun generateBinding(): ActionBinding {
-    val actionCoords = ActionCoords(
-        owner = "Vampire",
-        name = "setup-wsl",
-        version = "v3",
-    )
+    val actionCoords =
+        ActionCoords(
+            owner = "Vampire",
+            name = "setup-wsl",
+            version = "v3",
+        )
     return actionCoords.generateBinding(
         metadataRevision = NewestForVersion,
     )
@@ -77,9 +81,9 @@ fun createJarFile(contents: Path): ByteArrayOutputStream =
         ZipOutputStream(byteArrayOutputStream).use { zipOutputStream ->
             contents.listDirectoryEntries().forEach { file ->
                 if (file.isDirectory()) {
-                    zipDirectory(file.toFile(), file.name, zipOutputStream);
+                    zipDirectory(file.toFile(), file.name, zipOutputStream)
                 } else {
-                    zipFile(file.toFile(), zipOutputStream);
+                    zipFile(file.toFile(), zipOutputStream)
                 }
             }
             zipOutputStream.flush()
@@ -96,7 +100,8 @@ fun createJarFile(contents: Path): ByteArrayOutputStream =
  */
 @Throws(FileNotFoundException::class, IOException::class)
 private fun zipDirectory(
-    folder: File, parentFolder: String,
+    folder: File,
+    parentFolder: String,
     zos: ZipOutputStream,
 ) {
     for (file in folder.listFiles()) {
@@ -105,9 +110,10 @@ private fun zipDirectory(
             continue
         }
         zos.putNextEntry(ZipEntry(parentFolder + "/" + file.getName()))
-        val bis = BufferedInputStream(
-            FileInputStream(file),
-        )
+        val bis =
+            BufferedInputStream(
+                FileInputStream(file),
+            )
         var bytesRead: Long = 0
         val bytesIn = ByteArray(BUFFER_SIZE)
         var read = 0
@@ -127,13 +133,17 @@ private fun zipDirectory(
  * @throws IOException
  */
 @Throws(FileNotFoundException::class, IOException::class)
-private fun zipFile(file: File, zos: ZipOutputStream) {
+private fun zipFile(
+    file: File,
+    zos: ZipOutputStream,
+) {
     zos.putNextEntry(ZipEntry(file.getName()))
-    val bis = BufferedInputStream(
-        FileInputStream(
-            file,
-        ),
-    )
+    val bis =
+        BufferedInputStream(
+            FileInputStream(
+                file,
+            ),
+        )
     var bytesRead: Long = 0
     val bytesIn = ByteArray(BUFFER_SIZE)
     var read = 0
@@ -145,17 +155,20 @@ private fun zipFile(file: File, zos: ZipOutputStream) {
 }
 
 fun main() {
-    val (binding, bindingGenerationDuration) = measureTimedValue {
-        generateBinding()
-    }
+    val (binding, bindingGenerationDuration) =
+        measureTimedValue {
+            generateBinding()
+        }
     println("Generating binding took $bindingGenerationDuration")
-    val (pathWithJarContents, compilationDuration) = measureTimedValue {
-        buildMavenBinding(binding)
-    }
+    val (pathWithJarContents, compilationDuration) =
+        measureTimedValue {
+            buildMavenBinding(binding)
+        }
     println("Compilation took $compilationDuration")
-    val (outputStream, jarCreationDuration) = measureTimedValue {
-        createJarFile(contents = pathWithJarContents)
-    }
+    val (outputStream, jarCreationDuration) =
+        measureTimedValue {
+            createJarFile(contents = pathWithJarContents)
+        }
     println("Packing into JAR took $jarCreationDuration")
     println("Writing to file")
     FileOutputStream("/Users/piotr/checkout.jar").use {
