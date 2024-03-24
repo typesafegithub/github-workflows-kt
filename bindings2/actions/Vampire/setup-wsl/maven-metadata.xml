@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>Vampire</groupId>
+  <artifactId>setup-wsl</artifactId>
+  <versioning>
+    <latest>v3</latest>
+    <release>v3</release>
+    <versions>
+      <version>v3</version>
+    </versions>
+    <lastUpdated>20240324075217</lastUpdated>
+  </versioning>
+</metadata>
