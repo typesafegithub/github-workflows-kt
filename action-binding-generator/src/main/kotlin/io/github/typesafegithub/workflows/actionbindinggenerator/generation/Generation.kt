@@ -105,7 +105,7 @@ private fun generateActionBindingSourceCode(
 ): String {
     val fileSpec =
         FileSpec.builder(
-            "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+            if (generateForScript) "" else "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
             className,
         )
             .addFileComment(

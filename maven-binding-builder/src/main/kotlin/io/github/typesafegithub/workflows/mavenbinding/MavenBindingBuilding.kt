@@ -34,13 +34,12 @@ fun buildMavenBinding(): Path {
     println("Output: $compilationOutput")
 
     val actionCoords = ActionCoords(
-        owner = "actions",
-        name = "checkout",
-        version = "v4",
+        owner = "Vampire",
+        name = "setup-wsl",
+        version = "v3",
     )
     val binding = actionCoords.generateBinding(
         metadataRevision = NewestForVersion,
-        generateForScript = true,
     )
     val sourceFilePath = compilationInput / Path(binding.filePath.substringAfter("kotlin/"))
     sourceFilePath.createParentDirectories()
@@ -139,5 +138,5 @@ private fun zipFile(file: File, zos: ZipOutputStream) {
 
 fun main() {
     val pathWithJarContents = buildMavenBinding()
-    createJarFile(contents = pathWithJarContents, targetFile = "/Users/piotr/action-checkout.jar")
+    createJarFile(contents = pathWithJarContents, targetFile = "/Users/piotr/checkout.jar")
 }
