@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>github-workflows-kt-monorepo</groupId>
+  <artifactId>checkout</artifactId>
+  <versioning>
+    <latest>v4</latest>
+    <release>v4</release>
+    <versions>
+      <version>v4</version>
+    </versions>
+    <lastUpdated>20240323075217</lastUpdated>
+  </versioning>
+</metadata>
