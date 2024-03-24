@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 import com.intellij.util.io.PagedFileStorage.BUFFER_SIZE
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
@@ -26,21 +27,15 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 import kotlin.io.path.writeText
+import kotlin.time.measureTime
+import kotlin.time.measureTimedValue
 
 
-fun buildMavenBinding(): Path {
+fun buildMavenBinding(binding: ActionBinding): Path {
     val compilationInput = createTempDirectory()
     val compilationOutput = createTempDirectory()
     println("Output: $compilationOutput")
 
-    val actionCoords = ActionCoords(
-        owner = "Vampire",
-        name = "setup-wsl",
-        version = "v3",
-    )
-    val binding = actionCoords.generateBinding(
-        metadataRevision = NewestForVersion,
-    )
     val sourceFilePath = compilationInput / Path(binding.filePath.substringAfter("kotlin/"))
     sourceFilePath.createParentDirectories()
     sourceFilePath.writeText(binding.kotlinCode)
@@ -64,10 +59,20 @@ fun buildMavenBinding(): Path {
     return compilationOutput
 }
 
+fun generateBinding(): ActionBinding {
+    val actionCoords = ActionCoords(
+        owner = "Vampire",
+        name = "setup-wsl",
+        version = "v3",
+    )
+    return actionCoords.generateBinding(
+        metadataRevision = NewestForVersion,
+    )
+}
+
 fun createJarFile(contents: Path, targetFile: String) {
     val zos = ZipOutputStream(FileOutputStream(targetFile))
     contents.listDirectoryEntries().forEach { file ->
-        print("Adding '$file' to ZIP...")
         if (file.isDirectory()) {
             zipDirectory(file.toFile(), file.name, zos);
         } else {
@@ -137,6 +142,16 @@ private fun zipFile(file: File, zos: ZipOutputStream) {
 }
 
 fun main() {
-    val pathWithJarContents = buildMavenBinding()
-    createJarFile(contents = pathWithJarContents, targetFile = "/Users/piotr/checkout.jar")
+    val (binding, bindingGenerationDuration) = measureTimedValue {
+        generateBinding()
+    }
+    println("Generating binding took $bindingGenerationDuration")
+    val (pathWithJarContents, compilationDuration) = measureTimedValue {
+        buildMavenBinding(binding)
+    }
+    println("Compilation took $compilationDuration")
+    val jarCreationDuration = measureTime {
+        createJarFile(contents = pathWithJarContents, targetFile = "/Users/piotr/checkout.jar")
+    }
+    println("Packing into JAR took $jarCreationDuration")
 }
