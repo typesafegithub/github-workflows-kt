@@ -17,6 +17,7 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.nio.file.Path
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
@@ -30,7 +31,7 @@ import kotlin.io.path.name
 import kotlin.io.path.writeText
 import kotlin.time.measureTimedValue
 
-fun buildMavenBinding(binding: ActionBinding): Path {
+private fun buildMavenBinding(binding: ActionBinding): Path {
     val compilationInput = createTempDirectory()
     val compilationOutput = createTempDirectory()
     println("Output: $compilationOutput")
@@ -54,28 +55,27 @@ fun buildMavenBinding(binding: ActionBinding): Path {
             MessageRenderer.GRADLE_STYLE,
             false,
         )
-    val exitCode =
-        K2JVMCompiler().exec(
-            messageCollector = compilerMessageCollector,
-            services = Services.EMPTY,
-            arguments = args,
-        )
+    K2JVMCompiler().exec(
+        messageCollector = compilerMessageCollector,
+        services = Services.EMPTY,
+        arguments = args,
+    )
     return compilationOutput
 }
 
-fun generateBinding(): ActionBinding {
+private fun generateBinding(owner: String, name: String, version: String): ActionBinding {
     val actionCoords =
         ActionCoords(
-            owner = "Vampire",
-            name = "setup-wsl",
-            version = "v3",
+            owner = owner,
+            name = name,
+            version = version,
         )
     return actionCoords.generateBinding(
         metadataRevision = NewestForVersion,
     )
 }
 
-fun createJarFile(contents: Path): ByteArrayOutputStream =
+private fun createJarFile(contents: Path): ByteArrayOutputStream =
     ByteArrayOutputStream().also { byteArrayOutputStream ->
         // TODO use https://github.com/srikanth-lingala/zip4j to avoid boilerplate
         ZipOutputStream(byteArrayOutputStream).use { zipOutputStream ->
@@ -88,6 +88,19 @@ fun createJarFile(contents: Path): ByteArrayOutputStream =
             }
             zipOutputStream.flush()
         }
+    }
+
+private fun OutputStream.createJarFile(contents: Path) =
+    // TODO use https://github.com/srikanth-lingala/zip4j to avoid boilerplate
+    ZipOutputStream(this).use { zipOutputStream ->
+        contents.listDirectoryEntries().forEach { file ->
+            if (file.isDirectory()) {
+                zipDirectory(file.toFile(), file.name, zipOutputStream)
+            } else {
+                zipFile(file.toFile(), zipOutputStream)
+            }
+        }
+        zipOutputStream.flush()
     }
 
 /**
@@ -116,7 +129,7 @@ private fun zipDirectory(
             )
         var bytesRead: Long = 0
         val bytesIn = ByteArray(BUFFER_SIZE)
-        var read = 0
+        var read: Int
         while ((bis.read(bytesIn).also { read = it }) != -1) {
             zos.write(bytesIn, 0, read)
             bytesRead += read.toLong()
@@ -146,7 +159,7 @@ private fun zipFile(
         )
     var bytesRead: Long = 0
     val bytesIn = ByteArray(BUFFER_SIZE)
-    var read = 0
+    var read: Int
     while ((bis.read(bytesIn).also { read = it }) != -1) {
         zos.write(bytesIn, 0, read)
         bytesRead += read.toLong()
@@ -154,10 +167,16 @@ private fun zipFile(
     zos.closeEntry()
 }
 
+fun OutputStream.buildJar(owner: String, name: String, version: String) {
+    val binding = generateBinding(owner = owner, name = name, version = version)
+    val pathWithJarContents = buildMavenBinding(binding)
+    return this.createJarFile(pathWithJarContents)
+}
+
 fun main() {
     val (binding, bindingGenerationDuration) =
         measureTimedValue {
-            generateBinding()
+            generateBinding(owner = "Vampire", name="setup-wsl", version = "v3")
         }
     println("Generating binding took $bindingGenerationDuration")
     val (pathWithJarContents, compilationDuration) =

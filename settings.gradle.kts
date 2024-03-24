@@ -6,6 +6,7 @@ include(
     "github-workflows-kt",
     "action-binding-generator",
     "maven-binding-builder",
+    "jit-binding-server",
     "shared-internal",
     ":automation:code-generator",
 )
