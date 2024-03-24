@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.cli.common.messages.PrintingMessageCollector
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.config.Services
 import java.io.BufferedInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -70,18 +71,19 @@ fun generateBinding(): ActionBinding {
     )
 }
 
-fun createJarFile(contents: Path, targetFile: String) {
-    val zos = ZipOutputStream(FileOutputStream(targetFile))
-    contents.listDirectoryEntries().forEach { file ->
-        if (file.isDirectory()) {
-            zipDirectory(file.toFile(), file.name, zos);
-        } else {
-            zipFile(file.toFile(), zos);
+fun createJarFile(contents: Path): ByteArrayOutputStream =
+    ByteArrayOutputStream().also { byteArrayOutputStream ->
+        ZipOutputStream(byteArrayOutputStream).use { zipOutputStream ->
+            contents.listDirectoryEntries().forEach { file ->
+                if (file.isDirectory()) {
+                    zipDirectory(file.toFile(), file.name, zipOutputStream);
+                } else {
+                    zipFile(file.toFile(), zipOutputStream);
+                }
+            }
+            zipOutputStream.flush()
         }
     }
-    zos.flush()
-    zos.close()
-}
 
 /**
  * Adds a directory to the current zip output stream
@@ -150,8 +152,12 @@ fun main() {
         buildMavenBinding(binding)
     }
     println("Compilation took $compilationDuration")
-    val jarCreationDuration = measureTime {
-        createJarFile(contents = pathWithJarContents, targetFile = "/Users/piotr/checkout.jar")
+    val (outputStream, jarCreationDuration) = measureTimedValue {
+        createJarFile(contents = pathWithJarContents)
     }
     println("Packing into JAR took $jarCreationDuration")
+    println("Writing to file")
+    FileOutputStream("/Users/piotr/checkout.jar").use {
+        outputStream.writeTo(it)
+    }
 }
