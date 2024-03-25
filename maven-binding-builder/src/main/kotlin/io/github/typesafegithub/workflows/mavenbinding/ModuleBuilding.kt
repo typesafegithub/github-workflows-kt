@@ -1,6 +1,10 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-fun buildModuleFile(owner: String, name: String, version: String): String =
+fun buildModuleFile(
+    owner: String,
+    name: String,
+    version: String,
+): String =
     """
     {
       "formatVersion": "1.1",

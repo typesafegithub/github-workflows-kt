@@ -63,7 +63,11 @@ private fun buildMavenBinding(binding: ActionBinding): Path {
     return compilationOutput
 }
 
-private fun generateBinding(owner: String, name: String, version: String): ActionBinding {
+private fun generateBinding(
+    owner: String,
+    name: String,
+    version: String,
+): ActionBinding {
     val actionCoords =
         ActionCoords(
             owner = owner,
@@ -167,7 +171,11 @@ private fun zipFile(
     zos.closeEntry()
 }
 
-fun OutputStream.buildJar(owner: String, name: String, version: String) {
+fun OutputStream.buildJar(
+    owner: String,
+    name: String,
+    version: String,
+) {
     val binding = generateBinding(owner = owner, name = name, version = version)
     val pathWithJarContents = buildMavenBinding(binding)
     return this.createJarFile(pathWithJarContents)
@@ -176,7 +184,7 @@ fun OutputStream.buildJar(owner: String, name: String, version: String) {
 fun main() {
     val (binding, bindingGenerationDuration) =
         measureTimedValue {
-            generateBinding(owner = "Vampire", name="setup-wsl", version = "v3")
+            generateBinding(owner = "Vampire", name = "setup-wsl", version = "v3")
         }
     println("Generating binding took $bindingGenerationDuration")
     val (pathWithJarContents, compilationDuration) =

@@ -23,11 +23,12 @@ fun main() {
                 val version = call.parameters["version"]!!
                 val file = call.parameters["file"]!!
                 when (file) {
-                    "$name-$version.jar" -> call.respondOutputStream(
-                        contentType = ContentType.parse("application/java-archive"),
-                        status = HttpStatusCode.OK,
-                        producer = { this.buildJar(owner = owner, name = name, version = version) },
-                    )
+                    "$name-$version.jar" ->
+                        call.respondOutputStream(
+                            contentType = ContentType.parse("application/java-archive"),
+                            status = HttpStatusCode.OK,
+                            producer = { this.buildJar(owner = owner, name = name, version = version) },
+                        )
                     "$name-$version.pom" -> call.respondText(buildPomFile(owner = owner, name = name, version = version))
                     "$name-$version.module" -> call.respondText(buildModuleFile(owner = owner, name = name, version = version))
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
