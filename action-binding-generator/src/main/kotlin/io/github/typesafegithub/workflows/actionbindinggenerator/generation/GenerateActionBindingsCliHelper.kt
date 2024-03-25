@@ -49,7 +49,7 @@ public fun generateActionBindings(
             val binding =
                 action.generateBinding(
                     metadataRevision = NewestForVersion,
-                    generateForScript = true,
+                    clientType = ClientType.CLIENT_SIDE_GENERATION,
                 )
             it.toFile().writeText(binding.kotlinCode)
         }

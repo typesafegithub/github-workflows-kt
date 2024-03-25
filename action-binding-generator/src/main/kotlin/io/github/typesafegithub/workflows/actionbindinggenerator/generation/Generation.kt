@@ -44,6 +44,19 @@ public data class ActionBinding(
     val typingActualSource: TypingActualSource?,
 )
 
+public enum class ClientType {
+    /**
+     * The binding is going to be bundled with the library.
+     */
+    BUNDLED_WITH_LIB,
+
+    /**
+     * The binding is going to be generated on the client side, and consumed
+     * via `@file:Import(...)`.
+     */
+    CLIENT_SIDE_GENERATION,
+}
+
 private object Types {
     val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
     val nullableString = String::class.asTypeName().copy(nullable = true)
@@ -60,7 +73,7 @@ public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata = this.fetchMetadata(metadataRevision),
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?> = provideTypes(metadataRevision),
-    generateForScript: Boolean = false,
+    clientType: ClientType = ClientType.BUNDLED_WITH_LIB,
 ): ActionBinding {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
@@ -71,9 +84,9 @@ public fun ActionCoords.generateBinding(
         println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
     }
 
-    val className = this.buildActionClassName(includeVersion = !generateForScript)
+    val className = this.buildActionClassName(includeVersion = clientType == ClientType.BUNDLED_WITH_LIB)
     val actionBindingSourceCode =
-        generateActionBindingSourceCode(metadataProcessed, this, inputTypings.first, className, generateForScript = generateForScript)
+        generateActionBindingSourceCode(metadataProcessed, this, inputTypings.first, className, clientType)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
@@ -101,11 +114,15 @@ private fun generateActionBindingSourceCode(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
-    generateForScript: Boolean,
+    clientType: ClientType,
 ): String {
     val fileSpec =
         FileSpec.builder(
-            if (generateForScript) "" else "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+            if (clientType == ClientType.BUNDLED_WITH_LIB) {
+                "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
+            } else {
+                ""
+            },
             className,
         )
             .addFileComment(
@@ -115,14 +132,14 @@ private fun generateActionBindingSourceCode(
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
             )
-            .addType(generateActionClass(metadata, coords, inputTypings, className, generateForScript = generateForScript))
+            .addType(generateActionClass(metadata, coords, inputTypings, className, clientType))
             .addSuppressAnnotation(metadata, coords)
             .indent("    ")
             .build()
     return buildString {
         fileSpec.writeTo(this)
     }.let {
-        if (generateForScript) {
+        if (clientType == ClientType.CLIENT_SIDE_GENERATION) {
             it.lines()
                 .filter { !it.startsWith("import io.github.typesafegithub.workflows.actions.") }
                 .joinToString(separator = "\n")
@@ -157,18 +174,18 @@ private fun generateActionClass(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
-    generateForScript: Boolean,
+    clientType: ClientType,
 ): TypeSpec {
     return TypeSpec.classBuilder(className)
         .addModifiers(KModifier.DATA)
         .apply {
-            if (generateForScript) {
+            if (clientType == ClientType.CLIENT_SIDE_GENERATION) {
                 addExperimentalAnnotation()
             }
         }
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
-        .inheritsFromRegularAction(coords, metadata, className, generateForScript = generateForScript)
+        .inheritsFromRegularAction(coords, metadata, className, clientType)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className))
         .properties(metadata, coords, inputTypings, className)
         .addFunction(metadata.secondaryConstructor(inputTypings, coords, className))
@@ -332,7 +349,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
     coords: ActionCoords,
     metadata: Metadata,
     className: String,
-    generateForScript: Boolean,
+    clientType: ClientType,
 ): TypeSpec.Builder {
     val superclass =
         ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
@@ -341,7 +358,11 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
                     OutputsBase
                 } else {
                     ClassName(
-                        if (generateForScript) "" else "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+                        if (clientType == ClientType.BUNDLED_WITH_LIB) {
+                            "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
+                        } else {
+                            ""
+                        },
                         className,
                         "Outputs",
                     )
