@@ -11,6 +11,7 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondOutputStream
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
+import io.ktor.server.routing.head
 import io.ktor.server.routing.routing
 
 fun main() {
@@ -32,6 +33,23 @@ fun main() {
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
                 }
             }
+            head("/binding/{owner}/{name}/{version}/{file}") {
+                val name = call.parameters["name"]!!
+                val version = call.parameters["version"]!!
+                val file = call.parameters["file"]!!
+                when (file) {
+                    "$name-$version.jar" -> call.respondText("ok", status = HttpStatusCode.OK)
+                    "$name-$version.pom" -> call.respondText("ok", status = HttpStatusCode.OK)
+                    "$name-$version.module" -> call.respondText("ok", status = HttpStatusCode.OK)
+                    else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
+                }
+            }
+//            route("{...}") {
+//                handle {
+//                    println("Unhandled request to ${call.request.local.uri}")
+//                    call.respondText("Not found", status = HttpStatusCode.NotFound)
+//                }
+//            }
         }
     }.start(wait = true)
 }
