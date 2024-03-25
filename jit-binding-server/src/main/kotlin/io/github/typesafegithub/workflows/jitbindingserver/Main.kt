@@ -1,6 +1,8 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.mavenbinding.buildJar
+import io.github.typesafegithub.workflows.mavenbinding.buildModuleFile
+import io.github.typesafegithub.workflows.mavenbinding.buildPomFile
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -25,6 +27,8 @@ fun main() {
                         status = HttpStatusCode.OK,
                         producer = { this.buildJar(owner = owner, name = name, version = version) },
                     )
+                    "$name-$version.pom" -> call.respondText(buildPomFile(owner = owner, name = name, version = version))
+                    "$name-$version.module" -> call.respondText(buildModuleFile(owner = owner, name = name, version = version))
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
                 }
             }
