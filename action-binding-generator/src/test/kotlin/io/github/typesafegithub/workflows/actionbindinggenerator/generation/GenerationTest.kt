@@ -388,7 +388,7 @@ class GenerationTest : FunSpec({
         binding.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
     }
 
-    test("action binding generated to be used from a script") {
+    test("action binding generated on the client side") {
         // given
         val actionManifest =
             Metadata(
@@ -426,7 +426,7 @@ class GenerationTest : FunSpec({
             coords.generateBinding(
                 metadataRevision = FromLockfile,
                 metadata = actionManifest,
-                generateForScript = true,
+                clientType = ClientType.CLIENT_SIDE_GENERATION,
                 inputTypings =
                     Pair(
                         mapOf(
