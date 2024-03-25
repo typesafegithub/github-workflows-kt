@@ -12,9 +12,12 @@ import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
+
+val GRADLE_ENCRYPTION_KEY by Contexts.secrets
 
 @OptIn(ExperimentalClientSideBindings::class)
 workflow(
@@ -32,7 +35,9 @@ workflow(
         ) {
             uses(action = Checkout())
             setupJava()
-            uses(action = ActionsSetupGradle())
+            uses(action = ActionsSetupGradle(
+                cacheEncryptionKey = expr { GRADLE_ENCRYPTION_KEY },
+            ))
             run(
                 name = "Build",
                 command = "./gradlew build",
