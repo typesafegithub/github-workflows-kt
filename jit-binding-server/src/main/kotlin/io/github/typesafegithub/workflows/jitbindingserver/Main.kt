@@ -34,6 +34,7 @@ fun main() {
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
                 }
             }
+
             head("/binding/{owner}/{name}/{version}/{file}") {
                 val name = call.parameters["name"]!!
                 val version = call.parameters["version"]!!
@@ -45,12 +46,6 @@ fun main() {
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
                 }
             }
-//            route("{...}") {
-//                handle {
-//                    println("Unhandled request to ${call.request.local.uri}")
-//                    call.respondText("Not found", status = HttpStatusCode.NotFound)
-//                }
-//            }
         }
     }.start(wait = true)
 }
