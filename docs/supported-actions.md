@@ -122,7 +122,7 @@ Click on a version to see the binding's code.
 * ruby
     * [setup-ruby](https://github.com/ruby/setup-ruby) - v1: [`SetupRubyV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/ruby/SetupRubyV1.kt)
 * softprops
-    * [action-gh-release](https://github.com/softprops/action-gh-release) - v1: [`ActionGhReleaseV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/softprops/ActionGhReleaseV1.kt)
+    * [action-gh-release](https://github.com/softprops/action-gh-release) - v1: [`ActionGhReleaseV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/softprops/ActionGhReleaseV1.kt), v2: [`ActionGhReleaseV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/softprops/ActionGhReleaseV2.kt)
 * stefanzweifel
     * [git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action) - v4: [`GitAutoCommitActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/stefanzweifel/GitAutoCommitActionV4.kt), v5: [`GitAutoCommitActionV5`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/stefanzweifel/GitAutoCommitActionV5.kt)
 * subosito
@@ -141,6 +141,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 160
+* counting each version separately: 161
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
