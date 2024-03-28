@@ -55,6 +55,11 @@ public enum class ClientType {
      * via `@file:Import(...)`.
      */
     CLIENT_SIDE_GENERATION,
+
+    /**
+     * The binding is going to be provided in a versioned JAR.
+     */
+    VERSIONED_JAR,
 }
 
 private object Types {
@@ -118,7 +123,7 @@ private fun generateActionBindingSourceCode(
 ): String {
     val fileSpec =
         FileSpec.builder(
-            if (clientType == ClientType.BUNDLED_WITH_LIB) {
+            if (clientType != ClientType.CLIENT_SIDE_GENERATION) {
                 "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
             } else {
                 ""
