@@ -84,6 +84,7 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/gen
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/generation/ClientType : java/lang/Enum {
 	public static final field BUNDLED_WITH_LIB Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ClientType;
 	public static final field CLIENT_SIDE_GENERATION Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ClientType;
+	public static final field VERSIONED_JAR Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ClientType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ClientType;
 	public static fun values ()[Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ClientType;
