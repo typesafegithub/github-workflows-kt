@@ -1,6 +1,9 @@
+import io.ktor.plugin.features.*
+
 plugins {
     buildsrc.convention.`kotlin-jvm`
     application
+    id("io.ktor.plugin") version "2.3.9"
 }
 
 dependencies {
@@ -14,4 +17,20 @@ dependencies {
 
 application {
     mainClass.set("io.github.typesafegithub.workflows.jitbindingserver.MainKt")
+}
+
+val dockerAppName = "github-workflows-kt-jit-binding-server"
+
+ktor {
+    docker {
+        localImageName.set(dockerAppName)
+
+        externalRegistry.set(
+            DockerImageRegistry.dockerHub(
+                appName = provider { dockerAppName },
+                username = providers.environmentVariable("DOCKERHUB_USERNAME"),
+                password = providers.environmentVariable("DOCKERHUB_PASSWORD"),
+            ),
+        )
+    }
 }
