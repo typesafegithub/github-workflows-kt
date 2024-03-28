@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.softprops
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -48,16 +46,15 @@ import kotlin.collections.toTypedArray
  * If name is specified, the specified name will be used; otherwise, a name will be automatically
  * generated. If body is specified, the body will be pre-pended to the automatically generated notes.
  * @param appendBody Append to existing body instead of overwriting it. Default is false.
+ * @param makeLatest Specifies whether this release should be set as the latest release for the
+ * repository. Drafts and prereleases cannot be set as latest. Can be `true`, `false`, or `legacy`.
+ * Uses GitHub api default if not provided
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: ActionGhReleaseV2",
-    replaceWith = ReplaceWith("ActionGhReleaseV2"),
-)
-public data class ActionGhReleaseV1 private constructor(
+public data class ActionGhReleaseV2 private constructor(
     /**
      * Note-worthy description of changes in release
      */
@@ -120,6 +117,12 @@ public data class ActionGhReleaseV1 private constructor(
      */
     public val appendBody: Boolean? = null,
     /**
+     * Specifies whether this release should be set as the latest release for the repository. Drafts
+     * and prereleases cannot be set as latest. Can be `true`, `false`, or `legacy`. Uses GitHub api
+     * default if not provided
+     */
+    public val makeLatest: ActionGhReleaseV2.MakeLatest? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -128,8 +131,8 @@ public data class ActionGhReleaseV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionGhReleaseV1.Outputs>("softprops", "action-gh-release", _customVersion ?:
-        "v1") {
+) : RegularAction<ActionGhReleaseV2.Outputs>("softprops", "action-gh-release", _customVersion ?:
+        "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         body: String? = null,
@@ -146,13 +149,14 @@ public data class ActionGhReleaseV1 private constructor(
         discussionCategoryName: String? = null,
         generateReleaseNotes: Boolean? = null,
         appendBody: Boolean? = null,
+        makeLatest: ActionGhReleaseV2.MakeLatest? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(body=body, bodyPath=bodyPath, name=name, tagName=tagName, draft=draft,
             prerelease=prerelease, files=files, failOnUnmatchedFiles=failOnUnmatchedFiles,
             repository=repository, token=token, targetCommitish=targetCommitish,
             discussionCategoryName=discussionCategoryName,
-            generateReleaseNotes=generateReleaseNotes, appendBody=appendBody,
+            generateReleaseNotes=generateReleaseNotes, appendBody=appendBody, makeLatest=makeLatest,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -172,11 +176,26 @@ public data class ActionGhReleaseV1 private constructor(
             discussionCategoryName?.let { "discussion_category_name" to it },
             generateReleaseNotes?.let { "generate_release_notes" to it.toString() },
             appendBody?.let { "append_body" to it.toString() },
+            makeLatest?.let { "make_latest" to it.stringValue },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public sealed class MakeLatest(
+        public val stringValue: String,
+    ) {
+        public object True : ActionGhReleaseV2.MakeLatest("true")
+
+        public object False : ActionGhReleaseV2.MakeLatest("false")
+
+        public object Legacy : ActionGhReleaseV2.MakeLatest("legacy")
+
+        public class Custom(
+            customStringValue: String,
+        ) : ActionGhReleaseV2.MakeLatest(customStringValue)
+    }
 
     public class Outputs(
         stepId: String,
