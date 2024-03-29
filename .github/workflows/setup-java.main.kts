@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.12.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
 @file:Import("generated/actions/setup-java.kt")
 
 import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
