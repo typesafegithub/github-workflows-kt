@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ClientType
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
@@ -40,6 +41,7 @@ private fun generateBinding(
         )
     return actionCoords.generateBinding(
         metadataRevision = NewestForVersion,
+        clientType = ClientType.VERSIONED_JAR,
     )
 }
 
