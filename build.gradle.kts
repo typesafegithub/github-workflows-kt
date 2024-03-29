@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.typesafegithub"
-version = "1.12.1-SNAPSHOT"
+version = "1.13.0"
 
 nexusPublishing {
     repositories {
