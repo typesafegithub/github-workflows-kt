@@ -18,7 +18,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class GenerationTest : FunSpec({
-    val actionManifestWithAllTypesOfInputs =
+    val actionManifestWithAllTypesOfInputsAndSomeOutput =
         Metadata(
             name = "Do something cool",
             description = "This is a test description that should be put in the KDoc comment for a class",
@@ -76,6 +76,10 @@ class GenerationTest : FunSpec({
                     "list-ints" to Input("List of integers"),
                     "list-enums" to Input("List of enums"),
                     "list-int-special" to Input("List of integer with special values"),
+                ),
+            outputs =
+                mapOf(
+                    "baz-goo" to Output(description = "Cool output!"),
                 ),
         )
     val typingsForAllTypesOfInputs =
@@ -194,7 +198,7 @@ class GenerationTest : FunSpec({
         val binding =
             coords.generateBinding(
                 metadataRevision = FromLockfile,
-                metadata = actionManifestWithAllTypesOfInputs,
+                metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
                 inputTypings =
                     Pair(
                         typingsForAllTypesOfInputs,
@@ -507,7 +511,7 @@ class GenerationTest : FunSpec({
         val binding =
             coords.generateBinding(
                 metadataRevision = FromLockfile,
-                metadata = actionManifestWithAllTypesOfInputs,
+                metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
                 clientType = ClientType.VERSIONED_JAR,
                 inputTypings =
                     Pair(

@@ -363,7 +363,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
                     OutputsBase
                 } else {
                     ClassName(
-                        if (clientType == ClientType.BUNDLED_WITH_LIB) {
+                        if (clientType != ClientType.CLIENT_SIDE_GENERATION) {
                             "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
                         } else {
                             ""

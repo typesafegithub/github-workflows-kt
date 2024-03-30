@@ -104,8 +104,8 @@ public data class ActionWithAllTypesOfInputsV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-all-types-of-inputs", _customVersion ?:
-        "v3") {
+) : RegularAction<ActionWithAllTypesOfInputsV3.Outputs>("john-smith",
+        "action-with-all-types-of-inputs", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         fooBar: String,
@@ -147,7 +147,7 @@ public data class ActionWithAllTypesOfInputsV3 private constructor(
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
     public sealed class Bin(
         public val stringValue: String,
@@ -207,5 +207,14 @@ public data class ActionWithAllTypesOfInputsV3 private constructor(
         ) : ActionWithAllTypesOfInputsV3.MyInt(requestedValue)
 
         public object TheAnswer : ActionWithAllTypesOfInputsV3.MyInt(42)
+    }
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * Cool output!
+         */
+        public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
     }
 }
