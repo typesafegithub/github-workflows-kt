@@ -78,9 +78,9 @@ class GenerationTest : FunSpec({
                     "list-int-special" to Input("List of integer with special values"),
                 ),
             outputs =
-            mapOf(
-                "baz-goo" to Output(description = "Cool output!"),
-            ),
+                mapOf(
+                    "baz-goo" to Output(description = "Cool output!"),
+                ),
         )
     val typingsForAllTypesOfInputs =
         mapOf(
