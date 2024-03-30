@@ -18,6 +18,89 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class GenerationTest : FunSpec({
+    val actionManifestWithAllTypesOfInputs =
+        Metadata(
+            name = "Do something cool",
+            description = "This is a test description that should be put in the KDoc comment for a class",
+            inputs =
+                mapOf(
+                    "foo-bar" to
+                        Input(
+                            description = "Short description",
+                            required = true,
+                            default = null,
+                        ),
+                    "baz-goo" to
+                        Input(
+                            description = "First boolean input!",
+                            required = true,
+                            default = null,
+                        ),
+                    "bin-kin" to
+                        Input(
+                            description = "Boolean and nullable",
+                            required = false,
+                            default = "test",
+                        ),
+                    "int-pint" to
+                        Input(
+                            description = "Integer",
+                            required = true,
+                            default = null,
+                        ),
+                    "flo-pint" to
+                        Input(
+                            description = "Float",
+                            required = true,
+                            default = null,
+                        ),
+                    "fin-bin" to
+                        Input(
+                            description = "Enumeration",
+                            required = true,
+                            default = null,
+                        ),
+                    "goo-zen" to
+                        Input(
+                            description = "Integer with special value",
+                            required = true,
+                            default = null,
+                        ),
+                    "bah-enum" to
+                        Input(
+                            description = "Enum with custom naming",
+                            required = true,
+                            default = null,
+                        ),
+                    "list-strings" to Input("List of strings"),
+                    "list-ints" to Input("List of integers"),
+                    "list-enums" to Input("List of enums"),
+                    "list-int-special" to Input("List of integer with special values"),
+                ),
+        )
+    val typingsForAllTypesOfInputs =
+        mapOf(
+            "baz-goo" to BooleanTyping,
+            "bin-kin" to BooleanTyping,
+            "int-pint" to IntegerTyping,
+            "flo-pint" to FloatTyping,
+            "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
+            "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
+            "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+            "list-strings" to ListOfTypings(",", StringTyping),
+            "list-ints" to ListOfTypings(",", IntegerTyping),
+            "list-enums" to
+                ListOfTypings(
+                    delimiter = ",",
+                    typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
+                ),
+            "list-int-special" to
+                ListOfTypings(
+                    delimiter = ",",
+                    typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
+                ),
+        )
+
     test("action with required inputs as strings, no outputs") {
         // given
         val actionManifest =
@@ -105,96 +188,16 @@ class GenerationTest : FunSpec({
 
     test("action with all types of inputs") {
         // given
-        val actionManifest =
-            Metadata(
-                name = "Do something cool",
-                description = "This is a test description that should be put in the KDoc comment for a class",
-                inputs =
-                    mapOf(
-                        "foo-bar" to
-                            Input(
-                                description = "Short description",
-                                required = true,
-                                default = null,
-                            ),
-                        "baz-goo" to
-                            Input(
-                                description = "First boolean input!",
-                                required = true,
-                                default = null,
-                            ),
-                        "bin-kin" to
-                            Input(
-                                description = "Boolean and nullable",
-                                required = false,
-                                default = "test",
-                            ),
-                        "int-pint" to
-                            Input(
-                                description = "Integer",
-                                required = true,
-                                default = null,
-                            ),
-                        "flo-pint" to
-                            Input(
-                                description = "Float",
-                                required = true,
-                                default = null,
-                            ),
-                        "fin-bin" to
-                            Input(
-                                description = "Enumeration",
-                                required = true,
-                                default = null,
-                            ),
-                        "goo-zen" to
-                            Input(
-                                description = "Integer with special value",
-                                required = true,
-                                default = null,
-                            ),
-                        "bah-enum" to
-                            Input(
-                                description = "Enum with custom naming",
-                                required = true,
-                                default = null,
-                            ),
-                        "list-strings" to Input("List of strings"),
-                        "list-ints" to Input("List of integers"),
-                        "list-enums" to Input("List of enums"),
-                        "list-int-special" to Input("List of integer with special values"),
-                    ),
-            )
         val coords = ActionCoords("john-smith", "action-with-all-types-of-inputs", "v3")
 
         // when
         val binding =
             coords.generateBinding(
                 metadataRevision = FromLockfile,
-                metadata = actionManifest,
+                metadata = actionManifestWithAllTypesOfInputs,
                 inputTypings =
                     Pair(
-                        mapOf(
-                            "baz-goo" to BooleanTyping,
-                            "bin-kin" to BooleanTyping,
-                            "int-pint" to IntegerTyping,
-                            "flo-pint" to FloatTyping,
-                            "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
-                            "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
-                            "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
-                            "list-strings" to ListOfTypings(",", StringTyping),
-                            "list-ints" to ListOfTypings(",", IntegerTyping),
-                            "list-enums" to
-                                ListOfTypings(
-                                    delimiter = ",",
-                                    typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
-                                ),
-                            "list-int-special" to
-                                ListOfTypings(
-                                    delimiter = ",",
-                                    typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
-                                ),
-                        ),
+                        typingsForAllTypesOfInputs,
                         ACTION,
                     ),
             )
