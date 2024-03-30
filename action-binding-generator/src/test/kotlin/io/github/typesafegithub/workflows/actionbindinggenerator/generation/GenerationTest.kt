@@ -103,7 +103,7 @@ class GenerationTest : FunSpec({
         binding.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
     }
 
-    test("action with non-string inputs") {
+    test("action with all types of inputs") {
         // given
         val actionManifest =
             Metadata(
@@ -141,12 +141,6 @@ class GenerationTest : FunSpec({
                                 required = true,
                                 default = null,
                             ),
-                        "boo-zoo" to
-                            Input(
-                                description = "List of strings",
-                                required = true,
-                                default = null,
-                            ),
                         "fin-bin" to
                             Input(
                                 description = "Enumeration",
@@ -165,9 +159,13 @@ class GenerationTest : FunSpec({
                                 required = true,
                                 default = null,
                             ),
+                        "list-strings" to Input("List of strings"),
+                        "list-ints" to Input("List of integers"),
+                        "list-enums" to Input("List of enums"),
+                        "list-int-special" to Input("List of integer with special values"),
                     ),
             )
-        val coords = ActionCoords("john-smith", "action-with-non-string-inputs", "v3")
+        val coords = ActionCoords("john-smith", "action-with-all-types-of-inputs", "v3")
 
         // when
         val binding =
@@ -181,17 +179,28 @@ class GenerationTest : FunSpec({
                             "bin-kin" to BooleanTyping,
                             "int-pint" to IntegerTyping,
                             "flo-pint" to FloatTyping,
-                            "boo-zoo" to ListOfTypings(","),
                             "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123")),
                             "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
                             "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
+                            "list-strings" to ListOfTypings(",", StringTyping),
+                            "list-ints" to ListOfTypings(",", IntegerTyping),
+                            "list-enums" to
+                                ListOfTypings(
+                                    delimiter = ",",
+                                    typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
+                                ),
+                            "list-int-special" to
+                                ListOfTypings(
+                                    delimiter = ",",
+                                    typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
+                                ),
                         ),
                         ACTION,
                     ),
             )
 
         // then
-        binding.shouldMatchFile("ActionWithNonStringInputsV3.kt")
+        binding.shouldMatchFile("ActionWithAllTypesOfInputsV3.kt")
     }
 
     test("action with outputs") {
@@ -293,52 +302,6 @@ class GenerationTest : FunSpec({
 
         // then
         binding.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
-    }
-
-    test("action with ListOfTypings") {
-        // given
-        val actionManifest =
-            Metadata(
-                name = "Do something cool",
-                description = "This is a test description that should be put in the KDoc comment for a class",
-                inputs =
-                    mapOf(
-                        "list-strings" to Input("List of strings"),
-                        "list-ints" to Input("List of integers"),
-                        "list-enums" to Input("List of enums"),
-                        "list-int-special" to Input("List of integer with special values"),
-                    ),
-            )
-        val inputTypings =
-            Pair(
-                mapOf(
-                    "list-strings" to ListOfTypings(",", StringTyping),
-                    "list-ints" to ListOfTypings(",", IntegerTyping),
-                    "list-enums" to
-                        ListOfTypings(
-                            delimiter = ",",
-                            typing = EnumTyping("MyEnum", listOf("one", "two", "three")),
-                        ),
-                    "list-int-special" to
-                        ListOfTypings(
-                            delimiter = ",",
-                            typing = IntegerWithSpecialValueTyping("MyInt", mapOf("the-answer" to 42)),
-                        ),
-                ),
-                ACTION,
-            )
-        val coords = ActionCoords("john-smith", "simple-action-with-lists", "v3")
-
-        // when
-        val binding =
-            coords.generateBinding(
-                metadataRevision = FromLockfile,
-                metadata = actionManifest,
-                inputTypings = inputTypings,
-            )
-
-        // then
-        binding.shouldMatchFile("SimpleActionWithListsV3.kt")
     }
 
     test("action with inputs sharing type") {
