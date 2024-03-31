@@ -16,7 +16,6 @@ import org.snakeyaml.engine.v2.events.SequenceStartEvent
 import org.snakeyaml.engine.v2.events.StreamEndEvent
 import org.snakeyaml.engine.v2.events.StreamStartEvent
 import java.io.StringWriter
-import java.util.Optional
 
 internal fun Any.toYaml(): String {
     val settings =
@@ -33,7 +32,7 @@ internal fun Any.toYaml(): String {
         }
     val emitter = Emitter(settings, writer)
     emitter.emit(StreamStartEvent())
-    emitter.emit(DocumentStartEvent(false, Optional.empty(), emptyMap()))
+    emitter.emit(DocumentStartEvent(false, null, emptyMap()))
 
     this.elementToYaml(emitter)
 
@@ -52,14 +51,14 @@ private fun Any?.elementToYaml(emitter: Emitter) {
 }
 
 private fun Map<*, *>.mapToYaml(emitter: Emitter) {
-    emitter.emit(MappingStartEvent(Optional.empty(), Optional.empty(), true, FlowStyle.BLOCK))
+    emitter.emit(MappingStartEvent(null, null, true, FlowStyle.BLOCK))
 
     this.forEach { (key, value) ->
         // key
         emitter.emit(
             ScalarEvent(
-                Optional.empty(),
-                Optional.empty(),
+                null,
+                null,
                 ImplicitTuple(true, true),
                 key.toString(),
                 ScalarStyle.PLAIN,
@@ -73,7 +72,7 @@ private fun Map<*, *>.mapToYaml(emitter: Emitter) {
 }
 
 private fun List<*>.listToYaml(emitter: Emitter) {
-    emitter.emit(SequenceStartEvent(Optional.empty(), Optional.empty(), true, FlowStyle.BLOCK))
+    emitter.emit(SequenceStartEvent(null, null, true, FlowStyle.BLOCK))
 
     this.forEach { value ->
         value.elementToYaml(emitter)
@@ -94,6 +93,6 @@ private fun Any?.scalarToYaml(emitter: Emitter) {
             ScalarStyle.PLAIN
         }
     emitter.emit(
-        ScalarEvent(Optional.empty(), Optional.empty(), ImplicitTuple(true, true), this.toString(), scalarStyle),
+        ScalarEvent(null, null, ImplicitTuple(true, true), this.toString(), scalarStyle),
     )
 }
