@@ -8,7 +8,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.server.response.respondOutputStream
+import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.head
@@ -23,12 +23,13 @@ fun main() {
                 val version = call.parameters["version"]!!
                 val file = call.parameters["file"]!!
                 when (file) {
-                    "$name-$version.jar" ->
-                        call.respondOutputStream(
+                    "$name-$version.jar" -> {
+                        val jarByteArray = buildJar(owner = owner, name = name, version = version)
+                        call.respondBytes(
+                            bytes = jarByteArray,
                             contentType = ContentType.parse("application/java-archive"),
-                            status = HttpStatusCode.OK,
-                            producer = { this.buildJar(owner = owner, name = name, version = version) },
                         )
+                    }
                     "$name-$version.pom" -> call.respondText(buildPomFile(owner = owner, name = name, version = version))
                     "$name-$version.module" -> call.respondText(buildModuleFile(owner = owner, name = name, version = version))
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
