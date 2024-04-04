@@ -63,6 +63,7 @@ import kotlin.collections.toTypedArray
  * @param slug Specify the slug manually (Enterprise use)
  * @param url Specify the base url to upload (Enterprise use)
  * @param useLegacyUploadEndpoint Use the legacy upload endpoint
+ * @param useOidc Use OIDC instead of token. This will ignore any token supplied
  * @param verbose Specify whether the Codecov output should be verbose
  * @param version Specify which version of the Codecov CLI should be used. Defaults to `latest`
  * @param workingDirectory Directory in which to execute codecov.sh
@@ -198,6 +199,10 @@ public data class CodecovActionV4 private constructor(
      */
     public val useLegacyUploadEndpoint: Boolean? = null,
     /**
+     * Use OIDC instead of token. This will ignore any token supplied
+     */
+    public val useOidc: String? = null,
+    /**
      * Specify whether the Codecov output should be verbose
      */
     public val verbose: Boolean? = null,
@@ -252,6 +257,7 @@ public data class CodecovActionV4 private constructor(
         slug: String? = null,
         url: String? = null,
         useLegacyUploadEndpoint: Boolean? = null,
+        useOidc: String? = null,
         verbose: Boolean? = null,
         version: String? = null,
         workingDirectory: String? = null,
@@ -265,9 +271,9 @@ public data class CodecovActionV4 private constructor(
             name=name, os=os, overrideBranch=overrideBranch, overrideBuild=overrideBuild,
             overrideBuildUrl=overrideBuildUrl, overrideCommit=overrideCommit, overridePr=overridePr,
             plugin=plugin, plugins=plugins, reportCode=reportCode, rootDir=rootDir, slug=slug,
-            url=url, useLegacyUploadEndpoint=useLegacyUploadEndpoint, verbose=verbose,
-            version=version, workingDirectory=workingDirectory, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            url=url, useLegacyUploadEndpoint=useLegacyUploadEndpoint, useOidc=useOidc,
+            verbose=verbose, version=version, workingDirectory=workingDirectory,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -303,6 +309,7 @@ public data class CodecovActionV4 private constructor(
             slug?.let { "slug" to it },
             url?.let { "url" to it },
             useLegacyUploadEndpoint?.let { "use_legacy_upload_endpoint" to it.toString() },
+            useOidc?.let { "use_oidc" to it },
             verbose?.let { "verbose" to it.toString() },
             version?.let { "version" to it },
             workingDirectory?.let { "working-directory" to it },
