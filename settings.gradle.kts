@@ -20,12 +20,13 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlwaysIf(System.getenv("GITHUB_ACTIONS") == "true")
-        publishOnFailure()
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
+        publishing.onlyIf {
+            System.getenv("GITHUB_ACTIONS") == "true" && it.buildResult.failures.isNotEmpty()
+        }
     }
 }
 
