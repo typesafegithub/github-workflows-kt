@@ -5,12 +5,14 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestFo
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ClientType
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
+import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
 import org.jetbrains.kotlin.cli.common.messages.PrintingMessageCollector
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.config.Services
-import java.io.OutputStream
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.createParentDirectories
@@ -18,14 +20,16 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.div
 import kotlin.io.path.writeText
 
-fun OutputStream.buildJar(
+fun buildJar(
     owner: String,
     name: String,
     version: String,
-) {
+): ByteArray {
     val binding = generateBinding(owner = owner, name = name, version = version)
     val pathWithJarContents = binding.compileBinding()
-    return this.createZipFile(pathWithJarContents)
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    byteArrayOutputStream.createZipFile(pathWithJarContents)
+    return byteArrayOutputStream.toByteArray()
 }
 
 private fun generateBinding(
@@ -62,16 +66,21 @@ private fun ActionBinding.compileBinding(): Path {
             noReflect = true
             includeRuntime = false
         }
+    val compilerMessagesOutputStream = ByteArrayOutputStream()
     val compilerMessageCollector =
         PrintingMessageCollector(
-            System.out,
+            PrintStream(compilerMessagesOutputStream),
             MessageRenderer.GRADLE_STYLE,
             false,
         )
-    K2JVMCompiler().exec(
-        messageCollector = compilerMessageCollector,
-        services = Services.EMPTY,
-        arguments = args,
-    )
+    val exitCode =
+        K2JVMCompiler().exec(
+            messageCollector = compilerMessageCollector,
+            services = Services.EMPTY,
+            arguments = args,
+        )
+    require(exitCode == ExitCode.OK) {
+        "Binding compilation failed! Compiler messages: $compilerMessagesOutputStream"
+    }
     return compilationOutput
 }
