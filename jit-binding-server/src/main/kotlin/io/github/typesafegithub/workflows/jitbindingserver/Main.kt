@@ -47,6 +47,10 @@ fun main() {
                     else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
                 }
             }
+
+            get("/status") {
+                call.respondText("OK")
+            }
         }
     }.start(wait = true)
 }
