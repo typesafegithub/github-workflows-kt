@@ -54,7 +54,7 @@ workflow(
         run(name = "Wait for the server to respond") {
             val timeSource = TimeSource.Monotonic
             val waitStart = timeSource.markNow()
-            val timeout = 1.minutes
+            val timeout = 2.minutes
 
             while (timeSource.markNow() - waitStart < timeout) {
                 try {
