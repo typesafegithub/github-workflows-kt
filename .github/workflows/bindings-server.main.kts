@@ -8,6 +8,7 @@ import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.net.URI
@@ -22,16 +23,16 @@ val GRADLE_ENCRYPTION_KEY by Contexts.secrets
 
 @OptIn(ExperimentalKotlinLogicStep::class)
 workflow(
-    name = "End-to-end tests",
+    name = "Bindings server",
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    job(
-        id = "test-jit-server",
-        name = "Test Just-In-Time bindings server",
+    val endToEndTest = job(
+        id = "end-to-end-test",
+        name = "End-to-end test",
         runsOn = UbuntuLatest,
     ) {
         // Using bundled bindings to avoid generating them here.
@@ -72,5 +73,18 @@ workflow(
                 .github/workflows/test-script-consuming-jit-bindings.main.kts
             """.trimIndent(),
         )
+    }
+
+    job(
+        id = "deploy",
+        name = "Deploy to DockerHub",
+        runsOn = UbuntuLatest,
+        `if` = expr { "${github.event_name} == 'push'" },
+        needs = listOf(endToEndTest),
+        _customArguments = mapOf(
+            "environment" to "DockerHub",
+        )
+    ) {
+        run(command = "echo TODO")
     }
 }.writeToFile()
