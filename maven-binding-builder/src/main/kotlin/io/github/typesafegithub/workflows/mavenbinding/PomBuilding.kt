@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-fun buildPomFile(
+internal fun buildPomFile(
     owner: String,
     name: String,
     version: String,

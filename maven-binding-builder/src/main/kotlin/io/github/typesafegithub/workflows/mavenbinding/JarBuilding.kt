@@ -20,7 +20,7 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.div
 import kotlin.io.path.writeText
 
-fun buildJar(
+internal fun buildJar(
     owner: String,
     name: String,
     version: String,

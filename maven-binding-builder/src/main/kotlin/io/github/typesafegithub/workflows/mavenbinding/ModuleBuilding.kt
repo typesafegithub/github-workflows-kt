@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-fun buildModuleFile(
+internal fun buildModuleFile(
     owner: String,
     name: String,
     version: String,
