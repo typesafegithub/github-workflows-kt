@@ -21,7 +21,7 @@ data class JarArtifact(val data: ByteArray) : Artifact {
 
 fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact> =
     mapOf(
-        "$name-$version.jar" to JarArtifact(buildJar(owner = owner, name = name, version = version)),
-        "$name-$version.pom" to TextArtifact(buildPomFile(owner = owner, name = name, version = version)),
-        "$name-$version.module" to TextArtifact(buildModuleFile(owner = owner, name = name, version = version)),
+        "$name-$version.jar" to JarArtifact(buildJar(owner = owner, name = name.replace("__", "/"), version = version)),
+        "$name-$version.pom" to TextArtifact(buildPomFile(owner = owner, name = name.replace("__", "/"), version = version)),
+        "$name-$version.module" to TextArtifact(buildModuleFile(owner = owner, name = name.replace("__", "/"), version = version)),
     )
