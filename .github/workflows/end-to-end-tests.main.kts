@@ -2,7 +2,6 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradleV3
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -37,13 +36,6 @@ workflow(
     ) {
         // Using bundled bindings to avoid generating them here.
         uses(action = CheckoutV4())
-        uses(
-            name = "Set up JDK",
-            action = SetupJavaV4(
-                javaVersion = "11",
-                distribution = SetupJavaV4.Distribution.Zulu,
-            )
-        )
         uses(action = ActionsSetupGradleV3())
 
         run(
@@ -54,7 +46,7 @@ workflow(
         run(name = "Wait for the server to respond") {
             val timeSource = TimeSource.Monotonic
             val waitStart = timeSource.markNow()
-            val timeout = 2.minutes
+            val timeout = 3.minutes
 
             while (timeSource.markNow() - waitStart < timeout) {
                 try {
