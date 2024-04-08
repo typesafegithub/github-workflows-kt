@@ -24,14 +24,7 @@ data class JarArtifact(val data: ByteArray) : Artifact {
 fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact> {
     val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version)
     val pom = buildPomFile(owner = owner, name = name.replace("__", "/"), version = version)
-    val module =
-        buildModuleFile(
-            owner = owner,
-            name = name.replace("__", "/"),
-            version = version,
-            size = jar.size.toLong(),
-            md5Checksum = jar.md5Checksum(),
-        )
+    val module = buildModuleFile(owner = owner, name = name.replace("__", "/"), version = version)
     return mapOf(
         "$name-$version.jar" to JarArtifact(jar),
         "$name-$version.jar.md5" to TextArtifact(jar.md5Checksum()),
