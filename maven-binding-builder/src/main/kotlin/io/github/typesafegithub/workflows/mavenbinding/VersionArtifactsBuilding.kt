@@ -6,20 +6,7 @@ sealed interface Artifact
 
 data class TextArtifact(val data: String) : Artifact
 
-data class JarArtifact(val data: ByteArray) : Artifact {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as JarArtifact
-
-        return data.contentEquals(other.data)
-    }
-
-    override fun hashCode(): Int {
-        return data.contentHashCode()
-    }
-}
+data class JarArtifact(val data: ByteArray) : Artifact
 
 fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact> {
     val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version)
