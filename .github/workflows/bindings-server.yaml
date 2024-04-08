@@ -49,8 +49,19 @@ jobs:
     needs:
     - 'end-to-end-test'
     - 'check_yaml_consistency'
+    env:
+      DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
+      DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
     if: '${{ github.event_name == ''push'' }}'
     environment: 'DockerHub'
     steps:
     - id: 'step-0'
-      run: 'echo TODO'
+      uses: 'actions/checkout@v4'
+    - id: 'step-1'
+      uses: 'gradle/actions/setup-gradle@v3'
+    - id: 'step-2'
+      name: 'Build and publish image'
+      run: './gradlew :jit-binding-server:publishImage'
+    - id: 'step-3'
+      name: 'Use newest image on the server'
+      run: 'curl -X POST ${{ secrets.TRIGGER_IMAGE_PULL }} --insecure'
