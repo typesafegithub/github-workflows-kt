@@ -19,7 +19,9 @@ import java.net.http.HttpResponse.BodyHandlers
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.TimeSource
 
-val GRADLE_ENCRYPTION_KEY by Contexts.secrets
+val DOCKERHUB_USERNAME by Contexts.secrets
+val DOCKERHUB_PASSWORD by Contexts.secrets
+val TRIGGER_IMAGE_PULL by Contexts.secrets
 
 @OptIn(ExperimentalKotlinLogicStep::class)
 workflow(
@@ -81,10 +83,23 @@ workflow(
         runsOn = UbuntuLatest,
         `if` = expr { "${github.event_name} == 'push'" },
         needs = listOf(endToEndTest),
+        env = linkedMapOf(
+            "DOCKERHUB_USERNAME" to expr { DOCKERHUB_USERNAME },
+            "DOCKERHUB_PASSWORD" to expr { DOCKERHUB_PASSWORD },
+        ),
         _customArguments = mapOf(
             "environment" to "DockerHub",
         )
     ) {
-        run(command = "echo TODO")
+        uses(action = CheckoutV4())
+        uses(action = ActionsSetupGradleV3())
+        run(
+            name = "Build and publish image",
+            command = "./gradlew :jit-binding-server:publishImage",
+        )
+        run(
+            name = "Use newest image on the server",
+            command = "curl -X POST ${expr { TRIGGER_IMAGE_PULL }} --insecure",
+        )
     }
 }.writeToFile()
