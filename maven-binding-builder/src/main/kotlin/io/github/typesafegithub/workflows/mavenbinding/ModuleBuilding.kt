@@ -4,6 +4,8 @@ internal fun buildModuleFile(
     owner: String,
     name: String,
     version: String,
+    size: Long,
+    md5Checksum: String,
 ): String =
     """
     {
@@ -38,7 +40,8 @@ internal fun buildModuleFile(
             {
               "name": "$name-$version.jar",
               "url": "$name-$version.jar",
-              "size": 1
+              "size": $size,
+              "md5": "$md5Checksum"
             }
           ]
         },
