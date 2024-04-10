@@ -23,7 +23,7 @@ internal suspend fun buildMavenMetadataFile(
             .format(Instant.now())
     val availableMajorVersions =
         fetchAvailableVersions(owner = owner, name = name, githubToken = githubToken)
-            .filter { !it.contains(".") }
+            .filter { it.removePrefix("v").toIntOrNull() != null }
     val newest = availableMajorVersions.maxBy { it.removePrefix("v") }
     return """
         <?xml version="1.0" encoding="UTF-8"?>
