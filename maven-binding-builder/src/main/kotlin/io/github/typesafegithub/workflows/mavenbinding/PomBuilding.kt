@@ -14,24 +14,11 @@ internal fun buildPomFile(
       <version>$version</version>
       <name>$name</name>
       <description>Auto-generated binding for $owner/$name@$version.</description>
-      <url>https://github.com/typesafegithub/github-workflows-kt</url>
-      <licenses>
-        <license>
-          <name>Apache License, version 2.0</name>
-          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-      </licenses>
-      <developers>
-        <developer>
-          <id>typesafegithub</id>
-          <name>Piotr Krzemiński</name>
-          <email>git@krzeminski.it</email>
-        </developer>
-      </developers>
+      <url>https://github.com/$owner/$name</url>
       <scm>
-        <connection>scm:git:git://github.com/typesafegithub/github-workflows-kt.git/</connection>
-        <developerConnection>scm:git:ssh://github.com:typesafegithub/github-workflows-kt.git</developerConnection>
-        <url>https://github.com/typesafegithub/github-workflows-kt.git</url>
+        <connection>scm:git:git://github.com/$owner/$name.git/</connection>
+        <developerConnection>scm:git:ssh://github.com:$owner/$name.git</developerConnection>
+        <url>https://github.com/$owner/$name.git</url>
       </scm>
       <dependencies></dependencies>
     </project>
