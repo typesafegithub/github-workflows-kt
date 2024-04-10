@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.reactivecircus.cache4k.Cache
-import io.github.typesafegithub.workflows.mavenbinding.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact

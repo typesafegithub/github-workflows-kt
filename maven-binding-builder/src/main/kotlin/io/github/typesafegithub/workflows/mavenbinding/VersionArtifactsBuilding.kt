@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import java.security.MessageDigest
 
 sealed interface Artifact
