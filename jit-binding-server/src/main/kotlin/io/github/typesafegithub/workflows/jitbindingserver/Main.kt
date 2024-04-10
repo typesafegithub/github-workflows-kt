@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
+import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -75,6 +76,29 @@ fun main() {
                         }
                     if (file in bindingArtifacts) {
                         call.respondText("Exists", status = HttpStatusCode.OK)
+                    } else {
+                        call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
+                    }
+                }
+            }
+
+            route("/binding/{owner}/{name}/{file}") {
+                get {
+                    val owner = call.parameters["owner"]!!
+                    val name = call.parameters["name"]!!
+                    val file = call.parameters["file"]!!
+                    val actionCoords =
+                        ActionCoords(
+                            owner = owner,
+                            name = name,
+                            version = "irrelevant",
+                        )
+                    val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = System.getenv("GITHUB_TOKEN"))
+                    if (file in bindingArtifacts) {
+                        when (val artifact = bindingArtifacts[file]) {
+                            is String -> call.respondText(artifact)
+                            else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
+                        }
                     } else {
                         call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
                     }
