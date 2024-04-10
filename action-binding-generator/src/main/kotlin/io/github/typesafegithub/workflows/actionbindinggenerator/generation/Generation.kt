@@ -51,12 +51,6 @@ public enum class ClientType {
     BUNDLED_WITH_LIB,
 
     /**
-     * The binding is going to be generated on the client side, and consumed
-     * via `@file:Import(...)`.
-     */
-    CLIENT_SIDE_GENERATION,
-
-    /**
      * The binding is going to be provided in a versioned JAR.
      */
     VERSIONED_JAR,
@@ -91,7 +85,7 @@ public fun ActionCoords.generateBinding(
 
     val className = this.buildActionClassName(includeVersion = clientType == ClientType.BUNDLED_WITH_LIB)
     val actionBindingSourceCode =
-        generateActionBindingSourceCode(metadataProcessed, this, inputTypings.first, className, clientType)
+        generateActionBindingSourceCode(metadataProcessed, this, inputTypings.first, className)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
@@ -119,15 +113,10 @@ private fun generateActionBindingSourceCode(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
-    clientType: ClientType,
 ): String {
     val fileSpec =
         FileSpec.builder(
-            if (clientType != ClientType.CLIENT_SIDE_GENERATION) {
-                "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
-            } else {
-                ""
-            },
+            "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
             className,
         )
             .addFileComment(
@@ -137,20 +126,12 @@ private fun generateActionBindingSourceCode(
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
             )
-            .addType(generateActionClass(metadata, coords, inputTypings, className, clientType))
+            .addType(generateActionClass(metadata, coords, inputTypings, className))
             .addSuppressAnnotation(metadata, coords)
             .indent("    ")
             .build()
     return buildString {
         fileSpec.writeTo(this)
-    }.let {
-        if (clientType == ClientType.CLIENT_SIDE_GENERATION) {
-            it.lines()
-                .filter { !it.startsWith("import io.github.typesafegithub.workflows.actions.") }
-                .joinToString(separator = "\n")
-        } else {
-            it
-        }
     }
 }
 
@@ -179,18 +160,12 @@ private fun generateActionClass(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
-    clientType: ClientType,
 ): TypeSpec {
     return TypeSpec.classBuilder(className)
         .addModifiers(KModifier.DATA)
-        .apply {
-            if (clientType == ClientType.CLIENT_SIDE_GENERATION) {
-                addExperimentalAnnotation()
-            }
-        }
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
-        .inheritsFromRegularAction(coords, metadata, className, clientType)
+        .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className))
         .properties(metadata, coords, inputTypings, className)
         .addFunction(metadata.secondaryConstructor(inputTypings, coords, className))
@@ -199,13 +174,6 @@ private fun generateActionClass(
         .addOutputClassIfNecessary(metadata)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
-}
-
-private fun TypeSpec.Builder.addExperimentalAnnotation() {
-    addAnnotation(
-        AnnotationSpec.builder(ClassName("io.github.typesafegithub.workflows.annotations", "ExperimentalClientSideBindings"))
-            .build(),
-    )
 }
 
 private fun TypeSpec.Builder.addCustomTypes(
@@ -354,7 +322,6 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
     coords: ActionCoords,
     metadata: Metadata,
     className: String,
-    clientType: ClientType,
 ): TypeSpec.Builder {
     val superclass =
         ClassName("io.github.typesafegithub.workflows.domain.actions", "RegularAction")
@@ -363,11 +330,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
                     OutputsBase
                 } else {
                     ClassName(
-                        if (clientType != ClientType.CLIENT_SIDE_GENERATION) {
-                            "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
-                        } else {
-                            ""
-                        },
+                        "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
                         className,
                         "Outputs",
                     )
