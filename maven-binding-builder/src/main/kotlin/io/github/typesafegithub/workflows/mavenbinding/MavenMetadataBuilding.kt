@@ -22,14 +22,14 @@ internal suspend fun buildMavenMetadataFile(
             .withZone(ZoneId.systemDefault())
             .format(Instant.now())
     val availableMajorVersions =
-        fetchAvailableVersions(owner = owner, name = name, githubToken = githubToken)
+        fetchAvailableVersions(owner = owner, name = name.substringBefore("__"), githubToken = githubToken)
             .filter { it.removePrefix("v").toIntOrNull() != null }
     val newest = availableMajorVersions.maxBy { it.removePrefix("v") }
     return """
         <?xml version="1.0" encoding="UTF-8"?>
         <metadata>
           <groupId>$owner</groupId>
-          <artifactId>$name</artifactId>
+          <artifactId>${name.replace("__", "/")}</artifactId>
           <versioning>
             <latest>$newest</latest>
             <release>$newest</release>

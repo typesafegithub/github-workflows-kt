@@ -27,6 +27,7 @@ import kotlin.time.TimeSource
 val DOCKERHUB_USERNAME by Contexts.secrets
 val DOCKERHUB_PASSWORD by Contexts.secrets
 val TRIGGER_IMAGE_PULL by Contexts.secrets
+val GITHUB_TOKEN by Contexts.secrets
 
 @OptIn(ExperimentalKotlinLogicStep::class)
 workflow(
@@ -41,6 +42,9 @@ workflow(
         id = "end-to-end-test",
         name = "End-to-end test",
         runsOn = UbuntuLatest,
+        env = linkedMapOf(
+            "GITHUB_TOKEN" to expr { GITHUB_TOKEN },
+        ),
     ) {
         uses(action = Checkout())
         uses(action = ActionsSetupGradle())
@@ -78,6 +82,15 @@ workflow(
                 mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
                 .github/workflows/test-script-consuming-jit-bindings.main.kts
             """.trimIndent(),
+        )
+
+        run(
+            name = "Fetch maven-metadata.xml for top-level action",
+            command = "curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml",
+        )
+        run(
+            name = "Fetch maven-metadata.xml for nested action",
+            command = "curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml",
         )
     }
 

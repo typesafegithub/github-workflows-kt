@@ -27,6 +27,8 @@ jobs:
     runs-on: 'ubuntu-latest'
     needs:
     - 'check_yaml_consistency'
+    env:
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
@@ -43,6 +45,12 @@ jobs:
       run: |-
         mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
         .github/workflows/test-script-consuming-jit-bindings.main.kts
+    - id: 'step-5'
+      name: 'Fetch maven-metadata.xml for top-level action'
+      run: 'curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml'
+    - id: 'step-6'
+      name: 'Fetch maven-metadata.xml for nested action'
+      run: 'curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml'
   deploy:
     name: 'Deploy to DockerHub'
     runs-on: 'ubuntu-latest'
