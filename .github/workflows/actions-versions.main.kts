@@ -1,12 +1,18 @@
 #!/usr/bin/env kotlin
+@file:Repository("https://repo1.maven.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
+
+@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("actions:checkout:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("peter-evans:create-issue-from-file:v5")
+
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
-@file:Import("generated/actions/checkout.kt")
-@file:Import("generated/gradle/actions/setup-gradle.kt")
-@file:Import("generated/peter-evans/create-issue-from-file.kt")
 
-import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
+import io.github.typesafegithub.workflows.actions.peterevans.CreateIssueFromFile
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Cron
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
@@ -15,7 +21,6 @@ import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
-@OptIn(ExperimentalClientSideBindings::class)
 workflow(
     name = "Updates available",
     on = listOf(
@@ -48,4 +53,4 @@ workflow(
             )
         )
     }
-}.writeToFile(generateActionBindings = true)
+}.writeToFile()

@@ -17,12 +17,9 @@ jobs:
       name: 'Check out'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
-      name: 'Generate action bindings'
-      run: '.github/workflows/generate-action-bindings.main.kts "build.yaml"'
-    - id: 'step-2'
       name: 'Execute script'
       run: 'rm ''.github/workflows/build.yaml'' && ''.github/workflows/build.main.kts'''
-    - id: 'step-3'
+    - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/build.yaml'''
   build-for-UbuntuLatest:
@@ -127,9 +124,6 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
-      name: 'Generate action bindings'
-      run: '.github/workflows/generate-action-bindings.main.kts'
-    - id: 'step-2'
       run: |-
         find -name *.main.kts -print0 | while read -d $'\0' file
         do
@@ -154,9 +148,6 @@ jobs:
     - id: 'step-2'
       run: 'cd .github/workflows'
     - id: 'step-3'
-      name: 'Generate action bindings'
-      run: '.github/workflows/generate-action-bindings.main.kts'
-    - id: 'step-4'
       name: 'Regenerate all workflow YAMLs'
       run: |-
         find -name "*.main.kts" -print0 | while read -d $'\0' file
@@ -166,6 +157,6 @@ jobs:
                 ($file)
             fi
         done
-    - id: 'step-5'
+    - id: 'step-4'
       name: 'Check if some file is different after regeneration'
       run: 'git diff --exit-code .'

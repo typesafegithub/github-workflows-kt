@@ -1,12 +1,15 @@
 #!/usr/bin/env kotlin
+@file:Repository("https://repo1.maven.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
-@file:Import("generated/gradle/actions/setup-gradle.kt")
-@file:Import("generated/JamesIves/github-pages-deploy-action.kt")
 
-import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
+@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("JamesIves:github-pages-deploy-action:v4")
+
+import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
+import io.github.typesafegithub.workflows.actions.jamesives.GithubPagesDeployAction
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 
-@OptIn(ExperimentalClientSideBindings::class)
 fun JobBuilder<*>.deployDocs() {
     run(command = "pip install -r docs/requirements.txt")
 
