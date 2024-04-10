@@ -1,6 +1,3 @@
-public abstract interface annotation class io/github/typesafegithub/workflows/annotations/ExperimentalClientSideBindings : java/lang/annotation/Annotation {
-}
-
 public abstract interface annotation class io/github/typesafegithub/workflows/annotations/ExperimentalKotlinLogicStep : java/lang/annotation/Annotation {
 }
 
