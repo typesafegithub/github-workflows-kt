@@ -1,10 +1,12 @@
 #!/usr/bin/env kotlin
+@file:Repository("https://repo1.maven.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
-@file:Import("generated/actions/setup-python.kt")
 
-import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
+@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("actions:setup-python:v5")
+
+import io.github.typesafegithub.workflows.actions.actions.SetupPython
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 
-@OptIn(ExperimentalClientSideBindings::class)
 fun JobBuilder<*>.setupPython() =
     uses(action = SetupPython(pythonVersion = "3.8"))

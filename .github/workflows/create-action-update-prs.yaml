@@ -17,12 +17,9 @@ jobs:
       name: 'Check out'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
-      name: 'Generate action bindings'
-      run: '.github/workflows/generate-action-bindings.main.kts "create-action-update-prs.yaml"'
-    - id: 'step-2'
       name: 'Execute script'
       run: 'rm ''.github/workflows/create-action-update-prs.yaml'' && ''.github/workflows/create-action-update-prs.main.kts'''
-    - id: 'step-3'
+    - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/create-action-update-prs.yaml'''
   check-updates-and-create-prs:

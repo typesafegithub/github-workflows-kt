@@ -1,8 +1,13 @@
 #!/usr/bin/env kotlin
+@file:Repository("https://repo1.maven.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradleV3
+@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("actions:checkout:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v3")
+
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -37,9 +42,8 @@ workflow(
         name = "End-to-end test",
         runsOn = UbuntuLatest,
     ) {
-        // Using bundled bindings to avoid generating them here.
-        uses(action = CheckoutV4())
-        uses(action = ActionsSetupGradleV3())
+        uses(action = Checkout())
+        uses(action = ActionsSetupGradle())
 
         run(
             name = "Start the server",
@@ -91,8 +95,8 @@ workflow(
             "environment" to "DockerHub",
         )
     ) {
-        uses(action = CheckoutV4())
-        uses(action = ActionsSetupGradleV3())
+        uses(action = Checkout())
+        uses(action = ActionsSetupGradle())
         run(
             name = "Build and publish image",
             command = "./gradlew :jit-binding-server:publishImage",

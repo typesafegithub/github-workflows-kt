@@ -1,13 +1,19 @@
 #!/usr/bin/env kotlin
+@file:Repository("https://repo1.maven.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
+
+@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("actions:checkout:v4")
+@file:DependsOn("actions:setup-java:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v3")
+
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
 @file:Import("setup-python.main.kts")
-@file:Import("generated/actions/checkout.kt")
-@file:Import("generated/actions/setup-java.kt")
-@file:Import("generated/gradle/actions/setup-gradle.kt")
 
-import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.SetupJava
+import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -19,7 +25,6 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 
 val GRADLE_ENCRYPTION_KEY by Contexts.secrets
 
-@OptIn(ExperimentalClientSideBindings::class)
 workflow(
     name = "Build",
     on = listOf(
@@ -92,10 +97,6 @@ workflow(
     ) {
         uses(action = Checkout())
         run(
-            name = "Generate action bindings",
-            command = ".github/workflows/generate-action-bindings.main.kts",
-        )
-        run(
             command = """
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
@@ -122,10 +123,6 @@ workflow(
         )
         run(command = "cd .github/workflows")
         run(
-            name = "Generate action bindings",
-            command = ".github/workflows/generate-action-bindings.main.kts",
-        )
-        run(
             name = "Regenerate all workflow YAMLs",
             command = """
             find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
@@ -142,4 +139,4 @@ workflow(
             command = "git diff --exit-code .",
         )
     }
-}.writeToFile(generateActionBindings = true)
+}.writeToFile()
