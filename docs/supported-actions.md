@@ -110,7 +110,7 @@ Click on a version to see the binding's code.
 * nobrayner
     * [discord-webhook](https://github.com/nobrayner/discord-webhook) - v1: [`DiscordWebhookV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/nobrayner/DiscordWebhookV1.kt)
 * peaceiris
-    * [actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) - v3: [`ActionsGhPagesV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/peaceiris/ActionsGhPagesV3.kt)
+    * [actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) - v3: [`ActionsGhPagesV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/peaceiris/ActionsGhPagesV3.kt), v4: [`ActionsGhPagesV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/peaceiris/ActionsGhPagesV4.kt)
     * [actions-hugo](https://github.com/peaceiris/actions-hugo) - v2: [`ActionsHugoV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/peaceiris/ActionsHugoV2.kt)
 * peter-evans
     * [create-issue-from-file](https://github.com/peter-evans/create-issue-from-file) - v4: [`CreateIssueFromFileV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/peterevans/CreateIssueFromFileV4.kt), v5: [`CreateIssueFromFileV5`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/peterevans/CreateIssueFromFileV5.kt)
@@ -141,6 +141,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 162
+* counting each version separately: 163
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
