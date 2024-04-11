@@ -49,6 +49,7 @@ nav:
       - Using actions: 'user-guide/using-actions.md'
       - Type-safe expressions: 'user-guide/type-safe-expressions.md'
       - Job outputs: 'user-guide/job-outputs.md'
+      - Migrating to Maven-based bindings: 'user-guide/migrating-to-Maven-based-bindings.md'
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Feature coverage: 'feature-coverage.md'
