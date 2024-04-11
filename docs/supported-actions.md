@@ -94,7 +94,7 @@ Click on a version to see the binding's code.
 * JasonEtco
     * [create-an-issue](https://github.com/JasonEtco/create-an-issue) - v2: [`CreateAnIssueV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/jasonetco/CreateAnIssueV2.kt)
 * julia-actions
-    * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/juliaactions/SetupJuliaV1.kt)
+    * [setup-julia](https://github.com/julia-actions/setup-julia) - v1: [`SetupJuliaV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/juliaactions/SetupJuliaV1.kt), v2: [`SetupJuliaV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/juliaactions/SetupJuliaV2.kt)
 * madhead
     * [check-gradle-version](https://github.com/madhead/check-gradle-version) - v1 ✅: [`CheckGradleVersionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/CheckGradleVersionV1.kt)
     * [intellij-http-client-action](https://github.com/madhead/intellij-http-client-action) - v0 ✅: [`IntellijHttpClientActionV0`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/IntellijHttpClientActionV0.kt), v231 ✅: [`IntellijHttpClientActionV231`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/IntellijHttpClientActionV231.kt), v233 ✅: [`IntellijHttpClientActionV233`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/madhead/IntellijHttpClientActionV233.kt)
@@ -141,6 +141,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 161
+* counting each version separately: 162
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18

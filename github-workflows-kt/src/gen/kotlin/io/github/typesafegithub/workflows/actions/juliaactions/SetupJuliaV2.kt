@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.juliaactions
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -39,11 +37,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: SetupJuliaV2",
-    replaceWith = ReplaceWith("SetupJuliaV2"),
-)
-public data class SetupJuliaV1 private constructor(
+public data class SetupJuliaV2 private constructor(
     /**
      * The Julia version to download (if necessary) and use. Example: 1.0.4
      */
@@ -56,7 +50,7 @@ public data class SetupJuliaV1 private constructor(
      * Architecture of the Julia binaries. Defaults to the architecture of the runner executing the
      * job.
      */
-    public val arch: SetupJuliaV1.Architecture? = null,
+    public val arch: SetupJuliaV2.Architecture? = null,
     /**
      * Display InteractiveUtils.versioninfo() after installing
      */
@@ -70,12 +64,12 @@ public data class SetupJuliaV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<SetupJuliaV1.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v1") {
+) : RegularAction<SetupJuliaV2.Outputs>("julia-actions", "setup-julia", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         version: String? = null,
         includeAllPrereleases: Boolean? = null,
-        arch: SetupJuliaV1.Architecture? = null,
+        arch: SetupJuliaV2.Architecture? = null,
         showVersioninfo: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
@@ -99,15 +93,15 @@ public data class SetupJuliaV1 private constructor(
     public sealed class Architecture(
         public val stringValue: String,
     ) {
-        public object X64 : SetupJuliaV1.Architecture("x64")
+        public object X64 : SetupJuliaV2.Architecture("x64")
 
-        public object X86 : SetupJuliaV1.Architecture("x86")
+        public object X86 : SetupJuliaV2.Architecture("x86")
 
-        public object Aarch64 : SetupJuliaV1.Architecture("aarch64")
+        public object Aarch64 : SetupJuliaV2.Architecture("aarch64")
 
         public class Custom(
             customStringValue: String,
-        ) : SetupJuliaV1.Architecture(customStringValue)
+        ) : SetupJuliaV2.Architecture(customStringValue)
     }
 
     public class Outputs(
