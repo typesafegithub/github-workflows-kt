@@ -65,11 +65,15 @@ import kotlin.collections.toTypedArray
  * @param buildScanPublish Set to 'true' to automatically publish build results as a Build Scan on
  * scans.gradle.com.
  * For publication to succeed without user input, you must also provide values for
- * `build-scan-terms-of-service-url` and 'build-scan-terms-of-service-agree'.
- * @param buildScanTermsOfServiceUrl The URL to the Build Scan® terms of service. This input must be
- * set to 'https://gradle.com/terms-of-service'.
- * @param buildScanTermsOfServiceAgree Indicate that you agree to the Build Scan® terms of service.
- * This input value must be "yes".
+ * `build-scan-terms-of-use-url` and 'build-scan-terms-of-use-agree'.
+ * @param buildScanTermsOfUseUrl The URL to the Build Scan® terms of use. This input must be set to
+ * 'https://gradle.com/terms-of-service' or 'https://gradle.com/help/legal-terms-of-use'.
+ * @param buildScanTermsOfUseAgree Indicate that you agree to the Build Scan® terms of use. This
+ * input value must be "yes".
+ * @param buildScanTermsOfServiceUrl The URL to the Build Scan® terms of use. This input must be set
+ * to 'https://gradle.com/terms-of-service'.
+ * @param buildScanTermsOfServiceAgree Indicate that you agree to the Build Scan® terms of use. This
+ * input value must be "yes".
  * @param arguments Gradle command line arguments (supports multi-line input)
  * @param buildRootDirectory Path to the root directory of the build. Default is the root of the
  * GitHub workspace.
@@ -161,16 +165,25 @@ public data class GradleBuildActionV3 private constructor(
     /**
      * Set to 'true' to automatically publish build results as a Build Scan on scans.gradle.com.
      * For publication to succeed without user input, you must also provide values for
-     * `build-scan-terms-of-service-url` and 'build-scan-terms-of-service-agree'.
+     * `build-scan-terms-of-use-url` and 'build-scan-terms-of-use-agree'.
      */
     public val buildScanPublish: Boolean? = null,
     /**
-     * The URL to the Build Scan® terms of service. This input must be set to
+     * The URL to the Build Scan® terms of use. This input must be set to
+     * 'https://gradle.com/terms-of-service' or 'https://gradle.com/help/legal-terms-of-use'.
+     */
+    public val buildScanTermsOfUseUrl: String? = null,
+    /**
+     * Indicate that you agree to the Build Scan® terms of use. This input value must be "yes".
+     */
+    public val buildScanTermsOfUseAgree: String? = null,
+    /**
+     * The URL to the Build Scan® terms of use. This input must be set to
      * 'https://gradle.com/terms-of-service'.
      */
     public val buildScanTermsOfServiceUrl: String? = null,
     /**
-     * Indicate that you agree to the Build Scan® terms of service. This input value must be "yes".
+     * Indicate that you agree to the Build Scan® terms of use. This input value must be "yes".
      */
     public val buildScanTermsOfServiceAgree: String? = null,
     /**
@@ -227,6 +240,8 @@ public data class GradleBuildActionV3 private constructor(
         dependencyGraphContinueOnFailure: Boolean? = null,
         artifactRetentionDays: Int? = null,
         buildScanPublish: Boolean? = null,
+        buildScanTermsOfUseUrl: String? = null,
+        buildScanTermsOfUseAgree: String? = null,
         buildScanTermsOfServiceUrl: String? = null,
         buildScanTermsOfServiceAgree: String? = null,
         arguments: String? = null,
@@ -245,6 +260,8 @@ public data class GradleBuildActionV3 private constructor(
             addJobSummaryAsPrComment=addJobSummaryAsPrComment, dependencyGraph=dependencyGraph,
             dependencyGraphContinueOnFailure=dependencyGraphContinueOnFailure,
             artifactRetentionDays=artifactRetentionDays, buildScanPublish=buildScanPublish,
+            buildScanTermsOfUseUrl=buildScanTermsOfUseUrl,
+            buildScanTermsOfUseAgree=buildScanTermsOfUseAgree,
             buildScanTermsOfServiceUrl=buildScanTermsOfServiceUrl,
             buildScanTermsOfServiceAgree=buildScanTermsOfServiceAgree, arguments=arguments,
             buildRootDirectory=buildRootDirectory, generateJobSummary=generateJobSummary,
@@ -271,6 +288,8 @@ public data class GradleBuildActionV3 private constructor(
                     it.toString() },
             artifactRetentionDays?.let { "artifact-retention-days" to it.toString() },
             buildScanPublish?.let { "build-scan-publish" to it.toString() },
+            buildScanTermsOfUseUrl?.let { "build-scan-terms-of-use-url" to it },
+            buildScanTermsOfUseAgree?.let { "build-scan-terms-of-use-agree" to it },
             buildScanTermsOfServiceUrl?.let { "build-scan-terms-of-service-url" to it },
             buildScanTermsOfServiceAgree?.let { "build-scan-terms-of-service-agree" to it },
             arguments?.let { "arguments" to it },
