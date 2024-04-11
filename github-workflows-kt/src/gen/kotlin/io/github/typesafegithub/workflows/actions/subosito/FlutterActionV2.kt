@@ -20,20 +20,22 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- * Action: Flutter action
+ * Action: Set up Flutter
  *
  * Setup your runner with Flutter environment
  *
  * [Action on GitHub](https://github.com/subosito/flutter-action)
  *
- * @param flutterVersion The Flutter version to make available on the path
  * @param channel The Flutter build release channel
+ * @param flutterVersion The Flutter version to make available on the path
+ * @param flutterVersionFile The pubspec.yaml file with exact Flutter version defined
+ * @param architecture The architecture of Flutter SDK executable (x64 or arm64)
  * @param cache Cache the Flutter SDK
  * @param cacheKey Identifier for the Flutter SDK cache
- * @param pubCacheKey Identifier for the Dart .pub-cache cache
  * @param cachePath Flutter SDK cache path
+ * @param pubCacheKey Identifier for the Dart .pub-cache cache
  * @param pubCachePath Flutter pub cache path
- * @param architecture The architecture of Flutter SDK executable (x64 or arm64)
+ * @param dryRun If true, get outputs but do not install Flutter
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -41,13 +43,21 @@ import kotlin.collections.toTypedArray
  */
 public data class FlutterActionV2 private constructor(
     /**
+     * The Flutter build release channel
+     */
+    public val channel: FlutterActionV2.Channel? = null,
+    /**
      * The Flutter version to make available on the path
      */
     public val flutterVersion: String? = null,
     /**
-     * The Flutter build release channel
+     * The pubspec.yaml file with exact Flutter version defined
      */
-    public val channel: FlutterActionV2.Channel? = null,
+    public val flutterVersionFile: String? = null,
+    /**
+     * The architecture of Flutter SDK executable (x64 or arm64)
+     */
+    public val architecture: FlutterActionV2.Architecture? = null,
     /**
      * Cache the Flutter SDK
      */
@@ -57,21 +67,21 @@ public data class FlutterActionV2 private constructor(
      */
     public val cacheKey: String? = null,
     /**
-     * Identifier for the Dart .pub-cache cache
-     */
-    public val pubCacheKey: String? = null,
-    /**
      * Flutter SDK cache path
      */
     public val cachePath: String? = null,
+    /**
+     * Identifier for the Dart .pub-cache cache
+     */
+    public val pubCacheKey: String? = null,
     /**
      * Flutter pub cache path
      */
     public val pubCachePath: String? = null,
     /**
-     * The architecture of Flutter SDK executable (x64 or arm64)
+     * If true, get outputs but do not install Flutter
      */
-    public val architecture: FlutterActionV2.Architecture? = null,
+    public val dryRun: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -84,31 +94,36 @@ public data class FlutterActionV2 private constructor(
 ) : RegularAction<FlutterActionV2.Outputs>("subosito", "flutter-action", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        flutterVersion: String? = null,
         channel: FlutterActionV2.Channel? = null,
+        flutterVersion: String? = null,
+        flutterVersionFile: String? = null,
+        architecture: FlutterActionV2.Architecture? = null,
         cache: Boolean? = null,
         cacheKey: String? = null,
-        pubCacheKey: String? = null,
         cachePath: String? = null,
+        pubCacheKey: String? = null,
         pubCachePath: String? = null,
-        architecture: FlutterActionV2.Architecture? = null,
+        dryRun: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(flutterVersion=flutterVersion, channel=channel, cache=cache, cacheKey=cacheKey,
-            pubCacheKey=pubCacheKey, cachePath=cachePath, pubCachePath=pubCachePath,
-            architecture=architecture, _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(channel=channel, flutterVersion=flutterVersion, flutterVersionFile=flutterVersionFile,
+            architecture=architecture, cache=cache, cacheKey=cacheKey, cachePath=cachePath,
+            pubCacheKey=pubCacheKey, pubCachePath=pubCachePath, dryRun=dryRun,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            flutterVersion?.let { "flutter-version" to it },
             channel?.let { "channel" to it.stringValue },
+            flutterVersion?.let { "flutter-version" to it },
+            flutterVersionFile?.let { "flutter-version-file" to it },
+            architecture?.let { "architecture" to it.stringValue },
             cache?.let { "cache" to it.toString() },
             cacheKey?.let { "cache-key" to it },
-            pubCacheKey?.let { "pub-cache-key" to it },
             cachePath?.let { "cache-path" to it },
+            pubCacheKey?.let { "pub-cache-key" to it },
             pubCachePath?.let { "pub-cache-path" to it },
-            architecture?.let { "architecture" to it.stringValue },
+            dryRun?.let { "dry-run" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
@@ -148,18 +163,39 @@ public data class FlutterActionV2 private constructor(
     public class Outputs(
         stepId: String,
     ) : Action.Outputs(stepId) {
-        public val cachePath: String = "steps.$stepId.outputs.CACHE-PATH"
-
-        public val cacheKey: String = "steps.$stepId.outputs.CACHE-KEY"
-
+        /**
+         * The selected Flutter release channel
+         */
         public val channel: String = "steps.$stepId.outputs.CHANNEL"
 
+        /**
+         * The selected Flutter version
+         */
         public val version: String = "steps.$stepId.outputs.VERSION"
 
+        /**
+         * The selected Flutter CPU architecture
+         */
         public val architecture: String = "steps.$stepId.outputs.ARCHITECTURE"
 
+        /**
+         * Key used to cache the Flutter SDK
+         */
+        public val cacheKey: String = "steps.$stepId.outputs.CACHE-KEY"
+
+        /**
+         * Path to Flutter SDK
+         */
+        public val cachePath: String = "steps.$stepId.outputs.CACHE-PATH"
+
+        /**
+         * Key used to cache the pub dependencies
+         */
         public val pubCacheKey: String = "steps.$stepId.outputs.PUB-CACHE-KEY"
 
+        /**
+         * Path to pub cache
+         */
         public val pubCachePath: String = "steps.$stepId.outputs.PUB-CACHE-PATH"
     }
 }
