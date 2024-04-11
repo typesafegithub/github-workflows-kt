@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.peaceiris
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -36,11 +34,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: ActionsHugoV3",
-    replaceWith = ReplaceWith("ActionsHugoV3"),
-)
-public data class ActionsHugoV2 private constructor(
+public data class ActionsHugoV3 private constructor(
     /**
      * The Hugo version to download (if necessary) and use. Example: 0.58.2
      */
@@ -58,7 +52,7 @@ public data class ActionsHugoV2 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("peaceiris", "actions-hugo", _customVersion ?: "v2") {
+) : RegularAction<Action.Outputs>("peaceiris", "actions-hugo", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         hugoVersion: String? = null,
