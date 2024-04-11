@@ -11,7 +11,6 @@ theme:
   name: material
   features:
     - navigation.expand
-    - content.code.annotate
   palette:
     - scheme: default
       media: "(prefers-color-scheme: light)"
