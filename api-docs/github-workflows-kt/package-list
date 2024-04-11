@@ -1,7 +1,6 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:io.github.typesafegithub.workflows.annotations////PointingToDeclaration/github-workflows-kt/io.github.typesafegithub.workflows.annotations/index.html
-$dokka.location:io.github.typesafegithub.workflows.annotations/ExperimentalClientSideBindings///PointingToDeclaration/github-workflows-kt/io.github.typesafegithub.workflows.annotations/-experimental-client-side-bindings/index.html
 $dokka.location:io.github.typesafegithub.workflows.annotations/ExperimentalKotlinLogicStep///PointingToDeclaration/github-workflows-kt/io.github.typesafegithub.workflows.annotations/-experimental-kotlin-logic-step/index.html
 $dokka.location:io.github.typesafegithub.workflows.domain.actions////PointingToDeclaration/github-workflows-kt/io.github.typesafegithub.workflows.domain.actions/index.html
 $dokka.location:io.github.typesafegithub.workflows.domain.actions/Action.Outputs///PointingToDeclaration/github-workflows-kt/io.github.typesafegithub.workflows.domain.actions/-action/-outputs/index.html

@@ -18,15 +18,15 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.15">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
-        <title>Migrating to client-side bindings generation - github-workflows-kt</title>
+        <title>Migrating to Maven-based bindings - github-workflows-kt</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#migrating-to-client-side-bindings-generation" class="md-skip">
+        <a href="#migrating-to-maven-based-bindings" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Migrating to client-side bindings generation
+              Migrating to Maven-based bindings
             
           </span>
         </div>
@@ -409,7 +409,7 @@
           
   
   <span class="md-ellipsis">
-    Migrating to client-side bindings generation
+    Migrating to Maven-based bindings
   </span>
   
 
@@ -420,7 +420,7 @@
         
   
   <span class="md-ellipsis">
-    Migrating to client-side bindings generation
+    Migrating to Maven-based bindings
   </span>
   
 
@@ -451,9 +451,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#steps" class="md-nav__link">
+  <a href="#required-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      Steps
+      Required changes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remarks
     </span>
   </a>
   
@@ -653,9 +662,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#steps" class="md-nav__link">
+  <a href="#required-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      Steps
+      Required changes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remarks
     </span>
   </a>
   
@@ -679,7 +697,12 @@
   
 
 
-<div><h1 id="migrating-to-client-side-bindings-generation">Migrating to client-side bindings generation</h1>
+<div><h1 id="migrating-to-maven-based-bindings">Migrating to Maven-based bindings</h1>
+<div class="admonition warning">
+<p class="admonition-title">Experimental</p>
+<p>This feature is experimental. We're awaiting feedback and fixing remaining issues. Breaking changes may appear as
+well. You can give it a try in non-critical projects.</p>
+</div>
 <h2 id="goal">Goal</h2>
 <p>Let's say you have the following workflow:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">#!/usr/bin/env kotlin</span>
@@ -687,7 +710,7 @@
 
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.actions.CheckoutV4</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.actions.SetupJavaV3</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradleV3</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.triggers.PullRequest</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.dsl.workflow</span>
@@ -701,65 +724,40 @@
 <span class="w">    </span><span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"build"</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CheckoutV4</span><span class="p">())</span>
 <span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SetupJavaV3</span><span class="p">())</span>
-<span class="w">        </span><span class="n">uses</span><span class="p">(</span>
+<span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ActionsSetupGradleV3</span><span class="p">())</span>
+<span class="w">        </span><span class="n">run</span><span class="p">(</span>
 <span class="w">            </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Build"</span><span class="p">,</span>
-<span class="w">            </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GradleBuildActionV2</span><span class="p">(</span>
-<span class="w">                </span><span class="n">arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"build"</span><span class="p">,</span>
-<span class="w">            </span><span class="p">)</span>
+<span class="w">            </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"./gradlew build"</span><span class="p">,</span>
 <span class="w">        </span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}.</span><span class="na">writeToFile</span><span class="p">()</span>
 </code></pre></div>
-<p><code>CheckoutV4</code>, <code>SetupJavaV3</code> and <code>GradleBuildActionV2</code> come with the library - they are bundled together with the DSL.
-We're going to stop using the bundled classes in favor of generating the bindings on demand.</p>
-<h2 id="steps">Steps</h2>
-<ol>
-<li>Create a new file under <code>.github/workflows/_used_actions.yaml</code> with the following contents:
-   <div class="highlight"><pre><span></span><code><span class="c1"># This workflow isn't meant to be run. It exists solely for the purpose of using it with</span>
-<span class="c1"># https://github.com/typesafegithub/github-workflows-kt. Thanks to defining used actions this way, the library can</span>
-<span class="c1"># generate type-safe bindings, and dependency updating bots like Renovate or Dependabot can update actions' versions.</span>
-
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">this-branch-must-never-be-created</span><span class="p p-Indicator">]</span>
-
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">some-job</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="c1"># List used actions below, as subsequent "- uses" items:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-java@v3</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gradle/gradle-build-action@v2</span>
-</code></pre></div></li>
-<li>Create another file, under <code>.github/workflows/generate-action-bindings.main.kts</code>, with this contents:
-   <div class="highlight"><pre><span></span><code><span class="c1">#!/usr/bin/env kotlin</span>
-<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:action-binding-generator:&lt;newest-version&gt;"</span><span class="p">)</span>
-
-<span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actionbindinggenerator.generateActionBindings</span>
-
-<span class="n">generateActionBindings</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="n">__FILE__</span><span class="p">.</span><span class="na">toPath</span><span class="p">())</span>
-</code></pre></div>
-   and make this file executable (<code>chmod +x &lt;path-to-file&gt;</code> on Linux/Unix).<br>
-   This file has two roles:<ul>
-<li>it will be called in the consistency check job, prior to actually checking the consistency, to generate the
-  bindings</li>
-<li>you can call it locally to get the bindings for workflow development</li>
+<p><code>CheckoutV4</code>, <code>SetupJavaV3</code> and <code>ActionsSetupGradleV3</code> come with the library - they are shipped together with the DSL.
+It has a number of downsides:</p>
+<ul>
+<li>the library needs to be aware of a certain action, which requires the maintainer's attention</li>
+<li>getting new versions of the bindings happens is tied to the release cadence of the library, which is currently
+  released monthly</li>
+<li>automatic updates via dependency update bots like Renovate or Dependabot aren't possible</li>
 </ul>
-</li>
-<li>Call <code>.github/workflows/generate-action-bindings.main.kts</code> to generate the bindings.</li>
-<li>Add <code>.github/workflows/generated</code> to .gitignore.</li>
-<li>Replace bundled binding classes with the generated ones, together with opting into using client-side binding
-   generation. For the example workflow, you need to make these changes:
-   <div class="highlight"><pre><span></span><code><span class="w"> </span> #!/usr/bin/env kotlin
+<p>We're going to switch to the new approach where each type-safe action binding is compiled and packaged in a JAR on
+demand, and is then shipped as a separate Maven artifact from a custom Maven-compatible server.</p>
+<h2 id="required-changes">Required changes</h2>
+<p>The following changes are required in our example workflow:
+   </p><div class="highlight"><pre><span></span><code><span class="w"> </span> #!/usr/bin/env kotlin
+<span class="gi">+ @file:Repository("https://repo1.maven.org/maven2/")</span>
 <span class="w"> </span> @file:DependsOn("io.github.typesafegithub:github-workflows-kt:&lt;newest-version&gt;")
-<span class="gi">+ @file:Import("generated/actions/checkout.kt")</span>
-<span class="gi">+ @file:Import("generated/actions/setup-java.kt")</span>
-<span class="gi">+ @file:Import("generated/gradle/gradle-build-action.kt")</span>
+<span class="gi">+ @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")</span>
+<span class="gi">+ @file:DependsOn("actions:checkout:v4")</span>
+<span class="gi">+ @file:DependsOn("actions:setup-java:v3")</span>
+<span class="gi">+ @file:DependsOn("gradle:actions__setup-gradle:v3")</span>
 
 <span class="gd">- import io.github.typesafegithub.workflows.actions.actions.CheckoutV4</span>
+<span class="gi">+ import io.github.typesafegithub.workflows.actions.actions.Checkout</span>
 <span class="gd">- import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3</span>
-<span class="gd">- import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2</span>
+<span class="gi">+ import io.github.typesafegithub.workflows.actions.actions.SetupJava</span>
+<span class="gd">- import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradleV3</span>
+<span class="gi">+ import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle</span>
 <span class="w"> </span> import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 <span class="w"> </span> import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 <span class="w"> </span> import io.github.typesafegithub.workflows.dsl.workflow
@@ -775,20 +773,34 @@ We're going to stop using the bundled classes in favor of generating the binding
 <span class="gi">+         uses(action = Checkout())</span>
 <span class="gd">-         uses(action = SetupJavaV3())</span>
 <span class="gi">+         uses(action = SetupJava())</span>
-<span class="w"> </span>         uses(
+<span class="gd">-         uses(action = ActionsSetupGradleV3())</span>
+<span class="gi">+         uses(action = ActionsSetupGradle())</span>
+<span class="w"> </span>         run(
 <span class="w"> </span>             name = "Build",
-<span class="gd">-             action = GradleBuildActionV2(</span>
-<span class="gi">+             action = GradleBuildAction(</span>
-<span class="w"> </span>                 arguments = "build",
-<span class="w"> </span>             )
+<span class="w"> </span>             command = "./gradlew build",
 <span class="w"> </span>         )
 <span class="w"> </span>     }
-<span class="gd">- }.writeToFile()</span>
-<span class="gi">+ }.writeToFile(generateActionBindings = true)</span>
-</code></pre></div></li>
-<li>Regenerate your YAML. You should see an extra step in the consistency check job.</li>
-</ol>
-<p>Congratulations, your workflow now uses the client-side bindings generation!</p></div>
+<span class="w"> </span> }.writeToFile()
+</code></pre></div>
+<p>Then regenerate your YAML to ensure there are no changes.</p>
+<h2 id="remarks">Remarks</h2>
+<ol>
+<li>Top-level actions like <code>actions/checkout@v4</code> map to Maven artifacts like <code>actions:checkout:v4</code>. Nested actions like
+   <code>gradle/actions/setup-gradle@v3</code> require replacing the slash in the middle of the compound name with <code>__</code> (double
+   underscore) because slash is not allowed in Maven coordinates. Hence, we get <code>gradle:actions__setup-gradle:v3</code>.</li>
+<li>So far, only major versions (e.g. <code>v3</code>) are supported. Support for full versions like <code>v1.2.3</code> will be added in the
+   future.</li>
+<li>If a given binding has incorrect typing, please either ask the action owner to onboard
+   <a href="https://github.com/typesafegithub/github-actions-typing/">github-action-typing</a>, or if it's not possible, contribute
+   to <a href="https://github.com/typesafegithub/github-actions-typing-catalog">github-actions-typing-catalog</a>.</li>
+<li>The bindings server currently caches the artifacts for a given owner/name/version tuple for 1 hour
+   (<a href="https://github.com/typesafegithub/github-workflows-kt/blob/1b9a7bf03982a33fc82cbc57cb41cb6ebd4c1f1b/jit-binding-server/src/main/kotlin/io/github/typesafegithub/workflows/jitbindingserver/Main.kt#L26">code</a>).
+   If you think it's too much/too little, or a different caching strategy would be better, please reach out via GitHub
+   issues!</li>
+<li>Regarding dependency update bots, Renovate is able to put updates to the Kotlin script and the YAML in a single PR,
+   like <a href="https://github.com/LeoColman/Petals/pull/510/files">here</a>. It wasn't tested with Dependabot yet, feel free to
+   give it a try!</li>
+</ol></div>
 
 
 
@@ -835,10 +847,10 @@ We're going to stop using the bundled classes in favor of generating the binding
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.13.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.14.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>
