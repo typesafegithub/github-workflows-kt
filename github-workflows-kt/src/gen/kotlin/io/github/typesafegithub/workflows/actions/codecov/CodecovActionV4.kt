@@ -49,6 +49,11 @@ import kotlin.collections.toTypedArray
  * @param handleNoReportsFound Raise no exceptions when no coverage reports found
  * @param jobCode The job code
  * @param name User defined upload name. Visible in Codecov UI
+ * @param networkFilter Specify a filter on the files listed in the network section of the Codecov
+ * report. This will only add files whose path begin with the specified filter. Useful for
+ * upload-specific path fixing
+ * @param networkPrefix Specify a prefix on files listed in the network section of the Codecov
+ * report. Useful to help resolve path fixing
  * @param os Override the assumed OS. Options are linux | macos | windows.
  * @param overrideBranch Specify the branch name
  * @param overrideBuild Specify the build number
@@ -63,6 +68,7 @@ import kotlin.collections.toTypedArray
  * @param slug Specify the slug manually (Enterprise use)
  * @param url Specify the base url to upload (Enterprise use)
  * @param useLegacyUploadEndpoint Use the legacy upload endpoint
+ * @param useOidc Use OIDC instead of token. This will ignore any token supplied
  * @param verbose Specify whether the Codecov output should be verbose
  * @param version Specify which version of the Codecov CLI should be used. Defaults to `latest`
  * @param workingDirectory Directory in which to execute codecov.sh
@@ -146,6 +152,17 @@ public data class CodecovActionV4 private constructor(
      */
     public val name: String? = null,
     /**
+     * Specify a filter on the files listed in the network section of the Codecov report. This will
+     * only add files whose path begin with the specified filter. Useful for upload-specific path
+     * fixing
+     */
+    public val networkFilter: String? = null,
+    /**
+     * Specify a prefix on files listed in the network section of the Codecov report. Useful to help
+     * resolve path fixing
+     */
+    public val networkPrefix: String? = null,
+    /**
      * Override the assumed OS. Options are linux | macos | windows.
      */
     public val os: CodecovActionV4.OperatingSystem? = null,
@@ -198,6 +215,10 @@ public data class CodecovActionV4 private constructor(
      */
     public val useLegacyUploadEndpoint: Boolean? = null,
     /**
+     * Use OIDC instead of token. This will ignore any token supplied
+     */
+    public val useOidc: Boolean? = null,
+    /**
      * Specify whether the Codecov output should be verbose
      */
     public val verbose: Boolean? = null,
@@ -239,6 +260,8 @@ public data class CodecovActionV4 private constructor(
         handleNoReportsFound: Boolean? = null,
         jobCode: String? = null,
         name: String? = null,
+        networkFilter: String? = null,
+        networkPrefix: String? = null,
         os: CodecovActionV4.OperatingSystem? = null,
         overrideBranch: String? = null,
         overrideBuild: String? = null,
@@ -252,6 +275,7 @@ public data class CodecovActionV4 private constructor(
         slug: String? = null,
         url: String? = null,
         useLegacyUploadEndpoint: Boolean? = null,
+        useOidc: Boolean? = null,
         verbose: Boolean? = null,
         version: String? = null,
         workingDirectory: String? = null,
@@ -262,12 +286,13 @@ public data class CodecovActionV4 private constructor(
             disableSafeDirectory=disableSafeDirectory, dryRun=dryRun, envVars=envVars,
             exclude=exclude, failCiIfError=failCiIfError, `file`=`file`, files=files, flags=flags,
             gitService=gitService, handleNoReportsFound=handleNoReportsFound, jobCode=jobCode,
-            name=name, os=os, overrideBranch=overrideBranch, overrideBuild=overrideBuild,
+            name=name, networkFilter=networkFilter, networkPrefix=networkPrefix, os=os,
+            overrideBranch=overrideBranch, overrideBuild=overrideBuild,
             overrideBuildUrl=overrideBuildUrl, overrideCommit=overrideCommit, overridePr=overridePr,
             plugin=plugin, plugins=plugins, reportCode=reportCode, rootDir=rootDir, slug=slug,
-            url=url, useLegacyUploadEndpoint=useLegacyUploadEndpoint, verbose=verbose,
-            version=version, workingDirectory=workingDirectory, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            url=url, useLegacyUploadEndpoint=useLegacyUploadEndpoint, useOidc=useOidc,
+            verbose=verbose, version=version, workingDirectory=workingDirectory,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -290,6 +315,8 @@ public data class CodecovActionV4 private constructor(
             handleNoReportsFound?.let { "handle_no_reports_found" to it.toString() },
             jobCode?.let { "job_code" to it },
             name?.let { "name" to it },
+            networkFilter?.let { "network_filter" to it },
+            networkPrefix?.let { "network_prefix" to it },
             os?.let { "os" to it.stringValue },
             overrideBranch?.let { "override_branch" to it },
             overrideBuild?.let { "override_build" to it },
@@ -303,6 +330,7 @@ public data class CodecovActionV4 private constructor(
             slug?.let { "slug" to it },
             url?.let { "url" to it },
             useLegacyUploadEndpoint?.let { "use_legacy_upload_endpoint" to it.toString() },
+            useOidc?.let { "use_oidc" to it.toString() },
             verbose?.let { "verbose" to it.toString() },
             version?.let { "version" to it },
             workingDirectory?.let { "working-directory" to it },
