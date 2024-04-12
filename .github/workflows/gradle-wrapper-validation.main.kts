@@ -4,7 +4,7 @@
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
-@file:DependsOn("gradle:wrapper-validation-action:v2")
+@file:DependsOn("gradle:wrapper-validation-action:v3")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.gradle.WrapperValidationAction
