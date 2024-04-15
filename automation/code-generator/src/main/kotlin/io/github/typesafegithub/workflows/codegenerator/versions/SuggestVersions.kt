@@ -68,7 +68,7 @@ fun List<GithubRef>.versions(): List<Version> =
 fun ActionCoords.suggestNewerVersion(
     existingVersions: List<Version>,
     availableVersions: List<Version>,
-    fetchMeta: ActionCoords.(MetadataRevision) -> Metadata = { this.fetchMetadata(it) },
+    fetchMeta: ActionCoords.(MetadataRevision) -> Metadata = { this.fetchMetadata(it) ?: error("Couldn't get metadata for $this!") },
 ): String? {
     if (availableVersions.isEmpty()) {
         return null

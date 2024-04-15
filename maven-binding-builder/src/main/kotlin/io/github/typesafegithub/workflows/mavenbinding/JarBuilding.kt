@@ -24,8 +24,8 @@ internal fun buildJar(
     owner: String,
     name: String,
     version: String,
-): ByteArray {
-    val binding = generateBinding(owner = owner, name = name, version = version)
+): ByteArray? {
+    val binding = generateBinding(owner = owner, name = name, version = version) ?: return null
     val pathWithJarContents = binding.compileBinding()
     val byteArrayOutputStream = ByteArrayOutputStream()
     byteArrayOutputStream.createZipFile(pathWithJarContents)
@@ -36,7 +36,7 @@ private fun generateBinding(
     owner: String,
     name: String,
     version: String,
-): ActionBinding {
+): ActionBinding? {
     val actionCoords =
         ActionCoords(
             owner = owner,

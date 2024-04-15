@@ -15,6 +15,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerW
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldNotBe
 
 class GenerationTest : FunSpec({
     val actionManifestWithAllTypesOfInputsAndSomeOutput =
@@ -141,7 +142,8 @@ class GenerationTest : FunSpec({
         val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
 
         // then
-        binding.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
     }
 
     test("action with various combinations of input parameters describing being required or optional") {
@@ -186,7 +188,8 @@ class GenerationTest : FunSpec({
         val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
 
         // then
-        binding.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
     }
 
     test("action with all types of inputs") {
@@ -206,7 +209,8 @@ class GenerationTest : FunSpec({
             )
 
         // then
-        binding.shouldMatchFile("ActionWithAllTypesOfInputsV3.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionWithAllTypesOfInputsV3.kt")
     }
 
     test("action with outputs") {
@@ -236,7 +240,8 @@ class GenerationTest : FunSpec({
         val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
 
         // then
-        binding.shouldMatchFile("ActionWithOutputsV3.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionWithOutputsV3.kt")
     }
 
     test("action with no inputs") {
@@ -255,7 +260,8 @@ class GenerationTest : FunSpec({
         val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
 
         // then
-        binding.shouldMatchFile("ActionWithNoInputsV3.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionWithNoInputsV3.kt")
     }
 
     test("action v2 deprecated by v3") {
@@ -274,7 +280,7 @@ class GenerationTest : FunSpec({
         val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
 
         // then
-        binding.shouldMatchFile("DeprecatedActionV2.kt")
+        binding?.shouldMatchFile("DeprecatedActionV2.kt")
     }
 
     test("action with deprecated input resolving to the same Kotlin field name") {
@@ -307,7 +313,8 @@ class GenerationTest : FunSpec({
         val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
 
         // then
-        binding.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
     }
 
     test("action with inputs sharing type") {
@@ -354,7 +361,8 @@ class GenerationTest : FunSpec({
             )
 
         // then
-        binding.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
     }
 
     test("action binding generated for the versioned JAR") {
@@ -375,6 +383,7 @@ class GenerationTest : FunSpec({
             )
 
         // then
-        binding.shouldMatchFile("ActionForGeneratedJar.kt")
+        binding shouldNotBe null
+        binding?.shouldMatchFile("ActionForGeneratedJar.kt")
     }
 })

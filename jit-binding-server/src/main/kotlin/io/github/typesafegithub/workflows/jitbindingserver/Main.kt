@@ -40,8 +40,17 @@ fun main() {
                             version = version,
                         )
                     val bindingArtifacts =
-                        bindingsCache.get(actionCoords) {
-                            actionCoords.buildVersionArtifacts()
+                        if (bindingsCache.get(actionCoords) != null) {
+                            bindingsCache.get(actionCoords)!!
+                        } else {
+                            val versionArtifacts = actionCoords.buildVersionArtifacts()
+                            if (versionArtifacts != null) {
+                                bindingsCache.put(actionCoords, versionArtifacts)
+                                versionArtifacts
+                            } else {
+                                call.respondText("Not found", status = HttpStatusCode.NotFound)
+                                return@get
+                            }
                         }
                     val file = call.parameters["file"]!!
                     if (file in bindingArtifacts) {
@@ -71,8 +80,17 @@ fun main() {
                             version = version,
                         )
                     val bindingArtifacts =
-                        bindingsCache.get(actionCoords) {
-                            actionCoords.buildVersionArtifacts()
+                        if (bindingsCache.get(actionCoords) != null) {
+                            bindingsCache.get(actionCoords)!!
+                        } else {
+                            val versionArtifacts = actionCoords.buildVersionArtifacts()
+                            if (versionArtifacts != null) {
+                                bindingsCache.put(actionCoords, versionArtifacts)
+                                versionArtifacts
+                            } else {
+                                call.respondText("Not found", status = HttpStatusCode.NotFound)
+                                return@head
+                            }
                         }
                     if (file in bindingArtifacts) {
                         call.respondText("Exists", status = HttpStatusCode.OK)

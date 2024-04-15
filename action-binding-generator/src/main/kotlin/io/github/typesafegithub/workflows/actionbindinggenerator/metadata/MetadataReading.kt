@@ -5,7 +5,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHa
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -55,7 +54,7 @@ internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$
 public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-): Metadata {
+): Metadata? {
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
@@ -63,20 +62,15 @@ public fun ActionCoords.fetchMetadata(
             FromLockfile -> this.getCommitHashFromFileSystem()
         }
     val list = listOf(actionYmlUrl(gitRef), actionYamlUrl(gitRef))
-    val metadataYaml =
-        list.firstNotNullOfOrNull { url ->
-            try {
-                println("  ... from $url")
-                fetchUri(URI(url))
-            } catch (e: IOException) {
-                null
-            }
-        } ?: error(
-            "$prettyPrint\n†Can't fetch any of those URLs:\n- ${list.joinToString(separator = "\n- ")}\n" +
-                "Check release page $releasesUrl",
-        )
 
-    return myYaml.decodeFromString(metadataYaml)
+    return list.firstNotNullOfOrNull { url ->
+        try {
+            println("  ... from $url")
+            fetchUri(URI(url))
+        } catch (e: IOException) {
+            null
+        }
+    }?.let { myYaml.decodeFromString(it) }
 }
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
