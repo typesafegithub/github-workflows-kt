@@ -17,7 +17,6 @@ import com.squareup.kotlinpoet.asTypeName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_INPUTS
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_VERSION
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
@@ -30,7 +29,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.asString
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.buildCustomType
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.getClassName
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.provideTypes
-import io.github.typesafegithub.workflows.actionbindinggenerator.typing.suggestAdditionalTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.removeTrailingWhitespacesForEachLine
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCase
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
@@ -79,9 +77,6 @@ public fun ActionCoords.generateBinding(
     }
 
     val metadataProcessed = metadata.removeDeprecatedInputsIfNameClash()
-    metadataProcessed.suggestAdditionalTypings(inputTypings.first.keys)?.let { formatSuggestions ->
-        println("$prettyPrint I suggest the following typings:\n$formatSuggestions")
-    }
 
     val className = this.buildActionClassName(includeVersion = clientType == ClientType.BUNDLED_WITH_LIB)
     val actionBindingSourceCode =
