@@ -29,7 +29,7 @@ private suspend fun generateBindings(): List<Pair<ActionBindingRequest, ActionBi
         ) { actionBindingRequest ->
             println("Generating ${actionBindingRequest.actionCoords.prettyPrint}")
             val binding = actionBindingRequest.actionCoords.generateBinding(metadataRevision = FromLockfile)
-            Pair(actionBindingRequest, binding)
+            Pair(actionBindingRequest, binding ?: error("Couldn't generate binding for ${actionBindingRequest.actionCoords}"))
         }
     requestsAndBindings.forEach { (_, binding) ->
         with(Paths.get(binding.filePath).toFile()) {

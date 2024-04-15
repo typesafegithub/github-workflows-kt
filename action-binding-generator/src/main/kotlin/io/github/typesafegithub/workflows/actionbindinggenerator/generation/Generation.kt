@@ -68,26 +68,28 @@ private object Properties {
 
 public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
-    metadata: Metadata = this.fetchMetadata(metadataRevision),
-    inputTypings: Pair<Map<String, Typing>, TypingActualSource?> = provideTypes(metadataRevision),
+    metadata: Metadata? = null,
+    inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
     clientType: ClientType = ClientType.BUNDLED_WITH_LIB,
-): ActionBinding {
+): ActionBinding? {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
     }
+    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return null
+    val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
-    val metadataProcessed = metadata.removeDeprecatedInputsIfNameClash()
+    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
 
     val className = this.buildActionClassName(includeVersion = clientType == ClientType.BUNDLED_WITH_LIB)
     val actionBindingSourceCode =
-        generateActionBindingSourceCode(metadataProcessed, this, inputTypings.first, className)
+        generateActionBindingSourceCode(metadataProcessed, this, inputTypingsResolved.first, className)
     val packageName = owner.toKotlinPackageName()
     return ActionBinding(
         kotlinCode = actionBindingSourceCode,
         filePath = "github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
         className = className,
         packageName = packageName,
-        typingActualSource = inputTypings.second,
+        typingActualSource = inputTypingsResolved.second,
     )
 }
 

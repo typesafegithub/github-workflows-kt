@@ -85,7 +85,7 @@ private suspend fun createPullRequest(
 private fun ActionBindingRequest.generateBindingForCommit(commitHash: String): ActionBinding =
     actionCoords.generateBinding(
         metadataRevision = CommitHash(commitHash),
-    )
+    ) ?: error("Couldn't generate binding for ${this.actionCoords}")
 
 private suspend fun ActionCoords.fetchCommitHash(githubToken: String): String? {
     suspend fun fetch(detailsUrl: String): String? {
