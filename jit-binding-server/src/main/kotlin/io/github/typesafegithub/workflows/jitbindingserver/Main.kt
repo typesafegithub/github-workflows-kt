@@ -23,7 +23,7 @@ import kotlin.time.Duration.Companion.hours
 
 fun main() {
     val bindingsCache =
-        Cache.Builder<ActionCoords, Map<String, Artifact>>()
+        Cache.Builder<ActionCoords, Result<Map<String, Artifact>>>()
             .expireAfterAccess(1.hours)
             .build()
 
@@ -42,18 +42,17 @@ fun main() {
                         )
                     println("➡️ Requesting ${actionCoords.prettyPrint}")
                     val bindingArtifacts =
-                        if (bindingsCache.get(actionCoords) != null) {
-                            bindingsCache.get(actionCoords)!!
-                        } else {
-                            val versionArtifacts = actionCoords.buildVersionArtifacts()
-                            if (versionArtifacts != null) {
-                                bindingsCache.put(actionCoords, versionArtifacts)
-                                versionArtifacts
-                            } else {
-                                call.respondText("Not found", status = HttpStatusCode.NotFound)
-                                return@get
-                            }
-                        }
+                        bindingsCache.get(actionCoords) {
+                            actionCoords.buildVersionArtifacts()?.let {
+                                Result.success(it)
+                            } ?: Result.failure(object : Throwable() {})
+                        }.getOrNull()
+
+                    if (bindingArtifacts == null) {
+                        call.respondText("Not found", status = HttpStatusCode.NotFound)
+                        return@get
+                    }
+
                     val file = call.parameters["file"]!!
                     if (file in bindingArtifacts) {
                         when (val artifact = bindingArtifacts[file]) {
@@ -82,18 +81,16 @@ fun main() {
                             version = version,
                         )
                     val bindingArtifacts =
-                        if (bindingsCache.get(actionCoords) != null) {
-                            bindingsCache.get(actionCoords)!!
-                        } else {
-                            val versionArtifacts = actionCoords.buildVersionArtifacts()
-                            if (versionArtifacts != null) {
-                                bindingsCache.put(actionCoords, versionArtifacts)
-                                versionArtifacts
-                            } else {
-                                call.respondText("Not found", status = HttpStatusCode.NotFound)
-                                return@head
-                            }
-                        }
+                        bindingsCache.get(actionCoords) {
+                            actionCoords.buildVersionArtifacts()?.let {
+                                Result.success(it)
+                            } ?: Result.failure(object : Throwable() {})
+                        }.getOrNull()
+
+                    if (bindingArtifacts == null) {
+                        call.respondText("Not found", status = HttpStatusCode.NotFound)
+                        return@head
+                    }
                     if (file in bindingArtifacts) {
                         call.respondText("Exists", status = HttpStatusCode.OK)
                     } else {
