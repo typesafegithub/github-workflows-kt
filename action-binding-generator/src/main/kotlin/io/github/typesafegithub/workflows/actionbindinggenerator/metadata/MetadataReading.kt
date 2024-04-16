@@ -12,7 +12,6 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
-import java.net.URI
 import java.nio.file.Path
 
 /**
@@ -77,7 +76,5 @@ public suspend fun ActionCoords.fetchMetadata(
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
-
-internal fun fetchUri(uri: URI): String = uri.toURL().readText()
 
 private val myHttpClient = HttpClient {}
