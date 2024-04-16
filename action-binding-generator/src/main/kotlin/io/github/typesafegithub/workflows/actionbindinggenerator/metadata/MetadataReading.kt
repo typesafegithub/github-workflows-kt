@@ -6,6 +6,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
+import io.ktor.client.HttpClient
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
@@ -53,6 +54,7 @@ internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$
 
 public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
+    httpClient: HttpClient,
     fetchUri: (URI) -> String = ::fetchUri,
 ): Metadata? {
     val gitRef =
@@ -75,5 +77,3 @@ public fun ActionCoords.fetchMetadata(
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
-
-internal fun fetchUri(uri: URI): String = uri.toURL().readText()

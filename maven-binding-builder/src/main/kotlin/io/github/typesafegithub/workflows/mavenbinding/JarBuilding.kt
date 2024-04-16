@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestFo
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ClientType
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
+import io.ktor.client.HttpClient
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
@@ -24,8 +25,9 @@ internal fun buildJar(
     owner: String,
     name: String,
     version: String,
+    httpClient: HttpClient,
 ): ByteArray? {
-    val binding = generateBinding(owner = owner, name = name, version = version) ?: return null
+    val binding = generateBinding(owner = owner, name = name, version = version, httpClient) ?: return null
     val pathWithJarContents = binding.compileBinding()
     val byteArrayOutputStream = ByteArrayOutputStream()
     byteArrayOutputStream.createZipFile(pathWithJarContents)
@@ -36,6 +38,7 @@ private fun generateBinding(
     owner: String,
     name: String,
     version: String,
+    httpClient: HttpClient,
 ): ActionBinding? {
     val actionCoords =
         ActionCoords(
@@ -46,6 +49,7 @@ private fun generateBinding(
     return actionCoords.generateBinding(
         metadataRevision = NewestForVersion,
         clientType = ClientType.VERSIONED_JAR,
+        httpClient = httpClient,
     )
 }
 

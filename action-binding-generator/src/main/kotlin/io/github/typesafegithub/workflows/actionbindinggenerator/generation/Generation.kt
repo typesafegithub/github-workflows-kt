@@ -32,6 +32,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.provideT
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.removeTrailingWhitespacesForEachLine
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCase
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
+import io.ktor.client.HttpClient
 import java.nio.file.Path
 
 public data class ActionBinding(
@@ -71,14 +72,15 @@ public fun ActionCoords.generateBinding(
     metadata: Metadata? = null,
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
     clientType: ClientType = ClientType.BUNDLED_WITH_LIB,
+    httpClient: HttpClient,
 ): ActionBinding? {
     require(this.version.removePrefix("v").toIntOrNull() != null) {
         "Only major versions are supported, and '${this.version}' was given!"
     }
-    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return null
+    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision, httpClient) ?: return null
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
-    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
+    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision, httpClient)
 
     val className = this.buildActionClassName(includeVersion = clientType == ClientType.BUNDLED_WITH_LIB)
     val actionBindingSourceCode =

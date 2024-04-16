@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.ktor.client.HttpClient
 import java.security.MessageDigest
 
 sealed interface Artifact
@@ -9,8 +10,8 @@ data class TextArtifact(val data: String) : Artifact
 
 data class JarArtifact(val data: ByteArray) : Artifact
 
-fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
-    val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version) ?: return null
+fun ActionCoords.buildVersionArtifacts(httpClient: HttpClient): Map<String, Artifact>? {
+    val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version, httpClient) ?: return null
     val pom = buildPomFile(owner = owner, name = name.replace("__", "/"), version = version)
     val module = buildModuleFile(owner = owner, name = name.replace("__", "/"), version = version)
     return mapOf(

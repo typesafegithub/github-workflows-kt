@@ -11,6 +11,8 @@ dependencies {
     implementation("io.ktor:ktor-client-cio")
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-2.0:2.3.0-alpha")
+    implementation("io.opentelemetry:opentelemetry-sdk:1.37.0")
 
     runtimeOnly(projects.githubWorkflowsKt)
 }

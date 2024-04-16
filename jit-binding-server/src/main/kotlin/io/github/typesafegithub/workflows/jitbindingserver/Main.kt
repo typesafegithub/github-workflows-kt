@@ -8,9 +8,13 @@ import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.call
+import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondBytes
@@ -19,6 +23,9 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.head
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
+import io.opentelemetry.instrumentation.ktor.v2_0.client.KtorClientTracing
+import io.opentelemetry.instrumentation.ktor.v2_0.server.KtorServerTracing
+import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.hours
 
 fun main() {
@@ -26,8 +33,26 @@ fun main() {
         Cache.Builder<ActionCoords, Result<Map<String, Artifact>>>()
             .expireAfterAccess(1.hours)
             .build()
+    val openTelemetry = OpenTelemetryConfig.config("jit-bindings").newInstance()
+
+    val httpClient =
+        HttpClient {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                    },
+                )
+            }
+            install(KtorClientTracing) {
+                setOpenTelemetry(openTelemetry)
+            }
+        }
 
     embeddedServer(Netty, port = 8080) {
+        install(KtorServerTracing) {
+            setOpenTelemetry(openTelemetry)
+        }
         routing {
             route("/binding/{owner}/{name}/{version}/{file}") {
                 get {
@@ -43,7 +68,7 @@ fun main() {
                     println("➡️ Requesting ${actionCoords.prettyPrint}")
                     val bindingArtifacts =
                         bindingsCache.get(actionCoords) {
-                            actionCoords.buildVersionArtifacts()?.let {
+                            actionCoords.buildVersionArtifacts(httpClient)?.let {
                                 Result.success(it)
                             } ?: Result.failure(object : Throwable() {})
                         }.getOrNull()
@@ -82,7 +107,7 @@ fun main() {
                         )
                     val bindingArtifacts =
                         bindingsCache.get(actionCoords) {
-                            actionCoords.buildVersionArtifacts()?.let {
+                            actionCoords.buildVersionArtifacts(httpClient)?.let {
                                 Result.success(it)
                             } ?: Result.failure(object : Throwable() {})
                         }.getOrNull()
@@ -110,7 +135,7 @@ fun main() {
                             name = name,
                             version = "irrelevant",
                         )
-                    val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = System.getenv("GITHUB_TOKEN"))
+                    val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = System.getenv("GITHUB_TOKEN"), httpClient)
                     if (file in bindingArtifacts) {
                         when (val artifact = bindingArtifacts[file]) {
                             is String -> call.respondText(artifact)

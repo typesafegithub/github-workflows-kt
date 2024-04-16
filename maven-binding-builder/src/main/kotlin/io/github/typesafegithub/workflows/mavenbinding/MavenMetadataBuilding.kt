@@ -2,12 +2,9 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -16,13 +13,14 @@ internal suspend fun buildMavenMetadataFile(
     owner: String,
     name: String,
     githubToken: String,
+    httpClient: HttpClient,
 ): String {
     val lastUpdated =
         DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
             .withZone(ZoneId.systemDefault())
             .format(Instant.now())
     val availableMajorVersions =
-        fetchAvailableVersions(owner = owner, name = name.substringBefore("__"), githubToken = githubToken)
+        fetchAvailableVersions(owner = owner, name = name.substringBefore("__"), githubToken = githubToken, httpClient = httpClient)
             .filter { it.removePrefix("v").toIntOrNull() != null }
     val newest = availableMajorVersions.maxBy { it.removePrefix("v") }
     return """
@@ -48,32 +46,22 @@ private suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
     githubToken: String,
+    httpClient: HttpClient,
 ): List<String> =
     listOf(
         apiTagsUrl(owner = owner, name = name),
         apiBranchesUrl(owner = owner, name = name),
-    ).flatMap { url -> fetchGithubRefs(url, githubToken) }
+    ).flatMap { url -> fetchGithubRefs(url, githubToken, httpClient) }
         .map { it.ref.substringAfterLast("/") }
 
 private suspend fun fetchGithubRefs(
     url: String,
     githubToken: String,
+    httpClient: HttpClient,
 ): List<GithubRef> =
     httpClient.get(urlString = url) {
         bearerAuth(githubToken)
     }.body()
-
-private val httpClient by lazy {
-    HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                },
-            )
-        }
-    }
-}
 
 private fun apiTagsUrl(
     owner: String,
