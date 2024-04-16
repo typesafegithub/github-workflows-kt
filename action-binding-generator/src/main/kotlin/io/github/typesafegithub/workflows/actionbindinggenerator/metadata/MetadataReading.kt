@@ -5,14 +5,13 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHa
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.decodeFromString
 import java.net.URI
 import java.nio.file.Path
 
@@ -70,13 +69,10 @@ public suspend fun ActionCoords.fetchMetadata(
 
     return list.firstNotNullOfOrNull { url ->
         println("  ... from $url")
-        val response = thisHttpClient.get(url)
-        if (response.status == HttpStatusCode.NotFound) {
-            return null
-        } else {
-            response.body()
-        }
-    }
+        thisHttpClient.get(url)
+            .takeIf { it.status != HttpStatusCode.NotFound }
+            ?.bodyAsText()
+    }?.let { myYaml.decodeFromString(it) }
 }
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
@@ -84,13 +80,4 @@ private fun ActionCoords.getCommitHashFromFileSystem(): String =
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()
 
-private val myHttpClient =
-    HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                },
-            )
-        }
-    }
+private val myHttpClient = HttpClient {}
