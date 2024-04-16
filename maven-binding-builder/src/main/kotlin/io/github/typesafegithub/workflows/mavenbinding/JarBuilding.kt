@@ -20,7 +20,7 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.div
 import kotlin.io.path.writeText
 
-internal fun buildJar(
+internal suspend fun buildJar(
     owner: String,
     name: String,
     version: String,
@@ -32,7 +32,7 @@ internal fun buildJar(
     return byteArrayOutputStream.toByteArray()
 }
 
-private fun generateBinding(
+private suspend fun generateBinding(
     owner: String,
     name: String,
     version: String,

@@ -10,6 +10,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metada
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
 import io.github.typesafegithub.workflows.codegenerator.model.Version
+import io.ktor.client.HttpClient
 import java.io.File
 
 /**
@@ -65,11 +66,14 @@ fun List<GithubRef>.versions(): List<Version> =
         Version(version)
     }
 
-fun ActionCoords.suggestNewerVersion(
+suspend fun ActionCoords.suggestNewerVersion(
     existingVersions: List<Version>,
     availableVersions: List<Version>,
-    fetchMeta: ActionCoords.(MetadataRevision) -> Metadata = { this.fetchMetadata(it) ?: error("Couldn't get metadata for $this!") },
+    httpClient: HttpClient? = null,
 ): String? {
+    suspend fun ActionCoords.fetchMeta(metadataRevision: MetadataRevision): Metadata =
+        this.fetchMetadata(metadataRevision, httpClient) ?: error("Couldn't get metadata for $this!")
+
     if (availableVersions.isEmpty()) {
         return null
     }
@@ -83,7 +87,7 @@ fun ActionCoords.suggestNewerVersion(
             .filter { it.isMajorVersion() }
             .sorted()
 
-    val metadata by lazy { this.copy(version = maxExisting.version).fetchMeta(FromLockfile) }
+    val metadata = this.copy(version = maxExisting.version).fetchMeta(FromLockfile)
 
     val newerMajorVersions =
         majorVersions.filter { it > maxExisting }.sorted()

@@ -5,10 +5,14 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHa
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
-import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import java.io.IOException
+import kotlinx.serialization.json.Json
 import java.net.URI
 import java.nio.file.Path
 
@@ -51,10 +55,11 @@ internal val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
 
 internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
-public fun ActionCoords.fetchMetadata(
+public suspend fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
-    fetchUri: (URI) -> String = ::fetchUri,
+    httpClient: HttpClient? = null,
 ): Metadata? {
+    val thisHttpClient = httpClient ?: myHttpClient
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
@@ -64,16 +69,28 @@ public fun ActionCoords.fetchMetadata(
     val list = listOf(actionYmlUrl(gitRef), actionYamlUrl(gitRef))
 
     return list.firstNotNullOfOrNull { url ->
-        try {
-            println("  ... from $url")
-            fetchUri(URI(url))
-        } catch (e: IOException) {
-            null
+        println("  ... from $url")
+        val response = thisHttpClient.get(url)
+        if (response.status == HttpStatusCode.NotFound) {
+            return null
+        } else {
+            response.body()
         }
-    }?.let { myYaml.decodeFromString(it) }
+    }
 }
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
     Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()
+
+private val myHttpClient =
+    HttpClient {
+        install(ContentNegotiation) {
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                },
+            )
+        }
+    }

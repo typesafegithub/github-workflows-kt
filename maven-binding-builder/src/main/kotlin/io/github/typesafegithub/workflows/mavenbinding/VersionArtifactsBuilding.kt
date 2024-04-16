@@ -9,7 +9,7 @@ data class TextArtifact(val data: String) : Artifact
 
 data class JarArtifact(val data: ByteArray) : Artifact
 
-fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
+suspend fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
     val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version) ?: return null
     val pom = buildPomFile(owner = owner, name = name.replace("__", "/"), version = version)
     val module = buildModuleFile(owner = owner, name = name.replace("__", "/"), version = version)
