@@ -72,8 +72,10 @@ public fun ActionCoords.generateBinding(
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
     clientType: ClientType = ClientType.BUNDLED_WITH_LIB,
 ): ActionBinding? {
-    require(this.version.removePrefix("v").toIntOrNull() != null) {
-        "Only major versions are supported, and '${this.version}' was given!"
+    if (clientType == ClientType.BUNDLED_WITH_LIB) {
+        require(this.version.removePrefix("v").toIntOrNull() != null) {
+            "Only major versions are supported, and '${this.version}' was given!"
+        }
     }
     val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return null
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
