@@ -11,7 +11,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")
-    implementation("ch.qos.logback:logback-classic:1.5.5")
+    implementation("ch.qos.logback:logback-classic:1.5.6")
 
     implementation(projects.mavenBindingBuilder)
 }
