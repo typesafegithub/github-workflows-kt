@@ -5,6 +5,7 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 include(
     "github-workflows-kt",
     "action-binding-generator",
+    "action-versions-updates",
     "maven-binding-builder",
     "jit-binding-server",
     "shared-internal",
