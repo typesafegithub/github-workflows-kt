@@ -42,5 +42,3 @@ jobs:
     - id: 'step-2'
       name: 'setup nodejs'
       uses: 'actions/setup-node@v3'
-      with:
-        node-version: 'lts'

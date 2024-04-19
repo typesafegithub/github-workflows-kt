@@ -2,7 +2,7 @@
 
 @file:Repository("https://repo1.maven.org/maven2/")
 @file:Repository("https://jitpack.io/")
-@file:DependsOn("com.github.NikkyAI.github-workflows-kt:action-versions-updates:action-updates-4672d4e7bb-1")
+@file:DependsOn("com.github.NikkyAI.github-workflows-kt:action-versions-updates:action-updates-5270e8791a-1")
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn(
     "actions:checkout:v3",
@@ -51,10 +51,7 @@ val workflow =
                 )
                 uses(
                     name = "setup nodejs",
-                    action =
-                        SetupNode(
-                            nodeVersion = "lts",
-                        ),
+                    action = SetupNode(),
                 )
             }
     }
