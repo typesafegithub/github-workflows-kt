@@ -4,6 +4,7 @@
 
 name: 'This is a example of a horribly outdated workflow'
 on:
+  pull_request: {}
   push:
     branches:
     - 'action-updates'
