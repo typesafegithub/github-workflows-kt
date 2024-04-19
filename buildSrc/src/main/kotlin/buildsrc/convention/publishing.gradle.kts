@@ -63,8 +63,13 @@ publishing {
     }
 }
 
+val jitpack = System.getenv("JITPACK")?.toString()?.toBooleanStrictOrNull() ?: false
+val isSnapshotVersion = project.version.toString().endsWith("-SNAPSHOT")
 signing {
-    if (!project.version.toString().endsWith("-SNAPSHOT")) {
+    setRequired({
+        !isSnapshotVersion && !jitpack && gradle.taskGraph.hasTask("publish")
+    })
+    if (!isSnapshotVersion && !jitpack) {
         sign(publishing.publications["mavenJava"])
     }
 

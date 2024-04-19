@@ -1,0 +1,7 @@
+# use openjdk 11 for buildscripts
+jdk:
+  openjdk11
+before_install:
+  # ensures that a jdk 17 is available,
+  # this is failing too often due to network/curl issues on jitpacks buildserver
+  - sdk install java 17.0.4.1-zulu
