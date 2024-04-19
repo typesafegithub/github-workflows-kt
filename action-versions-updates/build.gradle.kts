@@ -1,5 +1,3 @@
-import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
-
 plugins {
     buildsrc.convention.`kotlin-jvm`
     buildsrc.convention.publishing
@@ -19,21 +17,8 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
 
     implementation(projects.githubWorkflowsKt)
-//    implementation(projects.actionBindingGenerator)
 }
 
 kotlin {
     explicitApi()
-}
-
-fun ConfigurableKtLintTask.kotlinterConfig() {
-    exclude("**/bindingsfromunittests/**")
-}
-
-tasks.lintKotlinTest {
-    kotlinterConfig()
-}
-
-tasks.formatKotlinTest {
-    kotlinterConfig()
 }

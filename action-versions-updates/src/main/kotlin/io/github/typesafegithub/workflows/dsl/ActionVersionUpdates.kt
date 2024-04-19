@@ -1,14 +1,15 @@
 package io.github.typesafegithub.workflows.dsl
 
-import io.github.typesafegithub.workflows.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
+import io.github.typesafegithub.workflows.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.internal.getGithubTokenOrNull
 import io.github.typesafegithub.workflows.internal.githubGroup
 import io.github.typesafegithub.workflows.internal.githubStepSummaryAppendLine
 import io.github.typesafegithub.workflows.internal.githubWarning
 import io.github.typesafegithub.workflows.internal.model.Version
+import io.github.typesafegithub.workflows.internal.versions
 import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.exists
@@ -20,21 +21,21 @@ import kotlin.io.path.relativeTo
 internal val githubAuthorization = getGithubTokenOrNull()
 
 public suspend fun Workflow.printActionVersionUpdates() {
-    val actionSteps = jobs
-        .flatMap { job ->
-            job.steps
-        }
-        .filterIsInstance<ActionStep<*>>()
+    val actionSteps =
+        jobs
+            .flatMap { job ->
+                job.steps
+            }
+            .filterIsInstance<ActionStep<*>>()
 
     actionSteps.forEach { step ->
         val action = step.action
-        if(action is RegularAction<*>) {
+        if (action is RegularAction<*>) {
             action.printActionVersionUpdates(
                 step = step,
-                file = sourceFile?.relativeTo(File(".").toPath())
+                file = sourceFile?.relativeTo(File(".").toPath()),
             )
         }
-
     }
 }
 
@@ -43,11 +44,11 @@ internal suspend fun RegularAction<*>.printActionVersionUpdates(
     file: Path?,
 ) {
     val currentVersion = Version(actionVersion)
-    val availableVersions = fetchAvailableVersions(githubAuthorization)
+    val availableVersions = fetchAvailableVersions(githubAuthorization).versions()
 
     val newerVersions = availableVersions.filter { it > currentVersion }
 
-    if(newerVersions.isNotEmpty()) {
+    if (newerVersions.isNotEmpty()) {
 //        val allmajorVersions = newerVersions.map { it.major }
 //        val majorVersions = newerVersions.filter { it.isMajorVersion() }
 //        val otherVersions = newerVersions.filterNot { it.isMajorVersion() }
@@ -55,14 +56,18 @@ internal suspend fun RegularAction<*>.printActionVersionUpdates(
 
         val mavenGroupId = actionOwner.replace(":", "__")
         val mavenArtifactId = actionName.replace(":", "__")
-        githubGroup("'$actionOwner/$actionName:$actionVersion' has ${newerVersions.size} newer versions available, step '${step.name ?: step.id}'") {
+        githubGroup(
+            "'$actionOwner/$actionName:$actionVersion' has ${newerVersions.size} newer versions available" +
+                ", step '${step.name ?: step.id}'",
+        ) {
             file?.let {
-                val line = file.takeIf { it.exists() }
-                    ?.let {
-                        it.readText().lines().indexOfFirst {
-                            it.contains("\"$mavenGroupId:$mavenArtifactId:")
+                val line =
+                    file.takeIf { it.exists() }
+                        ?.let {
+                            it.readText().lines().indexOfFirst {
+                                it.contains("\"$mavenGroupId:$mavenArtifactId:")
+                            }
                         }
-                    }
                 githubWarning(
                     message = "this should point to ${file.pathString.substringAfterLast("../")}:$line",
                     file = file.name,
@@ -78,13 +83,12 @@ internal suspend fun RegularAction<*>.printActionVersionUpdates(
             newerVersions.forEach {
                 val mavenVersion = it.version
 
-                println("version `$mavenGroupId:$mavenArtifactId:$mavenVersion\"`",)
+                println("version `$mavenGroupId:$mavenArtifactId:$mavenVersion\"`")
 
                 githubStepSummaryAppendLine(
-                    "@file:DependsOn(\"$mavenGroupId:$mavenArtifactId:$mavenVersion\")"
+                    "@file:DependsOn(\"$mavenGroupId:$mavenArtifactId:$mavenVersion\")",
                 )
             }
-
         }
     }
 }
