@@ -15,6 +15,7 @@ import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.actions.SetupNode
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.updates.printActionVersionUpdates
 import io.github.typesafegithub.workflows.yaml.writeToFile
@@ -24,6 +25,7 @@ val workflow =
         name = "This is a example of a horribly outdated workflow",
         on =
             listOf(
+                PullRequest(),
                 Push(branches = listOf("action-updates")),
             ),
         sourceFile = __FILE__.toPath(),
