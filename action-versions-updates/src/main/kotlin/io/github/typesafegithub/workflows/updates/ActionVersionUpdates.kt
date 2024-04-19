@@ -81,7 +81,7 @@ public fun Workflow.printActionVersionUpdates(stepSummary: Boolean = true) {
             }
             if (stepSummary) {
                 githubStepSummaryAppendLine(
-                    "## available versions for `${action.actionOwner}/${action.actionName}@${action.actionVersion}`",
+                    "## available updates for `${action.actionOwner}/${action.actionName}@${action.actionVersion}`",
                 )
                 update.file?.let { file ->
                     val githubRepo = System.getenv("GITHUB_REPOSITORY") ?: return@let

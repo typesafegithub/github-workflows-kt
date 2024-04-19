@@ -43,4 +43,4 @@ jobs:
       name: 'setup nodejs'
       uses: 'actions/setup-node@v3'
       with:
-        node-version-file: '.nvmrc'
+        node-version: 'lts'

@@ -7,9 +7,8 @@
 @file:DependsOn(
     "actions:checkout:v3",
     "actions:setup-java:v3",
-    "actions:setup-node:v3",
 )
-@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("actions:setup-node:v3")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
@@ -54,7 +53,7 @@ val workflow =
                     name = "setup nodejs",
                     action =
                         SetupNode(
-                            nodeVersionFile = ".nvmrc",
+                            nodeVersion = "lts",
                         ),
                 )
             }
