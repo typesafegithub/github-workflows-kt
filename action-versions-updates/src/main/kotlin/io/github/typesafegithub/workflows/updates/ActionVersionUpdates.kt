@@ -93,7 +93,7 @@ public fun Workflow.printActionVersionUpdates(stepSummary: Boolean = true) {
                             .relativeTo(File(".").toPath())
                             .joinToString("/")
                     githubStepSummaryAppendLine("")
-                    githubStepSummaryAppendLine("[${file.name}$line]($baseUrl/$${relativePath}$line)")
+                    githubStepSummaryAppendLine("[${file.name}$line]($baseUrl/${relativePath}$line)")
                 }
 
                 githubStepSummaryAppendLine("")
