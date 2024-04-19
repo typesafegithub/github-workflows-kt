@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows
+package io.github.typesafegithub.workflows.updates
 
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.Workflow

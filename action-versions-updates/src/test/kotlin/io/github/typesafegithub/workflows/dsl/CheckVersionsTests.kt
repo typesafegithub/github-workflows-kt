@@ -3,7 +3,7 @@ package io.github.typesafegithub.workflows.dsl
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
-import io.github.typesafegithub.workflows.getAvailableActionVersionUpdates
+import io.github.typesafegithub.workflows.updates.getAvailableActionVersionUpdates
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.collections.shouldHaveSize
