@@ -4,7 +4,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.codegenerator.model.Version
+import io.github.typesafegithub.workflows.shared.internal.model.Version
 import java.nio.file.Paths
 
 internal fun generateListOfBindingsForDocs(requestsAndBindings: List<Pair<ActionBindingRequest, ActionBinding>>) {
