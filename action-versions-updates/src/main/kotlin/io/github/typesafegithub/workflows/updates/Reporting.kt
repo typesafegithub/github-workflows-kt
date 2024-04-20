@@ -11,9 +11,11 @@ import kotlin.io.path.relativeTo
 public fun Workflow.reportAvailableUpdates(
     skipAlreadyUpToDate: Boolean = true,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
-    githubToken: String? = getGithubTokenOrNull(),
+    githubToken: String? = null,
 ) {
-    availableVersionsForEachAction(githubToken = githubToken) {
+    availableVersionsForEachAction(
+        githubToken = githubToken ?: getGithubTokenOrNull(),
+    ) {
         val usesString =
             with(action) {
                 "$actionOwner/$actionName@$actionVersion"
@@ -63,6 +65,6 @@ public fun Workflow.reportAvailableUpdates(
             println(mavenCoordinates)
             stepSummary?.appendLine("@file:DependsOn(\"$mavenCoordinates\")")
         }
-        stepSummary?.appendLine("\n```\n")
+        stepSummary?.appendLine("```\n")
     }
 }

@@ -1,8 +1,11 @@
 #!/usr/bin/env kotlin
 
+// usage:
+// echo "" > summary.md && GITHUB_STEP_SUMMARY=summary.md GITHUB_TOKEN=$token ./outdated_workflow.main.kts
+
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:Repository("https://jitpack.io/")
-@file:DependsOn("com.github.NikkyAI.github-workflows-kt:action-versions-updates:action-updates-5270e8791a-1")
+@file:Repository("file://~/.m2/repository/")
+@file:DependsOn("io.github.typesafegithub:action-versions-updates:1.14.1-SNAPSHOT")
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn(
     "actions:checkout:v3",
@@ -14,10 +17,10 @@ import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.actions.SetupNode
 import io.github.typesafegithub.workflows.domain.RunnerType
-import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
+import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.updates.printActionVersionUpdates
+import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
 val workflow =
@@ -58,5 +61,5 @@ val workflow =
             }
     }
 
-workflow.printActionVersionUpdates(true)
+workflow.reportAvailableUpdates()
 workflow.writeToFile(addConsistencyCheck = true)
