@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.codegenerator.versions
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.codegenerator.model.Version
+import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
