@@ -8,6 +8,7 @@ import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
+import io.github.typesafegithub.workflows.shared.internal.getGithubToken
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -110,7 +111,7 @@ fun main() {
                             name = name,
                             version = "irrelevant",
                         )
-                    val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = System.getenv("GITHUB_TOKEN"))
+                    val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = getGithubToken())
                     if (file in bindingArtifacts) {
                         when (val artifact = bindingArtifacts[file]) {
                             is String -> call.respondText(artifact)
