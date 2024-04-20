@@ -10,13 +10,11 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:2.3.10"))
-    implementation("io.ktor:ktor-client-core")
-    implementation("io.ktor:ktor-client-cio")
-    implementation("io.ktor:ktor-client-content-negotiation")
-    implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
+    implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
 
     implementation(projects.githubWorkflowsKt)
+    implementation(projects.sharedInternal)
 }
 
 kotlin {

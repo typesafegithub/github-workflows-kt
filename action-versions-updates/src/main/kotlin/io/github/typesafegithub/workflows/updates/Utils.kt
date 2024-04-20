@@ -1,0 +1,110 @@
+package io.github.typesafegithub.workflows.updates
+
+import io.github.typesafegithub.workflows.domain.ActionStep
+import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
+import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
+import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
+import io.github.typesafegithub.workflows.shared.internal.model.Version
+import io.github.typesafegithub.workflows.updates.model.RegularActionVersions
+import kotlinx.coroutines.runBlocking
+import java.nio.file.Path
+import kotlin.io.path.exists
+import kotlin.io.path.readText
+
+public fun <R> Workflow.availableVersionsForEachAction(
+    githubToken: String? = getGithubTokenOrNull(),
+    onEach: suspend RegularActionVersions.() -> R,
+): List<R> {
+    if (githubToken == null) {
+        System.err.println("github token is not set")
+        return emptyList()
+    }
+    val groupedSteps = groupStepsByAction()
+    return runBlocking {
+        groupedSteps.mapNotNull { (action, steps) ->
+            val availableVersions =
+                action.fetchAvailableVersionsOrWarn(
+                    githubToken = githubToken,
+                )
+            val currentVersion = Version(action.actionVersion)
+            if (availableVersions != null) {
+                val newerVersions =
+                    availableVersions
+                        .filter { it > currentVersion }
+                        .filter { it.isMajorVersion() == currentVersion.isMajorVersion() }
+                RegularActionVersions(
+                    action = action,
+                    steps = steps,
+                    newerVersions = newerVersions,
+                    availableVersions = availableVersions,
+                ).onEach()
+            } else {
+                null
+            }
+        }
+    }
+}
+
+public fun Workflow.availableVersionsForEachAction(githubToken: String? = getGithubTokenOrNull()): List<RegularActionVersions> =
+    availableVersionsForEachAction(githubToken) { this }
+
+internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String): List<Version>? {
+    return try {
+        fetchAvailableVersions(
+            owner = actionOwner,
+            name = actionName,
+            githubToken = githubToken,
+        )
+    } catch (e: IllegalStateException) {
+        System.err.println(e.message)
+        githubWarning(
+            "failed to fetch versions for $actionOwner/$actionName, skipping",
+        )
+        null
+    }
+}
+
+internal fun Workflow.groupStepsByAction(): List<Pair<RegularAction<*>, List<ActionStep<*>>>> {
+    val actionSteps =
+        jobs
+            .flatMap { job ->
+                job.steps
+            }
+            .filterIsInstance<ActionStep<*>>()
+    return actionSteps.groupBy { step ->
+        when (val action = step.action) {
+            is RegularAction<*> -> {
+                "${action.actionOwner}/${action.actionName}@${action.actionVersion}"
+            }
+
+            else -> {
+                null
+            }
+        }
+    }.values.toList().mapNotNull { list ->
+        val action = list.firstNotNullOfOrNull { it.action as? RegularAction<*> }
+        action?.let {
+            it to list
+        }
+    }
+}
+
+internal fun RegularAction<*>.mavenCoordinatesForAction(version: Version? = null): String {
+    val mavenGroupId = actionOwner.replace(":", "__")
+    val mavenArtifactId = actionName.replace(":", "__")
+    return "$mavenGroupId:$mavenArtifactId:${version?.version ?: actionVersion}"
+}
+
+public fun Workflow.findDependencyDeclaration(action: RegularAction<*>): Pair<Path?, Int?> {
+    val file = sourceFile?.takeIf { it.exists() }
+    val line =
+        file?.let { sourceFile ->
+            val currentCoordinates = action.mavenCoordinatesForAction()
+            sourceFile.readText().lines().indexOfFirst { line ->
+                line.contains("\"$currentCoordinates\"")
+            }
+        }
+
+    return file to line
+}

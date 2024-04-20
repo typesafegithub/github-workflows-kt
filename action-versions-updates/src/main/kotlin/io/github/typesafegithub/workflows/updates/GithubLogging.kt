@@ -1,14 +1,29 @@
-package io.github.typesafegithub.workflows.internal
+package io.github.typesafegithub.workflows.updates
 
 import java.io.File
 
-private val GITHUB_STEP_SUMMARY =
-    System.getenv("GITHUB_STEP_SUMMARY")
-        ?.let { File(it) }
-        ?.takeIf { it.exists() }
+public interface GithubStepSummary {
+    public fun appendText(text: String)
 
-public fun githubStepSummaryAppendLine(message: String) {
-    GITHUB_STEP_SUMMARY?.appendText(message + "\n")
+    public fun appendLine(line: String) {
+        appendText(line + "\n")
+    }
+
+    public companion object {
+        public fun fromEnv(): GithubStepSummary? {
+            val path = System.getenv("GITHUB_STEP_SUMMARY")
+            return path
+                ?.let { File(it) }
+                ?.takeIf { it.exists() }
+                ?.let { githubStepSummaryFile ->
+                    object : GithubStepSummary {
+                        override fun appendText(text: String) {
+                            githubStepSummaryFile.appendText(text)
+                        }
+                    }
+                }
+        }
+    }
 }
 
 public fun githubNotice(
