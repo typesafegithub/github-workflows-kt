@@ -101,10 +101,11 @@ public fun Workflow.findDependencyDeclaration(action: RegularAction<*>): Pair<Pa
     val line =
         file?.let { sourceFile ->
             val currentCoordinates = action.mavenCoordinatesForAction()
-            sourceFile.readText().lines().indexOfFirst { line ->
-                line.contains("\"$currentCoordinates\"")
-            }
+            val index =
+                sourceFile.readText().lines().indexOfFirst { line ->
+                    line.contains("\"$currentCoordinates\"")
+                }
+            index + 1
         }
-
     return file to line
 }
