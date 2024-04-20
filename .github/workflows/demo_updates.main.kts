@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 
 // usage:
-// echo "" > summary.md && GITHUB_STEP_SUMMARY=summary.md GITHUB_TOKEN=$token ./outdated_workflow.main.kts
+// echo "" > summary.md && GITHUB_STEP_SUMMARY=summary.md GITHUB_TOKEN=$token ./demo_updates.main.kts
 
 @file:Repository("https://repo1.maven.org/maven2/")
 @file:Repository("file://~/.m2/repository/")
@@ -11,25 +11,27 @@
     "actions:checkout:v3",
     "actions:setup-java:v3",
 )
-@file:DependsOn("actions:setup-node:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v3")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
-import io.github.typesafegithub.workflows.actions.actions.SetupNode
+import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
-import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import io.github.typesafegithub.workflows.yaml.writeToFile
+import java.io.File
+import kotlin.io.path.relativeTo
 
 val workflow =
     workflow(
-        name = "This is a example of a horribly outdated workflow",
+        name = "demo version updates",
         on =
             listOf(
                 PullRequest(),
-                Push(branches = listOf("action-updates")),
             ),
         sourceFile = __FILE__.toPath(),
     ) {
@@ -44,22 +46,32 @@ val workflow =
                     action = Checkout(),
                 )
                 uses(
-                    name = "setup jdk",
+                    name = "Set up JDK",
                     action =
                         SetupJava(
-                            javaPackage = SetupJava.JavaPackage.Jdk,
-                            javaVersion = "21",
-                            architecture = "x64",
-                            distribution = SetupJava.Distribution.Adopt,
-                            cache = SetupJava.BuildPlatform.Gradle,
+                            javaVersion = "11",
+                            distribution = SetupJava.Distribution.Zulu,
                         ),
                 )
-                uses(
-                    name = "setup nodejs",
-                    action = SetupNode(),
+                uses(action = ActionsSetupGradle())
+                run(
+                    name = "Publish to mavenLocal",
+                    command = "./gradlew publishToMavenLocal",
+                )
+                val currentFile = __FILE__.toPath().relativeTo(File(".").toPath().findGitRoot())
+                run(
+                    name = "execute script with github token",
+                    command =
+                        """
+                        '$currentFile'
+                        """.trimIndent(),
+                    env =
+                        linkedMapOf(
+                            "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN"),
+                        ),
                 )
             }
     }
 
 workflow.reportAvailableUpdates()
-workflow.writeToFile(addConsistencyCheck = true)
+workflow.writeToFile(addConsistencyCheck = false)

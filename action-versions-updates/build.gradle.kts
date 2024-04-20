@@ -10,8 +10,8 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
-    implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
+    // see https://youtrack.jetbrains.com/issue/KT-67618
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 
     implementation(projects.githubWorkflowsKt)
     implementation(projects.sharedInternal)
