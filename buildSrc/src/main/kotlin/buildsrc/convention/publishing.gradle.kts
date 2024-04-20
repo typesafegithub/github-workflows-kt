@@ -64,7 +64,11 @@ publishing {
 }
 
 signing {
-    if (!project.version.toString().endsWith("-SNAPSHOT")) {
+    val isSnapshotVersion = project.version.toString().endsWith("-SNAPSHOT")
+    setRequired({
+        !isSnapshotVersion && gradle.taskGraph.hasTask("publish")
+    })
+    if (!isSnapshotVersion) {
         sign(publishing.publications["mavenJava"])
     }
 
