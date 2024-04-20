@@ -9,6 +9,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPr
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
+import io.github.typesafegithub.workflows.shared.internal.getGithubToken
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import java.io.File
 

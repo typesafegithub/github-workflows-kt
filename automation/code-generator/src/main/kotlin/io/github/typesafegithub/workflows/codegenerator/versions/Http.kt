@@ -18,16 +18,6 @@ val ActionCoords.apiTagsUrl: String
 val ActionCoords.apiBranchesUrl: String
     get() = "https://api.github.com/repos/$owner/$name/git/matching-refs/heads/v"
 
-fun getGithubToken(): String =
-    System.getenv("GITHUB_TOKEN")
-        ?: error(
-            """
-            Missing environment variable export GITHUB_TOKEN=token
-            Create a personal token at https://github.com/settings/tokens
-            The token needs to have public_repo scope.
-            """.trimIndent(),
-        )
-
 @Serializable
 data class GithubRef(
     val ref: String,

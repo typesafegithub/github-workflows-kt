@@ -10,9 +10,9 @@ import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
 import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
 import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
-import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
 import io.github.typesafegithub.workflows.codegenerator.versions.httpClient
 import io.github.typesafegithub.workflows.codegenerator.versions.json
+import io.github.typesafegithub.workflows.shared.internal.getGithubToken
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
