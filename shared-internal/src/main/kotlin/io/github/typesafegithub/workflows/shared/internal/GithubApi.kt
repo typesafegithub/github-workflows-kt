@@ -4,6 +4,7 @@ import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
@@ -32,6 +33,7 @@ private suspend fun fetchGithubRefs(
     githubToken: String,
 ): List<GithubRef> =
     httpClient.get(urlString = url) {
+        expectSuccess = true
         bearerAuth(githubToken)
     }.body()
 
