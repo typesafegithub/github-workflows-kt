@@ -86,11 +86,11 @@ workflow(
 
         run(
             name = "Fetch maven-metadata.xml for top-level action",
-            command = "curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml",
+            command = "curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
         )
         run(
             name = "Fetch maven-metadata.xml for nested action",
-            command = "curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml",
+            command = "curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
         )
     }
 

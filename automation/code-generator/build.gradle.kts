@@ -18,6 +18,7 @@ dependencies {
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.4")
 
     implementation(projects.actionBindingGenerator)
+    implementation(projects.sharedInternal)
 
     testImplementation(projects.githubWorkflowsKt)
 }

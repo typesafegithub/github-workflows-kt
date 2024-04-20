@@ -9,7 +9,9 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPr
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
-import io.github.typesafegithub.workflows.codegenerator.model.Version
+import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
+import io.github.typesafegithub.workflows.shared.internal.getGithubToken
+import io.github.typesafegithub.workflows.shared.internal.model.Version
 import java.io.File
 
 /**
@@ -40,7 +42,7 @@ suspend fun main() {
             .mapValues { (_, value) -> value.map { Version(it.version) } }
 
     for ((coords, existingVersions) in actionsMap) {
-        val available = coords.fetchAvailableVersions(githubAuthorization)
+        val available = fetchAvailableVersions(owner = coords.owner, name = coords.name, githubAuthorization)
         coords.suggestNewerVersion(existingVersions, available)?.let { message ->
             val outputForAction = "# ${coords.prettyPrint}\n$message"
             println(outputForAction)
@@ -58,12 +60,6 @@ suspend fun main() {
         }
     }
 }
-
-fun List<GithubRef>.versions(): List<Version> =
-    this.map { githubRef ->
-        val version = githubRef.ref.substringAfterLast("/")
-        Version(version)
-    }
 
 fun ActionCoords.suggestNewerVersion(
     existingVersions: List<Version>,

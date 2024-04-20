@@ -5,7 +5,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Output
-import io.github.typesafegithub.workflows.codegenerator.model.Version
+import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.Table2
