@@ -64,13 +64,10 @@ publishing {
 }
 
 signing {
-    val isSnapshotVersion = project.version.toString().endsWith("-SNAPSHOT")
     setRequired({
-        !isSnapshotVersion && gradle.taskGraph.hasTask("publish")
+        !project.version.toString().endsWith("-SNAPSHOT")
     })
-    if (!isSnapshotVersion) {
-        sign(publishing.publications["mavenJava"])
-    }
+    sign(publishing.publications["mavenJava"])
 
     val signingKey = System.getenv("SIGNING_KEY")
     val signingPassword = System.getenv("SIGNING_PASSWORD")
