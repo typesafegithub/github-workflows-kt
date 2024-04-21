@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Container
+import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.KotlinLogicStep
@@ -30,6 +31,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val timeoutMinutes: Int? = null,
     public val concurrency: Concurrency? = null,
     public val container: Container? = null,
+    public val environment: Environment? = null,
     public val services: Map<String, Container> = emptyMap(),
     public val jobOutputs: OUTPUT,
     override val _customArguments: Map<String, @Contextual Any?>,
@@ -49,6 +51,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             timeoutMinutes = timeoutMinutes,
             concurrency = concurrency,
             container = container,
+            environment = environment,
             services = services,
             outputs = jobOutputs,
             _customArguments = _customArguments,
