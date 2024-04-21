@@ -72,7 +72,7 @@ workflow(
             run(
                 name = "Publish '$library' to Sonatype",
                 condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
-                command = "./gradlew $library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
+                command = "./gradlew $library:publishToSonatype --no-configuration-cache",
             )
         }
     }
