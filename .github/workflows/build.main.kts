@@ -56,8 +56,6 @@ workflow(
         runsOn = UbuntuLatest,
         condition = expr { "${github.ref} == 'refs/heads/main'" },
         env = linkedMapOf(
-            "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
-            "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
         ),
