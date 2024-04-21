@@ -54,7 +54,6 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-        condition = expr { "${github.ref} == 'refs/heads/main'" },
         env = linkedMapOf(
             "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
             "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
@@ -65,15 +64,10 @@ workflow(
         uses(action = Checkout())
         setupJava()
         uses(action = ActionsSetupGradle())
-        val setIsSnapshotVersionFlag = run(
-            name = "Check if snapshot version is set",
-            command = "./gradlew setIsSnapshotFlagInGithubOutput",
-        )
 
         libraries.forEach { library ->
             run(
                 name = "Publish '$library' to Sonatype",
-                condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
                 command = "./gradlew $library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
             )
         }
