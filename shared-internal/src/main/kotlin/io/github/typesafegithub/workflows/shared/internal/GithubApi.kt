@@ -39,15 +39,19 @@ private suspend fun fetchGithubRefs(
         }
     }.body()
 
+private fun repository(name: String): String {
+    return name.substringBefore('/')
+}
+
 private fun apiTagsUrl(
     owner: String,
     name: String,
-): String = "https://api.github.com/repos/$owner/$name/git/matching-refs/tags/v"
+): String = "https://api.github.com/repos/$owner/${repository(name)}/git/matching-refs/tags/v"
 
 private fun apiBranchesUrl(
     owner: String,
     name: String,
-): String = "https://api.github.com/repos/$owner/$name/git/matching-refs/heads/v"
+): String = "https://api.github.com/repos/$owner/${repository(name)}/git/matching-refs/heads/v"
 
 @Serializable
 private data class GithubRef(
