@@ -79,7 +79,14 @@ public fun Workflow.writeToFile(
     if (runStepEnvVar != null) {
         val contextDumpsDirEnvVar = getenv("CONTEXT_DUMPS_DIR")
         println("Context dumps dir: $contextDumpsDirEnvVar")
-        val githubContext = ((Path.of(contextDumpsDirEnvVar) ?: error("CONTEXT_DUMPS_DIR should be set!")) / "github.json").toFile().readLines()
+        val githubContext =
+            (
+                (
+                    Path.of(
+                        contextDumpsDirEnvVar,
+                    ) ?: error("CONTEXT_DUMPS_DIR should be set!")
+                ) / "github.json"
+            ).toFile().readLines()
         print("github context: $githubContext")
 
         val (jobId, stepId) = runStepEnvVar.split(":")
