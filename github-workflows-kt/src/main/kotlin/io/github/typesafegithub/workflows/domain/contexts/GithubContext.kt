@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 public data class GithubContext(
     val repository: String,
     val sha: String,
+    val ref: String? = null,
     val event: GithubContextEvent,
     val event_name: String,
 )

@@ -55,8 +55,6 @@ public fun Workflow.toYaml(
     )
 }
 
-private val json = Json { ignoreUnknownKeys = true }
-
 /**
  * Writes the workflow given in the receiver to a YAML string, under a path that is built this way:
  * `<git-repo-root>/.github/workflows/<[Workflow.targetFileName]>.yaml`.
@@ -81,19 +79,13 @@ public fun Workflow.writeToFile(
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
 
     if (runStepEnvVar != null) {
-        val githubContextRaw = getenv("GHWKT_GITHUB_CONTEXT_JSON") ?: error("GHWKT_GITHUB_CONTEXT_JSON should be set!")
-        val githubContext = json.decodeFromString<GithubContext>(githubContextRaw)
-        val contexts =
-            Contexts(
-                github = githubContext,
-            )
-
         val (jobId, stepId) = runStepEnvVar.split(":")
         val kotlinLogicStep =
             this.jobs
                 .first { it.id == jobId }
                 .steps
                 .first { it.id == stepId } as KotlinLogicStep
+        val contexts = loadContextsFromEnvVars(getenv)
         kotlinLogicStep.logic(contexts)
         return
     }
@@ -119,6 +111,16 @@ public fun Workflow.writeToFile(
         it.parentFile.mkdirs()
         it.writeText(yaml)
     }
+}
+
+private fun loadContextsFromEnvVars(getenv: (String) -> String?): Contexts {
+    fun getEnvVarOrFail(varName: String): String = getenv(varName) ?: error("$varName should be set!")
+
+    val githubContextRaw = getEnvVarOrFail("GHWKT_GITHUB_CONTEXT_JSON")
+    val githubContext = json.decodeFromString<GithubContext>(githubContextRaw)
+    return Contexts(
+        github = githubContext,
+    )
 }
 
 private fun commentify(preamble: String): String {
@@ -254,3 +256,5 @@ private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map
         *_customArguments.toList().toTypedArray(),
         "jobs" to jobsWithConsistencyCheck.jobsToYaml(),
     )
+
+private val json = Json { ignoreUnknownKeys = true }
