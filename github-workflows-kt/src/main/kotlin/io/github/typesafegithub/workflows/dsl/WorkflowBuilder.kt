@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.dsl
 
+import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Environment
@@ -42,6 +43,7 @@ public class WorkflowBuilder(
             _customArguments = _customArguments,
         )
 
+    @OptIn(ExperimentalKotlinLogicStep::class)
     @Suppress("LongParameterList")
     public fun <OUTPUT : JobOutputs> job(
         @Suppress("UNUSED_PARAMETER")
@@ -68,13 +70,28 @@ public class WorkflowBuilder(
         require(listOfNotNull(`if`, condition, ifKotlin).size <= 1) {
             "Only one of 'if', 'condition' or 'ifKotlin' can be set!"
         }
-        // TODO: create a synthetic job to evaluate "ifKotlin"
+
+        val conditionEvaluationJob =
+            ifKotlin?.let {
+                job(
+                    id = "${id}__condition_evaluation",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    run {
+                        val evaluationResult = ifKotlin()
+                        println("Evaluation result: $evaluationResult")
+                        // TODO: expose the evaluation result as an output
+                    }
+                }
+            }
+
         val jobBuilder =
             JobBuilder(
                 id = id,
                 name = name,
                 runsOn = runsOn,
-                needs = needs,
+                needs = (needs + conditionEvaluationJob).filterNotNull(),
+                // TODO: translate the condition evaluation job's output to a condition here
                 condition = `if` ?: condition,
                 env = env,
                 strategyMatrix = strategyMatrix,

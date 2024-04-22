@@ -1860,8 +1860,8 @@ public abstract interface class io/github/typesafegithub/workflows/dsl/HasCustom
 }
 
 public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/LinkedHashMap;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lio/github/typesafegithub/workflows/domain/Job;
 	public final fun getConcurrency ()Lio/github/typesafegithub/workflows/domain/Concurrency;
 	public final fun getCondition ()Ljava/lang/String;
@@ -1869,7 +1869,6 @@ public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github
 	public final fun getEnv ()Ljava/util/LinkedHashMap;
 	public final fun getEnvironment ()Lio/github/typesafegithub/workflows/domain/Environment;
 	public final fun getId ()Ljava/lang/String;
-	public final fun getIfKotlin ()Lkotlin/jvm/functions/Function1;
 	public final fun getJobOutputs ()Lio/github/typesafegithub/workflows/domain/JobOutputs;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNeeds ()Ljava/util/List;
