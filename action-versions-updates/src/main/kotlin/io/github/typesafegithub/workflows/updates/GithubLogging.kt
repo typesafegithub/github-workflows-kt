@@ -1,6 +1,9 @@
 package io.github.typesafegithub.workflows.updates
 
 import java.io.File
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 public interface GithubStepSummary {
     public fun appendText(text: String)
@@ -26,6 +29,32 @@ public interface GithubStepSummary {
     }
 }
 
+private val isGithubCi: Boolean by lazy {
+    System.getenv("GITHUB_ACTIONS") == "true"
+}
+
+public fun logSimple(
+    level: String,
+    message: String,
+    title: String? = null,
+    file: String? = null,
+    col: Int? = null,
+    endColumn: Int? = null,
+    line: Int? = null,
+    endLine: Int? = null,
+) {
+    val context =
+        listOfNotNull(
+            title?.let { "title=$it" },
+            file?.let { "file=$it" },
+            col?.let { "col=$it" },
+            endColumn?.let { "endColumn=$it" },
+            line?.let { "line=$it" },
+            endLine?.let { "endLine=$it" },
+        ).joinToString(",")
+    println("$level: $context $message")
+}
+
 public fun githubNotice(
     message: String,
     title: String? = null,
@@ -35,16 +64,29 @@ public fun githubNotice(
     line: Int? = null,
     endLine: Int? = null,
 ) {
-    val parameters =
-        listOfNotNull(
-            title?.let { "title=$it" },
-            file?.let { "file=$it" },
-            col?.let { "col=$it" },
-            endColumn?.let { "endColumn=$it" },
-            line?.let { "line=$it" },
-            endLine?.let { "endLine=$it" },
-        ).joinToString(",")
-    println("echo ::notice $parameters::$message")
+    if (isGithubCi) {
+        val parameters =
+            listOfNotNull(
+                title?.let { "title=$it" },
+                file?.let { "file=$it" },
+                col?.let { "col=$it" },
+                endColumn?.let { "endColumn=$it" },
+                line?.let { "line=$it" },
+                endLine?.let { "endLine=$it" },
+            ).joinToString(",")
+        println("echo ::notice $parameters::$message")
+    } else {
+        logSimple(
+            level = "notice",
+            message = message,
+            title = title,
+            file = file,
+            col = col,
+            endColumn = endColumn,
+            line = line,
+            endLine = endLine,
+        )
+    }
 }
 
 public fun githubWarning(
@@ -56,16 +98,29 @@ public fun githubWarning(
     line: Int? = null,
     endLine: Int? = null,
 ) {
-    val parameters =
-        listOfNotNull(
-            title?.let { "title=$it" },
-            file?.let { "file=$it" },
-            col?.let { "col=$it" },
-            endColumn?.let { "endColumn=$it" },
-            line?.let { "line=$it" },
-            endLine?.let { "endLine=$it" },
-        ).joinToString(",")
-    println("::warning $parameters::$message")
+    if (isGithubCi) {
+        val parameters =
+            listOfNotNull(
+                title?.let { "title=$it" },
+                file?.let { "file=$it" },
+                col?.let { "col=$it" },
+                endColumn?.let { "endColumn=$it" },
+                line?.let { "line=$it" },
+                endLine?.let { "endLine=$it" },
+            ).joinToString(",")
+        println("::warning $parameters::$message")
+    } else {
+        logSimple(
+            level = "warning",
+            message = message,
+            title = title,
+            file = file,
+            col = col,
+            endColumn = endColumn,
+            line = line,
+            endLine = endLine,
+        )
+    }
 }
 
 public fun githubError(
@@ -77,23 +132,46 @@ public fun githubError(
     line: Int? = null,
     endLine: Int? = null,
 ) {
-    val parameters =
-        listOfNotNull(
-            title?.let { "title=$it" },
-            file?.let { "file=$it" },
-            col?.let { "col=$it" },
-            endColumn?.let { "endColumn=$it" },
-            line?.let { "line=$it" },
-            endLine?.let { "endLine=$it" },
-        ).joinToString(",")
-    println("::error $parameters::$message")
+    if (isGithubCi) {
+        val parameters =
+            listOfNotNull(
+                title?.let { "title=$it" },
+                file?.let { "file=$it" },
+                col?.let { "col=$it" },
+                endColumn?.let { "endColumn=$it" },
+                line?.let { "line=$it" },
+                endLine?.let { "endLine=$it" },
+            ).joinToString(",")
+        println("::error $parameters::$message")
+    } else {
+        logSimple(
+            level = "error",
+            message = message,
+            title = title,
+            file = file,
+            col = col,
+            endColumn = endColumn,
+            line = line,
+            endLine = endLine,
+        )
+    }
 }
 
-public inline fun githubGroup(
+@OptIn(ExperimentalContracts::class)
+public fun githubGroup(
     title: String,
     block: () -> Unit,
 ) {
-    println("::group::$title")
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    if (isGithubCi) {
+        println("::group::$title")
+    } else {
+        println(title)
+    }
     block()
-    println("::endgroup::")
+    if (isGithubCi) {
+        println("::endgroup::")
+    }
 }
