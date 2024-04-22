@@ -54,7 +54,6 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-        condition = expr { "${github.ref} == 'refs/heads/main'" },
         env = linkedMapOf(
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
@@ -63,15 +62,10 @@ workflow(
         uses(action = Checkout())
         setupJava()
         uses(action = ActionsSetupGradle())
-        val setIsSnapshotVersionFlag = run(
-            name = "Check if snapshot version is set",
-            command = "./gradlew setIsSnapshotFlagInGithubOutput",
-        )
 
         libraries.forEach { library ->
             run(
                 name = "Publish '$library' to Sonatype",
-                condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
                 command = "./gradlew $library:publishToSonatype --no-configuration-cache",
             )
         }

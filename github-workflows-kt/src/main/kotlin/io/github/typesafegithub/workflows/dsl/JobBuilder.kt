@@ -129,7 +129,11 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 // Because of the current architecture, it's hard to make this command work properly if the sourceFile
                 // isn't in .github/workflows directory. It's the most common use case, though, so for now this
                 // simplified implementation is used.
-                command = "GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'",
+                command = """
+                    CONTEXT_DUMPS_DIR=$(mktemp -d)
+                    echo '${'$'}{{ toJSON(github) }}' > "${'$'}CONTEXT_DUMPS_DIR/github.json"
+                    GHWKT_RUN_STEP='${this.id}:$id' CONTEXT_DUMPS_DIR=${'$'}CONTEXT_DUMPS_DIR '.github/workflows/${sourceFile.name}'
+                """.trimIndent(),
                 logic = logic,
                 env = env,
                 condition = `if` ?: condition,
