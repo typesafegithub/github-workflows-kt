@@ -28,6 +28,8 @@ jobs:
       uses: 'actions/checkout@v4'
     - id: 'step-1'
       name: 'Step with Kotlin logic'
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
       run: |-
-        echo '${{ toJSON(github) }}' > github-context.json
+        echo $GHWKT_GITHUB_CONTEXT_JSON > github-context.json
         GHWKT_RUN_STEP='test-job:step-1' '.github/workflows/test-workflow.main.kts'
