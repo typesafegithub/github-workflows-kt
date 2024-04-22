@@ -56,8 +56,6 @@ workflow(
         runsOn = UbuntuLatest,
         condition = expr { "${github.ref} == 'refs/heads/main'" },
         env = linkedMapOf(
-            "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
-            "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
         ),
@@ -74,7 +72,7 @@ workflow(
             run(
                 name = "Publish '$library' to Sonatype",
                 condition = expr("steps.${setIsSnapshotVersionFlag.id}.outputs.is-snapshot == 'true'"),
-                command = "./gradlew $library:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache",
+                command = "./gradlew $library:publishToSonatype --no-configuration-cache",
             )
         }
     }

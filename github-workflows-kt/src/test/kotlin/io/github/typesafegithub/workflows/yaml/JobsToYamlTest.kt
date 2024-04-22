@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.yaml
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Container
+import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
@@ -164,6 +165,7 @@ class JobsToYamlTest : DescribeSpec({
                             Permission.Contents to Mode.None,
                         ),
                     container = Container(image = "some-image"),
+                    environment = Environment(name = "some-name", url = "some-url"),
                     services =
                         mapOf(
                             "some-service" to Container(image = "some-service-image"),
@@ -230,6 +232,11 @@ class JobsToYamlTest : DescribeSpec({
                         "container" to
                             mapOf(
                                 "image" to "some-image",
+                            ),
+                        "environment" to
+                            mapOf(
+                                "name" to "some-name",
+                                "url" to "some-url",
                             ),
                         "services" to
                             mapOf(
