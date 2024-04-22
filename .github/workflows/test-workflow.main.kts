@@ -12,7 +12,7 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 
 
 workflow(
-    name = "Build",
+    name = "TEST WORKFLOW",
     on = listOf(Push()),
     sourceFile = __FILE__.toPath(),
 ) {
