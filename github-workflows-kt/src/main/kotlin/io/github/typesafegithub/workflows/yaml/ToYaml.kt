@@ -54,6 +54,8 @@ public fun Workflow.toYaml(
     )
 }
 
+private val json = Json { ignoreUnknownKeys = true }
+
 /**
  * Writes the workflow given in the receiver to a YAML string, under a path that is built this way:
  * `<git-repo-root>/.github/workflows/<[Workflow.targetFileName]>.yaml`.
@@ -80,7 +82,7 @@ public fun Workflow.writeToFile(
     if (runStepEnvVar != null) {
         val githubContextRaw = getenv("GHWKT_GITHUB_CONTEXT_JSON") ?: error("GHWKT_GITHUB_CONTEXT_JSON should be set!")
         println("github context raw: $githubContextRaw")
-        val githubContext = Json.decodeFromString<GithubContext>(githubContextRaw)
+        val githubContext = json.decodeFromString<GithubContext>(githubContextRaw)
 
         val (jobId, stepId) = runStepEnvVar.split(":")
         val kotlinLogicStep =
