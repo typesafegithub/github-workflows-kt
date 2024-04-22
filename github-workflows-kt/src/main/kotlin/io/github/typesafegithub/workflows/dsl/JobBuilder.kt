@@ -14,7 +14,7 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
-import io.github.typesafegithub.workflows.domain.contexts.GithubContext
+import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import kotlinx.serialization.Contextual
 import kotlin.io.path.name
 
@@ -110,7 +110,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         workingDirectory: String? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-        logic: (GithubContext) -> Unit,
+        logic: Contexts.() -> Unit,
     ): KotlinLogicStep {
         require(!(`if` != null && condition != null)) {
             "Either 'if' or 'condition' have to be set, not both!"

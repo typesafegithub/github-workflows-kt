@@ -882,59 +882,80 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-//    test("writeToFile() - calling Kotlin logic step") {
-//        // Given
-//        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
-//        var callCount = 0
-//
-//        val myWorkflow =
-//            workflow(
-//                name = "test",
-//                on = listOf(Push()),
-//                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-//            ) {
-//                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
-//                    uses(action = CheckoutV4())
-//                    run(name = "Step with Kotlin code in lambda") {
-//                        callCount++
-//                    }
-//                }
-//            }
-//
-//        // When
-//        // Writing the YAML
-//        myWorkflow.writeToFile(
-//            preamble = Just(""),
-//            addConsistencyCheck = false,
-//            gitRootDir = gitRootDir,
-//        )
-//        // During runtime
-//        myWorkflow.writeToFile(
-//            preamble = Just(""),
-//            addConsistencyCheck = false,
-//            gitRootDir = gitRootDir,
-//            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-1" else null },
-//        )
-//
-//        // Then
-//        targetTempFile.readText() shouldBe
-//            """
-//            name: 'test'
-//            on:
-//              push: {}
-//            jobs:
-//              test:
-//                runs-on: 'ubuntu-latest'
-//                steps:
-//                - id: 'step-0'
-//                  uses: 'actions/checkout@v4'
-//                - id: 'step-1'
-//                  name: 'Step with Kotlin code in lambda'
-//                  run: 'GHWKT_RUN_STEP=''test:step-1'' ''.github/workflows/some_workflow.main.kts'''
-//
-//            """.trimIndent()
-//        callCount shouldBe 1
-//    }
+    test("writeToFile() - calling Kotlin logic step") {
+        // Given
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
+        var callCount = 0
+        var repoName = ""
+
+        val myWorkflow =
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            ) {
+                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                    uses(action = CheckoutV4())
+                    run(name = "Step with Kotlin code in lambda") {
+                        callCount++
+                        repoName = github.repository
+                    }
+                }
+            }
+
+        // When
+        // Writing the YAML
+        myWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+            gitRootDir = gitRootDir,
+        )
+        // During runtime
+        myWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+            gitRootDir = gitRootDir,
+            getenv = {
+                when (it) {
+                    "GHWKT_RUN_STEP" -> "test:step-1"
+                    "GHWKT_GITHUB_CONTEXT_JSON" ->
+                        """
+                        {
+                            "repository": "test-repository",
+                            "sha": "d34db33f",
+                            "event_name": "push",
+                            "event": {
+                                "after": "bce434"
+                            }
+                        }
+                        """.trimIndent()
+                    else -> null
+                }
+            },
+        )
+
+        // Then
+        targetTempFile.readText() shouldBe
+            """
+            name: 'test'
+            on:
+              push: {}
+            jobs:
+              test:
+                runs-on: 'ubuntu-latest'
+                steps:
+                - id: 'step-0'
+                  uses: 'actions/checkout@v4'
+                - id: 'step-1'
+                  name: 'Step with Kotlin code in lambda'
+                  env:
+                    GHWKT_GITHUB_CONTEXT_JSON: '${'$'}{{ toJSON(github) }}'
+                  run: 'GHWKT_RUN_STEP=''test:step-1'' ''.github/workflows/some_workflow.main.kts'''
+
+            """.trimIndent()
+        callCount shouldBe 1
+        repoName shouldBe "test-repository"
+    }
 
     test("toYaml() - calling Kotlin logic step") {
         // Given

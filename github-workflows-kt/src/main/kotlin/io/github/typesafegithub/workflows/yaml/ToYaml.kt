@@ -7,6 +7,7 @@ import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
@@ -81,8 +82,11 @@ public fun Workflow.writeToFile(
 
     if (runStepEnvVar != null) {
         val githubContextRaw = getenv("GHWKT_GITHUB_CONTEXT_JSON") ?: error("GHWKT_GITHUB_CONTEXT_JSON should be set!")
-        println("github context raw: $githubContextRaw")
         val githubContext = json.decodeFromString<GithubContext>(githubContextRaw)
+        val contexts =
+            Contexts(
+                github = githubContext,
+            )
 
         val (jobId, stepId) = runStepEnvVar.split(":")
         val kotlinLogicStep =
@@ -90,7 +94,7 @@ public fun Workflow.writeToFile(
                 .first { it.id == jobId }
                 .steps
                 .first { it.id == stepId } as KotlinLogicStep
-        kotlinLogicStep.logic(githubContext)
+        kotlinLogicStep.logic(contexts)
         return
     }
 

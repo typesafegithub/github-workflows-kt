@@ -600,18 +600,29 @@ public abstract class io/github/typesafegithub/workflows/domain/actions/RegularA
 	public fun getActionVersion ()Ljava/lang/String;
 }
 
+public final class io/github/typesafegithub/workflows/domain/contexts/Contexts {
+	public fun <init> (Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;)V
+	public final fun component1 ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
+	public final fun copy (Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;)Lio/github/typesafegithub/workflows/domain/contexts/Contexts;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/contexts/Contexts;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/contexts/Contexts;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGithub ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/domain/contexts/GithubContext {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;
+	public final fun component3 ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getEvent ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;
-	public final fun getEventName ()Ljava/lang/String;
+	public final fun getEvent ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;
+	public final fun getEvent_name ()Ljava/lang/String;
 	public final fun getRepository ()Ljava/lang/String;
 	public final fun getSha ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -633,30 +644,30 @@ public final class io/github/typesafegithub/workflows/domain/contexts/GithubCont
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/domain/contexts/GithubContext$Event {
-	public static final field Companion Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event$Companion;
+public final class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAfter ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/domain/contexts/GithubContext$Event$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event$$serializer;
+public final class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$Event;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/domain/contexts/GithubContext$Event$Companion {
+public final class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
