@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.1-20240422.083415-28")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.1-20240422.091618-32")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
