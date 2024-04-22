@@ -94,8 +94,8 @@ internal fun Workflow.groupStepsByAction(): List<Pair<RegularAction<*>, List<Act
 }
 
 internal fun RegularAction<*>.mavenCoordinatesForAction(version: Version? = null): String {
-    val mavenGroupId = actionOwner.replace(":", "__")
-    val mavenArtifactId = actionName.replace(":", "__")
+    val mavenGroupId = actionOwner.replace("/", "__")
+    val mavenArtifactId = actionName.replace("/", "__")
     return "$mavenGroupId:$mavenArtifactId:${version?.version ?: actionVersion}"
 }
 

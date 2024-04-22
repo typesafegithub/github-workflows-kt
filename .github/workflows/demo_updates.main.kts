@@ -11,13 +11,14 @@
     "actions:checkout:v3",
     "actions:setup-java:v3",
 )
-@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v3.0.0")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
+import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
@@ -32,6 +33,7 @@ val workflow =
         on =
             listOf(
                 PullRequest(),
+                Push(branches = listOf("action-updates")),
             ),
         sourceFile = __FILE__.toPath(),
     ) {

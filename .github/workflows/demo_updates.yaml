@@ -5,6 +5,9 @@
 name: 'demo version updates'
 on:
   pull_request: {}
+  push:
+    branches:
+    - 'action-updates'
 jobs:
   build:
     runs-on: 'ubuntu-latest'
@@ -20,7 +23,7 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v3.0.0'
     - id: 'step-3'
       name: 'Publish to mavenLocal'
       run: './gradlew publishToMavenLocal'
