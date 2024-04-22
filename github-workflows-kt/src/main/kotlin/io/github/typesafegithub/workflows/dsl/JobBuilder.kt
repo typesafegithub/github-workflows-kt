@@ -14,6 +14,7 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import kotlinx.serialization.Contextual
 import kotlin.io.path.name
 
@@ -109,7 +110,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         workingDirectory: String? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-        logic: () -> Unit,
+        logic: (GithubContext) -> Unit,
     ): KotlinLogicStep {
         require(!(`if` != null && condition != null)) {
             "Either 'if' or 'condition' have to be set, not both!"
@@ -132,7 +133,6 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 // simplified implementation is used.
                 command =
                     """
-                    echo ${'$'}GHWKT_GITHUB_CONTEXT_JSON > github-context.json
                     GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'
                     """.trimIndent(),
                 logic = logic,

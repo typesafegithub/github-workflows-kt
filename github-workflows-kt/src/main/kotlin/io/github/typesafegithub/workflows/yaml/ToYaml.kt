@@ -7,13 +7,14 @@ import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
-import java.io.File
+import kotlinx.serialization.json.Json
 import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.exists
@@ -77,8 +78,9 @@ public fun Workflow.writeToFile(
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
 
     if (runStepEnvVar != null) {
-        val githubContext = File("github-context.json").readLines()
-        println("github context: $githubContext")
+        val githubContextRaw = getenv("GHWKT_GITHUB_CONTEXT_JSON") ?: error("GHWKT_GITHUB_CONTEXT_JSON should be set!")
+        println("github context raw: $githubContextRaw")
+        val githubContext = Json.decodeFromString<GithubContext>(githubContextRaw)
 
         val (jobId, stepId) = runStepEnvVar.split(":")
         val kotlinLogicStep =
@@ -86,7 +88,7 @@ public fun Workflow.writeToFile(
                 .first { it.id == jobId }
                 .steps
                 .first { it.id == stepId } as KotlinLogicStep
-        kotlinLogicStep.logic()
+        kotlinLogicStep.logic(githubContext)
         return
     }
 
