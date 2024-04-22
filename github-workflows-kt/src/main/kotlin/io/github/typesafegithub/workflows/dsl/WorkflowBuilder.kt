@@ -9,6 +9,7 @@ import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
@@ -51,6 +52,7 @@ public class WorkflowBuilder(
         needs: List<Job<*>> = emptyList(),
         `if`: String? = null,
         condition: String? = null,
+        ifKotlin: (Contexts.() -> Boolean)? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
         permissions: Map<Permission, Mode>? = null,
@@ -63,9 +65,10 @@ public class WorkflowBuilder(
         outputs: OUTPUT,
         block: JobBuilder<OUTPUT>.() -> Unit,
     ): Job<OUTPUT> {
-        require(!(`if` != null && condition != null)) {
-            "Either 'if' or 'condition' have to be set, not both!"
+        require(listOfNotNull(`if`, condition, ifKotlin).size <= 1) {
+            "Only one of 'if', 'condition' or 'ifKotlin' can be set!"
         }
+        // TODO: create a synthetic job to evaluate "ifKotlin"
         val jobBuilder =
             JobBuilder(
                 id = id,
@@ -105,6 +108,7 @@ public class WorkflowBuilder(
         needs: List<Job<*>> = emptyList(),
         `if`: String? = null,
         condition: String? = null,
+        ifKotlin: (Contexts.() -> Boolean)? = null,
         env: LinkedHashMap<String, String> = linkedMapOf(),
         strategyMatrix: Map<String, List<String>>? = null,
         permissions: Map<Permission, Mode>? = null,
@@ -116,8 +120,8 @@ public class WorkflowBuilder(
         services: Map<String, Container> = emptyMap(),
         block: JobBuilder<JobOutputs.EMPTY>.() -> Unit,
     ): Job<JobOutputs.EMPTY> {
-        require(!(`if` != null && condition != null)) {
-            "Either 'if' or 'condition' have to be set, not both!"
+        require(listOfNotNull(`if`, condition, ifKotlin).size <= 1) {
+            "Only one of 'if', 'condition' or 'ifKotlin' can be set!"
         }
         return job(
             id = id,
@@ -125,6 +129,7 @@ public class WorkflowBuilder(
             runsOn = runsOn,
             needs = needs,
             condition = `if` ?: condition,
+            ifKotlin = ifKotlin,
             env = env,
             strategyMatrix = strategyMatrix,
             permissions = permissions,
