@@ -121,6 +121,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             workflowBuilder.workflow.sourceFile
                 ?: throw IllegalArgumentException("sourceFile needs to be set when using Kotlin-based 'run' block!")
         val id = "step-${job.steps.size}"
+        println(env)
 
         val newStep =
             KotlinLogicStep(
@@ -131,11 +132,11 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 // simplified implementation is used.
                 command =
                     """
-                    echo '${'$'}{{ toJSON(github) }}' > github-context.json
+                    echo ${'$'}GHWKT_GITHUB_CONTEXT_JSON > github-context.json
                     GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'
                     """.trimIndent(),
                 logic = logic,
-                env = env,
+                env = linkedMapOf("GHWKT_GITHUB_CONTEXT_JSON" to "${'$'}{{ toJSON(github) }}"),
                 condition = `if` ?: condition,
                 continueOnError = continueOnError,
                 timeoutMinutes = timeoutMinutes,
