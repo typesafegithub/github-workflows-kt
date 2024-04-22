@@ -23,7 +23,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import io.github.typesafegithub.workflows.yaml.writeToFile
-import java.io.File
+import kotlin.io.path.absolute
 import kotlin.io.path.relativeTo
 
 val workflow =
@@ -58,7 +58,9 @@ val workflow =
                     name = "Publish to mavenLocal",
                     command = "./gradlew publishToMavenLocal",
                 )
-                val currentFile = __FILE__.toPath().relativeTo(File(".").toPath().findGitRoot())
+                val currentFile =
+                    __FILE__.toPath().absolute()
+                        .relativeTo(__FILE__.toPath().findGitRoot())
                 run(
                     name = "execute script with github token",
                     command =

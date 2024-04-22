@@ -53,8 +53,7 @@ public fun Workflow.reportAvailableUpdates(
             val lineAnchor = line?.let { "#L$line" }.orEmpty()
             val gitRoot = file.findGitRoot()
             val relativeToRepositoryRoot =
-                file.absolute()
-                    .relativeTo(gitRoot.absolute())
+                file.absolute().relativeTo(gitRoot.absolute())
                     .joinToString("/")
             stepSummary.appendLine(
                 "\n[${file.name}$lineAnchor]($baseUrl/${relativeToRepositoryRoot}$lineAnchor)",
