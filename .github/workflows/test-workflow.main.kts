@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.1-20240422.092635-34")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.1-20240422.100111-37")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
@@ -21,8 +21,15 @@ workflow(
         runsOn = RunnerType.UbuntuLatest,
     ) {
         uses(action = CheckoutV4())
-        run(name = "Step with Kotlin logic") {
+        run(name = "Step with Kotlin logic") { github ->
             println("Hello from Kotlin!")
+            println("github.sha: ${github.sha}")
+            println(
+                "Can do any sort of transformations: ${github.repository
+                    .filter { it !in setOf('a', 'e', 'i', 'o', 'u', 'y') }
+                    .uppercase()}",
+            )
+            println("Can access nested values: ${github.event.after}")
         }
     }
 }.writeToFile()
