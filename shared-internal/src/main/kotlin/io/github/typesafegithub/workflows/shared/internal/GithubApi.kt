@@ -14,7 +14,7 @@ import kotlinx.serialization.json.Json
 suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
-    githubToken: String,
+    githubToken: String?,
 ): List<Version> =
     listOf(
         apiTagsUrl(owner = owner, name = name),
@@ -30,11 +30,13 @@ private fun List<GithubRef>.versions(): List<Version> =
 
 private suspend fun fetchGithubRefs(
     url: String,
-    githubToken: String,
+    githubToken: String?,
 ): List<GithubRef> =
     httpClient.get(urlString = url) {
         expectSuccess = true
-        bearerAuth(githubToken)
+        if (githubToken != null) {
+            bearerAuth(githubToken)
+        }
     }.body()
 
 private fun apiTagsUrl(

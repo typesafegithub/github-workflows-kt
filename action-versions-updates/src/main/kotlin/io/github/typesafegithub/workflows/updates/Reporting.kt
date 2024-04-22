@@ -10,10 +10,12 @@ import kotlin.io.path.relativeTo
 
 public fun Workflow.reportAvailableUpdates(
     skipAlreadyUpToDate: Boolean = true,
+    reportWhenTokenUnset: Boolean = false,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
     githubToken: String? = null,
 ) {
     availableVersionsForEachAction(
+        reportWhenTokenUnset = reportWhenTokenUnset,
         githubToken = githubToken ?: getGithubTokenOrNull(),
     ) {
         val usesString =

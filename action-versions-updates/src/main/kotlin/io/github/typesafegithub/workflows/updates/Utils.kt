@@ -13,11 +13,12 @@ import kotlin.io.path.exists
 import kotlin.io.path.readText
 
 public fun <R> Workflow.availableVersionsForEachAction(
+    reportWhenTokenUnset: Boolean = true,
     githubToken: String? = getGithubTokenOrNull(),
     onEach: suspend RegularActionVersions.() -> R,
 ): List<R> {
-    if (githubToken == null) {
-        System.err.println("github token is not set")
+    if (githubToken == null && !reportWhenTokenUnset) {
+        System.err.println("github token is required, but not set, skipping api calls")
         return emptyList()
     }
     val groupedSteps = groupStepsByAction()
@@ -46,10 +47,12 @@ public fun <R> Workflow.availableVersionsForEachAction(
     }
 }
 
-public fun Workflow.availableVersionsForEachAction(githubToken: String? = getGithubTokenOrNull()): List<RegularActionVersions> =
-    availableVersionsForEachAction(githubToken) { this }
+public fun Workflow.availableVersionsForEachAction(
+    reportWhenTokenUnset: Boolean = false,
+    githubToken: String? = getGithubTokenOrNull(),
+): List<RegularActionVersions> = availableVersionsForEachAction(reportWhenTokenUnset, githubToken) { this }
 
-internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String): List<Version>? {
+internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String?): List<Version>? {
     return try {
         fetchAvailableVersions(
             owner = actionOwner,

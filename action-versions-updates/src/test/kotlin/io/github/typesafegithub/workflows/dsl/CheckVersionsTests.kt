@@ -68,6 +68,8 @@ class CheckVersionsTests : FunSpec(
             workflow
                 .availableVersionsForEachAction()
 
+        // write dependency notations into a file,
+        // so we can test finding the correct line numbers
         availableVersionsForEachAction.forEach {
             val coordinates = it.action.mavenCoordinatesForAction()
             sourceTempFile.appendText(
@@ -86,13 +88,14 @@ class CheckVersionsTests : FunSpec(
         test("dependency annotations can be looked up") {
             availableVersionsForEachAction.forEachIndexed { index, regularActionVersions ->
                 val (_, line) = workflow.findDependencyDeclaration(regularActionVersions.action)
-                line shouldBe index
+                line shouldBe (index + 1)
             }
         }
 
         test("do nothing with missing token") {
             workflow
                 .availableVersionsForEachAction(
+                    reportWhenTokenUnset = false,
                     githubToken = null,
                 )
                 .shouldHaveSize(0)
