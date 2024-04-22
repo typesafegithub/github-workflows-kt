@@ -131,9 +131,8 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 // simplified implementation is used.
                 command =
                     """
-                    CONTEXT_DUMPS_DIR=$(mktemp -d)
-                    echo '${'$'}{{ toJSON(github) }}' > "${'$'}CONTEXT_DUMPS_DIR/github.json"
-                    GHWKT_RUN_STEP='${this.id}:$id' CONTEXT_DUMPS_DIR=${'$'}CONTEXT_DUMPS_DIR '.github/workflows/${sourceFile.name}'
+                    echo '${'$'}{{ toJSON(github) }}' > github-context.json
+                    GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'
                     """.trimIndent(),
                 logic = logic,
                 env = env,

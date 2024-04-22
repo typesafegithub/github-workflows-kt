@@ -13,9 +13,9 @@ import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
+import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.absolute
-import kotlin.io.path.div
 import kotlin.io.path.exists
 import kotlin.io.path.invariantSeparatorsPathString
 
@@ -77,17 +77,8 @@ public fun Workflow.writeToFile(
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
 
     if (runStepEnvVar != null) {
-        val contextDumpsDirEnvVar = getenv("CONTEXT_DUMPS_DIR")
-        println("Context dumps dir: $contextDumpsDirEnvVar")
-        val githubContext =
-            (
-                (
-                    Path.of(
-                        contextDumpsDirEnvVar,
-                    ) ?: error("CONTEXT_DUMPS_DIR should be set!")
-                ) / "github.json"
-            ).toFile().readLines()
-        print("github context: $githubContext")
+        val githubContext = File("github-context.json").readLines()
+        println("github context: $githubContext")
 
         val (jobId, stepId) = runStepEnvVar.split(":")
         val kotlinLogicStep =
