@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.domain
 
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 
@@ -56,7 +57,7 @@ public data class KotlinLogicStep(
     val shell: Shell? = null,
     val workingDirectory: String? = null,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
-    val logic: () -> Unit,
+    val logic: Contexts.() -> Unit,
 ) : Step(
         id = id,
         condition = condition,

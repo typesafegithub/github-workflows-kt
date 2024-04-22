@@ -886,6 +886,7 @@ class IntegrationTest : FunSpec({
         // Given
         val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         var callCount = 0
+        var repoName = ""
 
         val myWorkflow =
             workflow(
@@ -897,6 +898,7 @@ class IntegrationTest : FunSpec({
                     uses(action = CheckoutV4())
                     run(name = "Step with Kotlin code in lambda") {
                         callCount++
+                        repoName = github.repository
                     }
                 }
             }
@@ -913,7 +915,23 @@ class IntegrationTest : FunSpec({
             preamble = Just(""),
             addConsistencyCheck = false,
             gitRootDir = gitRootDir,
-            getenv = { if (it == "GHWKT_RUN_STEP") "test:step-1" else null },
+            getenv = {
+                when (it) {
+                    "GHWKT_RUN_STEP" -> "test:step-1"
+                    "GHWKT_GITHUB_CONTEXT_JSON" ->
+                        """
+                        {
+                            "repository": "test-repository",
+                            "sha": "d34db33f",
+                            "event_name": "push",
+                            "event": {
+                                "after": "bce434"
+                            }
+                        }
+                        """.trimIndent()
+                    else -> null
+                }
+            },
         )
 
         // Then
@@ -930,10 +948,13 @@ class IntegrationTest : FunSpec({
                   uses: 'actions/checkout@v4'
                 - id: 'step-1'
                   name: 'Step with Kotlin code in lambda'
+                  env:
+                    GHWKT_GITHUB_CONTEXT_JSON: '${'$'}{{ toJSON(github) }}'
                   run: 'GHWKT_RUN_STEP=''test:step-1'' ''.github/workflows/some_workflow.main.kts'''
 
             """.trimIndent()
         callCount shouldBe 1
+        repoName shouldBe "test-repository"
     }
 
     test("toYaml() - calling Kotlin logic step") {
