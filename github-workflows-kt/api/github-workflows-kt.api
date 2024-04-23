@@ -607,6 +607,7 @@ public final class io/github/typesafegithub/workflows/domain/contexts/Contexts {
 	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/contexts/Contexts;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/contexts/Contexts;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getGithub ()Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
+	public final fun getOutputs ()Lio/github/typesafegithub/workflows/domain/contexts/OutputsContext;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -672,6 +673,11 @@ public final class io/github/typesafegithub/workflows/domain/contexts/GithubCont
 
 public final class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/contexts/OutputsContext {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/contexts/OutputsContext;
+	public final fun set (Ljava/lang/String;Ljava/lang/String;)V
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule : io/github/typesafegithub/workflows/domain/triggers/Trigger {
