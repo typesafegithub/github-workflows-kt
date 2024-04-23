@@ -39,16 +39,20 @@ jobs:
       run: './gradlew :jit-binding-server:run &'
     - id: 'step-3'
       name: 'Wait for the server to respond'
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
       run: 'GHWKT_RUN_STEP=''end-to-end-test:step-3'' ''.github/workflows/bindings-server.main.kts'''
     - id: 'step-4'
+      run: 'echo ''${{ steps.step-3.outputs.output-from-kotlin-step }}'''
+    - id: 'step-5'
       name: 'Execute the script using the bindings from the server'
       run: |-
         mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
         .github/workflows/test-script-consuming-jit-bindings.main.kts
-    - id: 'step-5'
+    - id: 'step-6'
       name: 'Fetch maven-metadata.xml for top-level action'
       run: 'curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
-    - id: 'step-6'
+    - id: 'step-7'
       name: 'Fetch maven-metadata.xml for nested action'
       run: 'curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
   deploy:

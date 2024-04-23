@@ -1,6 +1,7 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.0")
+@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.1-20240423.115006-47")
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
@@ -54,7 +55,7 @@ workflow(
             command = "./gradlew :jit-binding-server:run &",
         )
 
-        run(name = "Wait for the server to respond") {
+        val waitStep = run(name = "Wait for the server to respond") {
             val timeSource = TimeSource.Monotonic
             val waitStart = timeSource.markNow()
             val timeout = 3.minutes
@@ -74,7 +75,10 @@ workflow(
                     println("The server is still starting...")
                 }
             }
+            outputs["output-from-kotlin-step"] = "hello from Kotlin!".uppercase().reversed()
         }
+
+        run(command = "echo '${expr { "steps.${waitStep.id}.outputs.output-from-kotlin-step" }}'")
 
         run(
             name = "Execute the script using the bindings from the server",
