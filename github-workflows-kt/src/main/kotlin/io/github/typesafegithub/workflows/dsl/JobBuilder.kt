@@ -127,7 +127,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
 
         val conditionCheckingStep =
             ifKotlin?.let {
-                run {
+                run(name = "Evaluating condition for '${name ?: "step-${job.steps.size + 1}"}'") {
                     outputs[evaluationResultOutput] = ifKotlin().toString()
                 }
             }
