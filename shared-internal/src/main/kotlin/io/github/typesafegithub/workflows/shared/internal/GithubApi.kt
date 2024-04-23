@@ -4,7 +4,6 @@ import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
@@ -33,23 +32,20 @@ private suspend fun fetchGithubRefs(
     githubToken: String?,
 ): List<GithubRef> =
     httpClient.get(urlString = url) {
-        expectSuccess = true
         if (githubToken != null) {
             bearerAuth(githubToken)
         }
     }.body()
 
-private fun repoName(name: String): String = name.substringBefore('/')
-
 private fun apiTagsUrl(
     owner: String,
     name: String,
-): String = "https://api.github.com/repos/$owner/${repoName(name)}/git/matching-refs/tags/v"
+): String = "https://api.github.com/repos/$owner/$name/git/matching-refs/tags/v"
 
 private fun apiBranchesUrl(
     owner: String,
     name: String,
-): String = "https://api.github.com/repos/$owner/${repoName(name)}/git/matching-refs/heads/v"
+): String = "https://api.github.com/repos/$owner/$name/git/matching-refs/heads/v"
 
 @Serializable
 private data class GithubRef(

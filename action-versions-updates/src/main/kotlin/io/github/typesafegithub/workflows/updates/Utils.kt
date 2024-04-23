@@ -18,7 +18,7 @@ public fun <R> Workflow.availableVersionsForEachAction(
     onEach: suspend RegularActionVersions.() -> R,
 ): List<R> {
     if (githubToken == null && !reportWhenTokenUnset) {
-        System.err.println("github token is required, but not set, skipping api calls")
+        githubError("github token is required, but not set, skipping api calls")
         return emptyList()
     }
     val groupedSteps = groupStepsByAction()
@@ -56,11 +56,10 @@ internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: 
     return try {
         fetchAvailableVersions(
             owner = actionOwner,
-            name = actionName,
+            name = actionName.substringBefore('/'),
             githubToken = githubToken,
         )
-    } catch (e: IllegalStateException) {
-        System.err.println(e.message)
+    } catch (e: Exception) {
         githubWarning(
             "failed to fetch versions for $actionOwner/$actionName, skipping",
         )

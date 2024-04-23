@@ -33,7 +33,7 @@ private val isGithubCi: Boolean by lazy {
     System.getenv("GITHUB_ACTIONS") == "true"
 }
 
-public fun logSimple(
+internal fun logSimple(
     level: String,
     message: String,
     title: String? = null,
@@ -55,7 +55,7 @@ public fun logSimple(
     println("$level: $context $message")
 }
 
-public fun githubNotice(
+internal fun githubNotice(
     message: String,
     title: String? = null,
     file: String? = null,
@@ -89,7 +89,7 @@ public fun githubNotice(
     }
 }
 
-public fun githubWarning(
+internal fun githubWarning(
     message: String,
     title: String? = null,
     file: String? = null,
@@ -123,7 +123,7 @@ public fun githubWarning(
     }
 }
 
-public fun githubError(
+internal fun githubError(
     message: String,
     title: String? = null,
     file: String? = null,
@@ -158,7 +158,7 @@ public fun githubError(
 }
 
 @OptIn(ExperimentalContracts::class)
-public fun githubGroup(
+internal fun githubGroup(
     title: String,
     block: () -> Unit,
 ) {

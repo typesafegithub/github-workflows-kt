@@ -46,6 +46,10 @@ workflow(
             run(
                 name = "Build",
                 command = "./gradlew build",
+                env =
+                    linkedMapOf(
+                        "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN"),
+                    ),
             )
         }
     }

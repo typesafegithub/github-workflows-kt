@@ -34,38 +34,40 @@ public fun Workflow.reportAvailableUpdates(
             return@availableVersionsForEachAction
         }
 
-        val (file, line) = findDependencyDeclaration(action)
+        githubGroup("new version available for $usesString") {
+            val (file, line) = findDependencyDeclaration(action)
 
-        if (file != null && line != null) {
-            githubNotice(
-                message = "dependency notation at ${file.pathString}:$line",
-                file = file.name,
-                line = line,
-            )
-        }
+            if (file != null && line != null) {
+                githubNotice(
+                    message = "dependency notation at ${file.pathString}:$line",
+                    file = file.name,
+                    line = line,
+                )
+            }
 
-        if (stepSummary != null && file != null) {
-            stepSummary.appendLine("## available updates for `$usesString`")
-            stepSummary.appendLine("used by steps: ${stepNames.joinToString { "`$it`" }}")
-            val githubRepo = System.getenv("GITHUB_REPOSITORY") ?: "\$GITHUB_REPOSITORY"
-            val refName = System.getenv("GITHUB_REF_NAME") ?: "\$GITHUB_REF_NAME"
-            val baseUrl = "https://github.com/$githubRepo/tree/$refName"
-            val lineAnchor = line?.let { "#L$line" }.orEmpty()
-            val gitRoot = file.findGitRoot()
-            val relativeToRepositoryRoot =
-                file.absolute().relativeTo(gitRoot.absolute())
-                    .joinToString("/")
-            stepSummary.appendLine(
-                "\n[${file.name}$lineAnchor]($baseUrl/${relativeToRepositoryRoot}$lineAnchor)",
-            )
-        }
+            if (stepSummary != null && file != null) {
+                stepSummary.appendLine("## available updates for `$usesString`")
+                stepSummary.appendLine("used by steps: ${stepNames.joinToString { "`$it`" }}")
+                val githubRepo = System.getenv("GITHUB_REPOSITORY") ?: "\$GITHUB_REPOSITORY"
+                val refName = System.getenv("GITHUB_REF_NAME") ?: "\$GITHUB_REF_NAME"
+                val baseUrl = "https://github.com/$githubRepo/tree/$refName"
+                val lineAnchor = line?.let { "#L$line" }.orEmpty()
+                val gitRoot = file.findGitRoot()
+                val relativeToRepositoryRoot =
+                    file.absolute().relativeTo(gitRoot.absolute())
+                        .joinToString("/")
+                stepSummary.appendLine(
+                    "\n[${file.name}$lineAnchor]($baseUrl/${relativeToRepositoryRoot}$lineAnchor)",
+                )
+            }
 
-        stepSummary?.appendLine("\n```kotlin")
-        newerVersions.forEach { version ->
-            val mavenCoordinates = action.mavenCoordinatesForAction(version)
-            println(mavenCoordinates)
-            stepSummary?.appendLine("@file:DependsOn(\"$mavenCoordinates\")")
+            stepSummary?.appendLine("\n```kotlin")
+            newerVersions.forEach { version ->
+                val mavenCoordinates = action.mavenCoordinatesForAction(version)
+                println(mavenCoordinates)
+                stepSummary?.appendLine("@file:DependsOn(\"$mavenCoordinates\")")
+            }
+            stepSummary?.appendLine("```\n")
         }
-        stepSummary?.appendLine("```\n")
     }
 }
