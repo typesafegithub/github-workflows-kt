@@ -8,6 +8,15 @@ import kotlin.io.path.name
 import kotlin.io.path.pathString
 import kotlin.io.path.relativeTo
 
+/**
+ * will report all available updates in the terminal output and the github step summary
+ * looks up the github token from env `GITHUB_TOKEN` by default
+ * when no github token is present and not otherwise configured, reporting will be skipped
+ *
+ * @param skipAlreadyUpToDate enabled by default, set to false to report when a version is up to date
+ * @param reportWhenTokenUnset enable to use github api without a token
+ * @param githubToken if not set, will load the token from the environment variable GITHUB_TOKEN
+ */
 public fun Workflow.reportAvailableUpdates(
     skipAlreadyUpToDate: Boolean = true,
     reportWhenTokenUnset: Boolean = false,

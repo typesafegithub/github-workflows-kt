@@ -3,7 +3,3 @@ public final class io/github/typesafegithub/workflows/updates/ReportingKt {
 	public static synthetic fun reportAvailableUpdates$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZZLjava/lang/String;ILjava/lang/Object;)V
 }
 
-public final class io/github/typesafegithub/workflows/updates/UtilsKt {
-	public static final fun findDependencyDeclaration (Lio/github/typesafegithub/workflows/domain/Workflow;Lio/github/typesafegithub/workflows/domain/actions/RegularAction;)Lkotlin/Pair;
-}
-

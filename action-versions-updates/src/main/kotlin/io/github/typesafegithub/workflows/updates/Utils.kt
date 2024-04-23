@@ -98,7 +98,7 @@ internal fun RegularAction<*>.mavenCoordinatesForAction(version: Version? = null
     return "$mavenGroupId:$mavenArtifactId:${version?.version ?: actionVersion}"
 }
 
-public fun Workflow.findDependencyDeclaration(action: RegularAction<*>): Pair<Path?, Int?> {
+internal fun Workflow.findDependencyDeclaration(action: RegularAction<*>): Pair<Path?, Int?> {
     val file = sourceFile?.takeIf { it.exists() }
     val line =
         file?.let { sourceFile ->
