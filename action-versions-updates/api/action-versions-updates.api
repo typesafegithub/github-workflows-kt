@@ -1,44 +1,9 @@
-public abstract interface class io/github/typesafegithub/workflows/updates/GithubStepSummary {
-	public static final field Companion Lio/github/typesafegithub/workflows/updates/GithubStepSummary$Companion;
-	public abstract fun appendLine (Ljava/lang/String;)V
-	public abstract fun appendText (Ljava/lang/String;)V
-}
-
-public final class io/github/typesafegithub/workflows/updates/GithubStepSummary$Companion {
-	public final fun fromEnv ()Lio/github/typesafegithub/workflows/updates/GithubStepSummary;
-}
-
-public final class io/github/typesafegithub/workflows/updates/GithubStepSummary$DefaultImpls {
-	public static fun appendLine (Lio/github/typesafegithub/workflows/updates/GithubStepSummary;Ljava/lang/String;)V
-}
-
 public final class io/github/typesafegithub/workflows/updates/ReportingKt {
-	public static final fun reportAvailableUpdates (Lio/github/typesafegithub/workflows/domain/Workflow;ZZLio/github/typesafegithub/workflows/updates/GithubStepSummary;Ljava/lang/String;)V
-	public static synthetic fun reportAvailableUpdates$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZZLio/github/typesafegithub/workflows/updates/GithubStepSummary;Ljava/lang/String;ILjava/lang/Object;)V
+	public static final fun reportAvailableUpdates (Lio/github/typesafegithub/workflows/domain/Workflow;ZZLjava/lang/String;)V
+	public static synthetic fun reportAvailableUpdates$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZZLjava/lang/String;ILjava/lang/Object;)V
 }
 
 public final class io/github/typesafegithub/workflows/updates/UtilsKt {
-	public static final fun availableVersionsForEachAction (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/lang/String;)Ljava/util/List;
-	public static final fun availableVersionsForEachAction (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/lang/String;Lkotlin/jvm/functions/Function2;)Ljava/util/List;
-	public static synthetic fun availableVersionsForEachAction$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/lang/String;ILjava/lang/Object;)Ljava/util/List;
-	public static synthetic fun availableVersionsForEachAction$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/util/List;
 	public static final fun findDependencyDeclaration (Lio/github/typesafegithub/workflows/domain/Workflow;Lio/github/typesafegithub/workflows/domain/actions/RegularAction;)Lkotlin/Pair;
-}
-
-public final class io/github/typesafegithub/workflows/updates/model/RegularActionVersions {
-	public fun <init> (Lio/github/typesafegithub/workflows/domain/actions/RegularAction;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
-	public final fun component1 ()Lio/github/typesafegithub/workflows/domain/actions/RegularAction;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Ljava/util/List;
-	public final fun copy (Lio/github/typesafegithub/workflows/domain/actions/RegularAction;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lio/github/typesafegithub/workflows/updates/model/RegularActionVersions;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/updates/model/RegularActionVersions;Lio/github/typesafegithub/workflows/domain/actions/RegularAction;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/updates/model/RegularActionVersions;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAction ()Lio/github/typesafegithub/workflows/domain/actions/RegularAction;
-	public final fun getAvailableVersions ()Ljava/util/List;
-	public final fun getNewerVersions ()Ljava/util/List;
-	public final fun getSteps ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 

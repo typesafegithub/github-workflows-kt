@@ -12,7 +12,7 @@ import java.nio.file.Path
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 
-public fun <R> Workflow.availableVersionsForEachAction(
+internal fun <R> Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
     githubToken: String? = getGithubTokenOrNull(),
     onEach: suspend RegularActionVersions.() -> R,
@@ -47,7 +47,7 @@ public fun <R> Workflow.availableVersionsForEachAction(
     }
 }
 
-public fun Workflow.availableVersionsForEachAction(
+internal fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = false,
     githubToken: String? = getGithubTokenOrNull(),
 ): List<RegularActionVersions> = availableVersionsForEachAction(reportWhenTokenUnset, githubToken) { this }

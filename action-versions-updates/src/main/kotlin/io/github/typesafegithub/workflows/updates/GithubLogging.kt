@@ -5,15 +5,15 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public interface GithubStepSummary {
-    public fun appendText(text: String)
+internal interface GithubStepSummary {
+    fun appendText(text: String)
 
-    public fun appendLine(line: String) {
+    fun appendLine(line: String) {
         appendText(line + "\n")
     }
 
-    public companion object {
-        public fun fromEnv(): GithubStepSummary? {
+    companion object {
+        fun fromEnv(): GithubStepSummary? {
             val path = System.getenv("GITHUB_STEP_SUMMARY")
             return path
                 ?.let { File(it) }

@@ -11,8 +11,19 @@ import kotlin.io.path.relativeTo
 public fun Workflow.reportAvailableUpdates(
     skipAlreadyUpToDate: Boolean = true,
     reportWhenTokenUnset: Boolean = false,
-    stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
     githubToken: String? = null,
+): Unit =
+    reportAvailableUpdatesInternal(
+        skipAlreadyUpToDate = skipAlreadyUpToDate,
+        reportWhenTokenUnset = reportWhenTokenUnset,
+        githubToken = githubToken,
+    )
+
+internal fun Workflow.reportAvailableUpdatesInternal(
+    skipAlreadyUpToDate: Boolean = true,
+    reportWhenTokenUnset: Boolean = false,
+    githubToken: String? = null,
+    stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
 ) {
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,

@@ -7,7 +7,7 @@ import io.github.typesafegithub.workflows.updates.GithubStepSummary
 import io.github.typesafegithub.workflows.updates.availableVersionsForEachAction
 import io.github.typesafegithub.workflows.updates.findDependencyDeclaration
 import io.github.typesafegithub.workflows.updates.mavenCoordinatesForAction
-import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
+import io.github.typesafegithub.workflows.updates.reportAvailableUpdatesInternal
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.collections.shouldHaveSize
@@ -104,7 +104,7 @@ class CheckVersionsTests : FunSpec(
         test("should write to github step summary()") {
             val summary =
                 buildString {
-                    workflow.reportAvailableUpdates(
+                    workflow.reportAvailableUpdatesInternal(
                         stepSummary =
                             object : GithubStepSummary {
                                 override fun appendText(text: String) {
