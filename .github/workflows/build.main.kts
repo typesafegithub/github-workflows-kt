@@ -98,6 +98,10 @@ workflow(
             command = """
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
+                if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
+                    continue
+                fi
+
                 echo "Compiling ${'$'}file..."
                 kotlinc -Werror -Xallow-any-scripts-in-source-roots "${'$'}file"
             done
@@ -125,6 +129,10 @@ workflow(
             command = """
             find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
             do
+                if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
+                    continue
+                fi
+
                 if [ -x "${'$'}file" ]; then
                     echo "Regenerating ${'$'}file..."
                     (${'$'}file)
