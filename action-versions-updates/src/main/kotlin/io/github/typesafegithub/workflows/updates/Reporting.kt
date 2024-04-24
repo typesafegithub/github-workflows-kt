@@ -11,25 +11,21 @@ import kotlin.io.path.relativeTo
 /**
  * will report all available updates in the terminal output and the github step summary
  * looks up the github token from env `GITHUB_TOKEN` by default
- * when no github token is present and not otherwise configured, reporting will be skipped
+ * when no github token is present, reporting will be skipped
  *
- * @param skipAlreadyUpToDate enabled by default, set to false to report when a version is up to date
  * @param reportWhenTokenUnset enable to use github api without a token
- * @param githubToken if not set, will load the token from the environment variable GITHUB_TOKEN
+ * @param githubToken if not set, will try to load from the environment variable `GITHUB_TOKEN`
  */
 public fun Workflow.reportAvailableUpdates(
-    skipAlreadyUpToDate: Boolean = true,
     reportWhenTokenUnset: Boolean = false,
     githubToken: String? = null,
 ): Unit =
     reportAvailableUpdatesInternal(
-        skipAlreadyUpToDate = skipAlreadyUpToDate,
         reportWhenTokenUnset = reportWhenTokenUnset,
         githubToken = githubToken,
     )
 
 internal fun Workflow.reportAvailableUpdatesInternal(
-    skipAlreadyUpToDate: Boolean = true,
     reportWhenTokenUnset: Boolean = false,
     githubToken: String? = null,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
@@ -46,11 +42,6 @@ internal fun Workflow.reportAvailableUpdatesInternal(
         val stepNames = regularActionVersions.steps.map { it.name ?: it.id }
 
         if (regularActionVersions.newerVersions.isEmpty()) {
-            if (!skipAlreadyUpToDate) {
-                stepSummary?.appendLine("\n## action `$usesString` is up to date")
-                stepSummary?.appendLine("used by steps: ${stepNames.joinToString { "`$it`" }}")
-                githubNotice("action $usesString is up to date (used by steps: $stepNames)")
-            }
             return@onEach
         }
 
