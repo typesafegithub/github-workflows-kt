@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.dsl
+package io.github.typesafegithub.workflows.updates
 
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
