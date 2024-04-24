@@ -12,45 +12,41 @@ import java.nio.file.Path
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 
-internal fun <R> Workflow.availableVersionsForEachAction(
+internal fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
     githubToken: String? = getGithubTokenOrNull(),
-    onEach: suspend RegularActionVersions.() -> R,
-): List<R> {
+): Sequence<RegularActionVersions> {
     if (githubToken == null && !reportWhenTokenUnset) {
         githubError("github token is required, but not set, skipping api calls")
-        return emptyList()
+        return emptySequence()
     }
     val groupedSteps = groupStepsByAction()
-    return runBlocking {
+    return sequence {
         groupedSteps.mapNotNull { (action, steps) ->
             val availableVersions =
-                action.fetchAvailableVersionsOrWarn(
-                    githubToken = githubToken,
-                )
+                runBlocking {
+                    action.fetchAvailableVersionsOrWarn(
+                        githubToken = githubToken,
+                    )
+                }
             val currentVersion = Version(action.actionVersion)
             if (availableVersions != null) {
                 val newerVersions =
                     availableVersions
                         .filter { it > currentVersion }
                         .filter { it.isMajorVersion() == currentVersion.isMajorVersion() }
-                RegularActionVersions(
-                    action = action,
-                    steps = steps,
-                    newerVersions = newerVersions,
-                    availableVersions = availableVersions,
-                ).onEach()
-            } else {
-                null
+                val value =
+                    RegularActionVersions(
+                        action = action,
+                        steps = steps,
+                        newerVersions = newerVersions,
+                        availableVersions = availableVersions,
+                    )
+                yield(value)
             }
         }
     }
 }
-
-internal fun Workflow.availableVersionsForEachAction(
-    reportWhenTokenUnset: Boolean = false,
-    githubToken: String? = getGithubTokenOrNull(),
-): List<RegularActionVersions> = availableVersionsForEachAction(reportWhenTokenUnset, githubToken) { this }
 
 internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String?): List<Version>? {
     return try {

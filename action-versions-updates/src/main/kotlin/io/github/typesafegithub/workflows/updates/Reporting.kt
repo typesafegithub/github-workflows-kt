@@ -37,25 +37,25 @@ internal fun Workflow.reportAvailableUpdatesInternal(
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,
         githubToken = githubToken ?: getGithubTokenOrNull(),
-    ) {
+    ).onEach { regularActionVersions ->
         val usesString =
-            with(action) {
+            with(regularActionVersions.action) {
                 "$actionOwner/$actionName@$actionVersion"
             }
 
-        val stepNames = steps.map { it.name ?: it.id }
+        val stepNames = regularActionVersions.steps.map { it.name ?: it.id }
 
-        if (newerVersions.isEmpty()) {
+        if (regularActionVersions.newerVersions.isEmpty()) {
             if (!skipAlreadyUpToDate) {
                 stepSummary?.appendLine("\n## action `$usesString` is up to date")
                 stepSummary?.appendLine("used by steps: ${stepNames.joinToString { "`$it`" }}")
                 githubNotice("action $usesString is up to date (used by steps: $stepNames)")
             }
-            return@availableVersionsForEachAction
+            return@onEach
         }
 
         githubGroup("new version available for $usesString") {
-            val (file, line) = findDependencyDeclaration(action)
+            val (file, line) = findDependencyDeclaration(regularActionVersions.action)
 
             if (file != null && line != null) {
                 githubNotice(
@@ -82,8 +82,8 @@ internal fun Workflow.reportAvailableUpdatesInternal(
             }
 
             stepSummary?.appendLine("\n```kotlin")
-            newerVersions.forEach { version ->
-                val mavenCoordinates = action.mavenCoordinatesForAction(version)
+            regularActionVersions.newerVersions.forEach { version ->
+                val mavenCoordinates = regularActionVersions.action.mavenCoordinatesForAction(version)
                 println(mavenCoordinates)
                 stepSummary?.appendLine("@file:DependsOn(\"$mavenCoordinates\")")
             }
