@@ -19,11 +19,27 @@ import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.*
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import java.time.Instant
+
+fun JobBuilder<*>.publishToMavenLocal() {
+    uses(
+        name = "Set up JDK",
+        action = SetupJava(
+            javaVersion = "11",
+            distribution = SetupJava.Distribution.Zulu,
+        ),
+    )
+    uses(action = ActionsSetupGradle(generateJobSummary = false))
+    run(
+        name = "Publish to Maven local",
+        command = "./gradlew publishToMavenLocal",
+    )
+}
 
 workflow(
     name = "End-to-end tests",
@@ -32,18 +48,7 @@ workflow(
         PullRequest(),
     ),
     yamlConsistencyJobAdditionalSteps = {
-        uses(
-            name = "Set up JDK",
-            action = SetupJava(
-                javaVersion = "11",
-                distribution = SetupJava.Distribution.Zulu,
-            ),
-        )
-        uses(action = ActionsSetupGradle(generateJobSummary = false))
-        run(
-            name = "Publish to Maven local",
-            command = "./gradlew publishToMavenLocal",
-        )
+        publishToMavenLocal()
     },
     sourceFile = __FILE__.toPath(),
 ) {
@@ -196,6 +201,8 @@ workflow(
                 command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
                 condition = expr { always() },
             )
+
+            publishToMavenLocal()
 
             run(
                 name = "Step with a Kotlin-based logic",
