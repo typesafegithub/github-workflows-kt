@@ -166,6 +166,7 @@ private fun Workflow.generateYaml(
                     name = "Check YAML consistency",
                     runsOn = UbuntuLatest,
                     condition = yamlConsistencyJobCondition,
+                    env = yamlConsistencyJobEnv,
                 ) {
                     uses(name = "Check out", action = CheckoutV4())
 

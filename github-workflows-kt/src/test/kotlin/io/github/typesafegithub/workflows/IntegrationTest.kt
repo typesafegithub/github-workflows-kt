@@ -118,6 +118,7 @@ class IntegrationTest : FunSpec({
                 name = "Test workflow",
                 on = listOf(Push()),
                 sourceFile = sourceTempFile.toPath(),
+                yamlConsistencyJobEnv = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
             ) {
                 job(
                     id = "test_job",
@@ -152,6 +153,8 @@ class IntegrationTest : FunSpec({
               check_yaml_consistency:
                 name: 'Check YAML consistency'
                 runs-on: 'ubuntu-latest'
+                env:
+                  GITHUB_TOKEN: '${'$'}{{ secrets.GITHUB_TOKEN }}'
                 steps:
                 - id: 'step-0'
                   name: 'Check out'

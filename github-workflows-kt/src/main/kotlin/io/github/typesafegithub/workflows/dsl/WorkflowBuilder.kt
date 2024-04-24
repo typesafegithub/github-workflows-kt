@@ -23,6 +23,7 @@ public class WorkflowBuilder(
     targetFileName: String?,
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
+    yamlConsistencyJobEnv: LinkedHashMap<String, String> = linkedMapOf(),
     yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     jobs: List<Job<*>> = emptyList(),
     permissions: Map<Permission, Mode>? = null,
@@ -39,6 +40,7 @@ public class WorkflowBuilder(
             permissions = permissions,
             concurrency = concurrency,
             yamlConsistencyJobCondition = yamlConsistencyJobCondition,
+            yamlConsistencyJobEnv = yamlConsistencyJobEnv,
             yamlConsistencyJobAdditionalSteps = yamlConsistencyJobAdditionalSteps,
             _customArguments = _customArguments,
         )
@@ -166,6 +168,7 @@ public fun workflow(
     targetFileName: String? = sourceFile?.fileName?.let { it.toString().substringBeforeLast(".main.kts") + ".yaml" },
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
+    yamlConsistencyJobEnv: LinkedHashMap<String, String> = linkedMapOf(),
     yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any> = mapOf(),
@@ -185,6 +188,7 @@ public fun workflow(
             permissions = permissions,
             concurrency = concurrency,
             yamlConsistencyJobCondition = yamlConsistencyJobCondition,
+            yamlConsistencyJobEnv = yamlConsistencyJobEnv,
             yamlConsistencyJobAdditionalSteps = yamlConsistencyJobAdditionalSteps,
             _customArguments = _customArguments,
         )
