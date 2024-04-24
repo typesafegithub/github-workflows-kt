@@ -98,7 +98,7 @@ workflow(
             command = """
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
-                if [ "${'$'}file" = ".github/workflows/end-to-end-tests.main.kts" ]; then
+                if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
                     continue
                 fi
 
@@ -129,7 +129,7 @@ workflow(
             command = """
             find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
             do
-                if [ "${'$'}file" = ".github/workflows/end-to-end-tests.main.kts" ]; then
+                if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
                     continue
                 fi
 
