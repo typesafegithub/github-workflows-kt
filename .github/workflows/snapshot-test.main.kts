@@ -33,5 +33,5 @@ val workflow =
             run(command = "echo 'hello!'")
         }
     }
-        .publishToMavenLocal()
+        .consistencyCheckPublishToMavenLocal()
         .writeToFile()

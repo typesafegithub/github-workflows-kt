@@ -1,4 +1,4 @@
-# This file was generated using Kotlin DSL (.github/workflows/integration-test.main.kts).
+# This file was generated using Kotlin DSL (.github/workflows/snapshot-test.main.kts).
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/typesafegithub/github-workflows-kt
 
@@ -31,10 +31,10 @@ jobs:
       run: './gradlew publishToMavenLocal'
     - id: 'step-4'
       name: 'Execute script'
-      run: 'rm ''.github/workflows/integration-test.yaml'' && ''.github/workflows/integration-test.main.kts'''
+      run: 'rm ''.github/workflows/snapshot-test.yaml'' && ''.github/workflows/snapshot-test.main.kts'''
     - id: 'step-5'
       name: 'Consistency check'
-      run: 'git diff --exit-code ''.github/workflows/integration-test.yaml'''
+      run: 'git diff --exit-code ''.github/workflows/snapshot-test.yaml'''
   test_job:
     name: 'Test Job'
     runs-on: 'ubuntu-latest'

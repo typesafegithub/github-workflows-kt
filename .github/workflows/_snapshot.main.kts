@@ -8,7 +8,7 @@ import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.domain.Workflow
 
-fun Workflow.publishToMavenLocal() =
+fun Workflow.consistencyCheckPublishToMavenLocal() =
     copy(
         yamlConsistencyJobAdditionalSteps = {
             uses(
