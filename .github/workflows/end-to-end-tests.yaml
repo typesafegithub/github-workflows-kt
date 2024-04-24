@@ -46,9 +46,9 @@ jobs:
     env:
       $GREETING: 'World'
     outputs:
-      scriptKey: '${{ steps.step-15.outputs.key }}'
-      scriptKey2: '${{ steps.step-15.outputs.key2 }}'
-      scriptResult: '${{ steps.step-15.outputs.result }}'
+      scriptKey: '${{ steps.step-17.outputs.key }}'
+      scriptKey2: '${{ steps.step-17.outputs.key2 }}'
+      scriptResult: '${{ steps.step-17.outputs.result }}'
     steps:
     - id: 'step-0'
       name: 'Hello world!'
@@ -117,6 +117,17 @@ jobs:
       run: 'action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY'
       if: '${{ always() }}'
     - id: 'step-15'
+      name: 'Evaluating condition for ''Step with a Kotlin-based logic'''
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
+      run: 'GHWKT_RUN_STEP=''test_job_1:step-15'' ''.github/workflows/end-to-end-tests.main.kts'''
+    - id: 'step-16'
+      name: 'Step with a Kotlin-based logic'
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
+      run: 'GHWKT_RUN_STEP=''test_job_1:step-16'' ''.github/workflows/end-to-end-tests.main.kts'''
+      if: '${{ steps.step-15.outputs.evaluation-result }}'
+    - id: 'step-17'
       uses: 'actions/github-script@v7'
       with:
         script: |-
