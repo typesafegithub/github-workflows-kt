@@ -7,8 +7,7 @@ import kotlin.io.path.isDirectory
 
 fun Path.findGitRoot(): Path {
     return generateSequence(this.absolute()) { it.parent }
-        .firstOrNull { folder ->
-            val dotGit = folder.resolve(".git")
-            dotGit.exists() && dotGit.isDirectory()
+        .firstOrNull {
+            it.resolve(".git")?.let { it.exists() && it.isDirectory() } ?: false
         } ?: error("could not find a git root from ${this.absolute()}")
 }
