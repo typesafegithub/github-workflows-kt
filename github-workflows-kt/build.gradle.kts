@@ -21,9 +21,9 @@ version = rootProject.version
 dependencies {
     implementation("it.krzeminski:snakeyaml-engine-kmp:2.7.5")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation(projects.sharedInternal)
 
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     testImplementation("dev.zacsweers.kctfork:core:0.4.1")
     testImplementation("com.lemonappdev:konsist:0.14.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.

@@ -14,6 +14,8 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.contexts.Contexts
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import kotlinx.serialization.Contextual
 import kotlin.io.path.name
 
@@ -103,16 +105,17 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
+        ifKotlin: (Contexts.() -> Boolean)? = null,
         continueOnError: Boolean? = null,
         timeoutMinutes: Int? = null,
         shell: Shell? = null,
         workingDirectory: String? = null,
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
-        logic: () -> Unit,
+        logic: Contexts.() -> Unit,
     ): KotlinLogicStep {
-        require(!(`if` != null && condition != null)) {
-            "Either 'if' or 'condition' have to be set, not both!"
+        require(listOfNotNull(`if`, condition, ifKotlin).size <= 1) {
+            "Only one of 'if', 'condition' or `ifKotlin` can be set!"
         }
         require(job.steps.filterIsInstance<ActionStep<*>>().any { "/checkout@" in it.action.usesString }) {
             "Please check out the code prior to using Kotlin-based 'run' block!"
@@ -120,8 +123,16 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         val sourceFile =
             workflowBuilder.workflow.sourceFile
                 ?: throw IllegalArgumentException("sourceFile needs to be set when using Kotlin-based 'run' block!")
-        val id = "step-${job.steps.size}"
+        val evaluationResultOutput = "evaluation-result"
 
+        val conditionCheckingStep =
+            ifKotlin?.let {
+                run(name = "Evaluating condition for '${name ?: "step-${job.steps.size + 1}"}'") {
+                    outputs[evaluationResultOutput] = ifKotlin().toString()
+                }
+            }
+
+        val id = "step-${job.steps.size}"
         val newStep =
             KotlinLogicStep(
                 id = id,
@@ -131,8 +142,11 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 // simplified implementation is used.
                 command = "GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'",
                 logic = logic,
-                env = env,
-                condition = `if` ?: condition,
+                env = LinkedHashMap(env.toMap() + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "${'$'}{{ toJSON(github) }}")),
+                condition =
+                    conditionCheckingStep?.let {
+                        expr { "steps.${conditionCheckingStep.id}.outputs.$evaluationResultOutput" }
+                    } ?: `if` ?: condition,
                 continueOnError = continueOnError,
                 timeoutMinutes = timeoutMinutes,
                 shell = shell,

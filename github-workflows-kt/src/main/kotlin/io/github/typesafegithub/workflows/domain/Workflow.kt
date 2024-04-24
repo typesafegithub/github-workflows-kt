@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.domain
 
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
 import io.github.typesafegithub.workflows.dsl.HasCustomArguments
+import io.github.typesafegithub.workflows.dsl.JobBuilder
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
 
@@ -14,6 +15,8 @@ public data class Workflow(
     val concurrency: Concurrency? = null,
     val permissions: Map<Permission, Mode>? = null,
     val yamlConsistencyJobCondition: String? = null,
+    val yamlConsistencyJobEnv: LinkedHashMap<String, String> = linkedMapOf(),
+    val yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     val jobs: List<Job<*>>,
     override val _customArguments: Map<String, @Contextual Any?> = mapOf(),
 ) : HasCustomArguments
