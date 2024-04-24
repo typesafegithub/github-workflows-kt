@@ -24,6 +24,7 @@ public class WorkflowBuilder(
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
     yamlConsistencyJobEnv: LinkedHashMap<String, String> = linkedMapOf(),
+    yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     jobs: List<Job<*>> = emptyList(),
     permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any?>,
@@ -40,6 +41,7 @@ public class WorkflowBuilder(
             concurrency = concurrency,
             yamlConsistencyJobCondition = yamlConsistencyJobCondition,
             yamlConsistencyJobEnv = yamlConsistencyJobEnv,
+            yamlConsistencyJobAdditionalSteps = yamlConsistencyJobAdditionalSteps,
             _customArguments = _customArguments,
         )
 
@@ -167,6 +169,7 @@ public fun workflow(
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
     yamlConsistencyJobEnv: LinkedHashMap<String, String> = linkedMapOf(),
+    yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
@@ -186,6 +189,7 @@ public fun workflow(
             concurrency = concurrency,
             yamlConsistencyJobCondition = yamlConsistencyJobCondition,
             yamlConsistencyJobEnv = yamlConsistencyJobEnv,
+            yamlConsistencyJobAdditionalSteps = yamlConsistencyJobAdditionalSteps,
             _customArguments = _customArguments,
         )
     workflowBuilder.block()

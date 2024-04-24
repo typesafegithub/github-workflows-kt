@@ -170,6 +170,10 @@ private fun Workflow.generateYaml(
                 ) {
                     uses(name = "Check out", action = CheckoutV4())
 
+                    yamlConsistencyJobAdditionalSteps?.also { block ->
+                        block()
+                    }
+
                     if (generateActionBindings &&
                         sourceFile.parent?.resolve(GENERATE_ACTION_BINDINGS_SCRIPT_NAME)?.exists() == true
                     ) {
