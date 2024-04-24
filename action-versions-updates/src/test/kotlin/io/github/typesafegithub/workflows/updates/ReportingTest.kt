@@ -11,6 +11,7 @@ import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
+import kotlinx.coroutines.flow.toList
 
 @OptIn(ExperimentalKotest::class)
 class ReportingTest : FunSpec(
@@ -68,6 +69,7 @@ class ReportingTest : FunSpec(
             val availableVersionsForEachAction =
                 workflow
                     .availableVersionsForEachAction()
+                    .toList()
 
             // write dependency notations into a file,
             // so we can test finding the correct line numbers
@@ -79,13 +81,11 @@ class ReportingTest : FunSpec(
             }
             test("there should be 3 actions with available versions") {
                 availableVersionsForEachAction
-                    .toList()
                     .shouldHaveSize(3)
             }
             test("there should be 2 actions with updates available") {
                 availableVersionsForEachAction
                     .filter { it.newerVersions.isNotEmpty() }
-                    .toList()
                     .shouldHaveSize(2)
             }
             test("dependency annotations can be looked up") {

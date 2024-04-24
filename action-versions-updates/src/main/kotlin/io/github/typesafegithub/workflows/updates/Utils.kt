@@ -7,28 +7,28 @@ import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.github.typesafegithub.workflows.updates.model.RegularActionVersions
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flow
 import java.nio.file.Path
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 
-internal fun Workflow.availableVersionsForEachAction(
+internal suspend fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
     githubToken: String? = getGithubTokenOrNull(),
-): Sequence<RegularActionVersions> {
+): Flow<RegularActionVersions> {
     if (githubToken == null && !reportWhenTokenUnset) {
         githubError("github token is required, but not set, skipping api calls")
-        return emptySequence()
+        return emptyFlow()
     }
     val groupedSteps = groupStepsByAction()
-    return sequence {
+    return flow {
         groupedSteps.mapNotNull { (action, steps) ->
             val availableVersions =
-                runBlocking {
-                    action.fetchAvailableVersionsOrWarn(
-                        githubToken = githubToken,
-                    )
-                }
+                action.fetchAvailableVersionsOrWarn(
+                    githubToken = githubToken,
+                )
             val currentVersion = Version(action.actionVersion)
             if (availableVersions != null) {
                 val newerVersions =
@@ -42,7 +42,7 @@ internal fun Workflow.availableVersionsForEachAction(
                         newerVersions = newerVersions,
                         availableVersions = availableVersions,
                     )
-                yield(value)
+                emit(value)
             }
         }
     }

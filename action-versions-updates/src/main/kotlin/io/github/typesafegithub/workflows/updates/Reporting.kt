@@ -3,6 +3,9 @@ package io.github.typesafegithub.workflows.updates
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.runBlocking
 import kotlin.io.path.absolute
 import kotlin.io.path.name
 import kotlin.io.path.pathString
@@ -20,12 +23,14 @@ public fun Workflow.reportAvailableUpdates(
     reportWhenTokenUnset: Boolean = false,
     githubToken: String? = null,
 ): Unit =
-    reportAvailableUpdatesInternal(
-        reportWhenTokenUnset = reportWhenTokenUnset,
-        githubToken = githubToken,
-    )
+    runBlocking {
+        reportAvailableUpdatesInternal(
+            reportWhenTokenUnset = reportWhenTokenUnset,
+            githubToken = githubToken,
+        )
+    }
 
-internal fun Workflow.reportAvailableUpdatesInternal(
+internal suspend fun Workflow.reportAvailableUpdatesInternal(
     reportWhenTokenUnset: Boolean = false,
     githubToken: String? = null,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
@@ -80,5 +85,5 @@ internal fun Workflow.reportAvailableUpdatesInternal(
             }
             stepSummary?.appendLine("```\n")
         }
-    }
+    }.collect()
 }
