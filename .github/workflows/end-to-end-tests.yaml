@@ -46,9 +46,9 @@ jobs:
     env:
       $GREETING: 'World'
     outputs:
-      scriptKey: '${{ steps.step-15.outputs.key }}'
-      scriptKey2: '${{ steps.step-15.outputs.key2 }}'
-      scriptResult: '${{ steps.step-15.outputs.result }}'
+      scriptKey: '${{ steps.step-20.outputs.key }}'
+      scriptKey2: '${{ steps.step-20.outputs.key2 }}'
+      scriptResult: '${{ steps.step-20.outputs.result }}'
     steps:
     - id: 'step-0'
       name: 'Hello world!'
@@ -117,6 +117,30 @@ jobs:
       run: 'action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY'
       if: '${{ always() }}'
     - id: 'step-15'
+      name: 'Set up JDK'
+      uses: 'actions/setup-java@v4'
+      with:
+        java-version: '11'
+        distribution: 'zulu'
+    - id: 'step-16'
+      uses: 'gradle/actions/setup-gradle@v3'
+      with:
+        generate-job-summary: 'false'
+    - id: 'step-17'
+      name: 'Publish to Maven local'
+      run: './gradlew publishToMavenLocal'
+    - id: 'step-18'
+      name: 'Evaluating condition for ''Step with a Kotlin-based logic'''
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
+      run: 'GHWKT_RUN_STEP=''test_job_1:step-18'' ''.github/workflows/end-to-end-tests.main.kts'''
+    - id: 'step-19'
+      name: 'Step with a Kotlin-based logic'
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
+      run: 'GHWKT_RUN_STEP=''test_job_1:step-19'' ''.github/workflows/end-to-end-tests.main.kts'''
+      if: '${{ steps.step-18.outputs.evaluation-result }}'
+    - id: 'step-20'
       uses: 'actions/github-script@v7'
       with:
         script: |-

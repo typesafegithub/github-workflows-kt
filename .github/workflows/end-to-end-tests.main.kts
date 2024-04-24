@@ -7,9 +7,11 @@
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("actions:setup-python:v5")
 @file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:OptIn(ExperimentalKotlinLogicStep::class)
 
 import io.github.typesafegithub.workflows.actions.actions.*
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
+import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
@@ -17,10 +19,27 @@ import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.*
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
+import java.time.Instant
+
+fun JobBuilder<*>.publishToMavenLocal() {
+    uses(
+        name = "Set up JDK",
+        action = SetupJava(
+            javaVersion = "11",
+            distribution = SetupJava.Distribution.Zulu,
+        ),
+    )
+    uses(action = ActionsSetupGradle(generateJobSummary = false))
+    run(
+        name = "Publish to Maven local",
+        command = "./gradlew publishToMavenLocal",
+    )
+}
 
 workflow(
     name = "End-to-end tests",
@@ -29,18 +48,7 @@ workflow(
         PullRequest(),
     ),
     yamlConsistencyJobAdditionalSteps = {
-        uses(
-            name = "Set up JDK",
-            action = SetupJava(
-                javaVersion = "11",
-                distribution = SetupJava.Distribution.Zulu,
-            ),
-        )
-        uses(action = ActionsSetupGradle(generateJobSummary = false))
-        run(
-            name = "Publish to Maven local",
-            command = "./gradlew publishToMavenLocal",
-        )
+        publishToMavenLocal()
     },
     sourceFile = __FILE__.toPath(),
 ) {
@@ -193,6 +201,17 @@ workflow(
                 command = "action=${Contexts.env.GITHUB_ACTION} repo=${Contexts.env.GITHUB_REPOSITORY}",
                 condition = expr { always() },
             )
+
+            publishToMavenLocal()
+
+            run(
+                name = "Step with a Kotlin-based logic",
+                ifKotlin = { Instant.now() > Instant.parse("2022-03-04T12:34:56.00Z") },
+            ) {
+                println("Hello from Kotlin! Now it's ${Instant.now()}")
+                println("Running for commit ${github.sha}, branch ${github.ref}")
+            }
+
             val scriptStep =
                 uses(
                     action = GithubScript(
