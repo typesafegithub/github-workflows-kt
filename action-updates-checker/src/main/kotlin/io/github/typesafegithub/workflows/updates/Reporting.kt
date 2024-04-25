@@ -92,19 +92,22 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
         githubNotice(
             message = "action-version-checker found no actions or skipped running",
         )
-    }.toList().also { regularActionVersions ->
-        if (regularActionVersions.isNotEmpty()) {
-            val hasOutdatedVersions = regularActionVersions.any { regularActionVersion ->
-                regularActionVersion.newerVersions.isNotEmpty()
-            }
+    }
+        .toList()
+        .also { regularActionVersions ->
+            if (regularActionVersions.isNotEmpty()) {
+                val hasOutdatedVersions = regularActionVersions
+                    .any { regularActionVersion ->
+                        regularActionVersion.newerVersions.isNotEmpty()
+                    }
 
-            if (!hasOutdatedVersions) {
-                githubNotice(
-                    message = "action-version-checker found no outdated actions",
-                )
+                if (!hasOutdatedVersions) {
+                    githubNotice(
+                        message = "action-version-checker found no outdated actions",
+                    )
 
-                stepSummary?.appendLine("action-version-checker found no outdated actions")
+                    stepSummary?.appendLine("action-version-checker found no outdated actions")
+                }
             }
         }
-    }
 }
