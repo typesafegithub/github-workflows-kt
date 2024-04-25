@@ -53,6 +53,7 @@ import kotlin.collections.toTypedArray
  * @param sshStrict Whether to perform strict host key checking. When true, adds the options
  * `StrictHostKeyChecking=yes` and `CheckHostIP=no` to the SSH command line. Use the input
  * `ssh-known-hosts` to configure additional hosts.
+ * @param sshUser The user to use when connecting to the remote SSH host. By default 'git' is used.
  * @param persistCredentials Whether to configure the token or SSH key with the local git config
  * @param path Relative path under $GITHUB_WORKSPACE to place the repository
  * @param clean Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching
@@ -125,6 +126,10 @@ public data class CheckoutV4 private constructor(
      * `ssh-known-hosts` to configure additional hosts.
      */
     public val sshStrict: Boolean? = null,
+    /**
+     * The user to use when connecting to the remote SSH host. By default 'git' is used.
+     */
+    public val sshUser: String? = null,
     /**
      * Whether to configure the token or SSH key with the local git config
      */
@@ -202,6 +207,7 @@ public data class CheckoutV4 private constructor(
         sshKey: String? = null,
         sshKnownHosts: String? = null,
         sshStrict: Boolean? = null,
+        sshUser: String? = null,
         persistCredentials: Boolean? = null,
         path: String? = null,
         clean: Boolean? = null,
@@ -218,12 +224,13 @@ public data class CheckoutV4 private constructor(
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(repository=repository, ref=ref, token=token, sshKey=sshKey,
-            sshKnownHosts=sshKnownHosts, sshStrict=sshStrict, persistCredentials=persistCredentials,
-            path=path, clean=clean, filter=filter, sparseCheckout=sparseCheckout,
-            sparseCheckoutConeMode=sparseCheckoutConeMode, fetchDepth=fetchDepth,
-            fetchTags=fetchTags, showProgress=showProgress, lfs=lfs, submodules=submodules,
-            setSafeDirectory=setSafeDirectory, githubServerUrl=githubServerUrl,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            sshKnownHosts=sshKnownHosts, sshStrict=sshStrict, sshUser=sshUser,
+            persistCredentials=persistCredentials, path=path, clean=clean, filter=filter,
+            sparseCheckout=sparseCheckout, sparseCheckoutConeMode=sparseCheckoutConeMode,
+            fetchDepth=fetchDepth, fetchTags=fetchTags, showProgress=showProgress, lfs=lfs,
+            submodules=submodules, setSafeDirectory=setSafeDirectory,
+            githubServerUrl=githubServerUrl, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -234,6 +241,7 @@ public data class CheckoutV4 private constructor(
             sshKey?.let { "ssh-key" to it },
             sshKnownHosts?.let { "ssh-known-hosts" to it },
             sshStrict?.let { "ssh-strict" to it.toString() },
+            sshUser?.let { "ssh-user" to it },
             persistCredentials?.let { "persist-credentials" to it.toString() },
             path?.let { "path" to it },
             clean?.let { "clean" to it.toString() },
