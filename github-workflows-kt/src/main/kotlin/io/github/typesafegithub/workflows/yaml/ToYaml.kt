@@ -1,12 +1,12 @@
 package io.github.typesafegithub.workflows.yaml
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.Workflow
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
@@ -160,7 +160,18 @@ private fun Workflow.generateYaml(
                     condition = yamlConsistencyJobCondition,
                     env = yamlConsistencyJobEnv,
                 ) {
-                    uses(name = "Check out", action = CheckoutV4())
+                    uses(
+                        name = "Check out",
+                        // Since this action is used in a simple way, and we actually don't want to update the version
+                        // because it causes YAML regeneration, let's not use the type-safe binding here. It will also
+                        // let us avoid depending on a Maven-based action binding once bundled bindings are deprecated.
+                        action =
+                            CustomAction(
+                                actionOwner = "actions",
+                                actionName = "checkout",
+                                actionVersion = "v4",
+                            ),
+                    )
 
                     yamlConsistencyJobAdditionalSteps?.also { block ->
                         block()
