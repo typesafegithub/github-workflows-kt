@@ -24,10 +24,12 @@ public fun Workflow.reportAvailableUpdates(
     githubToken: String? = null,
 ): Unit =
     runBlocking {
-        reportAvailableUpdatesInternal(
-            reportWhenTokenUnset = reportWhenTokenUnset,
-            githubToken = githubToken,
-        )
+        if(System.getenv("GHWKT_RUN_STEP") == null) {
+            reportAvailableUpdatesInternal(
+                reportWhenTokenUnset = reportWhenTokenUnset,
+                githubToken = githubToken,
+            )
+        }
     }
 
 internal suspend fun Workflow.reportAvailableUpdatesInternal(
