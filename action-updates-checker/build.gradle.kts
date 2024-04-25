@@ -14,8 +14,8 @@ dependencies {
     // see https://youtrack.jetbrains.com/issue/KT-67618
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 
-    implementation(projects.githubWorkflowsKt)
-    implementation(projects.sharedInternal)
+    compileOnly(projects.githubWorkflowsKt)
+    compileOnly(projects.sharedInternal)
 }
 
 kotlin {
