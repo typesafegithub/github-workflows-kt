@@ -3,7 +3,6 @@ package io.github.typesafegithub.workflows.updates
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.toList
@@ -26,7 +25,7 @@ public fun Workflow.reportAvailableUpdates(
     githubToken: String? = null,
 ): Unit =
     runBlocking {
-        if(System.getenv("GHWKT_RUN_STEP") == null) {
+        if (System.getenv("GHWKT_RUN_STEP") == null) {
             reportAvailableUpdatesInternal(
                 reportWhenTokenUnset = reportWhenTokenUnset,
                 githubToken = githubToken,
@@ -94,12 +93,12 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
             message = "action-version-checker found no actions or skipped running",
         )
     }.toList().also { regularActionVersions ->
-        if(regularActionVersions.isNotEmpty()) {
+        if (regularActionVersions.isNotEmpty()) {
             val hasOutdatedVersions = regularActionVersions.any { regularActionVersion ->
                 regularActionVersion.newerVersions.isNotEmpty()
             }
 
-            if(!hasOutdatedVersions) {
+            if (!hasOutdatedVersions) {
                 githubNotice(
                     message = "action-version-checker found no outdated actions",
                 )
