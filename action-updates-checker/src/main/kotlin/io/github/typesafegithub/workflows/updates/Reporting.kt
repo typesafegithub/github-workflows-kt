@@ -96,10 +96,11 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
         .toList()
         .also { regularActionVersions ->
             if (regularActionVersions.isNotEmpty()) {
-                val hasOutdatedVersions = regularActionVersions
-                    .any { regularActionVersion ->
-                        regularActionVersion.newerVersions.isNotEmpty()
-                    }
+                val hasOutdatedVersions =
+                    regularActionVersions
+                        .any { regularActionVersion ->
+                            regularActionVersion.newerVersions.isNotEmpty()
+                        }
 
                 if (!hasOutdatedVersions) {
                     githubNotice(
