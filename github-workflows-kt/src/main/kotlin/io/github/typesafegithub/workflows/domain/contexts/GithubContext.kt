@@ -15,5 +15,5 @@ public data class GithubContext(
 
 @Serializable
 public data class GithubContextEvent(
-    val after: String?,
+    val after: String? = null,
 )
