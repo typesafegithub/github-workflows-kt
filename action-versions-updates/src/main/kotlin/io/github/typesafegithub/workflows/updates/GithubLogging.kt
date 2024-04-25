@@ -74,7 +74,7 @@ internal fun githubNotice(
                 line?.let { "line=$it" },
                 endLine?.let { "endLine=$it" },
             ).joinToString(",")
-        println("echo ::notice $parameters::$message")
+        println("::notice $parameters::$message")
     } else {
         logSimple(
             level = "notice",
