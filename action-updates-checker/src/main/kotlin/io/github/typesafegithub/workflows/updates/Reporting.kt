@@ -5,6 +5,8 @@ import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onEmpty
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlin.io.path.absolute
 import kotlin.io.path.name
@@ -37,7 +39,6 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
     githubToken: String? = null,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
 ) {
-    var hasOutdatedVersions = false
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,
         githubToken = githubToken ?: getGithubTokenOrNull(),
@@ -52,7 +53,6 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
         if (regularActionVersions.newerVersions.isEmpty()) {
             return@onEach
         }
-        hasOutdatedVersions = true
 
         githubGroup("new version available for $usesString") {
             val (file, line) = findDependencyDeclaration(regularActionVersions.action)
@@ -89,13 +89,23 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
             }
             stepSummary?.appendLine("```\n")
         }
-    }.collect()
-
-    if(!hasOutdatedVersions) {
+    }.onEmpty {
         githubNotice(
-            message = "action-version-checker found no outdated actions",
+            message = "action-version-checker found no actions or skipped running",
         )
+    }.toList().also { regularActionVersions ->
+        if(regularActionVersions.isNotEmpty()) {
+            val hasOutdatedVersions = regularActionVersions.any { regularActionVersion ->
+                regularActionVersion.newerVersions.isNotEmpty()
+            }
 
-        stepSummary?.appendLine("action-version-checker found no outdated actions")
+            if(!hasOutdatedVersions) {
+                githubNotice(
+                    message = "action-version-checker found no outdated actions",
+                )
+
+                stepSummary?.appendLine("action-version-checker found no outdated actions")
+            }
+        }
     }
 }
