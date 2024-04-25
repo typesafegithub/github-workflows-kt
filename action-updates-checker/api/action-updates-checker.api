@@ -1,0 +1,5 @@
+public final class io/github/typesafegithub/workflows/updates/ReportingKt {
+	public static final fun reportAvailableUpdates (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/lang/String;)V
+	public static synthetic fun reportAvailableUpdates$default (Lio/github/typesafegithub/workflows/domain/Workflow;ZLjava/lang/String;ILjava/lang/Object;)V
+}
+

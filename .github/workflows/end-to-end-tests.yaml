@@ -12,6 +12,8 @@ jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
     runs-on: 'ubuntu-latest'
+    env:
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
     - id: 'step-0'
       name: 'Check out'
