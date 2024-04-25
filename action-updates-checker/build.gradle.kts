@@ -10,8 +10,6 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
-    // see https://youtrack.jetbrains.com/issue/KT-67618
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 
     compileOnly(projects.githubWorkflowsKt)
