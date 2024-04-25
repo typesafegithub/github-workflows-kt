@@ -18,7 +18,6 @@ import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
 import kotlinx.serialization.json.Json
 import java.nio.file.Path
 import kotlin.io.path.absolute
-import kotlin.io.path.exists
 import kotlin.io.path.invariantSeparatorsPathString
 
 /**
@@ -40,7 +39,6 @@ public fun Workflow.toYaml(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
-    generateActionBindings: Boolean = false,
 ): String {
     require(this.jobs.all { it.steps.none { it is KotlinLogicStep } }) {
         "toYaml() currently doesn't support steps with Kotlin-based 'run' blocks!"
@@ -51,7 +49,6 @@ public fun Workflow.toYaml(
         useGitDiff = false,
         gitRootDir = gitRootDir,
         preamble,
-        generateActionBindings = generateActionBindings,
     )
 }
 
@@ -73,7 +70,6 @@ public fun Workflow.writeToFile(
     addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
-    generateActionBindings: Boolean = false,
     getenv: (String) -> String? = { System.getenv(it) },
 ) {
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
@@ -104,7 +100,6 @@ public fun Workflow.writeToFile(
             useGitDiff = true,
             gitRootDir = gitRootDir,
             preamble,
-            generateActionBindings = generateActionBindings,
         )
 
     gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName).toFile().let {
@@ -131,15 +126,12 @@ private fun commentify(preamble: String): String {
         .joinToString("\n", postfix = "\n\n") { "# $it".trimEnd() }
 }
 
-private const val GENERATE_ACTION_BINDINGS_SCRIPT_NAME = "generate-action-bindings.main.kts"
-
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(
     addConsistencyCheck: Boolean,
     useGitDiff: Boolean,
     gitRootDir: Path?,
     preamble: Preamble?,
-    generateActionBindings: Boolean,
 ): String {
     val sourceFilePath =
         gitRootDir?.let {
@@ -172,15 +164,6 @@ private fun Workflow.generateYaml(
 
                     yamlConsistencyJobAdditionalSteps?.also { block ->
                         block()
-                    }
-
-                    if (generateActionBindings &&
-                        sourceFile.parent?.resolve(GENERATE_ACTION_BINDINGS_SCRIPT_NAME)?.exists() == true
-                    ) {
-                        run(
-                            name = "Generate action bindings",
-                            command = ".github/workflows/$GENERATE_ACTION_BINDINGS_SCRIPT_NAME \"$targetFileName\"",
-                        )
                     }
 
                     if (useGitDiff) {
