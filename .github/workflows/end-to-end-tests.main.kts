@@ -1,6 +1,7 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.1-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:action-versions-updates:1.14.1-SNAPSHOT")
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:github-script:v7")
@@ -24,6 +25,7 @@ import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
+import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
 
 fun JobBuilder<*>.publishToMavenLocal() {
@@ -46,6 +48,9 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
+    ),
+    yamlConsistencyJobEnv = linkedMapOf(
+        "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
     ),
     yamlConsistencyJobAdditionalSteps = {
         publishToMavenLocal()
@@ -246,4 +251,6 @@ workflow(
             """.trimIndent(),
         )
     }
+}.also { workflow ->
+    workflow.reportAvailableUpdates()
 }.writeToFile()
