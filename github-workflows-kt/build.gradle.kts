@@ -86,6 +86,10 @@ val validateDuplicatedVersion by tasks.creating<Task> {
             rootDir.resolve("github-workflows-kt/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
                 .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
         ) { "Library version stated in github-workflows-kt/src/test/.../GettingStarted.kt should be equal to $version!" }
+        require(
+            rootDir.resolve(".github/workflows/end-to-end-tests.main.kts").readText()
+                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
+        ) { "Library version stated in end-to-end-tests.main.kts should be equal to $version!" }
     }
 }
 
