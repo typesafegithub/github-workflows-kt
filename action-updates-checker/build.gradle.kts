@@ -12,8 +12,8 @@ version = rootProject.version
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 
-    compileOnly(projects.githubWorkflowsKt)
-    compileOnly(projects.sharedInternal)
+    implementation(projects.githubWorkflowsKt)
+    implementation(projects.sharedInternal)
 }
 
 kotlin {
