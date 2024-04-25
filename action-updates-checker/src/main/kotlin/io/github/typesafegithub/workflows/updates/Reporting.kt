@@ -35,6 +35,7 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
     githubToken: String? = null,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
 ) {
+    var hasOutdatedVersions = false
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,
         githubToken = githubToken ?: getGithubTokenOrNull(),
@@ -49,13 +50,14 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
         if (regularActionVersions.newerVersions.isEmpty()) {
             return@onEach
         }
+        hasOutdatedVersions = true
 
         githubGroup("new version available for $usesString") {
             val (file, line) = findDependencyDeclaration(regularActionVersions.action)
 
             if (file != null && line != null) {
                 githubNotice(
-                    message = "dependency notation at ${file.pathString}:$line",
+                    message = "updates available for ${file.pathString}:$line",
                     file = file.name,
                     line = line,
                 )
@@ -86,4 +88,12 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
             stepSummary?.appendLine("```\n")
         }
     }.collect()
+
+    if(!hasOutdatedVersions) {
+        githubNotice(
+            message = "action-version-checker found no outdated actions",
+        )
+
+        stepSummary?.appendLine("action-version-checker found no outdated actions")
+    }
 }

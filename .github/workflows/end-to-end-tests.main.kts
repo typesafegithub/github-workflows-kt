@@ -252,5 +252,7 @@ workflow(
         )
     }
 }.also { workflow ->
-    workflow.reportAvailableUpdates()
+    if(System.getenv("GHWKT_RUN_STEP") == null) {
+        workflow.reportAvailableUpdates()
+    }
 }.writeToFile()
