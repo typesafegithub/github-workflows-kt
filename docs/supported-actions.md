@@ -88,7 +88,7 @@ Click on a version to see the binding's code.
 * gradle
     * [actions/setup-gradle](https://github.com/gradle/actions/tree/v3/setup-gradle) - v3: [`ActionsSetupGradleV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/ActionsSetupGradleV3.kt)
     * [gradle-build-action](https://github.com/gradle/gradle-build-action) - v2: [`GradleBuildActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV2.kt), v3: [`GradleBuildActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/GradleBuildActionV3.kt)
-    * [wrapper-validation-action](https://github.com/gradle/wrapper-validation-action) - v1: [`WrapperValidationActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV1.kt), v2: [`WrapperValidationActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV2.kt)
+    * [wrapper-validation-action](https://github.com/gradle/wrapper-validation-action) - v1: [`WrapperValidationActionV1`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV1.kt), v2: [`WrapperValidationActionV2`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV2.kt), v3: [`WrapperValidationActionV3`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/gradle/WrapperValidationActionV3.kt)
 * JamesIves
     * [github-pages-deploy-action](https://github.com/JamesIves/github-pages-deploy-action) - v4: [`GithubPagesDeployActionV4`](https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/jamesives/GithubPagesDeployActionV4.kt)
 * JasonEtco
@@ -141,6 +141,6 @@ Click on a version to see the binding's code.
 Number of bindings available:
 
 * counting by actions: 85
-* counting each version separately: 164
+* counting each version separately: 165
 
 Actions [providing typings](https://github.com/typesafegithub/github-actions-typing/) (marked with ✅ on the above list): 18
