@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.gradle
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -42,11 +40,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: WrapperValidationActionV3",
-    replaceWith = ReplaceWith("WrapperValidationActionV3"),
-)
-public data class WrapperValidationActionV2 private constructor(
+public data class WrapperValidationActionV3 private constructor(
     /**
      * Minimum number expected gradle-wrapper.jar files found in the repository. Non-negative
      * number. Higher number is useful in monorepos where each project might have their own wrapper.
@@ -70,8 +64,8 @@ public data class WrapperValidationActionV2 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<WrapperValidationActionV2.Outputs>("gradle", "wrapper-validation-action",
-        _customVersion ?: "v2") {
+) : RegularAction<WrapperValidationActionV3.Outputs>("gradle", "wrapper-validation-action",
+        _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         minWrapperCount: Int? = null,
