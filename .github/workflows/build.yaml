@@ -101,6 +101,10 @@ jobs:
       name: 'Publish '':action-binding-generator'' to Sonatype'
       run: './gradlew :action-binding-generator:publishToSonatype --no-configuration-cache'
       if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
+    - id: 'step-7'
+      name: 'Publish '':action-updates-checker'' to Sonatype'
+      run: './gradlew :action-updates-checker:publishToSonatype --no-configuration-cache'
+      if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'
     runs-on: 'ubuntu-latest'
