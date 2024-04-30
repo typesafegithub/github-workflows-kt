@@ -14,4 +14,5 @@ val libraries = listOf(
     ":shared-internal",
     ":github-workflows-kt",
     ":action-binding-generator",
+    ":action-updates-checker",
 )
