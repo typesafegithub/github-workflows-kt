@@ -14,7 +14,7 @@ public data class CustomAction(
     override val actionVersion: String,
     public val inputs: Map<String, String> = emptyMap(),
 ) : RegularAction<Outputs>(actionOwner, actionName, actionVersion) {
-    override fun toYamlArguments(): Map<String, String> = LinkedHashMap(inputs)
+    override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(inputs)
 
     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 }
@@ -23,7 +23,7 @@ public data class CustomLocalAction(
     override val actionPath: String,
     public val inputs: Map<String, String> = emptyMap(),
 ) : LocalAction<Outputs>(actionPath) {
-    override fun toYamlArguments(): Map<String, String> = LinkedHashMap(inputs)
+    override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(inputs)
 
     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 }
@@ -34,7 +34,7 @@ public data class CustomDockerAction(
     public val inputs: Map<String, String> = emptyMap(),
     override val actionHost: String? = null,
 ) : DockerAction<Outputs>(actionImage, actionTag, actionHost) {
-    override fun toYamlArguments(): Map<String, String> = LinkedHashMap(inputs)
+    override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(inputs)
 
     override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 }
