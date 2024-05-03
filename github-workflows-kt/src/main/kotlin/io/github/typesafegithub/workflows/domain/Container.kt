@@ -11,7 +11,7 @@ import kotlinx.serialization.Contextual
 public data class Container(
     val image: String,
     val credentials: Credentials? = null,
-    val env: LinkedHashMap<String, String> = linkedMapOf(),
+    val env: Map<String, String> = linkedMapOf(),
     val ports: List<PortMapping> = emptyList(),
     val volumes: List<VolumeMapping> = emptyList(),
     val options: List<String> = emptyList(),

@@ -26,7 +26,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
     public val name: String?,
     public val runsOn: RunnerType,
     public val needs: List<Job<*>>,
-    public val env: LinkedHashMap<String, String>,
+    public val env: Map<String, String>,
     public val condition: String?,
     public val strategyMatrix: Map<String, List<String>>?,
     public val permissions: Map<Permission, Mode>? = null,
@@ -64,7 +64,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         vararg pleaseUseNamedArguments: Unit,
         command: String,
         name: String? = null,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
+        env: Map<String, String> = linkedMapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
@@ -101,7 +101,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         @Suppress("UNUSED_PARAMETER")
         vararg pleaseUseNamedArguments: Unit,
         name: String? = null,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
+        env: Map<String, String> = linkedMapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
@@ -142,7 +142,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 // simplified implementation is used.
                 command = "GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'",
                 logic = logic,
-                env = LinkedHashMap(env.toMap() + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "${'$'}{{ toJSON(github) }}")),
+                env = env + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "${'$'}{{ toJSON(github) }}"),
                 condition =
                     conditionCheckingStep?.let {
                         expr { "steps.${conditionCheckingStep.id}.outputs.$evaluationResultOutput" }
@@ -162,7 +162,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         vararg pleaseUseNamedArguments: Unit,
         action: Action<T>,
         name: String? = null,
-        env: LinkedHashMap<String, String> = linkedMapOf(),
+        env: Map<String, String> = linkedMapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
