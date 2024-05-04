@@ -250,6 +250,4 @@ workflow(
             """.trimIndent(),
         )
     }
-}.also { workflow ->
-    workflow.reportAvailableUpdates()
-}
+}.reportAvailableUpdates()
