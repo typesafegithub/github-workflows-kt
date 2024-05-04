@@ -118,7 +118,7 @@ class IntegrationTest : FunSpec({
                 name = "Test workflow",
                 on = listOf(Push()),
                 sourceFile = sourceTempFile.toPath(),
-                yamlConsistencyJobEnv = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
+                yamlConsistencyJobEnv = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
             ) {
                 job(
                     id = "test_job",
@@ -187,7 +187,7 @@ class IntegrationTest : FunSpec({
                 name = "Test workflow",
                 on = listOf(Push()),
                 env =
-                    linkedMapOf(
+                    mapOf(
                         "SIMPLE_VAR" to "simple-value-workflow",
                         "MULTILINE_VAR" to
                             """
@@ -208,7 +208,7 @@ class IntegrationTest : FunSpec({
                     runsOn = RunnerType.UbuntuLatest,
                     condition = "\${{ always() }}",
                     env =
-                        linkedMapOf(
+                        mapOf(
                             "SIMPLE_VAR" to "simple-value-job",
                             "MULTILINE_VAR" to
                                 """
@@ -229,7 +229,7 @@ class IntegrationTest : FunSpec({
                         name = "Check out",
                         action = CheckoutV4(),
                         env =
-                            linkedMapOf(
+                            mapOf(
                                 "SIMPLE_VAR" to "simple-value-uses",
                                 "MULTILINE_VAR" to
                                     """
@@ -245,7 +245,7 @@ class IntegrationTest : FunSpec({
                         name = "Hello world!",
                         command = "echo 'hello!'",
                         env =
-                            linkedMapOf(
+                            mapOf(
                                 "SIMPLE_VAR" to "simple-value-run",
                                 "MULTILINE_VAR" to
                                     """

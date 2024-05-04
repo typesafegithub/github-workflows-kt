@@ -130,7 +130,7 @@ class JobsToYamlTest : DescribeSpec({
                     runsOn = UbuntuLatest,
                     outputs = JobOutputs.EMPTY,
                     env =
-                        linkedMapOf(
+                        mapOf(
                             "FOO" to "bar",
                             "BAZ" to
                                 """
