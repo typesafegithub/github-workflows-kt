@@ -24,7 +24,6 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
 
@@ -253,4 +252,4 @@ workflow(
     }
 }.also { workflow ->
     workflow.reportAvailableUpdates()
-}.writeToFile()
+}
