@@ -103,7 +103,7 @@ class UsingActionsSnippets : FunSpec({
                 actionName = "latex-action",
                 actionVersion = "v2",
                 inputs =
-                    linkedMapOf(
+                    mapOf(
                         "root_file" to "report.tex",
                         "compiler" to "latexmk",
                     ),

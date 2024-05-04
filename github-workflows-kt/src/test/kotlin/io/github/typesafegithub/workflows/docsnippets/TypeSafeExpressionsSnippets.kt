@@ -49,14 +49,14 @@ class TypeSafeExpressionsSnippets : FunSpec({
                 runsOn = RunnerType.UbuntuLatest,
                 // --8<-- [start:custom-environment-variables-2]
                 env =
-                    linkedMapOf(
+                    mapOf(
                         GREETING to "World",
                     ),
             ) {
                 run(
                     name = "Custom environment variable",
                     env =
-                        linkedMapOf(
+                        mapOf(
                             FIRST_NAME to "Patrick",
                         ),
                     command = "echo $GREETING $FIRST_NAME",
@@ -81,7 +81,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
                 run(
                     name = "Encrypted secret",
                     env =
-                        linkedMapOf(
+                        mapOf(
                             SECRET to expr { SUPER_SECRET },
                             TOKEN to expr { secrets.GITHUB_TOKEN },
                         ),

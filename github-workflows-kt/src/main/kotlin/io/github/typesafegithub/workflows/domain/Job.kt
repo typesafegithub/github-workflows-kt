@@ -11,7 +11,7 @@ public data class Job<OUTPUT : JobOutputs>(
     val steps: List<Step>,
     val needs: List<Job<*>> = emptyList(),
     val outputs: OUTPUT,
-    val env: Map<String, String> = linkedMapOf(),
+    val env: Map<String, String> = mapOf(),
     val condition: String? = null,
     val strategyMatrix: Map<String, List<String>>? = null,
     val permissions: Map<Permission, Mode>? = null,

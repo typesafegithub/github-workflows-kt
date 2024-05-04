@@ -37,7 +37,7 @@ class ContainerToYamlTest : DescribeSpec({
                         volume("/host/path" to "/container/path"),
                         volume("/host/path2" to "/container/path2"),
                     ),
-                env = linkedMapOf("test-env-key" to "test-env-value"),
+                env = mapOf("test-env-key" to "test-env-value"),
                 options = listOf("test-option1", "test-option2"),
                 credentials =
                     Credentials(
@@ -83,7 +83,7 @@ class ContainerToYamlTest : DescribeSpec({
                     timeoutSeconds = 5,
                     retries = 5,
                 ),
-            env = linkedMapOf("POSTGRES_PASSWORD" to "postgres"),
+            env = mapOf("POSTGRES_PASSWORD" to "postgres"),
         ).toYaml() shouldBe
             mapOf(
                 "image" to "postgres",
@@ -113,7 +113,7 @@ class ContainerToYamlTest : DescribeSpec({
         // https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container
         Container(
             image = "node:14.16",
-            env = linkedMapOf("NODE_ENV" to "development"),
+            env = mapOf("NODE_ENV" to "development"),
             ports = listOf(port(80)),
             volumes = listOf(volume("my_docker_volume" to "/volume_mount")),
             options = listOf("--cpus 1"),

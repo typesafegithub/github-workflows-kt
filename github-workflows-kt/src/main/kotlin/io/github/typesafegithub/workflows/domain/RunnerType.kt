@@ -8,7 +8,7 @@ public sealed interface RunnerType {
     // Custom runner. Could be an expression `runsOn = expr("github.event.inputs.run-on")`
     public data class Custom(val runsOn: String) : RunnerType
 
-    public data class Labelled(val labels: LinkedHashSet<String>) : RunnerType {
+    public data class Labelled(val labels: Set<String>) : RunnerType {
         public constructor(vararg labels: String) : this(LinkedHashSet(labels.toList()))
 
         init {
@@ -20,7 +20,7 @@ public sealed interface RunnerType {
      * @see <a href="https://docs.github.com/en/actions/using-jobs/choosing-the-runner-for-a-job#choosing-runners-in-a-group">Choosing runners in a group</a>
      */
     @Suppress("MaxLineLength")
-    public data class Group(val name: String, val labels: LinkedHashSet<String>? = null) : RunnerType {
+    public data class Group(val name: String, val labels: Set<String>? = null) : RunnerType {
         public constructor(name: String, vararg labels: String) : this(name, LinkedHashSet(labels.toList()))
     }
 

@@ -82,7 +82,7 @@ class StepsToYamlTest : DescribeSpec({
                         id = "someId",
                         name = "Some command",
                         env =
-                            linkedMapOf(
+                            mapOf(
                                 "FOO" to "bar",
                                 "BAZ" to
                                     """
@@ -266,7 +266,7 @@ class StepsToYamlTest : DescribeSpec({
                         timeoutMinutes = 123,
                         action = CheckoutV4(fetchDepth = FetchDepth.Infinite),
                         env =
-                            linkedMapOf(
+                            mapOf(
                                 "FOO" to "bar",
                                 "BAZ" to
                                     """
@@ -333,7 +333,7 @@ class StepsToYamlTest : DescribeSpec({
                                 actionName = "latex-action",
                                 actionVersion = "v2",
                                 inputs =
-                                    linkedMapOf(
+                                    mapOf(
                                         "root_file" to "report.tex",
                                         "compiler" to "latexmk",
                                     ),

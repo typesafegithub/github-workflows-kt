@@ -49,7 +49,7 @@ workflow(
         Push(branches = listOf("main")),
         PullRequest(),
     ),
-    yamlConsistencyJobEnv = linkedMapOf(
+    yamlConsistencyJobEnv = mapOf(
         "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
     ),
     yamlConsistencyJobAdditionalSteps = {
@@ -67,7 +67,7 @@ workflow(
         job(
             id = "test_job_1",
             runsOn = RunnerType.UbuntuLatest,
-            env = linkedMapOf(
+            env = mapOf(
                 GREETING to "World",
             ),
             permissions = mapOf(
@@ -180,14 +180,14 @@ workflow(
 
             run(
                 name = "Custom environment variable",
-                env = linkedMapOf(
+                env = mapOf(
                     FIRST_NAME to "Patrick",
                 ),
                 command = "echo $GREETING $FIRST_NAME",
             )
             run(
                 name = "Encrypted secret",
-                env = linkedMapOf(
+                env = mapOf(
                     SECRET to expr { SUPER_SECRET },
                     TOKEN to expr { secrets.GITHUB_TOKEN },
                 ),

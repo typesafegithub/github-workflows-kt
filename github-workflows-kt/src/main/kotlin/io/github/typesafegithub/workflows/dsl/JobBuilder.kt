@@ -64,7 +64,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         vararg pleaseUseNamedArguments: Unit,
         command: String,
         name: String? = null,
-        env: Map<String, String> = linkedMapOf(),
+        env: Map<String, String> = mapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
@@ -101,7 +101,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         @Suppress("UNUSED_PARAMETER")
         vararg pleaseUseNamedArguments: Unit,
         name: String? = null,
-        env: Map<String, String> = linkedMapOf(),
+        env: Map<String, String> = mapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
@@ -162,7 +162,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         vararg pleaseUseNamedArguments: Unit,
         action: Action<T>,
         name: String? = null,
-        env: Map<String, String> = linkedMapOf(),
+        env: Map<String, String> = mapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
         condition: String? = null,
