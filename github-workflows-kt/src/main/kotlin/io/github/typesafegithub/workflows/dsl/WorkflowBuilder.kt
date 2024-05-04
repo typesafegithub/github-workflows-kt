@@ -10,8 +10,12 @@ import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
+import io.github.typesafegithub.workflows.shared.internal.findGitRoot
+import io.github.typesafegithub.workflows.yaml.Preamble
+import io.github.typesafegithub.workflows.yaml.writeToFile
 import kotlinx.serialization.Contextual
 import java.nio.file.Path
+import kotlin.io.path.absolute
 
 @GithubActionsDsl
 @Suppress("LongParameterList", "FunctionParameterNaming", "ConstructorParameterNaming")
@@ -171,6 +175,10 @@ public fun workflow(
     yamlConsistencyJobEnv: Map<String, String> = mapOf(),
     yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     permissions: Map<Permission, Mode>? = null,
+    addConsistencyCheck: Boolean = sourceFile != null,
+    gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
+    preamble: Preamble? = null,
+    getenv: (String) -> String? = { System.getenv(it) },
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
 ): Workflow {
@@ -200,6 +208,14 @@ public fun workflow(
     workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
     return workflowBuilder.build()
+        .also {
+            it.writeToFile(
+                addConsistencyCheck = addConsistencyCheck,
+                gitRootDir = gitRootDir,
+                preamble = preamble,
+                getenv = getenv,
+            )
+        }
 }
 
 private fun List<Job<*>>.requireUniqueJobIds() {
