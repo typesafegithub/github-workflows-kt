@@ -25,7 +25,6 @@ dependencies {
     implementation(projects.sharedInternal)
 
     testImplementation("dev.zacsweers.kctfork:core:0.4.1")
-    testImplementation("com.lemonappdev:konsist:0.14.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
