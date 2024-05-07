@@ -6,10 +6,10 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.23"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.24"))
 
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
-    implementation("org.jetbrains.kotlin:kotlin-serialization:1.9.23")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
+    implementation("org.jetbrains.kotlin:kotlin-serialization:1.9.24")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.6")
     implementation("org.jmailen.gradle:kotlinter-gradle:4.3.0")
