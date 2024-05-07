@@ -137,6 +137,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             KotlinLogicStep(
                 id = id,
                 name = name,
+                // TODO: fix it here, now it's possible since we have access to gitRootDir!
                 // Because of the current architecture, it's hard to make this command work properly if the sourceFile
                 // isn't in .github/workflows directory. It's the most common use case, though, so for now this
                 // simplified implementation is used.
