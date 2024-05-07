@@ -4,6 +4,7 @@
 !.idea/externalDependencies.xml # Required IntelliJ plugins.
 !.idea/icon.svg
 .DS_Store
+.kotlin
 
 build
 

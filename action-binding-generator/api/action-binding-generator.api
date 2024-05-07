@@ -114,13 +114,13 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/met
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -148,13 +148,13 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/met
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -182,13 +182,13 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/met
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
