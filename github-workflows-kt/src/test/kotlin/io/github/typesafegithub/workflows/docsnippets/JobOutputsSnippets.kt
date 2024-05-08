@@ -8,14 +8,22 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 import java.util.LinkedHashMap
 
 @Suppress("ktlint:standard:no-consecutive-comments")
 class JobOutputsSnippets : FunSpec({
+    val gitRootDir =
+        tempdir().also {
+            it.resolve(".git").mkdirs()
+        }.toPath()
+    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+
     test("jobOutputs") {
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             // --8<-- [start:define-job-outputs-1]
             val myJob =
