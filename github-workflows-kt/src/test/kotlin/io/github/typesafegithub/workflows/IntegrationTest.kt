@@ -33,7 +33,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             yamlConsistencyJobEnv = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
         ) {
             job(
@@ -108,7 +108,7 @@ class IntegrationTest : FunSpec({
                         hello! workflow
                         """.trimIndent(),
                 ),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             addConsistencyCheck = false,
             _customArguments =
                 mapOf(
@@ -233,7 +233,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             addConsistencyCheck = false,
             concurrency = Concurrency("workflow_staging_environment"),
         ) {
@@ -295,7 +295,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             addConsistencyCheck = false,
         ) {
             job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
@@ -373,7 +373,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             addConsistencyCheck = false,
             concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
         ) {
@@ -435,7 +435,7 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             yamlConsistencyJobCondition = "\${{ always() }}",
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             job(
                 id = "test_job",
@@ -538,7 +538,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "test",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             preamble =
                 Just(
                     """
@@ -575,7 +575,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "test",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             preamble =
                 Just(
                     """
@@ -614,7 +614,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             preamble =
                 WithOriginalAfter(
                     """
@@ -657,7 +657,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             preamble =
                 WithOriginalBefore(
                     """
@@ -700,7 +700,7 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "test",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             preamble = Just(""),
             addConsistencyCheck = false,
         ) {
@@ -731,7 +731,7 @@ class IntegrationTest : FunSpec({
             workflow(
                 name = "test",
                 on = listOf(Push()),
-                sourceFile = sourceTempFile.toPath(),
+                sourceFile = sourceTempFile,
             ) {
                 job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                     run(name = "Step with Kotlin code in lambda") {

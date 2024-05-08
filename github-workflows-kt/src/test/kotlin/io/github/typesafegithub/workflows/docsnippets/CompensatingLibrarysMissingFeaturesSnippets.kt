@@ -23,7 +23,7 @@ class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
             // --8<-- [end:custom-arguments-1]
             name = "customArguments",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
             // --8<-- [start:custom-arguments-2]
             // ...
             _customArguments =

@@ -14,6 +14,7 @@ import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import kotlinx.serialization.Contextual
+import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.absolute
 
@@ -23,7 +24,7 @@ public class WorkflowBuilder(
     name: String,
     on: List<Trigger>,
     env: Map<String, String> = mapOf(),
-    sourceFile: Path?,
+    sourceFile: File?,
     targetFileName: String?,
     concurrency: Concurrency? = null,
     public val gitRootDir: Path? = null,
@@ -169,15 +170,18 @@ public fun workflow(
     name: String,
     on: List<Trigger>,
     env: Map<String, String> = mapOf(),
-    sourceFile: Path? = null,
-    targetFileName: String? = sourceFile?.fileName?.let { it.toString().substringBeforeLast(".main.kts") + ".yaml" },
+    sourceFile: File? = null,
+    targetFileName: String? =
+        sourceFile?.toPath()?.fileName?.let {
+            it.toString().substringBeforeLast(".main.kts") + ".yaml"
+        },
     concurrency: Concurrency? = null,
     yamlConsistencyJobCondition: String? = null,
     yamlConsistencyJobEnv: Map<String, String> = mapOf(),
     yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     permissions: Map<Permission, Mode>? = null,
     addConsistencyCheck: Boolean = sourceFile != null,
-    gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
+    gitRootDir: Path? = sourceFile?.toPath()?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
     getenv: (String) -> String? = { System.getenv(it) },
     _customArguments: Map<String, @Contextual Any> = mapOf(),

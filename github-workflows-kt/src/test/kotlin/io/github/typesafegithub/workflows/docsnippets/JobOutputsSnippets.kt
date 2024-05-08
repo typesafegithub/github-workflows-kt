@@ -23,7 +23,7 @@ class JobOutputsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             // --8<-- [start:define-job-outputs-1]
             val myJob =
