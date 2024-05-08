@@ -12,7 +12,6 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
-import io.github.typesafegithub.workflows.yaml.writeToFile
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -28,49 +27,30 @@ class IntegrationTest : FunSpec({
         }.toPath()
     val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
     val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
-    val workflow =
+
+    test("'hello world' workflow") {
+        // when
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = sourceTempFile.toPath(),
+            yamlConsistencyJobEnv = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
         ) {
             job(
                 id = "test_job",
-                name = "Test Job",
                 runsOn = RunnerType.UbuntuLatest,
             ) {
-                uses(action = CheckoutV4())
-                run(command = "echo 'hello!'")
+                uses(
+                    name = "Check out",
+                    action = CheckoutV4(),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
             }
         }
-
-    test("writeToFile() - 'hello world' workflow") {
-        // given
-        val workflowWithTempTargetFile =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                sourceFile = sourceTempFile.toPath(),
-                yamlConsistencyJobEnv = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
-            ) {
-                job(
-                    id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
-                ) {
-                    uses(
-                        name = "Check out",
-                        action = CheckoutV4(),
-                    )
-
-                    run(
-                        name = "Hello world!",
-                        command = "echo 'hello!'",
-                    )
-                }
-            }
-
-        // when
-        workflowWithTempTargetFile.writeToFile()
 
         // then
         targetTempFile.readText() shouldBe
@@ -113,87 +93,84 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - environment variables and continueOnError") {
+    test("environment variables and continueOnError") {
         // when
-        val testWorkflow =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            env =
+                mapOf(
+                    "SIMPLE_VAR" to "simple-value-workflow",
+                    "MULTILINE_VAR" to
+                        """
+                        hey,
+                        hi,
+                        hello! workflow
+                        """.trimIndent(),
+                ),
+            sourceFile = sourceTempFile.toPath(),
+            addConsistencyCheck = false,
+            _customArguments =
+                mapOf(
+                    "name" to "Overridden name!",
+                    "foo-bar" to "baz",
+                ),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                condition = "\${{ always() }}",
                 env =
                     mapOf(
-                        "SIMPLE_VAR" to "simple-value-workflow",
+                        "SIMPLE_VAR" to "simple-value-job",
                         "MULTILINE_VAR" to
                             """
                             hey,
                             hi,
-                            hello! workflow
+                            hello! job
                             """.trimIndent(),
                     ),
-                sourceFile = sourceTempFile.toPath(),
                 _customArguments =
                     mapOf(
-                        "name" to "Overridden name!",
-                        "foo-bar" to "baz",
+                        "baz-goo" to 123,
+                        "null-string" to "null",
+                        "null-value" to null,
+                        "empty-string" to "",
                     ),
             ) {
-                job(
-                    id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
-                    condition = "\${{ always() }}",
+                uses(
+                    name = "Check out",
+                    action = CheckoutV4(),
                     env =
                         mapOf(
-                            "SIMPLE_VAR" to "simple-value-job",
+                            "SIMPLE_VAR" to "simple-value-uses",
                             "MULTILINE_VAR" to
                                 """
                                 hey,
                                 hi,
-                                hello! job
+                                hello! uses
                                 """.trimIndent(),
                         ),
-                    _customArguments =
+                    continueOnError = true,
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                    env =
                         mapOf(
-                            "baz-goo" to 123,
-                            "null-string" to "null",
-                            "null-value" to null,
-                            "empty-string" to "",
+                            "SIMPLE_VAR" to "simple-value-run",
+                            "MULTILINE_VAR" to
+                                """
+                                hey,
+                                hi,
+                                hello! run
+                                """.trimIndent(),
                         ),
-                ) {
-                    uses(
-                        name = "Check out",
-                        action = CheckoutV4(),
-                        env =
-                            mapOf(
-                                "SIMPLE_VAR" to "simple-value-uses",
-                                "MULTILINE_VAR" to
-                                    """
-                                    hey,
-                                    hi,
-                                    hello! uses
-                                    """.trimIndent(),
-                            ),
-                        continueOnError = true,
-                    )
-
-                    run(
-                        name = "Hello world!",
-                        command = "echo 'hello!'",
-                        env =
-                            mapOf(
-                                "SIMPLE_VAR" to "simple-value-run",
-                                "MULTILINE_VAR" to
-                                    """
-                                    hey,
-                                    hi,
-                                    hello! run
-                                    """.trimIndent(),
-                            ),
-                        continueOnError = true,
-                    )
-                }
+                    continueOnError = true,
+                )
             }
-
-        // when
-        testWorkflow.writeToFile(addConsistencyCheck = false)
+        }
 
         // then
         targetTempFile.readText() shouldBe
@@ -251,36 +228,33 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - with concurrency, default behavior") {
-        // given
-        val testWorkflow =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                sourceFile = sourceTempFile.toPath(),
-                concurrency = Concurrency("workflow_staging_environment"),
-            ) {
-                job(
-                    id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
-                    concurrency = Concurrency("job_staging_environment"),
-                ) {
-                    val addAndCommit = uses(action = AddAndCommitV9())
-
-                    uses(
-                        name = "Some step consuming other step's output",
-                        action =
-                            CheckoutV4(
-                                repository = expr(addAndCommit.id),
-                                ref = expr(addAndCommit.outputs.commitSha),
-                                token = expr(addAndCommit.outputs["my-unsafe-output"]),
-                            ),
-                    )
-                }
-            }
-
+    test("with concurrency, default behavior") {
         // when
-        testWorkflow.writeToFile(addConsistencyCheck = false)
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
+            addConsistencyCheck = false,
+            concurrency = Concurrency("workflow_staging_environment"),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                concurrency = Concurrency("job_staging_environment"),
+            ) {
+                val addAndCommit = uses(action = AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action =
+                        CheckoutV4(
+                            repository = expr(addAndCommit.id),
+                            ref = expr(addAndCommit.outputs.commitSha),
+                            token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                        ),
+                )
+            }
+        }
 
         // then
         targetTempFile.readText() shouldBe
@@ -316,48 +290,45 @@ class IntegrationTest : FunSpec({
     }
 
     @Suppress("MaxLineLength")
-    test("writeToFile() - long strings with GitHub expressions in action arguments") {
+    test("long strings with GitHub expressions in action arguments") {
         // when
-        val testWorkflow =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                sourceFile = sourceTempFile.toPath(),
-            ) {
-                job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
-                    uses(
-                        action =
-                            ConfigureAwsCredentialsV4(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
-                                awsRegion = "us-west-1",
-                            ),
-                    )
-                    uses(
-                        action =
-                            ConfigureAwsCredentialsV4(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
-                                awsRegion = "us-west-1",
-                            ),
-                    )
-                    uses(
-                        action =
-                            ConfigureAwsCredentialsV4(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
-                                awsRegion = "us-west-1",
-                            ),
-                    )
-                    uses(
-                        action =
-                            ConfigureAwsCredentialsV4(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
-                                awsRegion = "us-west-1",
-                            ),
-                    )
-                }
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
+            addConsistencyCheck = false,
+        ) {
+            job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
+                uses(
+                    action =
+                        ConfigureAwsCredentialsV4(
+                            roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
+                            awsRegion = "us-west-1",
+                        ),
+                )
+                uses(
+                    action =
+                        ConfigureAwsCredentialsV4(
+                            roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
+                            awsRegion = "us-west-1",
+                        ),
+                )
+                uses(
+                    action =
+                        ConfigureAwsCredentialsV4(
+                            roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
+                            awsRegion = "us-west-1",
+                        ),
+                )
+                uses(
+                    action =
+                        ConfigureAwsCredentialsV4(
+                            roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
+                            awsRegion = "us-west-1",
+                        ),
+                )
             }
-
-        // when
-        testWorkflow.writeToFile(addConsistencyCheck = false)
+        }
 
         // then
         targetTempFile.readText() shouldBe
@@ -397,36 +368,33 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - with concurrency, cancel in progress") {
-        // given
-        val testWorkflow =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                sourceFile = sourceTempFile.toPath(),
-                concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
-            ) {
-                job(
-                    id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
-                    concurrency = Concurrency("job_staging_environment", cancelInProgress = true),
-                ) {
-                    val addAndCommit = uses(action = AddAndCommitV9())
-
-                    uses(
-                        name = "Some step consuming other step's output",
-                        action =
-                            CheckoutV4(
-                                repository = expr(addAndCommit.id),
-                                ref = expr(addAndCommit.outputs.commitSha),
-                                token = expr(addAndCommit.outputs["my-unsafe-output"]),
-                            ),
-                    )
-                }
-            }
-
+    test("with concurrency, cancel in progress") {
         // when
-        testWorkflow.writeToFile(addConsistencyCheck = false)
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
+            addConsistencyCheck = false,
+            concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+                concurrency = Concurrency("job_staging_environment", cancelInProgress = true),
+            ) {
+                val addAndCommit = uses(action = AddAndCommitV9())
+
+                uses(
+                    name = "Some step consuming other step's output",
+                    action =
+                        CheckoutV4(
+                            repository = expr(addAndCommit.id),
+                            ref = expr(addAndCommit.outputs.commitSha),
+                            token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                        ),
+                )
+            }
+        }
 
         // then
         targetTempFile.readText() shouldBe
@@ -461,27 +429,23 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - YAML consistency job condition") {
+    test("YAML consistency job condition") {
         // given
-        val testWorkflow =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                yamlConsistencyJobCondition = "\${{ always() }}",
-                sourceFile = sourceTempFile.toPath(),
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            yamlConsistencyJobCondition = "\${{ always() }}",
+            sourceFile = sourceTempFile.toPath(),
+        ) {
+            job(
+                id = "test_job",
+                name = "Test Job",
+                runsOn = RunnerType.UbuntuLatest,
             ) {
-                job(
-                    id = "test_job",
-                    name = "Test Job",
-                    runsOn = RunnerType.UbuntuLatest,
-                ) {
-                    uses(action = CheckoutV4())
-                    run(command = "echo 'hello!'")
-                }
+                uses(action = CheckoutV4())
+                run(command = "echo 'hello!'")
             }
-
-        // when
-        testWorkflow.writeToFile()
+        }
 
         // then
         targetTempFile.readText() shouldBe
@@ -522,32 +486,29 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - works without `sourceFile`") {
-        // given
-        val workflowWithTempTargetFile =
-            workflow(
-                name = "Test workflow",
-                on = listOf(Push()),
-                targetFileName = "some_workflow.yaml",
-            ) {
-                job(
-                    id = "test_job",
-                    runsOn = RunnerType.UbuntuLatest,
-                ) {
-                    uses(
-                        name = "Check out",
-                        action = CheckoutV4(),
-                    )
-
-                    run(
-                        name = "Hello world!",
-                        command = "echo 'hello!'",
-                    )
-                }
-            }
-
+    test("works without `sourceFile`") {
         // when
-        workflowWithTempTargetFile.writeToFile(gitRootDir = gitRootDir)
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            targetFileName = "some_workflow.yaml",
+            gitRootDir = gitRootDir,
+        ) {
+            job(
+                id = "test_job",
+                runsOn = RunnerType.UbuntuLatest,
+            ) {
+                uses(
+                    name = "Check out",
+                    action = CheckoutV4(),
+                )
+
+                run(
+                    name = "Hello world!",
+                    command = "echo 'hello!'",
+                )
+            }
+        }
 
         // then
         targetTempFile.readText() shouldBe
@@ -573,19 +534,11 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    val trivialWorkflow =
+    test("custom preamble") {
         workflow(
             name = "test",
             on = listOf(Push()),
             sourceFile = sourceTempFile.toPath(),
-        ) {
-            job(id = "test", runsOn = RunnerType.UbuntuLatest) {
-                run(command = "echo 'Hello!'")
-            }
-        }
-
-    test("writeToFile() - custom preamble") {
-        trivialWorkflow.writeToFile(
             preamble =
                 Just(
                     """
@@ -594,7 +547,11 @@ class IntegrationTest : FunSpec({
                     """.trimIndent(),
                 ),
             addConsistencyCheck = false,
-        )
+        ) {
+            job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                run(command = "echo 'Hello!'")
+            }
+        }
 
         targetTempFile.readText() shouldBe
             """
@@ -614,8 +571,11 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - custom preamble with empty line") {
-        trivialWorkflow.writeToFile(
+    test("custom preamble with empty line") {
+        workflow(
+            name = "test",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
             preamble =
                 Just(
                     """
@@ -625,7 +585,11 @@ class IntegrationTest : FunSpec({
                     """.trimIndent(),
                 ),
             addConsistencyCheck = false,
-        )
+        ) {
+            job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                run(command = "echo 'Hello!'")
+            }
+        }
 
         targetTempFile.readText() shouldBe
             """
@@ -646,21 +610,30 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - custom preamble with original after") {
-        workflow.writeToFile(
+    test("custom preamble with original after") {
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
             preamble =
                 WithOriginalAfter(
                     """
                     Test preamble
+
                     with original after
                     """.trimIndent(),
                 ),
             addConsistencyCheck = false,
-        )
+        ) {
+            job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
+                run(command = "echo 'Hello!'")
+            }
+        }
 
         targetTempFile.readText() shouldBe
             """
             # Test preamble
+            #
             # with original after
 
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
@@ -672,28 +645,33 @@ class IntegrationTest : FunSpec({
               push: {}
             jobs:
               test_job:
-                name: 'Test Job'
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  run: 'echo ''hello!'''
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
     }
 
-    test("writeToFile() - custom preamble with original before") {
-        workflow.writeToFile(
+    test("custom preamble with original before") {
+        workflow(
+            name = "Test workflow",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
             preamble =
                 WithOriginalBefore(
                     """
                     Test preamble
+
                     with original before
                     """.trimIndent(),
                 ),
             addConsistencyCheck = false,
-        )
+        ) {
+            job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
+                run(command = "echo 'Hello!'")
+            }
+        }
 
         targetTempFile.readText() shouldBe
             """
@@ -702,6 +680,7 @@ class IntegrationTest : FunSpec({
             # Generated with https://github.com/typesafegithub/github-workflows-kt
 
             # Test preamble
+            #
             # with original before
 
             name: 'Test workflow'
@@ -709,22 +688,26 @@ class IntegrationTest : FunSpec({
               push: {}
             jobs:
               test_job:
-                name: 'Test Job'
                 runs-on: 'ubuntu-latest'
                 steps:
                 - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  run: 'echo ''hello!'''
+                  run: 'echo ''Hello!'''
 
             """.trimIndent()
     }
 
-    test("writeToFile() - no preamble") {
-        trivialWorkflow.writeToFile(
+    test("no preamble") {
+        workflow(
+            name = "test",
+            on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
             preamble = Just(""),
             addConsistencyCheck = false,
-        )
+        ) {
+            job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                run(command = "echo 'Hello!'")
+            }
+        }
 
         targetTempFile.readText() shouldBe
             """
@@ -741,81 +724,7 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("writeToFile() - calling Kotlin logic step") {
-        // Given
-        var callCount = 0
-        var repoName = ""
-
-        val myWorkflow =
-            workflow(
-                name = "test",
-                on = listOf(Push()),
-                sourceFile = sourceTempFile.toPath(),
-            ) {
-                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
-                    uses(action = CheckoutV4())
-                    run(name = "Step with Kotlin code in lambda") {
-                        callCount++
-                        repoName = github.repository
-                    }
-                }
-            }
-
-        // When
-        // Writing the YAML
-        myWorkflow.writeToFile(
-            preamble = Just(""),
-            addConsistencyCheck = false,
-            gitRootDir = gitRootDir,
-        )
-        // During runtime
-        myWorkflow.writeToFile(
-            preamble = Just(""),
-            addConsistencyCheck = false,
-            gitRootDir = gitRootDir,
-            getenv = {
-                when (it) {
-                    "GHWKT_RUN_STEP" -> "test:step-1"
-                    "GHWKT_GITHUB_CONTEXT_JSON" ->
-                        """
-                        {
-                            "repository": "test-repository",
-                            "sha": "d34db33f",
-                            "event_name": "push",
-                            "event": {
-                                "after": "bce434"
-                            }
-                        }
-                        """.trimIndent()
-                    else -> null
-                }
-            },
-        )
-
-        // Then
-        targetTempFile.readText() shouldBe
-            """
-            name: 'test'
-            on:
-              push: {}
-            jobs:
-              test:
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  name: 'Step with Kotlin code in lambda'
-                  env:
-                    GHWKT_GITHUB_CONTEXT_JSON: '${'$'}{{ toJSON(github) }}'
-                  run: 'GHWKT_RUN_STEP=''test:step-1'' ''.github/workflows/some_workflow.main.kts'''
-
-            """.trimIndent()
-        callCount shouldBe 1
-        repoName shouldBe "test-repository"
-    }
-
-    test("writeToFile() - calling Kotlin logic step without prior checkout") {
+    test("calling Kotlin logic step without prior checkout") {
         // Then
         shouldThrow<IllegalArgumentException> {
             // When
@@ -835,7 +744,7 @@ class IntegrationTest : FunSpec({
         }
     }
 
-    test("writeToFile() - calling Kotlin logic step without setting sourceFile") {
+    test("calling Kotlin logic step without setting sourceFile") {
         // Then
         shouldThrow<IllegalArgumentException> {
             // When
