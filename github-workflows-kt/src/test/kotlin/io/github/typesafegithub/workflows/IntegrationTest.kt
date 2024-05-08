@@ -12,7 +12,6 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
-import io.github.typesafegithub.workflows.yaml.toYaml
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -27,11 +26,13 @@ class IntegrationTest : FunSpec({
         tempdir().also {
             it.resolve(".git").mkdirs()
         }.toPath()
+    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+    val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
     val workflow =
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(
                 id = "test_job",
@@ -43,76 +44,8 @@ class IntegrationTest : FunSpec({
             }
         }
 
-    test("toYaml() - 'hello world' workflow") {
-        // when
-        val actualYaml = workflow.toYaml()
-
-        // then
-        actualYaml shouldBe
-            """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            name: 'Test workflow'
-            on:
-              push: {}
-            jobs:
-              check_yaml_consistency:
-                name: 'Check YAML consistency'
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  name: 'Check out'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  name: 'Consistency check'
-                  run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
-              test_job:
-                name: 'Test Job'
-                runs-on: 'ubuntu-latest'
-                needs:
-                - 'check_yaml_consistency'
-                steps:
-                - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  run: 'echo ''hello!'''
-
-            """.trimIndent()
-    }
-
-    test("toYaml() - 'hello world' workflow without consistency check") {
-        // when
-        val actualYaml = workflow.toYaml(addConsistencyCheck = false)
-
-        // then
-        actualYaml shouldBe
-            """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            name: 'Test workflow'
-            on:
-              push: {}
-            jobs:
-              test_job:
-                name: 'Test Job'
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  run: 'echo ''hello!'''
-
-            """.trimIndent()
-    }
-
-    test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
+    test("writeToFile() - 'hello world' workflow") {
         // given
-        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
-        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         val workflowWithTempTargetFile =
             workflow(
                 name = "Test workflow",
@@ -137,7 +70,7 @@ class IntegrationTest : FunSpec({
             }
 
         // when
-        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
+        workflowWithTempTargetFile.writeToFile()
 
         // then
         targetTempFile.readText() shouldBe
@@ -180,9 +113,9 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - environment variables and continueOnError") {
+    test("writeToFile() - environment variables and continueOnError") {
         // when
-        val actualYaml =
+        val testWorkflow =
             workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
@@ -196,7 +129,7 @@ class IntegrationTest : FunSpec({
                             hello! workflow
                             """.trimIndent(),
                     ),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
                 _customArguments =
                     mapOf(
                         "name" to "Overridden name!",
@@ -257,10 +190,13 @@ class IntegrationTest : FunSpec({
                         continueOnError = true,
                     )
                 }
-            }.toYaml(addConsistencyCheck = false)
+            }
+
+        // when
+        testWorkflow.writeToFile(addConsistencyCheck = false)
 
         // then
-        actualYaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -315,13 +251,13 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - with concurrency, default behavior") {
-        // when
-        val actualYaml =
+    test("writeToFile() - with concurrency, default behavior") {
+        // given
+        val testWorkflow =
             workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
                 concurrency = Concurrency("workflow_staging_environment"),
             ) {
                 job(
@@ -341,10 +277,13 @@ class IntegrationTest : FunSpec({
                             ),
                     )
                 }
-            }.toYaml(addConsistencyCheck = false)
+            }
+
+        // when
+        testWorkflow.writeToFile(addConsistencyCheck = false)
 
         // then
-        actualYaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -377,13 +316,13 @@ class IntegrationTest : FunSpec({
     }
 
     @Suppress("MaxLineLength")
-    test("toYaml() - long strings with GitHub expressions in action arguments") {
+    test("writeToFile() - long strings with GitHub expressions in action arguments") {
         // when
-        val actualYaml =
+        val testWorkflow =
             workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
             ) {
                 job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
                     uses(
@@ -415,10 +354,13 @@ class IntegrationTest : FunSpec({
                             ),
                     )
                 }
-            }.toYaml(addConsistencyCheck = false)
+            }
+
+        // when
+        testWorkflow.writeToFile(addConsistencyCheck = false)
 
         // then
-        actualYaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -455,13 +397,13 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - with concurrency, cancel in progress") {
-        // when
-        val actualYaml =
+    test("writeToFile() - with concurrency, cancel in progress") {
+        // given
+        val testWorkflow =
             workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
                 concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
             ) {
                 job(
@@ -481,10 +423,13 @@ class IntegrationTest : FunSpec({
                             ),
                     )
                 }
-            }.toYaml(addConsistencyCheck = false)
+            }
+
+        // when
+        testWorkflow.writeToFile(addConsistencyCheck = false)
 
         // then
-        actualYaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -516,14 +461,14 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - YAML consistency job condition") {
-        // when
-        val actualYaml =
+    test("writeToFile() - YAML consistency job condition") {
+        // given
+        val testWorkflow =
             workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
                 yamlConsistencyJobCondition = "\${{ always() }}",
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
             ) {
                 job(
                     id = "test_job",
@@ -533,10 +478,13 @@ class IntegrationTest : FunSpec({
                     uses(action = CheckoutV4())
                     run(command = "echo 'hello!'")
                 }
-            }.toYaml()
+            }
+
+        // when
+        testWorkflow.writeToFile()
 
         // then
-        actualYaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -555,8 +503,11 @@ class IntegrationTest : FunSpec({
                   name: 'Check out'
                   uses: 'actions/checkout@v4'
                 - id: 'step-1'
+                  name: 'Execute script'
+                  run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                - id: 'step-2'
                   name: 'Consistency check'
-                  run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
+                  run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
               test_job:
                 name: 'Test Job'
                 runs-on: 'ubuntu-latest'
@@ -573,7 +524,6 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - works without `sourceFile`") {
         // given
-        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         val workflowWithTempTargetFile =
             workflow(
                 name = "Test workflow",
@@ -623,57 +573,30 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    val workflowWithoutSource =
+    val trivialWorkflow =
         workflow(
             name = "test",
             on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")
             }
         }
 
-    test("toYaml() - should succeed without sourceFile") {
-        val yaml = workflowWithoutSource.toYaml()
+    test("writeToFile() - custom preamble") {
+        trivialWorkflow.writeToFile(
+            preamble =
+                Just(
+                    """
+                    Test preamble
+                    with a second line
+                    """.trimIndent(),
+                ),
+            addConsistencyCheck = false,
+        )
 
-        yaml shouldBe
-            """
-            # This file was generated using a Kotlin DSL.
-            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            name: 'test'
-            on:
-              push: {}
-            jobs:
-              test:
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  run: 'echo ''Hello!'''
-
-            """.trimIndent()
-    }
-
-    test("toYaml() - should fail to addConsistencyCheck when sourceFile is absent") {
-        shouldThrow<IllegalStateException> {
-            workflowWithoutSource.toYaml(addConsistencyCheck = true)
-        }
-    }
-
-    test("toYaml() - custom preamble") {
-        val yaml =
-            workflowWithoutSource.toYaml(
-                preamble =
-                    Just(
-                        """
-                        Test preamble
-                        with a second line
-                        """.trimIndent(),
-                    ),
-            )
-
-        yaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # Test preamble
             # with a second line
@@ -691,20 +614,20 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - custom preamble with empty line") {
-        val yaml =
-            workflowWithoutSource.toYaml(
-                preamble =
-                    Just(
-                        """
-                        Test preamble
+    test("writeToFile() - custom preamble with empty line") {
+        trivialWorkflow.writeToFile(
+            preamble =
+                Just(
+                    """
+                    Test preamble
 
-                        with an empty line
-                        """.trimIndent(),
-                    ),
-            )
+                    with an empty line
+                    """.trimIndent(),
+                ),
+            addConsistencyCheck = false,
+        )
 
-        yaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # Test preamble
             #
@@ -723,20 +646,19 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - custom preamble with original after") {
-        val yaml =
-            workflow.toYaml(
-                addConsistencyCheck = false,
-                preamble =
-                    WithOriginalAfter(
-                        """
-                        Test preamble
-                        with original after
-                        """.trimIndent(),
-                    ),
-            )
+    test("writeToFile() - custom preamble with original after") {
+        workflow.writeToFile(
+            preamble =
+                WithOriginalAfter(
+                    """
+                    Test preamble
+                    with original after
+                    """.trimIndent(),
+                ),
+            addConsistencyCheck = false,
+        )
 
-        yaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # Test preamble
             # with original after
@@ -761,54 +683,19 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - custom preamble with original after without source") {
-        val yaml =
-            workflowWithoutSource.toYaml(
-                preamble =
-                    WithOriginalAfter(
-                        """
-                        Test preamble
-                        with original after
-                        """.trimIndent(),
-                    ),
-            )
+    test("writeToFile() - custom preamble with original before") {
+        workflow.writeToFile(
+            preamble =
+                WithOriginalBefore(
+                    """
+                    Test preamble
+                    with original before
+                    """.trimIndent(),
+                ),
+            addConsistencyCheck = false,
+        )
 
-        yaml shouldBe
-            """
-            # Test preamble
-            # with original after
-
-            # This file was generated using a Kotlin DSL.
-            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            name: 'test'
-            on:
-              push: {}
-            jobs:
-              test:
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  run: 'echo ''Hello!'''
-
-            """.trimIndent()
-    }
-
-    test("toYaml() - custom preamble with original before") {
-        val yaml =
-            workflow.toYaml(
-                addConsistencyCheck = false,
-                preamble =
-                    WithOriginalBefore(
-                        """
-                        Test preamble
-                        with original before
-                        """.trimIndent(),
-                    ),
-            )
-
-        yaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
@@ -833,44 +720,13 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - custom preamble with original before without source") {
-        val yaml =
-            workflowWithoutSource.toYaml(
-                preamble =
-                    WithOriginalBefore(
-                        """
-                        Test preamble
-                        with original before
-                        """.trimIndent(),
-                    ),
-            )
+    test("writeToFile() - no preamble") {
+        trivialWorkflow.writeToFile(
+            preamble = Just(""),
+            addConsistencyCheck = false,
+        )
 
-        yaml shouldBe
-            """
-            # This file was generated using a Kotlin DSL.
-            # If you want to modify the workflow, please change the Kotlin source and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            # Test preamble
-            # with original before
-
-            name: 'test'
-            on:
-              push: {}
-            jobs:
-              test:
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  run: 'echo ''Hello!'''
-
-            """.trimIndent()
-    }
-
-    test("toYaml() - no preamble") {
-        val yaml = workflowWithoutSource.toYaml(preamble = Just(""))
-
-        yaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             name: 'test'
             on:
@@ -887,7 +743,6 @@ class IntegrationTest : FunSpec({
 
     test("writeToFile() - calling Kotlin logic step") {
         // Given
-        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
         var callCount = 0
         var repoName = ""
 
@@ -895,7 +750,7 @@ class IntegrationTest : FunSpec({
             workflow(
                 name = "test",
                 on = listOf(Push()),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
             ) {
                 job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                     uses(action = CheckoutV4())
@@ -960,34 +815,6 @@ class IntegrationTest : FunSpec({
         repoName shouldBe "test-repository"
     }
 
-    test("toYaml() - calling Kotlin logic step") {
-        // Given
-        val myWorkflow =
-            workflow(
-                name = "test",
-                on = listOf(Push()),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
-            ) {
-                job(id = "test", runsOn = RunnerType.UbuntuLatest) {
-                    uses(action = CheckoutV4())
-                    run(name = "Step with Kotlin code in lambda") {
-                    }
-                }
-            }
-
-        // Then
-        shouldThrow<IllegalArgumentException> {
-            // When
-            myWorkflow.toYaml(
-                preamble = Just(""),
-                addConsistencyCheck = false,
-                gitRootDir = gitRootDir,
-            )
-        }.also {
-            it.message shouldBe "toYaml() currently doesn't support steps with Kotlin-based 'run' blocks!"
-        }
-    }
-
     test("writeToFile() - calling Kotlin logic step without prior checkout") {
         // Then
         shouldThrow<IllegalArgumentException> {
@@ -995,7 +822,7 @@ class IntegrationTest : FunSpec({
             workflow(
                 name = "test",
                 on = listOf(Push()),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
             ) {
                 job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                     run(name = "Step with Kotlin code in lambda") {
