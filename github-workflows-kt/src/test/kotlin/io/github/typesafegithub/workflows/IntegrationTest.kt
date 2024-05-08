@@ -43,73 +43,7 @@ class IntegrationTest : FunSpec({
             }
         }
 
-    test("toYaml() - 'hello world' workflow") {
-        // when
-        val actualYaml = workflow.toYaml()
-
-        // then
-        actualYaml shouldBe
-            """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            name: 'Test workflow'
-            on:
-              push: {}
-            jobs:
-              check_yaml_consistency:
-                name: 'Check YAML consistency'
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  name: 'Check out'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  name: 'Consistency check'
-                  run: 'diff -u ''.github/workflows/some_workflow.yaml'' <(''.github/workflows/some_workflow.main.kts'')'
-              test_job:
-                name: 'Test Job'
-                runs-on: 'ubuntu-latest'
-                needs:
-                - 'check_yaml_consistency'
-                steps:
-                - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  run: 'echo ''hello!'''
-
-            """.trimIndent()
-    }
-
-    test("toYaml() - 'hello world' workflow without consistency check") {
-        // when
-        val actualYaml = workflow.toYaml(addConsistencyCheck = false)
-
-        // then
-        actualYaml shouldBe
-            """
-            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
-            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
-            # Generated with https://github.com/typesafegithub/github-workflows-kt
-
-            name: 'Test workflow'
-            on:
-              push: {}
-            jobs:
-              test_job:
-                name: 'Test Job'
-                runs-on: 'ubuntu-latest'
-                steps:
-                - id: 'step-0'
-                  uses: 'actions/checkout@v4'
-                - id: 'step-1'
-                  run: 'echo ''hello!'''
-
-            """.trimIndent()
-    }
-
-    test("writeToFile(addConsistencyCheck = true) - 'hello world' workflow") {
+    test("writeToFile() - 'hello world' workflow") {
         // given
         val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
         val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
@@ -137,7 +71,7 @@ class IntegrationTest : FunSpec({
             }
 
         // when
-        workflowWithTempTargetFile.writeToFile(addConsistencyCheck = true)
+        workflowWithTempTargetFile.writeToFile()
 
         // then
         targetTempFile.readText() shouldBe
@@ -180,9 +114,11 @@ class IntegrationTest : FunSpec({
             """.trimIndent()
     }
 
-    test("toYaml() - environment variables and continueOnError") {
+    test("writeToFile() - environment variables and continueOnError") {
         // when
-        val actualYaml =
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+        val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
+        val testWorkflow =
             workflow(
                 name = "Test workflow",
                 on = listOf(Push()),
@@ -196,7 +132,7 @@ class IntegrationTest : FunSpec({
                             hello! workflow
                             """.trimIndent(),
                     ),
-                sourceFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts"),
+                sourceFile = sourceTempFile.toPath(),
                 _customArguments =
                     mapOf(
                         "name" to "Overridden name!",
@@ -257,10 +193,13 @@ class IntegrationTest : FunSpec({
                         continueOnError = true,
                     )
                 }
-            }.toYaml(addConsistencyCheck = false)
+            }
+
+        // when
+        testWorkflow.writeToFile(addConsistencyCheck = false)
 
         // then
-        actualYaml shouldBe
+        targetTempFile.readText() shouldBe
             """
             # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
             # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
