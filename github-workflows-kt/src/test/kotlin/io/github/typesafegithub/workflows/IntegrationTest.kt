@@ -9,6 +9,8 @@ import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.ConsistencyCheckJobConfig.Disabled
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
@@ -34,7 +36,10 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = sourceTempFile,
-            yamlConsistencyJobEnv = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
+            consistencyCheckJobConfig =
+                DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                    env = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
+                ),
         ) {
             job(
                 id = "test_job",
@@ -109,7 +114,7 @@ class IntegrationTest : FunSpec({
                         """.trimIndent(),
                 ),
             sourceFile = sourceTempFile,
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
             _customArguments =
                 mapOf(
                     "name" to "Overridden name!",
@@ -234,7 +239,7 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = sourceTempFile,
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
             concurrency = Concurrency("workflow_staging_environment"),
         ) {
             job(
@@ -296,7 +301,7 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = sourceTempFile,
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
         ) {
             job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
                 uses(
@@ -374,7 +379,7 @@ class IntegrationTest : FunSpec({
             name = "Test workflow",
             on = listOf(Push()),
             sourceFile = sourceTempFile,
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
             concurrency = Concurrency("workflow_staging_environment", cancelInProgress = true),
         ) {
             job(
@@ -434,7 +439,10 @@ class IntegrationTest : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            yamlConsistencyJobCondition = "\${{ always() }}",
+            consistencyCheckJobConfig =
+                DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                    condition = "\${{ always() }}",
+                ),
             sourceFile = sourceTempFile,
         ) {
             job(
@@ -546,7 +554,7 @@ class IntegrationTest : FunSpec({
                     with a second line
                     """.trimIndent(),
                 ),
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
         ) {
             job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")
@@ -584,7 +592,7 @@ class IntegrationTest : FunSpec({
                     with an empty line
                     """.trimIndent(),
                 ),
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
         ) {
             job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")
@@ -623,7 +631,7 @@ class IntegrationTest : FunSpec({
                     with original after
                     """.trimIndent(),
                 ),
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
         ) {
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")
@@ -666,7 +674,7 @@ class IntegrationTest : FunSpec({
                     with original before
                     """.trimIndent(),
                 ),
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
         ) {
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")
@@ -702,7 +710,7 @@ class IntegrationTest : FunSpec({
             on = listOf(Push()),
             sourceFile = sourceTempFile,
             preamble = Just(""),
-            addConsistencyCheck = false,
+            consistencyCheckJobConfig = Disabled,
         ) {
             job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                 run(command = "echo 'Hello!'")

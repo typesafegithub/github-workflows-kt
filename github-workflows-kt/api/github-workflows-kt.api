@@ -484,24 +484,23 @@ public abstract interface class io/github/typesafegithub/workflows/domain/WithOu
 }
 
 public final class io/github/typesafegithub/workflows/domain/Workflow : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Lkotlin/jvm/functions/Function1;
-	public final fun component11 ()Ljava/util/List;
-	public final fun component12 ()Ljava/util/Map;
+	public final fun component10 ()Ljava/util/Map;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/Map;
 	public final fun component4 ()Ljava/io/File;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Lio/github/typesafegithub/workflows/domain/Concurrency;
-	public final fun component7 ()Ljava/util/Map;
-	public final fun component8 ()Ljava/lang/String;
-	public final fun component9 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/Workflow;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Workflow;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public final fun component6 ()Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;
+	public final fun component7 ()Lio/github/typesafegithub/workflows/domain/Concurrency;
+	public final fun component8 ()Ljava/util/Map;
+	public final fun component9 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Workflow;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/util/Map;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getConcurrency ()Lio/github/typesafegithub/workflows/domain/Concurrency;
+	public final fun getConsistencyCheckJobConfig ()Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;
 	public final fun getEnv ()Ljava/util/Map;
 	public final fun getJobs ()Ljava/util/List;
 	public final fun getName ()Ljava/lang/String;
@@ -509,9 +508,6 @@ public final class io/github/typesafegithub/workflows/domain/Workflow : io/githu
 	public final fun getPermissions ()Ljava/util/Map;
 	public final fun getSourceFile ()Ljava/io/File;
 	public final fun getTargetFileName ()Ljava/lang/String;
-	public final fun getYamlConsistencyJobAdditionalSteps ()Lkotlin/jvm/functions/Function1;
-	public final fun getYamlConsistencyJobCondition ()Ljava/lang/String;
-	public final fun getYamlConsistencyJobEnv ()Ljava/util/Map;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1899,8 +1895,8 @@ public final class io/github/typesafegithub/workflows/dsl/JobBuilder : io/github
 }
 
 public final class io/github/typesafegithub/workflows/dsl/WorkflowBuilder {
-	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/nio/file/Path;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/nio/file/Path;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/nio/file/Path;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/nio/file/Path;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lio/github/typesafegithub/workflows/domain/Workflow;
 	public final fun getGitRootDir ()Ljava/nio/file/Path;
 	public final fun job ([Lkotlin/Unit;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Job;
@@ -1911,8 +1907,8 @@ public final class io/github/typesafegithub/workflows/dsl/WorkflowBuilder {
 
 public final class io/github/typesafegithub/workflows/dsl/WorkflowBuilderKt {
 	public static final fun toBuilder (Lio/github/typesafegithub/workflows/domain/Workflow;)Lio/github/typesafegithub/workflows/dsl/WorkflowBuilder;
-	public static final fun workflow ([Lkotlin/Unit;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/Map;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;Lkotlin/jvm/functions/Function1;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Workflow;
-	public static synthetic fun workflow$default ([Lkotlin/Unit;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Ljava/util/Map;ZLjava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;Lkotlin/jvm/functions/Function1;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public static final fun workflow ([Lkotlin/Unit;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Ljava/util/Map;Ljava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;Lkotlin/jvm/functions/Function1;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/domain/Workflow;
+	public static synthetic fun workflow$default ([Lkotlin/Unit;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/io/File;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig;Ljava/util/Map;Ljava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;Lkotlin/jvm/functions/Function1;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Workflow;
 }
 
 public final class io/github/typesafegithub/workflows/dsl/expressions/Contexts : io/github/typesafegithub/workflows/dsl/expressions/contexts/FunctionsContext {
@@ -3125,6 +3121,35 @@ public abstract interface annotation class io/github/typesafegithub/workflows/in
 
 public final class io/github/typesafegithub/workflows/yaml/CaseKt {
 	public static final fun snakeCaseOf (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public abstract interface class io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig {
+}
+
+public final class io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Configuration : io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig {
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Configuration;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Configuration;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Configuration;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAdditionalSteps ()Lkotlin/jvm/functions/Function1;
+	public final fun getCondition ()Ljava/lang/String;
+	public final fun getEnv ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Disabled : io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Disabled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfigKt {
+	public static final fun getDEFAULT_CONSISTENCY_CHECK_JOB_CONFIG ()Lio/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig$Configuration;
 }
 
 public final class io/github/typesafegithub/workflows/yaml/JobsToYamlKt {
