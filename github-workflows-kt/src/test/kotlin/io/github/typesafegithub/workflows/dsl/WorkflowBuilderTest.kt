@@ -15,7 +15,7 @@ class WorkflowBuilderTest : FunSpec({
                     workflow(
                         name = "Some workflow",
                         on = listOf(Push()),
-                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
                     ) {
                         // No jobs.
                     }
@@ -29,7 +29,7 @@ class WorkflowBuilderTest : FunSpec({
                     workflow(
                         name = "Some workflow",
                         on = listOf(Push()),
-                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
                     ) {
                         job(
                             id = "Some-job",
@@ -48,7 +48,7 @@ class WorkflowBuilderTest : FunSpec({
                     workflow(
                         name = "Some workflow",
                         on = emptyList(),
-                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
                     ) {
                         job(
                             id = "Some job",
@@ -70,7 +70,7 @@ class WorkflowBuilderTest : FunSpec({
                     workflow(
                         name = "Some workflow",
                         on = listOf(Push()),
-                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
                     ) {
                         job(
                             id = "Some-job-1",

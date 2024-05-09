@@ -136,7 +136,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         val id = "step-${job.steps.size}"
         val sourceFilePath =
             workflowBuilder.gitRootDir?.let {
-                sourceFile.relativeToAbsolute(it).invariantSeparatorsPathString
+                sourceFile.toPath().relativeToAbsolute(it).invariantSeparatorsPathString
             }
         val newStep =
             KotlinLogicStep(

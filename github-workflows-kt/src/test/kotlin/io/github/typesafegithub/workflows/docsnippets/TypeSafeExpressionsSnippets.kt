@@ -21,7 +21,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             job(
                 id = "test_job",
@@ -46,7 +46,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             // --8<-- [start:custom-environment-variables-1]
             val GREETING by Contexts.env
@@ -79,7 +79,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             // --8<-- [start:secrets]
             val SUPER_SECRET by Contexts.secrets

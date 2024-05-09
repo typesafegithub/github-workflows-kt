@@ -25,7 +25,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "Test workflow",
                     on = listOf(Push()),
-                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts"),
+                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
                 ) {
                     job(
                         id = "test_job",
@@ -77,7 +77,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "test",
                     on = listOf(Push()),
-                    sourceFile = sourceTempFile.toPath(),
+                    sourceFile = sourceTempFile,
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "a", `if` = "b") {
                         run(command = "ls")
@@ -92,7 +92,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "test",
                     on = listOf(Push()),
-                    sourceFile = sourceTempFile.toPath(),
+                    sourceFile = sourceTempFile,
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
                         run(command = "ls")
@@ -109,7 +109,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "test",
                     on = listOf(Push()),
-                    sourceFile = sourceTempFile.toPath(),
+                    sourceFile = sourceTempFile,
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
                         run(command = "ls")

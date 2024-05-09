@@ -54,7 +54,7 @@ workflow(
     yamlConsistencyJobAdditionalSteps = {
         publishToMavenLocal()
     },
-    sourceFile = __FILE__.toPath(),
+    sourceFile = __FILE__,
 ) {
     val GREETING by Contexts.env
     val FIRST_NAME by Contexts.env

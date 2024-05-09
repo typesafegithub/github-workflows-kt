@@ -29,7 +29,7 @@ class ReportingTest : FunSpec(
                 workflow(
                     name = "Test workflow",
                     on = listOf(Push()),
-                    sourceFile = sourceTempFile.toPath(),
+                    sourceFile = sourceTempFile,
                 ) {
                     job(
                         id = "test_job",

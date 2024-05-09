@@ -28,7 +28,7 @@ class GettingStartedSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = __FILE__.toPath(),
+            sourceFile = __FILE__,
         ) {
             job(id = "test_job", runsOn = UbuntuLatest) {
                 uses(name = "Check out", action = CheckoutV4())

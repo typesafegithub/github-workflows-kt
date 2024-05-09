@@ -99,7 +99,7 @@ private fun Workflow.generateYaml(
 ): String {
     val sourceFilePath =
         gitRootDir?.let {
-            sourceFile?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
+            sourceFile?.toPath()?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
         }
 
     val jobsWithConsistencyCheck =

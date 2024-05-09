@@ -60,7 +60,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             job(id = "test-job", runsOn = RunnerType.UbuntuLatest) {
                 // --8<-- [start:using]
@@ -121,7 +121,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             // --8<-- [start:custom-action-outputs]
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
@@ -149,7 +149,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 uses(
@@ -172,7 +172,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
-            sourceFile = sourceTempFile.toPath(),
+            sourceFile = sourceTempFile,
         ) {
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 uses(
