@@ -12,8 +12,15 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 
 class UsingActionsSnippets : FunSpec({
+    val gitRootDir =
+        tempdir().also {
+            it.resolve(".git").mkdirs()
+        }.toPath()
+    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+
     test("actionWithoutOutputs") {
         // --8<-- [start:action-without-outputs]
         class MyCoolActionV3(
@@ -53,6 +60,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(id = "test-job", runsOn = RunnerType.UbuntuLatest) {
                 // --8<-- [start:using]
@@ -113,6 +121,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             // --8<-- [start:custom-action-outputs]
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
@@ -140,6 +149,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 uses(
@@ -162,6 +172,7 @@ class UsingActionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile.toPath(),
         ) {
             job(id = "test_job", runsOn = RunnerType.UbuntuLatest) {
                 uses(

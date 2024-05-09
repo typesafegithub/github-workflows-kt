@@ -8,7 +8,6 @@ import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 // --8<-- [end:getting-started-2]
 import java.io.File
 
@@ -35,7 +34,7 @@ class GettingStartedSnippets : FunSpec({
                 uses(name = "Check out", action = CheckoutV4())
                 run(name = "Print greeting", command = "echo 'Hello world!'")
             }
-        }.writeToFile()
+        }
         // --8<-- [end:getting-started-3]
     }
 })

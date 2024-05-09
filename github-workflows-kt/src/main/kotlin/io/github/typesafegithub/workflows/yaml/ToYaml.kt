@@ -11,13 +11,11 @@ import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
-import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
 import kotlinx.serialization.json.Json
 import java.nio.file.Path
-import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
 
 /**
@@ -34,11 +32,11 @@ import kotlin.io.path.invariantSeparatorsPathString
  * @param preamble Allows customizing the comment at the beginning of the generated YAML by either passing an extra
  * string, or replacing the whole preamble.
  */
-public fun Workflow.writeToFile(
-    addConsistencyCheck: Boolean = sourceFile != null,
-    gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
-    preamble: Preamble? = null,
-    getenv: (String) -> String? = { System.getenv(it) },
+internal fun Workflow.writeToFile(
+    addConsistencyCheck: Boolean,
+    gitRootDir: Path?,
+    preamble: Preamble?,
+    getenv: (String) -> String?,
 ) {
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
 

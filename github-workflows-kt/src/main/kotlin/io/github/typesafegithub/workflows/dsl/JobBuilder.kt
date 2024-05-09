@@ -16,8 +16,9 @@ import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
+import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import kotlinx.serialization.Contextual
-import kotlin.io.path.name
+import kotlin.io.path.invariantSeparatorsPathString
 
 @Suppress("LongParameterList")
 @GithubActionsDsl
@@ -133,14 +134,15 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             }
 
         val id = "step-${job.steps.size}"
+        val sourceFilePath =
+            workflowBuilder.gitRootDir?.let {
+                sourceFile.relativeToAbsolute(it).invariantSeparatorsPathString
+            }
         val newStep =
             KotlinLogicStep(
                 id = id,
                 name = name,
-                // Because of the current architecture, it's hard to make this command work properly if the sourceFile
-                // isn't in .github/workflows directory. It's the most common use case, though, so for now this
-                // simplified implementation is used.
-                command = "GHWKT_RUN_STEP='${this.id}:$id' '.github/workflows/${sourceFile.name}'",
+                command = "GHWKT_RUN_STEP='${this.id}:$id' '$sourceFilePath'",
                 logic = logic,
                 env = env + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "${'$'}{{ toJSON(github) }}"),
                 condition =

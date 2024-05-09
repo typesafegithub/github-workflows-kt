@@ -7,10 +7,17 @@ import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import java.nio.file.Paths
 
 class JobBuilderTest : FunSpec({
+    val gitRootDir =
+        tempdir().also {
+            it.resolve(".git").mkdirs()
+        }.toPath()
+    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+
     context("job builder") {
         test("with custom step arguments") {
             // Given
@@ -70,6 +77,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "test",
                     on = listOf(Push()),
+                    sourceFile = sourceTempFile.toPath(),
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "a", `if` = "b") {
                         run(command = "ls")
@@ -84,6 +92,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "test",
                     on = listOf(Push()),
+                    sourceFile = sourceTempFile.toPath(),
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
                         run(command = "ls")
@@ -100,6 +109,7 @@ class JobBuilderTest : FunSpec({
                 workflow(
                     name = "test",
                     on = listOf(Push()),
+                    sourceFile = sourceTempFile.toPath(),
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
                         run(command = "ls")
