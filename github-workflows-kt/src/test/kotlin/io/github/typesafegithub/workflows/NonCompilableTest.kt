@@ -51,7 +51,7 @@ class NonCompilableTest : FunSpec({
             )
 
         compilationResult.exitCode shouldBe COMPILATION_ERROR
-        compilationResult.messages shouldContain "can't be called in this context by implicit receiver"
+        compilationResult.messages shouldContain "cannot be called in this context with an implicit receiver"
     }
 
     test("no named argument") {
