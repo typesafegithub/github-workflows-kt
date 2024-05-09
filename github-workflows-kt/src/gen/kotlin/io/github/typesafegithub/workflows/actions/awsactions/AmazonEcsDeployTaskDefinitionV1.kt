@@ -28,6 +28,8 @@ import kotlin.collections.toTypedArray
  * [Action on GitHub](https://github.com/aws-actions/amazon-ecs-deploy-task-definition)
  *
  * @param taskDefinition The path to the ECS task definition file to register
+ * @param desiredCount The number of instantiations of the task to place and keep running in your
+ * service.
  * @param service The name of the ECS service to deploy to. The action will only register the task
  * definition if no service is given.
  * @param cluster The name of the ECS service's cluster.  Will default to the 'default' cluster
@@ -56,6 +58,10 @@ public data class AmazonEcsDeployTaskDefinitionV1 private constructor(
      * The path to the ECS task definition file to register
      */
     public val taskDefinition: String,
+    /**
+     * The number of instantiations of the task to place and keep running in your service.
+     */
+    public val desiredCount: String? = null,
     /**
      * The name of the ECS service to deploy to. The action will only register the task definition
      * if no service is given.
@@ -115,6 +121,7 @@ public data class AmazonEcsDeployTaskDefinitionV1 private constructor(
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         taskDefinition: String,
+        desiredCount: String? = null,
         service: String? = null,
         cluster: String? = null,
         waitForServiceStability: Boolean? = null,
@@ -126,9 +133,10 @@ public data class AmazonEcsDeployTaskDefinitionV1 private constructor(
         forceNewDeployment: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(taskDefinition=taskDefinition, service=service, cluster=cluster,
-            waitForServiceStability=waitForServiceStability, waitForMinutes=waitForMinutes,
-            codedeployAppspec=codedeployAppspec, codedeployApplication=codedeployApplication,
+    ) : this(taskDefinition=taskDefinition, desiredCount=desiredCount, service=service,
+            cluster=cluster, waitForServiceStability=waitForServiceStability,
+            waitForMinutes=waitForMinutes, codedeployAppspec=codedeployAppspec,
+            codedeployApplication=codedeployApplication,
             codedeployDeploymentGroup=codedeployDeploymentGroup,
             codedeployDeploymentDescription=codedeployDeploymentDescription,
             forceNewDeployment=forceNewDeployment, _customInputs=_customInputs,
@@ -138,6 +146,7 @@ public data class AmazonEcsDeployTaskDefinitionV1 private constructor(
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "task-definition" to taskDefinition,
+            desiredCount?.let { "desired-count" to it },
             service?.let { "service" to it },
             cluster?.let { "cluster" to it },
             waitForServiceStability?.let { "wait-for-service-stability" to it.toString() },
