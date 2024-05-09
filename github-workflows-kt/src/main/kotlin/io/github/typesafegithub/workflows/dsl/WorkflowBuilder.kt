@@ -11,6 +11,9 @@ import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
+import io.github.typesafegithub.workflows.yaml.ConsistencyCheckJobConfig
+import io.github.typesafegithub.workflows.yaml.ConsistencyCheckJobConfig.Disabled
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import io.github.typesafegithub.workflows.yaml.Preamble
 import io.github.typesafegithub.workflows.yaml.writeToFile
 import kotlinx.serialization.Contextual
@@ -26,11 +29,9 @@ public class WorkflowBuilder(
     env: Map<String, String> = mapOf(),
     sourceFile: File?,
     targetFileName: String?,
+    consistencyCheckJobConfig: ConsistencyCheckJobConfig,
     concurrency: Concurrency? = null,
     public val gitRootDir: Path? = null,
-    yamlConsistencyJobCondition: String? = null,
-    yamlConsistencyJobEnv: Map<String, String> = mapOf(),
-    yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
     jobs: List<Job<*>> = emptyList(),
     permissions: Map<Permission, Mode>? = null,
     _customArguments: Map<String, @Contextual Any?>,
@@ -45,9 +46,7 @@ public class WorkflowBuilder(
             jobs = jobs,
             permissions = permissions,
             concurrency = concurrency,
-            yamlConsistencyJobCondition = yamlConsistencyJobCondition,
-            yamlConsistencyJobEnv = yamlConsistencyJobEnv,
-            yamlConsistencyJobAdditionalSteps = yamlConsistencyJobAdditionalSteps,
+            consistencyCheckJobConfig = consistencyCheckJobConfig,
             _customArguments = _customArguments,
         )
 
@@ -159,6 +158,7 @@ public fun Workflow.toBuilder(): WorkflowBuilder =
         sourceFile = sourceFile,
         permissions = permissions,
         targetFileName = targetFileName,
+        consistencyCheckJobConfig = consistencyCheckJobConfig,
         jobs = jobs,
         _customArguments = _customArguments,
     )
@@ -176,11 +176,13 @@ public fun workflow(
             it.toString().substringBeforeLast(".main.kts") + ".yaml"
         },
     concurrency: Concurrency? = null,
-    yamlConsistencyJobCondition: String? = null,
-    yamlConsistencyJobEnv: Map<String, String> = mapOf(),
-    yamlConsistencyJobAdditionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)? = null,
+    consistencyCheckJobConfig: ConsistencyCheckJobConfig =
+        if (sourceFile != null) {
+            DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
+        } else {
+            Disabled
+        },
     permissions: Map<Permission, Mode>? = null,
-    addConsistencyCheck: Boolean = sourceFile != null,
     gitRootDir: Path? = sourceFile?.toPath()?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
     getenv: (String) -> String? = { System.getenv(it) },
@@ -201,9 +203,7 @@ public fun workflow(
             permissions = permissions,
             concurrency = concurrency,
             gitRootDir = gitRootDir,
-            yamlConsistencyJobCondition = yamlConsistencyJobCondition,
-            yamlConsistencyJobEnv = yamlConsistencyJobEnv,
-            yamlConsistencyJobAdditionalSteps = yamlConsistencyJobAdditionalSteps,
+            consistencyCheckJobConfig = consistencyCheckJobConfig,
             _customArguments = _customArguments,
         )
     workflowBuilder.block()
@@ -216,7 +216,6 @@ public fun workflow(
     return workflowBuilder.build()
         .also {
             it.writeToFile(
-                addConsistencyCheck = addConsistencyCheck,
                 gitRootDir = gitRootDir,
                 preamble = preamble,
                 getenv = getenv,

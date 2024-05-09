@@ -24,16 +24,12 @@ import kotlin.io.path.invariantSeparatorsPathString
  *
  * @receiver a workflow which needs to be written to the file.
  *
- * @param addConsistencyCheck If true, adds an extra job that makes sure the Kotlin script defined in
- * [Workflow.sourceFile] produces exactly the same YAML as in [Workflow.targetFileName], and fails the whole workflow if
- * it's not the case. This parameter defaults to `true` if [Workflow.sourceFile] is set, otherwise defaults to `false`.
  * @param gitRootDir Path to the git root directory, used for building relative paths for the consistency check. Usually
  * there's no need to set it explicitly, unless testing the library. Leave unset if unsure.
  * @param preamble Allows customizing the comment at the beginning of the generated YAML by either passing an extra
  * string, or replacing the whole preamble.
  */
 internal fun Workflow.writeToFile(
-    addConsistencyCheck: Boolean,
     gitRootDir: Path?,
     preamble: Preamble?,
     getenv: (String) -> String?,
@@ -62,7 +58,6 @@ internal fun Workflow.writeToFile(
 
     val yaml =
         generateYaml(
-            addConsistencyCheck = addConsistencyCheck,
             gitRootDir = gitRootDir,
             preamble,
         )
@@ -93,7 +88,6 @@ private fun commentify(preamble: String): String {
 
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(
-    addConsistencyCheck: Boolean,
     gitRootDir: Path?,
     preamble: Preamble?,
 ): String {
@@ -103,7 +97,7 @@ private fun Workflow.generateYaml(
         }
 
     val jobsWithConsistencyCheck =
-        if (addConsistencyCheck) {
+        if (consistencyCheckJobConfig is ConsistencyCheckJobConfig.Configuration) {
             check(gitRootDir != null && sourceFile != null) {
                 "consistency check requires a valid sourceFile and Git root directory"
             }
@@ -121,8 +115,8 @@ private fun Workflow.generateYaml(
                     id = "check_yaml_consistency",
                     name = "Check YAML consistency",
                     runsOn = UbuntuLatest,
-                    condition = yamlConsistencyJobCondition,
-                    env = yamlConsistencyJobEnv,
+                    condition = consistencyCheckJobConfig.condition,
+                    env = consistencyCheckJobConfig.env,
                 ) {
                     uses(
                         name = "Check out",
@@ -137,7 +131,7 @@ private fun Workflow.generateYaml(
                             ),
                     )
 
-                    yamlConsistencyJobAdditionalSteps?.also { block ->
+                    consistencyCheckJobConfig.additionalSteps?.also { block ->
                         block()
                     }
 
