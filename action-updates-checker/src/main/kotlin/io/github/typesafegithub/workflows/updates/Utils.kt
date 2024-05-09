@@ -95,7 +95,7 @@ internal fun RegularAction<*>.mavenCoordinatesForAction(version: Version? = null
 }
 
 internal fun Workflow.findDependencyDeclaration(action: RegularAction<*>): Pair<Path?, Int?> {
-    val file = sourceFile?.takeIf { it.exists() }
+    val file = sourceFile?.toPath()?.takeIf { it.exists() }
     val line =
         file?.let { sourceFile ->
             val currentCoordinates = action.mavenCoordinatesForAction()

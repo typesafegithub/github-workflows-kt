@@ -8,14 +8,22 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 
 class CompensatingLibrarysMissingFeaturesSnippets : FunSpec({
+    val gitRootDir =
+        tempdir().also {
+            it.resolve(".git").mkdirs()
+        }.toPath()
+    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+
     test("customArguments") {
         // --8<-- [start:custom-arguments-1]
         workflow(
             // --8<-- [end:custom-arguments-1]
             name = "customArguments",
             on = listOf(Push()),
+            sourceFile = sourceTempFile,
             // --8<-- [start:custom-arguments-2]
             // ...
             _customArguments =

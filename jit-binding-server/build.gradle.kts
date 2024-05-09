@@ -3,11 +3,11 @@ import io.ktor.plugin.features.*
 plugins {
     buildsrc.convention.`kotlin-jvm-server`
     application
-    id("io.ktor.plugin") version "2.3.10"
+    id("io.ktor.plugin") version "2.3.11"
 }
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:2.3.10"))
+    implementation(platform("io.ktor:ktor-bom:2.3.11"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")

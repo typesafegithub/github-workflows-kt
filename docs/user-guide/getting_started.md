@@ -23,15 +23,9 @@ names with your own.
    --8<-- "GettingStartedSnippets.kt:getting-started-2"
    --8<-- "GettingStartedSnippets.kt:getting-started-3"
    ```
-   Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source
+   This way we create a workflow with the DSL provided by this library. The reason it needs source
    file path is to be able to generate consistency checks, to ensure that both source and target files are in sync.
-   You'll see it in a moment in the generated file. What's written to the `workflow` variable is an object of type
-   `io.github.typesafegithub.workflows.domain.Workflow`, it's not a YAML yet. However, a call to `writeToFile()`
-   extension function does the final piece of job.  
-   Alternatively, apart from `writeToFile()` which puts the string straight into the file under path inferred by the
-   library or name overridden with `targetFileName` workflow argument, there's also `toYaml()` which doesn't touch
-   any files, it just returns a string with the YAML. It may come in handy when more control over the YAML is needed,
-   e.g. to do some post-processing.
+   You'll see it in a moment in the generated file.
 4. Generate the YAML by calling the above script:
    ```
    .github/workflows/hello_world_workflow.main.kts

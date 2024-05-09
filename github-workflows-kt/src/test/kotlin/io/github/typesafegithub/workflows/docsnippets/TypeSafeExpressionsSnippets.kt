@@ -8,12 +8,20 @@ import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 
 class TypeSafeExpressionsSnippets : FunSpec({
+    val gitRootDir =
+        tempdir().also {
+            it.resolve(".git").mkdirs()
+        }.toPath()
+    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+
     test("illExample") {
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile,
         ) {
             job(
                 id = "test_job",
@@ -38,6 +46,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile,
         ) {
             // --8<-- [start:custom-environment-variables-1]
             val GREETING by Contexts.env
@@ -70,6 +79,7 @@ class TypeSafeExpressionsSnippets : FunSpec({
         workflow(
             name = "Test workflow",
             on = listOf(Push()),
+            sourceFile = sourceTempFile,
         ) {
             // --8<-- [start:secrets]
             val SUPER_SECRET by Contexts.secrets

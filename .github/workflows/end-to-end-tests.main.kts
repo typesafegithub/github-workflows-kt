@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.15.1-SNAPSHOT")
-@file:DependsOn("io.github.typesafegithub:action-updates-checker:1.15.1-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:action-updates-checker:2.0.0-SNAPSHOT")
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:github-script:v7")
@@ -24,7 +24,6 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
 
@@ -55,7 +54,7 @@ workflow(
     yamlConsistencyJobAdditionalSteps = {
         publishToMavenLocal()
     },
-    sourceFile = __FILE__.toPath(),
+    sourceFile = __FILE__,
 ) {
     val GREETING by Contexts.env
     val FIRST_NAME by Contexts.env
@@ -251,6 +250,4 @@ workflow(
             """.trimIndent(),
         )
     }
-}.also { workflow ->
-    workflow.reportAvailableUpdates()
-}.writeToFile()
+}.reportAvailableUpdates()
