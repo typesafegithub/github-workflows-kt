@@ -21,38 +21,6 @@ import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
 
 /**
- * Returns a YAML string representing the workflow given in the receiver.
- *
- * @receiver a workflow which needs to be written to a YAML string.
- *
- * @param addConsistencyCheck If true, adds an extra job that makes sure the Kotlin script defined in
- * [Workflow.sourceFile] produces exactly the same YAML as in [Workflow.targetFileName], and fails the whole workflow if
- * it's not the case. This parameter defaults to `true` if [Workflow.sourceFile] is set, otherwise defaults to `false`.
- * @param gitRootDir Path to the git root directory, used for building relative paths for the consistency check. Usually
- * there's no need to set it explicitly, unless testing the library. Leave unset if unsure.
- * @param preamble Allows customizing the comment at the beginning of the generated YAML by either passing an extra
- * string, or replacing the whole preamble.
- *
- * @return Workflow as YAML string.
- */
-public fun Workflow.toYaml(
-    addConsistencyCheck: Boolean = sourceFile != null,
-    gitRootDir: Path? = sourceFile?.absolute()?.findGitRoot(),
-    preamble: Preamble? = null,
-): String {
-    require(this.jobs.all { it.steps.none { it is KotlinLogicStep } }) {
-        "toYaml() currently doesn't support steps with Kotlin-based 'run' blocks!"
-    }
-
-    return generateYaml(
-        addConsistencyCheck = addConsistencyCheck,
-        useGitDiff = false,
-        gitRootDir = gitRootDir,
-        preamble,
-    )
-}
-
-/**
  * Writes the workflow given in the receiver to a YAML string, under a path that is built this way:
  * `<git-repo-root>/.github/workflows/<[Workflow.targetFileName]>.yaml`.
  *
@@ -97,7 +65,6 @@ public fun Workflow.writeToFile(
     val yaml =
         generateYaml(
             addConsistencyCheck = addConsistencyCheck,
-            useGitDiff = true,
             gitRootDir = gitRootDir,
             preamble,
         )
@@ -129,7 +96,6 @@ private fun commentify(preamble: String): String {
 @Suppress("LongMethod")
 private fun Workflow.generateYaml(
     addConsistencyCheck: Boolean,
-    useGitDiff: Boolean,
     gitRootDir: Path?,
     preamble: Preamble?,
 ): String {
@@ -177,25 +143,16 @@ private fun Workflow.generateYaml(
                         block()
                     }
 
-                    if (useGitDiff) {
-                        run(
-                            name = "Execute script",
-                            command =
-                                "rm '$targetFilePath' " +
-                                    "&& '$sourceFilePath'",
-                        )
-                        run(
-                            name = "Consistency check",
-                            command = "git diff --exit-code '$targetFilePath'",
-                        )
-                    } else {
-                        run(
-                            name = "Consistency check",
-                            command =
-                                "diff -u '$targetFilePath' " +
-                                    "<('$sourceFilePath')",
-                        )
-                    }
+                    run(
+                        name = "Execute script",
+                        command =
+                            "rm '$targetFilePath' " +
+                                "&& '$sourceFilePath'",
+                    )
+                    run(
+                        name = "Consistency check",
+                        command = "git diff --exit-code '$targetFilePath'",
+                    )
                 }
             listOf(consistencyCheckJob) +
                 jobs.map {
