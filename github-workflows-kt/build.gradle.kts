@@ -93,6 +93,10 @@ val validateDuplicatedVersion by tasks.creating<Task> {
             rootDir.resolve(".github/workflows/end-to-end-tests.main.kts").readText()
                 .contains("\"io.github.typesafegithub:action-updates-checker:$version\"")
         ) { "Library version stated in end-to-end-tests.main.kts should be equal to $version!" }
+        require(
+            rootDir.resolve("images/teaser-with-newest-version.svg").readText()
+                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
+        ) { "Library version stated in the teaser image shiuld be equal to $version!" }
     }
 }
 
