@@ -138,6 +138,7 @@ public final class io/github/typesafegithub/workflows/domain/Credentials {
 
 public final class io/github/typesafegithub/workflows/domain/Environment {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Environment;
