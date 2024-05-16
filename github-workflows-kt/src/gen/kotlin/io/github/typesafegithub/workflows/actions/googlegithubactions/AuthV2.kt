@@ -81,6 +81,9 @@ import kotlin.collections.toTypedArray
  * default universe is "googleapis.com", which corresponds to
  * https://cloud.google.com. Trusted Partner Cloud and Google Distributed
  * Hosted Cloud should set this to their universe address.
+ * @param requestReason An optional Reason Request System Parameter for each API call made by the
+ * GitHub Action. This will inject the "X-Goog-Request-Reason" HTTP header,
+ * which will provide user-supplied information in Google Cloud audit logs.
  * @param cleanupCredentials If true, the action will remove any created credentials from the
  * filesystem upon completion. This only applies if "create_credentials_file"
  * is true.
@@ -192,6 +195,12 @@ public data class AuthV2 private constructor(
      */
     public val universe: String? = null,
     /**
+     * An optional Reason Request System Parameter for each API call made by the
+     * GitHub Action. This will inject the "X-Goog-Request-Reason" HTTP header,
+     * which will provide user-supplied information in Google Cloud audit logs.
+     */
+    public val requestReason: String? = null,
+    /**
      * If true, the action will remove any created credentials from the
      * filesystem upon completion. This only applies if "create_credentials_file"
      * is true.
@@ -267,6 +276,7 @@ public data class AuthV2 private constructor(
         tokenFormat: AuthV2.TokenFormat? = null,
         delegates: List<String>? = null,
         universe: String? = null,
+        requestReason: String? = null,
         cleanupCredentials: Boolean? = null,
         accessTokenLifetime: String? = null,
         accessTokenScopes: List<String>? = null,
@@ -282,12 +292,12 @@ public data class AuthV2 private constructor(
             serviceAccount=serviceAccount, audience=audience, credentialsJson=credentialsJson,
             createCredentialsFile=createCredentialsFile,
             exportEnvironmentVariables=exportEnvironmentVariables, tokenFormat=tokenFormat,
-            delegates=delegates, universe=universe, cleanupCredentials=cleanupCredentials,
-            accessTokenLifetime=accessTokenLifetime, accessTokenScopes=accessTokenScopes,
-            accessTokenSubject=accessTokenSubject, retries=retries, backoff=backoff,
-            backoffLimit=backoffLimit, idTokenAudience=idTokenAudience,
-            idTokenIncludeEmail=idTokenIncludeEmail, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+            delegates=delegates, universe=universe, requestReason=requestReason,
+            cleanupCredentials=cleanupCredentials, accessTokenLifetime=accessTokenLifetime,
+            accessTokenScopes=accessTokenScopes, accessTokenSubject=accessTokenSubject,
+            retries=retries, backoff=backoff, backoffLimit=backoffLimit,
+            idTokenAudience=idTokenAudience, idTokenIncludeEmail=idTokenIncludeEmail,
+            _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -302,6 +312,7 @@ public data class AuthV2 private constructor(
             tokenFormat?.let { "token_format" to it.stringValue },
             delegates?.let { "delegates" to it.joinToString(",") },
             universe?.let { "universe" to it },
+            requestReason?.let { "request_reason" to it },
             cleanupCredentials?.let { "cleanup_credentials" to it.toString() },
             accessTokenLifetime?.let { "access_token_lifetime" to it },
             accessTokenScopes?.let { "access_token_scopes" to it.joinToString(",") },
