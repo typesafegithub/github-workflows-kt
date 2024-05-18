@@ -9,6 +9,7 @@
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
+import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -103,9 +104,7 @@ workflow(
             "DOCKERHUB_USERNAME" to expr { DOCKERHUB_USERNAME },
             "DOCKERHUB_PASSWORD" to expr { DOCKERHUB_PASSWORD },
         ),
-        _customArguments = mapOf(
-            "environment" to "DockerHub",
-        )
+        environment = Environment(name = "DockerHub"),
     ) {
         uses(action = Checkout())
         uses(action = ActionsSetupGradle())
