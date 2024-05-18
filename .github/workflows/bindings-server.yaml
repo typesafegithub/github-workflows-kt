@@ -63,7 +63,8 @@ jobs:
       DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
       DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
     if: '${{ github.event_name == ''push'' }}'
-    environment: 'DockerHub'
+    environment:
+      name: 'DockerHub'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
