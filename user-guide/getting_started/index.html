@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -624,34 +624,27 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
 <li>Put this content into the previously created file and save it:
    <div class="highlight"><pre><span></span><code><span class="c1">#!/usr/bin/env kotlin</span>
 
-<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:github-workflows-kt:1.15.0"</span><span class="p">)</span>
+<span class="nd">@file</span><span class="p">:</span><span class="n">DependsOn</span><span class="p">(</span><span class="s">"io.github.typesafegithub:github-workflows-kt:2.0.0"</span><span class="p">)</span>
 
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.actions.actions.CheckoutV4</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.domain.triggers.Push</span>
 <span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.dsl.workflow</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">io.github.typesafegithub.workflows.yaml.writeToFile</span>
 
 <span class="n">workflow</span><span class="p">(</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Test workflow"</span><span class="p">,</span>
 <span class="w">    </span><span class="n">on</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">Push</span><span class="p">()),</span>
-<span class="w">    </span><span class="n">sourceFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__FILE__</span><span class="p">.</span><span class="na">toPath</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">sourceFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__FILE__</span><span class="p">,</span>
 <span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"test_job"</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Check out"</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CheckoutV4</span><span class="p">())</span>
 <span class="w">        </span><span class="n">run</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Print greeting"</span><span class="p">,</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"echo 'Hello world!'"</span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="p">}.</span><span class="na">writeToFile</span><span class="p">()</span>
+<span class="p">}</span>
 </code></pre></div>
-   Explanation: first, we create a workflow with the DSL provided by this library. The reason it needs source
+   This way we create a workflow with the DSL provided by this library. The reason it needs source
    file path is to be able to generate consistency checks, to ensure that both source and target files are in sync.
-   You'll see it in a moment in the generated file. What's written to the <code>workflow</code> variable is an object of type
-   <code>io.github.typesafegithub.workflows.domain.Workflow</code>, it's not a YAML yet. However, a call to <code>writeToFile()</code>
-   extension function does the final piece of job.<br>
-   Alternatively, apart from <code>writeToFile()</code> which puts the string straight into the file under path inferred by the
-   library or name overridden with <code>targetFileName</code> workflow argument, there's also <code>toYaml()</code> which doesn't touch
-   any files, it just returns a string with the YAML. It may come in handy when more control over the YAML is needed,
-   e.g. to do some post-processing.</li>
+   You'll see it in a moment in the generated file.</li>
 <li>Generate the YAML by calling the above script:
    <div class="highlight"><pre><span></span><code>.github/workflows/hello_world_workflow.main.kts
 </code></pre></div>
@@ -706,10 +699,10 @@ chmod +x .github/workflows/hello_world_workflow.main.kts
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.15.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "2.0.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>

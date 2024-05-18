@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -719,7 +719,7 @@ well. You can give it a try in non-critical projects.</p>
 <span class="n">workflow</span><span class="p">(</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Build"</span><span class="p">,</span>
 <span class="w">    </span><span class="n">on</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">PullRequest</span><span class="p">()),</span>
-<span class="w">    </span><span class="n">sourceFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__FILE__</span><span class="p">.</span><span class="na">toPath</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">sourceFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__FILE__</span><span class="p">,</span>
 <span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">job</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"build"</span><span class="p">,</span><span class="w"> </span><span class="n">runsOn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UbuntuLatest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">uses</span><span class="p">(</span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CheckoutV4</span><span class="p">())</span>
@@ -730,7 +730,7 @@ well. You can give it a try in non-critical projects.</p>
 <span class="w">            </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"./gradlew build"</span><span class="p">,</span>
 <span class="w">        </span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="p">}.</span><span class="na">writeToFile</span><span class="p">()</span>
+<span class="p">}</span>
 </code></pre></div>
 <p><code>CheckoutV4</code>, <code>SetupJavaV3</code> and <code>ActionsSetupGradleV3</code> come with the library - they are shipped together with the DSL.
 It has a number of downsides:</p>
@@ -766,7 +766,7 @@ demand, and is then shipped as a separate Maven artifact from a custom Maven-com
 <span class="w"> </span> workflow(
 <span class="w"> </span>     name = "Build",
 <span class="w"> </span>     on = listOf(PullRequest()),
-<span class="w"> </span>     sourceFile = __FILE__.toPath(),
+<span class="w"> </span>     sourceFile = __FILE__,
 <span class="w"> </span> ) {
 <span class="w"> </span>     job(id = "build", runsOn = UbuntuLatest) {
 <span class="gd">-         uses(action = CheckoutV4())</span>
@@ -780,7 +780,7 @@ demand, and is then shipped as a separate Maven artifact from a custom Maven-com
 <span class="w"> </span>             command = "./gradlew build",
 <span class="w"> </span>         )
 <span class="w"> </span>     }
-<span class="w"> </span> }.writeToFile()
+<span class="w"> </span> }
 </code></pre></div>
 <p>Then regenerate your YAML to ensure there are no changes.</p>
 <h2 id="remarks">Remarks</h2>
@@ -847,10 +847,10 @@ demand, and is then shipped as a separate Maven artifact from a custom Maven-com
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "1.15.0"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "2.0.0"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
       
     
   </body>
