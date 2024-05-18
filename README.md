@@ -51,4 +51,4 @@ confidence.
 * [API docs](https://typesafegithub.github.io/github-workflows-kt/api-docs/)
 * [how to contribute](https://github.com/typesafegithub/github-workflows-kt/blob/main/CONTRIBUTING.md)
 
-![teaser](images/teaser.svg)
+![teaser](https://github.com/typesafegithub/github-workflows-kt/blob/gh-pages/teaser-with-newest-version.svg)
