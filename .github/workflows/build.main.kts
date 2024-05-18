@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.15.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
@@ -21,7 +21,6 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 
 val GRADLE_ENCRYPTION_KEY by Contexts.secrets
 
@@ -31,7 +30,7 @@ workflow(
         Push(branches = listOf("main")),
         PullRequest(),
     ),
-    sourceFile = __FILE__.toPath(),
+    sourceFile = __FILE__,
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
@@ -47,7 +46,7 @@ workflow(
                 name = "Build",
                 command = "./gradlew build",
                 env =
-                    linkedMapOf(
+                    mapOf(
                         "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN"),
                     ),
             )
@@ -59,7 +58,7 @@ workflow(
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
         condition = expr { "${github.ref} == 'refs/heads/main'" },
-        env = linkedMapOf(
+        env = mapOf(
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
         ),
@@ -149,4 +148,4 @@ workflow(
             command = "git diff --exit-code .",
         )
     }
-}.writeToFile()
+}

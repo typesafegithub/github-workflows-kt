@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.15.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
@@ -19,7 +19,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Schedule
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 
 workflow(
     name = "Updates available",
@@ -29,8 +29,10 @@ workflow(
         )),
         WorkflowDispatch(),
     ),
-    sourceFile = __FILE__.toPath(),
-    yamlConsistencyJobCondition = disableScheduledJobInForks,
+    sourceFile = __FILE__,
+    consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        condition = disableScheduledJobInForks,
+    ),
 ) {
     job(
         id = "updates-available",
@@ -42,7 +44,7 @@ workflow(
         uses(action = ActionsSetupGradle())
         run(
             name = "Run suggestVersions",
-            env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
+            env = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
             command = "./gradlew suggestVersions",
         )
         uses(
@@ -53,4 +55,4 @@ workflow(
             )
         )
     }
-}.writeToFile()
+}
