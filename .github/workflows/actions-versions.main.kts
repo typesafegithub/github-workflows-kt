@@ -19,6 +19,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Schedule
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 
 workflow(
     name = "Updates available",
@@ -29,7 +30,9 @@ workflow(
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__,
-    yamlConsistencyJobCondition = disableScheduledJobInForks,
+    consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        condition = disableScheduledJobInForks,
+    ),
 ) {
     job(
         id = "updates-available",
