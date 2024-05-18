@@ -16,7 +16,6 @@ import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 
 workflow(
     name = "Check if action bindings up to date",
@@ -25,7 +24,7 @@ workflow(
         PullRequest(),
         WorkflowDispatch(),
     ),
-    sourceFile = __FILE__.toPath(),
+    sourceFile = __FILE__,
 ) {
     listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
@@ -45,4 +44,4 @@ workflow(
             )
         }
     }
-}.writeToFile()
+}

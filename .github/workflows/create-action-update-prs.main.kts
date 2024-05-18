@@ -17,7 +17,6 @@ import io.github.typesafegithub.workflows.domain.triggers.Schedule
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 
 workflow(
     name = "Create action update PRs",
@@ -27,7 +26,7 @@ workflow(
         )),
         WorkflowDispatch(),
     ),
-    sourceFile = __FILE__.toPath(),
+    sourceFile = __FILE__,
     yamlConsistencyJobCondition = disableScheduledJobInForks,
 ) {
     job(
@@ -40,8 +39,8 @@ workflow(
         uses(action = ActionsSetupGradle())
         run(
             name = "Run logic",
-            env = linkedMapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
+            env = mapOf("GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")),
             command = "./gradlew createActionUpdatePRs",
         )
     }
-}.writeToFile()
+}

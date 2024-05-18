@@ -17,13 +17,12 @@ import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 
 workflow(
     name = "Release",
     on = listOf(Push(tags = listOf("v*.*.*"))),
-    sourceFile = __FILE__.toPath(),
-    env = linkedMapOf(
+    sourceFile = __FILE__,
+    env = mapOf(
         "SIGNING_KEY" to expr("secrets.SIGNING_KEY"),
         "SIGNING_PASSWORD" to expr("secrets.SIGNING_PASSWORD"),
         "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
@@ -62,4 +61,4 @@ workflow(
 
         deployDocs()
     }
-}.writeToFile()
+}
