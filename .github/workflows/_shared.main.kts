@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
 
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 
@@ -14,4 +14,5 @@ val libraries = listOf(
     ":shared-internal",
     ":github-workflows-kt",
     ":action-binding-generator",
+    ":action-updates-checker",
 )

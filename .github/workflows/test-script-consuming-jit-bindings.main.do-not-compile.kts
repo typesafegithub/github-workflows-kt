@@ -10,8 +10,13 @@
 // Nested action.
 @file:DependsOn("gradle:actions__setup-gradle:v3")
 
+// Using specific version.
+@file:DependsOn("actions:cache:v3.3.3")
+
+import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 
 println(Checkout())
 println(ActionsSetupGradle())
+println(Cache(path = listOf("some-path"), key = "some-key"))

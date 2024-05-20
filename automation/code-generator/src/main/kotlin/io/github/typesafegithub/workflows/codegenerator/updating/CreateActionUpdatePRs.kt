@@ -8,15 +8,17 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Acti
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import io.github.typesafegithub.workflows.codegenerator.bindingsToGenerate
 import io.github.typesafegithub.workflows.codegenerator.model.ActionBindingRequest
-import io.github.typesafegithub.workflows.codegenerator.versions.GithubRef
-import io.github.typesafegithub.workflows.codegenerator.versions.GithubTag
-import io.github.typesafegithub.workflows.codegenerator.versions.getGithubToken
-import io.github.typesafegithub.workflows.codegenerator.versions.httpClient
-import io.github.typesafegithub.workflows.codegenerator.versions.json
+import io.github.typesafegithub.workflows.shared.internal.getGithubToken
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import java.nio.file.Path
 import java.time.Instant
 import kotlin.io.path.Path
@@ -151,5 +153,46 @@ private suspend fun fetchGithubUrl(
     return response.bodyAsText()
 }
 
+@Serializable
+private data class GithubRef(
+    val ref: String,
+    @SerialName("object")
+    val obj: GithubRefObject?,
+)
+
+@Serializable
+private data class GithubRefObject(
+    val sha: String,
+    val type: String,
+    val url: String,
+)
+
+@Serializable
+private data class GithubTag(
+    @SerialName("object")
+    val obj: GithubTagObject?,
+)
+
+@Serializable
+private data class GithubTagObject(
+    val sha: String,
+    val type: String,
+    val url: String,
+)
+
 private fun ActionCoords.buildCommitHashFilePath(): Path =
     Path.of("actions").resolve(owner).resolve(name).resolve(version).resolve("commit-hash.txt")
+
+internal val httpClient by lazy {
+    HttpClient {
+        install(ContentNegotiation) {
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                },
+            )
+        }
+    }
+}
+
+private val json = Json { ignoreUnknownKeys = true }

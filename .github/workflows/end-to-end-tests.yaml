@@ -1,26 +1,56 @@
-# This file was generated using Kotlin DSL (.github/workflows/Integration tests.main.kts).
+# This file was generated using Kotlin DSL (.github/workflows/end-to-end-tests.main.kts).
 # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
 # Generated with https://github.com/typesafegithub/github-workflows-kt
 
-name: 'Integration tests'
+name: 'End-to-end tests'
 on:
   push:
     branches:
     - 'main'
   pull_request: {}
 jobs:
+  check_yaml_consistency:
+    name: 'Check YAML consistency'
+    runs-on: 'ubuntu-latest'
+    env:
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+    steps:
+    - id: 'step-0'
+      name: 'Check out'
+      uses: 'actions/checkout@v4'
+    - id: 'step-1'
+      name: 'Set up JDK'
+      uses: 'actions/setup-java@v4'
+      with:
+        java-version: '11'
+        distribution: 'zulu'
+    - id: 'step-2'
+      uses: 'gradle/actions/setup-gradle@v3'
+      with:
+        generate-job-summary: 'false'
+    - id: 'step-3'
+      name: 'Publish to Maven local'
+      run: './gradlew publishToMavenLocal'
+    - id: 'step-4'
+      name: 'Execute script'
+      run: 'rm ''.github/workflows/end-to-end-tests.yaml'' && ''.github/workflows/end-to-end-tests.main.kts'''
+    - id: 'step-5'
+      name: 'Consistency check'
+      run: 'git diff --exit-code ''.github/workflows/end-to-end-tests.yaml'''
   test_job_1:
     runs-on: 'ubuntu-latest'
     permissions:
       actions: 'read'
       checks: 'write'
       contents: 'none'
+    needs:
+    - 'check_yaml_consistency'
     env:
       $GREETING: 'World'
     outputs:
-      scriptKey: '${{ steps.step-15.outputs.key }}'
-      scriptKey2: '${{ steps.step-15.outputs.key2 }}'
-      scriptResult: '${{ steps.step-15.outputs.result }}'
+      scriptKey: '${{ steps.step-20.outputs.key }}'
+      scriptKey2: '${{ steps.step-20.outputs.key2 }}'
+      scriptResult: '${{ steps.step-20.outputs.result }}'
     steps:
     - id: 'step-0'
       name: 'Hello world!'
@@ -89,6 +119,30 @@ jobs:
       run: 'action=$GITHUB_ACTION repo=$GITHUB_REPOSITORY'
       if: '${{ always() }}'
     - id: 'step-15'
+      name: 'Set up JDK'
+      uses: 'actions/setup-java@v4'
+      with:
+        java-version: '11'
+        distribution: 'zulu'
+    - id: 'step-16'
+      uses: 'gradle/actions/setup-gradle@v3'
+      with:
+        generate-job-summary: 'false'
+    - id: 'step-17'
+      name: 'Publish to Maven local'
+      run: './gradlew publishToMavenLocal'
+    - id: 'step-18'
+      name: 'Evaluating condition for ''Step with a Kotlin-based logic'''
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
+      run: 'GHWKT_RUN_STEP=''test_job_1:step-18'' ''.github/workflows/end-to-end-tests.main.kts'''
+    - id: 'step-19'
+      name: 'Step with a Kotlin-based logic'
+      env:
+        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
+      run: 'GHWKT_RUN_STEP=''test_job_1:step-19'' ''.github/workflows/end-to-end-tests.main.kts'''
+      if: '${{ steps.step-18.outputs.evaluation-result }}'
+    - id: 'step-20'
       uses: 'actions/github-script@v7'
       with:
         script: |-
@@ -99,6 +153,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     needs:
     - 'test_job_1'
+    - 'check_yaml_consistency'
     if: '${{ always() }}'
     steps:
     - id: 'step-0'

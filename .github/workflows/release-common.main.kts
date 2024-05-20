@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.14.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("gradle:actions__setup-gradle:v3")
@@ -30,6 +30,10 @@ fun JobBuilder<*>.deployDocs() {
     run(
         name = "Copy Dokka output to Mkdocs output",
         command = "cp -r github-workflows-kt/build/dokka/html/* $directoryToDeploy/api-docs",
+    )
+    run(
+        name = "Copy teaser image",
+        command = "cp images/teaser-with-newest-version.svg $directoryToDeploy"
     )
     uses(
         name = "Deploy merged docs to GitHub Pages",

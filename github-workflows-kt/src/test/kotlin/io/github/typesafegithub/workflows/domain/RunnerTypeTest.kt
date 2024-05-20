@@ -10,7 +10,7 @@ class RunnerTypeTest : FunSpec({
                 RunnerType.Labelled()
             }
             shouldThrow<IllegalArgumentException> {
-                RunnerType.Labelled(linkedSetOf())
+                RunnerType.Labelled(emptySet())
             }
         }
     }

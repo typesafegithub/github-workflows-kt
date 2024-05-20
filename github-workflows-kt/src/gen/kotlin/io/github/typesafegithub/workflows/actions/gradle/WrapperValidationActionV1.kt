@@ -43,8 +43,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: WrapperValidationActionV2",
-    replaceWith = ReplaceWith("WrapperValidationActionV2"),
+    message = "This action has a newer major version: WrapperValidationActionV3",
+    replaceWith = ReplaceWith("WrapperValidationActionV3"),
 )
 public data class WrapperValidationActionV1 private constructor(
     /**

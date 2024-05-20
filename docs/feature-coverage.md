@@ -17,7 +17,7 @@ Legend:
 | Environment variables (`env` context)       | ✅       |                                                                            |
 | `github` context                            | ✅       |                                                                            |
 | Job containers                              | ✅       |                                                                            |
-| Job environments                            | ❌       | [#1273](https://github.com/typesafegithub/github-workflows-kt/issues/1273) |
+| Job environments                            | ✅       |                                                                            |
 | Docker actions                              | ✅       |                                                                            |
 | Local actions                               | ✅       |                                                                            |
 | `outcome` context                           | ✅       |                                                                            |

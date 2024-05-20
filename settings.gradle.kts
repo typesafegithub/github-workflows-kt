@@ -5,6 +5,7 @@ apply(from = "./buildSrc/repositories.settings.gradle.kts")
 include(
     "github-workflows-kt",
     "action-binding-generator",
+    "action-updates-checker",
     "maven-binding-builder",
     "jit-binding-server",
     "shared-internal",
@@ -12,7 +13,7 @@ include(
 )
 
 plugins {
-    id("com.gradle.develocity") version "3.17.1"
+    id("com.gradle.develocity") version "3.17.4"
 }
 
 dependencyResolutionManagement {

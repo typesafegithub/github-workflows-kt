@@ -23,7 +23,7 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 workflow(
     name = "Build",
     on = listOf(PullRequest()),
-    sourceFile = __FILE__.toPath(),
+    sourceFile = __FILE__,
 ) {
     job(id = "build", runsOn = UbuntuLatest) {
         uses(action = CheckoutV4())
@@ -34,7 +34,7 @@ workflow(
             command = "./gradlew build",
         )
     }
-}.writeToFile()
+}
 ```
 
 `CheckoutV4`, `SetupJavaV3` and `ActionsSetupGradleV3` come with the library - they are shipped together with the DSL.
@@ -74,7 +74,7 @@ The following changes are required in our example workflow:
      workflow(
          name = "Build",
          on = listOf(PullRequest()),
-         sourceFile = __FILE__.toPath(),
+         sourceFile = __FILE__,
      ) {
          job(id = "build", runsOn = UbuntuLatest) {
    -         uses(action = CheckoutV4())
@@ -88,7 +88,7 @@ The following changes are required in our example workflow:
                  command = "./gradlew build",
              )
          }
-     }.writeToFile()
+     }
    ```
 
 Then regenerate your YAML to ensure there are no changes.

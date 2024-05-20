@@ -1,4 +1,4 @@
-package io.github.typesafegithub.workflows.codegenerator.model
+package io.github.typesafegithub.workflows.shared.internal.model
 
 data class Version(val version: String) : Comparable<Version> {
     val input: String = version.removePrefix("v").removePrefix("V")

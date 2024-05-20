@@ -41,6 +41,8 @@ jobs:
         cache-encryption-key: '${{ secrets.GRADLE_ENCRYPTION_KEY }}'
     - id: 'step-3'
       name: 'Build'
+      env:
+        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       run: './gradlew build'
   build-for-Windows2022:
     runs-on: 'windows-2022'
@@ -61,6 +63,8 @@ jobs:
         cache-encryption-key: '${{ secrets.GRADLE_ENCRYPTION_KEY }}'
     - id: 'step-3'
       name: 'Build'
+      env:
+        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       run: './gradlew build'
   publish-snapshot:
     name: 'Publish snapshot'
@@ -68,8 +72,6 @@ jobs:
     needs:
     - 'check_yaml_consistency'
     env:
-      SIGNING_KEY: '${{ secrets.SIGNING_KEY }}'
-      SIGNING_PASSWORD: '${{ secrets.SIGNING_PASSWORD }}'
       ORG_GRADLE_PROJECT_sonatypeUsername: '${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}'
       ORG_GRADLE_PROJECT_sonatypePassword: '${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}'
     if: '${{ github.ref == ''refs/heads/main'' }}'
@@ -89,15 +91,19 @@ jobs:
       run: './gradlew setIsSnapshotFlagInGithubOutput'
     - id: 'step-4'
       name: 'Publish '':shared-internal'' to Sonatype'
-      run: './gradlew :shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      run: './gradlew :shared-internal:publishToSonatype --no-configuration-cache'
       if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
     - id: 'step-5'
       name: 'Publish '':github-workflows-kt'' to Sonatype'
-      run: './gradlew :github-workflows-kt:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      run: './gradlew :github-workflows-kt:publishToSonatype --no-configuration-cache'
       if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
     - id: 'step-6'
       name: 'Publish '':action-binding-generator'' to Sonatype'
-      run: './gradlew :action-binding-generator:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
+      run: './gradlew :action-binding-generator:publishToSonatype --no-configuration-cache'
+      if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
+    - id: 'step-7'
+      name: 'Publish '':action-updates-checker'' to Sonatype'
+      run: './gradlew :action-updates-checker:publishToSonatype --no-configuration-cache'
       if: '${{ steps.step-3.outputs.is-snapshot == ''true'' }}'
   build_docs:
     name: 'Build docs'
@@ -127,6 +133,10 @@ jobs:
       run: |-
         find -name *.main.kts -print0 | while read -d $'\0' file
         do
+            if [ "$file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
+                continue
+            fi
+
             echo "Compiling $file..."
             kotlinc -Werror -Xallow-any-scripts-in-source-roots "$file"
         done
@@ -152,6 +162,10 @@ jobs:
       run: |-
         find -name "*.main.kts" -print0 | while read -d $'\0' file
         do
+            if [ "$file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
+                continue
+            fi
+
             if [ -x "$file" ]; then
                 echo "Regenerating $file..."
                 ($file)

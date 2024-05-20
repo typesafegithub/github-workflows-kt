@@ -64,9 +64,10 @@ publishing {
 }
 
 signing {
-    if (!project.version.toString().endsWith("-SNAPSHOT")) {
-        sign(publishing.publications["mavenJava"])
-    }
+    setRequired({
+        !project.version.toString().endsWith("-SNAPSHOT")
+    })
+    sign(publishing.publications["mavenJava"])
 
     val signingKey = System.getenv("SIGNING_KEY")
     val signingPassword = System.getenv("SIGNING_PASSWORD")

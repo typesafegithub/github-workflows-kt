@@ -21,11 +21,10 @@ version = rootProject.version
 dependencies {
     implementation("it.krzeminski:snakeyaml-engine-kmp:2.7.5")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation(projects.sharedInternal)
 
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    testImplementation("dev.zacsweers.kctfork:core:0.4.1")
-    testImplementation("com.lemonappdev:konsist:0.14.0")
+    testImplementation("dev.zacsweers.kctfork:core:0.5.0-alpha07")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
@@ -86,6 +85,18 @@ val validateDuplicatedVersion by tasks.creating<Task> {
             rootDir.resolve("github-workflows-kt/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
                 .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
         ) { "Library version stated in github-workflows-kt/src/test/.../GettingStarted.kt should be equal to $version!" }
+        require(
+            rootDir.resolve(".github/workflows/end-to-end-tests.main.kts").readText()
+                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
+        ) { "Library version stated in end-to-end-tests.main.kts should be equal to $version!" }
+        require(
+            rootDir.resolve(".github/workflows/end-to-end-tests.main.kts").readText()
+                .contains("\"io.github.typesafegithub:action-updates-checker:$version\"")
+        ) { "Library version stated in end-to-end-tests.main.kts should be equal to $version!" }
+        require(
+            rootDir.resolve("images/teaser-with-newest-version.svg").readText()
+                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
+        ) { "Library version stated in the teaser image shiuld be equal to $version!" }
     }
 }
 
