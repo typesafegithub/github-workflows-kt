@@ -31,8 +31,8 @@ import kotlin.collections.toTypedArray
  * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
  * They use the same WSL distribution ID, so the second that is used will not be installed
  * as the first one will be found as already installed by WSL distribution ID.
- * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
- * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
+ * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-24.04',
+ * 'Ubuntu-22.04', 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
  * @param useCache Whether to use the cache for the downloaded distribution installer.
  * This saves time in subsequent runs, jobs, or workflows but consumes space from
  * the available cache space of the repository.
@@ -90,8 +90,8 @@ public data class SetupWslV3 private constructor(
      * 'Ubuntu-22.04' and 'Ubuntu-20.04' can not be used together at the same time.
      * They use the same WSL distribution ID, so the second that is used will not be installed
      * as the first one will be found as already installed by WSL distribution ID.
-     * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-22.04',
-     * 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
+     * Valid values: 'Alpine', 'Debian', 'kali-linux', 'openSUSE-Leap-15.2', 'Ubuntu-24.04',
+     * 'Ubuntu-22.04', 'Ubuntu-20.04', 'Ubuntu-18.04', 'Ubuntu-16.04'
      */
     public val distribution: SetupWslV3.Distribution? = null,
     /**
@@ -213,6 +213,8 @@ public data class SetupWslV3 private constructor(
         public object KaliLinux : SetupWslV3.Distribution("kali-linux")
 
         public object OpenSUSELeap152 : SetupWslV3.Distribution("openSUSE-Leap-15.2")
+
+        public object Ubuntu2404 : SetupWslV3.Distribution("Ubuntu-24.04")
 
         public object Ubuntu2204 : SetupWslV3.Distribution("Ubuntu-22.04")
 
