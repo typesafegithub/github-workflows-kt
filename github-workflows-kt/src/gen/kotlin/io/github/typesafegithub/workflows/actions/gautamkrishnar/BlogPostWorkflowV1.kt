@@ -67,6 +67,8 @@ import kotlin.collections.toTypedArray
  * @param randSeed Provide your own seeding string for the randomness
  * @param removeDuplicates Allows you to remove duplicate blog posts from multiple sources
  * @param skipCommit Skips committing the changes to repo
+ * @param dummyCommitMessage Dummy commit message, This is when the workflow is doing automated
+ * commits to keep the repository active
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -203,6 +205,11 @@ public data class BlogPostWorkflowV1 private constructor(
      */
     public val skipCommit: Boolean? = null,
     /**
+     * Dummy commit message, This is when the workflow is doing automated commits to keep the
+     * repository active
+     */
+    public val dummyCommitMessage: String? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -246,6 +253,7 @@ public data class BlogPostWorkflowV1 private constructor(
         randSeed: String? = null,
         removeDuplicates: Boolean? = null,
         skipCommit: Boolean? = null,
+        dummyCommitMessage: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(ghToken=ghToken, readmePath=readmePath, maxPostCount=maxPostCount, feedList=feedList,
@@ -259,7 +267,8 @@ public data class BlogPostWorkflowV1 private constructor(
             retryCount=retryCount, retryWaitTime=retryWaitTime, feedNames=feedNames,
             disableHtmlEncoding=disableHtmlEncoding, categoriesTemplate=categoriesTemplate,
             disableItemValidation=disableItemValidation, filterDates=filterDates, randSeed=randSeed,
-            removeDuplicates=removeDuplicates, skipCommit=skipCommit, _customInputs=_customInputs,
+            removeDuplicates=removeDuplicates, skipCommit=skipCommit,
+            dummyCommitMessage=dummyCommitMessage, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
@@ -296,6 +305,7 @@ public data class BlogPostWorkflowV1 private constructor(
             randSeed?.let { "rand_seed" to it },
             removeDuplicates?.let { "remove_duplicates" to it.toString() },
             skipCommit?.let { "skip_commit" to it.toString() },
+            dummyCommitMessage?.let { "dummy_commit_message" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
