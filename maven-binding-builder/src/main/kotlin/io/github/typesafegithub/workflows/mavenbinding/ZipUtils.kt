@@ -8,21 +8,27 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.OutputStream
 import java.nio.file.Path
+import java.nio.file.attribute.FileTime
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import kotlin.io.path.absolute
 import kotlin.io.path.isDirectory
 import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 
 internal fun OutputStream.createZipFile(contents: Path) =
     ZipOutputStream(this).use { zipOutputStream ->
-        contents.listDirectoryEntries().forEach { file ->
-            if (file.isDirectory()) {
-                zipDirectory(file.toFile(), file.name, zipOutputStream)
-            } else {
-                zipFile(file.toFile(), zipOutputStream)
+        contents.listDirectoryEntries()
+            // Sorting to add ZIP entries in deterministic order, to provide exactly the same ZIP regardless of
+            // generation time.
+            .sortedBy { it.absolute().toString() }
+            .forEach { file ->
+                if (file.isDirectory()) {
+                    zipDirectory(file.toFile(), file.name, zipOutputStream)
+                } else {
+                    zipFile(file.toFile(), zipOutputStream)
+                }
             }
-        }
         zipOutputStream.flush()
     }
 
@@ -45,7 +51,15 @@ private fun zipDirectory(
             zipDirectory(file, parentFolder + "/" + file.getName(), zos)
             continue
         }
-        zos.putNextEntry(ZipEntry(parentFolder + "/" + file.getName()))
+        val zipEntry =
+            ZipEntry(parentFolder + "/" + file.getName()).apply {
+                // Resetting various timestamps to provide exactly the same ZIP regardless of generation time.
+                time = 0
+                creationTime = FileTime.fromMillis(0)
+                lastModifiedTime = FileTime.fromMillis(0)
+                lastAccessTime = FileTime.fromMillis(0)
+            }
+        zos.putNextEntry(zipEntry)
         val bis =
             BufferedInputStream(
                 FileInputStream(file),
@@ -73,7 +87,15 @@ private fun zipFile(
     file: File,
     zos: ZipOutputStream,
 ) {
-    zos.putNextEntry(ZipEntry(file.getName()))
+    val zipEntry =
+        ZipEntry(file.getName()).apply {
+            // Resetting various timestamps to provide exactly the same ZIP regardless of generation time.
+            time = 0
+            creationTime = FileTime.fromMillis(0)
+            lastModifiedTime = FileTime.fromMillis(0)
+            lastAccessTime = FileTime.fromMillis(0)
+        }
+    zos.putNextEntry(zipEntry)
     val bis =
         BufferedInputStream(
             FileInputStream(
