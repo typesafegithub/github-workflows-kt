@@ -11,11 +11,13 @@ import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
+import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
 import kotlinx.serialization.json.Json
 import java.nio.file.Path
+import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
 
 /**
@@ -52,10 +54,6 @@ internal fun Workflow.writeToFile(
         "gitRootDir must be specified explicitly when sourceFile is null"
     }
 
-    checkNotNull(this.targetFileName) {
-        "targetFileName must not be null"
-    }
-
     val yaml =
         generateYaml(
             gitRootDir = gitRootDir,
@@ -86,24 +84,27 @@ private fun commentify(preamble: String): String {
         .joinToString("\n", postfix = "\n\n") { "# $it".trimEnd() }
 }
 
+/**
+ * Return a YAML for a workflow passed as the receiver.
+ */
 @Suppress("LongMethod")
-private fun Workflow.generateYaml(
-    gitRootDir: Path?,
-    preamble: Preamble?,
+public fun Workflow.generateYaml(
+    gitRootDir: Path? = sourceFile?.toPath()?.absolute()?.findGitRoot(),
+    preamble: Preamble? = null,
 ): String {
     val sourceFilePath =
         gitRootDir?.let {
             sourceFile?.toPath()?.relativeToAbsolute(gitRootDir)?.invariantSeparatorsPathString
         }
 
+    require(!(consistencyCheckJobConfig is ConsistencyCheckJobConfig.Configuration && targetFileName == null)) {
+        "consistency check requires a targetFileName"
+    }
+
     val jobsWithConsistencyCheck =
         if (consistencyCheckJobConfig is ConsistencyCheckJobConfig.Configuration) {
             check(gitRootDir != null && sourceFile != null) {
                 "consistency check requires a valid sourceFile and Git root directory"
-            }
-
-            checkNotNull(targetFileName) {
-                "consistency check requires a targetFileName"
             }
 
             val targetFilePath =

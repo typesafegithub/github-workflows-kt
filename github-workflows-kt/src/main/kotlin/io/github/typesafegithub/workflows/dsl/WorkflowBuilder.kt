@@ -163,6 +163,12 @@ public fun Workflow.toBuilder(): WorkflowBuilder =
         _customArguments = _customArguments,
     )
 
+/**
+ * A DSL function that models the top-level parts of the GitHub Actions workflow.
+ *
+ * @param targetFileName Name of the produced YAML file inside the `.github/workflows` directory. If set to `null`,
+ * writing to file is disabled.
+ */
 @Suppress("LongParameterList", "FunctionParameterNaming")
 public fun workflow(
     @Suppress("UNUSED_PARAMETER")
@@ -215,11 +221,13 @@ public fun workflow(
 
     return workflowBuilder.build()
         .also {
-            it.writeToFile(
-                gitRootDir = gitRootDir,
-                preamble = preamble,
-                getenv = getenv,
-            )
+            if (targetFileName != null) {
+                it.writeToFile(
+                    gitRootDir = gitRootDir,
+                    preamble = preamble,
+                    getenv = getenv,
+                )
+            }
         }
 }
 

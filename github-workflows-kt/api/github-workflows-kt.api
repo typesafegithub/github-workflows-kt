@@ -3174,6 +3174,11 @@ public final class io/github/typesafegithub/workflows/yaml/Preamble$WithOriginal
 	public fun <init> (Ljava/lang/String;)V
 }
 
+public final class io/github/typesafegithub/workflows/yaml/ToYamlKt {
+	public static final fun generateYaml (Lio/github/typesafegithub/workflows/domain/Workflow;Ljava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;)Ljava/lang/String;
+	public static synthetic fun generateYaml$default (Lio/github/typesafegithub/workflows/domain/Workflow;Ljava/nio/file/Path;Lio/github/typesafegithub/workflows/yaml/Preamble;ILjava/lang/Object;)Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/yaml/TriggersToYamlKt {
 	public static final fun toMap (Lio/github/typesafegithub/workflows/domain/triggers/Trigger;)Ljava/util/Map;
 	public static final fun triggerName (Lio/github/typesafegithub/workflows/domain/triggers/Trigger;)Ljava/lang/String;
