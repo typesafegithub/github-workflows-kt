@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.azure
@@ -12,7 +11,6 @@ package io.github.typesafegithub.workflows.actions.azure
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -23,7 +21,7 @@ import kotlin.collections.toTypedArray
 /**
  * Action: Azure Container Registry Login
  *
- * Log in to Azure Container Registry (ACR) or any private docker container registry
+ * Log in to Azure Container Registry (ACR) or any private container registry
  *
  * [Action on GitHub](https://github.com/Azure/docker-login)
  *
@@ -35,11 +33,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: DockerLoginV2",
-    replaceWith = ReplaceWith("DockerLoginV2"),
-)
-public data class DockerLoginV1 private constructor(
+public data class DockerLoginV2 private constructor(
     /**
      * Container registry username
      */
@@ -61,7 +55,7 @@ public data class DockerLoginV1 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("Azure", "docker-login", _customVersion ?: "v1") {
+) : RegularAction<Action.Outputs>("Azure", "docker-login", _customVersion ?: "v2") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         username: String? = null,
