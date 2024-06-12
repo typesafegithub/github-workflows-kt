@@ -14,6 +14,7 @@ import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CON
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
+import io.github.typesafegithub.workflows.yaml.generateYaml
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -29,6 +30,10 @@ class IntegrationTest : FunSpec({
         }.toPath()
     val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
     val targetTempFile = gitRootDir.resolve(".github/workflows/some_workflow.yaml").toFile()
+
+    afterTest {
+        targetTempFile.delete()
+    }
 
     test("'hello world' workflow") {
         // when
@@ -769,5 +774,51 @@ class IntegrationTest : FunSpec({
         }.also {
             it.message shouldBe "sourceFile needs to be set when using Kotlin-based 'run' block!"
         }
+    }
+
+    test("return workflow as string and do not write to file") {
+        // given
+        val workflow =
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                targetFileName = null,
+                consistencyCheckJobConfig = Disabled,
+            ) {
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    uses(
+                        name = "Check out",
+                        action = CheckoutV4(),
+                    )
+                }
+            }
+
+        // when
+        val workflowYaml = workflow.generateYaml()
+
+        // then
+        workflowYaml shouldBe
+            """
+            # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+            # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+            # Generated with https://github.com/typesafegithub/github-workflows-kt
+
+            name: 'Test workflow'
+            on:
+              push: {}
+            jobs:
+              test_job:
+                runs-on: 'ubuntu-latest'
+                steps:
+                - id: 'step-0'
+                  name: 'Check out'
+                  uses: 'actions/checkout@v4'
+
+            """.trimIndent()
+        targetTempFile.exists() shouldBe false
     }
 })
