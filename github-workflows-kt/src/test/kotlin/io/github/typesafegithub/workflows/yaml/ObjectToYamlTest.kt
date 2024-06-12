@@ -33,6 +33,7 @@ class ObjectToYamlTest : DescribeSpec({
                         "bar",
                         123,
                         456.789f,
+                        11.22,
                         listOf(
                             mapOf("another-foo" to 123),
                             mapOf("key-with-null-value" to null),
@@ -54,6 +55,7 @@ class ObjectToYamlTest : DescribeSpec({
             - 'bar'
             - 123
             - 456.789
+            - 11.22
             - - another-foo: 123
               - key-with-null-value: null
               - key-with-null-map: {}

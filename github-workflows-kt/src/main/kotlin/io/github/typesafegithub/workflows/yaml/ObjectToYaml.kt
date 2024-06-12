@@ -45,7 +45,7 @@ private fun Any?.elementToYaml(emitter: Emitter) {
     when (this) {
         is Map<*, *> -> this.mapToYaml(emitter)
         is List<*> -> this.listToYaml(emitter)
-        is String, is Int, is Float, is Boolean, is Double, null -> this.scalarToYaml(emitter)
+        is String, is Int, is Float, is Double, is Boolean, null -> this.scalarToYaml(emitter)
         else -> error("Serializing $this is not supported!")
     }
 }
