@@ -77,6 +77,14 @@ workflow(
         }
 
         run(
+            name = "Execute the script using the bindings from the serve - with /binding",
+            command = """
+                mv .github/workflows/test-script-consuming-jit-bindings-old.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old.main.kts
+                .github/workflows/test-script-consuming-jit-bindings-old.main.kts
+            """.trimIndent(),
+        )
+
+        run(
             name = "Execute the script using the bindings from the server",
             command = """
                 mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
@@ -85,12 +93,21 @@ workflow(
         )
 
         run(
-            name = "Fetch maven-metadata.xml for top-level action",
+            name = "Fetch maven-metadata.xml for top-level action - with /binding",
             command = "curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
         )
         run(
-            name = "Fetch maven-metadata.xml for nested action",
+            name = "Fetch maven-metadata.xml for nested action - with /binding",
             command = "curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
+        )
+
+        run(
+            name = "Fetch maven-metadata.xml for top-level action",
+            command = "curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
+        )
+        run(
+            name = "Fetch maven-metadata.xml for nested action",
+            command = "curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
         )
     }
 
