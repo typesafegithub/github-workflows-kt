@@ -55,7 +55,7 @@ The following changes are required in our example workflow:
      #!/usr/bin/env kotlin
    + @file:Repository("https://repo1.maven.org/maven2/")
      @file:DependsOn("io.github.typesafegithub:github-workflows-kt:<newest-version>")
-   + @file:Repository("https://bindings.krzeminski.it/")
+   + @file:Repository("https://bindings.krzeminski.it")
    + @file:DependsOn("actions:checkout:v4")
    + @file:DependsOn("actions:setup-java:v3")
    + @file:DependsOn("gradle:actions__setup-gradle:v3")
