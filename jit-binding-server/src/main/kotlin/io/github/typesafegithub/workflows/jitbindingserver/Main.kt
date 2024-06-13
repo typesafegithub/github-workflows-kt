@@ -31,6 +31,8 @@ fun main() {
 
     embeddedServer(Netty, port = 8080) {
         routing {
+            // TODO: remove this route once known clients are migrated
+            // See https://github.com/typesafegithub/github-workflows-kt/issues/1492
             route("/binding") {
                 route("{owner}/{name}/{version}/{file}") {
                     artifact(bindingsCache)
@@ -39,6 +41,14 @@ fun main() {
                 route("{owner}/{name}/{file}") {
                     metadata()
                 }
+            }
+
+            route("{owner}/{name}/{version}/{file}") {
+                artifact(bindingsCache)
+            }
+
+            route("{owner}/{name}/{file}") {
+                metadata()
             }
 
             get("/status") {
