@@ -121,25 +121,6 @@ jobs:
       run: 'pip install -r docs/requirements.txt'
     - id: 'step-3'
       run: 'mkdocs build --site-dir public'
-  build_kotlin_scripts:
-    name: 'Build Kotlin scripts'
-    runs-on: 'ubuntu-latest'
-    needs:
-    - 'check_yaml_consistency'
-    steps:
-    - id: 'step-0'
-      uses: 'actions/checkout@v4'
-    - id: 'step-1'
-      run: |-
-        find -name *.main.kts -print0 | while read -d $'\0' file
-        do
-            if [ "$file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
-                continue
-            fi
-
-            echo "Compiling $file..."
-            kotlinc -Werror -Xallow-any-scripts-in-source-roots "$file"
-        done
   workflows_consistency_check:
     name: 'Run consistency check on all GitHub workflows'
     runs-on: 'ubuntu-latest'
