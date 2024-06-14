@@ -53,7 +53,7 @@ demand, and is then shipped as a separate Maven artifact from a custom Maven-com
 The following changes are required in our example workflow:
    ```diff
      #!/usr/bin/env kotlin
-   + @file:Repository("https://repo1.maven.org/maven2/")
+   + @file:Repository("https://repo.maven.apache.org/maven2/")
      @file:DependsOn("io.github.typesafegithub:github-workflows-kt:<newest-version>")
    + @file:Repository("https://bindings.krzeminski.it")
    + @file:DependsOn("actions:checkout:v4")

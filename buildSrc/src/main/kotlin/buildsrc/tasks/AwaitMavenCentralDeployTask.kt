@@ -28,7 +28,7 @@ abstract class AwaitMavenCentralDeployTask : DefaultTask() {
 
     @TaskAction
     fun awaitDeployment(): Unit = runBlocking {
-        val queriedUrl = "https://repo1.maven.org/maven2/" +
+        val queriedUrl = "https://repo.maven.apache.org/maven2/" +
             groupId.get().replace(".", "/") +
             "/${artifactId.get()}" +
             "/${version.get()}" +
