@@ -12,6 +12,7 @@ import io.github.typesafegithub.workflows.shared.internal.getGithubToken
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
+import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondBytes
@@ -21,6 +22,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.head
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
+import io.opentelemetry.instrumentation.ktor.v2_0.server.KtorServerTracing
 import kotlin.time.Duration.Companion.hours
 
 fun main() {
@@ -28,8 +30,12 @@ fun main() {
         Cache.Builder<ActionCoords, Result<Map<String, Artifact>>>()
             .expireAfterAccess(1.hours)
             .build()
+    val openTelemetry = buildOpenTelemetryConfig(serviceName = "github-actions-bindings")
 
     embeddedServer(Netty, port = 8080) {
+        install(KtorServerTracing) {
+            setOpenTelemetry(openTelemetry)
+        }
         routing {
             // TODO: remove this route once known clients are migrated
             // See https://github.com/typesafegithub/github-workflows-kt/issues/1492
