@@ -4,8 +4,5 @@
 @file:DependsOn("actions:checkout:v4")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
-println("after import")
 
-println("before instantiating Checkout")
 Checkout()
-println("after instantiating Checkout")
