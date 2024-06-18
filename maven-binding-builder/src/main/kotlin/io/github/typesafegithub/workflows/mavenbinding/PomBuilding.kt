@@ -22,6 +22,14 @@ internal fun buildPomFile(
         <developerConnection>scm:git:ssh://github.com:$owner/$name.git</developerConnection>
         <url>https://github.com/$owner/$name.git</url>
       </scm>
+      <repositories>
+        <repository>
+          <name>Maven Central</name>
+          <id>maven-central</id>
+          <url>https://repo.maven.apache.org/maven2/</url>
+          <layout>default</layout>
+        </repository>
+      </repositories>
       <dependencies>
         <dependency>
             <groupId>io.github.typesafegithub</groupId>
