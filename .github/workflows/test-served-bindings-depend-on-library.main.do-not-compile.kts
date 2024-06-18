@@ -3,7 +3,10 @@
 @file:Repository("http://localhost:8080")
 @file:DependsOn("actions:checkout:v4")
 
-println(System.getProperty("java.class.path"))
-// import io.github.typesafegithub.workflows.actions.actions.Checkout
+println("before import")
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+println("after import")
 
-// Checkout()
+println("before instantiating Checkout")
+Checkout()
+println("after instantiating Checkout")
