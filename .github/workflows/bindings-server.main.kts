@@ -37,6 +37,9 @@ workflow(
         PullRequest(),
     ),
     sourceFile = __FILE__,
+    env = mapOf(
+        "COMPILED_SCRIPTS_CACHE_DIR_ENV_VAR" to "",
+    )
 ) {
     val endToEndTest = job(
         id = "end-to-end-test",

@@ -8,6 +8,8 @@ on:
     branches:
     - 'main'
   pull_request: {}
+env:
+  COMPILED_SCRIPTS_CACHE_DIR_ENV_VAR: ''
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
