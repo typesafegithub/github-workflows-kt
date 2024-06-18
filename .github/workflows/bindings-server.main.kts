@@ -93,6 +93,19 @@ workflow(
         )
 
         run(
+            name = "Clean Maven Local to fetch required POMs again",
+            command = "rm -rf ~/.m2/repository/"
+        )
+
+        run(
+            name = "Execute the script using bindings but without dependency on library",
+            command = """
+                mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
+                .github/workflows/test-served-bindings-depend-on-library.main.kts
+            """.trimIndent(),
+        )
+
+        run(
             name = "Fetch maven-metadata.xml for top-level action - with /binding",
             command = "curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
         )

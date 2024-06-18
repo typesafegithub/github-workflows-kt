@@ -1,5 +1,7 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
+internal const val LATEST_RELASED_LIBRARY_VERSION = "2.1.0"
+
 internal fun buildPomFile(
     owner: String,
     name: String,
@@ -20,6 +22,13 @@ internal fun buildPomFile(
         <developerConnection>scm:git:ssh://github.com:$owner/$name.git</developerConnection>
         <url>https://github.com/$owner/$name.git</url>
       </scm>
-      <dependencies></dependencies>
+      <dependencies>
+        <dependency>
+            <groupId>io.github.typesafegithub</groupId>
+            <artifactId>github-workflows-kt</artifactId>
+            <version>$LATEST_RELASED_LIBRARY_VERSION</version>
+            <scope>compile</scope>
+        </dependency>
+      </dependencies>
     </project>
     """.trimIndent()
