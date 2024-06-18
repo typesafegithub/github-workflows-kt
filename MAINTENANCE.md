@@ -4,7 +4,7 @@ This file describes various maintenance tasks, relevant for project maintainers 
 
 It currently happens monthly, around the beginning of each month. We don't need to stick to this cadence strictly, the goal is to publish small frequent updates.
 
-1. Remove `-SNAPSHOT` for version starting from [/github-workflows-kt/build.gradle.kts](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/build.gradle.kts). By building the whole project with `./gradlew build`, you will learn what other places need to be adjusted. Once done, create a commit using this pattern for commit message: `chore: prepare for releasing version <version>`.
+1. Remove `-SNAPSHOT` for version starting from [/github-workflows-kt/build.gradle.kts](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/build.gradle.kts). By building the whole project with `./gradlew build`, you will learn what other places need to be adjusted. There's one place that needs extra care: in PomBuilding.kt, there's `LATEST_RELASED_LIBRARY_VERSION` - set it to the version you're going to deploy in a minute. Once done, create a commit using this pattern for commit message: `chore: prepare for releasing version <version>`.
 1. Once CI is green for the newly merged commits, create and push an annotated tag:
    ```
    COMMIT_TITLE=`git log -1 --pretty=%B`
