@@ -1,5 +1,4 @@
 #!/usr/bin/env kotlin
-@file:Repository("https://repo.maven.apache.org/maven2/")
 @file:Repository("http://localhost:8080")
 @file:DependsOn("actions:checkout:v4")
 
