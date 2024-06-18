@@ -37,9 +37,6 @@ workflow(
         PullRequest(),
     ),
     sourceFile = __FILE__,
-    env = mapOf(
-        "COMPILED_SCRIPTS_CACHE_DIR_ENV_VAR" to "",
-    )
 ) {
     val endToEndTest = job(
         id = "end-to-end-test",
@@ -93,6 +90,11 @@ workflow(
                 mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
                 .github/workflows/test-script-consuming-jit-bindings.main.kts
             """.trimIndent(),
+        )
+
+        run(
+            name = "Clean Maven Local to fetch required POMs again",
+            command = "rm -rf ~/.m2/repository/"
         )
 
         run(
