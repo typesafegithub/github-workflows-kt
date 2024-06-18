@@ -20,6 +20,13 @@ internal fun buildPomFile(
         <developerConnection>scm:git:ssh://github.com:$owner/$name.git</developerConnection>
         <url>https://github.com/$owner/$name.git</url>
       </scm>
-      <dependencies></dependencies>
+      <dependencies>
+        <dependency>
+            <groupId>io.github.typesafegithub</groupId>
+            <artifactId>github-workflows-kt</artifactId>
+            <version>2.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+      </dependencies>
     </project>
     """.trimIndent()
