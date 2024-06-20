@@ -261,5 +261,10 @@ public data class CreatePullRequestV6 private constructor(
          * The commit SHA of the pull request branch.
          */
         public val pullRequestHeadSha: String = "steps.$stepId.outputs.pull-request-head-sha"
+
+        /**
+         * The pull request branch name
+         */
+        public val pullRequestBranch: String = "steps.$stepId.outputs.pull-request-branch"
     }
 }
