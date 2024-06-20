@@ -57,7 +57,7 @@ workflow(
         id = "publish-snapshot",
         name = "Publish snapshot",
         runsOn = UbuntuLatest,
-        condition = expr { "${github.ref} == 'refs/heads/main'" },
+//        condition = expr { "${github.ref} == 'refs/heads/main'" },
         env = mapOf(
             "ORG_GRADLE_PROJECT_sonatypeUsername" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME"),
             "ORG_GRADLE_PROJECT_sonatypePassword" to expr("secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD"),
