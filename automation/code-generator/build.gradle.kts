@@ -16,6 +16,8 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.4")
+    implementation("org.gradle:gradle-tooling-api:8.8")
+    runtimeOnly("org.slf4j:slf4j-simple:1.7.10")
 
     implementation(projects.actionBindingGenerator)
     implementation(projects.sharedInternal)
