@@ -5,16 +5,18 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("JamesIves:github-pages-deploy-action:v4")
 
 @file:Import("_shared.main.kts")
-@file:Import("release-common.main.kts")
 @file:Import("setup-java.main.kts")
 @file:Import("setup-python.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
+import io.github.typesafegithub.workflows.actions.jamesives.GithubPagesDeployAction
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 
@@ -61,4 +63,37 @@ workflow(
 
         deployDocs()
     }
+}
+
+private fun JobBuilder<*>.deployDocs() {
+    run(command = "pip install -r docs/requirements.txt")
+
+    val directoryToDeploy = "to-gh-pages"
+    run(
+        name = "Build Mkdocs docs",
+        command = "mkdocs build --site-dir $directoryToDeploy",
+    )
+    uses(action = ActionsSetupGradle())
+    run(
+        name = "Generate API docs",
+        command = "./gradlew :github-workflows-kt:dokkaHtml --no-configuration-cache",
+    )
+    run(
+        name = "Prepare target directory for API docs",
+        command = "mkdir -p $directoryToDeploy/api-docs",
+    )
+    run(
+        name = "Copy Dokka output to Mkdocs output",
+        command = "cp -r github-workflows-kt/build/dokka/html/* $directoryToDeploy/api-docs",
+    )
+    run(
+        name = "Copy teaser image",
+        command = "cp images/teaser-with-newest-version.svg $directoryToDeploy"
+    )
+    uses(
+        name = "Deploy merged docs to GitHub Pages",
+        action = GithubPagesDeployAction(
+            folder = "$directoryToDeploy",
+        ),
+    )
 }
