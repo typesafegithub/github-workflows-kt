@@ -23,6 +23,8 @@ dependencies {
     implementation("it.krzeminski:snakeyaml-engine-kmp:3.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
+    implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")
+    implementation("ch.qos.logback:logback-classic:1.5.6")
     implementation(projects.sharedInternal)
 
     testImplementation("dev.zacsweers.kctfork:core:0.5.0")

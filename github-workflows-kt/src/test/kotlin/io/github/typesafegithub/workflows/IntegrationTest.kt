@@ -179,6 +179,10 @@ class IntegrationTest : FunSpec({
                         ),
                     continueOnError = true,
                 )
+
+                gradle(
+                    tasks = { this["foo"]["bar"] + this["goo"]["baz"] }
+                )
             }
         }
 

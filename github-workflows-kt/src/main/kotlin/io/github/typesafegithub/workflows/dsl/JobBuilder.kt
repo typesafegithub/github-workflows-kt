@@ -6,6 +6,7 @@ import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.Container
 import io.github.typesafegithub.workflows.domain.Environment
+import io.github.typesafegithub.workflows.domain.GradleTasks
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.KotlinLogicStep
@@ -157,6 +158,16 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             )
         job = job.copy(steps = job.steps + newStep)
         return newStep
+    }
+
+    public fun gradle(
+        @Suppress("UNUSED_PARAMETER")
+        vararg pleaseUseNamedArguments: Unit,
+        name: String? = null,
+        tasks: GradleTasks.() -> GradleTasks,
+    ) {
+        val configuredTasks = GradleTasks(tasks = emptyList()).tasks()
+        println(configuredTasks.tasks.joinToString(" ") { it.path })
     }
 
     public fun <T : Action.Outputs> uses(
