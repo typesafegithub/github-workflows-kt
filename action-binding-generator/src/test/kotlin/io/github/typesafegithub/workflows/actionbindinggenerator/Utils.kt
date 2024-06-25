@@ -7,7 +7,8 @@ import java.nio.file.Paths
 
 fun ActionBinding.shouldMatchFile(path: String) {
     val file =
-        Paths.get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path")
+        Paths
+            .get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path")
             .toFile()
     val expectedContent =
         when {

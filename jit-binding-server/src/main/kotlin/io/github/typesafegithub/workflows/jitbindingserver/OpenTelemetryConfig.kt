@@ -35,7 +35,8 @@ internal fun buildOpenTelemetryConfig(
     endpointConfig: String = "http://jaeger:4317",
 ): OpenTelemetry {
     val spanExporter =
-        OtlpGrpcSpanExporter.builder()
+        OtlpGrpcSpanExporter
+            .builder()
             .setEndpoint(endpointConfig)
             .setTimeout(30, TimeUnit.SECONDS)
             .build()
@@ -44,35 +45,38 @@ internal fun buildOpenTelemetryConfig(
     val recordExporter = OtlpGrpcLogRecordExporter.builder().build()
 
     val resource =
-        Resource.getDefault()
+        Resource
+            .getDefault()
             .toBuilder()
             .put(AttributeKey.stringKey("service.name"), serviceName)
             .build()
 
     val tracerProvider =
-        SdkTracerProvider.builder()
+        SdkTracerProvider
+            .builder()
             .addSpanProcessor(BatchSpanProcessor.builder(spanExporter).build())
             .setResource(resource)
             .build()
 
     val meterProvider =
-        SdkMeterProvider.builder()
+        SdkMeterProvider
+            .builder()
             .registerMetricReader(
                 PeriodicMetricReader.builder(metricExporter).build(),
-            )
-            .setResource(resource)
+            ).setResource(resource)
             .build()
 
     val loggerProvider =
-        SdkLoggerProvider.builder()
+        SdkLoggerProvider
+            .builder()
             .addLogRecordProcessor(
                 BatchLogRecordProcessor.builder(recordExporter).build(),
-            )
-            .setResource(resource)
+            ).setResource(resource)
             .build()
 
     val openTelemetry =
-        OpenTelemetrySdk.builder()
+        OpenTelemetrySdk
+            .builder()
             .setTracerProvider(tracerProvider)
             .setMeterProvider(meterProvider)
             .setLoggerProvider(loggerProvider)

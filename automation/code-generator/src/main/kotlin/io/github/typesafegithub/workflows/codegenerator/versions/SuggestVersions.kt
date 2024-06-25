@@ -82,7 +82,9 @@ fun ActionCoords.suggestNewerVersion(
     val metadata by lazy { this.copy(version = maxExisting.version).fetchMeta(FromLockfile) }
 
     val newerMajorVersions =
-        majorVersions.filter { it > maxExisting }.sorted()
+        majorVersions
+            .filter { it > maxExisting }
+            .sorted()
             .map {
                 val thisMetadata = this@suggestNewerVersion.copy(version = it.version).fetchMeta(NewestForVersion)
                 val addedInputs = thisMetadata.inputs.keys - metadata.inputs.keys

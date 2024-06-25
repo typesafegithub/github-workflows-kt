@@ -32,7 +32,8 @@ internal fun Typing.getClassName(
             ClassName("io.github.typesafegithub.workflows.actions.$actionPackageName", "$actionClassName.$typeName")
         }
         is ListOfTypings ->
-            List::class.asClassName()
+            List::class
+                .asClassName()
                 .parameterizedBy(typing.getClassName(actionPackageName, actionClassName, fieldName))
         StringTyping -> String::class.asTypeName()
     }
@@ -81,38 +82,39 @@ private fun EnumTyping.buildEnumCustomType(
     val actionPackageName = coords.owner.toKotlinPackageName()
     val sealedClassName = this.getClassName(actionPackageName, className, fieldName)
 
-    return TypeSpec.classBuilder(typeName)
+    return TypeSpec
+        .classBuilder(typeName)
         .addModifiers(KModifier.SEALED)
         .primaryConstructor(
-            FunSpec.constructorBuilder()
+            FunSpec
+                .constructorBuilder()
                 .addParameter(ParameterSpec.builder("stringValue", String::class).build())
                 .build(),
-        )
-        .addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
+        ).addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
         .addTypes(
             this.items.map {
                 val itemName =
                     itemsNameMap[it]?.let {
                         if (it == "Custom") "CustomEnum" else it
                     } ?: error("FIXME: key=$it absent from $itemsNameMap")
-                TypeSpec.objectBuilder(itemName)
+                TypeSpec
+                    .objectBuilder(itemName)
                     .superclass(sealedClassName)
                     .addSuperclassConstructorParameter("%S", it)
                     .build()
             },
-        )
-        .addType(
-            TypeSpec.classBuilder("Custom")
+        ).addType(
+            TypeSpec
+                .classBuilder("Custom")
                 .primaryConstructor(
-                    FunSpec.constructorBuilder()
+                    FunSpec
+                        .constructorBuilder()
                         .addParameter(ParameterSpec.builder("customStringValue", String::class).build())
                         .build(),
-                )
-                .superclass(sealedClassName)
+                ).superclass(sealedClassName)
                 .addSuperclassConstructorParameter("customStringValue")
                 .build(),
-        )
-        .build()
+        ).build()
 }
 
 private fun IntegerWithSpecialValueTyping.buildIntegerWithSpecialValueCustomType(
@@ -123,32 +125,33 @@ private fun IntegerWithSpecialValueTyping.buildIntegerWithSpecialValueCustomType
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
     val sealedClassName = this.getClassName(actionPackageName, className, fieldName)
-    return TypeSpec.classBuilder(typeName)
+    return TypeSpec
+        .classBuilder(typeName)
         .addModifiers(KModifier.SEALED)
         .primaryConstructor(
-            FunSpec.constructorBuilder()
+            FunSpec
+                .constructorBuilder()
                 .addParameter(ParameterSpec.builder("integerValue", Int::class).build())
                 .build(),
-        )
-        .addProperty(PropertySpec.builder("integerValue", Int::class).initializer("integerValue").build())
+        ).addProperty(PropertySpec.builder("integerValue", Int::class).initializer("integerValue").build())
         .addType(
-            TypeSpec.classBuilder("Value")
+            TypeSpec
+                .classBuilder("Value")
                 .primaryConstructor(
-                    FunSpec.constructorBuilder()
+                    FunSpec
+                        .constructorBuilder()
                         .addParameter(ParameterSpec.builder("requestedValue", Int::class).build())
                         .build(),
-                )
-                .superclass(sealedClassName)
+                ).superclass(sealedClassName)
                 .addSuperclassConstructorParameter("requestedValue")
                 .build(),
-        )
-        .addTypes(
+        ).addTypes(
             this.specialValues.map { (name, value) ->
-                TypeSpec.objectBuilder(name.toPascalCase())
+                TypeSpec
+                    .objectBuilder(name.toPascalCase())
                     .superclass(sealedClassName)
                     .addSuperclassConstructorParameter("%L", value)
                     .build()
             },
-        )
-        .build()
+        ).build()
 }

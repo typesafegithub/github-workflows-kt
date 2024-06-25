@@ -27,7 +27,8 @@ import kotlin.time.Duration.Companion.hours
 
 fun main() {
     val bindingsCache =
-        Cache.Builder<ActionCoords, Result<Map<String, Artifact>>>()
+        Cache
+            .Builder<ActionCoords, Result<Map<String, Artifact>>>()
             .expireAfterAccess(1.hours)
             .build()
     val openTelemetry = buildOpenTelemetryConfig(serviceName = "github-actions-bindings")
@@ -100,11 +101,12 @@ private fun Route.artifact(bindingsCache: Cache<ActionCoords, Result<Map<String,
             )
         println("➡️ Requesting ${actionCoords.prettyPrint}")
         val bindingArtifacts =
-            bindingsCache.get(actionCoords) {
-                actionCoords.buildVersionArtifacts()?.let {
-                    Result.success(it)
-                } ?: Result.failure(object : Throwable() {})
-            }.getOrNull()
+            bindingsCache
+                .get(actionCoords) {
+                    actionCoords.buildVersionArtifacts()?.let {
+                        Result.success(it)
+                    } ?: Result.failure(object : Throwable() {})
+                }.getOrNull()
 
         if (bindingArtifacts == null) {
             call.respondText("Not found", status = HttpStatusCode.NotFound)
@@ -140,11 +142,12 @@ private fun Route.artifact(bindingsCache: Cache<ActionCoords, Result<Map<String,
                 version = version,
             )
         val bindingArtifacts =
-            bindingsCache.get(actionCoords) {
-                actionCoords.buildVersionArtifacts()?.let {
-                    Result.success(it)
-                } ?: Result.failure(object : Throwable() {})
-            }.getOrNull()
+            bindingsCache
+                .get(actionCoords) {
+                    actionCoords.buildVersionArtifacts()?.let {
+                        Result.success(it)
+                    } ?: Result.failure(object : Throwable() {})
+                }.getOrNull()
 
         if (bindingArtifacts == null) {
             call.respondText("Not found", status = HttpStatusCode.NotFound)

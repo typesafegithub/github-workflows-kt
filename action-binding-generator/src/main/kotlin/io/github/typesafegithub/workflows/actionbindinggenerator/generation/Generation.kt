@@ -103,7 +103,8 @@ private fun Metadata.removeDeprecatedInputsIfNameClash(): Metadata {
                 clashingInputs
                     .find { it.value.deprecationMessage == null }
                     ?: clashingInputs.first()
-            }.values.associateBy({ it.key }, { it.value })
+            }.values
+            .associateBy({ it.key }, { it.value })
     return this.copy(inputs = newInputs)
 }
 
@@ -114,18 +115,17 @@ private fun generateActionBindingSourceCode(
     className: String,
 ): String {
     val fileSpec =
-        FileSpec.builder(
-            "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
-            className,
-        )
-            .addFileComment(
+        FileSpec
+            .builder(
+                "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
+                className,
+            ).addFileComment(
                 """
                 This file was generated using action-binding-generator. Don't change it by hand, otherwise your
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            )
-            .addType(generateActionClass(metadata, coords, inputTypings, className))
+            ).addType(generateActionClass(metadata, coords, inputTypings, className))
             .addSuppressAnnotation(metadata, coords)
             .indent("    ")
             .build()
@@ -142,15 +142,15 @@ private fun FileSpec.Builder.addSuppressAnnotation(
     val addSuppressionForDeprecation = isDeprecatedInputUsed || coords.deprecatedByVersion != null
 
     addAnnotation(
-        AnnotationSpec.builder(Suppress::class.asClassName())
+        AnnotationSpec
+            .builder(Suppress::class.asClassName())
             .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
             .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
             .apply {
                 if (addSuppressionForDeprecation) {
                     addMember(CodeBlock.of("%S", "DEPRECATION"))
                 }
-            }
-            .build(),
+            }.build(),
     )
 }
 
@@ -159,8 +159,9 @@ private fun generateActionClass(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
-): TypeSpec {
-    return TypeSpec.classBuilder(className)
+): TypeSpec =
+    TypeSpec
+        .classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdoc(actionKdoc(metadata, coords))
         .addMaybeDeprecated(coords)
@@ -173,7 +174,6 @@ private fun generateActionClass(
         .addOutputClassIfNecessary(metadata)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
-}
 
 private fun TypeSpec.Builder.addCustomTypes(
     typings: Map<String, Typing>,
@@ -195,7 +195,8 @@ private fun TypeSpec.Builder.properties(
 ): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         addProperty(
-            PropertySpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
+            PropertySpec
+                .builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
                 .initializer(key.toCamelCase())
                 .annotateDeprecated(input)
                 .build(),
@@ -214,23 +215,26 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
     }
 
     val stepIdConstructorParameter =
-        ParameterSpec.builder("stepId", String::class)
+        ParameterSpec
+            .builder("stepId", String::class)
             .build()
     val propertiesFromOutputs =
         metadata.outputs.map { (key, value) ->
-            PropertySpec.builder(key.toCamelCase(), String::class)
+            PropertySpec
+                .builder(key.toCamelCase(), String::class)
                 .initializer("\"steps.\$stepId.outputs.$key\"")
                 .addKdoc(value.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
                 .build()
         }
     addType(
-        TypeSpec.classBuilder("Outputs")
+        TypeSpec
+            .classBuilder("Outputs")
             .primaryConstructor(
-                FunSpec.constructorBuilder()
+                FunSpec
+                    .constructorBuilder()
                     .addParameter(stepIdConstructorParameter)
                     .build(),
-            )
-            .superclass(OutputsBase)
+            ).superclass(OutputsBase)
             .addSuperclassConstructorParameter("stepId")
             .addProperties(propertiesFromOutputs)
             .build(),
@@ -241,7 +245,8 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
 
 private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: Metadata): TypeSpec.Builder {
     addFunction(
-        FunSpec.builder("buildOutputObject")
+        FunSpec
+            .builder("buildOutputObject")
             .returns(if (metadata.outputs.isEmpty()) OutputsBase else ClassName("", "Outputs"))
             .addModifiers(KModifier.OVERRIDE)
             .addParameter("stepId", String::class)
@@ -256,7 +261,8 @@ private fun PropertySpec.Builder.annotateDeprecated(input: Input) =
     apply {
         if (input.deprecationMessage != null) {
             addAnnotation(
-                AnnotationSpec.builder(Deprecated::class.asClassName())
+                AnnotationSpec
+                    .builder(Deprecated::class.asClassName())
                     .addMember(CodeBlock.of("%S", input.deprecationMessage))
                     .build(),
             )
@@ -264,42 +270,46 @@ private fun PropertySpec.Builder.annotateDeprecated(input: Input) =
     }
 
 private fun Metadata.buildToYamlArgumentsFunction(inputTypings: Map<String, Typing>) =
-    FunSpec.builder("toYamlArguments")
+    FunSpec
+        .builder("toYamlArguments")
         .addModifiers(KModifier.OVERRIDE)
         .returns(LinkedHashMap::class.parameterizedBy(String::class, String::class))
         .addAnnotation(
-            AnnotationSpec.builder(Suppress::class)
+            AnnotationSpec
+                .builder(Suppress::class)
                 .addMember("\"SpreadOperator\"")
                 .build(),
-        )
-        .addCode(linkedMapOfInputs(inputTypings))
+        ).addCode(linkedMapOfInputs(inputTypings))
         .build()
 
 private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeBlock {
     if (inputs.isEmpty()) {
-        return CodeBlock.Builder()
+        return CodeBlock
+            .Builder()
             .add(CodeBlock.of("return %T($CUSTOM_INPUTS)", LinkedHashMap::class))
             .build()
     } else {
-        return CodeBlock.Builder().apply {
-            add("return linkedMapOf(\n")
-            indent()
-            add("*listOfNotNull(\n")
-            indent()
-            inputs.forEach { (key, value) ->
-                val asStringCode = inputTypings.getInputTyping(key).asString()
-                if (!value.shouldBeNonNullInBinding()) {
-                    add("%N?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
-                } else {
-                    add("%S to %N$asStringCode,\n", key, key.toCamelCase())
+        return CodeBlock
+            .Builder()
+            .apply {
+                add("return linkedMapOf(\n")
+                indent()
+                add("*listOfNotNull(\n")
+                indent()
+                inputs.forEach { (key, value) ->
+                    val asStringCode = inputTypings.getInputTyping(key).asString()
+                    if (!value.shouldBeNonNullInBinding()) {
+                        add("%N?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
+                    } else {
+                        add("%S to %N$asStringCode,\n", key, key.toCamelCase())
+                    }
                 }
-            }
-            add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
-            unindent()
-            add(").toTypedArray()\n")
-            unindent()
-            add(")")
-        }.build()
+                add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
+                unindent()
+                add(").toTypedArray()\n")
+                unindent()
+                add(")")
+            }.build()
     }
 }
 
@@ -309,7 +319,8 @@ private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.
     }
     val newerClass = coords.copy(version = coords.deprecatedByVersion)
     addAnnotation(
-        AnnotationSpec.builder(Deprecated::class)
+        AnnotationSpec
+            .builder(Deprecated::class)
             .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")
             .addMember("replaceWith = ReplaceWith(%S)", newerClass.buildActionClassName())
             .build(),
@@ -346,56 +357,58 @@ private fun Metadata.primaryConstructor(
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
-): FunSpec {
-    return FunSpec.constructorBuilder()
+): FunSpec =
+    FunSpec
+        .constructorBuilder()
         .addModifiers(KModifier.PRIVATE)
         .addParameters(buildCommonConstructorParameters(inputTypings, coords, className))
         .build()
-}
 
 private fun Metadata.secondaryConstructor(
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
-): FunSpec {
-    return FunSpec.constructorBuilder()
+): FunSpec =
+    FunSpec
+        .constructorBuilder()
         .addParameter(
-            ParameterSpec.builder("pleaseUseNamedArguments", Unit::class)
+            ParameterSpec
+                .builder("pleaseUseNamedArguments", Unit::class)
                 .addModifiers(KModifier.VARARG)
                 .build(),
-        )
-        .addParameters(buildCommonConstructorParameters(inputTypings, coords, className))
+        ).addParameters(buildCommonConstructorParameters(inputTypings, coords, className))
         .callThisConstructor(
             (inputs.keys.map { it.toCamelCase() } + CUSTOM_INPUTS + CUSTOM_VERSION)
                 .map { CodeBlock.of("%N=%N", it, it) },
-        )
-        .build()
-}
+        ).build()
 
 private fun Metadata.buildCommonConstructorParameters(
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
 ): List<ParameterSpec> =
-    inputs.map { (key, input) ->
-        ParameterSpec.builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
-            .defaultValueIfNullable(input)
-            .addKdoc(input.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
-            .build()
-    }.plus(
-        ParameterSpec.builder(CUSTOM_INPUTS, Types.mapStringString)
-            .defaultValue("mapOf()")
-            .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the binding")
-            .build(),
-    ).plus(
-        ParameterSpec.builder(CUSTOM_VERSION, Types.nullableString)
-            .defaultValue("null")
-            .addKdoc(
-                "Allows overriding action's version, for example to use a specific minor version, " +
-                    "or a newer version that the binding doesn't yet know about",
-            )
-            .build(),
-    )
+    inputs
+        .map { (key, input) ->
+            ParameterSpec
+                .builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
+                .defaultValueIfNullable(input)
+                .addKdoc(input.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
+                .build()
+        }.plus(
+            ParameterSpec
+                .builder(CUSTOM_INPUTS, Types.mapStringString)
+                .defaultValue("mapOf()")
+                .addKdoc("Type-unsafe map where you can put any inputs that are not yet supported by the binding")
+                .build(),
+        ).plus(
+            ParameterSpec
+                .builder(CUSTOM_VERSION, Types.nullableString)
+                .defaultValue("null")
+                .addKdoc(
+                    "Allows overriding action's version, for example to use a specific minor version, " +
+                        "or a newer version that the binding doesn't yet know about",
+                ).build(),
+        )
 
 private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): ParameterSpec.Builder {
     if (!input.shouldBeNonNullInBinding()) {
@@ -424,7 +437,8 @@ private fun Map<String, Typing>.getInputType(
     input: Input,
     coords: ActionCoords,
     className: String,
-) = getInputTyping(key).getClassName(coords.owner.toKotlinPackageName(), className, key)
+) = getInputTyping(key)
+    .getClassName(coords.owner.toKotlinPackageName(), className, key)
     .copy(nullable = !input.shouldBeNonNullInBinding())
 
 // Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
@@ -438,5 +452,7 @@ private val String.nestedCommentsSanitized
             }
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String? =
-    Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile()
+    Path
+        .of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt")
+        .toFile()
         .let { if (it.exists()) it.readText().trim() else null }

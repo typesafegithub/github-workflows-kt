@@ -18,7 +18,8 @@ import kotlin.io.path.name
 
 internal fun OutputStream.createZipFile(contents: Path) =
     ZipOutputStream(this).use { zipOutputStream ->
-        contents.listDirectoryEntries()
+        contents
+            .listDirectoryEntries()
             // Sorting to add ZIP entries in deterministic order, to provide exactly the same ZIP regardless of
             // generation time.
             .sortedBy { it.absolute().toString() }

@@ -63,17 +63,22 @@ public fun ActionCoords.fetchMetadata(
         }
     val list = listOf(actionYmlUrl(gitRef), actionYamlUrl(gitRef))
 
-    return list.firstNotNullOfOrNull { url ->
-        try {
-            println("  ... from $url")
-            fetchUri(URI(url))
-        } catch (e: IOException) {
-            null
-        }
-    }?.let { myYaml.decodeFromString(it) }
+    return list
+        .firstNotNullOfOrNull { url ->
+            try {
+                println("  ... from $url")
+                fetchUri(URI(url))
+            } catch (e: IOException) {
+                null
+            }
+        }?.let { myYaml.decodeFromString(it) }
 }
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String =
-    Path.of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt").toFile().readText().trim()
+    Path
+        .of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt")
+        .toFile()
+        .readText()
+        .trim()
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()

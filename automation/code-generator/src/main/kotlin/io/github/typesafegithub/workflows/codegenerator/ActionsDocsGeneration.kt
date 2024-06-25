@@ -39,7 +39,8 @@ internal fun generateListOfBindingsForDocs(requestsAndBindings: List<Pair<Action
         val uniqueActionsCount =
             requestsAndBindings
                 .map { it.first }
-                .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }.size
+                .groupBy { "${it.actionCoords.owner}/${it.actionCoords.name}" }
+                .size
         val uniqueActionsProvidingTypingsCount =
             requestsAndBindings
                 .groupBy { "${it.first.actionCoords.owner}/${it.first.actionCoords.name}" }
