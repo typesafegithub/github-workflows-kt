@@ -1,7 +1,8 @@
 package io.github.typesafegithub.workflows.shared.internal
 
 fun getGithubTokenOrNull(): String? =
-    System.getenv("GITHUB_TOKEN")
+    System
+        .getenv("GITHUB_TOKEN")
         .also {
             if (it == null) {
                 println(

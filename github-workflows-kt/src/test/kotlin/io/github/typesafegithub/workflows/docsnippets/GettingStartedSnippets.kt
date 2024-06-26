@@ -11,8 +11,9 @@ import io.github.typesafegithub.workflows.dsl.workflow
 // --8<-- [end:getting-started-2]
 import java.io.File
 
-class GettingStartedSnippets : FunSpec({
-    test("gettingStarted") {
+class GettingStartedSnippets :
+    FunSpec({
+        test("gettingStarted") {
         /*
         // --8<-- [start:getting-started-1]
         #!/usr/bin/env kotlin
@@ -21,20 +22,20 @@ class GettingStartedSnippets : FunSpec({
 
         // --8<-- [end:getting-started-1]
          */
-        @Suppress("VariableNaming", "ktlint:standard:backing-property-naming")
-        val __FILE__ = File("")
-        // --8<-- [start:getting-started-3]
+            @Suppress("VariableNaming", "ktlint:standard:backing-property-naming")
+            val __FILE__ = File("")
+            // --8<-- [start:getting-started-3]
 
-        workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = __FILE__,
-        ) {
-            job(id = "test_job", runsOn = UbuntuLatest) {
-                uses(name = "Check out", action = CheckoutV4())
-                run(name = "Print greeting", command = "echo 'Hello world!'")
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = __FILE__,
+            ) {
+                job(id = "test_job", runsOn = UbuntuLatest) {
+                    uses(name = "Check out", action = CheckoutV4())
+                    run(name = "Print greeting", command = "echo 'Hello world!'")
+                }
             }
+            // --8<-- [end:getting-started-3]
         }
-        // --8<-- [end:getting-started-3]
-    }
-})
+    })

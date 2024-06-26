@@ -1,7 +1,9 @@
 package io.github.typesafegithub.workflows.domain
 
 public sealed interface Shell {
-    public data class Custom(val value: String) : Shell
+    public data class Custom(
+        val value: String,
+    ) : Shell
 
     public object Bash : Shell
 

@@ -108,8 +108,12 @@ public fun Workflow.generateYaml(
             }
 
             val targetFilePath =
-                gitRootDir.resolve(".github").resolve("workflows").resolve(targetFileName)
-                    .relativeToAbsolute(gitRootDir).invariantSeparatorsPathString
+                gitRootDir
+                    .resolve(".github")
+                    .resolve("workflows")
+                    .resolve(targetFileName)
+                    .relativeToAbsolute(gitRootDir)
+                    .invariantSeparatorsPathString
 
             val consistencyCheckJob =
                 this.toBuilder().job(

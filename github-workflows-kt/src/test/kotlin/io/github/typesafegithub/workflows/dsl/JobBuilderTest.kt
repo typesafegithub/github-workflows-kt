@@ -11,113 +11,115 @@ import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldBe
 import java.nio.file.Paths
 
-class JobBuilderTest : FunSpec({
-    val gitRootDir =
-        tempdir().also {
-            it.resolve(".git").mkdirs()
-        }.toPath()
-    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+class JobBuilderTest :
+    FunSpec({
+        val gitRootDir =
+            tempdir()
+                .also {
+                    it.resolve(".git").mkdirs()
+                }.toPath()
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
 
-    context("job builder") {
-        test("with custom step arguments") {
-            // Given
-            val workflow =
-                workflow(
-                    name = "Test workflow",
-                    on = listOf(Push()),
-                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
-                ) {
-                    job(
-                        id = "test_job",
-                        runsOn = RunnerType.UbuntuLatest,
+        context("job builder") {
+            test("with custom step arguments") {
+                // Given
+                val workflow =
+                    workflow(
+                        name = "Test workflow",
+                        on = listOf(Push()),
+                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
                     ) {
-                        run(
-                            name = "Hello world!",
-                            command = "echo 'hello!'",
-                            _customArguments = mapOf("foo0" to true),
-                        )
-                        run(
-                            command = "echo 'hello!'",
-                            _customArguments = mapOf("foo1" to true),
-                        )
-                        uses(
-                            name = "Check out",
-                            action = CheckoutV4(),
-                            _customArguments = mapOf("foo2" to true),
-                        )
-                        uses(
-                            action = CheckoutV4(),
-                            _customArguments = mapOf("foo3" to true),
-                        )
-                        uses(
-                            name = "Set up Java",
-                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
-                            _customArguments = mapOf("foo4" to true),
-                        )
-                        uses(
-                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
-                            _customArguments = mapOf("foo5" to true),
-                        )
+                        job(
+                            id = "test_job",
+                            runsOn = RunnerType.UbuntuLatest,
+                        ) {
+                            run(
+                                name = "Hello world!",
+                                command = "echo 'hello!'",
+                                _customArguments = mapOf("foo0" to true),
+                            )
+                            run(
+                                command = "echo 'hello!'",
+                                _customArguments = mapOf("foo1" to true),
+                            )
+                            uses(
+                                name = "Check out",
+                                action = CheckoutV4(),
+                                _customArguments = mapOf("foo2" to true),
+                            )
+                            uses(
+                                action = CheckoutV4(),
+                                _customArguments = mapOf("foo3" to true),
+                            )
+                            uses(
+                                name = "Set up Java",
+                                action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
+                                _customArguments = mapOf("foo4" to true),
+                            )
+                            uses(
+                                action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
+                                _customArguments = mapOf("foo5" to true),
+                            )
+                        }
                     }
-                }
 
-            // When
-            val job = workflow.jobs.first()
+                // When
+                val job = workflow.jobs.first()
 
-            // Then
-            job.steps.forEachIndexed { index, step ->
-                step._customArguments shouldBe mapOf("foo$index" to true)
-            }
-        }
-    }
-
-    context("conditions") {
-        test("'if' and 'condition' are both set") {
-            shouldThrow<IllegalArgumentException> {
-                workflow(
-                    name = "test",
-                    on = listOf(Push()),
-                    sourceFile = sourceTempFile,
-                ) {
-                    job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "a", `if` = "b") {
-                        run(command = "ls")
-                    }
+                // Then
+                job.steps.forEachIndexed { index, step ->
+                    step._customArguments shouldBe mapOf("foo$index" to true)
                 }
             }
         }
 
-        test("use 'if'") {
-            // When
-            val workflow =
-                workflow(
-                    name = "test",
-                    on = listOf(Push()),
-                    sourceFile = sourceTempFile,
-                ) {
-                    job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
-                        run(command = "ls")
+        context("conditions") {
+            test("'if' and 'condition' are both set") {
+                shouldThrow<IllegalArgumentException> {
+                    workflow(
+                        name = "test",
+                        on = listOf(Push()),
+                        sourceFile = sourceTempFile,
+                    ) {
+                        job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "a", `if` = "b") {
+                            run(command = "ls")
+                        }
                     }
                 }
+            }
 
-            // Then
-            workflow.jobs[0].condition shouldBe "b"
-        }
-
-        test("use 'condition'") {
-            // When
-            val workflow =
-                workflow(
-                    name = "test",
-                    on = listOf(Push()),
-                    sourceFile = sourceTempFile,
-                ) {
-                    job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
-                        run(command = "ls")
+            test("use 'if'") {
+                // When
+                val workflow =
+                    workflow(
+                        name = "test",
+                        on = listOf(Push()),
+                        sourceFile = sourceTempFile,
+                    ) {
+                        job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
+                            run(command = "ls")
+                        }
                     }
-                }
 
-            // Then
-            workflow.jobs[0].condition shouldBe "b"
+                // Then
+                workflow.jobs[0].condition shouldBe "b"
+            }
+
+            test("use 'condition'") {
+                // When
+                val workflow =
+                    workflow(
+                        name = "test",
+                        on = listOf(Push()),
+                        sourceFile = sourceTempFile,
+                    ) {
+                        job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
+                            run(command = "ls")
+                        }
+                    }
+
+                // Then
+                workflow.jobs[0].condition shouldBe "b"
+            }
         }
-    }
-})
+    })

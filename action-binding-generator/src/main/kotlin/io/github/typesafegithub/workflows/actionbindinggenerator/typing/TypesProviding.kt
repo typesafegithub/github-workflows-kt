@@ -27,8 +27,7 @@ internal fun ActionCoords.provideTypes(
     (
         this.fetchTypingMetadata(metadataRevision, fetchUri)
             ?: this.toMajorVersion().fetchFromTypingsFromCatalog(fetchUri)
-    )
-        ?.let { Pair(it.first.toTypesMap(), it.second) }
+    )?.let { Pair(it.first.toTypesMap(), it.second) }
         ?: Pair(emptyMap(), null)
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
@@ -73,8 +72,7 @@ private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String =
     (
         fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
             ?: fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
-    )
-        ?.let { Pair(it, TYPING_CATALOG) }
+    )?.let { Pair(it, TYPING_CATALOG) }
 
 private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) -> String): ActionTypes? {
     val metadataUrl = this.catalogMetadata()
@@ -114,16 +112,17 @@ private fun fetchTypingsFromUrl(
 }
 
 internal fun getCommitHash(actionCoords: ActionCoords): String? =
-    Path.of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "commit-hash.txt")
-        .toFile().let {
+    Path
+        .of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "commit-hash.txt")
+        .toFile()
+        .let {
             if (it.exists()) it.readText().trim() else null
         }
 
-internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
-    return inputs.mapValues { (key, value) ->
+internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
+    inputs.mapValues { (key, value) ->
         value.toTyping(key)
     }
-}
 
 private fun ActionCoords.toMajorVersion(): ActionCoords = this.copy(version = this.version.substringBefore("."))
 

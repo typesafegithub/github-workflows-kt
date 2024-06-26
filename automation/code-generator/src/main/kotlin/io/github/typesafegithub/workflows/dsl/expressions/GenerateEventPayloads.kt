@@ -56,7 +56,8 @@ private val fakeList = ClassName(EXPRESSIONS, "FakeList")
 private val listOfStrings = List::class.asClassName().parameterizedBy(String::class.asClassName())
 
 private val annotationFileSuppress =
-    AnnotationSpec.builder(Suppress::class)
+    AnnotationSpec
+        .builder(Suppress::class)
         .addMember("%S", "ObjectPropertyNaming")
         .build()
 
@@ -89,17 +90,18 @@ fun PayloadEventParams.findAllObjects(
     val nothing = emptyMap<String, JsonObject>()
 
     val result =
-        element.flatMap { (subpath, entry) ->
-            when (entry) {
-                is JsonObject -> findAllObjects(entry, "$path.$subpath")
-                is JsonArray -> {
-                    (entry.firstOrNull() as? JsonObject)
-                        ?.let { firtSchild -> findAllObjects(firtSchild, "$path/$subpath") }
-                        ?: nothing
-                }
-                else -> nothing
-            }.toList()
-        }.toMap()
+        element
+            .flatMap { (subpath, entry) ->
+                when (entry) {
+                    is JsonObject -> findAllObjects(entry, "$path.$subpath")
+                    is JsonArray -> {
+                        (entry.firstOrNull() as? JsonObject)
+                            ?.let { firtSchild -> findAllObjects(firtSchild, "$path/$subpath") }
+                            ?: nothing
+                    }
+                    else -> nothing
+                }.toList()
+            }.toMap()
     return result + Pair(path, element)
 }
 
@@ -111,7 +113,8 @@ fun generateObjectTypes(
         objects.map { (key, jsonObject) ->
             jsonObject.generateObjectType(key, filename)
         }
-    return FileSpec.builder(PACKAGE, filename)
+    return FileSpec
+        .builder(PACKAGE, filename)
         .addFileComment(fileComment)
         .addAnnotation(annotationFileSuppress)
         .addTypes(types)
@@ -132,7 +135,8 @@ fun JsonObject.generateObjectType(
 ): TypeSpec {
     println("Generating class ${payloadClassName(key, filename)} : ExpressionContext(\"github.$key\")")
     val properties = mapNotNull { it.generatePropertySpec(key, filename) }
-    return TypeSpec.objectBuilder(payloadClassName(key, filename))
+    return TypeSpec
+        .objectBuilder(payloadClassName(key, filename))
         .addProperties(properties)
         .build()
 }
@@ -145,17 +149,20 @@ fun Map.Entry<String, JsonElement>.generatePropertySpec(
 
     return when (element) {
         is JsonPrimitive -> {
-            PropertySpec.builder(child, String::class.asClassName())
+            PropertySpec
+                .builder(child, String::class.asClassName())
                 .addModifiers(KModifier.CONST)
                 .initializer("%S", "github.$key.$child")
                 .build()
         }
         is JsonObject ->
-            PropertySpec.builder(child, ClassName(PACKAGE, payloadClassName("$key.$child", filename)))
+            PropertySpec
+                .builder(child, ClassName(PACKAGE, payloadClassName("$key.$child", filename)))
                 .initializer("%L", payloadClassName("$key.$child", filename))
                 .build()
         is JsonArray -> {
-            PropertySpec.builder(child, listOfStrings)
+            PropertySpec
+                .builder(child, listOfStrings)
                 .initializer("%T(%S)", fakeList, "github.$key.$child")
                 .build()
         }

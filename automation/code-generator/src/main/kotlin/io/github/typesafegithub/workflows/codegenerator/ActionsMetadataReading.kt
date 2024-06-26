@@ -17,7 +17,9 @@ internal fun readActionsMetadata(): List<ActionBindingRequest> =
 private fun readLocalActionTypings(): List<ActionBindingRequest> {
     val actionTypingsDirectory = Path.of("actions")
 
-    return Files.walk(actionTypingsDirectory).asSequence()
+    return Files
+        .walk(actionTypingsDirectory)
+        .asSequence()
         .filter { it.isRegularFile() }
         .filter { it.name == "action" }
         .map {

@@ -31,11 +31,12 @@ private suspend fun fetchGithubRefs(
     url: String,
     githubToken: String?,
 ): List<GithubRef> =
-    httpClient.get(urlString = url) {
-        if (githubToken != null) {
-            bearerAuth(githubToken)
-        }
-    }.body()
+    httpClient
+        .get(urlString = url) {
+            if (githubToken != null) {
+                bearerAuth(githubToken)
+            }
+        }.body()
 
 private fun apiTagsUrl(
     owner: String,

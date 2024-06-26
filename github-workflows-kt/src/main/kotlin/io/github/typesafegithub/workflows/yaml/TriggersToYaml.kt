@@ -51,14 +51,13 @@ internal fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
     )
 
 @InternalGithubActionsApi
-public fun Trigger.toMap(): Map<String, List<String>> {
-    return when (this) {
+public fun Trigger.toMap(): Map<String, List<String>> =
+    when (this) {
         is Push -> toMap()
         is PullRequest -> toMap()
         is PullRequestTarget -> toMap()
         else -> emptyMap()
     }
-}
 
 private fun Push.toMap() =
     mapOfNotNullValues(

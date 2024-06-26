@@ -264,9 +264,10 @@ private suspend inline fun <reified T> PrCreationContext.gitHubApiRequest(
     urlSuffix: String,
     block: HttpRequestBuilder.() -> Unit = {},
 ): T =
-    httpClient.request(urlString = "https://api.github.com/repos/$githubRepoOwner/$githubRepoName$urlSuffix") {
-        bearerAuth(githubToken)
-        accept(ContentType(contentType = "application", contentSubtype = "vnd.github+json"))
-        header(key = "X-GitHub-Api-Version", value = "2022-11-28")
-        block()
-    }.body()
+    httpClient
+        .request(urlString = "https://api.github.com/repos/$githubRepoOwner/$githubRepoName$urlSuffix") {
+            bearerAuth(githubToken)
+            accept(ContentType(contentType = "application", contentSubtype = "vnd.github+json"))
+            header(key = "X-GitHub-Api-Version", value = "2022-11-28")
+            block()
+        }.body()

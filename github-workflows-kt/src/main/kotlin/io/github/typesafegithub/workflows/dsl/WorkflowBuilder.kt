@@ -219,7 +219,8 @@ public fun workflow(
     }
     workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
-    return workflowBuilder.build()
+    return workflowBuilder
+        .build()
         .also {
             if (targetFileName != null) {
                 it.writeToFile(

@@ -48,8 +48,8 @@ internal suspend fun Workflow.availableVersionsForEachAction(
     }
 }
 
-internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String?): List<Version>? {
-    return try {
+internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String?): List<Version>? =
+    try {
         fetchAvailableVersions(
             owner = actionOwner,
             name = actionName.substringBefore('/'),
@@ -61,31 +61,32 @@ internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: 
         )
         null
     }
-}
 
 internal fun Workflow.groupStepsByAction(): List<Pair<RegularAction<*>, List<ActionStep<*>>>> {
     val actionSteps =
         jobs
             .flatMap { job ->
                 job.steps
-            }
-            .filterIsInstance<ActionStep<*>>()
-    return actionSteps.groupBy { step ->
-        when (val action = step.action) {
-            is RegularAction<*> -> {
-                "${action.actionOwner}/${action.actionName}@${action.actionVersion}"
-            }
+            }.filterIsInstance<ActionStep<*>>()
+    return actionSteps
+        .groupBy { step ->
+            when (val action = step.action) {
+                is RegularAction<*> -> {
+                    "${action.actionOwner}/${action.actionName}@${action.actionVersion}"
+                }
 
-            else -> {
-                null
+                else -> {
+                    null
+                }
+            }
+        }.values
+        .toList()
+        .mapNotNull { list ->
+            val action = list.firstNotNullOfOrNull { it.action as? RegularAction<*> }
+            action?.let {
+                it to list
             }
         }
-    }.values.toList().mapNotNull { list ->
-        val action = list.firstNotNullOfOrNull { it.action as? RegularAction<*> }
-        action?.let {
-            it to list
-        }
-    }
 }
 
 internal fun RegularAction<*>.mavenCoordinatesForAction(version: Version? = null): String {

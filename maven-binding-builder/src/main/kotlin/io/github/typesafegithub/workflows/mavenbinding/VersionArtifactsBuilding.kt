@@ -5,9 +5,13 @@ import java.security.MessageDigest
 
 sealed interface Artifact
 
-data class TextArtifact(val data: String) : Artifact
+data class TextArtifact(
+    val data: String,
+) : Artifact
 
-data class JarArtifact(val data: ByteArray) : Artifact
+data class JarArtifact(
+    val data: ByteArray,
+) : Artifact
 
 fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
     val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version) ?: return null

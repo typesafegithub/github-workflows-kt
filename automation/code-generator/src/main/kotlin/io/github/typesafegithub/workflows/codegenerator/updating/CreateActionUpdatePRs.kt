@@ -181,7 +181,12 @@ private data class GithubTagObject(
 )
 
 private fun ActionCoords.buildCommitHashFilePath(): Path =
-    Path.of("actions").resolve(owner).resolve(name).resolve(version).resolve("commit-hash.txt")
+    Path
+        .of("actions")
+        .resolve(owner)
+        .resolve(name)
+        .resolve(version)
+        .resolve("commit-hash.txt")
 
 internal val httpClient by lazy {
     HttpClient {

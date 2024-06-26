@@ -11,7 +11,8 @@ internal suspend fun buildMavenMetadataFile(
     githubToken: String,
 ): String {
     val lastUpdated =
-        DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+        DateTimeFormatter
+            .ofPattern("yyyyMMddHHmmss")
             .withZone(ZoneId.systemDefault())
             .format(Instant.now())
     val availableMajorVersions =
