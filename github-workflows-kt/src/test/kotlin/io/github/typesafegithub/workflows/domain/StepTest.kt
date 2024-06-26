@@ -17,7 +17,12 @@ class StepTest :
             step0.outcome eq Status.Success shouldBe "steps.step-0.outcome == 'success'"
         }
         test("step.conclusion") {
-            val someStep: Step = ActionStep(id = "whatever", action = CheckoutV4(), outputs = Action.Outputs("whatever"))
+            val someStep: Step =
+                ActionStep(
+                    id = "whatever",
+                    action = CheckoutV4(),
+                    outputs = Action.Outputs("whatever"),
+                )
             someStep.conclusion.toString() shouldBe "steps.whatever.conclusion"
             someStep.conclusion eq Status.Failure shouldBe "steps.whatever.conclusion == 'failure'"
             someStep.conclusion eq Status.Cancelled shouldBe "steps.whatever.conclusion == 'cancelled'"

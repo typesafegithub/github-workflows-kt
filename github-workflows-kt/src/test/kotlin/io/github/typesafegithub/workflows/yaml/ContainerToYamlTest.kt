@@ -88,7 +88,8 @@ class ContainerToYamlTest :
             ).toYaml() shouldBe
                 mapOf(
                     "image" to "postgres",
-                    "options" to "--health-cmd \"pg_isready\" --health-interval 10s --health-timeout 5s --health-retries 5",
+                    "options" to "--health-cmd \"pg_isready\" " +
+                        "--health-interval 10s --health-timeout 5s --health-retries 5",
                     "env" to mapOf("POSTGRES_PASSWORD" to "postgres"),
                 )
 
