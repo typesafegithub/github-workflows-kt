@@ -949,7 +949,9 @@ and in case of actions without explicit outputs, use the <code>Actions.Outputs</
 
 <span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">buildOutputObject</span><span class="p">(</span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span>
 
-<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Action</span><span class="p">.</span><span class="na">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">Outputs</span><span class="p">(</span>
+<span class="w">        </span><span class="n">stepId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Action</span><span class="p">.</span><span class="na">Outputs</span><span class="p">(</span><span class="n">stepId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">coolOutput</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"steps.</span><span class="si">$</span><span class="n">stepId</span><span class="s">.outputs.coolOutput"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
@@ -1082,7 +1084,7 @@ use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/g
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "2.1.1"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "2.2.0"}</script>
     
     
       <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
