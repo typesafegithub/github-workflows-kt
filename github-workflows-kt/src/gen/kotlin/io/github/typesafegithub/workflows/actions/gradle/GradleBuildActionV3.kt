@@ -72,6 +72,28 @@ import kotlin.collections.toTypedArray
  * 'https://gradle.com/terms-of-service' or 'https://gradle.com/help/legal-terms-of-use'.
  * @param buildScanTermsOfUseAgree Indicate that you agree to the Build Scan® terms of use. This
  * input value must be "yes".
+ * @param develocityAccessKey Develocity access key. Should be set to a secret containing the
+ * Develocity Access key.
+ * @param develocityTokenExpiry The Develocity short-lived access tokens expiry in hours. Default is
+ * 2 hours.
+ * @param develocityInjectionEnabled Enables Develocity injection.
+ * @param develocityUrl The URL for the Develocity server.
+ * @param develocityAllowUntrustedServer Allow communication with an untrusted server; set to _true_
+ * if your Develocity instance is using a self-signed.
+ * @param develocityCaptureFileFingerprints Enables capturing the paths and content hashes of each
+ * individual input file.
+ * @param develocityEnforceUrl Enforce the configured Develocity URL over a URL configured in the
+ * project's build; set to _true_ to enforce publication of build scans to the configured Develocity
+ * URL.
+ * @param develocityPluginVersion The version of the Develocity Gradle plugin to apply.
+ * @param develocityCcudPluginVersion The version of the Common Custom User Data Gradle plugin to
+ * apply, if any.
+ * @param gradlePluginRepositoryUrl The URL of the repository to use when resolving the Develocity
+ * and CCUD plugins; the Gradle Plugin Portal is used by default.
+ * @param gradlePluginRepositoryUsername The username for the repository URL to use when resolving
+ * the Develocity and CCUD.
+ * @param gradlePluginRepositoryPassword The password for the repository URL to use when resolving
+ * the Develocity and CCUD plugins; Consider using secrets to pass the value to this variable.
  * @param validateWrappers When 'true', the action will perform the 'wrapper-validation' action
  * automatically.
  * If the wrapper checksums are not valid, the action will fail.
@@ -185,6 +207,58 @@ public data class GradleBuildActionV3 private constructor(
      */
     public val buildScanTermsOfUseAgree: String? = null,
     /**
+     * Develocity access key. Should be set to a secret containing the Develocity Access key.
+     */
+    public val develocityAccessKey: String? = null,
+    /**
+     * The Develocity short-lived access tokens expiry in hours. Default is 2 hours.
+     */
+    public val develocityTokenExpiry: Int? = null,
+    /**
+     * Enables Develocity injection.
+     */
+    public val develocityInjectionEnabled: Boolean? = null,
+    /**
+     * The URL for the Develocity server.
+     */
+    public val develocityUrl: String? = null,
+    /**
+     * Allow communication with an untrusted server; set to _true_ if your Develocity instance is
+     * using a self-signed.
+     */
+    public val develocityAllowUntrustedServer: Boolean? = null,
+    /**
+     * Enables capturing the paths and content hashes of each individual input file.
+     */
+    public val develocityCaptureFileFingerprints: Boolean? = null,
+    /**
+     * Enforce the configured Develocity URL over a URL configured in the project's build; set to
+     * _true_ to enforce publication of build scans to the configured Develocity URL.
+     */
+    public val develocityEnforceUrl: Boolean? = null,
+    /**
+     * The version of the Develocity Gradle plugin to apply.
+     */
+    public val develocityPluginVersion: String? = null,
+    /**
+     * The version of the Common Custom User Data Gradle plugin to apply, if any.
+     */
+    public val develocityCcudPluginVersion: String? = null,
+    /**
+     * The URL of the repository to use when resolving the Develocity and CCUD plugins; the Gradle
+     * Plugin Portal is used by default.
+     */
+    public val gradlePluginRepositoryUrl: String? = null,
+    /**
+     * The username for the repository URL to use when resolving the Develocity and CCUD.
+     */
+    public val gradlePluginRepositoryUsername: String? = null,
+    /**
+     * The password for the repository URL to use when resolving the Develocity and CCUD plugins;
+     * Consider using secrets to pass the value to this variable.
+     */
+    public val gradlePluginRepositoryPassword: String? = null,
+    /**
      * When 'true', the action will perform the 'wrapper-validation' action automatically.
      * If the wrapper checksums are not valid, the action will fail.
      */
@@ -254,6 +328,18 @@ public data class GradleBuildActionV3 private constructor(
         buildScanPublish: Boolean? = null,
         buildScanTermsOfUseUrl: String? = null,
         buildScanTermsOfUseAgree: String? = null,
+        develocityAccessKey: String? = null,
+        develocityTokenExpiry: Int? = null,
+        develocityInjectionEnabled: Boolean? = null,
+        develocityUrl: String? = null,
+        develocityAllowUntrustedServer: Boolean? = null,
+        develocityCaptureFileFingerprints: Boolean? = null,
+        develocityEnforceUrl: Boolean? = null,
+        develocityPluginVersion: String? = null,
+        develocityCcudPluginVersion: String? = null,
+        gradlePluginRepositoryUrl: String? = null,
+        gradlePluginRepositoryUsername: String? = null,
+        gradlePluginRepositoryPassword: String? = null,
         validateWrappers: Boolean? = null,
         buildScanTermsOfServiceUrl: String? = null,
         buildScanTermsOfServiceAgree: String? = null,
@@ -274,7 +360,18 @@ public data class GradleBuildActionV3 private constructor(
             dependencyGraphContinueOnFailure=dependencyGraphContinueOnFailure,
             artifactRetentionDays=artifactRetentionDays, buildScanPublish=buildScanPublish,
             buildScanTermsOfUseUrl=buildScanTermsOfUseUrl,
-            buildScanTermsOfUseAgree=buildScanTermsOfUseAgree, validateWrappers=validateWrappers,
+            buildScanTermsOfUseAgree=buildScanTermsOfUseAgree,
+            develocityAccessKey=develocityAccessKey, develocityTokenExpiry=develocityTokenExpiry,
+            develocityInjectionEnabled=develocityInjectionEnabled, develocityUrl=develocityUrl,
+            develocityAllowUntrustedServer=develocityAllowUntrustedServer,
+            develocityCaptureFileFingerprints=develocityCaptureFileFingerprints,
+            develocityEnforceUrl=develocityEnforceUrl,
+            develocityPluginVersion=develocityPluginVersion,
+            develocityCcudPluginVersion=develocityCcudPluginVersion,
+            gradlePluginRepositoryUrl=gradlePluginRepositoryUrl,
+            gradlePluginRepositoryUsername=gradlePluginRepositoryUsername,
+            gradlePluginRepositoryPassword=gradlePluginRepositoryPassword,
+            validateWrappers=validateWrappers,
             buildScanTermsOfServiceUrl=buildScanTermsOfServiceUrl,
             buildScanTermsOfServiceAgree=buildScanTermsOfServiceAgree,
             generateJobSummary=generateJobSummary, arguments=arguments,
@@ -304,6 +401,20 @@ public data class GradleBuildActionV3 private constructor(
             buildScanPublish?.let { "build-scan-publish" to it.toString() },
             buildScanTermsOfUseUrl?.let { "build-scan-terms-of-use-url" to it },
             buildScanTermsOfUseAgree?.let { "build-scan-terms-of-use-agree" to it },
+            develocityAccessKey?.let { "develocity-access-key" to it },
+            develocityTokenExpiry?.let { "develocity-token-expiry" to it.toString() },
+            develocityInjectionEnabled?.let { "develocity-injection-enabled" to it.toString() },
+            develocityUrl?.let { "develocity-url" to it },
+            develocityAllowUntrustedServer?.let { "develocity-allow-untrusted-server" to
+                    it.toString() },
+            develocityCaptureFileFingerprints?.let { "develocity-capture-file-fingerprints" to
+                    it.toString() },
+            develocityEnforceUrl?.let { "develocity-enforce-url" to it.toString() },
+            develocityPluginVersion?.let { "develocity-plugin-version" to it },
+            develocityCcudPluginVersion?.let { "develocity-ccud-plugin-version" to it },
+            gradlePluginRepositoryUrl?.let { "gradle-plugin-repository-url" to it },
+            gradlePluginRepositoryUsername?.let { "gradle-plugin-repository-username" to it },
+            gradlePluginRepositoryPassword?.let { "gradle-plugin-repository-password" to it },
             validateWrappers?.let { "validate-wrappers" to it.toString() },
             buildScanTermsOfServiceUrl?.let { "build-scan-terms-of-service-url" to it },
             buildScanTermsOfServiceAgree?.let { "build-scan-terms-of-service-agree" to it },
