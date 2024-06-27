@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.docker
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -31,6 +29,7 @@ import kotlin.collections.toTypedArray
  *
  * @param addHosts List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
  * @param allow List of extra privileged entitlement (e.g., network.host,security.insecure)
+ * @param annotations List of annotation to set to the image
  * @param attests List of attestation parameters (e.g., type=sbom,generator=image)
  * @param buildArgs List of build-time variables
  * @param buildContexts List of additional build contexts (e.g., name=path)
@@ -55,6 +54,8 @@ import kotlin.collections.toTypedArray
  * @param push Push is a shorthand for --output=type=registry
  * @param sbom Generate SBOM attestation for the build (shorthand for --attest=type=sbom)
  * @param secrets List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)
+ * @param secretEnvs List of secret env vars to expose to the build (e.g., key=envname,
+ * MY_SECRET=MY_ENV_VAR)
  * @param secretFiles List of secret files to expose to the build (e.g., key=filename,
  * MY_SECRET=./secret.txt)
  * @param shmSize Size of /dev/shm (e.g., 2g)
@@ -68,11 +69,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: BuildPushActionV6",
-    replaceWith = ReplaceWith("BuildPushActionV6"),
-)
-public data class BuildPushActionV3 private constructor(
+public data class BuildPushActionV6 private constructor(
     /**
      * List of a customs host-to-IP mapping (e.g., docker:10.180.0.1)
      */
@@ -81,6 +78,10 @@ public data class BuildPushActionV3 private constructor(
      * List of extra privileged entitlement (e.g., network.host,security.insecure)
      */
     public val allow: List<String>? = null,
+    /**
+     * List of annotation to set to the image
+     */
+    public val annotations: List<String>? = null,
     /**
      * List of attestation parameters (e.g., type=sbom,generator=image)
      */
@@ -167,6 +168,10 @@ public data class BuildPushActionV3 private constructor(
      */
     public val secrets: List<String>? = null,
     /**
+     * List of secret env vars to expose to the build (e.g., key=envname, MY_SECRET=MY_ENV_VAR)
+     */
+    public val secretEnvs: List<String>? = null,
+    /**
      * List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)
      */
     public val secretFiles: List<String>? = null,
@@ -203,12 +208,13 @@ public data class BuildPushActionV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<BuildPushActionV3.Outputs>("docker", "build-push-action", _customVersion ?: "v3")
+) : RegularAction<BuildPushActionV6.Outputs>("docker", "build-push-action", _customVersion ?: "v6")
         {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         addHosts: List<String>? = null,
         allow: List<String>? = null,
+        annotations: List<String>? = null,
         attests: List<String>? = null,
         buildArgs: List<String>? = null,
         buildContexts: List<String>? = null,
@@ -230,6 +236,7 @@ public data class BuildPushActionV3 private constructor(
         push: Boolean? = null,
         sbom: Boolean? = null,
         secrets: List<String>? = null,
+        secretEnvs: List<String>? = null,
         secretFiles: List<String>? = null,
         shmSize: String? = null,
         ssh: List<String>? = null,
@@ -239,12 +246,13 @@ public data class BuildPushActionV3 private constructor(
         githubToken: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(addHosts=addHosts, allow=allow, attests=attests, buildArgs=buildArgs,
-            buildContexts=buildContexts, builder=builder, cacheFrom=cacheFrom, cacheTo=cacheTo,
-            cgroupParent=cgroupParent, context=context, `file`=`file`, labels=labels, load=load,
-            network=network, noCache=noCache, noCacheFilters=noCacheFilters, outputs=outputs,
-            platforms=platforms, provenance=provenance, pull=pull, push=push, sbom=sbom,
-            secrets=secrets, secretFiles=secretFiles, shmSize=shmSize, ssh=ssh, tags=tags,
+    ) : this(addHosts=addHosts, allow=allow, annotations=annotations, attests=attests,
+            buildArgs=buildArgs, buildContexts=buildContexts, builder=builder, cacheFrom=cacheFrom,
+            cacheTo=cacheTo, cgroupParent=cgroupParent, context=context, `file`=`file`,
+            labels=labels, load=load, network=network, noCache=noCache,
+            noCacheFilters=noCacheFilters, outputs=outputs, platforms=platforms,
+            provenance=provenance, pull=pull, push=push, sbom=sbom, secrets=secrets,
+            secretEnvs=secretEnvs, secretFiles=secretFiles, shmSize=shmSize, ssh=ssh, tags=tags,
             target=target, ulimit=ulimit, githubToken=githubToken, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
@@ -253,6 +261,7 @@ public data class BuildPushActionV3 private constructor(
         *listOfNotNull(
             addHosts?.let { "add-hosts" to it.joinToString("\n") },
             allow?.let { "allow" to it.joinToString("\n") },
+            annotations?.let { "annotations" to it.joinToString("\n") },
             attests?.let { "attests" to it.joinToString(",") },
             buildArgs?.let { "build-args" to it.joinToString("\n") },
             buildContexts?.let { "build-contexts" to it.joinToString("\n") },
@@ -274,6 +283,7 @@ public data class BuildPushActionV3 private constructor(
             push?.let { "push" to it.toString() },
             sbom?.let { "sbom" to it.toString() },
             secrets?.let { "secrets" to it.joinToString("\n") },
+            secretEnvs?.let { "secret-envs" to it.joinToString("\n") },
             secretFiles?.let { "secret-files" to it.joinToString("\n") },
             shmSize?.let { "shm-size" to it },
             ssh?.let { "ssh" to it.joinToString("\n") },

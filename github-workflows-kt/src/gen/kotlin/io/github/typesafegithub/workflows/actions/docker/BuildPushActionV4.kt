@@ -69,8 +69,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: BuildPushActionV5",
-    replaceWith = ReplaceWith("BuildPushActionV5"),
+    message = "This action has a newer major version: BuildPushActionV6",
+    replaceWith = ReplaceWith("BuildPushActionV6"),
 )
 public data class BuildPushActionV4 private constructor(
     /**
