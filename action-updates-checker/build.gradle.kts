@@ -2,7 +2,7 @@ plugins {
     buildsrc.convention.`kotlin-jvm`
     buildsrc.convention.publishing
 
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.14.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.15.0"
 }
 
 group = rootProject.group
