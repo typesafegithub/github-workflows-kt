@@ -45,6 +45,8 @@ import kotlin.collections.toTypedArray
  * same name as `avd-name` - `true` or `false`
  * @param emulatorBootTimeout Emulator boot timeout in seconds. If it takes longer to boot, the
  * action would fail - e.g. `300` for 5 minutes
+ * @param emulatorPort Port to run emulator on, allows to run multiple emulators on the same
+ * physical machine
  * @param emulatorOptions command-line options used when launching the emulator - e.g.
  * `-no-window -no-snapshot -camera-back emulated`
  * @param disableAnimations whether to disable animations - true or false
@@ -123,6 +125,10 @@ public data class AndroidEmulatorRunnerV2 private constructor(
      */
     public val emulatorBootTimeout: Int? = null,
     /**
+     * Port to run emulator on, allows to run multiple emulators on the same physical machine
+     */
+    public val emulatorPort: Int? = null,
+    /**
      * command-line options used when launching the emulator - e.g.
      * `-no-window -no-snapshot -camera-back emulated`
      */
@@ -200,6 +206,7 @@ public data class AndroidEmulatorRunnerV2 private constructor(
         avdName: String? = null,
         forceAvdCreation: Boolean? = null,
         emulatorBootTimeout: Int? = null,
+        emulatorPort: Int? = null,
         emulatorOptions: String? = null,
         disableAnimations: Boolean? = null,
         disableSpellchecker: Boolean? = null,
@@ -217,12 +224,13 @@ public data class AndroidEmulatorRunnerV2 private constructor(
     ) : this(apiLevel=apiLevel, target=target, arch=arch, profile=profile, cores=cores,
             ramSize=ramSize, heapSize=heapSize, sdcardPathOrSize=sdcardPathOrSize,
             diskSize=diskSize, avdName=avdName, forceAvdCreation=forceAvdCreation,
-            emulatorBootTimeout=emulatorBootTimeout, emulatorOptions=emulatorOptions,
-            disableAnimations=disableAnimations, disableSpellchecker=disableSpellchecker,
-            disableLinuxHwAccel=disableLinuxHwAccel, enableHwKeyboard=enableHwKeyboard,
-            emulatorBuild=emulatorBuild, workingDirectory=workingDirectory, ndk=ndk, cmake=cmake,
-            channel=channel, script=script, preEmulatorLaunchScript=preEmulatorLaunchScript,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+            emulatorBootTimeout=emulatorBootTimeout, emulatorPort=emulatorPort,
+            emulatorOptions=emulatorOptions, disableAnimations=disableAnimations,
+            disableSpellchecker=disableSpellchecker, disableLinuxHwAccel=disableLinuxHwAccel,
+            enableHwKeyboard=enableHwKeyboard, emulatorBuild=emulatorBuild,
+            workingDirectory=workingDirectory, ndk=ndk, cmake=cmake, channel=channel, script=script,
+            preEmulatorLaunchScript=preEmulatorLaunchScript, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -239,6 +247,7 @@ public data class AndroidEmulatorRunnerV2 private constructor(
             avdName?.let { "avd-name" to it },
             forceAvdCreation?.let { "force-avd-creation" to it.toString() },
             emulatorBootTimeout?.let { "emulator-boot-timeout" to it.toString() },
+            emulatorPort?.let { "emulator-port" to it.toString() },
             emulatorOptions?.let { "emulator-options" to it },
             disableAnimations?.let { "disable-animations" to it.toString() },
             disableSpellchecker?.let { "disable-spellchecker" to it.toString() },
