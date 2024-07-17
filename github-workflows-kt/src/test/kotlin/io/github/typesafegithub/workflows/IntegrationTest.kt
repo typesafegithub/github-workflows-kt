@@ -779,28 +779,26 @@ class IntegrationTest :
         }
 
         test("return workflow as string and do not write to file") {
-            // given
-            val workflow =
-                workflow(
-                    name = "Test workflow",
-                    on = listOf(Push()),
-                    sourceFile = sourceTempFile,
-                    targetFileName = null,
-                    consistencyCheckJobConfig = Disabled,
-                ) {
-                    job(
-                        id = "test_job",
-                        runsOn = RunnerType.UbuntuLatest,
-                    ) {
-                        uses(
-                            name = "Check out",
-                            action = CheckoutV4(),
-                        )
-                    }
-                }
-
             // when
-            val workflowYaml = workflow.generateYaml()
+            var workflowYaml: String? = null
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                targetFileName = null,
+                consistencyCheckJobConfig = Disabled,
+                useWorkflow = { workflowYaml = it.generateYaml() },
+            ) {
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    uses(
+                        name = "Check out",
+                        action = CheckoutV4(),
+                    )
+                }
+            }
 
             // then
             workflowYaml shouldBe
