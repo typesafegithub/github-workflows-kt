@@ -4,6 +4,7 @@ import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4.Distribution.Adopt
 import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -23,48 +24,49 @@ class JobBuilderTest :
         context("job builder") {
             test("with custom step arguments") {
                 // Given
-                val workflow =
-                    workflow(
-                        name = "Test workflow",
-                        on = listOf(Push()),
-                        sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
+                var workflow: Workflow? = null
+                workflow(
+                    name = "Test workflow",
+                    on = listOf(Push()),
+                    sourceFile = Paths.get(".github/workflows/some_workflow.main.kts").toFile(),
+                    useWorkflow = { workflow = it },
+                ) {
+                    job(
+                        id = "test_job",
+                        runsOn = RunnerType.UbuntuLatest,
                     ) {
-                        job(
-                            id = "test_job",
-                            runsOn = RunnerType.UbuntuLatest,
-                        ) {
-                            run(
-                                name = "Hello world!",
-                                command = "echo 'hello!'",
-                                _customArguments = mapOf("foo0" to true),
-                            )
-                            run(
-                                command = "echo 'hello!'",
-                                _customArguments = mapOf("foo1" to true),
-                            )
-                            uses(
-                                name = "Check out",
-                                action = CheckoutV4(),
-                                _customArguments = mapOf("foo2" to true),
-                            )
-                            uses(
-                                action = CheckoutV4(),
-                                _customArguments = mapOf("foo3" to true),
-                            )
-                            uses(
-                                name = "Set up Java",
-                                action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
-                                _customArguments = mapOf("foo4" to true),
-                            )
-                            uses(
-                                action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
-                                _customArguments = mapOf("foo5" to true),
-                            )
-                        }
+                        run(
+                            name = "Hello world!",
+                            command = "echo 'hello!'",
+                            _customArguments = mapOf("foo0" to true),
+                        )
+                        run(
+                            command = "echo 'hello!'",
+                            _customArguments = mapOf("foo1" to true),
+                        )
+                        uses(
+                            name = "Check out",
+                            action = CheckoutV4(),
+                            _customArguments = mapOf("foo2" to true),
+                        )
+                        uses(
+                            action = CheckoutV4(),
+                            _customArguments = mapOf("foo3" to true),
+                        )
+                        uses(
+                            name = "Set up Java",
+                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
+                            _customArguments = mapOf("foo4" to true),
+                        )
+                        uses(
+                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
+                            _customArguments = mapOf("foo5" to true),
+                        )
                     }
+                }
 
                 // When
-                val job = workflow.jobs.first()
+                val job = workflow!!.jobs.first()
 
                 // Then
                 job.steps.forEachIndexed { index, step ->
@@ -90,36 +92,38 @@ class JobBuilderTest :
 
             test("use 'if'") {
                 // When
-                val workflow =
-                    workflow(
-                        name = "test",
-                        on = listOf(Push()),
-                        sourceFile = sourceTempFile,
-                    ) {
-                        job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
-                            run(command = "ls")
-                        }
+                var workflow: Workflow? = null
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                    sourceFile = sourceTempFile,
+                    useWorkflow = { workflow = it },
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest, `if` = "b") {
+                        run(command = "ls")
                     }
+                }
 
                 // Then
-                workflow.jobs[0].condition shouldBe "b"
+                workflow!!.jobs[0].condition shouldBe "b"
             }
 
             test("use 'condition'") {
                 // When
-                val workflow =
-                    workflow(
-                        name = "test",
-                        on = listOf(Push()),
-                        sourceFile = sourceTempFile,
-                    ) {
-                        job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
-                            run(command = "ls")
-                        }
+                var workflow: Workflow? = null
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                    sourceFile = sourceTempFile,
+                    useWorkflow = { workflow = it },
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest, condition = "b") {
+                        run(command = "ls")
                     }
+                }
 
                 // Then
-                workflow.jobs[0].condition shouldBe "b"
+                workflow!!.jobs[0].condition shouldBe "b"
             }
         }
     })

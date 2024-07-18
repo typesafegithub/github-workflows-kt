@@ -191,6 +191,7 @@ public fun workflow(
     permissions: Map<Permission, Mode>? = null,
     gitRootDir: Path? = sourceFile?.toPath()?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
+    useWorkflow: (Workflow) -> Unit = {},
     getenv: (String) -> String? = { System.getenv(it) },
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
@@ -222,6 +223,7 @@ public fun workflow(
     return workflowBuilder
         .build()
         .also {
+            useWorkflow(it)
             if (targetFileName != null) {
                 it.writeToFile(
                     gitRootDir = gitRootDir,
