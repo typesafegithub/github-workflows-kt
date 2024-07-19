@@ -23,6 +23,8 @@ dependencies {
     implementation("it.krzeminski:snakeyaml-engine-kmp:3.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    implementation("org.gradle:gradle-tooling-api:8.9")
+    runtimeOnly("org.slf4j:slf4j-simple:1.7.10")
     implementation(projects.sharedInternal)
 
     testImplementation("dev.zacsweers.kctfork:core:0.5.1")

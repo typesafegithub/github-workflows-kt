@@ -3117,6 +3117,10 @@ public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/W
 	public static final field url Ljava/lang/String;
 }
 
+public final class io/github/typesafegithub/workflows/gradle/TaskTreeGenerationKt {
+	public static synthetic fun main ([Ljava/lang/String;)V
+}
+
 public abstract interface annotation class io/github/typesafegithub/workflows/internal/InternalGithubActionsApi : java/lang/annotation/Annotation {
 }
 

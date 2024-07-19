@@ -7,6 +7,7 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
 
         // It has to be defined here because preferring repositories config in settings apparently removes the below
         // additions done by Kotlin/JS plugin.
