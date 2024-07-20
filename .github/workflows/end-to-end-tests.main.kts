@@ -1,5 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
+@file:Repository("https://repo.gradle.org/gradle/libs-releases")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.2.1-SNAPSHOT")
 @file:DependsOn("io.github.typesafegithub:action-updates-checker:2.2.1-SNAPSHOT")
 @file:Repository("https://bindings.krzeminski.it")
