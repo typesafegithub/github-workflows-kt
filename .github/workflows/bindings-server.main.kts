@@ -11,8 +11,7 @@ import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.triggers.PullRequest
-import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.domain.triggers.*
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -35,6 +34,8 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
+        Schedule(triggers = listOf(Cron(minute = "0", hour = "0", dayWeek = "SUN"))),
+        WorkflowDispatch(),
     ),
     sourceFile = __FILE__,
 ) {
@@ -128,7 +129,7 @@ workflow(
         id = "deploy",
         name = "Deploy to DockerHub",
         runsOn = UbuntuLatest,
-        `if` = expr { "${github.event_name} == 'push'" },
+        `if` = expr { "${github.event_name} == 'workflow_dispatch' || ${github.event_name} == 'schedule'" },
         needs = listOf(endToEndTest),
         env = mapOf(
             "DOCKERHUB_USERNAME" to expr { DOCKERHUB_USERNAME },

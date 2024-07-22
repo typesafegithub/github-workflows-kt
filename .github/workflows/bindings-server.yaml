@@ -8,6 +8,9 @@ on:
     branches:
     - 'main'
   pull_request: {}
+  schedule:
+  - cron: '0 0 * * SUN'
+  workflow_dispatch: {}
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
@@ -81,7 +84,7 @@ jobs:
     env:
       DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
       DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
-    if: '${{ github.event_name == ''push'' }}'
+    if: '${{ github.event_name == ''workflow_dispatch'' || github.event_name == ''schedule'' }}'
     environment:
       name: 'DockerHub'
     steps:
