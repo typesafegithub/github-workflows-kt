@@ -26,7 +26,9 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/julia-actions/setup-julia)
  *
- * @param version The Julia version to download (if necessary) and use. Example: 1.0.4
+ * @param version The Julia version to download (if necessary) and use. Use a string input to avoid
+ * unwanted decimal conversion e.g. 1.10 without quotes will be interpreted as 1.1. Examples: "1",
+ * "1.10", "lts", "pre"
  * @param includeAllPrereleases Include prereleases when matching the Julia version to available
  * versions.
  * @param arch Architecture of the Julia binaries. Defaults to the architecture of the runner
@@ -39,7 +41,9 @@ import kotlin.collections.toTypedArray
  */
 public data class SetupJuliaV2 private constructor(
     /**
-     * The Julia version to download (if necessary) and use. Example: 1.0.4
+     * The Julia version to download (if necessary) and use. Use a string input to avoid unwanted
+     * decimal conversion e.g. 1.10 without quotes will be interpreted as 1.1. Examples: "1", "1.10",
+     * "lts", "pre"
      */
     public val version: String? = null,
     /**
