@@ -39,6 +39,8 @@ import kotlin.collections.toTypedArray
  * @param dockerLabels Create/Override options inside dockerLabels. Each variable is key=value, you
  * can specify multiple variables with multi-line YAML.
  * @param command The command used by ECS to start the container image
+ * @param envFiles S3 object arns to set env variables onto the container. You can specify multiple
+ * files with multi-line YAML strings.
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -82,6 +84,11 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
      */
     public val command: String? = null,
     /**
+     * S3 object arns to set env variables onto the container. You can specify multiple files with
+     * multi-line YAML strings.
+     */
+    public val envFiles: List<String>? = null,
+    /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
     public val _customInputs: Map<String, String> = mapOf(),
@@ -102,13 +109,15 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
         logConfigurationOptions: List<String>? = null,
         dockerLabels: List<String>? = null,
         command: String? = null,
+        envFiles: List<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(taskDefinition=taskDefinition, containerName=containerName, image=image,
             environmentVariables=environmentVariables,
             logConfigurationLogDriver=logConfigurationLogDriver,
             logConfigurationOptions=logConfigurationOptions, dockerLabels=dockerLabels,
-            command=command, _customInputs=_customInputs, _customVersion=_customVersion)
+            command=command, envFiles=envFiles, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -121,6 +130,7 @@ public data class AmazonEcsRenderTaskDefinitionV1 private constructor(
             logConfigurationOptions?.let { "log-configuration-options" to it.joinToString("\n") },
             dockerLabels?.let { "docker-labels" to it.joinToString("\n") },
             command?.let { "command" to it },
+            envFiles?.let { "env-files" to it.joinToString("\n") },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
