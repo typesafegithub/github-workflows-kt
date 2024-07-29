@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-internal const val LATEST_RELASED_LIBRARY_VERSION = "2.2.0"
+internal const val LATEST_RELASED_LIBRARY_VERSION = "2.3.0"
 
 internal fun buildPomFile(
     owner: String,
