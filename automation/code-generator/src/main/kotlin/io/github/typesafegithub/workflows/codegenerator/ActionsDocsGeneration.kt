@@ -69,13 +69,15 @@ internal fun deleteListOfBindingsInDocs() {
 
 private val listOfBindingsInDocs = Paths.get("docs/supported-actions.md")
 
+private const val LIB_VERSION = "2.2.1-SNAPSHOT"
+
 private fun Pair<ActionBindingRequest, ActionBinding>.toMarkdownLinkToKotlinCode(
     packageName: String,
     className: String,
 ): String {
     val typingsMarker = if (this.second.typingActualSource == TypingActualSource.ACTION) " ✅" else ""
     return "${this.first.actionCoords.version}$typingsMarker: [`$className`](" +
-        "https://github.com/typesafegithub/github-workflows-kt/blob/v[[ version ]]/github-workflows-kt/src/gen/kotlin/io/github/" +
+        "https://github.com/typesafegithub/github-workflows-kt/blob/v$LIB_VERSION/github-workflows-kt/src/gen/kotlin/io/github/" +
         "typesafegithub/workflows/actions/$packageName/$className.kt)"
 }
 
