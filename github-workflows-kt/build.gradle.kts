@@ -29,7 +29,6 @@ dependencies {
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
-    testImplementation("EndBug:add-and-commit:v9")
 }
 
 sourceSets {

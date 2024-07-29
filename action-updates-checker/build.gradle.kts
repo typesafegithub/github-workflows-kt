@@ -13,6 +13,7 @@ dependencies {
 
     implementation(projects.githubWorkflowsKt)
     implementation(projects.sharedInternal)
+    testImplementation("EndBug:add-and-commit:v9")
 }
 
 kotlin {
