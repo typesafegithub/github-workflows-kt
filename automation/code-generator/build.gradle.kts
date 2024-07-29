@@ -17,9 +17,6 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.4")
 
-    implementation(projects.actionBindingGenerator)
-    implementation(projects.sharedInternal)
-
     testImplementation(projects.githubWorkflowsKt)
 }
 
@@ -29,18 +26,4 @@ application {
 
 tasks.run.configure {
     workingDir(rootProject.layout.projectDirectory)
-}
-
-tasks.register<JavaExec>("suggestVersions") {
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("io.github.typesafegithub.workflows.codegenerator.versions.SuggestVersionsKt")
-    workingDir = rootDir
-    dependsOn(tasks.compileKotlin)
-}
-
-tasks.register<JavaExec>("createActionUpdatePRs") {
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("io.github.typesafegithub.workflows.codegenerator.updating.CreateActionUpdatePRsKt")
-    workingDir = rootDir
-    dependsOn(tasks.compileKotlin)
 }
