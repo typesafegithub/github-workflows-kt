@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.madhead
@@ -12,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
+import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -47,6 +49,10 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
+@Deprecated(
+    message = "This action has a newer major version: IntellijHttpClientActionV241",
+    replaceWith = ReplaceWith("IntellijHttpClientActionV241"),
+)
 public data class IntellijHttpClientActionV233 private constructor(
     /**
      * HTTP file paths
