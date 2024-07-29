@@ -40,7 +40,7 @@ workflow(
             )
             run(
                 name = "Fail if there are any changes in the generated code or docs",
-                command = "git diff --exit-code github-workflows-kt/src/gen/ docs/supported-actions.md"
+                command = "git diff --exit-code github-workflows-kt/src/gen/"
             )
         }
     }

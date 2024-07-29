@@ -43,7 +43,7 @@ jobs:
       run: './gradlew :automation:code-generator:run'
     - id: 'step-4'
       name: 'Fail if there are any changes in the generated code or docs'
-      run: 'git diff --exit-code github-workflows-kt/src/gen/ docs/supported-actions.md'
+      run: 'git diff --exit-code github-workflows-kt/src/gen/'
   check-on-Windows2022:
     runs-on: 'windows-2022'
     needs:
@@ -64,4 +64,4 @@ jobs:
       run: './gradlew :automation:code-generator:run'
     - id: 'step-4'
       name: 'Fail if there are any changes in the generated code or docs'
-      run: 'git diff --exit-code github-workflows-kt/src/gen/ docs/supported-actions.md'
+      run: 'git diff --exit-code github-workflows-kt/src/gen/'
