@@ -4,7 +4,6 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
-    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.madhead
@@ -13,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.Boolean
-import kotlin.Deprecated
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -39,6 +37,7 @@ import kotlin.collections.toTypedArray
  * @param envVariables Public environment variables ('key=value')
  * @param privateEnvFile Name of the private environment file
  * @param privateEnvVariables Private environment variables ('key=value')
+ * @param proxy Proxy setting in format 'scheme://login:password@host:port'
  * @param dockerMode Enables Docker mode. Treat 'localhost' as 'host.docker.internal'
  * @param logLevel Logging level. One of 'BASIC' (default), 'HEADERS', or 'VERBOSE'
  * @param report Creates report about execution in JUnit XML Format. Puts it in folder 'reports' in
@@ -48,11 +47,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated(
-    message = "This action has a newer major version: IntellijHttpClientActionV241",
-    replaceWith = ReplaceWith("IntellijHttpClientActionV241"),
-)
-public data class IntellijHttpClientActionV0 private constructor(
+public data class IntellijHttpClientActionV241 private constructor(
     /**
      * HTTP file paths
      */
@@ -90,13 +85,17 @@ public data class IntellijHttpClientActionV0 private constructor(
      */
     public val privateEnvVariables: List<String>? = null,
     /**
+     * Proxy setting in format 'scheme://login:password@host:port'
+     */
+    public val proxy: String? = null,
+    /**
      * Enables Docker mode. Treat 'localhost' as 'host.docker.internal'
      */
     public val dockerMode: Boolean? = null,
     /**
      * Logging level. One of 'BASIC' (default), 'HEADERS', or 'VERBOSE'
      */
-    public val logLevel: IntellijHttpClientActionV0.LogLevel? = null,
+    public val logLevel: IntellijHttpClientActionV241.LogLevel? = null,
     /**
      * Creates report about execution in JUnit XML Format. Puts it in folder 'reports' in the
      * current directory
@@ -111,8 +110,8 @@ public data class IntellijHttpClientActionV0 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?: "v0")
-        {
+) : RegularAction<Action.Outputs>("madhead", "intellij-http-client-action", _customVersion ?:
+        "v241") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         files: List<String>,
@@ -124,14 +123,15 @@ public data class IntellijHttpClientActionV0 private constructor(
         envVariables: List<String>? = null,
         privateEnvFile: String? = null,
         privateEnvVariables: List<String>? = null,
+        proxy: String? = null,
         dockerMode: Boolean? = null,
-        logLevel: IntellijHttpClientActionV0.LogLevel? = null,
+        logLevel: IntellijHttpClientActionV241.LogLevel? = null,
         report: Boolean? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(files=files, socketTimeout=socketTimeout, connectTimeout=connectTimeout,
             insecure=insecure, env=env, envFile=envFile, envVariables=envVariables,
-            privateEnvFile=privateEnvFile, privateEnvVariables=privateEnvVariables,
+            privateEnvFile=privateEnvFile, privateEnvVariables=privateEnvVariables, proxy=proxy,
             dockerMode=dockerMode, logLevel=logLevel, report=report, _customInputs=_customInputs,
             _customVersion=_customVersion)
 
@@ -147,6 +147,7 @@ public data class IntellijHttpClientActionV0 private constructor(
             envVariables?.let { "env_variables" to it.joinToString("\n") },
             privateEnvFile?.let { "private_env_file" to it },
             privateEnvVariables?.let { "private_env_variables" to it.joinToString("\n") },
+            proxy?.let { "proxy" to it },
             dockerMode?.let { "docker_mode" to it.toString() },
             logLevel?.let { "log_level" to it.stringValue },
             report?.let { "report" to it.toString() },
@@ -159,14 +160,14 @@ public data class IntellijHttpClientActionV0 private constructor(
     public sealed class LogLevel(
         public val stringValue: String,
     ) {
-        public object Basic : IntellijHttpClientActionV0.LogLevel("BASIC")
+        public object Basic : IntellijHttpClientActionV241.LogLevel("BASIC")
 
-        public object Headers : IntellijHttpClientActionV0.LogLevel("HEADERS")
+        public object Headers : IntellijHttpClientActionV241.LogLevel("HEADERS")
 
-        public object Verbose : IntellijHttpClientActionV0.LogLevel("VERBOSE")
+        public object Verbose : IntellijHttpClientActionV241.LogLevel("VERBOSE")
 
         public class Custom(
             customStringValue: String,
-        ) : IntellijHttpClientActionV0.LogLevel(customStringValue)
+        ) : IntellijHttpClientActionV241.LogLevel(customStringValue)
     }
 }

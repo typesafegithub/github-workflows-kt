@@ -49,8 +49,8 @@ import kotlin.collections.toTypedArray
  * version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
-    message = "This action has a newer major version: IntellijHttpClientActionV233",
-    replaceWith = ReplaceWith("IntellijHttpClientActionV233"),
+    message = "This action has a newer major version: IntellijHttpClientActionV241",
+    replaceWith = ReplaceWith("IntellijHttpClientActionV241"),
 )
 public data class IntellijHttpClientActionV231 private constructor(
     /**
