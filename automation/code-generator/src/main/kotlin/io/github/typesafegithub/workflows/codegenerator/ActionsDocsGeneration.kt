@@ -69,7 +69,7 @@ internal fun deleteListOfBindingsInDocs() {
 
 private val listOfBindingsInDocs = Paths.get("docs/supported-actions.md")
 
-private const val LIB_VERSION = "2.3.0"
+private const val LIB_VERSION = "2.3.1-SNAPSHOT"
 
 private fun Pair<ActionBindingRequest, ActionBinding>.toMarkdownLinkToKotlinCode(
     packageName: String,

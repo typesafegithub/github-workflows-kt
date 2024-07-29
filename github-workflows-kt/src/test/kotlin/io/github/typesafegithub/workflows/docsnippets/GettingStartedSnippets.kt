@@ -18,7 +18,7 @@ class GettingStartedSnippets :
         // --8<-- [start:getting-started-1]
         #!/usr/bin/env kotlin
 
-        @file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.3.0")
+        @file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.3.1-SNAPSHOT")
 
         // --8<-- [end:getting-started-1]
          */
