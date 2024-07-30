@@ -2,7 +2,7 @@ package io.github.typesafegithub.workflows
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
-import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
+import io.github.typesafegithub.workflows.actions.endbug.AddAndCommit
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
@@ -254,7 +254,7 @@ class IntegrationTest :
                     runsOn = RunnerType.UbuntuLatest,
                     concurrency = Concurrency("job_staging_environment"),
                 ) {
-                    val addAndCommit = uses(action = AddAndCommitV9())
+                    val addAndCommit = uses(action = AddAndCommit())
 
                     uses(
                         name = "Some step consuming other step's output",
@@ -394,7 +394,7 @@ class IntegrationTest :
                     runsOn = RunnerType.UbuntuLatest,
                     concurrency = Concurrency("job_staging_environment", cancelInProgress = true),
                 ) {
-                    val addAndCommit = uses(action = AddAndCommitV9())
+                    val addAndCommit = uses(action = AddAndCommit())
 
                     uses(
                         name = "Some step consuming other step's output",

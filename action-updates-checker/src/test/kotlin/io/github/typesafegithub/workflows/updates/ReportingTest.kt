@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.updates
 
-import io.github.typesafegithub.workflows.actions.endbug.AddAndCommit
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
@@ -51,7 +50,6 @@ class ReportingTest :
                                         actionVersion = "v3",
                                     ),
                             )
-                            uses(action = AddAndCommit())
                             uses(
                                 action =
                                     CustomAction(
