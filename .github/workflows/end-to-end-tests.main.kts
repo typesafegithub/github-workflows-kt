@@ -57,7 +57,7 @@ workflow(
             publishToMavenLocal()
         },
     ),
-    useWorkflow = { it.reportAvailableUpdates() }
+    useWorkflow = { it.reportAvailableUpdates() },
     sourceFile = __FILE__,
 ) {
     val GREETING by Contexts.env
