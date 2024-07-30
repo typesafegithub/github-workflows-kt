@@ -1,6 +1,6 @@
 package io.github.typesafegithub.workflows.domain
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
+import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.domain.AbstractResult.Status
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.kotest.core.spec.style.FunSpec
@@ -20,7 +20,7 @@ class StepTest :
             val someStep: Step =
                 ActionStep(
                     id = "whatever",
-                    action = CheckoutV4(),
+                    action = Checkout(),
                     outputs = Action.Outputs("whatever"),
                 )
             someStep.conclusion.toString() shouldBe "steps.whatever.conclusion"

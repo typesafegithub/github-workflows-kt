@@ -29,6 +29,13 @@ dependencies {
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
+
+    // GitHub action bindings
+    testImplementation("actions:checkout:v4")
+    testImplementation("actions:setup-java:v4")
+    testImplementation("actions:upload-artifact:v3")
+    testImplementation("aws-actions:configure-aws-credentials:v4")
+    testImplementation("EndBug:add-and-commit:v9")
 }
 
 sourceSets {
@@ -50,6 +57,10 @@ tasks.withType<KotlinCompile> {
 tasks.test {
     // The integration tests read from and write to there.
     inputs.dir("$rootDir/.github/workflows")
+
+    // It's a workaround to be able to use action bindings provided by the server. They declare a dependency on
+    // github-workflows-kt, and I think it causes some kind of version clash (e.g. between 2.3.0 and 2.3.1-SNAPSHOT).
+    dependsOn(tasks.jar)
 }
 
 kotlin {

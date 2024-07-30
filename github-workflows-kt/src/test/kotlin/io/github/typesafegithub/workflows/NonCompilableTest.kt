@@ -20,7 +20,7 @@ class NonCompilableTest :
                     code =
                         """
                         import io.github.typesafegithub.workflows.dsl.workflow
-                        import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
+                        import io.github.typesafegithub.workflows.actions.actions.Checkout
                         import io.github.typesafegithub.workflows.domain.RunnerType
                         import io.github.typesafegithub.workflows.domain.triggers.Push
                         import java.nio.file.Path
@@ -35,7 +35,7 @@ class NonCompilableTest :
                                 name = "Test Job",
                                 runsOn = RunnerType.UbuntuLatest,
                             ) {
-                                uses(action = CheckoutV4())
+                                uses(action = Checkout())
                                 run(command = "echo 'hello!'")
 
                                 job(
@@ -43,7 +43,7 @@ class NonCompilableTest :
                                     name = "Test Job",
                                     runsOn = RunnerType.UbuntuLatest,
                                 ) {
-                                    uses(action = CheckoutV4())
+                                    uses(action = Checkout())
                                     run(command = "echo 'hello!'")
                                 }
                             }
@@ -61,7 +61,7 @@ class NonCompilableTest :
                     code =
                         """
                         import io.github.typesafegithub.workflows.dsl.workflow
-                        import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
+                        import io.github.typesafegithub.workflows.actions.actions.Checkout
                         import io.github.typesafegithub.workflows.domain.RunnerType
                         import io.github.typesafegithub.workflows.domain.triggers.Push
                         import java.nio.file.Path
@@ -76,7 +76,7 @@ class NonCompilableTest :
                                 name = "Test Job",
                                 runsOn = RunnerType.UbuntuLatest,
                             ) {
-                                uses(action = CheckoutV4())
+                                uses(action = Checkout())
                                 run(command = "echo 'hello!'")
                             }
                         }

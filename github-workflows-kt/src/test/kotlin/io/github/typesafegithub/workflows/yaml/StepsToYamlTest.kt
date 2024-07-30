@@ -2,9 +2,9 @@
 
 package io.github.typesafegithub.workflows.yaml
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4.FetchDepth
-import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV3
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.Checkout.FetchDepth
+import io.github.typesafegithub.workflows.actions.actions.UploadArtifact
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Shell
@@ -27,7 +27,7 @@ class StepsToYamlTest :
                     ActionStep(
                         id = "someId",
                         name = "Some external action",
-                        action = CheckoutV4(),
+                        action = Checkout(),
                         outputs = Action.Outputs("someId"),
                     ),
                 )
@@ -238,7 +238,7 @@ class StepsToYamlTest :
                     listOf(
                         ActionStep(
                             id = "someId",
-                            action = CheckoutV4(),
+                            action = Checkout(),
                             outputs = Action.Outputs("someId"),
                         ),
                     )
@@ -265,7 +265,7 @@ class StepsToYamlTest :
                             name = "Some external action",
                             continueOnError = true,
                             timeoutMinutes = 123,
-                            action = CheckoutV4(fetchDepth = FetchDepth.Infinite),
+                            action = Checkout(fetchDepth = FetchDepth.Infinite),
                             env =
                                 mapOf(
                                     "FOO" to "bar",
@@ -369,7 +369,7 @@ class StepsToYamlTest :
                         ActionStep(
                             id = "someId",
                             action =
-                                UploadArtifactV3(
+                                UploadArtifact(
                                     name = "artifact",
                                     path = listOf("path1", "path2"),
                                     _customInputs =
@@ -408,7 +408,7 @@ class StepsToYamlTest :
                         ActionStep(
                             id = "someId",
                             action =
-                                UploadArtifactV3(
+                                UploadArtifact(
                                     name = "artifact",
                                     path = listOf("path1", "path2"),
                                     _customVersion = "v2.3.4",
@@ -446,7 +446,7 @@ class StepsToYamlTest :
                         ActionStep(
                             id = "someId",
                             name = "Will be overridden",
-                            action = CheckoutV4(),
+                            action = Checkout(),
                             outputs = Action.Outputs("someId"),
                             _customArguments =
                                 mapOf(

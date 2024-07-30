@@ -2,7 +2,7 @@
 
 package io.github.typesafegithub.workflows.docsnippets
 
-import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV3
+import io.github.typesafegithub.workflows.actions.actions.UploadArtifact
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -50,7 +50,7 @@ class CompensatingLibrarysMissingFeaturesSnippets :
 
         test("customInputs") {
             // --8<-- [start:custom-inputs-1]
-            UploadArtifactV3(
+            UploadArtifact(
                 // --8<-- [end:custom-inputs-1]
                 path = emptyList(),
                 // --8<-- [start:custom-inputs-2]
@@ -66,7 +66,7 @@ class CompensatingLibrarysMissingFeaturesSnippets :
 
         test("customVersion") {
             // --8<-- [start:custom-version-1]
-            UploadArtifactV3(
+            UploadArtifact(
                 // --8<-- [end:custom-version-1]
                 path = emptyList(),
                 // --8<-- [start:custom-version-2]
