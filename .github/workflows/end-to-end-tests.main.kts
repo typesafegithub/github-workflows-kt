@@ -57,6 +57,7 @@ workflow(
             publishToMavenLocal()
         },
     ),
+    useWorkflow = { it.reportAvailableUpdates() }
     sourceFile = __FILE__,
 ) {
     val GREETING by Contexts.env
@@ -253,4 +254,4 @@ workflow(
             """.trimIndent(),
         )
     }
-}.reportAvailableUpdates()
+}
