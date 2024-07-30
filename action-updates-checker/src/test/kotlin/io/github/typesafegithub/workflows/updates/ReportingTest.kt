@@ -90,7 +90,7 @@ class ReportingTest :
                 }
                 test("there should be 3 actions with available versions") {
                     availableVersionsForEachAction
-                        .shouldHaveSize(4)
+                        .shouldHaveSize(3)
                 }
                 test("there should be 2 actions with updates available") {
                     availableVersionsForEachAction
