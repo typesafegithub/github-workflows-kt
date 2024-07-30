@@ -12,10 +12,6 @@ val validateDuplicatedVersion by tasks.registering(Task::class) {
 
     doLast {
         require(
-            rootDir.resolve("automation/code-generator/src/main/kotlin/io/github/typesafegithub/workflows/codegenerator/ActionsDocsGeneration.kt").readText()
-                .contains("private const val LIB_VERSION = \"$version\"")
-        ) { "Library version stated in the docs should be equal to $version!" }
-        require(
             rootDir.resolve("github-workflows-kt/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
                 .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
         ) { "Library version stated in github-workflows-kt/src/test/.../GettingStarted.kt should be equal to $version!" }

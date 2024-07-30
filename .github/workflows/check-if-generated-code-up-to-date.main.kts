@@ -18,7 +18,7 @@ import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.dsl.workflow
 
 workflow(
-    name = "Check if action bindings up to date",
+    name = "Check if generated code up to date",
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
@@ -39,8 +39,8 @@ workflow(
                 command = "./gradlew :automation:code-generator:run",
             )
             run(
-                name = "Fail if there are any changes in the generated action bindings or their list in the docs",
-                command = "git diff --exit-code github-workflows-kt/src/gen/ docs/supported-actions.md"
+                name = "Fail if there are any changes in the generated code or docs",
+                command = "git diff --exit-code github-workflows-kt/src/gen/"
             )
         }
     }

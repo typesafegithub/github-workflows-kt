@@ -49,7 +49,6 @@ nav:
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Feature coverage: 'feature-coverage.md'
-  - Supported actions: 'supported-actions.md'
   - FAQ: 'faq.md'
   - API docs: 'https://typesafegithub.github.io/github-workflows-kt/api-docs/'
   - Projects using this library: 'projects-using-this-library.md'
