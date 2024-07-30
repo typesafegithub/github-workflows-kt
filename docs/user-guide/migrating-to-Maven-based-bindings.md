@@ -1,9 +1,5 @@
 # Migrating to Maven-based bindings
 
-!!! warning "Experimental"
-    This feature is experimental. We're awaiting feedback and fixing remaining issues. Breaking changes may appear as
-    well. You can give it a try in non-critical projects.
-
 ## Goal
 
 Let's say you have the following workflow:
