@@ -168,6 +168,9 @@ public fun Workflow.toBuilder(): WorkflowBuilder =
  *
  * @param targetFileName Name of the produced YAML file inside the `.github/workflows` directory. If set to `null`,
  * writing to file is disabled.
+ * @param useWorkflow A callback that provides a [Workflow] domain object for further analysis, e.g. some custom
+ * processing. The result of this processing isn't taken into account during writing the workflow to YAML, the only
+ * requirement is that it cannot fail (throw an exception).
  */
 @Suppress("LongParameterList", "FunctionParameterNaming")
 public fun workflow(
@@ -195,7 +198,7 @@ public fun workflow(
     getenv: (String) -> String? = { System.getenv(it) },
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
-): Workflow {
+) {
     require(on.isNotEmpty()) {
         "There are no triggers defined!"
     }
@@ -220,18 +223,16 @@ public fun workflow(
     }
     workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
-    return workflowBuilder
-        .build()
-        .also {
-            useWorkflow(it)
-            if (targetFileName != null) {
-                it.writeToFile(
-                    gitRootDir = gitRootDir,
-                    preamble = preamble,
-                    getenv = getenv,
-                )
-            }
-        }
+    val workflow = workflowBuilder.build()
+
+    useWorkflow(workflow)
+    if (targetFileName != null) {
+        workflow.writeToFile(
+            gitRootDir = gitRootDir,
+            preamble = preamble,
+            getenv = getenv,
+        )
+    }
 }
 
 private fun List<Job<*>>.requireUniqueJobIds() {
