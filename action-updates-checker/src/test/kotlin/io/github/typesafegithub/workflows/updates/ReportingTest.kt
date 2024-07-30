@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.updates
 
 import io.github.typesafegithub.workflows.actions.endbug.AddAndCommit
 import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -13,6 +14,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalKotest::class)
 class ReportingTest :
@@ -28,11 +30,13 @@ class ReportingTest :
 
                 val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
 
-                val workflow =
+                fun <T> useWithWorkflow(function: (Workflow) -> T): T {
+                    var output: T? = null
                     workflow(
                         name = "Test workflow",
                         on = listOf(Push()),
                         sourceFile = sourceTempFile,
+                        useWorkflow = { output = function(it) },
                     ) {
                         job(
                             id = "test_job",
@@ -66,13 +70,14 @@ class ReportingTest :
                             )
                         }
                     }
+                    return output ?: error("The value should be set in useWorkflow callback!")
+                }
 
                 sourceTempFile.absoluteFile.parentFile.mkdirs()
                 sourceTempFile.createNewFile()
 
                 val availableVersionsForEachAction =
-                    workflow
-                        .availableVersionsForEachAction()
+                    useWithWorkflow { runBlocking { it.availableVersionsForEachAction() } }
                         .toList()
 
                 // write dependency notations into a file,
@@ -94,31 +99,38 @@ class ReportingTest :
                 }
                 test("dependency annotations can be looked up") {
                     availableVersionsForEachAction.forEachIndexed { index, regularActionVersions ->
-                        val (_, line) = workflow.findDependencyDeclaration(regularActionVersions.action)
+                        val (_, line) = useWithWorkflow { it.findDependencyDeclaration(regularActionVersions.action) }
                         line shouldBe (index + 1)
                     }
                 }
 
                 test("do nothing with missing token") {
-                    workflow
-                        .availableVersionsForEachAction(
-                            reportWhenTokenUnset = false,
-                            githubToken = null,
-                        ).toList()
+                    useWithWorkflow {
+                        runBlocking {
+                            it.availableVersionsForEachAction(
+                                reportWhenTokenUnset = false,
+                                githubToken = null,
+                            )
+                        }
+                    }.toList()
                         .shouldHaveSize(0)
                 }
 
                 test("should write to github step summary()") {
                     val summary =
                         buildString {
-                            workflow.reportAvailableUpdatesInternal(
-                                stepSummary =
-                                    object : GithubStepSummary {
-                                        override fun appendText(text: String) {
-                                            this@buildString.append(text)
-                                        }
-                                    },
-                            )
+                            useWithWorkflow {
+                                runBlocking {
+                                    it.reportAvailableUpdatesInternal(
+                                        stepSummary =
+                                            object : GithubStepSummary {
+                                                override fun appendText(text: String) {
+                                                    this@buildString.append(text)
+                                                }
+                                            },
+                                    )
+                                }
+                            }
                         }
 
                     summary.trim().shouldNotBeEmpty()
