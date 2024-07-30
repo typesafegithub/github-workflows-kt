@@ -67,10 +67,6 @@ kotlin {
     explicitApi()
 }
 
-apiValidation {
-    ignoredPackages.add("io.github.typesafegithub.workflows.actions")
-}
-
 fun ConfigurableKtLintTask.kotlinterConfig() {
     exclude { it.file.invariantSeparatorsPath.contains("/gen/") }
 }
@@ -84,19 +80,8 @@ tasks.formatKotlinMain {
 
 pitest {
     junit5PluginVersion.set("1.1.0")
-    excludedClasses.set(
-        // Generated action bindings.
-        listOf("io.github.typesafegithub.workflows.actions.*"),
-    )
 }
 
 tasks.dokkaHtml {
     moduleName.set("github-workflows-kt")
-
-    dokkaSourceSets.configureEach {
-        perPackageOption {
-            matchingRegex.set("io.github.typesafegithub.workflows.actions.*")
-            suppress.set(true)
-        }
-    }
 }
