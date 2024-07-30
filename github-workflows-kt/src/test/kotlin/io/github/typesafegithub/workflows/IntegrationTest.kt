@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentialsV4
-import io.github.typesafegithub.workflows.actions.endbug.AddAndCommitV9
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.awsactions.ConfigureAwsCredentials
+import io.github.typesafegithub.workflows.actions.endbug.AddAndCommit
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
@@ -54,7 +54,7 @@ class IntegrationTest :
                 ) {
                     uses(
                         name = "Check out",
-                        action = CheckoutV4(),
+                        action = Checkout(),
                     )
 
                     run(
@@ -152,7 +152,7 @@ class IntegrationTest :
                 ) {
                     uses(
                         name = "Check out",
-                        action = CheckoutV4(),
+                        action = Checkout(),
                         env =
                             mapOf(
                                 "SIMPLE_VAR" to "simple-value-uses",
@@ -254,12 +254,12 @@ class IntegrationTest :
                     runsOn = RunnerType.UbuntuLatest,
                     concurrency = Concurrency("job_staging_environment"),
                 ) {
-                    val addAndCommit = uses(action = AddAndCommitV9())
+                    val addAndCommit = uses(action = AddAndCommit())
 
                     uses(
                         name = "Some step consuming other step's output",
                         action =
-                            CheckoutV4(
+                            Checkout(
                                 repository = expr(addAndCommit.id),
                                 ref = expr(addAndCommit.outputs.commitSha),
                                 token = expr(addAndCommit.outputs["my-unsafe-output"]),
@@ -313,28 +313,28 @@ class IntegrationTest :
                 job(id = "deploy-dev", runsOn = RunnerType.UbuntuLatest) {
                     uses(
                         action =
-                            ConfigureAwsCredentialsV4(
+                            ConfigureAwsCredentials(
                                 roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
                                 awsRegion = "us-west-1",
                             ),
                     )
                     uses(
                         action =
-                            ConfigureAwsCredentialsV4(
+                            ConfigureAwsCredentials(
                                 roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
                                 awsRegion = "us-west-1",
                             ),
                     )
                     uses(
                         action =
-                            ConfigureAwsCredentialsV4(
+                            ConfigureAwsCredentials(
                                 roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
                                 awsRegion = "us-west-1",
                             ),
                     )
                     uses(
                         action =
-                            ConfigureAwsCredentialsV4(
+                            ConfigureAwsCredentials(
                                 roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
                                 awsRegion = "us-west-1",
                             ),
@@ -394,12 +394,12 @@ class IntegrationTest :
                     runsOn = RunnerType.UbuntuLatest,
                     concurrency = Concurrency("job_staging_environment", cancelInProgress = true),
                 ) {
-                    val addAndCommit = uses(action = AddAndCommitV9())
+                    val addAndCommit = uses(action = AddAndCommit())
 
                     uses(
                         name = "Some step consuming other step's output",
                         action =
-                            CheckoutV4(
+                            Checkout(
                                 repository = expr(addAndCommit.id),
                                 ref = expr(addAndCommit.outputs.commitSha),
                                 token = expr(addAndCommit.outputs["my-unsafe-output"]),
@@ -457,7 +457,7 @@ class IntegrationTest :
                     name = "Test Job",
                     runsOn = RunnerType.UbuntuLatest,
                 ) {
-                    uses(action = CheckoutV4())
+                    uses(action = Checkout())
                     run(command = "echo 'hello!'")
                 }
             }
@@ -515,7 +515,7 @@ class IntegrationTest :
                 ) {
                     uses(
                         name = "Check out",
-                        action = CheckoutV4(),
+                        action = Checkout(),
                     )
 
                     run(
@@ -751,7 +751,7 @@ class IntegrationTest :
                     job(id = "test", runsOn = RunnerType.UbuntuLatest) {
                         run(name = "Step with Kotlin code in lambda") {
                         }
-                        uses(action = CheckoutV4())
+                        uses(action = Checkout())
                     }
                 }
             }.also {
@@ -768,7 +768,7 @@ class IntegrationTest :
                     on = listOf(Push()),
                 ) {
                     job(id = "test", runsOn = RunnerType.UbuntuLatest) {
-                        uses(action = CheckoutV4())
+                        uses(action = Checkout())
                         run(name = "Step with Kotlin code in lambda") {
                         }
                     }
@@ -795,7 +795,7 @@ class IntegrationTest :
                 ) {
                     uses(
                         name = "Check out",
-                        action = CheckoutV4(),
+                        action = Checkout(),
                     )
                 }
             }
