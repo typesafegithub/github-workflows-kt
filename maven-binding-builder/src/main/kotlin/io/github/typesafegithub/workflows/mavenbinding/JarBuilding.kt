@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:filename")
+
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
@@ -20,16 +22,30 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.div
 import kotlin.io.path.writeText
 
-internal fun buildJar(
+internal data class Jars(
+    val mainJar: ByteArray,
+    val sourcesJar: ByteArray,
+)
+
+internal fun buildJars(
     owner: String,
     name: String,
     version: String,
-): ByteArray? {
+): Jars? {
     val binding = generateBinding(owner = owner, name = name, version = version) ?: return null
-    val pathWithJarContents = binding.compileBinding()
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    byteArrayOutputStream.createZipFile(pathWithJarContents)
-    return byteArrayOutputStream.toByteArray()
+    val (sourceFilePath, compilationInputDir) = binding.prepareDirectoryWithSources()
+
+    val pathWithJarContents = compileBinding(sourceFilePath = sourceFilePath)
+    val mainJarByteArrayOutputStream = ByteArrayOutputStream()
+    mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
+
+    val sourcesJarByteArrayOutputStream = ByteArrayOutputStream()
+    sourcesJarByteArrayOutputStream.createZipFile(compilationInputDir)
+
+    return Jars(
+        mainJar = mainJarByteArrayOutputStream.toByteArray(),
+        sourcesJar = sourcesJarByteArrayOutputStream.toByteArray(),
+    )
 }
 
 private fun generateBinding(
@@ -49,13 +65,8 @@ private fun generateBinding(
     )
 }
 
-private fun ActionBinding.compileBinding(): Path {
-    val compilationInput = createTempDirectory()
+private fun compileBinding(sourceFilePath: Path): Path {
     val compilationOutput = createTempDirectory()
-
-    val sourceFilePath = compilationInput / Path(filePath.substringAfter("kotlin/"))
-    sourceFilePath.createParentDirectories()
-    sourceFilePath.writeText(kotlinCode)
 
     val args =
         K2JVMCompilerArguments().apply {
@@ -83,4 +94,14 @@ private fun ActionBinding.compileBinding(): Path {
         "Binding compilation failed! Compiler messages: $compilerMessagesOutputStream"
     }
     return compilationOutput
+}
+
+private fun ActionBinding.prepareDirectoryWithSources(): Pair<Path, Path> {
+    val directory = createTempDirectory()
+    val sourceFilePath = directory / Path(this.filePath.substringAfter("kotlin/"))
+    sourceFilePath.also {
+        it.createParentDirectories()
+        it.writeText(this.kotlinCode)
+    }
+    return Pair(sourceFilePath, directory)
 }
