@@ -18,7 +18,10 @@ class GettingStartedSnippets :
         // --8<-- [start:getting-started-1]
         #!/usr/bin/env kotlin
 
+        @file:Repository("https://repo.maven.apache.org/maven2/")
         @file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.3.1-SNAPSHOT")
+        @file:Repository("https://bindings.krzeminski.it")
+        @file:DependsOn("actions:checkout:v4")
 
         // --8<-- [end:getting-started-1]
          */
