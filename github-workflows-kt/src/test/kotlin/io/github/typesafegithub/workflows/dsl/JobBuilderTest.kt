@@ -1,8 +1,8 @@
 package io.github.typesafegithub.workflows.dsl
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4.Distribution.Adopt
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.SetupJava
+import io.github.typesafegithub.workflows.actions.actions.SetupJava.Distribution.Adopt
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -46,20 +46,20 @@ class JobBuilderTest :
                         )
                         uses(
                             name = "Check out",
-                            action = CheckoutV4(),
+                            action = Checkout(),
                             _customArguments = mapOf("foo2" to true),
                         )
                         uses(
-                            action = CheckoutV4(),
+                            action = Checkout(),
                             _customArguments = mapOf("foo3" to true),
                         )
                         uses(
                             name = "Set up Java",
-                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
+                            action = SetupJava(distribution = Adopt, javaVersion = "11"),
                             _customArguments = mapOf("foo4" to true),
                         )
                         uses(
-                            action = SetupJavaV4(distribution = Adopt, javaVersion = "11"),
+                            action = SetupJava(distribution = Adopt, javaVersion = "11"),
                             _customArguments = mapOf("foo5" to true),
                         )
                     }

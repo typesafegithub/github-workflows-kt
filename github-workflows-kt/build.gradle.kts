@@ -29,6 +29,12 @@ dependencies {
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
+
+    // GitHub action bindings
+    testImplementation("actions:checkout:v4")
+    testImplementation("actions:setup-java:v4")
+    testImplementation("actions:upload-artifact:v3")
+    testImplementation("aws-actions:configure-aws-credentials:v4")
     testImplementation("EndBug:add-and-commit:v9")
 }
 
