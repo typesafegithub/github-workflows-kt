@@ -1,46 +1,48 @@
-TODO: ADJUST IT!
-
 # Using actions
 
 As a reminder, to be able to use an action, you have to know its owner, name and version, e.g. `actions/checkout@v3`.
-The library comes bundled with some popular actions, but you can consume any action you want. Read on to learn about
-your possibilities.
+You can use any action you want. Read on to learn about your options.
 
-## Built-in actions
+## Maven-compatible action bindings repository
 
-Take a look here: [Supported actions](../supported-actions.md).
-These are actions ready to use, grouped by owners. For `actions/checkout@v3`, there's [`CheckoutV3`](https://github.com/typesafegithub/github-workflows-kt/blob/main/github-workflows-kt/src/gen/kotlin/io/github/typesafegithub/workflows/actions/actions/CheckoutV3.kt)
-accepting all inputs defined in its metadata file, along with some basic typing. You may notice that for each major
-version, a separate class exists. It's because it's assumed [Semantic Versioning](https://semver.org/) is used to
-version the actions, as [recommended by GitHub](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
-Each new major version means a breaking change, and it usually means that the Kotlin binding for the action needs a
-breaking change as well.
+!!! info "When to use this approach"
+    This is the recommended, default approach. Start with this.
 
-### Requirements for adding a new action
+To add a dependency on an action:
+1. Add a dependency on a Maven repository that generates the action bindings on the fly: https://bindings.krzeminski.it/
+2. Add a dependency on a Maven artifact, e.g. for `actions/checkout@v3` the right way to add the dependency in the
+   script is: `@file:DependsOn("actions:checkout:v3")`. As you can see, the group ID was adopted to model the action's
+   owner, the artifact ID models the action name, and the version is just action's version (a tag or a branch
+   corresponding to a released version). If an action's manifest is defined in a subdirectory, like the popular
+   `gradle/actions/setup-gradle@v3`, replace the slashes in the action name with `__`, so in this case it would be
+   `@file:DependsOn("gradle:actions__setup-gradle:v3")`.
+3. Use the action by importing a class like `io.github.typesafegithub.workflows.actions.actions.Checkout`.
 
-An action is eligible to be added to this library (i.e. have its Kotlin binding generated and maintained by the library)
-if the following conditions are fulfilled:
+For every action, a binding will be generated. However, some less popular actions don't have typings configured for
+their inputs, so by default all inputs are of type `String`. There are two ways of configuring typings:
+1. Recommended: a typing manifest (`action-typing.yml`) in the action's repo, see
+   [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/). Thanks to this, the actions' owner
+   is responsible for providing and maintaining the typings defined in a technology-agnostic way, to be used
+   **not only** with this Kotlin library. There are also no synchronization issues between the action itself and its
+   typings. When trying to use a new action that has no typings, always discuss this approach with the action owner
+   first.
+2. Fallback: if it's not possible to host the typings with the action, use
+   [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog). You can contribute
+   or fix typings for your favorite action.
 
-* follows [Semantic Versioning](https://semver.org/), with exceptions for pre-releases (like `v0.2`)
-* provides major version tags, as described [here](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-tags-for-release-management).
-  An example valid tag is `v2` that points to the newest release with major version number 2. Example invalid tags are
-  `v2.1.0`, `latest` or `main`
-
-Nice to have:
-
-* provides typings using [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/)
+This approach supports dependency updating bots that support Kotlin Script's `.main.kts` files. E.g. Renovate is known
+to support it.
 
 ## User-defined actions
 
-If your action is not bundled with the library, you are in a hurry and contributing to the library now is not an option,
-you have two ways to proceed.
+If you are in a hurry and adding typings is not possible right now, browse these options.
 
 ### Typed binding
 
 !!! info "When to use this approach"
-    It lets you create an action binding in a similar manner that is provided by the built-in action bindings in this
-    library, i.e. a class that takes some constructor arguments with types of your choice, and maps them to strings
-    inside `toYamlArguments`. Use it to have better type-safety when using the binding.
+    It lets you create an action binding in a similar manner that is provided by the action bindings server i.e. a class
+    that takes some constructor arguments with types of your choice, and maps them to strings inside `toYamlArguments`.
+    Use it to have better type-safety when using the binding.
 
 #### Repository based actions
 
