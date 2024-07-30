@@ -51,6 +51,10 @@ tasks.withType<KotlinCompile> {
 tasks.test {
     // The integration tests read from and write to there.
     inputs.dir("$rootDir/.github/workflows")
+
+    // It's a workaround to be able to use action bindings provided by the server. They declare a dependency on
+    // github-workflows-kt, and I think it causes some kind of version clash (e.g. between 2.3.0 and 2.3.1-SNAPSHOT).
+    dependsOn(tasks.jar)
 }
 
 kotlin {
