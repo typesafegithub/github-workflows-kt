@@ -9,7 +9,8 @@ You can use any action you want. Read on to learn about your options.
     This is the recommended, default approach. Start with this.
 
 To add a dependency on an action:
-1. Add a dependency on a Maven repository that generates the action bindings on the fly: https://bindings.krzeminski.it/
+1. If you haven't already, add a dependency on a Maven repository that generates the action bindings on the fly:
+   `@file:Repository("https://bindings.krzeminski.it")`.
 2. Add a dependency on a Maven artifact, e.g. for `actions/checkout@v3` the right way to add the dependency in the
    script is: `@file:DependsOn("actions:checkout:v3")`. As you can see, the group ID was adopted to model the action's
    owner, the artifact ID models the action name, and the version is just action's version (a tag or a branch
@@ -27,8 +28,9 @@ their inputs, so by default all inputs are of type `String`. There are two ways 
    typings. When trying to use a new action that has no typings, always discuss this approach with the action owner
    first.
 2. Fallback: if it's not possible to host the typings with the action, use
-   [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog). You can contribute
-   or fix typings for your favorite action.
+   [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog),
+   a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
+   sending a PR.
 
 This approach supports dependency updating bots that support Kotlin Script's `.main.kts` files. E.g. Renovate is known
 to support it.
