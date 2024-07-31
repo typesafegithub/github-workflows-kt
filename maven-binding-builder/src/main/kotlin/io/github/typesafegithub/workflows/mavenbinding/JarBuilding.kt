@@ -98,7 +98,7 @@ private fun compileBinding(sourceFilePath: Path): Path {
 
 private fun ActionBinding.prepareDirectoryWithSources(): Pair<Path, Path> {
     val directory = createTempDirectory()
-    val sourceFilePath = directory / Path(this.filePath.substringAfter("kotlin/"))
+    val sourceFilePath = directory / Path(this.filePath)
     sourceFilePath.also {
         it.createParentDirectories()
         it.writeText(this.kotlinCode)
