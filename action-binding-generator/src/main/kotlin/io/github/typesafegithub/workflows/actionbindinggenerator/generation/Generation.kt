@@ -223,7 +223,7 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
             PropertySpec
                 .builder(key.toCamelCase(), String::class)
                 .initializer("\"steps.\$stepId.outputs.$key\"")
-                .addKdoc(value.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
+                .addKdoc(value.description.escapedForComments.removeTrailingWhitespacesForEachLine())
                 .build()
         }
     addType(
@@ -392,7 +392,7 @@ private fun Metadata.buildCommonConstructorParameters(
             ParameterSpec
                 .builder(key.toCamelCase(), inputTypings.getInputType(key, input, coords, className))
                 .defaultValueIfNullable(input)
-                .addKdoc(input.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine())
+                .addKdoc(input.description.escapedForComments.removeTrailingWhitespacesForEachLine())
                 .build()
         }.plus(
             ParameterSpec
@@ -421,9 +421,9 @@ private fun actionKdoc(
     metadata: Metadata,
     coords: ActionCoords,
 ) = """
-       |Action: ${metadata.name.nestedCommentsSanitized}
+       |Action: ${metadata.name.escapedForComments}
        |
-       |${metadata.description.nestedCommentsSanitized.removeTrailingWhitespacesForEachLine()}
+       |${metadata.description.escapedForComments.removeTrailingWhitespacesForEachLine()}
        |
        |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore(
     '/',
@@ -441,15 +441,17 @@ private fun Map<String, Typing>.getInputType(
     .getClassName(coords.owner.toKotlinPackageName(), className, key)
     .copy(nullable = !input.shouldBeNonNullInBinding())
 
-// Replacing: working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
-//            and a shortcoming in KotlinPoet: https://github.com/square/kotlinpoet/issues/887
-private val String.nestedCommentsSanitized
+private val String.escapedForComments
     get() =
+        // Working around a bug in Kotlin: https://youtrack.jetbrains.com/issue/KT-23333
+        // and a shortcoming in KotlinPoet: https://github.com/square/kotlinpoet/issues/887
         replace("/*", "/&#42;")
             .replace("*/", "&#42;/")
             .replace("`[^`]++`".toRegex()) {
                 it.value.replace("&#42;", "`&#42;`")
             }
+            // Escape placeholders like in java.text.Format, used by KotlinPoet.
+            .replace("%", "%%")
 
 private fun ActionCoords.getCommitHashFromFileSystem(): String? =
     Path
