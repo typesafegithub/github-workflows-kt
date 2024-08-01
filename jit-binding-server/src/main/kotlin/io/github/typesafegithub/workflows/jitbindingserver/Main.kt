@@ -29,7 +29,7 @@ fun main() {
     val bindingsCache =
         Cache
             .Builder<ActionCoords, Result<Map<String, Artifact>>>()
-            .expireAfterAccess(1.hours)
+            .expireAfterWrite(1.hours)
             .build()
     val openTelemetry = buildOpenTelemetryConfig(serviceName = "github-actions-bindings")
 
