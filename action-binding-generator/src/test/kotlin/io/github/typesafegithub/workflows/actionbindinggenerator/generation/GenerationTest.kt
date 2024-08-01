@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata

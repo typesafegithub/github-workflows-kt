@@ -2,7 +2,6 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.metadata
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
@@ -10,7 +9,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 import java.net.URI
-import java.nio.file.Path
 
 /**
  * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
@@ -47,10 +45,6 @@ private fun ActionCoords.actionYamlUrl(gitRef: String) =
         '/',
     )}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
 
-internal val ActionCoords.releasesUrl: String get() = "$gitHubUrl/releases"
-
-internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
-
 public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
@@ -59,7 +53,6 @@ public fun ActionCoords.fetchMetadata(
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
             NewestForVersion -> this.version
-            FromLockfile -> this.getCommitHashFromFileSystem()
         }
     val list = listOf(actionYmlUrl(gitRef), actionYamlUrl(gitRef))
 
@@ -73,12 +66,5 @@ public fun ActionCoords.fetchMetadata(
             }
         }?.let { myYaml.decodeFromString(it) }
 }
-
-private fun ActionCoords.getCommitHashFromFileSystem(): String =
-    Path
-        .of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt")
-        .toFile()
-        .readText()
-        .trim()
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()

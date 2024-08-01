@@ -32,7 +32,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.provideT
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.removeTrailingWhitespacesForEachLine
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCase
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
-import java.nio.file.Path
 
 public data class ActionBinding(
     val kotlinCode: String,
@@ -41,18 +40,6 @@ public data class ActionBinding(
     val packageName: String,
     val typingActualSource: TypingActualSource?,
 )
-
-public enum class ClientType {
-    /**
-     * The binding is going to be bundled with the library.
-     */
-    BUNDLED_WITH_LIB,
-
-    /**
-     * The binding is going to be provided in a versioned JAR.
-     */
-    VERSIONED_JAR,
-}
 
 private object Types {
     val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
@@ -70,19 +57,13 @@ public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
-    clientType: ClientType = ClientType.BUNDLED_WITH_LIB,
 ): ActionBinding? {
-    if (clientType == ClientType.BUNDLED_WITH_LIB) {
-        require(this.version.removePrefix("v").toIntOrNull() != null) {
-            "Only major versions are supported, and '${this.version}' was given!"
-        }
-    }
     val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return null
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
     val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
 
-    val className = this.buildActionClassName(includeVersion = clientType == ClientType.BUNDLED_WITH_LIB)
+    val className = this.buildActionClassName()
     val actionBindingSourceCode =
         generateActionBindingSourceCode(metadataProcessed, this, inputTypingsResolved.first, className)
     val packageName = owner.toKotlinPackageName()
@@ -450,9 +431,3 @@ private val String.nestedCommentsSanitized
             .replace("`[^`]++`".toRegex()) {
                 it.value.replace("&#42;", "`&#42;`")
             }
-
-private fun ActionCoords.getCommitHashFromFileSystem(): String? =
-    Path
-        .of("actions", owner, name.substringBefore('/'), version, "commit-hash.txt")
-        .toFile()
-        .let { if (it.exists()) it.readText().trim() else null }
