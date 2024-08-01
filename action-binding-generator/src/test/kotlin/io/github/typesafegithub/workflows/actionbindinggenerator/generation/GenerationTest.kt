@@ -387,4 +387,32 @@ class GenerationTest :
             binding shouldNotBe null
             binding?.shouldMatchFile("ActionForGeneratedJar.kt")
         }
+
+        test("action with input descriptions with fancy characters") {
+            // given
+            val actionManifest =
+                Metadata(
+                    name = "Do something cool",
+                    description = "This is a test description that should be put in the KDoc comment for a class",
+                    inputs =
+                        mapOf(
+                            "nested-kotlin-comments" to
+                                Input(
+                                    description = "This is a /* test */",
+                                ),
+                            "percent" to
+                                Input(
+                                    description = "For example \"100%\"",
+                                ),
+                        ),
+                )
+            val coords = ActionCoords("john-smith", "action-with-fancy-chars-in-docs", "v3")
+
+            // when
+            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+
+            // then
+            binding shouldNotBe null
+            binding?.shouldMatchFile("ActionWithFancyCharsInDocsV3.kt")
+        }
     })
