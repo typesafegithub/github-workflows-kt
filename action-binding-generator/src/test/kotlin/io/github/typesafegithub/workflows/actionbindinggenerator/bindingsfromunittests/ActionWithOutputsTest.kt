@@ -1,13 +1,13 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.bindingsfromunittests
 
-import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithOutputsV3
+import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithOutputs
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class ActionWithOutputsV3Test : DescribeSpec({
+class ActionWithOutputsTest : DescribeSpec({
     it("fields have correct output placeholders") {
         // given
-        val outputs = ActionWithOutputsV3(fooBar = "1").buildOutputObject("someStepId")
+        val outputs = ActionWithOutputs(fooBar = "1").buildOutputObject("someStepId")
 
         // when & then
         outputs.bazGoo shouldBe "steps.someStepId.outputs.baz-goo"

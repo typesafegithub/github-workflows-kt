@@ -1,25 +1,25 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.bindingsfromunittests
 
-import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithAllTypesOfInputsV3
+import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithAllTypesOfInputs
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class ActionWithAllTypesOfInputsV3Test : DescribeSpec({
+class ActionWithAllTypesOfInputsTest : DescribeSpec({
     it("correctly translates all types of inputs") {
         // given
-        val action = ActionWithAllTypesOfInputsV3(
+        val action = ActionWithAllTypesOfInputs(
             fooBar = "test",
             bazGoo = true,
             binKin = false,
             intPint = 43,
             floPint = 123.456f,
-            finBin = ActionWithAllTypesOfInputsV3.Bin.BooBar,
-            gooZen = ActionWithAllTypesOfInputsV3.Zen.Special1,
-            bahEnum = ActionWithAllTypesOfInputsV3.BahEnum.HelloWorld,
+            finBin = ActionWithAllTypesOfInputs.Bin.BooBar,
+            gooZen = ActionWithAllTypesOfInputs.Zen.Special1,
+            bahEnum = ActionWithAllTypesOfInputs.BahEnum.HelloWorld,
             listStrings = listOf("hello", "world"),
             listInts = listOf(1, 42),
-            listEnums = listOf(ActionWithAllTypesOfInputsV3.MyEnum.One, ActionWithAllTypesOfInputsV3.MyEnum.Three),
-            listIntSpecial = listOf(ActionWithAllTypesOfInputsV3.MyInt.TheAnswer, ActionWithAllTypesOfInputsV3.MyInt.Value(0))
+            listEnums = listOf(ActionWithAllTypesOfInputs.MyEnum.One, ActionWithAllTypesOfInputs.MyEnum.Three),
+            listIntSpecial = listOf(ActionWithAllTypesOfInputs.MyInt.TheAnswer, ActionWithAllTypesOfInputs.MyInt.Value(0))
         )
 
         // when
@@ -44,15 +44,15 @@ class ActionWithAllTypesOfInputsV3Test : DescribeSpec({
 
     it("works for custom values") {
         // given
-        val action = ActionWithAllTypesOfInputsV3(
+        val action = ActionWithAllTypesOfInputs(
             fooBar = "test",
             bazGoo = true,
             binKin = false,
             intPint = 43,
             floPint = 123.456f,
-            finBin = ActionWithAllTypesOfInputsV3.Bin.Custom("this-is-custom!"),
-            gooZen = ActionWithAllTypesOfInputsV3.Zen.Value(123),
-            bahEnum = ActionWithAllTypesOfInputsV3.BahEnum.Custom("very-custom"),
+            finBin = ActionWithAllTypesOfInputs.Bin.Custom("this-is-custom!"),
+            gooZen = ActionWithAllTypesOfInputs.Zen.Value(123),
+            bahEnum = ActionWithAllTypesOfInputs.BahEnum.Custom("very-custom"),
         )
 
         // when

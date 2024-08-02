@@ -15,20 +15,27 @@ import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
 import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
- * Action: Action With No Inputs
+ * Action: Do something cool
  *
- * Description
+ * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
  *
+ * @param fooBar Short description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-public data class ActionWithNoInputsV3 private constructor(
+public data class ActionWithOutputs private constructor(
+    /**
+     * Short description
+     */
+    public val fooBar: String,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -38,15 +45,36 @@ public data class ActionWithNoInputsV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
+) : RegularAction<ActionWithOutputs.Outputs>("john-smith", "action-with-outputs", _customVersion ?:
+        "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
+        fooBar: String,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(_customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(fooBar=fooBar, _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
-    override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(_customInputs)
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+        *listOfNotNull(
+            "foo-bar" to fooBar,
+            *_customInputs.toList().toTypedArray(),
+        ).toTypedArray()
+    )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * Cool output!
+         */
+        public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
+
+        /**
+         * Another output...
+         */
+        public val looWoz: String = "steps.$stepId.outputs.loo-woz"
+    }
 }
