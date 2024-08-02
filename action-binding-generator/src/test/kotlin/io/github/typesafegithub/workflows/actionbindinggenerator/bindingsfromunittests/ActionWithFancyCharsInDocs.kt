@@ -23,39 +23,24 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-some-optional-inputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-fancy-chars-in-docs)
  *
- * @param fooBar Required is default, default is set
- * @param bazGoo Required is default, default is null
- * @param zooDar Required is false, default is set
- * @param cooPoo Required is false, default is default
- * @param package Required is true, default is default
+ * @param nestedKotlinComments This is a /&#42; test &#42;/
+ * @param percent For example "100%"
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-public data class ActionWithSomeOptionalInputsV3 private constructor(
+public data class ActionWithFancyCharsInDocs private constructor(
     /**
-     * Required is default, default is set
+     * This is a /&#42; test &#42;/
      */
-    public val fooBar: String? = null,
+    public val nestedKotlinComments: String? = null,
     /**
-     * Required is default, default is null
+     * For example "100%"
      */
-    public val bazGoo: String? = null,
-    /**
-     * Required is false, default is set
-     */
-    public val zooDar: String? = null,
-    /**
-     * Required is false, default is default
-     */
-    public val cooPoo: String? = null,
-    /**
-     * Required is true, default is default
-     */
-    public val `package`: String,
+    public val percent: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -65,28 +50,22 @@ public data class ActionWithSomeOptionalInputsV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-some-optional-inputs", _customVersion
-        ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs", _customVersion ?:
+        "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        fooBar: String? = null,
-        bazGoo: String? = null,
-        zooDar: String? = null,
-        cooPoo: String? = null,
-        `package`: String,
+        nestedKotlinComments: String? = null,
+        percent: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar=fooBar, bazGoo=bazGoo, zooDar=zooDar, cooPoo=cooPoo, `package`=`package`,
+    ) : this(nestedKotlinComments=nestedKotlinComments, percent=percent,
             _customInputs=_customInputs, _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            fooBar?.let { "foo-bar" to it },
-            bazGoo?.let { "baz-goo" to it },
-            zooDar?.let { "zoo-dar" to it },
-            cooPoo?.let { "coo-poo" to it },
-            "package" to `package`,
+            nestedKotlinComments?.let { "nested-kotlin-comments" to it },
+            percent?.let { "percent" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

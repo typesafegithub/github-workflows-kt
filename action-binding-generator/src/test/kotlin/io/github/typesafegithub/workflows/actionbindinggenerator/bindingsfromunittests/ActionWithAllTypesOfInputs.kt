@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-for-generated-jar)
+ * [Action on GitHub](https://github.com/john-smith/action-with-all-types-of-inputs)
  *
  * @param fooBar Short description
  * @param bazGoo First boolean input!
@@ -46,7 +46,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-public data class ActionForGeneratedJar private constructor(
+public data class ActionWithAllTypesOfInputs private constructor(
     /**
      * Short description
      */
@@ -70,15 +70,15 @@ public data class ActionForGeneratedJar private constructor(
     /**
      * Enumeration
      */
-    public val finBin: ActionForGeneratedJar.Bin,
+    public val finBin: ActionWithAllTypesOfInputs.Bin,
     /**
      * Integer with special value
      */
-    public val gooZen: ActionForGeneratedJar.Zen,
+    public val gooZen: ActionWithAllTypesOfInputs.Zen,
     /**
      * Enum with custom naming
      */
-    public val bahEnum: ActionForGeneratedJar.BahEnum,
+    public val bahEnum: ActionWithAllTypesOfInputs.BahEnum,
     /**
      * List of strings
      */
@@ -90,11 +90,11 @@ public data class ActionForGeneratedJar private constructor(
     /**
      * List of enums
      */
-    public val listEnums: List<ActionForGeneratedJar.MyEnum>? = null,
+    public val listEnums: List<ActionWithAllTypesOfInputs.MyEnum>? = null,
     /**
      * List of integer with special values
      */
-    public val listIntSpecial: List<ActionForGeneratedJar.MyInt>? = null,
+    public val listIntSpecial: List<ActionWithAllTypesOfInputs.MyInt>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -104,8 +104,8 @@ public data class ActionForGeneratedJar private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionForGeneratedJar.Outputs>("john-smith", "action-for-generated-jar",
-        _customVersion ?: "v3") {
+) : RegularAction<ActionWithAllTypesOfInputs.Outputs>("john-smith",
+        "action-with-all-types-of-inputs", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         fooBar: String,
@@ -113,13 +113,13 @@ public data class ActionForGeneratedJar private constructor(
         binKin: Boolean? = null,
         intPint: Int,
         floPint: Float,
-        finBin: ActionForGeneratedJar.Bin,
-        gooZen: ActionForGeneratedJar.Zen,
-        bahEnum: ActionForGeneratedJar.BahEnum,
+        finBin: ActionWithAllTypesOfInputs.Bin,
+        gooZen: ActionWithAllTypesOfInputs.Zen,
+        bahEnum: ActionWithAllTypesOfInputs.BahEnum,
         listStrings: List<String>? = null,
         listInts: List<Int>? = null,
-        listEnums: List<ActionForGeneratedJar.MyEnum>? = null,
-        listIntSpecial: List<ActionForGeneratedJar.MyInt>? = null,
+        listEnums: List<ActionWithAllTypesOfInputs.MyEnum>? = null,
+        listIntSpecial: List<ActionWithAllTypesOfInputs.MyInt>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
     ) : this(fooBar=fooBar, bazGoo=bazGoo, binKin=binKin, intPint=intPint, floPint=floPint,
@@ -152,15 +152,15 @@ public data class ActionForGeneratedJar private constructor(
     public sealed class Bin(
         public val stringValue: String,
     ) {
-        public object Foo : ActionForGeneratedJar.Bin("foo")
+        public object Foo : ActionWithAllTypesOfInputs.Bin("foo")
 
-        public object BooBar : ActionForGeneratedJar.Bin("boo-bar")
+        public object BooBar : ActionWithAllTypesOfInputs.Bin("boo-bar")
 
-        public object Baz123 : ActionForGeneratedJar.Bin("baz123")
+        public object Baz123 : ActionWithAllTypesOfInputs.Bin("baz123")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionForGeneratedJar.Bin(customStringValue)
+        ) : ActionWithAllTypesOfInputs.Bin(customStringValue)
     }
 
     public sealed class Zen(
@@ -168,35 +168,35 @@ public data class ActionForGeneratedJar private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : ActionForGeneratedJar.Zen(requestedValue)
+        ) : ActionWithAllTypesOfInputs.Zen(requestedValue)
 
-        public object Special1 : ActionForGeneratedJar.Zen(3)
+        public object Special1 : ActionWithAllTypesOfInputs.Zen(3)
 
-        public object Special2 : ActionForGeneratedJar.Zen(-1)
+        public object Special2 : ActionWithAllTypesOfInputs.Zen(-1)
     }
 
     public sealed class BahEnum(
         public val stringValue: String,
     ) {
-        public object HelloWorld : ActionForGeneratedJar.BahEnum("helloworld")
+        public object HelloWorld : ActionWithAllTypesOfInputs.BahEnum("helloworld")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionForGeneratedJar.BahEnum(customStringValue)
+        ) : ActionWithAllTypesOfInputs.BahEnum(customStringValue)
     }
 
     public sealed class MyEnum(
         public val stringValue: String,
     ) {
-        public object One : ActionForGeneratedJar.MyEnum("one")
+        public object One : ActionWithAllTypesOfInputs.MyEnum("one")
 
-        public object Two : ActionForGeneratedJar.MyEnum("two")
+        public object Two : ActionWithAllTypesOfInputs.MyEnum("two")
 
-        public object Three : ActionForGeneratedJar.MyEnum("three")
+        public object Three : ActionWithAllTypesOfInputs.MyEnum("three")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionForGeneratedJar.MyEnum(customStringValue)
+        ) : ActionWithAllTypesOfInputs.MyEnum(customStringValue)
     }
 
     public sealed class MyInt(
@@ -204,9 +204,9 @@ public data class ActionForGeneratedJar private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : ActionForGeneratedJar.MyInt(requestedValue)
+        ) : ActionWithAllTypesOfInputs.MyInt(requestedValue)
 
-        public object TheAnswer : ActionForGeneratedJar.MyInt(42)
+        public object TheAnswer : ActionWithAllTypesOfInputs.MyInt(42)
     }
 
     public class Outputs(

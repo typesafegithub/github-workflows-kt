@@ -4,6 +4,7 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.johnsmith
@@ -11,6 +12,7 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -20,27 +22,31 @@ import kotlin.collections.toTypedArray
 
 /**
  * Action: Do something cool
+ * and describe it in multiple lines
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-fancy-chars-in-docs)
+ * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
  *
- * @param nestedKotlinComments This is a /&#42; test &#42;/
- * @param percent For example "100%"
+ * @param fooBar Short description
+ * @param bazGoo Just another input
+ * with multiline description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-public data class ActionWithFancyCharsInDocsV3 private constructor(
+public data class SimpleActionWithRequiredStringInputs private constructor(
     /**
-     * This is a /&#42; test &#42;/
+     * Short description
      */
-    public val nestedKotlinComments: String? = null,
+    public val fooBar: String,
     /**
-     * For example "100%"
+     * Just another input
+     * with multiline description
      */
-    public val percent: String? = null,
+    @Deprecated("this is deprecated")
+    public val bazGoo: String,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -50,22 +56,22 @@ public data class ActionWithFancyCharsInDocsV3 private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs", _customVersion ?:
-        "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs",
+        _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        nestedKotlinComments: String? = null,
-        percent: String? = null,
+        fooBar: String,
+        bazGoo: String,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(nestedKotlinComments=nestedKotlinComments, percent=percent,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(fooBar=fooBar, bazGoo=bazGoo, _customInputs=_customInputs,
+            _customVersion=_customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            nestedKotlinComments?.let { "nested-kotlin-comments" to it },
-            percent?.let { "percent" to it },
+            "foo-bar" to fooBar,
+            "baz-goo" to bazGoo,
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

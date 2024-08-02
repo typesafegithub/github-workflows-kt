@@ -144,7 +144,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("SimpleActionWithRequiredStringInputsV3.kt")
+            binding?.shouldMatchFile("SimpleActionWithRequiredStringInputs.kt")
         }
 
         test("action with various combinations of input parameters describing being required or optional") {
@@ -190,7 +190,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithSomeOptionalInputsV3.kt")
+            binding?.shouldMatchFile("ActionWithSomeOptionalInputs.kt")
         }
 
         test("action with all types of inputs") {
@@ -211,7 +211,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithAllTypesOfInputsV3.kt")
+            binding?.shouldMatchFile("ActionWithAllTypesOfInputs.kt")
         }
 
         test("action with outputs") {
@@ -242,7 +242,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithOutputsV3.kt")
+            binding?.shouldMatchFile("ActionWithOutputs.kt")
         }
 
         test("action with no inputs") {
@@ -262,7 +262,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithNoInputsV3.kt")
+            binding?.shouldMatchFile("ActionWithNoInputs.kt")
         }
 
         test("action v2 deprecated by v3") {
@@ -281,7 +281,7 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding?.shouldMatchFile("DeprecatedActionV2.kt")
+            binding?.shouldMatchFile("DeprecatedAction.kt")
         }
 
         test("action with deprecated input resolving to the same Kotlin field name") {
@@ -315,7 +315,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithDeprecatedInputAndNameClashV2.kt")
+            binding?.shouldMatchFile("ActionWithDeprecatedInputAndNameClash.kt")
         }
 
         test("action with inputs sharing type") {
@@ -363,29 +363,7 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithInputsSharingTypeV3.kt")
-        }
-
-        test("action binding generated for the versioned JAR") {
-            // given
-            val coords = ActionCoords("john-smith", "action-for-generated-jar", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
-                    clientType = ClientType.VERSIONED_JAR,
-                    inputTypings =
-                        Pair(
-                            typingsForAllTypesOfInputs,
-                            ACTION,
-                        ),
-                )
-
-            // then
-            binding shouldNotBe null
-            binding?.shouldMatchFile("ActionForGeneratedJar.kt")
+            binding?.shouldMatchFile("ActionWithInputsSharingType.kt")
         }
 
         test("action with input descriptions with fancy characters") {
@@ -413,6 +391,6 @@ class GenerationTest :
 
             // then
             binding shouldNotBe null
-            binding?.shouldMatchFile("ActionWithFancyCharsInDocsV3.kt")
+            binding?.shouldMatchFile("ActionWithFancyCharsInDocs.kt")
         }
     })

@@ -1,15 +1,15 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.bindingsfromunittests
 
-import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithSomeOptionalInputsV3
+import io.github.typesafegithub.workflows.actions.johnsmith.SimpleActionWithRequiredStringInputs
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class ActionWithSomeOptionalInputsV3Test : DescribeSpec({
+class SimpleActionWithRequiredStringInputsTest : DescribeSpec({
     it("renders with defaults") {
         // given
-        val action = ActionWithSomeOptionalInputsV3(
+        val action = SimpleActionWithRequiredStringInputs(
+            fooBar = "abc123",
             bazGoo = "def456",
-            `package` = "qwe789"
         )
 
         // when
@@ -17,8 +17,8 @@ class ActionWithSomeOptionalInputsV3Test : DescribeSpec({
 
         // then
         yaml shouldBe linkedMapOf(
+            "foo-bar" to "abc123",
             "baz-goo" to "def456",
-            "package" to "qwe789",
         )
     }
 })

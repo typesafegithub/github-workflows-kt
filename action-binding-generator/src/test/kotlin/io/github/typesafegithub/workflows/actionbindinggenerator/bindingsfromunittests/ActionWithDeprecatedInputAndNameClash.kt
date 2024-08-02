@@ -31,7 +31,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-public data class ActionWithDeprecatedInputAndNameClashV2 private constructor(
+public data class ActionWithDeprecatedInputAndNameClash private constructor(
     /**
      * Foo bar - new
      */
