@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
@@ -140,7 +140,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding shouldNotBe null
@@ -186,7 +186,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding shouldNotBe null
@@ -200,7 +200,7 @@ class GenerationTest :
             // when
             val binding =
                 coords.generateBinding(
-                    metadataRevision = FromLockfile,
+                    metadataRevision = NewestForVersion,
                     metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
                     inputTypings =
                         Pair(
@@ -238,7 +238,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding shouldNotBe null
@@ -258,7 +258,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding shouldNotBe null
@@ -278,7 +278,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding?.shouldMatchFile("DeprecatedActionV2.kt")
@@ -311,7 +311,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding shouldNotBe null
@@ -348,7 +348,7 @@ class GenerationTest :
             // when
             val binding =
                 coords.generateBinding(
-                    metadataRevision = FromLockfile,
+                    metadataRevision = NewestForVersion,
                     metadata = actionManifest,
                     inputTypings =
                         Pair(
@@ -373,7 +373,7 @@ class GenerationTest :
             // when
             val binding =
                 coords.generateBinding(
-                    metadataRevision = FromLockfile,
+                    metadataRevision = NewestForVersion,
                     metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
                     clientType = ClientType.VERSIONED_JAR,
                     inputTypings =
@@ -409,7 +409,7 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-fancy-chars-in-docs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = FromLockfile, metadata = actionManifest)
+            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
             binding shouldNotBe null
