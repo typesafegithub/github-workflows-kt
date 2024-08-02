@@ -37,13 +37,6 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/dom
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/actionbindinggenerator/domain/FromLockfile : io/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/FromLockfile;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public abstract interface class io/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision {
 }
 
