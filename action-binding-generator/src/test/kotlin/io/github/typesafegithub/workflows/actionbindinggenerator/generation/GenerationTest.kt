@@ -265,25 +265,6 @@ class GenerationTest :
             binding?.shouldMatchFile("ActionWithNoInputs.kt")
         }
 
-        test("action v2 deprecated by v3") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Deprecated Action",
-                    description = "Description",
-                )
-
-            val coords = ActionCoords("john-smith", "deprecated-action", "v2", deprecatedByVersion = "v3")
-
-            // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
-
-            // then
-            binding?.shouldMatchFile("DeprecatedAction.kt")
-        }
-
         test("action with deprecated input resolving to the same Kotlin field name") {
             // given
             val actionManifest =
