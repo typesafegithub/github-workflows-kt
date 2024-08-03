@@ -107,7 +107,7 @@ private fun generateActionBindingSourceCode(
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
             ).addType(generateActionClass(metadata, coords, inputTypings, className))
-            .addSuppressAnnotation(metadata, coords)
+            .addSuppressAnnotation(metadata)
             .indent("    ")
             .build()
     return buildString {
@@ -115,25 +115,22 @@ private fun generateActionBindingSourceCode(
     }
 }
 
-private fun FileSpec.Builder.addSuppressAnnotation(
-    metadata: Metadata,
-    coords: ActionCoords,
-) = apply {
-    val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
-    val addSuppressionForDeprecation = isDeprecatedInputUsed || coords.deprecatedByVersion != null
+private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata) =
+    apply {
+        val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
 
-    addAnnotation(
-        AnnotationSpec
-            .builder(Suppress::class.asClassName())
-            .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
-            .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
-            .apply {
-                if (addSuppressionForDeprecation) {
-                    addMember(CodeBlock.of("%S", "DEPRECATION"))
-                }
-            }.build(),
-    )
-}
+        addAnnotation(
+            AnnotationSpec
+                .builder(Suppress::class.asClassName())
+                .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
+                .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
+                .apply {
+                    if (isDeprecatedInputUsed) {
+                        addMember(CodeBlock.of("%S", "DEPRECATION"))
+                    }
+                }.build(),
+        )
+    }
 
 private fun generateActionClass(
     metadata: Metadata,
@@ -145,7 +142,6 @@ private fun generateActionClass(
         .classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdoc(actionKdoc(metadata, coords))
-        .addMaybeDeprecated(coords)
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className))
         .properties(metadata, coords, inputTypings, className)
@@ -292,21 +288,6 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
                 add(")")
             }.build()
     }
-}
-
-private fun TypeSpec.Builder.addMaybeDeprecated(coords: ActionCoords): TypeSpec.Builder {
-    if (coords.deprecatedByVersion == null) {
-        return this
-    }
-    val newerClass = coords.copy(version = coords.deprecatedByVersion)
-    addAnnotation(
-        AnnotationSpec
-            .builder(Deprecated::class)
-            .addMember("message = %S", "This action has a newer major version: ${newerClass.buildActionClassName()}")
-            .addMember("replaceWith = ReplaceWith(%S)", newerClass.buildActionClassName())
-            .build(),
-    )
-    return this
 }
 
 private fun TypeSpec.Builder.inheritsFromRegularAction(
