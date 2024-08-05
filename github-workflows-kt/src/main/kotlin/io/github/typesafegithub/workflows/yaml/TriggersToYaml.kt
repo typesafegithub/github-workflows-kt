@@ -56,6 +56,7 @@ public fun Trigger.toMap(): Map<String, List<String>> =
         is Push -> toMap()
         is PullRequest -> toMap()
         is PullRequestTarget -> toMap()
+        is RepositoryDispatch -> toMap()
         else -> emptyMap()
     }
 
@@ -85,6 +86,11 @@ private fun PullRequestTarget.toMap() =
         "branches-ignore" to branchesIgnore,
         "paths" to paths,
         "paths-ignore" to pathsIgnore,
+    )
+
+private fun RepositoryDispatch.toMap() =
+    mapOfNotNullValues(
+        "types" to types,
     )
 
 @Suppress("ComplexMethod")
