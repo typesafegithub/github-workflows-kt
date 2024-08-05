@@ -34,7 +34,7 @@ jobs:
       GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       uses: 'gradle/actions/setup-gradle@v3'
     - id: 'step-2'
@@ -89,7 +89,7 @@ jobs:
       name: 'DockerHub'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v3'
     - id: 'step-1'
       uses: 'gradle/actions/setup-gradle@v3'
     - id: 'step-2'
