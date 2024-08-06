@@ -25,7 +25,7 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
       with:
         generate-job-summary: 'false'
     - id: 'step-3'
@@ -125,7 +125,7 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-16'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
       with:
         generate-job-summary: 'false'
     - id: 'step-17'

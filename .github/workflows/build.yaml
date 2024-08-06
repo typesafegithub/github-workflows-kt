@@ -36,7 +36,7 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
       with:
         cache-encryption-key: '${{ secrets.GRADLE_ENCRYPTION_KEY }}'
     - id: 'step-3'
@@ -58,7 +58,7 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
       with:
         cache-encryption-key: '${{ secrets.GRADLE_ENCRYPTION_KEY }}'
     - id: 'step-3'
@@ -85,7 +85,7 @@ jobs:
         java-version: '11'
         distribution: 'zulu'
     - id: 'step-2'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-3'
       name: 'Check if snapshot version is set'
       run: './gradlew setIsSnapshotFlagInGithubOutput'
