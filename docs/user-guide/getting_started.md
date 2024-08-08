@@ -36,4 +36,4 @@ names with your own.
 5. Commit both files, push the changes to GitHub and make sure the workflow is green when ran on GitHub Actions.
 6. Last but not least, feel invited to join the [Slack channel](https://kotlinlang.slack.com/archives/C02UUATR7RC/)
    dedicated to this library. You'll find information about upcoming breaking changes, discussion about new features,
-   and more! If you don't know how to sign up to the Kotlin's Slack sapce, see [here](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up).
+   and more! If you don't know how to sign up to the Kotlin's Slack space, see [here](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up).
