@@ -36,7 +36,7 @@ fun JobBuilder<*>.publishToMavenLocal() {
             distribution = SetupJava.Distribution.Zulu,
         ),
     )
-    uses(action = ActionsSetupGradle(generateJobSummary = false))
+    uses(action = ActionsSetupGradle())
     run(
         name = "Publish to Maven local",
         command = "./gradlew publishToMavenLocal",
