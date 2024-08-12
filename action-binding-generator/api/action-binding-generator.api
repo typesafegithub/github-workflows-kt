@@ -72,8 +72,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/gen
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/generation/GenerationKt {
-	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;)Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ActionBinding;
-	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/generation/ActionBinding;
+	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;)Ljava/util/List;
+	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;ILjava/lang/Object;)Ljava/util/List;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input {
