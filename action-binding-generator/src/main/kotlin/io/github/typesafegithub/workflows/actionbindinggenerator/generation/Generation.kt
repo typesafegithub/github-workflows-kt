@@ -57,8 +57,8 @@ public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
-): ActionBinding? {
-    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return null
+): List<ActionBinding> {
+    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
     val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
@@ -67,12 +67,14 @@ public fun ActionCoords.generateBinding(
     val actionBindingSourceCode =
         generateActionBindingSourceCode(metadataProcessed, this, inputTypingsResolved.first, className)
     val packageName = owner.toKotlinPackageName()
-    return ActionBinding(
-        kotlinCode = actionBindingSourceCode,
-        filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
-        className = className,
-        packageName = packageName,
-        typingActualSource = inputTypingsResolved.second,
+    return listOf(
+        ActionBinding(
+            kotlinCode = actionBindingSourceCode,
+            filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
+            className = className,
+            packageName = packageName,
+            typingActualSource = inputTypingsResolved.second,
+        ),
     )
 }
 

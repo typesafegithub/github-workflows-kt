@@ -31,10 +31,13 @@ internal fun buildJars(
     name: String,
     version: String,
 ): Jars? {
-    val binding = generateBinding(owner = owner, name = name, version = version) ?: return null
-    val (sourceFilePath, compilationInputDir) = binding.prepareDirectoryWithSources()
+    val binding =
+        generateBinding(owner = owner, name = name, version = version).also {
+            if (it.isEmpty()) return null
+        }
+    val (sourceFilePaths, compilationInputDir) = binding.prepareDirectoryWithSources()
 
-    val pathWithJarContents = compileBinding(sourceFilePath = sourceFilePath)
+    val pathWithJarContents = compileBinding(sourceFilePaths = sourceFilePaths)
     val mainJarByteArrayOutputStream = ByteArrayOutputStream()
     mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
 
@@ -51,7 +54,7 @@ private fun generateBinding(
     owner: String,
     name: String,
     version: String,
-): ActionBinding? {
+): List<ActionBinding> {
     val actionCoords =
         ActionCoords(
             owner = owner,
@@ -63,14 +66,14 @@ private fun generateBinding(
     )
 }
 
-private fun compileBinding(sourceFilePath: Path): Path {
+private fun compileBinding(sourceFilePaths: List<Path>): Path {
     val compilationOutput = createTempDirectory()
 
     val args =
         K2JVMCompilerArguments().apply {
             destination = compilationOutput.toString()
             classpath = System.getProperty("java.class.path")
-            freeArgs = listOf(sourceFilePath.toString())
+            freeArgs = sourceFilePaths.map { it.toString() }
             noStdlib = true
             noReflect = true
             includeRuntime = false
@@ -94,12 +97,16 @@ private fun compileBinding(sourceFilePath: Path): Path {
     return compilationOutput
 }
 
-private fun ActionBinding.prepareDirectoryWithSources(): Pair<Path, Path> {
+private fun List<ActionBinding>.prepareDirectoryWithSources(): Pair<List<Path>, Path> {
     val directory = createTempDirectory()
-    val sourceFilePath = directory / Path(this.filePath)
-    sourceFilePath.also {
-        it.createParentDirectories()
-        it.writeText(this.kotlinCode)
-    }
-    return Pair(sourceFilePath, directory)
+    val sourceFilePaths =
+        this
+            .map { binding ->
+                val sourceFilePath = directory / Path(binding.filePath)
+                sourceFilePath.also {
+                    it.createParentDirectories()
+                    it.writeText(binding.kotlinCode)
+                }
+            }
+    return Pair(sourceFilePaths, directory)
 }
