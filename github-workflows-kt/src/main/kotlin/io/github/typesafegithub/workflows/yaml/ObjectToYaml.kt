@@ -17,7 +17,7 @@ import it.krzeminski.snakeyaml.engine.kmp.events.StreamEndEvent
 import it.krzeminski.snakeyaml.engine.kmp.events.StreamStartEvent
 import java.io.StringWriter
 
-internal fun Any.toYaml(): String {
+public fun Any.toYaml(): String {
     val settings =
         DumpSettings
             .builder()
