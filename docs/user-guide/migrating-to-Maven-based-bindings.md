@@ -1,9 +1,5 @@
 # Migrating to Maven-based bindings
 
-!!! warning "Experimental"
-    This feature is experimental. We're awaiting feedback and fixing remaining issues. Breaking changes may appear as
-    well. You can give it a try in non-critical projects.
-
 ## Goal
 
 Let's say you have the following workflow:
@@ -53,9 +49,9 @@ demand, and is then shipped as a separate Maven artifact from a custom Maven-com
 The following changes are required in our example workflow:
    ```diff
      #!/usr/bin/env kotlin
-   + @file:Repository("https://repo1.maven.org/maven2/")
+   + @file:Repository("https://repo.maven.apache.org/maven2/")
      @file:DependsOn("io.github.typesafegithub:github-workflows-kt:<newest-version>")
-   + @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+   + @file:Repository("https://bindings.krzeminski.it")
    + @file:DependsOn("actions:checkout:v4")
    + @file:DependsOn("actions:setup-java:v3")
    + @file:DependsOn("gradle:actions__setup-gradle:v3")

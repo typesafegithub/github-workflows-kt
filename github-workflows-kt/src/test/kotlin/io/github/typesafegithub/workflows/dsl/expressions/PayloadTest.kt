@@ -9,19 +9,20 @@ import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
 
-class PayloadTest : FunSpec({
-    val payloads = File("src/test/resources/payloads")
+class PayloadTest :
+    FunSpec({
+        val payloads = File("src/test/resources/payloads")
 
-    fun KClass<*>.properties(): List<String> = declaredMemberProperties.map { it.name }.sorted()
+        fun KClass<*>.properties(): List<String> = declaredMemberProperties.map { it.name }.sorted()
 
-    test("Runner context") {
-        val context = RunnerContext::class
-        val file = payloads.resolve("runner.json")
-        val jsonObject = Json.parseToJsonElement(file.readText()).jsonObject
+        test("Runner context") {
+            val context = RunnerContext::class
+            val file = payloads.resolve("runner.json")
+            val jsonObject = Json.parseToJsonElement(file.readText()).jsonObject
 
-        context.properties() shouldMatch jsonObject.keys.sorted()
-    }
-})
+            context.properties() shouldMatch jsonObject.keys.sorted()
+        }
+    })
 
 infix fun List<String>.shouldMatch(other: List<String>) {
     if (this.toSet() != other.toSet()) {

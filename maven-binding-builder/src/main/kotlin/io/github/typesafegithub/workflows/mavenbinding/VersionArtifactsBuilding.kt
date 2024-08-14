@@ -5,17 +5,23 @@ import java.security.MessageDigest
 
 sealed interface Artifact
 
-data class TextArtifact(val data: String) : Artifact
+data class TextArtifact(
+    val data: String,
+) : Artifact
 
-data class JarArtifact(val data: ByteArray) : Artifact
+data class JarArtifact(
+    val data: ByteArray,
+) : Artifact
 
 fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
-    val jar = buildJar(owner = owner, name = name.replace("__", "/"), version = version) ?: return null
+    val jars = buildJars(owner = owner, name = name.replace("__", "/"), version = version) ?: return null
     val pom = buildPomFile(owner = owner, name = name.replace("__", "/"), version = version)
     val module = buildModuleFile(owner = owner, name = name.replace("__", "/"), version = version)
     return mapOf(
-        "$name-$version.jar" to JarArtifact(jar),
-        "$name-$version.jar.md5" to TextArtifact(jar.md5Checksum()),
+        "$name-$version.jar" to JarArtifact(jars.mainJar),
+        "$name-$version.jar.md5" to TextArtifact(jars.mainJar.md5Checksum()),
+        "$name-$version-sources.jar" to JarArtifact(jars.sourcesJar),
+        "$name-$version-sources.jar.md5" to TextArtifact(jars.sourcesJar.md5Checksum()),
         "$name-$version.pom" to TextArtifact(pom),
         "$name-$version.pom.md5" to TextArtifact(pom.md5Checksum()),
         "$name-$version.module" to TextArtifact(module),

@@ -163,6 +163,15 @@ public fun Workflow.toBuilder(): WorkflowBuilder =
         _customArguments = _customArguments,
     )
 
+/**
+ * A DSL function that models the top-level parts of the GitHub Actions workflow.
+ *
+ * @param targetFileName Name of the produced YAML file inside the `.github/workflows` directory. If set to `null`,
+ * writing to file is disabled.
+ * @param useWorkflow A callback that provides a [Workflow] domain object for further analysis, e.g. some custom
+ * processing. The result of this processing isn't taken into account during writing the workflow to YAML, the only
+ * requirement is that it cannot fail (throw an exception).
+ */
 @Suppress("LongParameterList", "FunctionParameterNaming")
 public fun workflow(
     @Suppress("UNUSED_PARAMETER")
@@ -185,10 +194,11 @@ public fun workflow(
     permissions: Map<Permission, Mode>? = null,
     gitRootDir: Path? = sourceFile?.toPath()?.absolute()?.findGitRoot(),
     preamble: Preamble? = null,
+    useWorkflow: (Workflow) -> Unit = {},
     getenv: (String) -> String? = { System.getenv(it) },
     _customArguments: Map<String, @Contextual Any> = mapOf(),
     block: WorkflowBuilder.() -> Unit,
-): Workflow {
+) {
     require(on.isNotEmpty()) {
         "There are no triggers defined!"
     }
@@ -213,14 +223,16 @@ public fun workflow(
     }
     workflowBuilder.workflow.jobs.requireUniqueJobIds()
 
-    return workflowBuilder.build()
-        .also {
-            it.writeToFile(
-                gitRootDir = gitRootDir,
-                preamble = preamble,
-                getenv = getenv,
-            )
-        }
+    val workflow = workflowBuilder.build()
+
+    useWorkflow(workflow)
+    if (targetFileName != null) {
+        workflow.writeToFile(
+            gitRootDir = gitRootDir,
+            preamble = preamble,
+            getenv = getenv,
+        )
+    }
 }
 
 private fun List<Job<*>>.requireUniqueJobIds() {

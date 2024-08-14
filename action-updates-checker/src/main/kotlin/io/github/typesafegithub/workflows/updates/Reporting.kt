@@ -73,7 +73,9 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
                 val lineAnchor = line?.let { "#L$line" }.orEmpty()
                 val gitRoot = file.findGitRoot()
                 val relativeToRepositoryRoot =
-                    file.absolute().relativeTo(gitRoot.absolute())
+                    file
+                        .absolute()
+                        .relativeTo(gitRoot.absolute())
                         .joinToString("/")
                 stepSummary.appendLine(
                     "\n[${file.name}$lineAnchor]($baseUrl/${relativeToRepositoryRoot}$lineAnchor)",
@@ -92,8 +94,7 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
         githubNotice(
             message = "action-version-checker found no actions or skipped running",
         )
-    }
-        .toList()
+    }.toList()
         .also { regularActionVersions ->
             if (regularActionVersions.isNotEmpty()) {
                 val hasOutdatedVersions =

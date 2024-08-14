@@ -10,95 +10,97 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 
-class TypeSafeExpressionsSnippets : FunSpec({
-    val gitRootDir =
-        tempdir().also {
-            it.resolve(".git").mkdirs()
-        }.toPath()
-    val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
+class TypeSafeExpressionsSnippets :
+    FunSpec({
+        val gitRootDir =
+            tempdir()
+                .also {
+                    it.resolve(".git").mkdirs()
+                }.toPath()
+        val sourceTempFile = gitRootDir.resolve(".github/workflows/some_workflow.main.kts").toFile()
 
-    test("illExample") {
-        workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = sourceTempFile,
-        ) {
-            job(
-                id = "test_job",
-                runsOn = RunnerType.UbuntuLatest,
+        test("illExample") {
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
             ) {
-                // --8<-- [start:ill-example]
-                run(
-                    name = "Environment variable and functions",
-                    command = "echo \$GITHUB_ACTORS",
-                    condition = "\${{invariably()}}",
-                )
-                run(
-                    name = "GitHubContext echo sha",
-                    command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
-                )
-                // --8<-- [end:ill-example]
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    // --8<-- [start:ill-example]
+                    run(
+                        name = "Environment variable and functions",
+                        command = "echo \$GITHUB_ACTORS",
+                        condition = "\${{invariably()}}",
+                    )
+                    run(
+                        name = "GitHubContext echo sha",
+                        command = "echo commit: \${{ github.sha256 }}  event: \${{ github.event.release.zip_url }}",
+                    )
+                    // --8<-- [end:ill-example]
+                }
             }
         }
-    }
 
-    test("customEnvironmentVariables") {
-        workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = sourceTempFile,
-        ) {
-            // --8<-- [start:custom-environment-variables-1]
-            val GREETING by Contexts.env
-            val FIRST_NAME by Contexts.env
-
-            job(
-                // --8<-- [end:custom-environment-variables-1]
-                id = "job0",
-                runsOn = RunnerType.UbuntuLatest,
-                // --8<-- [start:custom-environment-variables-2]
-                env =
-                    mapOf(
-                        GREETING to "World",
-                    ),
+        test("customEnvironmentVariables") {
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
             ) {
-                run(
-                    name = "Custom environment variable",
+                // --8<-- [start:custom-environment-variables-1]
+                val GREETING by Contexts.env
+                val FIRST_NAME by Contexts.env
+
+                job(
+                    // --8<-- [end:custom-environment-variables-1]
+                    id = "job0",
+                    runsOn = RunnerType.UbuntuLatest,
+                    // --8<-- [start:custom-environment-variables-2]
                     env =
                         mapOf(
-                            FIRST_NAME to "Patrick",
+                            GREETING to "World",
                         ),
-                    command = "echo $GREETING $FIRST_NAME",
-                )
+                ) {
+                    run(
+                        name = "Custom environment variable",
+                        env =
+                            mapOf(
+                                FIRST_NAME to "Patrick",
+                            ),
+                        command = "echo $GREETING $FIRST_NAME",
+                    )
+                }
+                // --8<-- [end:custom-environment-variables-2]
             }
-            // --8<-- [end:custom-environment-variables-2]
         }
-    }
 
-    test("secrets") {
-        workflow(
-            name = "Test workflow",
-            on = listOf(Push()),
-            sourceFile = sourceTempFile,
-        ) {
-            // --8<-- [start:secrets]
-            val SUPER_SECRET by Contexts.secrets
+        test("secrets") {
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+            ) {
+                // --8<-- [start:secrets]
+                val SUPER_SECRET by Contexts.secrets
 
-            val SECRET by Contexts.env
-            val TOKEN by Contexts.env
+                val SECRET by Contexts.env
+                val TOKEN by Contexts.env
 
-            job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
-                run(
-                    name = "Encrypted secret",
-                    env =
-                        mapOf(
-                            SECRET to expr { SUPER_SECRET },
-                            TOKEN to expr { secrets.GITHUB_TOKEN },
-                        ),
-                    command = "echo secret=$SECRET token=$TOKEN",
-                )
+                job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
+                    run(
+                        name = "Encrypted secret",
+                        env =
+                            mapOf(
+                                SECRET to expr { SUPER_SECRET },
+                                TOKEN to expr { secrets.GITHUB_TOKEN },
+                            ),
+                        command = "echo secret=$SECRET token=$TOKEN",
+                    )
+                }
+                // --8<-- [end:secrets]
             }
-            // --8<-- [end:secrets]
         }
-    }
-})
+    })

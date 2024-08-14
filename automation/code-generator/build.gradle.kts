@@ -7,20 +7,8 @@ plugins {
 }
 
 dependencies {
-    implementation("com.squareup:kotlinpoet:1.17.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-
-    implementation(platform("io.ktor:ktor-bom:2.3.11"))
-    implementation("io.ktor:ktor-client-core")
-    implementation("io.ktor:ktor-client-cio")
-    implementation("io.ktor:ktor-client-content-negotiation")
-    implementation("io.ktor:ktor-serialization-kotlinx-json")
-    implementation("io.arrow-kt:arrow-fx-coroutines:1.2.4")
-
-    implementation(projects.actionBindingGenerator)
-    implementation(projects.sharedInternal)
-
-    testImplementation(projects.githubWorkflowsKt)
+    implementation("com.squareup:kotlinpoet:1.18.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 }
 
 application {
@@ -29,18 +17,4 @@ application {
 
 tasks.run.configure {
     workingDir(rootProject.layout.projectDirectory)
-}
-
-tasks.register<JavaExec>("suggestVersions") {
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("io.github.typesafegithub.workflows.codegenerator.versions.SuggestVersionsKt")
-    workingDir = rootDir
-    dependsOn(tasks.compileKotlin)
-}
-
-tasks.register<JavaExec>("createActionUpdatePRs") {
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("io.github.typesafegithub.workflows.codegenerator.updating.CreateActionUpdatePRsKt")
-    workingDir = rootDir
-    dependsOn(tasks.compileKotlin)
 }

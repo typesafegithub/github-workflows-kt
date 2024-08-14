@@ -8,6 +8,10 @@ dependencyResolutionManagement {
         mavenCentral()
         gradlePluginPortal()
 
+        maven {
+            url = URI("https://bindings.krzeminski.it/")
+        }
+
         // It has to be defined here because preferring repositories config in settings apparently removes the below
         // additions done by Kotlin/JS plugin.
         // Tracked in https://youtrack.jetbrains.com/issue/KT-51379

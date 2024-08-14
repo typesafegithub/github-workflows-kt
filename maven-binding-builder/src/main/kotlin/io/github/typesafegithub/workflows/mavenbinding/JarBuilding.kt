@@ -1,9 +1,10 @@
+@file:Suppress("ktlint:standard:filename")
+
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
-import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ClientType
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
@@ -20,23 +21,40 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.div
 import kotlin.io.path.writeText
 
-internal fun buildJar(
+internal data class Jars(
+    val mainJar: ByteArray,
+    val sourcesJar: ByteArray,
+)
+
+internal fun buildJars(
     owner: String,
     name: String,
     version: String,
-): ByteArray? {
-    val binding = generateBinding(owner = owner, name = name, version = version) ?: return null
-    val pathWithJarContents = binding.compileBinding()
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    byteArrayOutputStream.createZipFile(pathWithJarContents)
-    return byteArrayOutputStream.toByteArray()
+): Jars? {
+    val binding =
+        generateBinding(owner = owner, name = name, version = version).also {
+            if (it.isEmpty()) return null
+        }
+    val (sourceFilePaths, compilationInputDir) = binding.prepareDirectoryWithSources()
+
+    val pathWithJarContents = compileBinding(sourceFilePaths = sourceFilePaths)
+    val mainJarByteArrayOutputStream = ByteArrayOutputStream()
+    mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
+
+    val sourcesJarByteArrayOutputStream = ByteArrayOutputStream()
+    sourcesJarByteArrayOutputStream.createZipFile(compilationInputDir)
+
+    return Jars(
+        mainJar = mainJarByteArrayOutputStream.toByteArray(),
+        sourcesJar = sourcesJarByteArrayOutputStream.toByteArray(),
+    )
 }
 
 private fun generateBinding(
     owner: String,
     name: String,
     version: String,
-): ActionBinding? {
+): List<ActionBinding> {
     val actionCoords =
         ActionCoords(
             owner = owner,
@@ -45,23 +63,17 @@ private fun generateBinding(
         )
     return actionCoords.generateBinding(
         metadataRevision = NewestForVersion,
-        clientType = ClientType.VERSIONED_JAR,
     )
 }
 
-private fun ActionBinding.compileBinding(): Path {
-    val compilationInput = createTempDirectory()
+private fun compileBinding(sourceFilePaths: List<Path>): Path {
     val compilationOutput = createTempDirectory()
-
-    val sourceFilePath = compilationInput / Path(filePath.substringAfter("kotlin/"))
-    sourceFilePath.createParentDirectories()
-    sourceFilePath.writeText(kotlinCode)
 
     val args =
         K2JVMCompilerArguments().apply {
             destination = compilationOutput.toString()
             classpath = System.getProperty("java.class.path")
-            freeArgs = listOf(sourceFilePath.toString())
+            freeArgs = sourceFilePaths.map { it.toString() }
             noStdlib = true
             noReflect = true
             includeRuntime = false
@@ -83,4 +95,18 @@ private fun ActionBinding.compileBinding(): Path {
         "Binding compilation failed! Compiler messages: $compilerMessagesOutputStream"
     }
     return compilationOutput
+}
+
+private fun List<ActionBinding>.prepareDirectoryWithSources(): Pair<List<Path>, Path> {
+    val directory = createTempDirectory()
+    val sourceFilePaths =
+        this
+            .map { binding ->
+                val sourceFilePath = directory / Path(binding.filePath)
+                sourceFilePath.also {
+                    it.createParentDirectories()
+                    it.writeText(binding.kotlinCode)
+                }
+            }
+    return Pair(sourceFilePaths, directory)
 }

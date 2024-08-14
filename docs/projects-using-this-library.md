@@ -1,9 +1,8 @@
 # Projects using this library
 
-It's also a great source of examples how to use the library.
-
 * [aSoft-Ltd/oss](https://github.com/aSoft-Ltd/oss/blob/main/.github/workflows/)
 * [awscdk-dsl-kotlin](https://github.com/cloudshiftinc/awscdk-dsl-kotlin/tree/main/.github/workflows)
+* [ComposeOClock](https://github.com/Splitties/ComposeOClock/tree/main/.github/workflows)
 * [course-evals](https://github.com/opLetter/course-evals/tree/master/.github/workflows)
 * [factcast](https://github.com/factcast/factcast/tree/master/.github/kts)
 * [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/tree/main/.github/workflows)

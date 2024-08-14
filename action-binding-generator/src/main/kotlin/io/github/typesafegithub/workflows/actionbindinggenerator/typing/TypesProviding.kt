@@ -3,7 +3,6 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.FromLockfile
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
@@ -18,7 +17,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 import java.net.URI
-import java.nio.file.Path
 
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
@@ -27,8 +25,7 @@ internal fun ActionCoords.provideTypes(
     (
         this.fetchTypingMetadata(metadataRevision, fetchUri)
             ?: this.toMajorVersion().fetchFromTypingsFromCatalog(fetchUri)
-    )
-        ?.let { Pair(it.first.toTypesMap(), it.second) }
+    )?.let { Pair(it.first.toTypesMap(), it.second) }
         ?: Pair(emptyMap(), null)
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
@@ -53,8 +50,7 @@ private fun ActionCoords.fetchTypingMetadata(
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
             NewestForVersion -> this.version
-            FromLockfile -> getCommitHash(this)
-        } ?: return null
+        }
     val list = listOf(actionTypesYmlUrl(gitRef), actionTypesYamlUrl(gitRef))
     val typesMetadataYaml =
         list.firstNotNullOfOrNull { url ->
@@ -73,8 +69,7 @@ private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String =
     (
         fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
             ?: fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
-    )
-        ?.let { Pair(it, TYPING_CATALOG) }
+    )?.let { Pair(it, TYPING_CATALOG) }
 
 private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) -> String): ActionTypes? {
     val metadataUrl = this.catalogMetadata()
@@ -113,17 +108,10 @@ private fun fetchTypingsFromUrl(
     return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
-internal fun getCommitHash(actionCoords: ActionCoords): String? =
-    Path.of("actions", actionCoords.owner, actionCoords.name, actionCoords.version, "commit-hash.txt")
-        .toFile().let {
-            if (it.exists()) it.readText().trim() else null
-        }
-
-internal fun ActionTypes.toTypesMap(): Map<String, Typing> {
-    return inputs.mapValues { (key, value) ->
+internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
+    inputs.mapValues { (key, value) ->
         value.toTyping(key)
     }
-}
 
 private fun ActionCoords.toMajorVersion(): ActionCoords = this.copy(version = this.version.substringBefore("."))
 

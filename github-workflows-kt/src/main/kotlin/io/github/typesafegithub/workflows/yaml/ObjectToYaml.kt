@@ -1,25 +1,26 @@
 package io.github.typesafegithub.workflows.yaml
 
-import org.snakeyaml.engine.v2.api.DumpSettings
-import org.snakeyaml.engine.v2.api.StreamDataWriter
-import org.snakeyaml.engine.v2.common.FlowStyle
-import org.snakeyaml.engine.v2.common.ScalarStyle
-import org.snakeyaml.engine.v2.emitter.Emitter
-import org.snakeyaml.engine.v2.events.DocumentEndEvent
-import org.snakeyaml.engine.v2.events.DocumentStartEvent
-import org.snakeyaml.engine.v2.events.ImplicitTuple
-import org.snakeyaml.engine.v2.events.MappingEndEvent
-import org.snakeyaml.engine.v2.events.MappingStartEvent
-import org.snakeyaml.engine.v2.events.ScalarEvent
-import org.snakeyaml.engine.v2.events.SequenceEndEvent
-import org.snakeyaml.engine.v2.events.SequenceStartEvent
-import org.snakeyaml.engine.v2.events.StreamEndEvent
-import org.snakeyaml.engine.v2.events.StreamStartEvent
+import it.krzeminski.snakeyaml.engine.kmp.api.DumpSettings
+import it.krzeminski.snakeyaml.engine.kmp.api.StreamDataWriter
+import it.krzeminski.snakeyaml.engine.kmp.common.FlowStyle
+import it.krzeminski.snakeyaml.engine.kmp.common.ScalarStyle
+import it.krzeminski.snakeyaml.engine.kmp.emitter.Emitter
+import it.krzeminski.snakeyaml.engine.kmp.events.DocumentEndEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.DocumentStartEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.ImplicitTuple
+import it.krzeminski.snakeyaml.engine.kmp.events.MappingEndEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.MappingStartEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.ScalarEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.SequenceEndEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.SequenceStartEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.StreamEndEvent
+import it.krzeminski.snakeyaml.engine.kmp.events.StreamStartEvent
 import java.io.StringWriter
 
 internal fun Any.toYaml(): String {
     val settings =
-        DumpSettings.builder()
+        DumpSettings
+            .builder()
             // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
             // expressions.
             .setWidth(Int.MAX_VALUE)
@@ -45,7 +46,7 @@ private fun Any?.elementToYaml(emitter: Emitter) {
     when (this) {
         is Map<*, *> -> this.mapToYaml(emitter)
         is List<*> -> this.listToYaml(emitter)
-        is String, is Int, is Float, is Boolean, null -> this.scalarToYaml(emitter)
+        is String, is Int, is Float, is Double, is Boolean, null -> this.scalarToYaml(emitter)
         else -> error("Serializing $this is not supported!")
     }
 }

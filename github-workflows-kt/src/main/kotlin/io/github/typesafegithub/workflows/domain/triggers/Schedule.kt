@@ -14,7 +14,9 @@ public data class Schedule(
  * @see https://crontab.guru
  **/
 @Serializable
-public data class Cron(val expression: String)
+public data class Cron(
+    val expression: String,
+)
 
 /**
  * Builds a cron expression given individual components. Performs basic validation.

@@ -4,13 +4,14 @@ import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
 plugins {
     buildsrc.convention.`kotlin-jvm`
     buildsrc.convention.publishing
+    buildsrc.convention.`duplicate-versions`
 
     kotlin("plugin.serialization")
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
     id("info.solidsoft.pitest") version "1.15.0"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.14.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.16.3"
 
     id("org.jetbrains.dokka") version "1.9.20"
 }
@@ -19,15 +20,22 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    implementation("it.krzeminski:snakeyaml-engine-kmp:2.7.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("it.krzeminski:snakeyaml-engine-kmp:3.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
     implementation(projects.sharedInternal)
 
-    testImplementation("dev.zacsweers.kctfork:core:0.5.0-alpha08")
+    testImplementation("dev.zacsweers.kctfork:core:0.5.1")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
+
+    // GitHub action bindings
+    testImplementation("actions:checkout:v4")
+    testImplementation("actions:setup-java:v4")
+    testImplementation("actions:upload-artifact:v3")
+    testImplementation("aws-actions:configure-aws-credentials:v4")
+    testImplementation("EndBug:add-and-commit:v9")
 }
 
 sourceSets {
@@ -49,14 +57,14 @@ tasks.withType<KotlinCompile> {
 tasks.test {
     // The integration tests read from and write to there.
     inputs.dir("$rootDir/.github/workflows")
+
+    // It's a workaround to be able to use action bindings provided by the server. They declare a dependency on
+    // github-workflows-kt, and I think it causes some kind of version clash (e.g. between 2.3.0 and 2.3.1-SNAPSHOT).
+    dependsOn(tasks.jar)
 }
 
 kotlin {
     explicitApi()
-}
-
-apiValidation {
-    ignoredPackages.add("io.github.typesafegithub.workflows.actions")
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
@@ -70,55 +78,10 @@ tasks.formatKotlinMain {
     kotlinterConfig()
 }
 
-val validateDuplicatedVersion by tasks.creating<Task> {
-    // These properties of a project need to be resolved before the 'doLast' block because otherwise, Gradle
-    // configuration cache cannot be used.
-    val rootDir = rootDir
-    val version = version
-
-    doLast {
-        require(
-            rootDir.resolve("mkdocs.yml").readText()
-                .contains("  version: $version")
-        ) { "Library version stated in the docs should be equal to $version!" }
-        require(
-            rootDir.resolve("github-workflows-kt/src/test/kotlin/io/github/typesafegithub/workflows/docsnippets/GettingStartedSnippets.kt").readText()
-                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
-        ) { "Library version stated in github-workflows-kt/src/test/.../GettingStarted.kt should be equal to $version!" }
-        require(
-            rootDir.resolve(".github/workflows/end-to-end-tests.main.kts").readText()
-                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
-        ) { "Library version stated in end-to-end-tests.main.kts should be equal to $version!" }
-        require(
-            rootDir.resolve(".github/workflows/end-to-end-tests.main.kts").readText()
-                .contains("\"io.github.typesafegithub:action-updates-checker:$version\"")
-        ) { "Library version stated in end-to-end-tests.main.kts should be equal to $version!" }
-        require(
-            rootDir.resolve("images/teaser-with-newest-version.svg").readText()
-                .contains("\"io.github.typesafegithub:github-workflows-kt:$version\"")
-        ) { "Library version stated in the teaser image shiuld be equal to $version!" }
-    }
-}
-
-tasks.check {
-    dependsOn(validateDuplicatedVersion)
-}
-
 pitest {
     junit5PluginVersion.set("1.1.0")
-    excludedClasses.set(
-        // Generated action bindings.
-        listOf("io.github.typesafegithub.workflows.actions.*"),
-    )
 }
 
 tasks.dokkaHtml {
     moduleName.set("github-workflows-kt")
-
-    dokkaSourceSets.configureEach {
-        perPackageOption {
-            matchingRegex.set("io.github.typesafegithub.workflows.actions.*")
-            suppress.set(true)
-        }
-    }
 }

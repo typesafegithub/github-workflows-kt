@@ -1,13 +1,13 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.1-SNAPSHOT")
-@file:DependsOn("io.github.typesafegithub:action-updates-checker:2.0.1-SNAPSHOT")
-@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.3.1-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:action-updates-checker:2.3.1-SNAPSHOT")
+@file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:github-script:v7")
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("actions:setup-python:v5")
-@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v4")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
 import io.github.typesafegithub.workflows.actions.actions.*
@@ -36,7 +36,7 @@ fun JobBuilder<*>.publishToMavenLocal() {
             distribution = SetupJava.Distribution.Zulu,
         ),
     )
-    uses(action = ActionsSetupGradle(generateJobSummary = false))
+    uses(action = ActionsSetupGradle())
     run(
         name = "Publish to Maven local",
         command = "./gradlew publishToMavenLocal",
@@ -57,6 +57,7 @@ workflow(
             publishToMavenLocal()
         },
     ),
+    useWorkflow = { it.reportAvailableUpdates() },
     sourceFile = __FILE__,
 ) {
     val GREETING by Contexts.env
@@ -253,4 +254,4 @@ workflow(
             """.trimIndent(),
         )
     }
-}.reportAvailableUpdates()
+}

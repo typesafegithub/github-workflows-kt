@@ -1,11 +1,11 @@
 #!/usr/bin/env kotlin
-@file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
+@file:Repository("https://repo.maven.apache.org/maven2/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.3.0")
 
-@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
-@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v4")
 
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
@@ -91,6 +91,7 @@ workflow(
         run(command = "mkdocs build --site-dir public")
     }
 
+
     job(
         id = "build_kotlin_scripts",
         name = "Build Kotlin scripts",
@@ -111,6 +112,7 @@ workflow(
             """.trimIndent()
         )
     }
+
 
     job(
         id = "workflows_consistency_check",

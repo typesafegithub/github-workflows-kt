@@ -23,7 +23,9 @@ public data class Workflow(
  * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions">GitHub</a>
  */
 @Suppress("MaxLineLength")
-public enum class Permission(public val value: String) {
+public enum class Permission(
+    public val value: String,
+) {
     Actions("actions"),
     Checks("checks"),
     Contents("contents"),
@@ -43,7 +45,9 @@ public enum class Permission(public val value: String) {
  * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions">GitHub</a>
  */
 @Suppress("MaxLineLength")
-public enum class Mode(public val value: String) {
+public enum class Mode(
+    public val value: String,
+) {
     Read("read"),
     Write("write"),
     None("none"),

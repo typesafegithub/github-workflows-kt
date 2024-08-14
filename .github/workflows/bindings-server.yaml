@@ -8,6 +8,9 @@ on:
     branches:
     - 'main'
   pull_request: {}
+  schedule:
+  - cron: '0 0 * * SUN'
+  workflow_dispatch: {}
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
@@ -33,7 +36,7 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-2'
       name: 'Start the server'
       run: './gradlew :jit-binding-server:run &'
@@ -43,16 +46,35 @@ jobs:
         GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
       run: 'GHWKT_RUN_STEP=''end-to-end-test:step-3'' ''.github/workflows/bindings-server.main.kts'''
     - id: 'step-4'
+      name: 'Execute the script using the bindings from the serve - with /binding'
+      run: |-
+        mv .github/workflows/test-script-consuming-jit-bindings-old.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old.main.kts
+        .github/workflows/test-script-consuming-jit-bindings-old.main.kts
+    - id: 'step-5'
       name: 'Execute the script using the bindings from the server'
       run: |-
         mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
         .github/workflows/test-script-consuming-jit-bindings.main.kts
-    - id: 'step-5'
-      name: 'Fetch maven-metadata.xml for top-level action'
-      run: 'curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
     - id: 'step-6'
-      name: 'Fetch maven-metadata.xml for nested action'
+      name: 'Clean Maven Local to fetch required POMs again'
+      run: 'rm -rf ~/.m2/repository/'
+    - id: 'step-7'
+      name: 'Execute the script using bindings but without dependency on library'
+      run: |-
+        mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
+        .github/workflows/test-served-bindings-depend-on-library.main.kts
+    - id: 'step-8'
+      name: 'Fetch maven-metadata.xml for top-level action - with /binding'
+      run: 'curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
+    - id: 'step-9'
+      name: 'Fetch maven-metadata.xml for nested action - with /binding'
       run: 'curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
+    - id: 'step-10'
+      name: 'Fetch maven-metadata.xml for top-level action'
+      run: 'curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
+    - id: 'step-11'
+      name: 'Fetch maven-metadata.xml for nested action'
+      run: 'curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
   deploy:
     name: 'Deploy to DockerHub'
     runs-on: 'ubuntu-latest'
@@ -62,14 +84,14 @@ jobs:
     env:
       DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
       DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
-    if: '${{ github.event_name == ''push'' }}'
+    if: '${{ github.event_name == ''workflow_dispatch'' || github.event_name == ''schedule'' }}'
     environment:
       name: 'DockerHub'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-2'
       name: 'Build and publish image'
       run: './gradlew :jit-binding-server:publishImage'

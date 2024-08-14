@@ -1,6 +1,8 @@
 package io.github.typesafegithub.workflows.shared.internal.model
 
-data class Version(val version: String) : Comparable<Version> {
+data class Version(
+    val version: String,
+) : Comparable<Version> {
     val input: String = version.removePrefix("v").removePrefix("V")
     val major = input.substringBefore(".").toIntOrNull() ?: 0
     val minor = input.substringAfter(".").substringBefore(".").toIntOrNull() ?: 0

@@ -9,7 +9,9 @@ public abstract class Action<out OUTPUTS : Outputs> {
 
     internal abstract val usesString: String
 
-    public open class Outputs(private val stepId: String) {
+    public open class Outputs(
+        private val stepId: String,
+    ) {
         public operator fun get(outputName: String): String = "steps.$stepId.outputs.$outputName"
     }
 }

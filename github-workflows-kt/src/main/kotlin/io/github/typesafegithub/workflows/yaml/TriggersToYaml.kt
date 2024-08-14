@@ -51,14 +51,14 @@ internal fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
     )
 
 @InternalGithubActionsApi
-public fun Trigger.toMap(): Map<String, List<String>> {
-    return when (this) {
+public fun Trigger.toMap(): Map<String, List<String>> =
+    when (this) {
         is Push -> toMap()
         is PullRequest -> toMap()
         is PullRequestTarget -> toMap()
+        is RepositoryDispatch -> toMap()
         else -> emptyMap()
     }
-}
 
 private fun Push.toMap() =
     mapOfNotNullValues(
@@ -86,6 +86,11 @@ private fun PullRequestTarget.toMap() =
         "branches-ignore" to branchesIgnore,
         "paths" to paths,
         "paths-ignore" to pathsIgnore,
+    )
+
+private fun RepositoryDispatch.toMap() =
+    mapOfNotNullValues(
+        "types" to types,
     )
 
 @Suppress("ComplexMethod")

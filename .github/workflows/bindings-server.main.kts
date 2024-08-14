@@ -1,18 +1,17 @@
 #!/usr/bin/env kotlin
-@file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
+@file:Repository("https://repo.maven.apache.org/maven2/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.3.0")
 
-@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
-@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v4")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.triggers.PullRequest
-import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.domain.triggers.*
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -35,6 +34,8 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
+        Schedule(triggers = listOf(Cron(minute = "0", hour = "0", dayWeek = "SUN"))),
+        WorkflowDispatch(),
     ),
     sourceFile = __FILE__,
 ) {
@@ -77,6 +78,14 @@ workflow(
         }
 
         run(
+            name = "Execute the script using the bindings from the serve - with /binding",
+            command = """
+                mv .github/workflows/test-script-consuming-jit-bindings-old.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old.main.kts
+                .github/workflows/test-script-consuming-jit-bindings-old.main.kts
+            """.trimIndent(),
+        )
+
+        run(
             name = "Execute the script using the bindings from the server",
             command = """
                 mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
@@ -85,12 +94,34 @@ workflow(
         )
 
         run(
-            name = "Fetch maven-metadata.xml for top-level action",
+            name = "Clean Maven Local to fetch required POMs again",
+            command = "rm -rf ~/.m2/repository/"
+        )
+
+        run(
+            name = "Execute the script using bindings but without dependency on library",
+            command = """
+                mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
+                .github/workflows/test-served-bindings-depend-on-library.main.kts
+            """.trimIndent(),
+        )
+
+        run(
+            name = "Fetch maven-metadata.xml for top-level action - with /binding",
             command = "curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
         )
         run(
-            name = "Fetch maven-metadata.xml for nested action",
+            name = "Fetch maven-metadata.xml for nested action - with /binding",
             command = "curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
+        )
+
+        run(
+            name = "Fetch maven-metadata.xml for top-level action",
+            command = "curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
+        )
+        run(
+            name = "Fetch maven-metadata.xml for nested action",
+            command = "curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
         )
     }
 
@@ -98,7 +129,7 @@ workflow(
         id = "deploy",
         name = "Deploy to DockerHub",
         runsOn = UbuntuLatest,
-        `if` = expr { "${github.event_name} == 'push'" },
+        `if` = expr { "${github.event_name} == 'workflow_dispatch' || ${github.event_name} == 'schedule'" },
         needs = listOf(endToEndTest),
         env = mapOf(
             "DOCKERHUB_USERNAME" to expr { DOCKERHUB_USERNAME },

@@ -35,10 +35,6 @@ markdown_extensions:
   - admonition
 
 plugins:
-  - markdownextradata:
-      jinja_options:
-        variable_start_string: '[['
-        variable_end_string: ']]'
   - search
   - mkdocs-video
 
@@ -53,10 +49,6 @@ nav:
       - Compensating library's missing features: 'user-guide/compensating-librarys-missing-features.md'
       - Nightly builds: 'user-guide/nightly-builds.md'
   - Feature coverage: 'feature-coverage.md'
-  - Supported actions: 'supported-actions.md'
   - FAQ: 'faq.md'
   - API docs: 'https://typesafegithub.github.io/github-workflows-kt/api-docs/'
   - Projects using this library: 'projects-using-this-library.md'
-
-extra:
-  version: 2.0.1-SNAPSHOT
