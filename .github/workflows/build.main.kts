@@ -91,27 +91,28 @@ workflow(
         run(command = "mkdocs build --site-dir public")
     }
 
-// Doesn't work due to https://youtrack.jetbrains.com/issue/KT-68681, likely going to be fixed in Kotlin 2.0.10.
-//    job(
-//        id = "build_kotlin_scripts",
-//        name = "Build Kotlin scripts",
-//        runsOn = UbuntuLatest,
-//    ) {
-//        uses(action = Checkout())
-//        run(
-//            command = """
-//            find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
-//            do
-//                if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
-//                    continue
-//                fi
-//
-//                echo "Compiling ${'$'}file..."
-//                kotlinc -Werror -Xallow-any-scripts-in-source-roots "${'$'}file"
-//            done
-//            """.trimIndent()
-//        )
-//    }
+
+    job(
+        id = "build_kotlin_scripts",
+        name = "Build Kotlin scripts",
+        runsOn = UbuntuLatest,
+    ) {
+        uses(action = Checkout())
+        run(
+            command = """
+            find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
+            do
+                if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
+                    continue
+                fi
+
+                echo "Compiling ${'$'}file..."
+                kotlinc -Werror -Xallow-any-scripts-in-source-roots -Xuse-fir-lt=false "${'$'}file"
+            done
+            """.trimIndent()
+        )
+    }
+
 
     job(
         id = "workflows_consistency_check",
