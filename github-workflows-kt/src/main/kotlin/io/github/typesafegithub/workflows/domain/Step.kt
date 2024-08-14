@@ -6,12 +6,14 @@ import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.dsl.HasCustomArguments
 import kotlinx.serialization.Contextual
 
-public sealed class Step(
+@Suppress("LongParameterList")
+public sealed class Step<out OUTPUTS : Outputs>(
     public open val id: String,
     public open val env: Map<String, String> = mapOf(),
     public open val condition: String? = null,
     public open val continueOnError: Boolean? = null,
     public open val timeoutMinutes: Int? = null,
+    public open val outputs: OUTPUTS,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : HasCustomArguments {
     public inner class Conclusion : AbstractResult("steps.$id.conclusion")
@@ -20,10 +22,6 @@ public sealed class Step(
 
     public val conclusion: Conclusion get() = Conclusion()
     public val outcome: Outcome get() = Outcome()
-}
-
-public interface WithOutputs<out T> {
-    public val outputs: T
 }
 
 public data class CommandStep(
@@ -37,12 +35,13 @@ public data class CommandStep(
     val shell: Shell? = null,
     val workingDirectory: String? = null,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
-) : Step(
+) : Step<Outputs>(
         id = id,
         condition = condition,
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         env = env,
+        outputs = Outputs(id),
         _customArguments = _customArguments,
     )
 
@@ -58,12 +57,13 @@ public data class KotlinLogicStep(
     val workingDirectory: String? = null,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
     val logic: Contexts.() -> Unit,
-) : Step(
+) : Step<Outputs>(
         id = id,
         condition = condition,
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         env = env,
+        outputs = Outputs(id),
         _customArguments = _customArguments,
     )
 
@@ -78,12 +78,12 @@ public open class ActionStep<out OUTPUTS : Outputs>(
     override val timeoutMinutes: Int? = null,
     override val outputs: OUTPUTS,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
-) : Step(
+) : Step<OUTPUTS>(
         id = id,
         condition = condition,
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         env = env,
+        outputs = outputs,
         _customArguments = _customArguments,
-    ),
-    WithOutputs<OUTPUTS>
+    )

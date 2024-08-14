@@ -8,7 +8,7 @@ public data class Job<OUTPUT : JobOutputs>(
     val id: String,
     val name: String? = null,
     val runsOn: RunnerType,
-    val steps: List<Step>,
+    val steps: List<Step<*>>,
     val needs: List<Job<*>> = emptyList(),
     val outputs: OUTPUT,
     val env: Map<String, String> = mapOf(),
