@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 class StepTest :
     FunSpec({
         test("step.outcome") {
-            val step0: Step = CommandStep(id = "step-0", command = "ls")
+            val step0: Step<*> = CommandStep(id = "step-0", command = "ls")
             step0.outcome.toString() shouldBe "steps.step-0.outcome"
             step0.outcome eq Status.Failure shouldBe "steps.step-0.outcome == 'failure'"
             step0.outcome eq Status.Cancelled shouldBe "steps.step-0.outcome == 'cancelled'"
@@ -17,7 +17,7 @@ class StepTest :
             step0.outcome eq Status.Success shouldBe "steps.step-0.outcome == 'success'"
         }
         test("step.conclusion") {
-            val someStep: Step =
+            val someStep: Step<*> =
                 ActionStep(
                     id = "whatever",
                     action = Checkout(),
@@ -28,5 +28,9 @@ class StepTest :
             someStep.conclusion eq Status.Cancelled shouldBe "steps.whatever.conclusion == 'cancelled'"
             someStep.conclusion eq Status.Skipped shouldBe "steps.whatever.conclusion == 'skipped'"
             someStep.conclusion eq Status.Success shouldBe "steps.whatever.conclusion == 'success'"
+        }
+        test("step.outputs") {
+            val step0: Step<*> = CommandStep(id = "step-0", command = "ls")
+            step0.outputs["foo"] shouldBe "steps.step-0.outputs.foo"
         }
     })

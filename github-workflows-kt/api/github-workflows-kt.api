@@ -18,7 +18,7 @@ public final class io/github/typesafegithub/workflows/domain/AbstractResult$Stat
 	public static fun values ()[Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
 }
 
-public class io/github/typesafegithub/workflows/domain/ActionStep : io/github/typesafegithub/workflows/domain/Step, io/github/typesafegithub/workflows/domain/WithOutputs {
+public class io/github/typesafegithub/workflows/domain/ActionStep : io/github/typesafegithub/workflows/domain/Step {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAction ()Lio/github/typesafegithub/workflows/domain/actions/Action;
@@ -28,7 +28,6 @@ public class io/github/typesafegithub/workflows/domain/ActionStep : io/github/ty
 	public fun getId ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
 	public fun getOutputs ()Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
-	public synthetic fun getOutputs ()Ljava/lang/Object;
 	public fun getTimeoutMinutes ()Ljava/lang/Integer;
 	public fun get_customArguments ()Ljava/util/Map;
 }
@@ -444,14 +443,15 @@ public final class io/github/typesafegithub/workflows/domain/Shell$Sh : io/githu
 }
 
 public abstract class io/github/typesafegithub/workflows/domain/Step : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getConclusion ()Lio/github/typesafegithub/workflows/domain/Step$Conclusion;
 	public fun getCondition ()Ljava/lang/String;
 	public fun getContinueOnError ()Ljava/lang/Boolean;
 	public fun getEnv ()Ljava/util/Map;
 	public fun getId ()Ljava/lang/String;
 	public final fun getOutcome ()Lio/github/typesafegithub/workflows/domain/Step$Outcome;
+	public fun getOutputs ()Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
 	public fun getTimeoutMinutes ()Ljava/lang/Integer;
 	public fun get_customArguments ()Ljava/util/Map;
 }
@@ -478,10 +478,6 @@ public final class io/github/typesafegithub/workflows/domain/VolumeMapping {
 	public fun hashCode ()I
 	public final fun isReadOnly ()Z
 	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class io/github/typesafegithub/workflows/domain/WithOutputs {
-	public abstract fun getOutputs ()Ljava/lang/Object;
 }
 
 public final class io/github/typesafegithub/workflows/domain/Workflow : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
