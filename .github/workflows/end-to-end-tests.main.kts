@@ -8,10 +8,12 @@
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("actions:setup-python:v5")
 @file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("Wandalen:wretry.action:v3")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
 import io.github.typesafegithub.workflows.actions.actions.*
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
+import io.github.typesafegithub.workflows.actions.wandalen.WretryAction
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
@@ -252,6 +254,22 @@ workflow(
                 echo ${expr { testJob1.outputs.scriptKey2 }}
                 echo ${expr { testJob1.outputs.scriptResult }}
             """.trimIndent(),
+        )
+
+        val setupJava11And20 = SetupJava(
+            javaVersion = """
+                11
+                20
+            """.trimIndent(),
+            distribution = SetupJava.Distribution.Temurin,
+        )
+
+        uses(
+            name = "Setup Java 11 and 20",
+            action = WretryAction(
+                action = setupJava11And20.usesString,
+                with = setupJava11And20.yamlArgumentsString,
+            )
         )
     }
 }

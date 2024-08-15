@@ -161,3 +161,13 @@ jobs:
         echo ${{ needs.test_job_1.outputs.scriptKey }}
         echo ${{ needs.test_job_1.outputs.scriptKey2 }}
         echo ${{ needs.test_job_1.outputs.scriptResult }}
+    - id: 'step-2'
+      name: 'Setup Java 11 and 20'
+      uses: 'Wandalen/wretry.action@v3'
+      with:
+        action: 'actions/setup-java@v4'
+        with: |
+          java-version: |-
+            11
+            20
+          distribution: 'temurin'
