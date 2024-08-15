@@ -6,7 +6,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Output
-import io.github.typesafegithub.workflows.actionbindinggenerator.shouldMatchFile
+import io.github.typesafegithub.workflows.actionbindinggenerator.shouldContainAndMatchFile
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.BooleanTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.EnumTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.FloatTyping
@@ -15,7 +15,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerW
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldHaveSize
 
 class GenerationTest :
     FunSpec({
@@ -143,8 +142,7 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("SimpleActionWithRequiredStringInputs.kt")
+            binding.shouldContainAndMatchFile("SimpleActionWithRequiredStringInputs.kt")
         }
 
         test("action with various combinations of input parameters describing being required or optional") {
@@ -189,8 +187,7 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithSomeOptionalInputs.kt")
+            binding.shouldContainAndMatchFile("ActionWithSomeOptionalInputs.kt")
         }
 
         test("action with all types of inputs") {
@@ -210,8 +207,7 @@ class GenerationTest :
                 )
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithAllTypesOfInputs.kt")
+            binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs.kt")
         }
 
         test("action with outputs") {
@@ -241,8 +237,7 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithOutputs.kt")
+            binding.shouldContainAndMatchFile("ActionWithOutputs.kt")
         }
 
         test("action with no inputs") {
@@ -261,8 +256,7 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithNoInputs.kt")
+            binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
         }
 
         test("action with deprecated input resolving to the same Kotlin field name") {
@@ -295,8 +289,7 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithDeprecatedInputAndNameClash.kt")
+            binding.shouldContainAndMatchFile("ActionWithDeprecatedInputAndNameClash.kt")
         }
 
         test("action with inputs sharing type") {
@@ -343,8 +336,7 @@ class GenerationTest :
                 )
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithInputsSharingType.kt")
+            binding.shouldContainAndMatchFile("ActionWithInputsSharingType.kt")
         }
 
         test("action with input descriptions with fancy characters") {
@@ -371,7 +363,6 @@ class GenerationTest :
             val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
 
             // then
-            binding shouldHaveSize 1
-            binding.first().shouldMatchFile("ActionWithFancyCharsInDocs.kt")
+            binding.shouldContainAndMatchFile("ActionWithFancyCharsInDocs.kt")
         }
     })

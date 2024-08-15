@@ -5,7 +5,11 @@ import io.kotest.assertions.fail
 import io.kotest.matchers.shouldBe
 import java.nio.file.Paths
 
-fun ActionBinding.shouldMatchFile(path: String) {
+fun List<ActionBinding>.shouldContainAndMatchFile(path: String) {
+    val binding =
+        this
+            .firstOrNull { it.filePath.endsWith(path) }
+            ?: error("Binding with path ending with $path not found!")
     val file =
         Paths
             .get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path")
@@ -15,9 +19,9 @@ fun ActionBinding.shouldMatchFile(path: String) {
             file.canRead() -> file.readText().removeWindowsNewLines()
             else -> ""
         }
-    val actualContent = kotlinCode.removeWindowsNewLines()
+    val actualContent = binding.kotlinCode.removeWindowsNewLines()
 
-    filePath shouldBe "kotlin/io/github/typesafegithub/workflows/actions/johnsmith/$path"
+    binding.filePath shouldBe "kotlin/io/github/typesafegithub/workflows/actions/johnsmith/$path"
 
     if (System.getenv("GITHUB_ACTIONS") == "true") {
         actualContent shouldBe expectedContent
