@@ -7,7 +7,7 @@ internal fun ActionCoords.buildModuleFile() =
     {
       "formatVersion": "1.1",
       "component": {
-        "group": "$owner",
+        "group": "$owner${typesUuid?.let { "__types__$it" } ?: ""}",
         "module": "$mavenName",
         "version": "$version",
         "attributes": {

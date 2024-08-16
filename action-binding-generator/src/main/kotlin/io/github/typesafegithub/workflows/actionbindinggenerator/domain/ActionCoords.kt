@@ -5,6 +5,7 @@ public data class ActionCoords(
     val name: String,
     val version: String,
     val path: String? = null,
+    val typesUuid: String? = null,
 )
 
 /**
@@ -13,7 +14,7 @@ public data class ActionCoords(
  */
 public val ActionCoords.isTopLevel: Boolean get() = path == null
 
-public val ActionCoords.prettyPrint: String get() = "$owner/$fullName@$version"
+public val ActionCoords.prettyPrint: String get() = "$owner/$fullName@$version${typesUuid?.let { " (types: $it)" } ?: ""}"
 
 /**
  * For most actions, it's empty.

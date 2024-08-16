@@ -12,18 +12,23 @@ import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.parameters
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.httpMethod
+import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.head
+import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.micrometer.core.instrument.Tag
 import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import it.krzeminski.snakeyaml.engine.kmp.api.Load
+import java.util.UUID.randomUUID
 import kotlin.time.Duration.Companion.hours
 
 private val logger = logger { }
@@ -55,6 +60,7 @@ private fun Route.artifact(
 ) {
     headArtifact(prometheusRegistry, refresh)
     getArtifact(prometheusRegistry, refresh)
+    postArtifact(prometheusRegistry)
 }
 
 private fun Route.headArtifact(
@@ -67,7 +73,7 @@ private fun Route.headArtifact(
         val file = call.parameters["file"] ?: return@head call.respondNotFound()
 
         if (file in bindingArtifacts) {
-            call.respondText("Exists", status = HttpStatusCode.OK)
+            call.respondText(text = "Exists", status = HttpStatusCode.OK)
         } else {
             call.respondNotFound()
         }
@@ -83,14 +89,14 @@ private fun Route.getArtifact(
     get {
         val bindingArtifacts = call.toBindingArtifacts(refresh) ?: return@get call.respondNotFound()
 
-        if (refresh && !deliverOnRefreshRoute) return@get call.respondText("OK")
+        if (refresh && !deliverOnRefreshRoute) return@get call.respondText(text = "OK")
 
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
 
         val artifact = bindingArtifacts[file] ?: return@get call.respondNotFound()
 
         when (artifact) {
-            is TextArtifact -> call.respondText(artifact.data())
+            is TextArtifact -> call.respondText(text = artifact.data())
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
         }
 
@@ -98,16 +104,42 @@ private fun Route.getArtifact(
     }
 }
 
-private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<String, Artifact>? {
-    val actionCoords = parameters.extractActionCoords(extractVersion = true)
+private fun Route.postArtifact(prometheusRegistry: PrometheusMeterRegistry) {
+    post {
+        val owner = "${call.parameters["owner"]}__types__${randomUUID()}"
+        val name = call.parameters["name"]!!
+        val version = call.parameters["version"]!!
+        val types = call.receiveText()
+        runCatching {
+            Load().loadOne(types)
+        }.onFailure {
+            call.respondText(
+                text = "Exception while parsing supplied typings:\n${it.stackTraceToString()}",
+                status = HttpStatusCode.UnprocessableEntity,
+            )
+            return@post
+        }
+        call.toBindingArtifacts(refresh = true, owner = owner, types = types)
+        call.respondText(text = "$owner:$name:$version")
+
+        incrementArtifactCounter(prometheusRegistry, call)
+    }
+}
+
+private suspend fun ApplicationCall.toBindingArtifacts(
+    refresh: Boolean,
+    owner: String = parameters["owner"]!!,
+    types: String? = null,
+): Map<String, Artifact>? {
+    val actionCoords = parameters.extractActionCoords(extractVersion = true, owner = owner)
 
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
     return if (refresh) {
-        actionCoords.buildVersionArtifacts().also {
+        actionCoords.buildVersionArtifacts(types ?: actionCoords.typesUuid?.let { "" }).also {
             bindingsCache.put(actionCoords, runCatching { it!! })
         }
     } else {
-        bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts()!! } }.getOrNull()
+        bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts(types ?: actionCoords.typesUuid?.let { "" })!! } }.getOrNull()
     }
 }
 

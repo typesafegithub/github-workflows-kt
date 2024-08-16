@@ -7,10 +7,10 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
 fun Routing.internalRoutes(prometheusRegistry: PrometheusMeterRegistry) {
     get("/metrics") {
-        call.respondText(prometheusRegistry.scrape())
+        call.respondText(text = prometheusRegistry.scrape())
     }
 
     get("/status") {
-        call.respondText("OK")
+        call.respondText(text = "OK")
     }
 }
