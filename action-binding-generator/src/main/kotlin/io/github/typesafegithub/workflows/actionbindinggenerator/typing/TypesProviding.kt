@@ -28,18 +28,18 @@ internal fun ActionCoords.provideTypes(
         ?: Pair(emptyMap(), null)
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yml"
+    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesFromCatalog() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$repoName/$version/$subName/action-types.yml"
+        "main/typings/$owner/$repoName/$version$subName/action-types.yml"
 
 private fun ActionCoords.catalogMetadata() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
         "main/typings/$owner/$repoName/metadata.yml"
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef/$subName/action-types.yaml"
+    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yaml"
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
