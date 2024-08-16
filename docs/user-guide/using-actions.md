@@ -35,6 +35,18 @@ There are two ways of configuring typings:
    a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
    sending a PR.
 
+While developing a typing manifest it might be a good idea to test the result without needing to
+release the action in question or merge a PR in the catalog. For this you can `POST` the typing manifest you have
+on disk to the binding server using any valid URL for the action in question, for example using
+```bash
+curl --data-binary @action-types.yml https://bindings.krzeminski.it/pbrisbin/setup-tool-action/v2/setup-tool-action-v2.pom
+```
+The binding server generates a binding with only the given type manifest and answer with some unique coordinates
+that you can use in a test workflow script. The binding will be available the normal cache time on the binding
+server and locally as long as you do not delete it from your local Maven repository where it is cached. After
+the cache period on the server ended requesting the same coordinates will return a binding as if no typing
+information is available at all.
+
 Once there are any typings in place for the action, the `_Untyped` suffixed class is marked `@Deprecated`, and a class
 without that suffix is created additionally. In that class for each input that does not have type information available
 there will still be only the property with `_Untyped` suffix and nullability according to required status. For each

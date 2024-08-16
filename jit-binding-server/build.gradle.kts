@@ -16,6 +16,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
+    implementation("it.krzeminski:snakeyaml-engine-kmp:3.0.2")
     implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.10.0-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk:1.46.0")
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.46.0")
