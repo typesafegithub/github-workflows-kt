@@ -21,14 +21,18 @@ import io.ktor.server.plugins.callid.CallId
 import io.ktor.server.plugins.callid.callIdMdc
 import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
+import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.head
+import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.opentelemetry.instrumentation.ktor.v3_0.server.KtorServerTracing
+import it.krzeminski.snakeyaml.engine.kmp.api.Load
+import java.util.UUID.randomUUID
 import kotlin.time.Duration.Companion.hours
 
 private val logger =
@@ -89,7 +93,7 @@ fun main() {
             }
 
             get("/status") {
-                call.respondText("OK")
+                call.respondText(text = "OK")
             }
         }
     }.start(wait = true)
@@ -116,7 +120,7 @@ private fun Route.metadata(refresh: Boolean = false) {
         val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = getGithubToken())
         if (file in bindingArtifacts) {
             when (val artifact = bindingArtifacts[file]) {
-                is String -> call.respondText(artifact)
+                is String -> call.respondText(text = artifact)
                 else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
             }
         } else {
@@ -132,7 +136,7 @@ private fun Route.artifact(
     get {
         val bindingArtifacts = call.toBindingArtifacts(bindingsCache, refresh)
         if (bindingArtifacts == null) {
-            call.respondText("Not found", status = HttpStatusCode.NotFound)
+            call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
             return@get
         } else if (refresh && !deliverOnRefreshRoute) {
             call.respondText(text = "OK")
@@ -160,41 +164,71 @@ private fun Route.artifact(
         val bindingArtifacts = call.toBindingArtifacts(bindingsCache, refresh)
         val file = call.parameters["file"]!!
         if (bindingArtifacts == null) {
-            call.respondText("Not found", status = HttpStatusCode.NotFound)
+            call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
             return@head
         }
         if (file in bindingArtifacts) {
-            call.respondText("Exists", status = HttpStatusCode.OK)
+            call.respondText(text = "Exists", status = HttpStatusCode.OK)
         } else {
             call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
         }
+    }
+
+    post {
+        val owner = "${call.parameters["owner"]}__types__${randomUUID()}"
+        val name = call.parameters["name"]!!
+        val version = call.parameters["version"]!!
+        val types = call.receiveText()
+        runCatching {
+            Load().loadOne(types)
+        }.onFailure {
+            call.respondText(
+                text = "Exception while parsing supplied typings:\n${it.stackTraceToString()}",
+                status = HttpStatusCode.UnprocessableEntity,
+            )
+            return@post
+        }
+        call.toBindingArtifacts(bindingsCache, refresh = true, owner = owner, types = types)
+        call.respondText(text = "$owner:$name:$version")
     }
 }
 
 private suspend fun ApplicationCall.toBindingArtifacts(
     bindingsCache: Cache<ActionCoords, Result<Map<String, Artifact>>>,
     refresh: Boolean,
+    owner: String = parameters["owner"]!!,
+    types: String? = null,
 ): Map<String, Artifact>? {
-    val owner = parameters["owner"]!!
     val nameAndPath = parameters["name"]!!.split("__")
     val name = nameAndPath.first()
     val version = parameters["version"]!!
+    // we cannot give the types UUID separately from the post handler
+    // only in the post handler we generate the UUID, but for the other
+    // handlers the UUID part is already coming through the request as part of the owner
+    val ownerAndTypesUuid = owner.split("__types__", limit = 2)
+    val ownerPlain = ownerAndTypesUuid.first()
+    val typesUuid =
+        ownerAndTypesUuid
+            .drop(1)
+            .takeIf { it.isNotEmpty() }
+            ?.single()
     val actionCoords =
         ActionCoords(
-            owner = owner,
+            owner = ownerPlain,
             name = name,
             version = version,
             path = nameAndPath.drop(1).joinToString("/").takeUnless { it.isBlank() },
+            typesUuid = typesUuid,
         )
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
     val bindingArtifacts =
         if (refresh) {
-            actionCoords.buildVersionArtifacts().also {
+            actionCoords.buildVersionArtifacts(types ?: typesUuid?.let { "" }).also {
                 bindingsCache.put(actionCoords, Result.of(it))
             }
         } else {
             bindingsCache
-                .get(actionCoords) { Result.of(actionCoords.buildVersionArtifacts()) }
+                .get(actionCoords) { Result.of(actionCoords.buildVersionArtifacts(types ?: typesUuid?.let { "" })) }
                 .getOrNull()
         }
     return bindingArtifacts
