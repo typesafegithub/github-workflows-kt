@@ -82,7 +82,7 @@ workflow(
         cleanMavenLocal()
 
         run(
-            name = "Execute the script using the bindings from the serve - with /binding",
+            name = "Execute the script using the bindings from the server - with /binding",
             command = """
                 mv .github/workflows/test-script-consuming-jit-bindings-old.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old.main.kts
                 .github/workflows/test-script-consuming-jit-bindings-old.main.kts
