@@ -8,24 +8,29 @@ import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
+import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.httpMethod
+import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.head
+import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.micrometer.core.instrument.Tag
 import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import it.krzeminski.snakeyaml.engine.kmp.api.Load
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Optional
+import java.util.UUID.randomUUID
 import kotlin.jvm.optionals.getOrNull
 
 private val logger = logger { }
@@ -58,6 +63,7 @@ private fun Route.artifact(
 ) {
     headArtifact(bindingsCache, prometheusRegistry, refresh)
     getArtifact(bindingsCache, prometheusRegistry, refresh)
+    postArtifact(bindingsCache, prometheusRegistry)
 }
 
 private fun Route.headArtifact(
@@ -112,17 +118,57 @@ internal fun prefetchBindingArtifacts(
     }
 }
 
+private fun Route.postArtifact(
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    prometheusRegistry: PrometheusMeterRegistry?,
+) {
+    post {
+        val owner = "${call.parameters["owner"]}__types__${randomUUID()}"
+        val name = call.parameters["name"]!!
+        val version = call.parameters["version"]!!
+        val types = call.receiveText()
+        runCatching {
+            Load().loadOne(types)
+        }.onFailure {
+            call.respondText(
+                text = "Exception while parsing supplied typings:\n${it.stackTraceToString()}",
+                status = HttpStatusCode.UnprocessableEntity,
+            )
+            return@post
+        }
+        val typingActualSource =
+            call
+                .toBindingArtifacts(
+                    refresh = true,
+                    bindingsCache = bindingsCache,
+                    owner = owner,
+                    types = types,
+                )?.typingActualSource ?: TypingActualSource.CUSTOM
+        call.respondText(text = "$owner:$name:$version")
+
+        prometheusRegistry?.incrementArtifactCounter(call, typingActualSource)
+    }
+}
+
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
     bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    owner: String = parameters["owner"]!!,
+    types: String? = null,
 ): VersionArtifacts? {
-    val parsedRequest = parameters.parseRequest(extractVersion = true) ?: return null
+    val parsedRequest = parameters.parseRequest(extractVersion = true, owner = owner) ?: return null
 
     logger.info { "➡️ Requesting ${parsedRequest.actionCoords.prettyPrint}" }
     if (refresh) {
         bindingsCache.invalidate(parsedRequest)
     }
-    return bindingsCache.get(parsedRequest).getOrNull()
+    return (
+        if (types != null) {
+            bindingsCache.get(parsedRequest) { buildVersionArtifacts(parsedRequest, types) }.getOrNull()
+        } else {
+            bindingsCache.get(parsedRequest).getOrNull()
+        }
+    )
 }
 
 private fun PrometheusMeterRegistry.incrementArtifactCounter(
@@ -143,6 +189,7 @@ private fun PrometheusMeterRegistry.incrementArtifactCounter(
         when (typingActualSource) {
             TypingActualSource.ACTION -> "action"
             TypingActualSource.TYPING_CATALOG -> "typing_catalog"
+            TypingActualSource.CUSTOM -> "custom"
             null -> "no_typing"
         }
 

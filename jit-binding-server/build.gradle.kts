@@ -13,6 +13,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
+    implementation("it.krzeminski:snakeyaml-engine-kmp:3.0.2")
     implementation("io.ktor:ktor-server-metrics-micrometer")
     implementation("io.ktor:ktor-client-core")
     implementation("io.ktor:ktor-client-cio")
