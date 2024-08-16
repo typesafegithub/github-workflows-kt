@@ -21,7 +21,7 @@ fun List<ActionBinding>.shouldContainAndMatchFile(path: String) {
         }
     val actualContent = binding.kotlinCode.removeWindowsNewLines()
 
-    binding.filePath shouldBe "kotlin/io/github/typesafegithub/workflows/actions/johnsmith/$path"
+    binding.filePath shouldBe "io/github/typesafegithub/workflows/actions/johnsmith/$path"
 
     if (System.getenv("GITHUB_ACTIONS") == "true") {
         actualContent shouldBe expectedContent
