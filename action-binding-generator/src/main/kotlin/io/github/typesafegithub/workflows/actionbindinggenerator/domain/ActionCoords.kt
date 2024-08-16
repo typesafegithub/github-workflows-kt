@@ -15,6 +15,7 @@ public data class ActionCoords(
      */
     val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
+    val typesUuid: String? = null,
 )
 
 /**
@@ -25,7 +26,7 @@ public val ActionCoords.isTopLevel: Boolean get() = path == null
 
 public val ActionCoords.prettyPrint: String get() = "$owner/$fullName${
     significantVersion.takeUnless { it == FULL }?.let { " with $it version" } ?: ""
-}@$version"
+}@$version${typesUuid?.let { " (types: $it)" } ?: ""}"
 
 /**
  * For most actions, it's empty.
