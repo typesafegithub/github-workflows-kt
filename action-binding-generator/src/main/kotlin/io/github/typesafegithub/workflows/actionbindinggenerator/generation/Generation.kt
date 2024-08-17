@@ -63,18 +63,45 @@ public fun ActionCoords.generateBinding(
 
     val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
 
-    val className = this.buildActionClassName()
-    val actionBindingSourceCode =
-        generateActionBindingSourceCode(metadataProcessed, this, inputTypingsResolved.first, className)
+    val classNameUntyped = this.buildActionClassName() + "_Untyped"
+    val actionBindingSourceCodeUntyped =
+        generateActionBindingSourceCode(metadataProcessed, this, emptyMap(), classNameUntyped, untyped = true)
+
+    val classNameAndSourceCodeTyped =
+        if (inputTypingsResolved.second != null) {
+            val className = this.buildActionClassName()
+            val actionBindingSourceCode =
+                generateActionBindingSourceCode(
+                    metadataProcessed,
+                    this,
+                    inputTypingsResolved.first,
+                    className,
+                    untyped = false,
+                )
+            Pair(className, actionBindingSourceCode)
+        } else {
+            null
+        }
+
     val packageName = owner.toKotlinPackageName()
-    return listOf(
+
+    return listOfNotNull(
         ActionBinding(
-            kotlinCode = actionBindingSourceCode,
-            filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
-            className = className,
+            kotlinCode = actionBindingSourceCodeUntyped,
+            filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$classNameUntyped.kt",
+            className = classNameUntyped,
             packageName = packageName,
-            typingActualSource = inputTypingsResolved.second,
+            typingActualSource = null,
         ),
+        classNameAndSourceCodeTyped?.let { (className, actionBindingSourceCode) ->
+            ActionBinding(
+                kotlinCode = actionBindingSourceCode,
+                filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
+                className = className,
+                packageName = packageName,
+                typingActualSource = inputTypingsResolved.second,
+            )
+        },
     )
 }
 
@@ -96,6 +123,7 @@ private fun generateActionBindingSourceCode(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
+    untyped: Boolean,
 ): String {
     val fileSpec =
         FileSpec
@@ -108,7 +136,7 @@ private fun generateActionBindingSourceCode(
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            ).addType(generateActionClass(metadata, coords, inputTypings, className))
+            ).addType(generateActionClass(metadata, coords, inputTypings, className, untyped))
             .addSuppressAnnotation(metadata)
             .indent("    ")
             .build()
@@ -139,11 +167,12 @@ private fun generateActionClass(
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     className: String,
+    untyped: Boolean,
 ): TypeSpec =
     TypeSpec
         .classBuilder(className)
         .addModifiers(KModifier.DATA)
-        .addKdoc(actionKdoc(metadata, coords))
+        .addKdoc(actionKdoc(metadata, coords, untyped))
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className))
         .properties(metadata, coords, inputTypings, className)
@@ -384,14 +413,44 @@ private fun ParameterSpec.Builder.defaultValueIfNullable(input: Input): Paramete
 private fun actionKdoc(
     metadata: Metadata,
     coords: ActionCoords,
-) = """
+    untyped: Boolean,
+) = (
+    if (untyped) {
+        """
+        |```text
+        |!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        |!!!                             WARNING                             !!!
+        |!!!                                                                 !!!
+        |!!! This action binding has no typings provided. All inputs will    !!!
+        |!!! have a default type of String.                                  !!!
+        |!!! To be able to use this action in a type-safe way, ask the       !!!
+        |!!! action's owner to provide the typings using                     !!!
+        |!!!                                                                 !!!
+        |!!! https://github.com/typesafegithub/github-actions-typing         !!!
+        |!!!                                                                 !!!
+        |!!! or if it's impossible, contribute typings to a community-driven !!!
+        |!!!                                                                 !!!
+        |!!! https://github.com/typesafegithub/github-actions-typing-catalog !!!
+        |!!!                                                                 !!!
+        |!!! This '_Untyped' binding will be available even once the typings !!!
+        |!!! are added.                                                      !!!
+        |!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        |```
+        |
+        |
+        """.trimMargin()
+    } else {
+        ""
+    }
+) +
+    """
        |Action: ${metadata.name.escapedForComments}
        |
        |${metadata.description.escapedForComments.removeTrailingWhitespacesForEachLine()}
        |
        |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore(
-    '/',
-)}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
+        '/',
+    )}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
     """.trimMargin()
 
 private fun Map<String, Typing>.getInputTyping(key: String) = this[key] ?: StringTyping

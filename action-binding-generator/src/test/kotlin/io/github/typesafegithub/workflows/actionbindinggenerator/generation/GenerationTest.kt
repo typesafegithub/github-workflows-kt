@@ -16,6 +16,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTy
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.Typing
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
 
 class GenerationTest :
     FunSpec({
@@ -395,6 +396,41 @@ class GenerationTest :
 
             // then
             binding.shouldContainAndMatchFile("ActionWithFancyCharsInDocs.kt")
+        }
+
+        test("action with no typings has only an untyped binding") {
+            // given
+            val actionManifest =
+                Metadata(
+                    name = "Do something cool",
+                    description = "This is a test description that should be put in the KDoc comment for a class",
+                    inputs =
+                        mapOf(
+                            "foo" to
+                                Input(
+                                    required = true,
+                                    default = null,
+                                ),
+                            "bar" to
+                                Input(
+                                    required = false,
+                                    default = "test",
+                                ),
+                        ),
+                )
+            val coords = ActionCoords("john-smith", "action-with-no-typings", "v3")
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(emptyMap(), null),
+                )
+
+            // then
+            binding shouldHaveSize 1
+            binding.shouldContainAndMatchFile("ActionWithNoTypings_Untyped.kt")
         }
     })
 

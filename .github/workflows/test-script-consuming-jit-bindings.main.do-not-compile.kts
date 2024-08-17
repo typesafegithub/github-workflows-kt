@@ -15,8 +15,10 @@
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 
-println(Checkout())
+println(Checkout_Untyped(fetchTags = "false"))
+println(Checkout(fetchTags = false))
 println(ActionsSetupGradle())
 println(Cache(path = listOf("some-path"), key = "some-key"))
