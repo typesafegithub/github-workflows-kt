@@ -14,6 +14,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerT
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerWithSpecialValueTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.Typing
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 
@@ -140,7 +141,12 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                )
 
             // then
             binding.shouldContainAndMatchFile("SimpleActionWithRequiredStringInputs.kt")
@@ -185,7 +191,12 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithSomeOptionalInputs.kt")
@@ -235,7 +246,12 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithOutputs.kt")
@@ -254,7 +270,12 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(emptyMap(), ACTION),
+                )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
@@ -287,7 +308,12 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithDeprecatedInputAndNameClash.kt")
@@ -361,7 +387,12 @@ class GenerationTest :
             val coords = ActionCoords("john-smith", "action-with-fancy-chars-in-docs", "v3")
 
             // when
-            val binding = coords.generateBinding(metadataRevision = NewestForVersion, metadata = actionManifest)
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithFancyCharsInDocs.kt")
@@ -402,3 +433,5 @@ class GenerationTest :
             binding.shouldContainAndMatchFile("ActionWithNoTypings_Untyped.kt")
         }
     })
+
+private fun Metadata.allInputsAsStrings(): Map<String, Typing> = this.inputs.mapValues { StringTyping }
