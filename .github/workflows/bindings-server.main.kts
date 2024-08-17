@@ -10,8 +10,10 @@ import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Environment
+import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.*
+import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -77,6 +79,8 @@ workflow(
             }
         }
 
+        cleanMavenLocal()
+
         run(
             name = "Execute the script using the bindings from the serve - with /binding",
             command = """
@@ -84,6 +88,8 @@ workflow(
                 .github/workflows/test-script-consuming-jit-bindings-old.main.kts
             """.trimIndent(),
         )
+
+        cleanMavenLocal()
 
         run(
             name = "Execute the script using the bindings from the server",
@@ -93,10 +99,7 @@ workflow(
             """.trimIndent(),
         )
 
-        run(
-            name = "Clean Maven Local to fetch required POMs again",
-            command = "rm -rf ~/.m2/repository/"
-        )
+        cleanMavenLocal()
 
         run(
             name = "Execute the script using bindings but without dependency on library",
@@ -148,4 +151,11 @@ workflow(
             command = "curl -X POST ${expr { TRIGGER_IMAGE_PULL }} --insecure",
         )
     }
+}
+
+fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
+    run(
+        name = "Clean Maven Local to fetch required POMs again",
+        command = "rm -rf ~/.m2/repository/"
+    )
 }
