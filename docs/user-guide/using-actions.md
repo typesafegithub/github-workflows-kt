@@ -20,7 +20,10 @@ To add a dependency on an action:
 3. Use the action by importing a class like `io.github.typesafegithub.workflows.actions.actions.Checkout`.
 
 For every action, a binding will be generated. However, some less popular actions don't have typings configured for
-their inputs, so by default all inputs are of type `String`. There are two ways of configuring typings:
+their inputs, so by default all inputs are of type `String`, and additionally the class name will have an `_Untyped`
+suffix.
+
+There are two ways of configuring typings:
 1. Recommended: a typing manifest (`action-typing.yml`) in the action's repo, see
    [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/). Thanks to this, the actions' owner
    is responsible for providing and maintaining the typings defined in a technology-agnostic way, to be used
@@ -31,6 +34,9 @@ their inputs, so by default all inputs are of type `String`. There are two ways 
    [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog),
    a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
    sending a PR.
+
+Once there are typings in place, a class without the `_Untyped` suffix, and with typed constructor arguments will be
+available.
 
 This approach supports dependency updating bots that support Kotlin Script's `.main.kts` files. E.g. Renovate is known
 to support it.
