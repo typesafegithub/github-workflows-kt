@@ -1,14 +1,15 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import java.time.format.DateTimeFormatter
 
 internal suspend fun ActionCoords.buildMavenMetadataFile(githubToken: String): String {
-    val availableMajorVersions =
+    val availableVersions =
         fetchAvailableVersions(owner = owner, name = name, githubToken = githubToken)
-            .filter { it.isMajorVersion() }
-    val newest = availableMajorVersions.max()
+            .filter { it.isMajorVersion() || (significantVersion < FULL) }
+    val newest = availableVersions.max()
     val lastUpdated =
         DateTimeFormatter
             .ofPattern("yyyyMMddHHmmss")
@@ -22,7 +23,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(githubToken: String): S
             <latest>$newest</latest>
             <release>$newest</release>
             <versions>
-${availableMajorVersions.joinToString(separator = "\n") {
+${availableVersions.joinToString(separator = "\n") {
         "              <version>$it</version>"
     }}
             </versions>

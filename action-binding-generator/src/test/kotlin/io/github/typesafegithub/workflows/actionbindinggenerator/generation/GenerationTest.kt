@@ -2,6 +2,9 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MAJOR
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MINOR
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
@@ -297,7 +300,7 @@ class GenerationTest :
                     description = "Description",
                 )
 
-            val coords = ActionCoords("john-smith", "action-with", "v3", "sub/action")
+            val coords = ActionCoords("john-smith", "action-with", "v3", FULL, "sub/action")
 
             // when
             val binding =
@@ -501,6 +504,60 @@ class GenerationTest :
             assertSoftly {
                 binding.shouldContainAndMatchFile("ActionWithPartlyTypings.kt")
                 binding.shouldContainAndMatchFile("ActionWithPartlyTypings_Untyped.kt")
+            }
+        }
+
+        test("action with no inputs with major version") {
+            // given
+            val actionManifestHasNoInputs = emptyMap<String, Input>()
+            val actionManifest =
+                Metadata(
+                    inputs = actionManifestHasNoInputs,
+                    name = "Action With No Inputs",
+                    description = "Description",
+                )
+
+            val coords = ActionCoords("john-smith", "action-with-no-inputs-with-major-version", "v3.1.3", MAJOR)
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(emptyMap(), ACTION),
+                )
+
+            // then
+            assertSoftly {
+                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMajorVersion.kt")
+                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMajorVersion_Untyped.kt")
+            }
+        }
+
+        test("action with no inputs with minor version") {
+            // given
+            val actionManifestHasNoInputs = emptyMap<String, Input>()
+            val actionManifest =
+                Metadata(
+                    inputs = actionManifestHasNoInputs,
+                    name = "Action With No Inputs",
+                    description = "Description",
+                )
+
+            val coords = ActionCoords("john-smith", "action-with-no-inputs-with-minor-version", "v3.1.3", MINOR)
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(emptyMap(), ACTION),
+                )
+
+            // then
+            assertSoftly {
+                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMinorVersion.kt")
+                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMinorVersion_Untyped.kt")
             }
         }
     })
