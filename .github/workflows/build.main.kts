@@ -102,6 +102,8 @@ workflow(
             command = """
             find -name *.main.kts -print0 | while read -d ${'$'}'\0' file
             do
+                # This script requires extra steps before it can be compiled, i.e. publishing
+                # the library to Maven Local. It's handled by the consistency check in this workflow.
                 if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
                     continue
                 fi
@@ -134,6 +136,8 @@ workflow(
             command = """
             find -name "*.main.kts" -print0 | while read -d ${'$'}'\0' file
             do
+                # This script requires extra steps before it can be compiled, i.e. publishing
+                # the library to Maven Local. It's handled by the consistency check in this workflow.
                 if [ "${'$'}file" = "./.github/workflows/end-to-end-tests.main.kts" ]; then
                     continue
                 fi
