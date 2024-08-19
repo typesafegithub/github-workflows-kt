@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import java.security.MessageDigest
 
 sealed interface Artifact
 
@@ -28,11 +27,3 @@ fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
         "$name-$version.module.md5" to TextArtifact(module.md5Checksum()),
     )
 }
-
-private fun ByteArray.md5Checksum(): String {
-    val md5 = MessageDigest.getInstance("MD5")
-    val hashBytes = md5.digest(this)
-    return hashBytes.joinToString("") { "%02x".format(it) }
-}
-
-private fun String.md5Checksum(): String = this.toByteArray(charset = Charsets.UTF_8).md5Checksum()

@@ -6,5 +6,6 @@ suspend fun ActionCoords.buildPackageArtifacts(githubToken: String): Map<String,
     val mavenMetadata = buildMavenMetadataFile(owner = owner, name = name, githubToken = githubToken)
     return mapOf(
         "maven-metadata.xml" to mavenMetadata,
+        "maven-metadata.xml.md5" to mavenMetadata.md5Checksum(),
     )
 }
