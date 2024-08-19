@@ -57,7 +57,7 @@ public data class ActionWithOutputs private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-bar" to fooBar,
+            "foo-bar".to(fooBar),
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

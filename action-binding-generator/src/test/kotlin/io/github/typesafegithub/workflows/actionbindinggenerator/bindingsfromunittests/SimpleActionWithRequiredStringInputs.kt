@@ -70,8 +70,8 @@ public data class SimpleActionWithRequiredStringInputs private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-bar" to fooBar,
-            "baz-goo" to bazGoo,
+            "foo-bar".to(fooBar),
+            "baz-goo".to(bazGoo),
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

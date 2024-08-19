@@ -57,7 +57,7 @@ public data class ActionWithDeprecatedInputAndNameClash private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "fooBar" to fooBar,
+            "fooBar".to(fooBar),
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

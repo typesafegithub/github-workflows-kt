@@ -82,11 +82,11 @@ public data class ActionWithSomeOptionalInputs private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            fooBar?.let { "foo-bar" to it },
-            bazGoo?.let { "baz-goo" to it },
-            zooDar?.let { "zoo-dar" to it },
-            cooPoo?.let { "coo-poo" to it },
-            "package" to `package`,
+            fooBar?.let { "foo-bar".to(it) },
+            bazGoo?.let { "baz-goo".to(it) },
+            zooDar?.let { "zoo-dar".to(it) },
+            cooPoo?.let { "coo-poo".to(it) },
+            "package".to(`package`),
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
