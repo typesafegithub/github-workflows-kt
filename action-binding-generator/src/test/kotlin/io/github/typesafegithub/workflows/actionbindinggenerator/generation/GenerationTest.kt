@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Output
@@ -86,6 +87,7 @@ class GenerationTest :
             )
         val typingsForAllTypesOfInputs =
             mapOf(
+                "foo-bar" to StringTyping,
                 "baz-goo" to BooleanTyping,
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
@@ -220,6 +222,7 @@ class GenerationTest :
 
             // then
             binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs.kt")
+            binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs_Untyped.kt")
         }
 
         test("action with outputs") {
@@ -431,6 +434,45 @@ class GenerationTest :
             // then
             binding shouldHaveSize 1
             binding.shouldContainAndMatchFile("ActionWithNoTypings_Untyped.kt")
+        }
+
+        test("action with partly typings has only untyped properties for the non-typed inputs") {
+            // given
+            val actionManifest =
+                Metadata(
+                    name = "Do something cool",
+                    description = "This is a test description that should be put in the KDoc comment for a class",
+                    inputs =
+                        mapOf(
+                            "foo" to
+                                Input(
+                                    required = true,
+                                    default = null,
+                                ),
+                            "bar" to
+                                Input(
+                                    required = false,
+                                    default = "test",
+                                ),
+                            "baz" to
+                                Input(
+                                    required = true,
+                                ),
+                        ),
+                )
+            val coords = ActionCoords("john-smith", "action-with-partly-typings", "v3")
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(mapOf("foo" to IntegerTyping), TYPING_CATALOG),
+                )
+
+            // then
+            binding.shouldContainAndMatchFile("ActionWithPartlyTypings.kt")
+            binding.shouldContainAndMatchFile("ActionWithPartlyTypings_Untyped.kt")
         }
     })
 

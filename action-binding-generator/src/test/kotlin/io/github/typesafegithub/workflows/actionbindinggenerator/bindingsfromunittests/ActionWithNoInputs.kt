@@ -43,7 +43,7 @@ public data class ActionWithNoInputs private constructor(
         vararg pleaseUseNamedArguments: Unit,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(_customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(_customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(_customInputs)

@@ -20,12 +20,12 @@ To add a dependency on an action:
 3. Use the action by importing a class like `io.github.typesafegithub.workflows.actions.actions.Checkout`.
 
 For every action, a binding will be generated. However, some less popular actions don't have typings configured for
-their inputs, so by default all inputs are of type `String`, and additionally the class name will have an `_Untyped`
-suffix.
+their inputs, so by default all inputs are of type `String`, have the suffix `_Untyped`, and additionally the class
+name will have an `_Untyped` suffix. The nullability of the inputs will be according to their required status.
 
 There are two ways of configuring typings:
 1. Recommended: a typing manifest (`action-typing.yml`) in the action's repo, see
-   [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/). Thanks to this, the actions' owner
+   [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/). Thanks to this, the action's owner
    is responsible for providing and maintaining the typings defined in a technology-agnostic way, to be used
    **not only** with this Kotlin library. There are also no synchronization issues between the action itself and its
    typings. When trying to use a new action that has no typings, always discuss this approach with the action owner
@@ -35,8 +35,13 @@ There are two ways of configuring typings:
    a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
    sending a PR.
 
-Once there are typings in place, a class without the `_Untyped` suffix, and with typed constructor arguments will be
-available.
+Once there are any typings in place for the action, the `_Untyped` suffixed class is marked `@Deprecated`, and a class
+without that suffix is created additionally. In that class for each input that does not have type information available
+there will still be only the property with `_Untyped` suffix and nullability according to required status. For each
+input that does have type information available, there will still be the `_Untyped` property and additionally a
+properly typed property. Both of these properties will be nullable. It is a runtime error to set both of these
+properties as well as setting none if the input is required. The `_Untyped` properties are not marked `@Deprecated`,
+as it could still make sense to use them, for example if you want to set the value from a GitHub Actions expression.
 
 This approach supports dependency updating bots that support Kotlin Script's `.main.kts` files. E.g. Renovate is known
 to support it.

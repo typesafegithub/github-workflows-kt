@@ -22,8 +22,9 @@ import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.typesafegithub.AlwaysUntypedActionForTests_Untyped
 
-println(Checkout_Untyped(fetchTags = "false"))
+println(Checkout_Untyped(fetchTags_Untyped = "false"))
 println(Checkout(fetchTags = false))
-println(AlwaysUntypedActionForTests_Untyped(foobar = "baz"))
+println(Checkout(fetchTags_Untyped = "false"))
+println(AlwaysUntypedActionForTests_Untyped(foobar_Untyped = "baz"))
 println(ActionsSetupGradle())
 println(Cache(path = listOf("some-path"), key = "some-key"))
