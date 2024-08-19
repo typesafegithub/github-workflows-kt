@@ -9,6 +9,7 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import java.time.ZonedDateTime
 
 suspend fun fetchAvailableVersions(
     owner: String,
@@ -19,12 +20,27 @@ suspend fun fetchAvailableVersions(
         apiTagsUrl(owner = owner, name = name),
         apiBranchesUrl(owner = owner, name = name),
     ).flatMap { url -> fetchGithubRefs(url, githubToken) }
-        .versions()
+        .versions(githubToken)
 
-private fun List<GithubRef>.versions(): List<Version> =
+private fun List<GithubRef>.versions(githubToken: String?): List<Version> =
     this.map { githubRef ->
         val version = githubRef.ref.substringAfterLast("/")
-        Version(version)
+        Version(version) {
+            val response =
+                httpClient
+                    .get(urlString = githubRef.`object`.url) {
+                        if (githubToken != null) {
+                            bearerAuth(githubToken)
+                        }
+                    }
+            val releaseDate =
+                when (githubRef.`object`.type) {
+                    "tag" -> response.body<Tag>().tagger
+                    "commit" -> response.body<Commit>().author
+                    else -> error("Unexpected target object type ${githubRef.`object`.type}")
+                }.date
+            ZonedDateTime.parse(releaseDate)
+        }
     }
 
 private suspend fun fetchGithubRefs(
@@ -51,6 +67,28 @@ private fun apiBranchesUrl(
 @Serializable
 private data class GithubRef(
     val ref: String,
+    val `object`: Object,
+)
+
+@Serializable
+private data class Object(
+    val type: String,
+    val url: String,
+)
+
+@Serializable
+private data class Tag(
+    val tagger: Person,
+)
+
+@Serializable
+private data class Commit(
+    val author: Person,
+)
+
+@Serializable
+private data class Person(
+    val date: String,
 )
 
 private val httpClient by lazy {
