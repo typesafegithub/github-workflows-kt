@@ -59,9 +59,9 @@ public data class ActionWithInputsSharingType private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-one" to fooOne.integerValue.toString(),
-            "foo-two" to fooTwo.integerValue.toString(),
-            fooThree?.let { "foo-three" to it.integerValue.toString() },
+            "foo-one".to(fooOne.integerValue.toString()),
+            "foo-two".to(fooTwo.integerValue.toString()),
+            fooThree?.let { "foo-three".to(it.integerValue.toString()) },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

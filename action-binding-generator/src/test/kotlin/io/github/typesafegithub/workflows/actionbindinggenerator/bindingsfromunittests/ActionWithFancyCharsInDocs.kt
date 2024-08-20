@@ -64,8 +64,8 @@ public data class ActionWithFancyCharsInDocs private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            nestedKotlinComments?.let { "nested-kotlin-comments" to it },
-            percent?.let { "percent" to it },
+            nestedKotlinComments?.let { "nested-kotlin-comments".to(it) },
+            percent?.let { "percent".to(it) },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

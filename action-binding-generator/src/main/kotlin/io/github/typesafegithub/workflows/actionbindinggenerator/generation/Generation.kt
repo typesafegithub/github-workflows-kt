@@ -307,9 +307,9 @@ private fun Metadata.linkedMapOfInputs(inputTypings: Map<String, Typing>): CodeB
                 inputs.forEach { (key, value) ->
                     val asStringCode = inputTypings.getInputTyping(key).asString()
                     if (!value.shouldBeNonNullInBinding()) {
-                        add("%N?.let { %S to it$asStringCode },\n", key.toCamelCase(), key)
+                        add("%N?.let { %S.to(it$asStringCode) },\n", key.toCamelCase(), key)
                     } else {
-                        add("%S to %N$asStringCode,\n", key, key.toCamelCase())
+                        add("%S.to(%N$asStringCode),\n", key, key.toCamelCase())
                     }
                 }
                 add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
