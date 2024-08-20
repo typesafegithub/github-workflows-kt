@@ -109,10 +109,10 @@ private fun Route.artifact(
         val file = call.parameters["file"]!!
         if (file in bindingArtifacts) {
             when (val artifact = bindingArtifacts[file]) {
-                is TextArtifact -> call.respondText(artifact.data)
+                is TextArtifact -> call.respondText(text = artifact.data())
                 is JarArtifact ->
                     call.respondBytes(
-                        bytes = artifact.data,
+                        bytes = artifact.data(),
                         contentType = ContentType.parse("application/java-archive"),
                     )
 

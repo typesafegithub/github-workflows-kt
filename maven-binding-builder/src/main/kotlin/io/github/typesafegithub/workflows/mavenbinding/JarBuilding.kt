@@ -22,8 +22,8 @@ import kotlin.io.path.div
 import kotlin.io.path.writeText
 
 internal data class Jars(
-    val mainJar: ByteArray,
-    val sourcesJar: ByteArray,
+    val mainJar: () -> ByteArray,
+    val sourcesJar: () -> ByteArray,
 )
 
 internal fun buildJars(
@@ -35,20 +35,28 @@ internal fun buildJars(
         generateBinding(owner = owner, name = name, version = version).also {
             if (it.isEmpty()) return null
         }
-    val (sourceFilePaths, compilationInputDir) = binding.prepareDirectoryWithSources()
 
-    val pathWithJarContents = compileBinding(sourceFilePaths = sourceFilePaths)
-    val mainJarByteArrayOutputStream = ByteArrayOutputStream()
-    mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
-    pathWithJarContents.toFile().deleteRecursively()
+    val mainJar by lazy {
+        val (sourceFilePaths, compilationInputDir) = binding.prepareDirectoryWithSources()
+        val pathWithJarContents = compileBinding(sourceFilePaths = sourceFilePaths)
+        val mainJarByteArrayOutputStream = ByteArrayOutputStream()
+        mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
+        pathWithJarContents.toFile().deleteRecursively()
+        compilationInputDir.toFile().deleteRecursively()
+        mainJarByteArrayOutputStream.toByteArray()
+    }
 
-    val sourcesJarByteArrayOutputStream = ByteArrayOutputStream()
-    sourcesJarByteArrayOutputStream.createZipFile(compilationInputDir)
-    compilationInputDir.toFile().deleteRecursively()
+    val sourcesJar by lazy {
+        val (_, compilationInputDir) = binding.prepareDirectoryWithSources()
+        val sourcesJarByteArrayOutputStream = ByteArrayOutputStream()
+        sourcesJarByteArrayOutputStream.createZipFile(compilationInputDir)
+        compilationInputDir.toFile().deleteRecursively()
+        sourcesJarByteArrayOutputStream.toByteArray()
+    }
 
     return Jars(
-        mainJar = mainJarByteArrayOutputStream.toByteArray(),
-        sourcesJar = sourcesJarByteArrayOutputStream.toByteArray(),
+        mainJar = { mainJar },
+        sourcesJar = { sourcesJar },
     )
 }
 
