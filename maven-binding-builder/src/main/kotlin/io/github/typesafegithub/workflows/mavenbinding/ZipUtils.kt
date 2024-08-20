@@ -29,7 +29,6 @@ internal fun OutputStream.createZipFile(contents: Path) =
                     zipFile(file.toFile(), zipOutputStream)
                 }
             }
-        zipOutputStream.flush()
     }
 
 /**
@@ -60,17 +59,8 @@ private fun zipDirectory(
                 lastAccessTime = FileTime.fromMillis(0)
             }
         zos.putNextEntry(zipEntry)
-        val bis =
-            BufferedInputStream(
-                FileInputStream(file),
-            )
-        var bytesRead: Long = 0
-        val bytesIn = ByteArray(BUFFER_SIZE)
-        var read: Int
-        while ((bis.read(bytesIn).also { read = it }) != -1) {
-            zos.write(bytesIn, 0, read)
-            bytesRead += read.toLong()
-        }
+        BufferedInputStream(FileInputStream(file))
+            .use { it.copyTo(zos) }
         zos.closeEntry()
     }
 }
@@ -96,20 +86,7 @@ private fun zipFile(
             lastAccessTime = FileTime.fromMillis(0)
         }
     zos.putNextEntry(zipEntry)
-    val bis =
-        BufferedInputStream(
-            FileInputStream(
-                file,
-            ),
-        )
-    var bytesRead: Long = 0
-    val bytesIn = ByteArray(BUFFER_SIZE)
-    var read: Int
-    while ((bis.read(bytesIn).also { read = it }) != -1) {
-        zos.write(bytesIn, 0, read)
-        bytesRead += read.toLong()
-    }
+    BufferedInputStream(FileInputStream(file))
+        .use { it.copyTo(zos) }
     zos.closeEntry()
 }
-
-private const val BUFFER_SIZE = 8192
