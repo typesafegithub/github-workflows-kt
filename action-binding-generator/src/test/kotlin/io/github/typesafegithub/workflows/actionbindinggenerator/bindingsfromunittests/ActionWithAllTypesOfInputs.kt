@@ -130,19 +130,19 @@ public data class ActionWithAllTypesOfInputs private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-bar".to(fooBar),
-            "baz-goo".to(bazGoo.toString()),
-            binKin?.let { "bin-kin".to(it.toString()) },
-            "int-pint".to(intPint.toString()),
-            "flo-pint".to(floPint.toString()),
-            "fin-bin".to(finBin.stringValue),
-            "goo-zen".to(gooZen.integerValue.toString()),
-            "bah-enum".to(bahEnum.stringValue),
-            listStrings?.let { "list-strings".to(it.joinToString(",")) },
-            listInts?.let { "list-ints".to(it.joinToString(",") { it.toString() }) },
-            listEnums?.let { "list-enums".to(it.joinToString(",") { it.stringValue }) },
-            listIntSpecial?.let { "list-int-special".to(it.joinToString(",") {
-                    it.integerValue.toString() }) },
+            "foo-bar" to fooBar,
+            "baz-goo" to bazGoo.toString(),
+            binKin?.let { "bin-kin" to it.toString() },
+            "int-pint" to intPint.toString(),
+            "flo-pint" to floPint.toString(),
+            "fin-bin" to finBin.stringValue,
+            "goo-zen" to gooZen.integerValue.toString(),
+            "bah-enum" to bahEnum.stringValue,
+            listStrings?.let { "list-strings" to it.joinToString(",") },
+            listInts?.let { "list-ints" to it.joinToString(",") { it.toString() } },
+            listEnums?.let { "list-enums" to it.joinToString(",") { it.stringValue } },
+            listIntSpecial?.let { "list-int-special" to it.joinToString(",") {
+                    it.integerValue.toString() } },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
