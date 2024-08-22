@@ -26,7 +26,7 @@ class InputNullabilityTest :
                         description = "Some input",
                         default = default,
                         required = required,
-                    ).shouldBeNonNullInBinding() shouldBe result
+                    ).shouldBeRequiredInBinding() shouldBe result
                 }
             }
         }

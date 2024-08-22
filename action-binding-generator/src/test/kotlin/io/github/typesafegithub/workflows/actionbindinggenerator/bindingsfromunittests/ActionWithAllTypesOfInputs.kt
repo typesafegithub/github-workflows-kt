@@ -29,18 +29,30 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-all-types-of-inputs)
  *
- * @param fooBar Short description
- * @param bazGoo First boolean input!
+ * @param fooBar &lt;required&gt; Short description
+ * @param fooBar_Untyped &lt;required&gt; Short description
+ * @param bazGoo &lt;required&gt; First boolean input!
+ * @param bazGoo_Untyped &lt;required&gt; First boolean input!
  * @param binKin Boolean and nullable
- * @param intPint Integer
- * @param floPint Float
- * @param finBin Enumeration
- * @param gooZen Integer with special value
- * @param bahEnum Enum with custom naming
+ * @param binKin_Untyped Boolean and nullable
+ * @param intPint &lt;required&gt; Integer
+ * @param intPint_Untyped &lt;required&gt; Integer
+ * @param floPint &lt;required&gt; Float
+ * @param floPint_Untyped &lt;required&gt; Float
+ * @param finBin &lt;required&gt; Enumeration
+ * @param finBin_Untyped &lt;required&gt; Enumeration
+ * @param gooZen &lt;required&gt; Integer with special value
+ * @param gooZen_Untyped &lt;required&gt; Integer with special value
+ * @param bahEnum &lt;required&gt; Enum with custom naming
+ * @param bahEnum_Untyped &lt;required&gt; Enum with custom naming
  * @param listStrings List of strings
+ * @param listStrings_Untyped List of strings
  * @param listInts List of integers
+ * @param listInts_Untyped List of integers
  * @param listEnums List of enums
+ * @param listEnums_Untyped List of enums
  * @param listIntSpecial List of integer with special values
+ * @param listIntSpecial_Untyped List of integer with special values
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -48,53 +60,101 @@ import kotlin.collections.toTypedArray
  */
 public data class ActionWithAllTypesOfInputs private constructor(
     /**
-     * Short description
+     * &lt;required&gt; Short description
      */
-    public val fooBar: String,
+    public val fooBar: String? = null,
     /**
-     * First boolean input!
+     * &lt;required&gt; Short description
      */
-    public val bazGoo: Boolean,
+    public val fooBar_Untyped: String? = null,
+    /**
+     * &lt;required&gt; First boolean input!
+     */
+    public val bazGoo: Boolean? = null,
+    /**
+     * &lt;required&gt; First boolean input!
+     */
+    public val bazGoo_Untyped: String? = null,
     /**
      * Boolean and nullable
      */
     public val binKin: Boolean? = null,
     /**
-     * Integer
+     * Boolean and nullable
      */
-    public val intPint: Int,
+    public val binKin_Untyped: String? = null,
     /**
-     * Float
+     * &lt;required&gt; Integer
      */
-    public val floPint: Float,
+    public val intPint: Int? = null,
     /**
-     * Enumeration
+     * &lt;required&gt; Integer
      */
-    public val finBin: ActionWithAllTypesOfInputs.Bin,
+    public val intPint_Untyped: String? = null,
     /**
-     * Integer with special value
+     * &lt;required&gt; Float
      */
-    public val gooZen: ActionWithAllTypesOfInputs.Zen,
+    public val floPint: Float? = null,
     /**
-     * Enum with custom naming
+     * &lt;required&gt; Float
      */
-    public val bahEnum: ActionWithAllTypesOfInputs.BahEnum,
+    public val floPint_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Enumeration
+     */
+    public val finBin: ActionWithAllTypesOfInputs.Bin? = null,
+    /**
+     * &lt;required&gt; Enumeration
+     */
+    public val finBin_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Integer with special value
+     */
+    public val gooZen: ActionWithAllTypesOfInputs.Zen? = null,
+    /**
+     * &lt;required&gt; Integer with special value
+     */
+    public val gooZen_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Enum with custom naming
+     */
+    public val bahEnum: ActionWithAllTypesOfInputs.BahEnum? = null,
+    /**
+     * &lt;required&gt; Enum with custom naming
+     */
+    public val bahEnum_Untyped: String? = null,
     /**
      * List of strings
      */
     public val listStrings: List<String>? = null,
     /**
+     * List of strings
+     */
+    public val listStrings_Untyped: String? = null,
+    /**
      * List of integers
      */
     public val listInts: List<Int>? = null,
+    /**
+     * List of integers
+     */
+    public val listInts_Untyped: String? = null,
     /**
      * List of enums
      */
     public val listEnums: List<ActionWithAllTypesOfInputs.MyEnum>? = null,
     /**
+     * List of enums
+     */
+    public val listEnums_Untyped: String? = null,
+    /**
      * List of integer with special values
      */
     public val listIntSpecial: List<ActionWithAllTypesOfInputs.MyInt>? = null,
+    /**
+     * List of integer with special values
+     */
+    public val listIntSpecial_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -106,43 +166,143 @@ public data class ActionWithAllTypesOfInputs private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<ActionWithAllTypesOfInputs.Outputs>("john-smith",
         "action-with-all-types-of-inputs", _customVersion ?: "v3") {
+    init {
+        require(!((fooBar != null) && (fooBar_Untyped != null))) {
+            "Only fooBar or fooBar_Untyped must be set, but not both"
+        }
+        require((fooBar != null) || (fooBar_Untyped != null)) {
+            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+        }
+
+        require(!((bazGoo != null) && (bazGoo_Untyped != null))) {
+            "Only bazGoo or bazGoo_Untyped must be set, but not both"
+        }
+        require((bazGoo != null) || (bazGoo_Untyped != null)) {
+            "Either bazGoo or bazGoo_Untyped must be set, one of them is required"
+        }
+
+        require(!((binKin != null) && (binKin_Untyped != null))) {
+            "Only binKin or binKin_Untyped must be set, but not both"
+        }
+
+        require(!((intPint != null) && (intPint_Untyped != null))) {
+            "Only intPint or intPint_Untyped must be set, but not both"
+        }
+        require((intPint != null) || (intPint_Untyped != null)) {
+            "Either intPint or intPint_Untyped must be set, one of them is required"
+        }
+
+        require(!((floPint != null) && (floPint_Untyped != null))) {
+            "Only floPint or floPint_Untyped must be set, but not both"
+        }
+        require((floPint != null) || (floPint_Untyped != null)) {
+            "Either floPint or floPint_Untyped must be set, one of them is required"
+        }
+
+        require(!((finBin != null) && (finBin_Untyped != null))) {
+            "Only finBin or finBin_Untyped must be set, but not both"
+        }
+        require((finBin != null) || (finBin_Untyped != null)) {
+            "Either finBin or finBin_Untyped must be set, one of them is required"
+        }
+
+        require(!((gooZen != null) && (gooZen_Untyped != null))) {
+            "Only gooZen or gooZen_Untyped must be set, but not both"
+        }
+        require((gooZen != null) || (gooZen_Untyped != null)) {
+            "Either gooZen or gooZen_Untyped must be set, one of them is required"
+        }
+
+        require(!((bahEnum != null) && (bahEnum_Untyped != null))) {
+            "Only bahEnum or bahEnum_Untyped must be set, but not both"
+        }
+        require((bahEnum != null) || (bahEnum_Untyped != null)) {
+            "Either bahEnum or bahEnum_Untyped must be set, one of them is required"
+        }
+
+        require(!((listStrings != null) && (listStrings_Untyped != null))) {
+            "Only listStrings or listStrings_Untyped must be set, but not both"
+        }
+
+        require(!((listInts != null) && (listInts_Untyped != null))) {
+            "Only listInts or listInts_Untyped must be set, but not both"
+        }
+
+        require(!((listEnums != null) && (listEnums_Untyped != null))) {
+            "Only listEnums or listEnums_Untyped must be set, but not both"
+        }
+
+        require(!((listIntSpecial != null) && (listIntSpecial_Untyped != null))) {
+            "Only listIntSpecial or listIntSpecial_Untyped must be set, but not both"
+        }
+    }
+
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        fooBar: String,
-        bazGoo: Boolean,
+        fooBar: String? = null,
+        fooBar_Untyped: String? = null,
+        bazGoo: Boolean? = null,
+        bazGoo_Untyped: String? = null,
         binKin: Boolean? = null,
-        intPint: Int,
-        floPint: Float,
-        finBin: ActionWithAllTypesOfInputs.Bin,
-        gooZen: ActionWithAllTypesOfInputs.Zen,
-        bahEnum: ActionWithAllTypesOfInputs.BahEnum,
+        binKin_Untyped: String? = null,
+        intPint: Int? = null,
+        intPint_Untyped: String? = null,
+        floPint: Float? = null,
+        floPint_Untyped: String? = null,
+        finBin: ActionWithAllTypesOfInputs.Bin? = null,
+        finBin_Untyped: String? = null,
+        gooZen: ActionWithAllTypesOfInputs.Zen? = null,
+        gooZen_Untyped: String? = null,
+        bahEnum: ActionWithAllTypesOfInputs.BahEnum? = null,
+        bahEnum_Untyped: String? = null,
         listStrings: List<String>? = null,
+        listStrings_Untyped: String? = null,
         listInts: List<Int>? = null,
+        listInts_Untyped: String? = null,
         listEnums: List<ActionWithAllTypesOfInputs.MyEnum>? = null,
+        listEnums_Untyped: String? = null,
         listIntSpecial: List<ActionWithAllTypesOfInputs.MyInt>? = null,
+        listIntSpecial_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar=fooBar, bazGoo=bazGoo, binKin=binKin, intPint=intPint, floPint=floPint,
-            finBin=finBin, gooZen=gooZen, bahEnum=bahEnum, listStrings=listStrings,
-            listInts=listInts, listEnums=listEnums, listIntSpecial=listIntSpecial,
-            _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped =
+            bazGoo_Untyped, binKin = binKin, binKin_Untyped = binKin_Untyped, intPint = intPint,
+            intPint_Untyped = intPint_Untyped, floPint = floPint, floPint_Untyped = floPint_Untyped,
+            finBin = finBin, finBin_Untyped = finBin_Untyped, gooZen = gooZen, gooZen_Untyped =
+            gooZen_Untyped, bahEnum = bahEnum, bahEnum_Untyped = bahEnum_Untyped, listStrings =
+            listStrings, listStrings_Untyped = listStrings_Untyped, listInts = listInts,
+            listInts_Untyped = listInts_Untyped, listEnums = listEnums, listEnums_Untyped =
+            listEnums_Untyped, listIntSpecial = listIntSpecial, listIntSpecial_Untyped =
+            listIntSpecial_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-bar" to fooBar,
-            "baz-goo" to bazGoo.toString(),
+            fooBar?.let { "foo-bar" to it },
+            fooBar_Untyped?.let { "foo-bar" to it },
+            bazGoo?.let { "baz-goo" to it.toString() },
+            bazGoo_Untyped?.let { "baz-goo" to it },
             binKin?.let { "bin-kin" to it.toString() },
-            "int-pint" to intPint.toString(),
-            "flo-pint" to floPint.toString(),
-            "fin-bin" to finBin.stringValue,
-            "goo-zen" to gooZen.integerValue.toString(),
-            "bah-enum" to bahEnum.stringValue,
+            binKin_Untyped?.let { "bin-kin" to it },
+            intPint?.let { "int-pint" to it.toString() },
+            intPint_Untyped?.let { "int-pint" to it },
+            floPint?.let { "flo-pint" to it.toString() },
+            floPint_Untyped?.let { "flo-pint" to it },
+            finBin?.let { "fin-bin" to it.stringValue },
+            finBin_Untyped?.let { "fin-bin" to it },
+            gooZen?.let { "goo-zen" to it.integerValue.toString() },
+            gooZen_Untyped?.let { "goo-zen" to it },
+            bahEnum?.let { "bah-enum" to it.stringValue },
+            bahEnum_Untyped?.let { "bah-enum" to it },
             listStrings?.let { "list-strings" to it.joinToString(",") },
+            listStrings_Untyped?.let { "list-strings" to it },
             listInts?.let { "list-ints" to it.joinToString(",") { it.toString() } },
+            listInts_Untyped?.let { "list-ints" to it },
             listEnums?.let { "list-enums" to it.joinToString(",") { it.stringValue } },
+            listEnums_Untyped?.let { "list-enums" to it },
             listIntSpecial?.let { "list-int-special" to it.joinToString(",") {
                     it.integerValue.toString() } },
+            listIntSpecial_Untyped?.let { "list-int-special" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

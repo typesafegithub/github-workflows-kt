@@ -37,7 +37,7 @@ workflow(
 It has a number of downsides:
 
 * the library needs to be aware of a certain action, which requires the maintainer's attention
-* getting new versions of the bindings happens is tied to the release cadence of the library, which is currently
+* getting new versions of the bindings is tied to the release cadence of the library, which is currently
   released monthly
 * automatic updates via dependency update bots like Renovate or Dependabot aren't possible
 
@@ -94,8 +94,9 @@ Then regenerate your YAML to ensure there are no changes.
 1. Top-level actions like `actions/checkout@v4` map to Maven artifacts like `actions:checkout:v4`. Nested actions like
    `gradle/actions/setup-gradle@v3` require replacing the slash in the middle of the compound name with `__` (double
    underscore) because slash is not allowed in Maven coordinates. Hence, we get `gradle:actions__setup-gradle:v3`.
-1. So far, only major versions (e.g. `v3`) are supported. Support for full versions like `v1.2.3` will be added in the
-   future.
+1. For inputs with typing information there will now be two properties, a typed one and a `String`-typed with
+   `_Untyped` suffix. You can only set one of those and for required inputs must set exactly one. For inputs that miss
+   typing information there will only be the `_Untyped` property with nullability according to required status.
 1. If a given binding has incorrect typing, please either ask the action owner to onboard
    [github-action-typing](https://github.com/typesafegithub/github-actions-typing/), or if it's not possible, contribute
    to [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog).

@@ -11,6 +11,7 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -43,16 +44,21 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-no-typings)
+ * [Action on GitHub](https://github.com/john-smith/action-with-partly-typings)
  *
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
-public data class ActionWithNoTypings_Untyped private constructor(
+@Deprecated(
+    "Use the typed class instead",
+    ReplaceWith("ActionWithPartlyTypings"),
+)
+public data class ActionWithPartlyTypings_Untyped private constructor(
     public val foo_Untyped: String,
     public val bar_Untyped: String? = null,
+    public val baz_Untyped: String,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -62,21 +68,24 @@ public data class ActionWithNoTypings_Untyped private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-no-typings", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings", _customVersion ?:
+        "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         foo_Untyped: String,
         bar_Untyped: String? = null,
+        baz_Untyped: String,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, _customInputs = _customInputs,
-            _customVersion = _customVersion)
+    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, baz_Untyped = baz_Untyped,
+            _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             "foo" to foo_Untyped,
             bar_Untyped?.let { "bar" to it },
+            "baz" to baz_Untyped,
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

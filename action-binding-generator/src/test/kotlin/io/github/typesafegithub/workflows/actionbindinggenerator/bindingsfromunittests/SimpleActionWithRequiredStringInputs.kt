@@ -28,8 +28,11 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
  *
- * @param fooBar Short description
- * @param bazGoo Just another input
+ * @param fooBar &lt;required&gt; Short description
+ * @param fooBar_Untyped &lt;required&gt; Short description
+ * @param bazGoo &lt;required&gt; Just another input
+ * with multiline description
+ * @param bazGoo_Untyped &lt;required&gt; Just another input
  * with multiline description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
@@ -38,15 +41,25 @@ import kotlin.collections.toTypedArray
  */
 public data class SimpleActionWithRequiredStringInputs private constructor(
     /**
-     * Short description
+     * &lt;required&gt; Short description
      */
-    public val fooBar: String,
+    public val fooBar: String? = null,
     /**
-     * Just another input
+     * &lt;required&gt; Short description
+     */
+    public val fooBar_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Just another input
      * with multiline description
      */
     @Deprecated("this is deprecated")
-    public val bazGoo: String,
+    public val bazGoo: String? = null,
+    /**
+     * &lt;required&gt; Just another input
+     * with multiline description
+     */
+    @Deprecated("this is deprecated")
+    public val bazGoo_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -58,20 +71,40 @@ public data class SimpleActionWithRequiredStringInputs private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs",
         _customVersion ?: "v3") {
+    init {
+        require(!((fooBar != null) && (fooBar_Untyped != null))) {
+            "Only fooBar or fooBar_Untyped must be set, but not both"
+        }
+        require((fooBar != null) || (fooBar_Untyped != null)) {
+            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+        }
+
+        require(!((bazGoo != null) && (bazGoo_Untyped != null))) {
+            "Only bazGoo or bazGoo_Untyped must be set, but not both"
+        }
+        require((bazGoo != null) || (bazGoo_Untyped != null)) {
+            "Either bazGoo or bazGoo_Untyped must be set, one of them is required"
+        }
+    }
+
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        fooBar: String,
-        bazGoo: String,
+        fooBar: String? = null,
+        fooBar_Untyped: String? = null,
+        bazGoo: String? = null,
+        bazGoo_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar=fooBar, bazGoo=bazGoo, _customInputs=_customInputs,
-            _customVersion=_customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped =
+            bazGoo_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-bar" to fooBar,
-            "baz-goo" to bazGoo,
+            fooBar?.let { "foo-bar" to it },
+            fooBar_Untyped?.let { "foo-bar" to it },
+            bazGoo?.let { "baz-goo" to it },
+            bazGoo_Untyped?.let { "baz-goo" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

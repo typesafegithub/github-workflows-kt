@@ -25,7 +25,8 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
  *
- * @param fooBar Short description
+ * @param fooBar &lt;required&gt; Short description
+ * @param fooBar_Untyped &lt;required&gt; Short description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
@@ -33,9 +34,13 @@ import kotlin.collections.toTypedArray
  */
 public data class ActionWithOutputs private constructor(
     /**
-     * Short description
+     * &lt;required&gt; Short description
      */
-    public val fooBar: String,
+    public val fooBar: String? = null,
+    /**
+     * &lt;required&gt; Short description
+     */
+    public val fooBar_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -47,17 +52,29 @@ public data class ActionWithOutputs private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<ActionWithOutputs.Outputs>("john-smith", "action-with-outputs", _customVersion ?:
         "v3") {
+    init {
+        require(!((fooBar != null) && (fooBar_Untyped != null))) {
+            "Only fooBar or fooBar_Untyped must be set, but not both"
+        }
+        require((fooBar != null) || (fooBar_Untyped != null)) {
+            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+        }
+    }
+
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        fooBar: String,
+        fooBar: String? = null,
+        fooBar_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar=fooBar, _customInputs=_customInputs, _customVersion=_customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, _customInputs = _customInputs,
+            _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo-bar" to fooBar,
+            fooBar?.let { "foo-bar" to it },
+            fooBar_Untyped?.let { "foo-bar" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
