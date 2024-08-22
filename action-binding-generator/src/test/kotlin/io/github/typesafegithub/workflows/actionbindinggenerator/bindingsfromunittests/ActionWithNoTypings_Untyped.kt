@@ -74,8 +74,8 @@ public data class ActionWithNoTypings_Untyped private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo".to(foo),
-            bar?.let { "bar".to(it) },
+            "foo" to foo,
+            bar?.let { "bar" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
