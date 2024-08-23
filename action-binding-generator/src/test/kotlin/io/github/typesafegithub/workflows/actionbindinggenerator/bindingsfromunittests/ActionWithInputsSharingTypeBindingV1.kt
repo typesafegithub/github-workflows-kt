@@ -64,22 +64,22 @@ public data class ActionWithInputsSharingTypeBindingV1 private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "action-with-inputs-sharing-type-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((fooOne != null) && (fooOne_Untyped != null))) {
-            "Only fooOne or fooOne_Untyped must be set, but not both"
+        require(listOfNotNull(fooOne, fooOne_Untyped).size <= 1) {
+            "Only one of fooOne, and fooOne_Untyped must be set, but not multiple"
         }
         require((fooOne != null) || (fooOne_Untyped != null)) {
-            "Either fooOne or fooOne_Untyped must be set, one of them is required"
+            "Either fooOne, or fooOne_Untyped must be set, one of them is required"
         }
 
-        require(!((fooTwo != null) && (fooTwo_Untyped != null))) {
-            "Only fooTwo or fooTwo_Untyped must be set, but not both"
+        require(listOfNotNull(fooTwo, fooTwo_Untyped).size <= 1) {
+            "Only one of fooTwo, and fooTwo_Untyped must be set, but not multiple"
         }
         require((fooTwo != null) || (fooTwo_Untyped != null)) {
-            "Either fooTwo or fooTwo_Untyped must be set, one of them is required"
+            "Either fooTwo, or fooTwo_Untyped must be set, one of them is required"
         }
 
-        require(!((fooThree != null) && (fooThree_Untyped != null))) {
-            "Only fooThree or fooThree_Untyped must be set, but not both"
+        require(listOfNotNull(fooThree, fooThree_Untyped).size <= 1) {
+            "Only one of fooThree, and fooThree_Untyped must be set, but not multiple"
         }
     }
 

@@ -6,6 +6,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.Bind
 import io.github.typesafegithub.workflows.actionbindinggenerator.withAllBindingVersions
 import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithOutputsBindingV1
 import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithOutputsBindingV2
+import io.github.typesafegithub.workflows.domain.Expression
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -30,11 +31,11 @@ class ActionWithOutputsTest : DescribeSpec({
 
                 V2 -> {
                     outputs as ActionWithOutputsBindingV2.Outputs
-                    outputs.bazGoo shouldBe "steps.someStepId.outputs.baz-goo"
-                    outputs.looWoz shouldBe "steps.someStepId.outputs.loo-woz"
+                    outputs.bazGoo_Untyped shouldBe Expression("steps.someStepId.outputs.baz-goo")
+                    outputs.looWoz_Untyped shouldBe Expression("steps.someStepId.outputs.loo-woz")
                 }
             }
-            outputs["custom-output"] shouldBe "steps.someStepId.outputs.custom-output"
+            outputs["custom-output"] shouldBe Expression("steps.someStepId.outputs.custom-output")
         }
     }
 })

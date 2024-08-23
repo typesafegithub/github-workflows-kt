@@ -8,6 +8,7 @@
 
 package io.github.typesafegithub.workflows.actions.johnsmith
 
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
@@ -56,9 +57,12 @@ import kotlin.collections.toTypedArray
 )
 @ExposedCopyVisibility
 public data class ActionWithPartlyTypingsBindingV2_Untyped private constructor(
-    public val foo_Untyped: String,
+    public val foo_Untyped: String? = null,
+    public val fooExpression: Expression<String>? = null,
     public val bar_Untyped: String? = null,
-    public val baz_Untyped: String,
+    public val barExpression: Expression<String>? = null,
+    public val baz_Untyped: String? = null,
+    public val bazExpression: Expression<String>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -77,23 +81,46 @@ public data class ActionWithPartlyTypingsBindingV2_Untyped private constructor(
                     """.trimMargin())
         }
 
+        require(listOfNotNull(foo_Untyped, fooExpression).size <= 1) {
+            "Only one of foo_Untyped, and fooExpression must be set, but not multiple"
+        }
+        require((foo_Untyped != null) || (fooExpression != null)) {
+            "Either foo_Untyped, or fooExpression must be set, one of them is required"
+        }
+
+        require(listOfNotNull(bar_Untyped, barExpression).size <= 1) {
+            "Only one of bar_Untyped, and barExpression must be set, but not multiple"
+        }
+
+        require(listOfNotNull(baz_Untyped, bazExpression).size <= 1) {
+            "Only one of baz_Untyped, and bazExpression must be set, but not multiple"
+        }
+        require((baz_Untyped != null) || (bazExpression != null)) {
+            "Either baz_Untyped, or bazExpression must be set, one of them is required"
+        }
     }
 
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        foo_Untyped: String,
+        foo_Untyped: String? = null,
+        fooExpression: Expression<String>? = null,
         bar_Untyped: String? = null,
-        baz_Untyped: String,
+        barExpression: Expression<String>? = null,
+        baz_Untyped: String? = null,
+        bazExpression: Expression<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, baz_Untyped = baz_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(foo_Untyped = foo_Untyped, fooExpression = fooExpression, bar_Untyped = bar_Untyped, barExpression = barExpression, baz_Untyped = baz_Untyped, bazExpression = bazExpression, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            "foo" to foo_Untyped,
+            foo_Untyped?.let { "foo" to it },
+            fooExpression?.let { "foo" to it.expressionString },
             bar_Untyped?.let { "bar" to it },
-            "baz" to baz_Untyped,
+            barExpression?.let { "bar" to it.expressionString },
+            baz_Untyped?.let { "baz" to it },
+            bazExpression?.let { "baz" to it.expressionString },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
