@@ -99,6 +99,10 @@ Then regenerate your YAML to ensure there are no changes.
    typing information there will only be the `_Untyped` property with nullability according to required status.
 1. If you used `_customInputs` to set a non-String property to a GitHub Actions expression, you can now instead use
    the `_Untyped` property for that input.
+1. If you used outputs anywhere, you will need to adjust your code, as outputs are now typed and of type `Expression`,
+   which can directly be wired to matching inputs' `...Expression` siblings or with the `_Untyped` sibling to any
+   input's `...Expression` sibling. If you need the pure expression, e.g. for usage within a bigger expression,
+   you can also get that from the `Expression` instance.
 1. If a given binding has incorrect typing, please either ask the action owner to onboard
    [github-action-typing](https://github.com/typesafegithub/github-actions-typing/), or if it's not possible, contribute
    to [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog).
