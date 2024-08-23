@@ -97,6 +97,8 @@ Then regenerate your YAML to ensure there are no changes.
 1. For inputs with typing information there will now be two properties, a typed one and a `String`-typed with
    `_Untyped` suffix. You can only set one of those and for required inputs must set exactly one. For inputs that miss
    typing information there will only be the `_Untyped` property with nullability according to required status.
+1. If you used `_customInputs` to set a non-String property to a GitHub Actions expression, you can now instead use
+   the `_Untyped` property for that input.
 1. If a given binding has incorrect typing, please either ask the action owner to onboard
    [github-action-typing](https://github.com/typesafegithub/github-actions-typing/), or if it's not possible, contribute
    to [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog).
