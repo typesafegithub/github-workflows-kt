@@ -49,7 +49,7 @@ jobs:
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-5'
-      name: 'Execute the script using the bindings from the serve - with /binding'
+      name: 'Execute the script using the bindings from the server - with /binding'
       run: |-
         mv .github/workflows/test-script-consuming-jit-bindings-old.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old.main.kts
         .github/workflows/test-script-consuming-jit-bindings-old.main.kts
