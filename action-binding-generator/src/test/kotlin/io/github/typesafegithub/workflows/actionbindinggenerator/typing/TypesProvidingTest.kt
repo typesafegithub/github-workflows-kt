@@ -80,7 +80,7 @@ class TypesProvidingTest :
                 )
 
             // Then
-            types.inputTypings shouldBe emptyMap()
+            types.outputTypings shouldBe emptyMap()
         }
 
         test("copes with empty inputs and outputs") {
@@ -101,6 +101,7 @@ class TypesProvidingTest :
 
             // Then
             types.inputTypings shouldBe emptyMap()
+            types.outputTypings shouldBe emptyMap()
         }
 
         test("parses all allowed elements of valid typing") {
@@ -949,7 +950,7 @@ class TypesProvidingTest :
                     )
 
                 // Then
-                types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
+                types shouldBe ActionTypings()
             }
 
             test("no typings at all") {
@@ -970,7 +971,7 @@ class TypesProvidingTest :
                     )
 
                 // Then
-                types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
+                types shouldBe ActionTypings()
             }
         }
 

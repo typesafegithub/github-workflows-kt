@@ -19,6 +19,7 @@ class JobTest :
                     outputs = JobOutputs.EMPTY,
                 )
             job.result.toString() shouldBe "needs.some-id.result"
+            job.result.toExpression() shouldBe Expression("needs.some-id.result")
             job.result eq Status.Failure shouldBe "needs.some-id.result == 'failure'"
             job.result eq Status.Cancelled shouldBe "needs.some-id.result == 'cancelled'"
             job.result eq Status.Skipped shouldBe "needs.some-id.result == 'skipped'"
@@ -34,17 +35,18 @@ class JobTest :
                         steps = listOf(),
                         outputs =
                             object : JobOutputs() {
-                                var output1 by output()
-                                var output2 by output()
+                                var output1 by output<Any>()
+                                var output2 by output<Any>()
                             },
                     )
-                job.outputs.output1 = "foo"
-                job.outputs.output2 = "foo"
+                job.outputs.output1 = Expression("foo")
+                job.outputs.output2 = Expression("foo")
 
-                job.outputs.output1 shouldBe "needs.some-id.outputs.output1"
-                job.outputs.output2 shouldBe "needs.some-id.outputs.output2"
+                job.outputs.output1 shouldBe Expression("needs.some-id.outputs.output1")
+                job.outputs.output2 shouldBe Expression("needs.some-id.outputs.output2")
 
                 job.result.toString() shouldBe "needs.some-id.result"
+                job.result.toExpression() shouldBe Expression("needs.some-id.result")
                 job.result eq Status.Failure shouldBe "needs.some-id.result == 'failure'"
                 job.result eq Status.Cancelled shouldBe "needs.some-id.result == 'cancelled'"
                 job.result eq Status.Skipped shouldBe "needs.some-id.result == 'skipped'"
@@ -60,7 +62,7 @@ class JobTest :
                         steps = listOf(),
                         outputs =
                             object : JobOutputs() {
-                                var output1 by output()
+                                var output1 by output<Any>()
                             },
                     )
 
@@ -78,13 +80,13 @@ class JobTest :
                         steps = listOf(),
                         outputs =
                             object : JobOutputs() {
-                                var output1 by output()
+                                var output1 by output<Any>()
                             },
                     )
-                job.outputs.output1 = "foo"
+                job.outputs.output1 = Expression("foo")
 
                 shouldThrow<IllegalStateException> {
-                    job.outputs.output1 = "bar"
+                    job.outputs.output1 = Expression("bar")
                     Unit
                 }
             }

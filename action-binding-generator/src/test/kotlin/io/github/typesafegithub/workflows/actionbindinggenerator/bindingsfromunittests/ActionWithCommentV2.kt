@@ -4,13 +4,16 @@
 @file:Suppress(
     "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.johnsmith
 
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.Deprecated
 import kotlin.ExposedCopyVisibility
 import kotlin.String
 import kotlin.Suppress
@@ -28,6 +31,7 @@ import kotlin.collections.toTypedArray
  *
  * @param foo &lt;required&gt; Short description
  * @param foo_Untyped &lt;required&gt; Short description
+ * @param fooExpression &lt;required&gt; Short description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
@@ -40,7 +44,12 @@ public data class ActionWithCommentV2 private constructor(
     /**
      * &lt;required&gt; Short description
      */
+    @Deprecated("Use the typed property or expression property instead")
     public val foo_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Short description
+     */
+    public val fooExpression: Expression<String>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -59,11 +68,11 @@ public data class ActionWithCommentV2 private constructor(
                     """.trimMargin())
         }
 
-        require(!((foo != null) && (foo_Untyped != null))) {
-            "Only foo or foo_Untyped must be set, but not both"
+        require(listOfNotNull(foo, foo_Untyped, fooExpression).size <= 1) {
+            "Only one of foo, foo_Untyped, and fooExpression must be set, but not multiple"
         }
-        require((foo != null) || (foo_Untyped != null)) {
-            "Either foo or foo_Untyped must be set, one of them is required"
+        require((foo != null) || (foo_Untyped != null) || (fooExpression != null)) {
+            "Either foo, foo_Untyped, or fooExpression must be set, one of them is required"
         }
     }
 
@@ -71,15 +80,17 @@ public data class ActionWithCommentV2 private constructor(
         vararg pleaseUseNamedArguments: Unit,
         foo: String? = null,
         foo_Untyped: String? = null,
+        fooExpression: Expression<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(foo = foo, foo_Untyped = foo_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(foo = foo, foo_Untyped = foo_Untyped, fooExpression = fooExpression, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             foo?.let { "foo" to it },
             foo_Untyped?.let { "foo" to it },
+            fooExpression?.let { "foo" to it.expressionString },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
