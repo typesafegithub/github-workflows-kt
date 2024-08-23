@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-import com.intellij.util.io.PagedFileStorage
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -66,7 +65,7 @@ private fun zipDirectory(
                 FileInputStream(file),
             )
         var bytesRead: Long = 0
-        val bytesIn = ByteArray(PagedFileStorage.BUFFER_SIZE)
+        val bytesIn = ByteArray(BUFFER_SIZE)
         var read: Int
         while ((bis.read(bytesIn).also { read = it }) != -1) {
             zos.write(bytesIn, 0, read)
@@ -104,7 +103,7 @@ private fun zipFile(
             ),
         )
     var bytesRead: Long = 0
-    val bytesIn = ByteArray(PagedFileStorage.BUFFER_SIZE)
+    val bytesIn = ByteArray(BUFFER_SIZE)
     var read: Int
     while ((bis.read(bytesIn).also { read = it }) != -1) {
         zos.write(bytesIn, 0, read)
@@ -112,3 +111,5 @@ private fun zipFile(
     }
     zos.closeEntry()
 }
+
+private const val BUFFER_SIZE = 8192

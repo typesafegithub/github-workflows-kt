@@ -175,6 +175,7 @@ private fun generateActionClass(
         .addModifiers(KModifier.DATA)
         .addKdocIfNotEmpty(actionKdoc(metadata, coords, untypedClass))
         .replaceWith(replaceWith)
+        .addClassConstructorAnnotation()
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
         .properties(metadata, coords, inputTypings, className, untypedClass)
@@ -383,6 +384,15 @@ private fun TypeSpec.Builder.replaceWith(replaceWith: CodeBlock?): TypeSpec.Buil
                 .build(),
         )
     }
+    return this
+}
+
+private fun TypeSpec.Builder.addClassConstructorAnnotation(): TypeSpec.Builder {
+    addAnnotation(
+        AnnotationSpec
+            .builder(ConsistentCopyVisibility::class.asClassName())
+            .build(),
+    )
     return this
 }
 
