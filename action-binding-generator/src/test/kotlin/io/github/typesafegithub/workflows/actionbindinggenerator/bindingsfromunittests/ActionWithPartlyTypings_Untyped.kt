@@ -11,6 +11,7 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.ConsistentCopyVisibility
 import kotlin.Deprecated
 import kotlin.String
 import kotlin.Suppress
@@ -55,6 +56,7 @@ import kotlin.collections.toTypedArray
     "Use the typed class instead",
     ReplaceWith("ActionWithPartlyTypings"),
 )
+@ConsistentCopyVisibility
 public data class ActionWithPartlyTypings_Untyped private constructor(
     public val foo_Untyped: String,
     public val bar_Untyped: String? = null,

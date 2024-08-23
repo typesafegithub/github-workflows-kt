@@ -11,6 +11,7 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import kotlin.ConsistentCopyVisibility
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -28,6 +29,7 @@ import kotlin.collections.Map
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
+@ConsistentCopyVisibility
 public data class ActionWithNoInputs private constructor(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
