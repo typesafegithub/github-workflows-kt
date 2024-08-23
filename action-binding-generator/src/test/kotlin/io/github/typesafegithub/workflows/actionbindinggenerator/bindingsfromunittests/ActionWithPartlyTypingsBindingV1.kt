@@ -54,11 +54,11 @@ public data class ActionWithPartlyTypingsBindingV1 private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((foo != null) && (foo_Untyped != null))) {
-            "Only foo or foo_Untyped must be set, but not both"
+        require(listOfNotNull(foo, foo_Untyped).size <= 1) {
+            "Only one of foo, and foo_Untyped must be set, but not multiple"
         }
         require((foo != null) || (foo_Untyped != null)) {
-            "Either foo or foo_Untyped must be set, one of them is required"
+            "Either foo, or foo_Untyped must be set, one of them is required"
         }
     }
 
