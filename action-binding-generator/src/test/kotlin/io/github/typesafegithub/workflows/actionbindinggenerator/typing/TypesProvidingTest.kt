@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 import com.charleskorn.kaml.ForbiddenAnchorOrAliasException
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.kotest.assertions.throwables.shouldThrow
@@ -21,7 +22,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("copes with comment-only typing") {
@@ -33,7 +34,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("parses all allowed elements of valid typing") {
@@ -79,7 +80,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe
+            types.inputTypings shouldBe
                 mapOf(
                     "name" to StringTyping,
                     "verbose" to BooleanTyping,
@@ -139,7 +140,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only hosted by the subaction (.yml)") {
@@ -159,7 +164,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only hosted by the action (.yaml)") {
@@ -176,7 +185,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yaml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yaml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only hosted by the subaction (.yaml)") {
@@ -196,7 +209,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yaml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yaml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only hosted by the action, both extensions") {
@@ -214,7 +231,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only hosted by the subaction, both extensions") {
@@ -238,7 +259,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only stored in typing catalog") {
@@ -259,7 +284,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("stored-in-typing-catalog" to StringTyping), TypingActualSource.TYPING_CATALOG)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                    )
             }
 
             test("only stored in typing catalog for subaction") {
@@ -280,7 +309,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("stored-in-typing-catalog" to StringTyping), TypingActualSource.TYPING_CATALOG)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                    )
             }
 
             test("hosted by action and stored in typing catalog") {
@@ -306,7 +339,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("hosted by subaction and stored in typing catalog") {
@@ -332,7 +369,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("hosted-by-action-yml" to StringTyping), TypingActualSource.ACTION)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("hosted-by-action-yml" to StringTyping),
+                        source = TypingActualSource.ACTION,
+                    )
             }
 
             test("only stored in typing catalog for older version") {
@@ -358,7 +399,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("stored-in-typing-catalog-for-older-version" to StringTyping), TypingActualSource.TYPING_CATALOG)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                    )
             }
 
             test("only stored in typing catalog for older version of subaction") {
@@ -384,7 +429,11 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(mapOf("stored-in-typing-catalog-for-older-version" to StringTyping), TypingActualSource.TYPING_CATALOG)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                    )
             }
 
             test("metadata available but no version available") {
@@ -405,7 +454,7 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(emptyMap(), null)
+                types shouldBe ActionTypings()
             }
 
             test("no typings at all") {
@@ -417,7 +466,7 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(emptyMap(), null)
+                types shouldBe ActionTypings()
             }
         }
 
@@ -462,13 +511,14 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    Pair(
-                        mapOf(
-                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                        ),
-                        TypingActualSource.ACTION,
+                    ActionTypings(
+                        inputTypings =
+                            mapOf(
+                                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            ),
+                        source = TypingActualSource.ACTION,
                     )
             }
 
@@ -491,13 +541,14 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    Pair(
-                        mapOf(
-                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                        ),
-                        TypingActualSource.TYPING_CATALOG,
+                    ActionTypings(
+                        inputTypings =
+                            mapOf(
+                                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            ),
+                        source = TypingActualSource.TYPING_CATALOG,
                     )
             }
 
@@ -525,13 +576,14 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    Pair(
-                        mapOf(
-                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                        ),
-                        TypingActualSource.TYPING_CATALOG,
+                    ActionTypings(
+                        inputTypings =
+                            mapOf(
+                                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            ),
+                        source = TypingActualSource.TYPING_CATALOG,
                     )
             }
 
@@ -591,6 +643,6 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
             // Then
-            types shouldBe Pair(emptyMap(), null)
+            types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
         }
     })
