@@ -141,4 +141,29 @@ class ActionWithAllTypesOfInputsTest : DescribeSpec({
             }
         exception.message shouldBe "Only listStrings or listStrings_Untyped must be set, but not both"
     }
+
+    it("exposes copy method") {
+        // given
+        val action = ActionWithAllTypesOfInputs(
+            fooBar = "test",
+            bazGoo = true,
+            binKin = false,
+            intPint = 43,
+            floPint = 123.456f,
+            finBin = ActionWithAllTypesOfInputs.Bin.BooBar,
+            gooZen = ActionWithAllTypesOfInputs.Zen.Special1,
+            bahEnum = ActionWithAllTypesOfInputs.BahEnum.HelloWorld,
+            listStrings = listOf("hello", "world"),
+            listInts = listOf(1, 42),
+            listEnums = listOf(ActionWithAllTypesOfInputs.MyEnum.One, ActionWithAllTypesOfInputs.MyEnum.Three),
+            listIntSpecial = listOf(ActionWithAllTypesOfInputs.MyInt.TheAnswer, ActionWithAllTypesOfInputs.MyInt.Value(0))
+        )
+
+        // when
+        @Suppress("DATA_CLASS_INVISIBLE_COPY_USAGE_WARNING")
+        val actionWithOneChange = action.copy(fooBar = "another")
+
+        // then
+        actionWithOneChange.fooBar shouldBe "another"
+    }
 })

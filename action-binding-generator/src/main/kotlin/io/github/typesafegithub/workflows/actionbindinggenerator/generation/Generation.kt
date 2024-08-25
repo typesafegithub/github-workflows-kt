@@ -390,7 +390,7 @@ private fun TypeSpec.Builder.replaceWith(replaceWith: CodeBlock?): TypeSpec.Buil
 private fun TypeSpec.Builder.addClassConstructorAnnotation(): TypeSpec.Builder {
     addAnnotation(
         AnnotationSpec
-            .builder(ConsistentCopyVisibility::class.asClassName())
+            .builder(ExposedCopyVisibility::class.asClassName())
             .build(),
     )
     return this

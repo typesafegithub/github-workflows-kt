@@ -28,3 +28,6 @@ println(Checkout(fetchTags_Untyped = "false"))
 println(AlwaysUntypedActionForTests_Untyped(foobar_Untyped = "baz"))
 println(ActionsSetupGradle())
 println(Cache(path = listOf("some-path"), key = "some-key"))
+
+// Ensure that 'copy(...)' method is exposed.
+Checkout(fetchTags = false).copy(fetchTags = true)
