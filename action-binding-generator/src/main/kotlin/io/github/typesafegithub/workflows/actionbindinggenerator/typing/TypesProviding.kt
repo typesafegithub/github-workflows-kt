@@ -11,7 +11,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.repoName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
-import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -62,7 +61,7 @@ private fun ActionCoords.fetchTypingMetadata(
             }
         } ?: return null
 
-    return Pair(myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
+    return Pair(yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }
 
 private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): Pair<ActionTypes, TypingActualSource>? =
@@ -80,7 +79,7 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
         } catch (e: IOException) {
             return null
         }
-    val metadata = myYaml.decodeFromString<CatalogMetadata>(metadataYml)
+    val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
     val fallbackVersion =
         metadata.versionsWithTypings
             .filter { it.versionToInt() < this.version.versionToInt() }
@@ -105,7 +104,7 @@ private fun fetchTypingsFromUrl(
         } catch (e: IOException) {
             null
         } ?: return null
-    return myYaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
+    return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
@@ -153,6 +152,15 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
     }
 
 private fun String.versionToInt() = lowercase().removePrefix("v").toInt()
+
+private val yaml =
+    Yaml(
+        configuration =
+            Yaml.default.configuration.copy(
+                strictMode = false,
+                allowAnchorsAndAliases = true,
+            ),
+    )
 
 @Serializable
 private data class CatalogMetadata(

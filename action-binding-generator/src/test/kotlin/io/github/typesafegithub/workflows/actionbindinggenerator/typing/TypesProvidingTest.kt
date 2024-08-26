@@ -257,4 +257,119 @@ class TypesProvidingTest :
                 types shouldBe Pair(emptyMap(), null)
             }
         }
+
+        context("YAML anchors and aliases") {
+            val typingYml =
+                """
+                inputs:
+                  granted-scopes: &scopes-list
+                    type: list
+                    separator: ','
+                    list-item:
+                      type: enum
+                      name: GrantedScopes
+                      allowed-values:
+                        - read
+                        - write
+                  granted-scopes2: *scopes-list
+                  granted-scopes3:
+                    <<: *scopes-list
+                    separator: '\n'
+                """.trimIndent()
+            val metadata =
+                """
+                "versionsWithTypings": &versions
+                - "v2"
+                - "v3"
+                - "v4"
+                """.trimIndent()
+
+            test("hosted by the action") {
+                // Given
+                val fetchUri: (URI) -> String = {
+                    when (it) {
+                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash//action-types.yml") -> typingYml
+                        else -> throw IOException()
+                    }
+                }
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+                // When
+                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+                // Then
+                types shouldBe
+                    Pair(
+                        mapOf(
+                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                        ),
+                        TypingActualSource.ACTION,
+                    )
+            }
+
+            test("hosted by typing catalog") {
+                // Given
+                val fetchUri: (URI) -> String = {
+                    when (it) {
+                        URI(
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3//action-types.yml",
+                        ),
+                        -> typingYml
+                        else -> throw IOException()
+                    }
+                }
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+                // When
+                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+                // Then
+                types shouldBe
+                    Pair(
+                        mapOf(
+                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                        ),
+                        TypingActualSource.TYPING_CATALOG,
+                    )
+            }
+
+            test("only stored in typing catalog for older version") {
+                // Given
+                val fetchUri: (URI) -> String = {
+                    when (it) {
+                        URI(
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml",
+                        ),
+                        -> metadata
+                        URI(
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4//action-types.yml",
+                        ),
+                        -> typingYml
+                        else -> throw IOException()
+                    }
+                }
+                val actionCoord = ActionCoords("some-owner", "some-name", "v6")
+
+                // When
+                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+                // Then
+                types shouldBe
+                    Pair(
+                        mapOf(
+                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                        ),
+                        TypingActualSource.TYPING_CATALOG,
+                    )
+            }
+        }
     })
