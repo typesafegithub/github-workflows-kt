@@ -16,6 +16,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerW
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.Typing
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 
@@ -221,8 +222,10 @@ class GenerationTest :
                 )
 
             // then
-            binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs.kt")
-            binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs_Untyped.kt")
+            assertSoftly {
+                binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs.kt")
+                binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs_Untyped.kt")
+            }
         }
 
         test("action with outputs") {
@@ -471,8 +474,10 @@ class GenerationTest :
                 )
 
             // then
-            binding.shouldContainAndMatchFile("ActionWithPartlyTypings.kt")
-            binding.shouldContainAndMatchFile("ActionWithPartlyTypings_Untyped.kt")
+            assertSoftly {
+                binding.shouldContainAndMatchFile("ActionWithPartlyTypings.kt")
+                binding.shouldContainAndMatchFile("ActionWithPartlyTypings_Untyped.kt")
+            }
         }
     })
 
