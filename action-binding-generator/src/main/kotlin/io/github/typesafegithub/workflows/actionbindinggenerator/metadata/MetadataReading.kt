@@ -1,10 +1,10 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.metadata
 
+import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
-import io.github.typesafegithub.workflows.actionbindinggenerator.utils.myYaml
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
@@ -66,7 +66,15 @@ public fun ActionCoords.fetchMetadata(
             } catch (e: IOException) {
                 null
             }
-        }?.let { myYaml.decodeFromString(it) }
+        }?.let { yaml.decodeFromString(it) }
 }
 
 internal fun fetchUri(uri: URI): String = uri.toURL().readText()
+
+private val yaml =
+    Yaml(
+        configuration =
+            Yaml.default.configuration.copy(
+                strictMode = false,
+            ),
+    )
