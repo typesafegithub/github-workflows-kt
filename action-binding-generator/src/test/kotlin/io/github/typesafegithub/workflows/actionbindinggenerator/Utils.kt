@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
-import io.kotest.assertions.fail
+import io.kotest.matchers.Matcher.Companion.failure
 import io.kotest.matchers.shouldBe
 import java.nio.file.Paths
 
@@ -27,10 +27,11 @@ fun List<ActionBinding>.shouldContainAndMatchFile(path: String) {
         actualContent shouldBe expectedContent
     } else if (actualContent != expectedContent) {
         file.writeText(actualContent)
-        fail(
-            "The binding's Kotlin code in ${file.name} doesn't match the expected one.\n" +
-                "The file has been updated to match what's expected.",
-        )
+        actualContent shouldBe
+            failure<Nothing>(
+                "The binding's Kotlin code in ${file.name} doesn't match the expected one.\n" +
+                    "The file has been updated to match what's expected.",
+            )
     }
 }
 
