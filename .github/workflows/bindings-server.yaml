@@ -49,36 +49,22 @@ jobs:
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-5'
-      name: 'Execute the script using the bindings from the server - with /binding'
-      run: |-
-        mv .github/workflows/test-script-consuming-jit-bindings-old.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old.main.kts
-        .github/workflows/test-script-consuming-jit-bindings-old.main.kts
-    - id: 'step-6'
-      name: 'Clean Maven Local to fetch required POMs again'
-      run: 'rm -rf ~/.m2/repository/'
-    - id: 'step-7'
       name: 'Execute the script using the bindings from the server'
       run: |-
         mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
         .github/workflows/test-script-consuming-jit-bindings.main.kts
-    - id: 'step-8'
+    - id: 'step-6'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
-    - id: 'step-9'
+    - id: 'step-7'
       name: 'Execute the script using bindings but without dependency on library'
       run: |-
         mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
         .github/workflows/test-served-bindings-depend-on-library.main.kts
-    - id: 'step-10'
-      name: 'Fetch maven-metadata.xml for top-level action - with /binding'
-      run: 'curl --fail http://localhost:8080/binding/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
-    - id: 'step-11'
-      name: 'Fetch maven-metadata.xml for nested action - with /binding'
-      run: 'curl --fail http://localhost:8080/binding/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
-    - id: 'step-12'
+    - id: 'step-8'
       name: 'Fetch maven-metadata.xml for top-level action'
       run: 'curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
-    - id: 'step-13'
+    - id: 'step-9'
       name: 'Fetch maven-metadata.xml for nested action'
       run: 'curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
   deploy:
