@@ -80,7 +80,7 @@ public fun ActionCoords.generateBinding(
     return listOfNotNull(
         ActionBinding(
             kotlinCode = actionBindingSourceCodeUntyped,
-            filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$classNameUntyped.kt",
+            filePath = "io/github/typesafegithub/workflows/actions/$packageName/$classNameUntyped.kt",
             className = classNameUntyped,
             packageName = packageName,
             typingActualSource = null,
@@ -95,7 +95,7 @@ public fun ActionCoords.generateBinding(
                 )
             ActionBinding(
                 kotlinCode = actionBindingSourceCode,
-                filePath = "kotlin/io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
+                filePath = "io/github/typesafegithub/workflows/actions/$packageName/$className.kt",
                 className = className,
                 packageName = packageName,
                 typingActualSource = it,
