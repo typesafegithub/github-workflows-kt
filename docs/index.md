@@ -1,7 +1,7 @@
 # github-workflows-kt
 
-github-workflows-kt is a tool for creating
-[GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows) in a **type-safe** script, helping you to
+github-workflows-kt is a tool for generating
+[GitHub Actions workflow](https://docs.github.com/en/actions/using-workflows) YAML files in a **type-safe** script, helping you to
 build **robust** workflows for your GitHub projects without mistakes, with **pleasure**, in
 [Kotlin](https://kotlinlang.org/).
 
