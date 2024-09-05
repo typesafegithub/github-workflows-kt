@@ -89,5 +89,5 @@ Here's a list of tickets on the JetBrains side, along with proposed workarounds:
 * **[\[KTIJ-31214\] Deleting a dependency jar from Maven Local and recreating it leaves `*.main.kts` script with unresolved symbols until IDE is restarted](https://youtrack.jetbrains.com/issue/KTIJ-31214)**  
   After following the previous step and deleting a dependency from the Maven Local cache repository to get it updated,
   IntelliJ will not re-resolve the dependency and even doing so in another way like actually executing the workflow
-  script, IntelliJ still treats the classes as unresolved symbols. To tet to a usable state again, you need to restart
+  script, IntelliJ still treats the classes as unresolved symbols. To get to a usable state again, you need to restart
   the whole IDE, just closing and re-opening the project is not sufficient.
