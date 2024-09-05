@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.metadata
 
 import com.charleskorn.kaml.Yaml
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
@@ -9,6 +10,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 import java.net.URI
+
+private val logger = logger { }
 
 /**
  * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
@@ -61,7 +64,7 @@ public fun ActionCoords.fetchMetadata(
     return list
         .firstNotNullOfOrNull { url ->
             try {
-                println("  ... from $url")
+                logger.info { "  ... from $url" }
                 fetchUri(URI(url))
             } catch (e: IOException) {
                 null
