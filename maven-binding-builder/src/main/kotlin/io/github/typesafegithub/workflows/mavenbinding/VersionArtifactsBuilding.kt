@@ -23,8 +23,8 @@ suspend fun buildVersionArtifacts(
     httpClient: HttpClient,
 ): VersionArtifacts? {
     with(bindingsServerRequest) {
-        val jars = actionCoords.buildJars(httpClient = httpClient) ?: return null
-        val pom = this.buildPomFile()
+        val jars = bindingsServerRequest.buildJars(httpClient = httpClient) ?: return null
+        val pom = this.buildPomFile(libraryVersion = bindingVersion.libraryVersion)
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
         val mainJarSha1Checksum by lazy { jars.mainJar().sha1Checksum() }
@@ -37,6 +37,7 @@ suspend fun buildVersionArtifacts(
         val sourcesJarSha512Checksum by lazy { jars.sourcesJar().sha512Checksum() }
         val module by lazy {
             buildModuleFile(
+                bindingVersion.libraryVersion,
                 mainJarSize,
                 mainJarMd5Checksum,
                 mainJarSha1Checksum,
