@@ -42,14 +42,26 @@ fun Routing.metadataRoutes(prometheusRegistry: PrometheusMeterRegistry) {
     route("/refresh/{owner}/{name}/{file}") {
         metadata(refresh = true)
     }
+
+    route("""(?<bindingVersion>v\d+)""".toRegex()) {
+        route("{owner}/{name}/{file}") {
+            metadata()
+        }
+
+        route("/refresh/{owner}/{name}/{file}") {
+            metadata(refresh = true)
+        }
+    }
 }
 
 private fun Route.metadata(refresh: Boolean = false) {
     get {
+        val bindingVersion = call.bindingVersion ?: return@get call.respondNotFound()
         val actionCoords = call.parameters.extractActionCoords(extractVersion = false)
 
-        logger.info { "➡️ Requesting metadata for ${actionCoords.prettyPrintWithoutVersion}" }
-
+        logger.info {
+            "➡️ Requesting metadata for ${actionCoords.prettyPrintWithoutVersion} binding version $bindingVersion"
+        }
         if (refresh) {
             metadataCache.invalidate(actionCoords)
         }
