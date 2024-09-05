@@ -17,10 +17,21 @@ fun Routing.metadataRoutes() {
     route("/refresh/{owner}/{name}/{file}") {
         metadata(refresh = true)
     }
+
+    route("""(?<bindingVersion>v\d+)""".toRegex()) {
+        route("{owner}/{name}/{file}") {
+            metadata()
+        }
+
+        route("/refresh/{owner}/{name}/{file}") {
+            metadata(refresh = true)
+        }
+    }
 }
 
 private fun Route.metadata(refresh: Boolean = false) {
     get {
+        if (call.bindingVersion == null) return@get call.respondNotFound()
         if (refresh && !deliverOnRefreshRoute) return@get call.respondNotFound()
 
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
