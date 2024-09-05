@@ -63,11 +63,31 @@ scripting. It's lagging behind the support provided by Kotlin itself.
 
 Here's a list of tickets on the JetBrains side, along with proposed workarounds:
 
-* [\[KTIJ-14580\] Imported script are not supported for scripts outside of a source root](https://youtrack.jetbrains.com/issue/KTIJ-14580)  
+* **[\[KTIJ-14580\] Imported script are not supported for scripts outside of a source root](https://youtrack.jetbrains.com/issue/KTIJ-14580)**  
   It's possible to partially mitigate it by adding dependencies from the imported files directly in the top-level
   script.
 
-* [\[KTIJ-16532\] Scripting: dependencies do not open source files](https://youtrack.jetbrains.com/issue/KTIJ-16532)  
+* **[\[KTIJ-16532\] Scripting: dependencies do not open source files](https://youtrack.jetbrains.com/issue/KTIJ-16532)**  
   There are several workarounds: browse the code in GitHub, add a dependency on the library in your main project which
   will let you browse the source code in the IDE, or maybe it's enough to use
   [the rendered API docs](https://typesafegithub.github.io/github-workflows-kt/api-docs/).
+
+* **[\[KTIJ-31203\] main.kts script handler uses stale `@Repository` value to resolve dependencies](https://youtrack.jetbrains.com/issue/KTIJ-31203)**  
+  When changing `@Repository` values, close the IntelliJ project and re-open it.
+  If IntelliJ already resolved the dependency from the old repository, you might need to delete it from the Maven Local
+  cache repository and after that restart the whole IDE as IntelliJ might not see the recreated file even after
+  executing the workflow script and the file was recreated in the Maven Local cache repository. (also see next points)
+
+* **A new release of an action added some input, but I don't see it in the IDE**  
+  If you depend on a major version of an action like `v1` and the action adds backwards compatible changes in a new
+  release that adds inputs, the generated `v1` bindings are already present in your Maven Local cache repository and
+  you do not get a new binding generated that includes the new inputs. To work-around this, delete the cache binding
+  from your Maven Local cache repository, which typically is located at `~/.m2/respository/`. After that, executing or
+  syncing the workflow script will re-request a fresh binding from the binding server that will include the up-to-date
+  state of the action.
+
+* **[\[KTIJ-31214\] Deleting a dependency jar from Maven Local and recreating it leaves `*.main.kts` script with unresolved symbols until IDE is restarted](https://youtrack.jetbrains.com/issue/KTIJ-31214)**  
+  After following the previous step and deleting a dependency from the Maven Local cache repository to get it updated,
+  IntelliJ will not re-resolve the dependency and even doing so in another way like actually executing the workflow
+  script, IntelliJ still treats the classes as unresolved symbols. To get to a usable state again, you need to restart
+  the whole IDE, just closing and re-opening the project is not sufficient.
