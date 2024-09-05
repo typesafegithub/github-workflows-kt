@@ -2,6 +2,8 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 
 sealed interface Artifact
 
@@ -18,10 +20,13 @@ data class VersionArtifacts(
     val typingActualSource: TypingActualSource?,
 )
 
-fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
+fun buildVersionArtifacts(
+    actionCoords: ActionCoords,
+    bindingVersion: BindingVersion = V1,
+): VersionArtifacts? {
     with(actionCoords) {
-        val jars = buildJars() ?: return null
-        val pom = buildPomFile()
+        val jars = buildJars(bindingVersion = bindingVersion) ?: return null
+        val pom = buildPomFile(libraryVersion = bindingVersion.libraryVersion)
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
         val mainJarSha1Checksum by lazy { jars.mainJar().sha1Checksum() }
@@ -34,6 +39,7 @@ fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
         val sourcesJarSha512Checksum by lazy { jars.sourcesJar().sha512Checksum() }
         val module by lazy {
             buildModuleFile(
+                bindingVersion.libraryVersion,
                 mainJarSize,
                 mainJarMd5Checksum,
                 mainJarSha1Checksum,

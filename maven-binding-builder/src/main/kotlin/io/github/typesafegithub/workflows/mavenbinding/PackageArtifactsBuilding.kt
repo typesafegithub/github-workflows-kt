@@ -1,11 +1,14 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 
 suspend fun buildPackageArtifacts(
     actionCoords: ActionCoords,
     githubAuthToken: String,
-    prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit,
+    prefetchBindingArtifacts: (Collection<ActionCoords>, BindingVersion) -> Unit,
+    bindingVersion: BindingVersion = V1,
 ): Map<String, String> {
     val mavenMetadata =
         actionCoords.buildMavenMetadataFile(

@@ -1,10 +1,11 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
@@ -33,7 +34,7 @@ typealias CachedVersionArtifact = VersionArtifacts?
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
 fun Routing.artifactRoutes(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -41,17 +42,27 @@ fun Routing.artifactRoutes(
     }
 
     route("{owner}/{name}/{version}/{file}") {
-        artifact(prometheusRegistry, bindingsCache, refresh = false)
+        artifact(prometheusRegistry, bindingsCache)
     }
 
     route("/refresh/{owner}/{name}/{version}/{file}") {
         artifact(prometheusRegistry, bindingsCache, refresh = true)
     }
+
+    route("""(?<bindingVersion>v\d+)""".toRegex()) {
+        route("{owner}/{name}/{version}/{file}") {
+            artifact(prometheusRegistry, bindingsCache)
+        }
+
+        route("/refresh/{owner}/{name}/{version}/{file}") {
+            artifact(prometheusRegistry, bindingsCache, refresh = true)
+        }
+    }
 }
 
 private fun Route.artifact(
     prometheusRegistry: PrometheusMeterRegistry?,
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     refresh: Boolean = false,
 ) {
     headArtifact(bindingsCache, prometheusRegistry, refresh)
@@ -59,7 +70,7 @@ private fun Route.artifact(
 }
 
 private fun Route.headArtifact(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -79,7 +90,7 @@ private fun Route.headArtifact(
 }
 
 private fun Route.getArtifact(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -103,30 +114,46 @@ private fun Route.getArtifact(
 
 internal fun prefetchBindingArtifacts(
     coords: Collection<ActionCoords>,
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingVersion: BindingVersion = V1,
+    bindingsCache: BindingsCache,
 ) {
     prefetchScope.launch {
-        bindingsCache.getAll(coords)
+        bindingsCache.getAll(coords.map { CacheKey(it, bindingVersion) })
     }
 }
 
+val ApplicationCall.bindingVersion: BindingVersion?
+    get() {
+        val bindingVersion = parameters["bindingVersion"]
+        return if (bindingVersion == null) {
+            V1
+        } else {
+            BindingVersion
+                .entries
+                .find { it.name.lowercase() == bindingVersion }
+        }
+    }
+
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
 ): VersionArtifacts? {
+    val bindingVersion = bindingVersion ?: return null
     val actionCoords = parameters.extractActionCoords(extractVersion = true)
 
-    logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
+    logger.info { "➡️ Requesting ${actionCoords.prettyPrint} binding version $bindingVersion" }
+    val cacheKey = CacheKey(actionCoords, bindingVersion)
     if (refresh) {
-        bindingsCache.invalidate(actionCoords)
+        bindingsCache.invalidate(cacheKey)
     }
-    return bindingsCache.get(actionCoords)
+    return bindingsCache.get(cacheKey)
 }
 
 private fun PrometheusMeterRegistry.incrementArtifactCounter(
     call: ApplicationCall,
     typingActualSource: TypingActualSource?,
 ) {
+    val bindingVersion = call.parameters["bindingVersion"] ?: "v1"
     val owner = call.parameters["owner"] ?: "unknown"
     val name = call.parameters["name"] ?: "unknown"
     val version = call.parameters["version"] ?: "unknown"
@@ -148,6 +175,7 @@ private fun PrometheusMeterRegistry.incrementArtifactCounter(
         this.counter(
             "artifact_requests_total",
             listOf(
+                Tag.of("bindingVersion", bindingVersion),
                 Tag.of("owner", owner),
                 Tag.of("name", name),
                 Tag.of("version", version),
