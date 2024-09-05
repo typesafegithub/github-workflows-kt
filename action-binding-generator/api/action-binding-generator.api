@@ -72,8 +72,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/gen
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/generation/GenerationKt {
-	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;)Ljava/util/List;
-	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;ILjava/lang/Object;)Ljava/util/List;
+	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;)Ljava/util/List;
+	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lkotlin/Pair;ILjava/lang/Object;)Ljava/util/List;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input {
@@ -180,5 +180,16 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/met
 }
 
 public abstract interface class io/github/typesafegithub/workflows/actionbindinggenerator/typing/Typing {
+}
+
+public final class io/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion : java/lang/Enum {
+	public static final field V1 Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getLibraryVersion ()Ljava/lang/String;
+	public final fun isDeprecated ()Z
+	public final fun isExperimental ()Z
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;
+	public static fun values ()[Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;
 }
 
