@@ -31,6 +31,7 @@ class ModuleBuildingTest :
                     )
                 val json =
                     bindingsServerRequest.buildModuleFile(
+                        libraryVersion = "4.5.6",
                         mainJarSize = 1,
                         mainJarMd5Checksum = "main-md5",
                         mainJarSha1Checksum = "main-sha1",
@@ -100,7 +101,7 @@ class ModuleBuildingTest :
                               "group": "io.github.typesafegithub",
                               "module": "github-workflows-kt",
                               "version": {
-                                "requires": "3.7.0"
+                                "requires": "4.5.6"
                               }
                             }
                           ],

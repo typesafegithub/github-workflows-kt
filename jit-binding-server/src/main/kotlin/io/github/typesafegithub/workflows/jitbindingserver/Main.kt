@@ -66,8 +66,10 @@ fun main() {
     }.start(wait = true)
 }
 
+private typealias VersionArtifactsBuilder = suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?
+
 fun Application.appModule(
-    buildVersionArtifacts: suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?,
+    buildVersionArtifacts: VersionArtifactsBuilder,
     buildPackageArtifacts: suspend (
         BindingsServerRequest,
         String,
@@ -102,19 +104,22 @@ fun Application.appModule(
     }
 }
 
+typealias BindingsCache = LoadingCache<BindingsServerRequest, CachedVersionArtifact>
+
 private fun buildBindingsCache(
-    buildVersionArtifacts: suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?,
+    buildVersionArtifacts: VersionArtifactsBuilder,
     httpClient: HttpClient,
-): LoadingCache<BindingsServerRequest, CachedVersionArtifact> =
+): BindingsCache =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
         .asLoadingCache { Optional.ofNullable(buildVersionArtifacts(it, httpClient)) }
 
-@Suppress("ktlint:standard:function-signature") // Conflict with detekt.
+typealias MetadataCache = LoadingCache<BindingsServerRequest, CachedMetadataArtifact>
+
 private fun buildMetadataCache(
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     buildPackageArtifacts: suspend (
         BindingsServerRequest,
         String,
@@ -122,7 +127,7 @@ private fun buildMetadataCache(
         MeterRegistry,
     ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
-): LoadingCache<BindingsServerRequest, CachedMetadataArtifact> =
+): MetadataCache =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
