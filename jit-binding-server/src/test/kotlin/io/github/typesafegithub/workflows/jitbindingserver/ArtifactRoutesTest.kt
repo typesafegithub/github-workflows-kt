@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -24,7 +23,7 @@ class ArtifactRoutesTest :
                                 mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
                             },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -45,7 +44,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = { null },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -65,7 +64,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = { error("An internal error occurred!") },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -81,7 +80,7 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords) -> Map<String, TextArtifact>?>()
+                    val mockBuildVersionArtifacts = mockk<(CacheKey) -> Map<String, TextArtifact>?>()
                     every { mockBuildVersionArtifacts(any()) } throws
                         Exception("An internal error occurred!") andThen
                         mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
@@ -89,7 +88,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = mockBuildVersionArtifacts,
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
