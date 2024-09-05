@@ -73,7 +73,7 @@ Here's a list of tickets on the JetBrains side, along with proposed workarounds:
   [the rendered API docs](https://typesafegithub.github.io/github-workflows-kt/api-docs/).
 
 * **[\[KTIJ-31203\] main.kts script handler uses stale `@Repository` value to resolve dependencies](https://youtrack.jetbrains.com/issue/KTIJ-31203)**  
-  When changing `@Repository` values close the IntelliJ project and re-open it.
+  When changing `@Repository` values, close the IntelliJ project and re-open it.
   If IntelliJ already resolved the dependency from the old repository, you might need to delete it from the Maven Local
   cache repository and after that restart the whole IDE as IntelliJ might not see the recreated file even after
   executing the workflow script and the file was recreated in the Maven Local cache repository. (also see next points)
