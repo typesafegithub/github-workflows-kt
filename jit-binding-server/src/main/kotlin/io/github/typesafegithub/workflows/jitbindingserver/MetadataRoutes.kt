@@ -1,8 +1,6 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrintWithoutVersion
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -17,7 +15,7 @@ private val logger = logger { }
 typealias CachedMetadataArtifact = Map<String, String>
 
 fun Routing.metadataRoutes(
-    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
+    metadataCache: MetadataCache,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -31,21 +29,34 @@ fun Routing.metadataRoutes(
     route("/refresh/{owner}/{name}/{file}") {
         metadata(metadataCache, refresh = true)
     }
+
+    route("""(?<bindingVersion>v\d+)""".toRegex()) {
+        route("{owner}/{name}/{file}") {
+            metadata(metadataCache)
+        }
+
+        route("/refresh/{owner}/{name}/{file}") {
+            metadata(metadataCache, refresh = true)
+        }
+    }
 }
 
 private fun Route.metadata(
-    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
+    metadataCache: MetadataCache,
     refresh: Boolean = false,
 ) {
     get {
+        val bindingVersion = call.bindingVersion ?: return@get call.respondNotFound()
         val actionCoords = call.parameters.extractActionCoords(extractVersion = false)
 
-        logger.info { "➡️ Requesting metadata for ${actionCoords.prettyPrintWithoutVersion}" }
-
-        if (refresh) {
-            metadataCache.invalidate(actionCoords)
+        logger.info {
+            "➡️ Requesting metadata for ${actionCoords.prettyPrintWithoutVersion} binding version $bindingVersion"
         }
-        val metadataArtifacts = metadataCache.get(actionCoords)
+        val cacheKey = CacheKey(actionCoords, bindingVersion)
+        if (refresh) {
+            metadataCache.invalidate(cacheKey)
+        }
+        val metadataArtifacts = metadataCache.get(cacheKey)
 
         if (refresh && !deliverOnRefreshRoute) return@get call.respondText(text = "OK")
 

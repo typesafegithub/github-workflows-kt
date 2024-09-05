@@ -4,9 +4,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 
-internal const val LATEST_RELASED_LIBRARY_VERSION = "3.4.0"
-
-internal fun ActionCoords.buildPomFile() =
+internal fun ActionCoords.buildPomFile(libraryVersion: String) =
     """
     <?xml version="1.0" encoding="UTF-8"?>
     <project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -26,7 +24,7 @@ internal fun ActionCoords.buildPomFile() =
         <dependency>
             <groupId>io.github.typesafegithub</groupId>
             <artifactId>github-workflows-kt</artifactId>
-            <version>$LATEST_RELASED_LIBRARY_VERSION</version>
+            <version>$libraryVersion</version>
             <scope>compile</scope>
         </dependency>
       </dependencies>

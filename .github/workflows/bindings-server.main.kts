@@ -99,6 +99,16 @@ workflow(
         cleanMavenLocal()
 
         run(
+            name = "Execute the script using the bindings from the server with v1 route",
+            command = """
+                mv .github/workflows/test-script-consuming-jit-bindings-v1.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-v1.main.kts
+                .github/workflows/test-script-consuming-jit-bindings-v1.main.kts
+            """.trimIndent(),
+        )
+
+        cleanMavenLocal()
+
+        run(
             name = "Execute the script using bindings but without dependency on library",
             command = """
                 mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
