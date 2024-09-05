@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.reactivecircus.cache4k.Cache
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
@@ -10,12 +11,17 @@ import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.github.typesafegithub.workflows.shared.internal.getGithubToken
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders.XRequestId
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.plugins.callid.CallId
+import io.ktor.server.plugins.callid.callIdMdc
+import io.ktor.server.plugins.callid.generate
+import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -26,7 +32,23 @@ import io.ktor.server.routing.routing
 import io.opentelemetry.instrumentation.ktor.v2_0.server.KtorServerTracing
 import kotlin.time.Duration.Companion.hours
 
+private val logger =
+    System
+        /*
+         * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         * !! IMPORTANT:                                                                       !!
+         * !!     This statement has to always be executed first before **any** other code,    !!
+         * !!     or else the property "java.util.logging.manager" may have no effect anymore! !!
+         * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         */
+        .setProperty("java.util.logging.manager", org.apache.logging.log4j.jul.LogManager::class.java.name)
+        .let { logger { } }
+
 fun main() {
+    Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+        logger.error(throwable) { "Uncaught exception in thread $thread" }
+    }
+
     val bindingsCache =
         Cache
             .Builder<ActionCoords, Result<Map<String, Artifact>>>()
@@ -35,6 +57,16 @@ fun main() {
     val openTelemetry = buildOpenTelemetryConfig(serviceName = "github-actions-bindings")
 
     embeddedServer(Netty, port = 8080) {
+        install(CallId) {
+            generate(
+                length = 15,
+                dictionary = "abcdefghijklmnopqrstuvwxyz0123456789",
+            )
+            replyToHeader(XRequestId)
+        }
+        install(CallLogging) {
+            callIdMdc("request-id")
+        }
         install(KtorServerTracing) {
             setOpenTelemetry(openTelemetry)
         }
@@ -155,7 +187,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
             version = version,
             path = nameAndPath.drop(1).joinToString("/").takeUnless { it.isBlank() },
         )
-    println("➡️ Requesting ${actionCoords.prettyPrint}")
+    logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
     val bindingArtifacts =
         if (refresh) {
             actionCoords.buildVersionArtifacts().also {
