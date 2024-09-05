@@ -1,11 +1,10 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-internal const val LATEST_RELASED_LIBRARY_VERSION = "3.0.0"
-
 internal fun buildPomFile(
     owner: String,
     name: String,
     version: String,
+    libraryVersion: String,
 ): String {
     val nameForRepo = name.substringBefore("/")
     return """
@@ -27,7 +26,7 @@ internal fun buildPomFile(
             <dependency>
                 <groupId>io.github.typesafegithub</groupId>
                 <artifactId>github-workflows-kt</artifactId>
-                <version>$LATEST_RELASED_LIBRARY_VERSION</version>
+                <version>$libraryVersion</version>
                 <scope>compile</scope>
             </dependency>
           </dependencies>
