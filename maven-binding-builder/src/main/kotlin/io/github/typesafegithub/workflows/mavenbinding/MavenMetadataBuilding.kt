@@ -5,9 +5,14 @@ import arrow.core.getOrElse
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.micrometer.core.instrument.MeterRegistry
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import java.time.format.DateTimeFormatter
 
 private val logger = logger { }
@@ -21,7 +26,7 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
         githubAuthToken: String?,
         meterRegistry: MeterRegistry?,
     ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
-    prefetchBindingArtifacts: (Collection<BindingsServerRequest>) -> Unit = {},
+    prefetchBindingArtifacts: (Collection<BindingsServerRequest>) -> Unit = { },
 ): String? {
     val availableVersions =
         fetchAvailableVersions(actionCoords.owner, actionCoords.name, githubAuthToken, meterRegistry)
@@ -31,16 +36,22 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
             }.filter { it.isMajorVersion() || (actionCoords.significantVersion < FULL) }
     val commitLenient = actionCoords.significantVersion == COMMIT_LENIENT
     prefetchBindingArtifacts(
-        availableVersions.map {
-            copy(
-                rawVersion = "$it${if (commitLenient) "__${it.getSha()}" else ""}",
-                actionCoords =
-                    actionCoords.copy(
-                        version = if (commitLenient) it.getSha()!! else "$it",
-                        comment = if (commitLenient) "$it" else null,
-                        versionForTypings = "$it",
-                    ),
-            )
+        availableVersions.flatMap {
+            flow {
+                emit(V1 to "")
+                BindingVersion.entries.forEach { emit(it to "binding_version_${it}___") }
+            }.map { (bindingVersion, versionPrefix) ->
+                copy(
+                    rawVersion = "$versionPrefix$it${if (commitLenient) "__${it.getSha()}" else ""}",
+                    bindingVersion = bindingVersion,
+                    actionCoords =
+                        actionCoords.copy(
+                            version = if (commitLenient) it.getSha()!! else "$it",
+                            comment = if (commitLenient) "$it" else null,
+                            versionForTypings = "$it",
+                        ),
+                )
+            }.toList()
         },
     )
     val newest = availableVersions.maxOrNull() ?: return null
@@ -54,12 +65,18 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
           <groupId>${actionCoords.owner}</groupId>
           <artifactId>$rawName</artifactId>
           <versioning>
-            <latest>$newest${if (commitLenient) "__${newest.getSha()}" else ""}</latest>
-            <release>$newest${if (commitLenient) "__${newest.getSha()}" else ""}</release>
+            <latest>binding_version_${BindingVersion.entries.last()}___$newest${if (commitLenient) "__${newest.getSha()}" else ""}</latest>
+            <release>binding_version_${BindingVersion.entries.last()}___$newest${if (commitLenient) "__${newest.getSha()}" else ""}</release>
             <versions>
-${availableVersions.map { "$it${if (commitLenient) "__${it.getSha()}" else ""}" }.joinToString(separator = "\n") {
-        "              <version>$it</version>"
-    }}
+${availableVersions.map {
+        flow {
+            emit("")
+            BindingVersion.entries.forEach { emit("binding_version_${it}___") }
+        }.map { versionPrefix ->
+            "              <version>$versionPrefix$it${if (commitLenient) "__${it.getSha()}" else ""}</version>"
+        }.toList()
+            .joinToString(separator = "\n")
+    }.joinToString(separator = "\n")}
             </versions>
             <lastUpdated>$lastUpdated</lastUpdated>
           </versioning>
