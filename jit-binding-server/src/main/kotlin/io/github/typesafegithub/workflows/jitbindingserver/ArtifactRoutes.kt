@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
@@ -27,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
+import kotlin.text.split
 
 private val logger = logger { }
 
@@ -35,7 +35,7 @@ typealias CachedVersionArtifact = Optional<VersionArtifacts>
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
 fun Routing.artifactRoutes(
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -53,7 +53,7 @@ fun Routing.artifactRoutes(
 
 private fun Route.artifact(
     prometheusRegistry: PrometheusMeterRegistry?,
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     refresh: Boolean = false,
 ) {
     headArtifact(bindingsCache, prometheusRegistry, refresh)
@@ -61,7 +61,7 @@ private fun Route.artifact(
 }
 
 private fun Route.headArtifact(
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -81,7 +81,7 @@ private fun Route.headArtifact(
 }
 
 private fun Route.getArtifact(
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -105,7 +105,7 @@ private fun Route.getArtifact(
 
 internal fun prefetchBindingArtifacts(
     coords: Collection<BindingsServerRequest>,
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
 ) {
     prefetchScope.launch {
         bindingsCache.getAll(coords)
@@ -114,11 +114,13 @@ internal fun prefetchBindingArtifacts(
 
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
-    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
+    bindingsCache: BindingsCache,
 ): VersionArtifacts? {
     val parsedRequest = parameters.parseRequest(extractVersion = true) ?: return null
 
-    logger.info { "➡️ Requesting ${parsedRequest.actionCoords.prettyPrint}" }
+    logger.info {
+        "➡️ Requesting ${parsedRequest.actionCoords.prettyPrint} binding version ${parsedRequest.bindingVersion}"
+    }
     if (refresh) {
         bindingsCache.invalidate(parsedRequest)
     }
@@ -132,6 +134,13 @@ private fun PrometheusMeterRegistry.incrementArtifactCounter(
     val owner = call.parameters["owner"] ?: "unknown"
     val name = call.parameters["name"] ?: "unknown"
     val version = call.parameters["version"] ?: "unknown"
+    val versionAndBindingVersionParts = version.split("___", limit = 2)
+    val bindingVersion =
+        when {
+            versionAndBindingVersionParts.size == 1 -> "v1"
+            !versionAndBindingVersionParts[0].startsWith("binding_version_") -> "unknown"
+            else -> versionAndBindingVersionParts[0].substringAfter("binding_version_")
+        }
     val file = call.parameters["file"] ?: "unknown"
     val method = call.request.httpMethod.value
     val status =
@@ -150,6 +159,7 @@ private fun PrometheusMeterRegistry.incrementArtifactCounter(
         this.counter(
             "artifact_requests_total",
             listOf(
+                Tag.of("bindingVersion", bindingVersion),
                 Tag.of("owner", owner),
                 Tag.of("name", name),
                 Tag.of("version", version),
