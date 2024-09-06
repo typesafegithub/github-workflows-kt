@@ -15,9 +15,9 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-2.0:2.3.0-alpha")
-    implementation("io.opentelemetry:opentelemetry-sdk:1.41.0")
-    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.41.0")
-    implementation("io.opentelemetry:opentelemetry-exporter-logging:1.41.0")
+    implementation("io.opentelemetry:opentelemetry-sdk:1.42.0")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.42.0")
+    implementation("io.opentelemetry:opentelemetry-exporter-logging:1.42.0")
     implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")
     implementation("ch.qos.logback:logback-classic:1.5.7")
 
