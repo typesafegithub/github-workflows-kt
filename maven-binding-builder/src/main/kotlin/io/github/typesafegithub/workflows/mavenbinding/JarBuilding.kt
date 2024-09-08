@@ -40,9 +40,11 @@ internal fun buildJars(
     val pathWithJarContents = compileBinding(sourceFilePaths = sourceFilePaths)
     val mainJarByteArrayOutputStream = ByteArrayOutputStream()
     mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
+    pathWithJarContents.toFile().deleteRecursively()
 
     val sourcesJarByteArrayOutputStream = ByteArrayOutputStream()
     sourcesJarByteArrayOutputStream.createZipFile(compilationInputDir)
+    compilationInputDir.toFile().deleteRecursively()
 
     return Jars(
         mainJar = mainJarByteArrayOutputStream.toByteArray(),
