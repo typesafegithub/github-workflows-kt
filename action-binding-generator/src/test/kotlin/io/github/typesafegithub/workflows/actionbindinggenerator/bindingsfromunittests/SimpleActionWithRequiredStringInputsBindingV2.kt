@@ -2,7 +2,6 @@
 // changes will be overwritten with the next binding code regeneration.
 // See https://github.com/typesafegithub/github-workflows-kt for more info.
 @file:Suppress(
-    "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
     "DEPRECATION",
 )
@@ -12,8 +11,11 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import java.util.Objects
+import kotlin.Any
+import kotlin.Boolean
 import kotlin.Deprecated
-import kotlin.ExposedCopyVisibility
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -38,8 +40,8 @@ import kotlin.collections.toTypedArray
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
-@ExposedCopyVisibility
-public data class SimpleActionWithRequiredStringInputsBindingV2 private constructor(
+public class SimpleActionWithRequiredStringInputsBindingV2(
+    vararg pleaseUseNamedArguments: Unit,
     /**
      * &lt;required&gt; Short description
      */
@@ -93,16 +95,6 @@ public data class SimpleActionWithRequiredStringInputsBindingV2 private construc
         }
     }
 
-    public constructor(
-        vararg pleaseUseNamedArguments: Unit,
-        fooBar: String? = null,
-        fooBar_Untyped: String? = null,
-        bazGoo: String? = null,
-        bazGoo_Untyped: String? = null,
-        _customInputs: Map<String, String> = mapOf(),
-        _customVersion: String? = null,
-    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped = bazGoo_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
-
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -112,6 +104,70 @@ public data class SimpleActionWithRequiredStringInputsBindingV2 private construc
             bazGoo_Untyped?.let { "baz-goo" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
+    )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as SimpleActionWithRequiredStringInputsBindingV2
+        return fooBar == other.fooBar &&
+            fooBar_Untyped == other.fooBar_Untyped &&
+            bazGoo == other.bazGoo &&
+            bazGoo_Untyped == other.bazGoo_Untyped &&
+            _customInputs == other._customInputs &&
+            _customVersion == other._customVersion
+    }
+
+    override fun hashCode(): Int = Objects.hash(
+        fooBar,
+        fooBar_Untyped,
+        bazGoo,
+        bazGoo_Untyped,
+        _customInputs,
+        _customVersion,
+    )
+
+    override fun toString(): String = buildString {
+        append("SimpleActionWithRequiredStringInputsBindingV2(")
+        append("""fooBar=$fooBar""")
+        append(", ")
+        append("""fooBar_Untyped=$fooBar_Untyped""")
+        append(", ")
+        append("""bazGoo=$bazGoo""")
+        append(", ")
+        append("""bazGoo_Untyped=$bazGoo_Untyped""")
+        append(", ")
+        append("""_customInputs=$_customInputs""")
+        append(", ")
+        append("""_customVersion=$_customVersion""")
+        append(")")
+    }
+
+    /**
+     * @param fooBar &lt;required&gt; Short description
+     * @param fooBar_Untyped &lt;required&gt; Short description
+     * @param bazGoo &lt;required&gt; Just another input
+     * with multiline description
+     * @param bazGoo_Untyped &lt;required&gt; Just another input
+     * with multiline description
+     * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+     * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
+     */
+    public fun copy(
+        vararg pleaseUseNamedArguments: Unit,
+        fooBar: String? = this.fooBar,
+        fooBar_Untyped: String? = this.fooBar_Untyped,
+        bazGoo: String? = this.bazGoo,
+        bazGoo_Untyped: String? = this.bazGoo_Untyped,
+        _customInputs: Map<String, String> = this._customInputs,
+        _customVersion: String? = this._customVersion,
+    ): SimpleActionWithRequiredStringInputsBindingV2 = SimpleActionWithRequiredStringInputsBindingV2(
+        fooBar = fooBar,
+        fooBar_Untyped = fooBar_Untyped,
+        bazGoo = bazGoo,
+        bazGoo_Untyped = bazGoo_Untyped,
+        _customInputs = _customInputs,
+        _customVersion = _customVersion,
     )
 
     override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
