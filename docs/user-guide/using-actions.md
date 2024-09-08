@@ -119,7 +119,14 @@ anyway as defined above.
 
 `https://bindings.krzeminski.it/v2`
 
-:   TBD
+:   - Binding classes are no `data` classes anymore.
+        - The `equals` method will work like before.
+        - The `hashCode` method will work like before.
+        - The `toString` method will work like before.
+        - Destructuring assignments are not possible anymore as this will likely break silently or during
+          compilation when action owners add new inputs in between existing ones.
+        - The `copy` method will work like before, just that now usage of named arguments is enforced
+          to ensure source compatibility when action owners add new inputs in between existing ones.
 
 `https://bindings.krzeminski.it` / `https://bindings.krzeminski.it/v1`
 
