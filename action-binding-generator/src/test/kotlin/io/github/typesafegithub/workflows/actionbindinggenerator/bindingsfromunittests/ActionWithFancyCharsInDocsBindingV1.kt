@@ -24,25 +24,35 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-fancy-chars-in-docs-binding-v1)
  *
- * @param fooBar &lt;required&gt; Short description
- * @param fooBar_Untyped &lt;required&gt; Short description
+ * @param nestedKotlinComments This is a /&#42; test &#42;/
+ * @param nestedKotlinComments_Untyped This is a /&#42; test &#42;/
+ * @param percent For example "100%"
+ * @param percent_Untyped For example "100%"
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor
  * version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithOutputs private constructor(
+public data class ActionWithFancyCharsInDocsBindingV1 private constructor(
     /**
-     * &lt;required&gt; Short description
+     * This is a /&#42; test &#42;/
      */
-    public val fooBar: String? = null,
+    public val nestedKotlinComments: String? = null,
     /**
-     * &lt;required&gt; Short description
+     * This is a /&#42; test &#42;/
      */
-    public val fooBar_Untyped: String? = null,
+    public val nestedKotlinComments_Untyped: String? = null,
+    /**
+     * For example "100%"
+     */
+    public val percent: String? = null,
+    /**
+     * For example "100%"
+     */
+    public val percent_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -52,48 +62,40 @@ public data class ActionWithOutputs private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithOutputs.Outputs>("john-smith", "action-with-outputs", _customVersion ?:
-        "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs-binding-v1",
+        _customVersion ?: "v3") {
     init {
-        require(!((fooBar != null) && (fooBar_Untyped != null))) {
-            "Only fooBar or fooBar_Untyped must be set, but not both"
+        require(!((nestedKotlinComments != null) && (nestedKotlinComments_Untyped != null))) {
+            "Only nestedKotlinComments or nestedKotlinComments_Untyped must be set, but not both"
         }
-        require((fooBar != null) || (fooBar_Untyped != null)) {
-            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+
+        require(!((percent != null) && (percent_Untyped != null))) {
+            "Only percent or percent_Untyped must be set, but not both"
         }
     }
 
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        fooBar: String? = null,
-        fooBar_Untyped: String? = null,
+        nestedKotlinComments: String? = null,
+        nestedKotlinComments_Untyped: String? = null,
+        percent: String? = null,
+        percent_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, _customInputs = _customInputs,
-            _customVersion = _customVersion)
+    ) : this(nestedKotlinComments = nestedKotlinComments, nestedKotlinComments_Untyped =
+            nestedKotlinComments_Untyped, percent = percent, percent_Untyped = percent_Untyped,
+            _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            fooBar?.let { "foo-bar" to it },
-            fooBar_Untyped?.let { "foo-bar" to it },
+            nestedKotlinComments?.let { "nested-kotlin-comments" to it },
+            nestedKotlinComments_Untyped?.let { "nested-kotlin-comments" to it },
+            percent?.let { "percent" to it },
+            percent_Untyped?.let { "percent" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
-
-    public class Outputs(
-        stepId: String,
-    ) : Action.Outputs(stepId) {
-        /**
-         * Cool output!
-         */
-        public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
-
-        /**
-         * Another output...
-         */
-        public val looWoz: String = "steps.$stepId.outputs.loo-woz"
-    }
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }

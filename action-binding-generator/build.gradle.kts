@@ -17,6 +17,8 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.61.0")
     implementation(projects.sharedInternal)
 
+    testImplementation("io.kotest:kotest-framework-datatest")
+    testImplementation(kotlin("reflect"))
     testImplementation(projects.githubWorkflowsKt)
 }
 

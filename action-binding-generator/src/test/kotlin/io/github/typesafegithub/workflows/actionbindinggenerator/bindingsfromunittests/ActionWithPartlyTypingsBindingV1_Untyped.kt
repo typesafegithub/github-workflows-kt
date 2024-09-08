@@ -45,7 +45,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-partly-typings)
+ * [Action on GitHub](https://github.com/john-smith/action-with-partly-typings-binding-v1)
  *
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
  * the binding
@@ -54,10 +54,10 @@ import kotlin.collections.toTypedArray
  */
 @Deprecated(
     "Use the typed class instead",
-    ReplaceWith("ActionWithPartlyTypings"),
+    ReplaceWith("ActionWithPartlyTypingsBindingV1"),
 )
 @ExposedCopyVisibility
-public data class ActionWithPartlyTypings_Untyped private constructor(
+public data class ActionWithPartlyTypingsBindingV1_Untyped private constructor(
     public val foo_Untyped: String,
     public val bar_Untyped: String? = null,
     public val baz_Untyped: String,
@@ -70,8 +70,8 @@ public data class ActionWithPartlyTypings_Untyped private constructor(
      * version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings", _customVersion ?:
-        "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings-binding-v1",
+        _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         foo_Untyped: String,
