@@ -17,6 +17,8 @@ dependencies {
     implementation("io.github.oshai:kotlin-logging:7.0.3")
     implementation(projects.sharedInternal)
 
+    testImplementation("io.kotest:kotest-framework-datatest")
+    testImplementation(kotlin("reflect"))
     testImplementation(projects.githubWorkflowsKt)
 }
 
