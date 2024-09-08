@@ -67,7 +67,7 @@ private fun generateBinding(
 }
 
 private fun compileBinding(sourceFilePaths: List<Path>): Path {
-    val compilationOutput = createTempDirectory()
+    val compilationOutput = createTempDirectory(prefix = "gwkt-classes_")
 
     val args =
         K2JVMCompilerArguments().apply {
@@ -98,7 +98,7 @@ private fun compileBinding(sourceFilePaths: List<Path>): Path {
 }
 
 private fun List<ActionBinding>.prepareDirectoryWithSources(): Pair<List<Path>, Path> {
-    val directory = createTempDirectory()
+    val directory = createTempDirectory(prefix = "gwkt-sources_")
     val sourceFilePaths =
         this
             .map { binding ->
