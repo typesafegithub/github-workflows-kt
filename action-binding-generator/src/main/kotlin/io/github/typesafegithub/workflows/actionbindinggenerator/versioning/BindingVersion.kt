@@ -6,6 +6,7 @@ public enum class BindingVersion(
     public val libraryVersion: String,
 ) {
     V1(isExperimental = false, libraryVersion = "3.4.0"),
+    V2(libraryVersion = "3.4.0"),
     ;
 
     override fun toString(): String = super.toString().lowercase()

@@ -28,7 +28,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-all-types-of-inputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-all-types-of-inputs-binding-v2)
  *
  * @param fooBar &lt;required&gt; Short description
  * @param fooBar_Untyped &lt;required&gt; Short description
@@ -58,7 +58,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithAllTypesOfInputs private constructor(
+public data class ActionWithAllTypesOfInputsBindingV2 private constructor(
     /**
      * &lt;required&gt; Short description
      */
@@ -102,7 +102,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
     /**
      * &lt;required&gt; Enumeration
      */
-    public val finBin: ActionWithAllTypesOfInputs.Bin? = null,
+    public val finBin: ActionWithAllTypesOfInputsBindingV2.Bin? = null,
     /**
      * &lt;required&gt; Enumeration
      */
@@ -110,7 +110,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
     /**
      * &lt;required&gt; Integer with special value
      */
-    public val gooZen: ActionWithAllTypesOfInputs.Zen? = null,
+    public val gooZen: ActionWithAllTypesOfInputsBindingV2.Zen? = null,
     /**
      * &lt;required&gt; Integer with special value
      */
@@ -118,7 +118,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
     /**
      * &lt;required&gt; Enum with custom naming
      */
-    public val bahEnum: ActionWithAllTypesOfInputs.BahEnum? = null,
+    public val bahEnum: ActionWithAllTypesOfInputsBindingV2.BahEnum? = null,
     /**
      * &lt;required&gt; Enum with custom naming
      */
@@ -142,7 +142,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
     /**
      * List of enums
      */
-    public val listEnums: List<ActionWithAllTypesOfInputs.MyEnum>? = null,
+    public val listEnums: List<ActionWithAllTypesOfInputsBindingV2.MyEnum>? = null,
     /**
      * List of enums
      */
@@ -150,7 +150,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
     /**
      * List of integer with special values
      */
-    public val listIntSpecial: List<ActionWithAllTypesOfInputs.MyInt>? = null,
+    public val listIntSpecial: List<ActionWithAllTypesOfInputsBindingV2.MyInt>? = null,
     /**
      * List of integer with special values
      */
@@ -163,8 +163,16 @@ public data class ActionWithAllTypesOfInputs private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithAllTypesOfInputs.Outputs>("john-smith", "action-with-all-types-of-inputs", _customVersion ?: "v3") {
+) : RegularAction<ActionWithAllTypesOfInputsBindingV2.Outputs>("john-smith", "action-with-all-types-of-inputs-binding-v2", _customVersion ?: "v3") {
     init {
+        println("WARNING: The used binding version v2 for john-smith/action-with-all-types-of-inputs-binding-v2@v3 is experimental! Last stable version is v1.")
+        if (System.getenv("GITHUB_ACTIONS").toBoolean()) {
+            println("""
+                    |
+                    |::warning title=Experimental Binding Version Used::The used binding version v2 for john-smith/action-with-all-types-of-inputs-binding-v2@v3 is experimental! Last stable version is v1.
+                    """.trimMargin())
+        }
+
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
         }
@@ -247,19 +255,19 @@ public data class ActionWithAllTypesOfInputs private constructor(
         intPint_Untyped: String? = null,
         floPint: Float? = null,
         floPint_Untyped: String? = null,
-        finBin: ActionWithAllTypesOfInputs.Bin? = null,
+        finBin: ActionWithAllTypesOfInputsBindingV2.Bin? = null,
         finBin_Untyped: String? = null,
-        gooZen: ActionWithAllTypesOfInputs.Zen? = null,
+        gooZen: ActionWithAllTypesOfInputsBindingV2.Zen? = null,
         gooZen_Untyped: String? = null,
-        bahEnum: ActionWithAllTypesOfInputs.BahEnum? = null,
+        bahEnum: ActionWithAllTypesOfInputsBindingV2.BahEnum? = null,
         bahEnum_Untyped: String? = null,
         listStrings: List<String>? = null,
         listStrings_Untyped: String? = null,
         listInts: List<Int>? = null,
         listInts_Untyped: String? = null,
-        listEnums: List<ActionWithAllTypesOfInputs.MyEnum>? = null,
+        listEnums: List<ActionWithAllTypesOfInputsBindingV2.MyEnum>? = null,
         listEnums_Untyped: String? = null,
-        listIntSpecial: List<ActionWithAllTypesOfInputs.MyInt>? = null,
+        listIntSpecial: List<ActionWithAllTypesOfInputsBindingV2.MyInt>? = null,
         listIntSpecial_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
@@ -301,21 +309,21 @@ public data class ActionWithAllTypesOfInputs private constructor(
     public sealed class Bin(
         public val stringValue: String,
     ) {
-        public object Bam123 : ActionWithAllTypesOfInputs.Bin("bam-123")
+        public object Bam123 : ActionWithAllTypesOfInputsBindingV2.Bin("bam-123")
 
-        public object Bam123_2 : ActionWithAllTypesOfInputs.Bin("bam/123")
+        public object Bam123_2 : ActionWithAllTypesOfInputsBindingV2.Bin("bam/123")
 
-        public object Bam123_3 : ActionWithAllTypesOfInputs.Bin("bam:123")
+        public object Bam123_3 : ActionWithAllTypesOfInputsBindingV2.Bin("bam:123")
 
-        public object Baz123 : ActionWithAllTypesOfInputs.Bin("baz123")
+        public object Baz123 : ActionWithAllTypesOfInputsBindingV2.Bin("baz123")
 
-        public object BooBar : ActionWithAllTypesOfInputs.Bin("boo-bar")
+        public object BooBar : ActionWithAllTypesOfInputsBindingV2.Bin("boo-bar")
 
-        public object Foo : ActionWithAllTypesOfInputs.Bin("foo")
+        public object Foo : ActionWithAllTypesOfInputsBindingV2.Bin("foo")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionWithAllTypesOfInputs.Bin(customStringValue)
+        ) : ActionWithAllTypesOfInputsBindingV2.Bin(customStringValue)
     }
 
     public sealed class Zen(
@@ -323,35 +331,35 @@ public data class ActionWithAllTypesOfInputs private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : ActionWithAllTypesOfInputs.Zen(requestedValue)
+        ) : ActionWithAllTypesOfInputsBindingV2.Zen(requestedValue)
 
-        public object Special1 : ActionWithAllTypesOfInputs.Zen(3)
+        public object Special1 : ActionWithAllTypesOfInputsBindingV2.Zen(3)
 
-        public object Special2 : ActionWithAllTypesOfInputs.Zen(-1)
+        public object Special2 : ActionWithAllTypesOfInputsBindingV2.Zen(-1)
     }
 
     public sealed class BahEnum(
         public val stringValue: String,
     ) {
-        public object HelloWorld : ActionWithAllTypesOfInputs.BahEnum("helloworld")
+        public object HelloWorld : ActionWithAllTypesOfInputsBindingV2.BahEnum("helloworld")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionWithAllTypesOfInputs.BahEnum(customStringValue)
+        ) : ActionWithAllTypesOfInputsBindingV2.BahEnum(customStringValue)
     }
 
     public sealed class MyEnum(
         public val stringValue: String,
     ) {
-        public object One : ActionWithAllTypesOfInputs.MyEnum("one")
+        public object One : ActionWithAllTypesOfInputsBindingV2.MyEnum("one")
 
-        public object Three : ActionWithAllTypesOfInputs.MyEnum("three")
+        public object Three : ActionWithAllTypesOfInputsBindingV2.MyEnum("three")
 
-        public object Two : ActionWithAllTypesOfInputs.MyEnum("two")
+        public object Two : ActionWithAllTypesOfInputsBindingV2.MyEnum("two")
 
         public class Custom(
             customStringValue: String,
-        ) : ActionWithAllTypesOfInputs.MyEnum(customStringValue)
+        ) : ActionWithAllTypesOfInputsBindingV2.MyEnum(customStringValue)
     }
 
     public sealed class MyInt(
@@ -359,9 +367,9 @@ public data class ActionWithAllTypesOfInputs private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : ActionWithAllTypesOfInputs.MyInt(requestedValue)
+        ) : ActionWithAllTypesOfInputsBindingV2.MyInt(requestedValue)
 
-        public object TheAnswer : ActionWithAllTypesOfInputs.MyInt(42)
+        public object TheAnswer : ActionWithAllTypesOfInputsBindingV2.MyInt(42)
     }
 
     public class Outputs(

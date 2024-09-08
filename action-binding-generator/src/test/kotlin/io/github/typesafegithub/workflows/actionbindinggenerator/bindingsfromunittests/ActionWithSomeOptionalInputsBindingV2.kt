@@ -24,7 +24,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-some-optional-inputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-some-optional-inputs-binding-v2)
  *
  * @param fooBar Required is default, default is set
  * @param fooBar_Untyped Required is default, default is set
@@ -40,7 +40,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithSomeOptionalInputs private constructor(
+public data class ActionWithSomeOptionalInputsBindingV2 private constructor(
     /**
      * Required is default, default is set
      */
@@ -89,8 +89,16 @@ public data class ActionWithSomeOptionalInputs private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-some-optional-inputs", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-some-optional-inputs-binding-v2", _customVersion ?: "v3") {
     init {
+        println("WARNING: The used binding version v2 for john-smith/action-with-some-optional-inputs-binding-v2@v3 is experimental! Last stable version is v1.")
+        if (System.getenv("GITHUB_ACTIONS").toBoolean()) {
+            println("""
+                    |
+                    |::warning title=Experimental Binding Version Used::The used binding version v2 for john-smith/action-with-some-optional-inputs-binding-v2@v3 is experimental! Last stable version is v1.
+                    """.trimMargin())
+        }
+
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
         }
