@@ -14,6 +14,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
+import com.squareup.kotlinpoet.buildCodeBlock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
@@ -338,39 +339,32 @@ private fun Metadata.buildToYamlArgumentsFunction(
 private fun Metadata.linkedMapOfInputs(
     inputTypings: Map<String, Typing>,
     untypedClass: Boolean,
-): CodeBlock {
-    if (inputs.isEmpty()) {
-        return CodeBlock
-            .Builder()
-            .add(CodeBlock.of("return %T($CUSTOM_INPUTS)", LinkedHashMap::class))
-            .build()
-    } else {
-        return CodeBlock
-            .Builder()
-            .apply {
-                add("return linkedMapOf(\n")
-                indent()
-                add("*listOfNotNull(\n")
-                indent()
-                inputs.forEach { (key, value) ->
-                    val propertyName = key.toCamelCase()
-                    if (!untypedClass && inputTypings.containsKey(key)) {
-                        val asStringCode = inputTypings.getInputTyping(key).asString()
-                        add("%N?.let { %S·to·it$asStringCode },\n", propertyName, key)
-                    }
-                    val asStringCode = null.getInputTyping(key).asString()
-                    if (value.shouldBeRequiredInBinding() && !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))) {
-                        add("%S·to·%N$asStringCode,\n", key, "${propertyName}_Untyped")
-                    } else {
-                        add("%N?.let { %S·to·it$asStringCode },\n", "${propertyName}_Untyped", key)
-                    }
-                }
-                add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
-                unindent()
-                add(").toTypedArray()\n")
-                unindent()
-                add(")")
-            }.build()
+) = if (inputs.isEmpty()) {
+    CodeBlock.of("return %T($CUSTOM_INPUTS)", LinkedHashMap::class)
+} else {
+    buildCodeBlock {
+        add("return linkedMapOf(\n")
+        indent()
+        add("*listOfNotNull(\n")
+        indent()
+        inputs.forEach { (key, value) ->
+            val propertyName = key.toCamelCase()
+            if (!untypedClass && inputTypings.containsKey(key)) {
+                val asStringCode = inputTypings.getInputTyping(key).asString()
+                add("%N?.let { %S·to·it$asStringCode },\n", propertyName, key)
+            }
+            val asStringCode = null.getInputTyping(key).asString()
+            if (value.shouldBeRequiredInBinding() && !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))) {
+                add("%S·to·%N$asStringCode,\n", key, "${propertyName}_Untyped")
+            } else {
+                add("%N?.let { %S·to·it$asStringCode },\n", "${propertyName}_Untyped", key)
+            }
+        }
+        add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
+        unindent()
+        add(").toTypedArray()\n")
+        unindent()
+        add(")")
     }
 }
 
@@ -471,15 +465,16 @@ private fun Metadata.buildCommonConstructorParameters(
         .flatMap { (key, input) ->
             val typedInput = inputTypings.containsKey(key)
             val description = input.description.escapedForComments.removeTrailingWhitespacesForEachLine()
-            val kdocBuilder = CodeBlock.builder()
-            if (typedInput && !untypedClass && input.shouldBeRequiredInBinding()) {
-                kdocBuilder.add("%L", "<required>".escapedForComments)
-                if (description.isNotEmpty()) {
-                    kdocBuilder.add(" ")
+            val kdoc =
+                buildCodeBlock {
+                    if (typedInput && !untypedClass && input.shouldBeRequiredInBinding()) {
+                        add("%L", "<required>".escapedForComments)
+                        if (description.isNotEmpty()) {
+                            add(" ")
+                        }
+                    }
+                    add("%L", description)
                 }
-            }
-            kdocBuilder.add("%L", description)
-            val kdoc = kdocBuilder.build()
 
             listOfNotNull(
                 untypedClass.takeIf { !it && typedInput }?.let {
@@ -545,19 +540,18 @@ private fun TypeSpec.Builder.addInitializerBlockIfNecessary(
     return this
 }
 
-private fun Metadata.initializerBlock(inputTypings: Map<String, Typing>): CodeBlock {
-    val codeBlockBuilder = CodeBlock.builder()
-    var first = true
-    inputs
-        .filter { inputTypings.containsKey(it.key) }
-        .forEach { (key, input) ->
-            if (!first) {
-                codeBlockBuilder.add("\n")
-            }
-            first = false
-            val propertyName = key.toCamelCase()
-            codeBlockBuilder
-                .add(
+private fun Metadata.initializerBlock(inputTypings: Map<String, Typing>) =
+    buildCodeBlock {
+        var first = true
+        inputs
+            .filter { inputTypings.containsKey(it.key) }
+            .forEach { (key, input) ->
+                if (!first) {
+                    add("\n")
+                }
+                first = false
+                val propertyName = key.toCamelCase()
+                add(
                     """
                     require(!((%1N != null) && (%1L_Untyped != null))) {
                         %2S
@@ -567,9 +561,8 @@ private fun Metadata.initializerBlock(inputTypings: Map<String, Typing>): CodeBl
                     propertyName,
                     "Only $propertyName or ${propertyName}_Untyped must be set, but not both",
                 )
-            if (input.shouldBeRequiredInBinding()) {
-                codeBlockBuilder
-                    .add(
+                if (input.shouldBeRequiredInBinding()) {
+                    add(
                         """
                         require((%1N != null) || (%1L_Untyped != null)) {
                             %2S
@@ -579,10 +572,9 @@ private fun Metadata.initializerBlock(inputTypings: Map<String, Typing>): CodeBl
                         propertyName,
                         "Either $propertyName or ${propertyName}_Untyped must be set, one of them is required",
                     )
+                }
             }
-        }
-    return codeBlockBuilder.build()
-}
+    }
 
 private fun actionKdoc(
     metadata: Metadata,
