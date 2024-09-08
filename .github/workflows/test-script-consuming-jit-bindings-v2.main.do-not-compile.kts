@@ -2,7 +2,7 @@
 @file:Repository("https://repo.maven.apache.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.0")
 
-@file:Repository("http://localhost:8080/v1")
+@file:Repository("http://localhost:8080/v2")
 
 // Regular, top-level action.
 @file:DependsOn("actions:checkout:v4")
