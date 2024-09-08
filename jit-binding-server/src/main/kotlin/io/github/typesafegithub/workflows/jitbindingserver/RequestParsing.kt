@@ -75,11 +75,21 @@ private fun Parameters.parseVersion(
 
                 else -> {
                     val bindingVersionPart = bindingVersionAndVersionParts[0].substringAfter("binding_version_")
-                    BindingVersion
-                        .entries
-                        .find {
-                            it.name.lowercase() == bindingVersionPart
-                        } to bindingVersionAndVersionParts[1]
+                    val bindingVersion =
+                        BindingVersion
+                            .entries
+                            .find {
+                                it.name.lowercase() == bindingVersionPart
+                            }
+                    if ((bindingVersion?.isExperimental == true) &&
+                        !bindingVersionAndVersionParts[1].endsWith("-beta")
+                    ) {
+                        null to bindingVersionAndVersionParts[1]
+                    } else if (bindingVersion?.isExperimental == true) {
+                        bindingVersion to bindingVersionAndVersionParts[1].removeSuffix("-beta")
+                    } else {
+                        bindingVersion to bindingVersionAndVersionParts[1]
+                    }
                 }
             }
         val (version, comment) =

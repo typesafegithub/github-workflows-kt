@@ -98,20 +98,20 @@ workflow(
         cleanMavenLocal()
 
         run(
-            name = "Execute the script using the bindings from the server",
+            name = "Execute the script using the bindings from the server with binding version v1",
             command = """
-                mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings.main.kts
-                .github/workflows/test-script-consuming-jit-bindings.main.kts
+                mv .github/workflows/test-script-consuming-jit-bindings-v1.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-v1.main.kts
+                .github/workflows/test-script-consuming-jit-bindings-v1.main.kts
             """.trimIndent(),
         )
 
         cleanMavenLocal()
 
         run(
-            name = "Execute the script using the bindings from the server with v1 route",
+            name = "Execute the script using the bindings from the server with binding version v2",
             command = """
-                mv .github/workflows/test-script-consuming-jit-bindings-v1.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-v1.main.kts
-                .github/workflows/test-script-consuming-jit-bindings-v1.main.kts
+                mv .github/workflows/test-script-consuming-jit-bindings-v2.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-v2.main.kts
+                .github/workflows/test-script-consuming-jit-bindings-v2.main.kts
             """.trimIndent(),
         )
 
@@ -133,7 +133,7 @@ workflow(
         runWithSpecificKotlinVersion(
             kotlinVersion = newestNotCompatibleVersion,
             command = """
-                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
+                cp .github/workflows/test-script-consuming-jit-bindings-v1.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
                 ${failsWithPhraseInLogs(
                     command = ".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts",
                     // This test depicts the current behavior that the served bindings aren't
@@ -146,7 +146,7 @@ workflow(
         runWithSpecificKotlinVersion(
             kotlinVersion = oldestCompatibleVersion,
             command = """
-                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
+                cp .github/workflows/test-script-consuming-jit-bindings-v1.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
                 .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
             """.trimIndent(),
         )
@@ -161,11 +161,11 @@ workflow(
 
         run(
             name = "Fetch maven-metadata.xml for top-level action",
-            command = "curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",
+            command = "curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep '<version>binding_version_v1___v4</version>'",
         )
         run(
             name = "Fetch maven-metadata.xml for nested action",
-            command = "curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
+            command = "curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep '<version>binding_version_v1___v4</version>'",
         )
 
         run(

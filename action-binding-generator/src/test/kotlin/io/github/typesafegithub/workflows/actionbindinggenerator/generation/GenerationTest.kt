@@ -20,6 +20,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.IntegerW
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.Typing
+import io.github.typesafegithub.workflows.testutils.withAllBindingVersions
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
@@ -114,503 +115,602 @@ class GenerationTest :
                     ),
             )
 
-        test("action with required inputs as strings, no outputs") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name =
-                        """
-                        Do something cool
-                        and describe it in multiple lines
-                        """.trimIndent(),
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "foo-bar" to
-                                Input(
-                                    description = "Short description",
-                                    required = true,
-                                    default = null,
-                                ),
-                            "baz-goo" to
-                                Input(
-                                    description =
-                                        """
-                                        Just another input
-                                        with multiline description
-                                        """.trimIndent(),
-                                    deprecationMessage = "this is deprecated",
-                                    required = true,
-                                    default = null,
-                                ),
-                        ),
+        withAllBindingVersions { bindingVersion ->
+            test("action with required inputs as strings, no outputs") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name =
+                            """
+                            Do something cool
+                            and describe it in multiple lines
+                            """.trimIndent(),
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "foo-bar" to
+                                    Input(
+                                        description = "Short description",
+                                        required = true,
+                                        default = null,
+                                    ),
+                                "baz-goo" to
+                                    Input(
+                                        description =
+                                            """
+                                            Just another input
+                                            with multiline description
+                                            """.trimIndent(),
+                                        deprecationMessage = "this is deprecated",
+                                        required = true,
+                                        default = null,
+                                    ),
+                            ),
+                    )
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "simple-action-with-required-string-inputs-binding-$bindingVersion",
+                        "v3",
+                    )
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = actionManifest.allInputsAsStrings(),
+                                source = ACTION,
+                            ),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile(
+                    "SimpleActionWithRequiredStringInputsBinding${bindingVersion.name}.kt",
                 )
-            val coords = ActionCoords("john-smith", "simple-action-with-required-string-inputs", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("SimpleActionWithRequiredStringInputs.kt")
-        }
-
-        test("action with various combinations of input parameters describing being required or optional") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Do something cool",
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "foo-bar" to
-                                Input(
-                                    description = "Required is default, default is set",
-                                    default = "barfoo",
-                                ),
-                            "baz-goo" to
-                                Input(
-                                    description = "Required is default, default is null",
-                                    default = null,
-                                ),
-                            "zoo-dar" to
-                                Input(
-                                    description = "Required is false, default is set",
-                                    required = false,
-                                    default = "googoo",
-                                ),
-                            "coo-poo" to
-                                Input(
-                                    description = "Required is false, default is default",
-                                    required = false,
-                                ),
-                            "package" to
-                                Input(
-                                    description = "Required is true, default is default",
-                                    required = true,
-                                ),
-                        ),
-                )
-            val coords = ActionCoords("john-smith", "action-with-some-optional-inputs", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithSomeOptionalInputs.kt")
-        }
-
-        test("action with all types of inputs") {
-            // given
-            val coords = ActionCoords("john-smith", "action-with-all-types-of-inputs", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
-                    inputTypings = ActionTypings(inputTypings = typingsForAllTypesOfInputs, source = ACTION),
-                )
-
-            // then
-            assertSoftly {
-                binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs.kt")
-                binding.shouldContainAndMatchFile("ActionWithAllTypesOfInputs_Untyped.kt")
             }
-        }
 
-        test("action with outputs") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Do something cool",
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "foo-bar" to
-                                Input(
-                                    description = "Short description",
-                                    required = true,
-                                    default = null,
-                                ),
-                        ),
-                    outputs =
-                        mapOf(
-                            "baz-goo" to Output(description = "Cool output!"),
-                            "loo-woz" to Output(description = "Another output..."),
-                        ),
-                )
-            val coords = ActionCoords("john-smith", "action-with-outputs", "v3")
+            test("action with various combinations of input parameters describing being required or optional") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Do something cool",
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "foo-bar" to
+                                    Input(
+                                        description = "Required is default, default is set",
+                                        default = "barfoo",
+                                    ),
+                                "baz-goo" to
+                                    Input(
+                                        description = "Required is default, default is null",
+                                        default = null,
+                                    ),
+                                "zoo-dar" to
+                                    Input(
+                                        description = "Required is false, default is set",
+                                        required = false,
+                                        default = "googoo",
+                                    ),
+                                "coo-poo" to
+                                    Input(
+                                        description = "Required is false, default is default",
+                                        required = false,
+                                    ),
+                                "package" to
+                                    Input(
+                                        description = "Required is true, default is default",
+                                        required = true,
+                                    ),
+                            ),
+                    )
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "action-with-some-optional-inputs-binding-$bindingVersion",
+                        "v3",
+                    )
 
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
-                )
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = actionManifest.allInputsAsStrings(),
+                                source = ACTION,
+                            ),
+                    )
 
-            // then
-            binding.shouldContainAndMatchFile("ActionWithOutputs.kt")
-        }
-
-        test("action with no inputs") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Action With No Inputs",
-                    description = "Description",
-                )
-
-            val coords = ActionCoords("john-smith", "action-with-no-inputs", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
-        }
-
-        test("action with no inputs from fallback version") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Action With No Inputs From Fallback Version",
-                    description = "Description",
-                )
-
-            val coords = ActionCoords("john-smith", "action-with-no-inputs-from-fallback-version", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithNoInputsFromFallbackVersion.kt")
-        }
-
-        test("subaction") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Action With No Inputs",
-                    description = "Description",
-                )
-
-            val coords = ActionCoords("john-smith", "action-with", "v3", FULL, "sub/action")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithSubAction.kt")
-        }
-
-        test("action with deprecated input resolving to the same Kotlin field name") {
-            // given
-            val actionManifest =
-                Metadata(
-                    inputs =
-                        mapOf(
-                            "foo-bar" to
-                                Input(
-                                    description = "Foo bar - old",
-                                    required = true,
-                                    default = null,
-                                    deprecationMessage = "Use 'fooBar'!",
-                                ),
-                            "fooBar" to
-                                Input(
-                                    description = "Foo bar - new",
-                                    required = true,
-                                    default = null,
-                                ),
-                        ),
-                    name = "Some Action",
-                    description = "Description",
-                )
-
-            val coords = ActionCoords("john-smith", "action-with-deprecated-input-and-name-clash", "v2")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithDeprecatedInputAndNameClash.kt")
-        }
-
-        test("action with inputs sharing type") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Do something cool",
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "foo-one" to
-                                Input(
-                                    required = true,
-                                    default = null,
-                                ),
-                            "foo-two" to
-                                Input(
-                                    required = true,
-                                    default = null,
-                                ),
-                            "foo-three" to
-                                Input(
-                                    required = false,
-                                    default = "test",
-                                ),
-                        ),
-                )
-            val coords = ActionCoords("john-smith", "action-with-inputs-sharing-type", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings =
-                                mapOf(
-                                    "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                                    "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                                    "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                                ),
-                            source = ACTION,
-                        ),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithInputsSharingType.kt")
-        }
-
-        test("action with input descriptions with fancy characters") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Do something cool",
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "nested-kotlin-comments" to
-                                Input(
-                                    description = "This is a /* test */",
-                                ),
-                            "percent" to
-                                Input(
-                                    description = "For example \"100%\"",
-                                ),
-                        ),
-                )
-            val coords = ActionCoords("john-smith", "action-with-fancy-chars-in-docs", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithFancyCharsInDocs.kt")
-        }
-
-        test("action with no typings has only an untyped binding") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Do something cool",
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "foo" to
-                                Input(
-                                    required = true,
-                                    default = null,
-                                ),
-                            "bar" to
-                                Input(
-                                    required = false,
-                                    default = "test",
-                                ),
-                        ),
-                )
-            val coords = ActionCoords("john-smith", "action-with-no-typings", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = null),
-                )
-
-            // then
-            binding shouldHaveSize 1
-            binding.shouldContainAndMatchFile("ActionWithNoTypings_Untyped.kt")
-        }
-
-        test("action with partly typings has only untyped properties for the non-typed inputs") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Do something cool",
-                    description = "This is a test description that should be put in the KDoc comment for a class",
-                    inputs =
-                        mapOf(
-                            "foo" to
-                                Input(
-                                    required = true,
-                                    default = null,
-                                ),
-                            "bar" to
-                                Input(
-                                    required = false,
-                                    default = "test",
-                                ),
-                            "baz" to
-                                Input(
-                                    required = true,
-                                ),
-                        ),
-                )
-            val coords = ActionCoords("john-smith", "action-with-partly-typings", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = mapOf("foo" to IntegerTyping), source = TYPING_CATALOG),
-                )
-
-            // then
-            assertSoftly {
-                binding.shouldContainAndMatchFile("ActionWithPartlyTypings.kt")
-                binding.shouldContainAndMatchFile("ActionWithPartlyTypings_Untyped.kt")
+                // then
+                binding.shouldContainAndMatchFile("ActionWithSomeOptionalInputsBinding${bindingVersion.name}.kt")
             }
-        }
 
-        test("action with no inputs with major version") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Action With No Inputs",
-                    description = "Description",
-                )
+            test("action with all types of inputs") {
+                // given
+                val coords = ActionCoords("john-smith", "action-with-all-types-of-inputs-binding-$bindingVersion", "v3")
 
-            val coords = ActionCoords("john-smith", "action-with-no-inputs-with-major-version", "v3.1.3", MAJOR)
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
+                        inputTypings = ActionTypings(inputTypings = typingsForAllTypesOfInputs, source = ACTION),
+                    )
 
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
-                )
-
-            // then
-            assertSoftly {
-                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMajorVersion.kt")
-                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMajorVersion_Untyped.kt")
+                // then
+                assertSoftly {
+                    binding.shouldContainAndMatchFile(
+                        "ActionWithAllTypesOfInputsBinding${bindingVersion.name}.kt",
+                    )
+                    binding.shouldContainAndMatchFile(
+                        "ActionWithAllTypesOfInputsBinding${bindingVersion.name}_Untyped.kt",
+                    )
+                }
             }
-        }
 
-        test("action with no inputs with minor version") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Action With No Inputs",
-                    description = "Description",
-                )
+            test("action with outputs") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Do something cool",
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "foo-bar" to
+                                    Input(
+                                        description = "Short description",
+                                        required = true,
+                                        default = null,
+                                    ),
+                            ),
+                        outputs =
+                            mapOf(
+                                "baz-goo" to Output(description = "Cool output!"),
+                                "loo-woz" to Output(description = "Another output..."),
+                            ),
+                    )
+                val coords = ActionCoords("john-smith", "action-with-outputs-binding-$bindingVersion", "v3")
 
-            val coords = ActionCoords("john-smith", "action-with-no-inputs-with-minor-version", "v3.1.3", MINOR)
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = actionManifest.allInputsAsStrings(),
+                                source = ACTION,
+                            ),
+                    )
 
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
-                )
-
-            // then
-            assertSoftly {
-                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMinorVersion.kt")
-                binding.shouldContainAndMatchFile("ActionWithNoInputsWithMinorVersion_Untyped.kt")
+                // then
+                binding.shouldContainAndMatchFile("ActionWithOutputsBinding${bindingVersion.name}.kt")
             }
-        }
 
-        test("action with comment") {
-            // given
-            val actionManifest =
-                Metadata(
-                    name = "Action with comment",
-                    description = "Do something cool",
-                    inputs =
-                        mapOf(
-                            "foo" to
-                                Input(
-                                    description = "Short description",
-                                    required = true,
-                                    default = null,
-                                ),
-                        ),
+            test("action with no inputs") {
+                // given
+                val actionManifestHasNoInputs = emptyMap<String, Input>()
+                val actionManifest =
+                    Metadata(
+                        inputs = actionManifestHasNoInputs,
+                        name = "Action With No Inputs",
+                        description = "Description",
+                    )
+
+                val coords = ActionCoords("john-smith", "action-with-no-inputs-binding-$bindingVersion", "v3")
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile("ActionWithNoInputsBinding${bindingVersion.name}.kt")
+            }
+
+            test("action with no inputs from fallback version") {
+                // given
+                val actionManifestHasNoInputs = emptyMap<String, Input>()
+                val actionManifest =
+                    Metadata(
+                        inputs = actionManifestHasNoInputs,
+                        name = "Action With No Inputs From Fallback Version",
+                        description = "Description",
+                    )
+
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "action-with-no-inputs-from-fallback-version-$bindingVersion",
+                        "v3",
+                    )
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile("ActionWithNoInputsFromFallbackVersion${bindingVersion.name}.kt")
+            }
+
+            test("subaction") {
+                // given
+                val actionManifestHasNoInputs = emptyMap<String, Input>()
+                val actionManifest =
+                    Metadata(
+                        inputs = actionManifestHasNoInputs,
+                        name = "Action With No Inputs",
+                        description = "Description",
+                    )
+
+                val coords = ActionCoords("john-smith", "action-binding-$bindingVersion-with", "v3", FULL, "sub/action")
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile("ActionBinding${bindingVersion.name}WithSubAction.kt")
+            }
+
+            test("action with deprecated input resolving to the same Kotlin field name") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        inputs =
+                            mapOf(
+                                "foo-bar" to
+                                    Input(
+                                        description = "Foo bar - old",
+                                        required = true,
+                                        default = null,
+                                        deprecationMessage = "Use 'fooBar'!",
+                                    ),
+                                "fooBar" to
+                                    Input(
+                                        description = "Foo bar - new",
+                                        required = true,
+                                        default = null,
+                                    ),
+                            ),
+                        name = "Some Action",
+                        description = "Description",
+                    )
+
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "action-with-deprecated-input-and-name-clash-binding-$bindingVersion",
+                        "v2",
+                    )
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = actionManifest.allInputsAsStrings(),
+                                source = ACTION,
+                            ),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile(
+                    "ActionWithDeprecatedInputAndNameClashBinding${bindingVersion.name}.kt",
                 )
-            val coords = ActionCoords("john-smith", "action-with-comment", "v3", comment = "some-comment")
+            }
 
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
-                )
+            test("action with inputs sharing type") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Do something cool",
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "foo-one" to
+                                    Input(
+                                        required = true,
+                                        default = null,
+                                    ),
+                                "foo-two" to
+                                    Input(
+                                        required = true,
+                                        default = null,
+                                    ),
+                                "foo-three" to
+                                    Input(
+                                        required = false,
+                                        default = "test",
+                                    ),
+                            ),
+                    )
+                val coords = ActionCoords("john-smith", "action-with-inputs-sharing-type-binding-$bindingVersion", "v3")
 
-            // then
-            binding.shouldContainAndMatchFile("ActionWithComment.kt")
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings =
+                                    mapOf(
+                                        "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                                        "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                                        "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                                    ),
+                                source = ACTION,
+                            ),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile("ActionWithInputsSharingTypeBinding${bindingVersion.name}.kt")
+            }
+
+            test("action with input descriptions with fancy characters") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Do something cool",
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "nested-kotlin-comments" to
+                                    Input(
+                                        description = "This is a /* test */",
+                                    ),
+                                "percent" to
+                                    Input(
+                                        description = "For example \"100%\"",
+                                    ),
+                            ),
+                    )
+                val coords = ActionCoords("john-smith", "action-with-fancy-chars-in-docs-binding-$bindingVersion", "v3")
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = actionManifest.allInputsAsStrings(),
+                                source = ACTION,
+                            ),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile("ActionWithFancyCharsInDocsBinding${bindingVersion.name}.kt")
+            }
+
+            test("action with no typings has only an untyped binding") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Do something cool",
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "foo" to
+                                    Input(
+                                        required = true,
+                                        default = null,
+                                    ),
+                                "bar" to
+                                    Input(
+                                        required = false,
+                                        default = "test",
+                                    ),
+                            ),
+                    )
+                val coords = ActionCoords("john-smith", "action-with-no-typings-binding-$bindingVersion", "v3")
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = null),
+                    )
+
+                // then
+                binding shouldHaveSize 1
+                binding.shouldContainAndMatchFile("ActionWithNoTypingsBinding${bindingVersion.name}_Untyped.kt")
+            }
+
+            test("action with partly typings has only untyped properties for the non-typed inputs") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Do something cool",
+                        description = "This is a test description that should be put in the KDoc comment for a class",
+                        inputs =
+                            mapOf(
+                                "foo" to
+                                    Input(
+                                        required = true,
+                                        default = null,
+                                    ),
+                                "bar" to
+                                    Input(
+                                        required = false,
+                                        default = "test",
+                                    ),
+                                "baz" to
+                                    Input(
+                                        required = true,
+                                    ),
+                            ),
+                    )
+                val coords = ActionCoords("john-smith", "action-with-partly-typings-binding-$bindingVersion", "v3")
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = mapOf("foo" to IntegerTyping),
+                                source = TYPING_CATALOG,
+                            ),
+                    )
+
+                // then
+                assertSoftly {
+                    binding.shouldContainAndMatchFile("ActionWithPartlyTypingsBinding${bindingVersion.name}.kt")
+                    binding.shouldContainAndMatchFile("ActionWithPartlyTypingsBinding${bindingVersion.name}_Untyped.kt")
+                }
+            }
+
+            test("action with no inputs with major version") {
+                // given
+                val actionManifestHasNoInputs = emptyMap<String, Input>()
+                val actionManifest =
+                    Metadata(
+                        inputs = actionManifestHasNoInputs,
+                        name = "Action With No Inputs",
+                        description = "Description",
+                    )
+
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "action-with-no-inputs-with-major-version-$bindingVersion",
+                        "v3.1.3",
+                        MAJOR,
+                    )
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                    )
+
+                // then
+                assertSoftly {
+                    binding.shouldContainAndMatchFile(
+                        "ActionWithNoInputsWithMajorVersion${bindingVersion.name}.kt",
+                    )
+                    binding.shouldContainAndMatchFile(
+                        "ActionWithNoInputsWithMajorVersion${bindingVersion.name}_Untyped.kt",
+                    )
+                }
+            }
+
+            test("action with no inputs with minor version") {
+                // given
+                val actionManifestHasNoInputs = emptyMap<String, Input>()
+                val actionManifest =
+                    Metadata(
+                        inputs = actionManifestHasNoInputs,
+                        name = "Action With No Inputs",
+                        description = "Description",
+                    )
+
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "action-with-no-inputs-with-minor-version-$bindingVersion",
+                        "v3.1.3",
+                        MINOR,
+                    )
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                    )
+
+                // then
+                assertSoftly {
+                    binding.shouldContainAndMatchFile(
+                        "ActionWithNoInputsWithMinorVersion${bindingVersion.name}.kt",
+                    )
+                    binding.shouldContainAndMatchFile(
+                        "ActionWithNoInputsWithMinorVersion${bindingVersion.name}_Untyped.kt",
+                    )
+                }
+            }
+
+            test("action with comment") {
+                // given
+                val actionManifest =
+                    Metadata(
+                        name = "Action with comment",
+                        description = "Do something cool",
+                        inputs =
+                            mapOf(
+                                "foo" to
+                                    Input(
+                                        description = "Short description",
+                                        required = true,
+                                        default = null,
+                                    ),
+                            ),
+                    )
+                val coords =
+                    ActionCoords(
+                        "john-smith",
+                        "action-with-comment-$bindingVersion",
+                        "v3",
+                        comment = "some-comment",
+                    )
+
+                // when
+                val binding =
+                    coords.generateBinding(
+                        bindingVersion = bindingVersion,
+                        metadataRevision = NewestForVersion,
+                        metadata = actionManifest,
+                        inputTypings =
+                            ActionTypings(
+                                inputTypings = actionManifest.allInputsAsStrings(),
+                                source = ACTION,
+                            ),
+                    )
+
+                // then
+                binding.shouldContainAndMatchFile("ActionWithComment${bindingVersion.name}.kt")
+            }
         }
     })
 

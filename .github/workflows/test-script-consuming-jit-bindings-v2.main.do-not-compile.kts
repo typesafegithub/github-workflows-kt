@@ -5,16 +5,16 @@
 @file:Repository("http://localhost:8080")
 
 // Regular, top-level action.
-@file:DependsOn("actions:checkout:binding_version_v1___v4")
+@file:DependsOn("actions:checkout:binding_version_v2___v4-beta")
 
 // Nested action.
-@file:DependsOn("gradle:actions__setup-gradle:binding_version_v1___v3")
+@file:DependsOn("gradle:actions__setup-gradle:binding_version_v2___v3-beta")
 
 // Using specific version.
-@file:DependsOn("actions:cache:binding_version_v1___v3.3.3")
+@file:DependsOn("actions:cache:binding_version_v2___v3.3.3-beta")
 
 // Always untyped action.
-@file:DependsOn("typesafegithub:always-untyped-action-for-tests:binding_version_v1___v1")
+@file:DependsOn("typesafegithub:always-untyped-action-for-tests:binding_version_v2___v1-beta")
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
