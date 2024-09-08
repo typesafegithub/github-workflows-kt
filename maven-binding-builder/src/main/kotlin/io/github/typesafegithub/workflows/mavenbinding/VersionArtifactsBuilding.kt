@@ -13,17 +13,17 @@ data class JarArtifact(
 ) : Artifact
 
 fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
-    val jars = buildJars(owner = owner, name = name.replace("__", "/"), version = version) ?: return null
-    val pom = buildPomFile(owner = owner, name = name.replace("__", "/"), version = version)
-    val module = buildModuleFile(owner = owner, name = name.replace("__", "/"), version = version)
+    val jars = buildJars() ?: return null
+    val pom = buildPomFile()
+    val module = buildModuleFile()
     return mapOf(
-        "$name-$version.jar" to JarArtifact(jars.mainJar),
-        "$name-$version.jar.md5" to TextArtifact { jars.mainJar().md5Checksum() },
-        "$name-$version-sources.jar" to JarArtifact(jars.sourcesJar),
-        "$name-$version-sources.jar.md5" to TextArtifact { jars.sourcesJar().md5Checksum() },
-        "$name-$version.pom" to TextArtifact { pom },
-        "$name-$version.pom.md5" to TextArtifact { pom.md5Checksum() },
-        "$name-$version.module" to TextArtifact { module },
-        "$name-$version.module.md5" to TextArtifact { module.md5Checksum() },
+        "$mavenName-$version.jar" to JarArtifact(jars.mainJar),
+        "$mavenName-$version.jar.md5" to TextArtifact { jars.mainJar().md5Checksum() },
+        "$mavenName-$version-sources.jar" to JarArtifact(jars.sourcesJar),
+        "$mavenName-$version-sources.jar.md5" to TextArtifact { jars.sourcesJar().md5Checksum() },
+        "$mavenName-$version.pom" to TextArtifact { pom },
+        "$mavenName-$version.pom.md5" to TextArtifact { pom.md5Checksum() },
+        "$mavenName-$version.module" to TextArtifact { module },
+        "$mavenName-$version.module.md5" to TextArtifact { module.md5Checksum() },
     )
 }

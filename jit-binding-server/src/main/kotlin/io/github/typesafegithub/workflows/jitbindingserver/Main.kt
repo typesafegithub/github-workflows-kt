@@ -72,13 +72,15 @@ private fun Route.metadata(refresh: Boolean = false) {
         }
 
         val owner = call.parameters["owner"]!!
-        val name = call.parameters["name"]!!
+        val nameAndPath = call.parameters["name"]!!.split("__")
+        val name = nameAndPath.first()
         val file = call.parameters["file"]!!
         val actionCoords =
             ActionCoords(
                 owner = owner,
                 name = name,
                 version = "irrelevant",
+                path = nameAndPath.drop(1).joinToString("/").takeUnless { it.isBlank() },
             )
         val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = getGithubToken())
         if (file in bindingArtifacts) {
@@ -143,13 +145,15 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
 ): Map<String, Artifact>? {
     val owner = parameters["owner"]!!
-    val name = parameters["name"]!!
+    val nameAndPath = parameters["name"]!!.split("__")
+    val name = nameAndPath.first()
     val version = parameters["version"]!!
     val actionCoords =
         ActionCoords(
             owner = owner,
             name = name,
             version = version,
+            path = nameAndPath.drop(1).joinToString("/").takeUnless { it.isBlank() },
         )
     println("➡️ Requesting ${actionCoords.prettyPrint}")
     val bindingArtifacts =

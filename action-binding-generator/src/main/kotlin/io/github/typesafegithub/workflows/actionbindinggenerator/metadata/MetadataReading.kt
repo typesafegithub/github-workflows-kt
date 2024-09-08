@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
@@ -35,15 +36,9 @@ public data class Output(
     val description: String = "",
 )
 
-private fun ActionCoords.actionYmlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/${name.substringBefore(
-        '/',
-    )}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
+private fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yml"
 
-private fun ActionCoords.actionYamlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/${name.substringBefore(
-        '/',
-    )}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
+private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
 
 internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
