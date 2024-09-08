@@ -16,19 +16,31 @@ import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
 import kotlin.collections.Map
+import kotlin.collections.toList
+import kotlin.collections.toTypedArray
 
 /**
- * Action: Action With No Inputs
+ * Action: Some Action
  *
  * Description
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-deprecated-input-and-name-clash-binding-v1)
  *
+ * @param fooBar &lt;required&gt; Foo bar - new
+ * @param fooBar_Untyped &lt;required&gt; Foo bar - new
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithNoInputs private constructor(
+public data class ActionWithDeprecatedInputAndNameClashBindingV1 private constructor(
+    /**
+     * &lt;required&gt; Foo bar - new
+     */
+    public val fooBar: String? = null,
+    /**
+     * &lt;required&gt; Foo bar - new
+     */
+    public val fooBar_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -37,15 +49,32 @@ public data class ActionWithNoInputs private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-no-inputs", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-deprecated-input-and-name-clash-binding-v1", _customVersion ?: "v2") {
+    init {
+        require(!((fooBar != null) && (fooBar_Untyped != null))) {
+            "Only fooBar or fooBar_Untyped must be set, but not both"
+        }
+        require((fooBar != null) || (fooBar_Untyped != null)) {
+            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+        }
+    }
+
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
+        fooBar: String? = null,
+        fooBar_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(_customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
-    override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(_customInputs)
+    override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
+        *listOfNotNull(
+            fooBar?.let { "fooBar" to it },
+            fooBar_Untyped?.let { "fooBar" to it },
+            *_customInputs.toList().toTypedArray(),
+        ).toTypedArray()
+    )
 
     override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }
