@@ -20,25 +20,25 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- * Action: Some Action
+ * Action: Do something cool
  *
- * Description
+ * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-deprecated-input-and-name-clash)
+ * [Action on GitHub](https://github.com/john-smith/action-with-outputs-binding-v1)
  *
- * @param fooBar &lt;required&gt; Foo bar - new
- * @param fooBar_Untyped &lt;required&gt; Foo bar - new
+ * @param fooBar &lt;required&gt; Short description
+ * @param fooBar_Untyped &lt;required&gt; Short description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithDeprecatedInputAndNameClash private constructor(
+public data class ActionWithOutputsBindingV1 private constructor(
     /**
-     * &lt;required&gt; Foo bar - new
+     * &lt;required&gt; Short description
      */
     public val fooBar: String? = null,
     /**
-     * &lt;required&gt; Foo bar - new
+     * &lt;required&gt; Short description
      */
     public val fooBar_Untyped: String? = null,
     /**
@@ -49,7 +49,7 @@ public data class ActionWithDeprecatedInputAndNameClash private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-deprecated-input-and-name-clash", _customVersion ?: "v2") {
+) : RegularAction<ActionWithOutputsBindingV1.Outputs>("john-smith", "action-with-outputs-binding-v1", _customVersion ?: "v3") {
     init {
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
@@ -70,11 +70,25 @@ public data class ActionWithDeprecatedInputAndNameClash private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            fooBar?.let { "fooBar" to it },
-            fooBar_Untyped?.let { "fooBar" to it },
+            fooBar?.let { "foo-bar" to it },
+            fooBar_Untyped?.let { "foo-bar" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
+    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+
+    public class Outputs(
+        stepId: String,
+    ) : Action.Outputs(stepId) {
+        /**
+         * Cool output!
+         */
+        public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
+
+        /**
+         * Another output...
+         */
+        public val looWoz: String = "steps.$stepId.outputs.loo-woz"
+    }
 }

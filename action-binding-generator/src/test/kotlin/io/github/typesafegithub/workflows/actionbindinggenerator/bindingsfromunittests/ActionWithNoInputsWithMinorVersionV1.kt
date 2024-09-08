@@ -22,13 +22,13 @@ import kotlin.collections.Map
  *
  * Description
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs-with-minor-version)
+ * [Action on GitHub](https://github.com/john-smith/action-with-no-inputs-with-minor-version-v1)
  *
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithNoInputsWithMinorVersion private constructor(
+public data class ActionWithNoInputsWithMinorVersionV1 private constructor(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -37,7 +37,7 @@ public data class ActionWithNoInputsWithMinorVersion private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-no-inputs-with-minor-version", _customVersion ?: "v3.1") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-no-inputs-with-minor-version-v1", _customVersion ?: "v3.1") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         _customInputs: Map<String, String> = mapOf(),

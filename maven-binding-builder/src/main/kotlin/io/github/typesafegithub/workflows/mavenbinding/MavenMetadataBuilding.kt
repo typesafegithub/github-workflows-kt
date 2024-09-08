@@ -38,11 +38,11 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
     prefetchBindingArtifacts(
         availableVersions.flatMap {
             flow {
-                emit(V1 to "")
-                BindingVersion.entries.forEach { emit(it to "binding_version_${it}___") }
-            }.map { (bindingVersion, versionPrefix) ->
+                BindingVersion.entries.forEach { emit(it) }
+            }.map { bindingVersion ->
                 copy(
-                    rawVersion = "$versionPrefix$it${if (commitLenient) "__${it.getSha()}" else ""}",
+                    rawVersion =
+                        "binding_version_${bindingVersion}___$it${if (commitLenient) "__${it.getSha()}" else ""}${if (bindingVersion.isExperimental) "-beta" else ""}",
                     bindingVersion = bindingVersion,
                     actionCoords =
                         actionCoords.copy(
@@ -59,21 +59,23 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
         DateTimeFormatter
             .ofPattern("yyyyMMddHHmmss")
             .format(newest.getReleaseDate())
+    val latestStableBindingVersion = BindingVersion.entries.last { !it.isExperimental }
     return """
         <?xml version="1.0" encoding="UTF-8"?>
         <metadata>
           <groupId>${actionCoords.owner}</groupId>
           <artifactId>$rawName</artifactId>
           <versioning>
-            <latest>binding_version_${BindingVersion.entries.last()}___$newest${if (commitLenient) "__${newest.getSha()}" else ""}</latest>
-            <release>binding_version_${BindingVersion.entries.last()}___$newest${if (commitLenient) "__${newest.getSha()}" else ""}</release>
+            <latest>binding_version_${latestStableBindingVersion}___$newest${if (commitLenient) "__${newest.getSha()}" else ""}</latest>
+            <release>binding_version_${latestStableBindingVersion}___$newest${if (commitLenient) "__${newest.getSha()}" else ""}</release>
             <versions>
 ${availableVersions.map {
         flow {
-            emit("")
-            BindingVersion.entries.forEach { emit("binding_version_${it}___") }
-        }.map { versionPrefix ->
-            "              <version>$versionPrefix$it${if (commitLenient) "__${it.getSha()}" else ""}</version>"
+            BindingVersion.entries.forEach {
+                emit("binding_version_${it}___" to (if (it.isExperimental) "-beta" else ""))
+            }
+        }.map { (versionPrefix, versionSuffix) ->
+            "              <version>$versionPrefix$it${if (commitLenient) "__${it.getSha()}" else ""}$versionSuffix</version>"
         }.toList()
             .joinToString(separator = "\n")
     }.joinToString(separator = "\n")}

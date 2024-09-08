@@ -1,9 +1,15 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.domain.actions.Action
+import io.kotest.engine.mapError
 import io.kotest.matchers.Matcher.Companion.failure
 import io.kotest.matchers.shouldBe
+import java.lang.reflect.InvocationTargetException
 import java.nio.file.Paths
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.jvm.isAccessible
 
 fun List<ActionBinding>.shouldContainAndMatchFile(path: String) {
     val binding =
@@ -37,3 +43,29 @@ fun List<ActionBinding>.shouldContainAndMatchFile(path: String) {
 }
 
 private fun String.removeWindowsNewLines(): String = replace("\r\n", "\n")
+
+fun constructAction(
+    owner: String,
+    classBaseName: String,
+    bindingVersion: BindingVersion,
+    arguments: Map<String, Any?> = emptyMap(),
+): Action<*> {
+    val constructor =
+        Class
+            .forName("io.github.typesafegithub.workflows.actions.$owner.${classBaseName}Binding${bindingVersion.name}")
+            .let {
+                @Suppress("UNCHECKED_CAST")
+                it as Class<Action<*>>
+            }.kotlin
+            .let { it.primaryConstructor ?: it.constructors.first() }
+            .apply { isAccessible = true }
+    return runCatching {
+        constructor.callBy(
+            arguments.mapKeys { (key, _) ->
+                constructor.parameters.first { it.name == key }
+            },
+        )
+    }.mapError {
+        if (it is InvocationTargetException) it.targetException else it
+    }.getOrThrow()
+}

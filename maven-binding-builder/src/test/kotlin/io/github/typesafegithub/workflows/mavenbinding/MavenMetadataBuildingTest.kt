@@ -61,6 +61,7 @@ class MavenMetadataBuildingTest :
                     prefetchBindingArtifacts = { prefetchedCoords = it },
                 )
 
+            val latestStableBindingVersion = BindingVersion.entries.last { !it.isExperimental }
             xml shouldBe
                 """
                 <?xml version="1.0" encoding="UTF-8"?>
@@ -68,21 +69,15 @@ class MavenMetadataBuildingTest :
                   <groupId>owner</groupId>
                   <artifactId>name</artifactId>
                   <versioning>
-                    <latest>binding_version_${BindingVersion.entries.last()}___v2</latest>
-                    <release>binding_version_${BindingVersion.entries.last()}___v2</release>
+                    <latest>binding_version_${latestStableBindingVersion}___v2</latest>
+                    <release>binding_version_${latestStableBindingVersion}___v2</release>
                     <versions>
-                      <version>v2</version>
-${
-                    BindingVersion.entries.map {
-                        "                      <version>binding_version_${it}___v2</version>"
-                    }.joinToString(separator = "\n")
-                }
-                      <version>v1</version>
-${
-                    BindingVersion.entries.map {
-                        "                      <version>binding_version_${it}___v1</version>"
-                    }.joinToString(separator = "\n")
-                }
+${BindingVersion.entries.joinToString(separator = "\n") {
+                    "                      <version>binding_version_${it}___v2${if (it.isExperimental) "-beta" else ""}</version>"
+                }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                    "                      <version>binding_version_${it}___v1${if (it.isExperimental) "-beta" else ""}</version>"
+                }}
                     </versions>
                     <lastUpdated>20240501000000</lastUpdated>
                   </versioning>
@@ -92,33 +87,12 @@ ${
             prefetchedCoords shouldNotBe null
             prefetchedCoords shouldContainExactlyInAnyOrder
                 sequence {
-                    yield(
-                        bindingsServerRequest.copy(
-                            rawName = "name",
-                            rawVersion = "v1",
-                            actionCoords =
-                                bindingsServerRequest.actionCoords.copy(
-                                    version = "v1",
-                                    versionForTypings = "v1",
-                                ),
-                        ),
-                    )
-                    yield(
-                        bindingsServerRequest.copy(
-                            rawName = "name",
-                            rawVersion = "v2",
-                            actionCoords =
-                                bindingsServerRequest.actionCoords.copy(
-                                    version = "v2",
-                                    versionForTypings = "v2",
-                                ),
-                        ),
-                    )
                     BindingVersion.entries.forEach { bindingVersion ->
                         yield(
                             bindingsServerRequest.copy(
                                 rawName = "name",
-                                rawVersion = "binding_version_${bindingVersion}___v1",
+                                rawVersion =
+                                    "binding_version_${bindingVersion}___v1${if (bindingVersion.isExperimental) "-beta" else ""}",
                                 bindingVersion = bindingVersion,
                                 actionCoords =
                                     bindingsServerRequest.actionCoords.copy(
@@ -130,7 +104,8 @@ ${
                         yield(
                             bindingsServerRequest.copy(
                                 rawName = "name",
-                                rawVersion = "binding_version_${bindingVersion}___v2",
+                                rawVersion =
+                                    "binding_version_${bindingVersion}___v2${if (bindingVersion.isExperimental) "-beta" else ""}",
                                 bindingVersion = bindingVersion,
                                 actionCoords =
                                     bindingsServerRequest.actionCoords.copy(
@@ -271,6 +246,7 @@ ${
                             prefetchBindingArtifacts = { prefetchedCoords = it },
                         )
 
+                val latestStableBindingVersion = BindingVersion.entries.last { !it.isExperimental }
                 val commitLenient = significantVersion == COMMIT_LENIENT
                 xml shouldBe
                     """
@@ -279,57 +255,33 @@ ${
                       <groupId>owner</groupId>
                       <artifactId>name___$significantVersion</artifactId>
                       <versioning>
-                        <latest>binding_version_${BindingVersion.entries.last()}___v2${if (commitLenient) "__2" else ""}</latest>
-                        <release>binding_version_${BindingVersion.entries.last()}___v2${if (commitLenient) "__2" else ""}</release>
+                        <latest>binding_version_${latestStableBindingVersion}___v2${if (commitLenient) "__2" else ""}</latest>
+                        <release>binding_version_${latestStableBindingVersion}___v2${if (commitLenient) "__2" else ""}</release>
                         <versions>
-                          <version>v3-beta${if (commitLenient) "__1" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v3-beta${if (commitLenient) "__1" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v2${if (commitLenient) "__2" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v2${if (commitLenient) "__2" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v1${if (commitLenient) "__3" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v1${if (commitLenient) "__3" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v1.1${if (commitLenient) "__4" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v1.1${if (commitLenient) "__4" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v1.1.0${if (commitLenient) "__5" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v1.1.0${if (commitLenient) "__5" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v1.0.1${if (commitLenient) "__6" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v1.0.1${if (commitLenient) "__6" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v1.0${if (commitLenient) "__7" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v1.0${if (commitLenient) "__7" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
-                          <version>v1.0.0${if (commitLenient) "__8" else ""}</version>
-${
-                        BindingVersion.entries.map {
-                            "                          <version>binding_version_${it}___v1.0.0${if (commitLenient) "__8" else ""}</version>"
-                        }.joinToString(separator = "\n")
-                    }
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v3-beta${if (commitLenient) "__1" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v2${if (commitLenient) "__2" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v1${if (commitLenient) "__3" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v1.1${if (commitLenient) "__4" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v1.1.0${if (commitLenient) "__5" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v1.0.1${if (commitLenient) "__6" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v1.0${if (commitLenient) "__7" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
+${BindingVersion.entries.joinToString(separator = "\n") {
+                        "                          <version>binding_version_${it}___v1.0.0${if (commitLenient) "__8" else ""}${if (it.isExperimental) "-beta" else ""}</version>"
+                    }}
                         </versions>
                         <lastUpdated>20240501000000</lastUpdated>
                       </versioning>
@@ -340,27 +292,12 @@ ${
                 prefetchedCoords shouldContainExactlyInAnyOrder
                     flow {
                         availableVersions.map { it to it.getSha() }.forEach { (availableVersion, sha) ->
-                            emit(
-                                bindingsServerRequest.copy(
-                                    rawName = "name___$significantVersion",
-                                    rawVersion =
-                                        "$availableVersion${if (commitLenient) "__${availableVersion.getSha()}" else ""}",
-                                    actionCoords =
-                                        bindingsServerRequest.actionCoords.copy(
-                                            version =
-                                                if (commitLenient) availableVersion.getSha()!! else "$availableVersion",
-                                            comment = if (commitLenient) "$availableVersion" else null,
-                                            significantVersion = significantVersion,
-                                            versionForTypings = "$availableVersion",
-                                        ),
-                                ),
-                            )
                             BindingVersion.entries.forEach { bindingVersion ->
                                 emit(
                                     bindingsServerRequest.copy(
                                         rawName = "name___$significantVersion",
                                         rawVersion =
-                                            "binding_version_${bindingVersion}___$availableVersion${if (commitLenient) "__${availableVersion.getSha()}" else ""}",
+                                            "binding_version_${bindingVersion}___$availableVersion${if (commitLenient) "__${availableVersion.getSha()}" else ""}${if (bindingVersion.isExperimental) "-beta" else ""}",
                                         bindingVersion = bindingVersion,
                                         actionCoords =
                                             bindingsServerRequest.actionCoords.copy(
