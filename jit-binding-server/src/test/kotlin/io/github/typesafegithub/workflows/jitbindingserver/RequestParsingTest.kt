@@ -19,27 +19,40 @@ class RequestParsingTest :
     FunSpec(
         {
             withContexts(
-                nameFn = { """version prefix "${it.second}"""" },
+                nameFn = { """version prefix "${it.second}", version suffix "${it.third}"""" },
                 ts =
                     sequence {
-                        yield(V1 to "")
-                        BindingVersion.entries.forEach { yield(it to "binding_version_${it}___") }
+                        yield(Triple(V1, "", ""))
+                        BindingVersion.entries.forEach {
+                            yield(
+                                Triple(
+                                    it,
+                                    "binding_version_${it}___",
+                                    if (it.isExperimental) "-beta" else "",
+                                ),
+                            )
+                        }
                         yield(
-                            null to "binding_version_v${
-                                BindingVersion
-                                    .entries
-                                    .last()
-                                    .name
-                                    .substringAfter('V')
-                                    .toInt() + 1
-                            }___",
+                            Triple(
+                                null,
+                                "binding_version_v${
+                                    BindingVersion
+                                        .entries
+                                        .last()
+                                        .name
+                                        .substringAfter('V')
+                                        .toInt() + 1
+                                }___",
+                                "",
+                            ),
                         )
-                        yield(null to "binding-version_v1___")
+                        yield(Triple(null, "binding-version_v1___", ""))
                     },
-            ) { (bindingVersion, versionPrefix) ->
+            ) { (bindingVersion, versionPrefix, versionSuffix) ->
                 context("parseRequest") {
                     test("parses owner/name with version and no path, FULL by default") {
-                        val parameters = createParameters(owner = "o", name = "act", version = "${versionPrefix}v1")
+                        val parameters =
+                            createParameters(owner = "o", name = "act", version = "${versionPrefix}v1$versionSuffix")
 
                         if (bindingVersion == null) {
                             parameters.parseRequest(extractVersion = true).shouldBeNull()
@@ -47,7 +60,7 @@ class RequestParsingTest :
                             parameters.parseRequest(extractVersion = true) shouldBe
                                 BindingsServerRequest(
                                     rawName = "act",
-                                    rawVersion = "${versionPrefix}v1",
+                                    rawVersion = "${versionPrefix}v1$versionSuffix",
                                     bindingVersion = bindingVersion,
                                     actionCoords =
                                         ActionCoords(
@@ -63,7 +76,11 @@ class RequestParsingTest :
 
                     test("parses owner/name with path and significant version suffix") {
                         val parameters =
-                            createParameters(owner = "o", name = "act__p1__p2___major", version = "${versionPrefix}v9")
+                            createParameters(
+                                owner = "o",
+                                name = "act__p1__p2___major",
+                                version = "${versionPrefix}v9$versionSuffix",
+                            )
 
                         if (bindingVersion == null) {
                             parameters.parseRequest(extractVersion = true).shouldBeNull()
@@ -71,7 +88,7 @@ class RequestParsingTest :
                             parameters.parseRequest(extractVersion = true) shouldBe
                                 BindingsServerRequest(
                                     rawName = "act__p1__p2___major",
-                                    rawVersion = "${versionPrefix}v9",
+                                    rawVersion = "${versionPrefix}v9$versionSuffix",
                                     bindingVersion = bindingVersion,
                                     actionCoords =
                                         ActionCoords(
@@ -128,7 +145,7 @@ class RequestParsingTest :
                             createParameters(
                                 owner = "o",
                                 name = "my_action-name__dir_one__dir-two___minor",
-                                version = "${versionPrefix}v2",
+                                version = "${versionPrefix}v2$versionSuffix",
                             )
 
                         if (bindingVersion == null) {
@@ -137,7 +154,7 @@ class RequestParsingTest :
                             parameters.parseRequest(extractVersion = true) shouldBe
                                 BindingsServerRequest(
                                     rawName = "my_action-name__dir_one__dir-two___minor",
-                                    rawVersion = "${versionPrefix}v2",
+                                    rawVersion = "${versionPrefix}v2$versionSuffix",
                                     bindingVersion = bindingVersion,
                                     actionCoords =
                                         ActionCoords(
@@ -156,7 +173,8 @@ class RequestParsingTest :
                             createParameters(
                                 owner = "o",
                                 name = "act___commit_lenient",
-                                version = "${versionPrefix}v1.2.3__323898970401d85df44b3324a610af9a862d54b3",
+                                version =
+                                    "${versionPrefix}v1.2.3__323898970401d85df44b3324a610af9a862d54b3$versionSuffix",
                             )
 
                         if (bindingVersion == null) {
@@ -165,7 +183,9 @@ class RequestParsingTest :
                             parameters.parseRequest(extractVersion = true) shouldBe
                                 BindingsServerRequest(
                                     rawName = "act___commit_lenient",
-                                    rawVersion = "${versionPrefix}v1.2.3__323898970401d85df44b3324a610af9a862d54b3",
+                                    rawVersion =
+                                        "${versionPrefix}v1.2.3__323898970401d85df44b3324a610af9a862d54b3" +
+                                            versionSuffix,
                                     bindingVersion = bindingVersion,
                                     actionCoords =
                                         ActionCoords(
@@ -186,7 +206,7 @@ class RequestParsingTest :
                             createParameters(
                                 owner = "o",
                                 name = "act___commit_lenient",
-                                version = "${versionPrefix}v1.2.3",
+                                version = "${versionPrefix}v1.2.3$versionSuffix",
                             )
 
                         parameters.parseRequest(extractVersion = true).shouldBeNull()
