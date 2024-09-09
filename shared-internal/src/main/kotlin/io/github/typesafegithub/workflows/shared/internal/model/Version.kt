@@ -1,7 +1,10 @@
 package io.github.typesafegithub.workflows.shared.internal.model
 
+import java.time.ZonedDateTime
+
 data class Version(
     val version: String,
+    private val dateProvider: suspend () -> ZonedDateTime? = { null },
 ) : Comparable<Version> {
     val input: String = version.removePrefix("v").removePrefix("V")
     val major = input.substringBefore(".").toIntOrNull() ?: 0
@@ -23,4 +26,6 @@ data class Version(
     override fun toString(): String = version
 
     fun isMajorVersion(): Boolean = version.contains(".").not()
+
+    suspend fun getReleaseDate() = dateProvider()
 }
