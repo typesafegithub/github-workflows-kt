@@ -9,6 +9,7 @@
 * [github-workflows-kt](https://github.com/typesafegithub/github-workflows-kt/tree/main/.github/workflows) (this library - we [dogfood](https://en.wikipedia.org/wiki/Eating_your_own_dog_food), of course)
 * [gradle-release-plugin](https://github.com/cloudshiftinc/gradle-release-plugin/tree/main/.github/workflows)
 * [greenback](https://github.com/DoudemoEthernet/greenback/tree/main/.github/workflows)
+* [jEdit-test](https://github.com/jEdit-editor/jEdit-test/tree/master/.github/workflows)
 * [Jopiter](https://github.com/JopiterApp/jopiter-backend/tree/master/.github/workflows)
 * [kotlin-python](https://github.com/krzema12/kotlin-python/tree/python-backend/.github/workflows)
 * [markout](https://github.com/mfwgenerics/markout/tree/main/markout-github-workflows-kt)
