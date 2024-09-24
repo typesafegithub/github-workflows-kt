@@ -12,6 +12,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.repoName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
+import it.krzeminski.snakeyaml.engine.kmp.api.Load
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
@@ -79,7 +80,7 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
         } catch (e: IOException) {
             return null
         }
-    val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
+    val metadata = yaml.protectedDecodeFromString<CatalogMetadata>(metadataYml)
     val fallbackVersion =
         metadata.versionsWithTypings
             .filter { it.versionToInt() < this.version.versionToInt() }
@@ -146,10 +147,17 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
     default: T,
 ): T =
     if (text.isNotBlank()) {
-        decodeFromString(text)
+        protectedDecodeFromString(text)
     } else {
         default
     }
+
+private inline fun <reified T> Yaml.protectedDecodeFromString(text: String): T {
+    // protect against billion laughs attack until
+    // https://github.com/charleskorn/kaml/pull/620 is available
+    Load().loadOne(text)
+    return decodeFromString(text)
+}
 
 private fun String.versionToInt() = lowercase().removePrefix("v").toInt()
 
