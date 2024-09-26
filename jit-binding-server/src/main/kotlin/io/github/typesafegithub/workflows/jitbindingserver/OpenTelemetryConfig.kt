@@ -41,8 +41,8 @@ internal fun buildOpenTelemetryConfig(
             .setTimeout(30, TimeUnit.SECONDS)
             .build()
 
-    val metricExporter = OtlpGrpcMetricExporter.builder().build()
-    val recordExporter = OtlpGrpcLogRecordExporter.builder().build()
+    val metricExporter = OtlpGrpcMetricExporter.builder().setEndpoint(endpointConfig).build()
+    val recordExporter = OtlpGrpcLogRecordExporter.builder().setEndpoint(endpointConfig).build()
 
     val resource =
         Resource
