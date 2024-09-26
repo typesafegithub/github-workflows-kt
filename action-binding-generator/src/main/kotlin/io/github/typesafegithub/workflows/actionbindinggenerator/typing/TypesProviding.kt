@@ -80,9 +80,10 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
             return null
         }
     val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
+    val requestedVersionAsInt = this.version.versionToIntOrNull() ?: return null
     val fallbackVersion =
         metadata.versionsWithTypings
-            .filter { it.versionToInt() < this.version.versionToInt() }
+            .filter { it.versionToInt() < requestedVersionAsInt }
             .maxByOrNull { it.versionToInt() }
             ?: run {
                 println("  ... no fallback version found!")
@@ -151,7 +152,9 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
         default
     }
 
-private fun String.versionToInt() = lowercase().removePrefix("v").toInt()
+private fun String.versionToInt() = this.versionToIntOrNull() ?: error("Version '$this' cannot be treated as numeric!")
+
+private fun String.versionToIntOrNull() = lowercase().removePrefix("v").toIntOrNull()
 
 private val yaml =
     Yaml(
