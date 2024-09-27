@@ -26,7 +26,7 @@ docker run --rm \
 -p 4317:4317 \
 -p 4318:4318 \
 -p 9411:9411 \
-jaegertracing/alsl-in-one:latest
+jaegertracing/all-in-one:latest
 
 UI available at http://localhost:16686/
 */
@@ -41,8 +41,8 @@ internal fun buildOpenTelemetryConfig(
             .setTimeout(30, TimeUnit.SECONDS)
             .build()
 
-    val metricExporter = OtlpGrpcMetricExporter.builder().build()
-    val recordExporter = OtlpGrpcLogRecordExporter.builder().build()
+    val metricExporter = OtlpGrpcMetricExporter.builder().setEndpoint(endpointConfig).build()
+    val recordExporter = OtlpGrpcLogRecordExporter.builder().setEndpoint(endpointConfig).build()
 
     val resource =
         Resource

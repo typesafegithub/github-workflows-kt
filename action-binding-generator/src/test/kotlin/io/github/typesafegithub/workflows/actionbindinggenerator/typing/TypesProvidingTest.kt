@@ -541,4 +541,32 @@ class TypesProvidingTest :
                 exception.message shouldBe "Number of aliases for non-scalar nodes exceeds the specified max=50"
             }
         }
+
+        test("non-numeric version is provided and metadata in typing catalog exists") {
+            // Given
+            val metadata =
+                """
+                "versionsWithTypings":
+                - "v2"
+                - "v3"
+                - "v4"
+                """.trimIndent()
+            val fetchUri: (URI) -> String = {
+                when (it) {
+                    URI(
+                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/metadata.yml",
+                    ),
+                    -> metadata
+                    else -> throw IOException()
+                }
+            }
+            val actionCoord = ActionCoords("some-owner", "some-name", "v6-beta")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+            // Then
+            types shouldBe Pair(emptyMap(), null)
+        }
     })
