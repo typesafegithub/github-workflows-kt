@@ -3,8 +3,10 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import it.krzeminski.snakeyaml.engine.kmp.exceptions.YamlEngineException
 import java.io.IOException
 import java.net.URI
 
@@ -507,6 +509,36 @@ class TypesProvidingTest :
                         ),
                         TypingActualSource.TYPING_CATALOG,
                     )
+            }
+
+            test("billion laughs attack is prevented") {
+                // Given
+                val billionLaughsAttack =
+                    """
+                    a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+                    b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+                    c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+                    d: &d [*c,*c,*c,*c,*c,*c,*c,*c,*c]
+                    e: &e [*d,*d,*d,*d,*d,*d,*d,*d,*d]
+                    f: &f [*e,*e,*e,*e,*e,*e,*e,*e,*e]
+                    g: &g [*f,*f,*f,*f,*f,*f,*f,*f,*f]
+                    h: &h [*g,*g,*g,*g,*g,*g,*g,*g,*g]
+                    i: &i [*h,*h,*h,*h,*h,*h,*h,*h,*h]
+                    """.trimIndent()
+                val fetchUri: (URI) -> String = {
+                    when (it) {
+                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml") -> billionLaughsAttack
+                        else -> throw IOException()
+                    }
+                }
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3")
+
+                // Expect
+                val exception =
+                    shouldThrow<YamlEngineException> {
+                        actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                    }
+                exception.message shouldBe "Number of aliases for non-scalar nodes exceeds the specified max=50"
             }
         }
 
