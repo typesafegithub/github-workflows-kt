@@ -25,7 +25,7 @@ data class Version(
 
     override fun toString(): String = version
 
-    fun isMajorVersion(): Boolean = version.contains(".").not()
+    fun isMajorVersion(): Boolean = version.removePrefix("v").removePrefix("V").toIntOrNull() != null
 
     suspend fun getReleaseDate() = dateProvider()
 }
