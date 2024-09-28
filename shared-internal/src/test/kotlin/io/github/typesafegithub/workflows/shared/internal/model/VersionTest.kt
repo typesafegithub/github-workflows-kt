@@ -10,8 +10,10 @@ class VersionTest :
                 Pair("v1.2.3", false),
                 Pair("v1.2", false),
                 Pair("v3", true),
+                Pair("V3", true),
                 // Incorrect behavior, will be fixed in https://github.com/typesafegithub/github-workflows-kt/issues/1670
                 Pair("v3-prerelease", true),
+                Pair("beta-v3", true),
             ).forEach { (version, isMajor) ->
                 test("isMajorVersion works correctly for $version") {
                     Version(version).isMajorVersion() shouldBe isMajor
