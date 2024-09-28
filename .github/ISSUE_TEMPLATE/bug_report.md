@@ -7,6 +7,12 @@ assignees: ''
 
 ---
 
+# Component
+
+* [ ] github-workflows-kt (library with the DSL)
+* [ ] bindings server (https://bindings.krzeminski.it)
+* [ ] I don't know
+
 # Action
 
 _Describe what you are trying to do._
@@ -23,6 +29,6 @@ _What happens instead?_
 
 _Manual adjustment of output YAML is not a workaround. Adjusting Kotlin code in a certain way is._
 
-# Library version
+# Version
 
-v...
+_If it's a bug in the library, specify it's version._
