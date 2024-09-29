@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 import com.charleskorn.kaml.Yaml
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
@@ -21,12 +22,13 @@ import java.net.URI
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-): Pair<Map<String, Typing>, TypingActualSource?> =
+): ActionTypings =
     (
         this.fetchTypingMetadata(metadataRevision, fetchUri)
             ?: this.toMajorVersion().fetchFromTypingsFromCatalog(fetchUri)
-    )?.let { Pair(it.first.toTypesMap(), it.second) }
-        ?: Pair(emptyMap(), null)
+    )?.let { (typings, typingActualSource) ->
+        ActionTypings(typings.toInputTypesMap(), typings.toOutputTypesMap(), typingActualSource)
+    } ?: ActionTypings()
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yml"
@@ -109,10 +111,14 @@ private fun fetchTypingsFromUrl(
     return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
-internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
-    inputs.mapValues { (key, value) ->
+private fun Map<String, ActionType>.toTypesMap(): Map<String, Typing> =
+    mapValues { (key, value) ->
         value.toTyping(key)
     }
+
+private fun ActionTypes.toInputTypesMap(): Map<String, Typing> = inputs.toTypesMap()
+
+private fun ActionTypes.toOutputTypesMap(): Map<String, Typing> = outputs.toTypesMap()
 
 private fun ActionCoords.toMajorVersion(): ActionCoords = this.copy(version = this.version.substringBefore("."))
 

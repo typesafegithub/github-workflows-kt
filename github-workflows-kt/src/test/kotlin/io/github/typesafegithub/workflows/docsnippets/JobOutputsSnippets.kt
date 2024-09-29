@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.docsnippets
 
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.actions.Action
@@ -34,8 +35,8 @@ class JobOutputsSnippets :
                         runsOn = RunnerType.UbuntuLatest,
                         outputs =
                             object : JobOutputs() {
-                                var myOutput by output()
-                                var anotherOutput by output()
+                                var myOutput by output<String>()
+                                var anotherOutput by output<Boolean>()
                             },
                         // --8<-- [end:define-job-outputs-1]
                 /*
@@ -52,7 +53,7 @@ class JobOutputsSnippets :
                             inner class Outputs(
                                 stepId: String,
                             ) : Action.Outputs(stepId) {
-                                val someStepOutput: String = ""
+                                val someStepOutput: Expression<String> = Expression("")
                             }
                         }
                         val someStep = uses(action = DocTest())
@@ -73,8 +74,8 @@ class JobOutputsSnippets :
                         name = "Use outputs",
                         command =
                             """
-                            echo ${expr { myJob.outputs.myOutput }}
-                            echo ${expr { myJob.outputs.anotherOutput }}
+                            echo ${myJob.outputs.myOutput.expressionString}
+                            echo ${expr(myJob.outputs.anotherOutput.expression)}
                             """.trimIndent(),
                     )
                 }
