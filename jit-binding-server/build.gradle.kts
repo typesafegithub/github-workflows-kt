@@ -14,6 +14,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio")
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("it.krzeminski:snakeyaml-engine-kmp:3.0.2")
     implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-2.0:2.3.0-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk:1.42.1")
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.42.1")
