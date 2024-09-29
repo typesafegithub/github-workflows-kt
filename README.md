@@ -22,7 +22,8 @@ hierarchical data, but it is sometimes used (abused?) to configure complicated s
 files that are difficult to write and maintain.
 
 Who among us hasn't accidentally used the wrong indentation, missed a possibility to extract a reusable piece of code,
-or been confused by ambiguous types? The power of a generic-purpose would come in handy in these cases.
+or been confused by ambiguous types? The power of a generic-purpose programming language would come in handy in these
+cases.
 
 We're developing **github-workflows-kt** to solve these and other problems, so you can create GitHub Workflows with
 confidence.
