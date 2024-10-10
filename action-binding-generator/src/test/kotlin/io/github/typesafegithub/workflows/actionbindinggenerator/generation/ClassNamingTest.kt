@@ -9,8 +9,8 @@ class ClassNamingTest :
         context("buildActionClassName") {
             listOf(
                 ActionCoords("irrelevant", "some-action-name", "v2") to "SomeActionName",
-                ActionCoords("irrelevant", "some-action-name/subaction", "v2") to "SomeActionNameSubaction",
-                ActionCoords("irrelevant", "some-action-name/foo/bar/baz", "v2") to "SomeActionNameFooBarBaz",
+                ActionCoords("irrelevant", "some-action-name", "v2", "subaction") to "SomeActionNameSubaction",
+                ActionCoords("irrelevant", "some-action-name", "v2", "foo/bar/baz") to "SomeActionNameFooBarBaz",
             ).forEach { (input, output) ->
                 test("should get '$input' and produce '$output'") {
                     input.buildActionClassName() shouldBe output

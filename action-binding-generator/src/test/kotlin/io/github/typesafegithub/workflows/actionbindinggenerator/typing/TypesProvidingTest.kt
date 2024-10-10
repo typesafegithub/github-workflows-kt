@@ -129,7 +129,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name/some-sub", "v3")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -166,7 +166,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name/some-sub", "v3")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -208,7 +208,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name/some-sub", "v3")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -250,7 +250,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name/some-sub", "v3")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -302,7 +302,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name/some-sub", "v3")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -354,7 +354,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name/some-sub", "v6")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v6", "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
