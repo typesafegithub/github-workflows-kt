@@ -3,6 +3,8 @@ package io.github.typesafegithub.workflows.jitbindingserver
 import io.github.reactivecircus.cache4k.Cache
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
@@ -29,7 +31,7 @@ import kotlin.time.Duration.Companion.hours
 fun main() {
     val bindingsCache =
         Cache
-            .Builder<ActionCoords, Result<Map<String, Artifact>>>()
+            .Builder<CacheKey, Result<Map<String, Artifact>>>()
             .expireAfterWrite(1.hours)
             .build()
     val openTelemetry = buildOpenTelemetryConfig(serviceName = "github-actions-bindings")
@@ -57,6 +59,26 @@ fun main() {
                 }
             }
 
+            route("{bindingVersion}") {
+                route("{owner}/{name}/{version}/{file}") {
+                    artifact(bindingsCache)
+                }
+
+                route("{owner}/{name}/{file}") {
+                    metadata()
+                }
+
+                route("/refresh") {
+                    route("{owner}/{name}/{version}/{file}") {
+                        artifact(bindingsCache, refresh = true)
+                    }
+
+                    route("{owner}/{name}/{file}") {
+                        metadata(refresh = true)
+                    }
+                }
+            }
+
             get("/status") {
                 call.respondText("OK")
             }
@@ -66,7 +88,7 @@ fun main() {
 
 private fun Route.metadata(refresh: Boolean = false) {
     get {
-        if (refresh && !deliverOnRefreshRoute) {
+        if ((call.bindingVersion == null) || (refresh && !deliverOnRefreshRoute)) {
             call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
             return@get
         }
@@ -93,7 +115,7 @@ private fun Route.metadata(refresh: Boolean = false) {
 }
 
 private fun Route.artifact(
-    bindingsCache: Cache<ActionCoords, Result<Map<String, Artifact>>>,
+    bindingsCache: Cache<CacheKey, Result<Map<String, Artifact>>>,
     refresh: Boolean = false,
 ) {
     get {
@@ -138,10 +160,23 @@ private fun Route.artifact(
     }
 }
 
+private val ApplicationCall.bindingVersion: BindingVersion?
+    get() {
+        val bindingVersion = parameters["bindingVersion"]
+        return if (bindingVersion == null) {
+            V1
+        } else {
+            BindingVersion
+                .entries
+                .find { it.name.equals(bindingVersion.uppercase(), ignoreCase = true) }
+        }
+    }
+
 private suspend fun ApplicationCall.toBindingArtifacts(
-    bindingsCache: Cache<ActionCoords, Result<Map<String, Artifact>>>,
+    bindingsCache: Cache<CacheKey, Result<Map<String, Artifact>>>,
     refresh: Boolean,
 ): Map<String, Artifact>? {
+    val bindingVersion = bindingVersion ?: return null
     val owner = parameters["owner"]!!
     val name = parameters["name"]!!
     val version = parameters["version"]!!
@@ -151,15 +186,16 @@ private suspend fun ApplicationCall.toBindingArtifacts(
             name = name,
             version = version,
         )
-    println("➡️ Requesting ${actionCoords.prettyPrint}")
+    println("➡️ Requesting ${actionCoords.prettyPrint} binding version $bindingVersion")
+    val cacheKey = CacheKey(actionCoords, bindingVersion)
     val bindingArtifacts =
         if (refresh) {
-            actionCoords.buildVersionArtifacts().also {
-                bindingsCache.put(actionCoords, Result.of(it))
+            actionCoords.buildVersionArtifacts(bindingVersion).also {
+                bindingsCache.put(cacheKey, Result.of(it))
             }
         } else {
             bindingsCache
-                .get(actionCoords) { Result.of(actionCoords.buildVersionArtifacts()) }
+                .get(cacheKey) { Result.of(actionCoords.buildVersionArtifacts(bindingVersion)) }
                 .getOrNull()
         }
     return bindingArtifacts
@@ -170,3 +206,8 @@ private fun Result.Companion.failure(): Result<Nothing> = failure(object : Throw
 private fun <T> Result.Companion.of(value: T?): Result<T> = value?.let { success(it) } ?: failure()
 
 private val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
+
+private data class CacheKey(
+    val actionCoords: ActionCoords,
+    val bindingVersion: BindingVersion,
+)
