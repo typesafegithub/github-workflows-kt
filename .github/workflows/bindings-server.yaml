@@ -8,6 +8,8 @@ on:
     branches:
     - 'main'
   pull_request: {}
+  schedule:
+  - cron: '0 0 * * SUN'
   workflow_dispatch: {}
 jobs:
   check_yaml_consistency:

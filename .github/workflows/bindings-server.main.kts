@@ -36,6 +36,7 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
+        Schedule(triggers = listOf(Cron(minute = "0", hour = "0", dayWeek = "SUN"))),
         WorkflowDispatch(),
     ),
     sourceFile = __FILE__,
