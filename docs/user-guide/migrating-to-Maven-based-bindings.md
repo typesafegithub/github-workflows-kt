@@ -6,7 +6,7 @@ Let's say you have the following workflow:
 
 ```kotlin
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:<newest-version>")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.1.0")
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
