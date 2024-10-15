@@ -6,6 +6,8 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
@@ -30,9 +32,10 @@ internal fun buildJars(
     owner: String,
     name: String,
     version: String,
+    bindingVersion: BindingVersion = V1,
 ): Jars? {
     val binding =
-        generateBinding(owner = owner, name = name, version = version).also {
+        generateBinding(owner = owner, name = name, version = version, bindingVersion = bindingVersion).also {
             if (it.isEmpty()) return null
         }
 
@@ -64,6 +67,7 @@ private fun generateBinding(
     owner: String,
     name: String,
     version: String,
+    bindingVersion: BindingVersion,
 ): List<ActionBinding> {
     val actionCoords =
         ActionCoords(
@@ -72,6 +76,7 @@ private fun generateBinding(
             version = version,
         )
     return actionCoords.generateBinding(
+        bindingVersion = bindingVersion,
         metadataRevision = NewestForVersion,
     )
 }
