@@ -3,7 +3,7 @@ import io.ktor.plugin.features.*
 plugins {
     buildsrc.convention.`kotlin-jvm-server`
     application
-    id("io.ktor.plugin") version "2.3.12"
+    id("io.ktor.plugin") version "3.0.0"
 }
 
 dependencies {
