@@ -351,13 +351,13 @@ private fun Metadata.linkedMapOfInputs(
             val propertyName = key.toCamelCase()
             if (!untypedClass && inputTypings.containsKey(key)) {
                 val asStringCode = inputTypings.getInputTyping(key).asString()
-                add("%N?.let { %S·to·it$asStringCode },\n", propertyName, key)
+                add("%N?.let { %S to it$asStringCode },\n", propertyName, key)
             }
             val asStringCode = null.getInputTyping(key).asString()
             if (value.shouldBeRequiredInBinding() && !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))) {
-                add("%S·to·%N$asStringCode,\n", key, "${propertyName}_Untyped")
+                add("%S to %N$asStringCode,\n", key, "${propertyName}_Untyped")
             } else {
-                add("%N?.let { %S·to·it$asStringCode },\n", "${propertyName}_Untyped", key)
+                add("%N?.let { %S to it$asStringCode },\n", "${propertyName}_Untyped", key)
             }
         }
         add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)

@@ -31,10 +31,8 @@ import kotlin.collections.toTypedArray
  * @param fooOne_Untyped &lt;required&gt;
  * @param fooTwo &lt;required&gt;
  * @param fooTwo_Untyped &lt;required&gt;
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
 public data class ActionWithInputsSharingType private constructor(
@@ -61,12 +59,10 @@ public data class ActionWithInputsSharingType private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-inputs-sharing-type", _customVersion ?:
-        "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-inputs-sharing-type", _customVersion ?: "v3") {
     init {
         require(!((fooOne != null) && (fooOne_Untyped != null))) {
             "Only fooOne or fooOne_Untyped must be set, but not both"
@@ -97,9 +93,7 @@ public data class ActionWithInputsSharingType private constructor(
         fooThree_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooOne = fooOne, fooOne_Untyped = fooOne_Untyped, fooTwo = fooTwo, fooTwo_Untyped =
-            fooTwo_Untyped, fooThree = fooThree, fooThree_Untyped = fooThree_Untyped, _customInputs
-            = _customInputs, _customVersion = _customVersion)
+    ) : this(fooOne = fooOne, fooOne_Untyped = fooOne_Untyped, fooTwo = fooTwo, fooTwo_Untyped = fooTwo_Untyped, fooThree = fooThree, fooThree_Untyped = fooThree_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
