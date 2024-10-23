@@ -30,10 +30,8 @@ import kotlin.collections.toTypedArray
  * @param nestedKotlinComments_Untyped This is a /&#42; test &#42;/
  * @param percent For example "100%"
  * @param percent_Untyped For example "100%"
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
 public data class ActionWithFancyCharsInDocs private constructor(
@@ -58,12 +56,10 @@ public data class ActionWithFancyCharsInDocs private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs", _customVersion ?:
-        "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs", _customVersion ?: "v3") {
     init {
         require(!((nestedKotlinComments != null) && (nestedKotlinComments_Untyped != null))) {
             "Only nestedKotlinComments or nestedKotlinComments_Untyped must be set, but not both"
@@ -82,9 +78,7 @@ public data class ActionWithFancyCharsInDocs private constructor(
         percent_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(nestedKotlinComments = nestedKotlinComments, nestedKotlinComments_Untyped =
-            nestedKotlinComments_Untyped, percent = percent, percent_Untyped = percent_Untyped,
-            _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(nestedKotlinComments = nestedKotlinComments, nestedKotlinComments_Untyped = nestedKotlinComments_Untyped, percent = percent, percent_Untyped = percent_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
