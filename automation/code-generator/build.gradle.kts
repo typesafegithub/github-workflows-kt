@@ -7,7 +7,7 @@ plugins {
 }
 
 dependencies {
-    implementation("com.squareup:kotlinpoet:1.18.1")
+    implementation("com.squareup:kotlinpoet:2.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 }
 
