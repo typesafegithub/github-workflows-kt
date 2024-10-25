@@ -19,7 +19,7 @@ dependencies {
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.43.0")
     implementation("io.opentelemetry:opentelemetry-exporter-logging:1.43.0")
     implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")
-    implementation("ch.qos.logback:logback-classic:1.5.11")
+    implementation("ch.qos.logback:logback-classic:1.5.12")
 
     implementation(projects.mavenBindingBuilder)
     implementation(projects.sharedInternal)
