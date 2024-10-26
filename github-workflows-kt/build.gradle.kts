@@ -31,7 +31,7 @@ dependencies {
     testImplementation(kotlin("reflect"))
 
     // GitHub action bindings
-    testImplementation("actions:checkout:v4")
+    testImplementation("gradle:actions__setup-gradle:v4")
     testImplementation("actions:setup-java:v4")
     testImplementation("actions:upload-artifact:v3")
     testImplementation("aws-actions:configure-aws-credentials:v4")
