@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 
 internal fun ActionCoords.buildModuleFile() =
     """
@@ -9,7 +8,7 @@ internal fun ActionCoords.buildModuleFile() =
       "formatVersion": "1.1",
       "component": {
         "group": "$owner",
-        "module": "$fullName",
+        "module": "$mavenName",
         "version": "$version",
         "attributes": {
           "org.gradle.status": "release"
@@ -35,8 +34,8 @@ internal fun ActionCoords.buildModuleFile() =
           "dependencies": [],
           "files": [
             {
-              "name": "$fullName-$version.jar",
-              "url": "$fullName-$version.jar",
+              "name": "$mavenName-$version.jar",
+              "url": "$mavenName-$version.jar",
               "size": 1
             }
           ]
@@ -55,8 +54,8 @@ internal fun ActionCoords.buildModuleFile() =
           "dependencies": [],
           "files": [
             {
-              "name": "$fullName-$version.jar",
-              "url": "$fullName-$version.jar",
+              "name": "$mavenName-$version.jar",
+              "url": "$mavenName-$version.jar",
               "size": 1
             }
           ]
