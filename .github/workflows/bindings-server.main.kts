@@ -103,14 +103,9 @@ workflow(
 
         run(
             name = "Compile a Gradle project using the bindings from the server",
-            // This test depicts the current incorrect behavior, and asserts on
-            // the Gradle build failing with a specific problem. Once the problem
-            // is fixed, modify the test to assert on a successful build.
-            // TODO: https://github.com/typesafegithub/github-workflows-kt/issues/1694
             command = """
                 cd .github/workflows/test-gradle-project-using-bindings-server
-                (./gradlew build || true) >> output.txt 2>&1
-                grep "inconsistent module metadata" output.txt
+                ./gradlew build
             """.trimIndent(),
         )
 
