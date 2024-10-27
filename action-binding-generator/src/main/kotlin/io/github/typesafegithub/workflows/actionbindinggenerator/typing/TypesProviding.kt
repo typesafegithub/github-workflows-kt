@@ -8,7 +8,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestFo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.repoName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
@@ -29,18 +28,18 @@ internal fun ActionCoords.provideTypes(
         ?: Pair(emptyMap(), null)
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yml"
+    "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesFromCatalog() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$repoName/$version$subName/action-types.yml"
+        "main/typings/$owner/$name/$version$subName/action-types.yml"
 
 private fun ActionCoords.catalogMetadata() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$repoName/metadata.yml"
+        "main/typings/$owner/$name/metadata.yml"
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yaml"
+    "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
