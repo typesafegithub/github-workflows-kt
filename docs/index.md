@@ -35,9 +35,3 @@ confidence.
 * integrates with [github-actions-typing](https://github.com/typesafegithub/github-actions-typing) to use typings
   provided by action authors
 * and more!
-
-## 🎥 Video presentation
-
-Here's a detailed presentation of the library by Piotr Krzemiński, along with simple demos:
-
-![type:video](https://www.youtube.com/embed/jrDQXqQicek)
