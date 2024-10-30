@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 import com.charleskorn.kaml.Yaml
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
@@ -16,6 +17,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 import java.net.URI
+
+private val logger = logger { }
 
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
@@ -54,7 +57,7 @@ private fun ActionCoords.fetchTypingMetadata(
     val typesMetadataYaml =
         list.firstNotNullOfOrNull { url ->
             try {
-                println("  ... types from $url")
+                logger.info { "  ... types from action $url" }
                 fetchUri(URI(url))
             } catch (e: IOException) {
                 null
@@ -74,7 +77,7 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
     val metadataUrl = this.catalogMetadata()
     val metadataYml =
         try {
-            println("  ... metadata from $metadataUrl")
+            logger.info { "  ... metadata from $metadataUrl" }
             fetchUri(URI(metadataUrl))
         } catch (e: IOException) {
             return null
@@ -86,10 +89,10 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
             .filter { it.versionToInt() < requestedVersionAsInt }
             .maxByOrNull { it.versionToInt() }
             ?: run {
-                println("  ... no fallback version found!")
+                logger.info { "  ... no fallback version found!" }
                 return null
             }
-    println("  ... using fallback version: $fallbackVersion")
+    logger.info { "  ... using fallback version: $fallbackVersion" }
     val adjustedCoords = this.copy(version = fallbackVersion)
     return fetchTypingsFromUrl(url = adjustedCoords.actionTypesFromCatalog(), fetchUri = fetchUri)
 }
@@ -100,7 +103,7 @@ private fun fetchTypingsFromUrl(
 ): ActionTypes? {
     val typesMetadataYml =
         try {
-            println("  ... types from $url")
+            logger.info { "  ... types from catalog $url" }
             fetchUri(URI(url))
         } catch (e: IOException) {
             null

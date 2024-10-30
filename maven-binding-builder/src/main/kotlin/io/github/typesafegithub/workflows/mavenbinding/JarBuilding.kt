@@ -81,8 +81,8 @@ private fun compileBinding(sourceFilePaths: List<Path>): Path {
             services = Services.EMPTY,
             arguments = args,
         )
-    require(exitCode == ExitCode.OK) {
-        "Binding compilation failed! Compiler messages: $compilerMessagesOutputStream"
+    check(exitCode == ExitCode.OK) {
+        "Binding compilation failed! Compiler messages:\n$compilerMessagesOutputStream"
     }
     return compilationOutput
 }
