@@ -1,169 +1,293 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.bindingsfromunittests
 
-import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithAllTypesOfInputs
+import io.github.typesafegithub.workflows.actionbindinggenerator.constructAction
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V2
+import io.github.typesafegithub.workflows.actionbindinggenerator.withAllBindingVersions
+import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithAllTypesOfInputsBindingV1
+import io.github.typesafegithub.workflows.actions.johnsmith.ActionWithAllTypesOfInputsBindingV2
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class ActionWithAllTypesOfInputsTest : DescribeSpec({
-    it("correctly translates all types of inputs") {
-        // given
-        val action = ActionWithAllTypesOfInputs(
-            fooBar = "test",
-            bazGoo = true,
-            binKin = false,
-            intPint = 43,
-            floPint = 123.456f,
-            finBin = ActionWithAllTypesOfInputs.Bin.BooBar,
-            gooZen = ActionWithAllTypesOfInputs.Zen.Special1,
-            bahEnum = ActionWithAllTypesOfInputs.BahEnum.HelloWorld,
-            listStrings = listOf("hello", "world"),
-            listInts = listOf(1, 42),
-            listEnums = listOf(ActionWithAllTypesOfInputs.MyEnum.One, ActionWithAllTypesOfInputs.MyEnum.Three),
-            listIntSpecial = listOf(ActionWithAllTypesOfInputs.MyInt.TheAnswer, ActionWithAllTypesOfInputs.MyInt.Value(0))
-        )
+    context("correctly translates all types of inputs") {
+        withAllBindingVersions { bindingVersion ->
+            // given
+            val action = constructAction(
+                owner = "johnsmith",
+                classBaseName = "ActionWithAllTypesOfInputs",
+                bindingVersion = bindingVersion,
+                arguments = mapOf(
+                    "fooBar" to "test",
+                    "bazGoo" to true,
+                    "binKin" to false,
+                    "intPint" to 43,
+                    "floPint" to 123.456f,
+                    "finBin" to bindingVersion.finBin,
+                    "gooZen" to bindingVersion.gooZen,
+                    "bahEnum" to bindingVersion.bahEnum,
+                    "listStrings" to listOf("hello", "world"),
+                    "listInts" to listOf(1, 42),
+                    "listEnums" to bindingVersion.listEnums,
+                    "listIntSpecial" to bindingVersion.listIntSpecial,
+                ),
+            )
 
-        // when
-        val yaml = action.toYamlArguments()
+            // when
+            val yaml = action.toYamlArguments()
 
-        // then
-        yaml shouldBe linkedMapOf(
-            "foo-bar" to "test",
-            "baz-goo" to "true",
-            "bin-kin" to "false",
-            "int-pint" to "43",
-            "flo-pint" to "123.456",
-            "fin-bin" to "boo-bar",
-            "goo-zen" to "3",
-            "bah-enum" to "helloworld",
-            "list-strings" to "hello,world",
-            "list-ints" to "1,42",
-            "list-enums" to "one,three",
-            "list-int-special" to "42,0"
-        )
+            // then
+            yaml shouldBe linkedMapOf(
+                "foo-bar" to "test",
+                "baz-goo" to "true",
+                "bin-kin" to "false",
+                "int-pint" to "43",
+                "flo-pint" to "123.456",
+                "fin-bin" to "boo-bar",
+                "goo-zen" to "3",
+                "bah-enum" to "helloworld",
+                "list-strings" to "hello,world",
+                "list-ints" to "1,42",
+                "list-enums" to "one,three",
+                "list-int-special" to "42,0"
+            )
+        }
     }
 
-    it("works for custom values") {
-        // given
-        val action = ActionWithAllTypesOfInputs(
-            fooBar = "test",
-            bazGoo = true,
-            binKin = false,
-            intPint = 43,
-            floPint = 123.456f,
-            finBin = ActionWithAllTypesOfInputs.Bin.Custom("this-is-custom!"),
-            gooZen = ActionWithAllTypesOfInputs.Zen.Value(123),
-            bahEnum = ActionWithAllTypesOfInputs.BahEnum.Custom("very-custom"),
-        )
+    context("works for custom values") {
+        withAllBindingVersions { bindingVersion ->
+            // given
+            val action = constructAction(
+                owner = "johnsmith",
+                classBaseName = "ActionWithAllTypesOfInputs",
+                bindingVersion = bindingVersion,
+                arguments = mapOf(
+                    "fooBar" to "test",
+                    "bazGoo" to true,
+                    "binKin" to false,
+                    "intPint" to 43,
+                    "floPint" to 123.456f,
+                    "finBin" to bindingVersion.customFinBin,
+                    "gooZen" to bindingVersion.customGooZen,
+                    "bahEnum" to bindingVersion.customBahEnum,
+                ),
+            )
 
-        // when
-        val yaml = action.toYamlArguments()
+            // when
+            val yaml = action.toYamlArguments()
 
-        // then
-        yaml shouldBe linkedMapOf(
-            "foo-bar" to "test",
-            "baz-goo" to "true",
-            "bin-kin" to "false",
-            "int-pint" to "43",
-            "flo-pint" to "123.456",
-            "fin-bin" to "this-is-custom!",
-            "goo-zen" to "123",
-            "bah-enum" to "very-custom",
-        )
+            // then
+            yaml shouldBe linkedMapOf(
+                "foo-bar" to "test",
+                "baz-goo" to "true",
+                "bin-kin" to "false",
+                "int-pint" to "43",
+                "flo-pint" to "123.456",
+                "fin-bin" to "this-is-custom!",
+                "goo-zen" to "123",
+                "bah-enum" to "very-custom",
+            )
+        }
     }
 
-    it("untyped input is sufficient for required input") {
-        // given
-        val action = ActionWithAllTypesOfInputs(
-            fooBar = "test",
-            bazGoo_Untyped = "\${{ 1 == 1 }}",
-            binKin = false,
-            intPint = 43,
-            floPint = 123.456f,
-            finBin = ActionWithAllTypesOfInputs.Bin.Custom("this-is-custom!"),
-            gooZen = ActionWithAllTypesOfInputs.Zen.Value(123),
-            bahEnum = ActionWithAllTypesOfInputs.BahEnum.Custom("very-custom"),
-        )
+    context("untyped input is sufficient for required input") {
+        withAllBindingVersions { bindingVersion ->
+            // given
+            val action = constructAction(
+                owner = "johnsmith",
+                classBaseName = "ActionWithAllTypesOfInputs",
+                bindingVersion = bindingVersion,
+                arguments = mapOf(
+                    "fooBar" to "test",
+                    "bazGoo_Untyped" to "\${{ 1 == 1 }}",
+                    "binKin" to false,
+                    "intPint" to 43,
+                    "floPint" to 123.456f,
+                    "finBin" to bindingVersion.customFinBin,
+                    "gooZen" to bindingVersion.customGooZen,
+                    "bahEnum" to bindingVersion.customBahEnum,
+                ),
+            )
 
-        // when
-        val yaml = action.toYamlArguments()
+            // when
+            val yaml = action.toYamlArguments()
 
-        // then
-        yaml shouldBe linkedMapOf(
-            "foo-bar" to "test",
-            "baz-goo" to "\${{ 1 == 1 }}",
-            "bin-kin" to "false",
-            "int-pint" to "43",
-            "flo-pint" to "123.456",
-            "fin-bin" to "this-is-custom!",
-            "goo-zen" to "123",
-            "bah-enum" to "very-custom",
-        )
+            // then
+            yaml shouldBe linkedMapOf(
+                "foo-bar" to "test",
+                "baz-goo" to "\${{ 1 == 1 }}",
+                "bin-kin" to "false",
+                "int-pint" to "43",
+                "flo-pint" to "123.456",
+                "fin-bin" to "this-is-custom!",
+                "goo-zen" to "123",
+                "bah-enum" to "very-custom",
+            )
+        }
     }
 
-    it("validates required inputs are not missing") {
-        // expect
-        val exception =
-            shouldThrow<IllegalArgumentException> {
-                ActionWithAllTypesOfInputs()
+    context("validates required inputs are not missing") {
+        withAllBindingVersions { bindingVersion ->
+            // expect
+            val exception =
+                shouldThrow<IllegalArgumentException> {
+                    constructAction(
+                        owner = "johnsmith",
+                        classBaseName = "ActionWithAllTypesOfInputs",
+                        bindingVersion = bindingVersion,
+                    )
+                }
+            exception.message shouldBe "Either fooBar or fooBar_Untyped must be set, one of them is required"
+        }
+    }
+
+    context("validates required inputs are not supplied typed and untyped") {
+        withAllBindingVersions { bindingVersion ->
+            // expect
+            val exception =
+                shouldThrow<IllegalArgumentException> {
+                    constructAction(
+                        owner = "johnsmith",
+                        classBaseName = "ActionWithAllTypesOfInputs",
+                        bindingVersion = bindingVersion,
+                        arguments = mapOf(
+                            "fooBar" to "test",
+                            "fooBar_Untyped" to "untyped test",
+                        ),
+                    )
+                }
+            exception.message shouldBe "Only fooBar or fooBar_Untyped must be set, but not both"
+        }
+    }
+
+    context("validates not-required inputs are not supplied typed and untyped") {
+        withAllBindingVersions { bindingVersion ->
+            // expect
+            val exception =
+                shouldThrow<IllegalArgumentException> {
+                    constructAction(
+                        owner = "johnsmith",
+                        classBaseName = "ActionWithAllTypesOfInputs",
+                        bindingVersion = bindingVersion,
+                        arguments = mapOf(
+                            "fooBar" to "test",
+                            "bazGoo_Untyped" to "\${{ 1 == 1 }}",
+                            "binKin" to false,
+                            "intPint" to 43,
+                            "floPint" to 123.456f,
+                            "finBin" to bindingVersion.customFinBin,
+                            "gooZen" to bindingVersion.customGooZen,
+                            "bahEnum" to bindingVersion.customBahEnum,
+                            "listStrings" to listOf("test"),
+                            "listStrings_Untyped" to "untyped test",
+                        ),
+                    )
+                }
+            exception.message shouldBe "Only listStrings or listStrings_Untyped must be set, but not both"
+        }
+    }
+
+    context("exposes copy method") {
+        withAllBindingVersions { bindingVersion ->
+            // given
+            val action = constructAction(
+                owner = "johnsmith",
+                classBaseName = "ActionWithAllTypesOfInputs",
+                bindingVersion = bindingVersion,
+                arguments = mapOf(
+                    "fooBar" to "test",
+                    "bazGoo" to true,
+                    "binKin" to false,
+                    "intPint" to 43,
+                    "floPint" to 123.456f,
+                    "finBin" to bindingVersion.finBin,
+                    "gooZen" to bindingVersion.gooZen,
+                    "bahEnum" to bindingVersion.bahEnum,
+                    "listStrings" to listOf("hello", "world"),
+                    "listInts" to listOf(1, 42),
+                    "listEnums" to bindingVersion.listEnums,
+                    "listIntSpecial" to bindingVersion.listIntSpecial,
+                ),
+            )
+
+            when (bindingVersion) {
+                V1 -> {
+                    // when
+                    action as ActionWithAllTypesOfInputsBindingV1
+                    @Suppress("DATA_CLASS_INVISIBLE_COPY_USAGE_WARNING")
+                    val actionWithOneChange = action.copy(fooBar = "another")
+
+                    // then
+                    actionWithOneChange.fooBar shouldBe "another"
+                }
+
+                V2 -> {
+                    // when
+                    action as ActionWithAllTypesOfInputsBindingV2
+                    @Suppress("DATA_CLASS_INVISIBLE_COPY_USAGE_WARNING")
+                    val actionWithOneChange = action.copy(fooBar = "another")
+
+                    // then
+                    actionWithOneChange.fooBar shouldBe "another"
+                }
             }
-        exception.message shouldBe "Either fooBar or fooBar_Untyped must be set, one of them is required"
-    }
-
-    it("validates required inputs are not supplied typed and untyped") {
-        // expect
-        val exception =
-            shouldThrow<IllegalArgumentException> {
-                ActionWithAllTypesOfInputs(
-                    fooBar = "test",
-                    fooBar_Untyped = "untyped test",
-                )
-            }
-        exception.message shouldBe "Only fooBar or fooBar_Untyped must be set, but not both"
-    }
-
-    it("validates not-required inputs are not supplied typed and untyped") {
-        // expect
-        val exception =
-            shouldThrow<IllegalArgumentException> {
-                ActionWithAllTypesOfInputs(
-                    fooBar = "test",
-                    bazGoo_Untyped = "\${{ 1 == 1 }}",
-                    binKin = false,
-                    intPint = 43,
-                    floPint = 123.456f,
-                    finBin = ActionWithAllTypesOfInputs.Bin.Custom("this-is-custom!"),
-                    gooZen = ActionWithAllTypesOfInputs.Zen.Value(123),
-                    bahEnum = ActionWithAllTypesOfInputs.BahEnum.Custom("very-custom"),
-                    listStrings = listOf("test"),
-                    listStrings_Untyped = "untyped test",
-                )
-            }
-        exception.message shouldBe "Only listStrings or listStrings_Untyped must be set, but not both"
-    }
-
-    it("exposes copy method") {
-        // given
-        val action = ActionWithAllTypesOfInputs(
-            fooBar = "test",
-            bazGoo = true,
-            binKin = false,
-            intPint = 43,
-            floPint = 123.456f,
-            finBin = ActionWithAllTypesOfInputs.Bin.BooBar,
-            gooZen = ActionWithAllTypesOfInputs.Zen.Special1,
-            bahEnum = ActionWithAllTypesOfInputs.BahEnum.HelloWorld,
-            listStrings = listOf("hello", "world"),
-            listInts = listOf(1, 42),
-            listEnums = listOf(ActionWithAllTypesOfInputs.MyEnum.One, ActionWithAllTypesOfInputs.MyEnum.Three),
-            listIntSpecial = listOf(ActionWithAllTypesOfInputs.MyInt.TheAnswer, ActionWithAllTypesOfInputs.MyInt.Value(0))
-        )
-
-        // when
-        @Suppress("DATA_CLASS_INVISIBLE_COPY_USAGE_WARNING")
-        val actionWithOneChange = action.copy(fooBar = "another")
-
-        // then
-        actionWithOneChange.fooBar shouldBe "another"
+        }
     }
 })
+
+private val BindingVersion.finBin
+    get() = when (this) {
+        V1 -> ActionWithAllTypesOfInputsBindingV1.Bin.BooBar
+        V2 -> ActionWithAllTypesOfInputsBindingV2.Bin.BooBar
+    }
+
+private val BindingVersion.customFinBin
+    get() = when (this) {
+        V1 -> ActionWithAllTypesOfInputsBindingV1.Bin.Custom("this-is-custom!")
+        V2 -> ActionWithAllTypesOfInputsBindingV2.Bin.Custom("this-is-custom!")
+    }
+
+private val BindingVersion.gooZen
+    get() = when (this) {
+        V1 -> ActionWithAllTypesOfInputsBindingV1.Zen.Special1
+        V2 -> ActionWithAllTypesOfInputsBindingV2.Zen.Special1
+    }
+
+private val BindingVersion.customGooZen
+    get() = when (this) {
+        V1 -> ActionWithAllTypesOfInputsBindingV1.Zen.Value(123)
+        V2 -> ActionWithAllTypesOfInputsBindingV2.Zen.Value(123)
+    }
+
+private val BindingVersion.bahEnum
+    get() = when (this) {
+        V1 -> ActionWithAllTypesOfInputsBindingV1.BahEnum.HelloWorld
+        V2 -> ActionWithAllTypesOfInputsBindingV2.BahEnum.HelloWorld
+    }
+
+private val BindingVersion.customBahEnum
+    get() = when (this) {
+        V1 -> ActionWithAllTypesOfInputsBindingV1.BahEnum.Custom("very-custom")
+        V2 -> ActionWithAllTypesOfInputsBindingV2.BahEnum.Custom("very-custom")
+    }
+
+private val BindingVersion.listEnums
+    get() = when (this) {
+        V1 -> listOf(ActionWithAllTypesOfInputsBindingV1.MyEnum.One, ActionWithAllTypesOfInputsBindingV1.MyEnum.Three)
+        V2 -> listOf(ActionWithAllTypesOfInputsBindingV2.MyEnum.One, ActionWithAllTypesOfInputsBindingV2.MyEnum.Three)
+    }
+
+private val BindingVersion.listIntSpecial
+    get() = when (this) {
+        V1 -> listOf(
+            ActionWithAllTypesOfInputsBindingV1.MyInt.TheAnswer,
+            ActionWithAllTypesOfInputsBindingV1.MyInt.Value(0),
+        )
+
+        V2 -> listOf(
+            ActionWithAllTypesOfInputsBindingV2.MyInt.TheAnswer,
+            ActionWithAllTypesOfInputsBindingV2.MyInt.Value(0),
+        )
+    }

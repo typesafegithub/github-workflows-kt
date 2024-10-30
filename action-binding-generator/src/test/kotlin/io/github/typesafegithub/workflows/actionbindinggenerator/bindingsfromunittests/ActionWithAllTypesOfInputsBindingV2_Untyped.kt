@@ -45,7 +45,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-all-types-of-inputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-all-types-of-inputs-binding-v2)
  *
  * @param fooBar_Untyped Short description
  * @param bazGoo_Untyped First boolean input!
@@ -64,10 +64,10 @@ import kotlin.collections.toTypedArray
  */
 @Deprecated(
     "Use the typed class instead",
-    ReplaceWith("ActionWithAllTypesOfInputs"),
+    ReplaceWith("ActionWithAllTypesOfInputsBindingV2"),
 )
 @ExposedCopyVisibility
-public data class ActionWithAllTypesOfInputs_Untyped private constructor(
+public data class ActionWithAllTypesOfInputsBindingV2_Untyped private constructor(
     /**
      * Short description
      */
@@ -124,7 +124,18 @@ public data class ActionWithAllTypesOfInputs_Untyped private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithAllTypesOfInputs_Untyped.Outputs>("john-smith", "action-with-all-types-of-inputs", _customVersion ?: "v3") {
+) : RegularAction<ActionWithAllTypesOfInputsBindingV2_Untyped.Outputs>("john-smith", "action-with-all-types-of-inputs-binding-v2", _customVersion ?: "v3") {
+    init {
+        println("WARNING: The used binding version v2 for john-smith/action-with-all-types-of-inputs-binding-v2@v3 is experimental! Last stable version is v1.")
+        if (System.getenv("GITHUB_ACTIONS").toBoolean()) {
+            println("""
+                    |
+                    |::warning title=Experimental Binding Version Used::The used binding version v2 for john-smith/action-with-all-types-of-inputs-binding-v2@v3 is experimental! Last stable version is v1.
+                    """.trimMargin())
+        }
+
+    }
+
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         fooBar_Untyped: String,
