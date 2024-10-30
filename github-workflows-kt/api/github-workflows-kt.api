@@ -4,6 +4,7 @@ public abstract interface annotation class io/github/typesafegithub/workflows/an
 public abstract class io/github/typesafegithub/workflows/domain/AbstractResult {
 	public final fun eq (Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;)Ljava/lang/String;
 	public final fun neq (Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;)Ljava/lang/String;
+	public final fun toExpression ()Lio/github/typesafegithub/workflows/domain/Expression;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -149,6 +150,18 @@ public final class io/github/typesafegithub/workflows/domain/Environment {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/github/typesafegithub/workflows/domain/Expression {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Expression;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Expression;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Expression;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExpression ()Ljava/lang/String;
+	public final fun getExpressionString ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/domain/Job : io/github/typesafegithub/workflows/dsl/HasCustomArguments {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/RunnerType;Ljava/util/List;Ljava/util/List;Lio/github/typesafegithub/workflows/domain/JobOutputs;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/Concurrency;Lio/github/typesafegithub/workflows/domain/Container;Lio/github/typesafegithub/workflows/domain/Environment;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -208,9 +221,9 @@ public final class io/github/typesafegithub/workflows/domain/JobOutputs$EMPTY : 
 
 public final class io/github/typesafegithub/workflows/domain/JobOutputs$Ref : kotlin/properties/ReadWriteProperty {
 	public fun <init> (Lio/github/typesafegithub/workflows/domain/JobOutputs;)V
-	public fun getValue (Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/reflect/KProperty;)Ljava/lang/String;
+	public fun getValue (Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/reflect/KProperty;)Lio/github/typesafegithub/workflows/domain/Expression;
 	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
-	public fun setValue (Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/reflect/KProperty;Ljava/lang/String;)V
+	public fun setValue (Lio/github/typesafegithub/workflows/domain/JobOutputs;Lkotlin/reflect/KProperty;Lio/github/typesafegithub/workflows/domain/Expression;)V
 	public synthetic fun setValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;Ljava/lang/Object;)V
 }
 
@@ -520,7 +533,7 @@ public abstract class io/github/typesafegithub/workflows/domain/actions/Action {
 
 public class io/github/typesafegithub/workflows/domain/actions/Action$Outputs {
 	public fun <init> (Ljava/lang/String;)V
-	public final fun get (Ljava/lang/String;)Ljava/lang/String;
+	public final fun get (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Expression;
 }
 
 public final class io/github/typesafegithub/workflows/domain/actions/CustomAction : io/github/typesafegithub/workflows/domain/actions/RegularAction {

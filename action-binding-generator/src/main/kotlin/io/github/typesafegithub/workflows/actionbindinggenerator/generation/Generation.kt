@@ -12,10 +12,12 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.WildcardTypeName
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import com.squareup.kotlinpoet.buildCodeBlock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
@@ -28,6 +30,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.shouldBeRequiredInBinding
+import io.github.typesafegithub.workflows.actionbindinggenerator.typing.ListOfTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.StringTyping
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.Typing
 import io.github.typesafegithub.workflows.actionbindinggenerator.typing.asString
@@ -39,6 +42,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCa
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
 import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V2
 
 public data class ActionBinding(
     val kotlinCode: String,
@@ -64,12 +68,12 @@ public fun ActionCoords.generateBinding(
     bindingVersion: BindingVersion = V1,
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
-    inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
+    typings: ActionTypings? = null,
 ): List<ActionBinding> {
     val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
-    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
+    val typingsResolved = typings ?: this.provideTypes(metadataRevision)
 
     val packageName = owner.toKotlinPackageName()
     val className = this.buildActionClassName()
@@ -81,9 +85,10 @@ public fun ActionCoords.generateBinding(
             coords = this,
             bindingVersion = bindingVersion,
             inputTypings = emptyMap(),
+            outputTypings = emptyMap(),
             className = classNameUntyped,
             untypedClass = true,
-            replaceWith = inputTypingsResolved.second?.let { CodeBlock.of("ReplaceWith(%S)", className) },
+            replaceWith = typingsResolved.source?.let { CodeBlock.of("ReplaceWith(%S)", className) },
         )
 
     return listOfNotNull(
@@ -94,13 +99,14 @@ public fun ActionCoords.generateBinding(
             packageName = packageName,
             typingActualSource = null,
         ),
-        inputTypingsResolved.second?.let {
+        typingsResolved.source?.let {
             val actionBindingSourceCode =
                 generateActionBindingSourceCode(
                     metadata = metadataProcessed,
                     coords = this,
                     bindingVersion = bindingVersion,
-                    inputTypings = inputTypingsResolved.first,
+                    inputTypings = typingsResolved.inputTypings,
+                    outputTypings = typingsResolved.outputTypings,
                     className = className,
                 )
             ActionBinding(
@@ -132,6 +138,7 @@ private fun generateActionBindingSourceCode(
     coords: ActionCoords,
     bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
+    outputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean = false,
     replaceWith: CodeBlock? = null,
@@ -147,8 +154,18 @@ private fun generateActionBindingSourceCode(
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            ).addType(generateActionClass(metadata, coords, bindingVersion, inputTypings, className, untypedClass, replaceWith))
-            .addSuppressAnnotation(metadata)
+            ).addType(
+                generateActionClass(
+                    metadata,
+                    coords,
+                    bindingVersion,
+                    inputTypings,
+                    outputTypings,
+                    className,
+                    untypedClass,
+                    replaceWith,
+                ),
+            ).addSuppressAnnotation(bindingVersion, metadata, untypedClass)
             .indent("    ")
             .build()
     return buildString {
@@ -156,28 +173,28 @@ private fun generateActionBindingSourceCode(
     }
 }
 
-private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata) =
-    apply {
-        val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
-
-        addAnnotation(
-            AnnotationSpec
-                .builder(Suppress::class.asClassName())
-                .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
-                .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
-                .apply {
-                    if (isDeprecatedInputUsed) {
-                        addMember(CodeBlock.of("%S", "DEPRECATION"))
-                    }
-                }.build(),
-        )
+private fun FileSpec.Builder.addSuppressAnnotation(
+    bindingVersion: BindingVersion,
+    metadata: Metadata,
+    untypedClass: Boolean,
+): FileSpec.Builder {
+    val suppress = AnnotationSpec.builder(Suppress::class.asClassName())
+    suppress.addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
+    suppress.addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
+    val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
+    if (((bindingVersion >= V2) && !untypedClass && metadata.inputs.isNotEmpty()) || isDeprecatedInputUsed) {
+        suppress.addMember(CodeBlock.of("%S", "DEPRECATION"))
     }
+    addAnnotation(suppress.build())
+    return this
+}
 
 private fun generateActionClass(
     metadata: Metadata,
     coords: ActionCoords,
     bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
+    outputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean,
     replaceWith: CodeBlock?,
@@ -190,29 +207,33 @@ private fun generateActionClass(
         .replaceWith(bindingVersion, replaceWith)
         .addClassConstructorAnnotation()
         .inheritsFromRegularAction(coords, metadata, className)
-        .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
-        .properties(metadata, coords, inputTypings, className, untypedClass)
+        .primaryConstructor(metadata.primaryConstructor(bindingVersion, inputTypings, coords, className, untypedClass))
+        .properties(bindingVersion, metadata, coords, inputTypings, className, untypedClass)
         .addInitializerBlock(metadata, bindingVersion, coords, inputTypings, untypedClass)
-        .addFunction(metadata.secondaryConstructor(inputTypings, coords, className, untypedClass))
-        .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings, untypedClass))
-        .addCustomTypes(inputTypings, coords, className)
-        .addOutputClassIfNecessary(metadata)
+        .addFunction(metadata.secondaryConstructor(bindingVersion, inputTypings, coords, className, untypedClass))
+        .addFunction(metadata.buildToYamlArgumentsFunction(bindingVersion, inputTypings, untypedClass))
+        .addCustomTypes(inputTypings, outputTypings, coords, className)
+        .addOutputClassIfNecessary(bindingVersion, metadata, coords, outputTypings)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
 
 private fun TypeSpec.Builder.addCustomTypes(
-    typings: Map<String, Typing>,
+    inputTypings: Map<String, Typing>,
+    outputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
 ): TypeSpec.Builder {
-    typings
+    (inputTypings.entries + outputTypings.entries)
         .mapNotNull { (inputName, typing) -> typing.buildCustomType(coords, inputName, className) }
         .distinctBy { it.name }
         .forEach { addType(it) }
     return this
 }
 
+private val Expression = ClassName("io.github.typesafegithub.workflows.domain", "Expression")
+
 private fun TypeSpec.Builder.properties(
+    bindingVersion: BindingVersion,
     metadata: Metadata,
     coords: ActionCoords,
     inputTypings: Map<String, Typing>,
@@ -221,31 +242,92 @@ private fun TypeSpec.Builder.properties(
 ): TypeSpec.Builder {
     metadata.inputs.forEach { (key, input) ->
         val typedInput = inputTypings.containsKey(key)
+        val propertyBaseName = key.toCamelCase()
         if (!untypedClass && typedInput) {
             addProperty(
                 PropertySpec
                     .builder(
-                        key.toCamelCase(),
-                        inputTypings.getInputType(
-                            key,
-                            input,
-                            coords,
-                            className,
-                            untypedClass = false,
-                            typedInput = true,
-                        ),
-                    ).initializer(key.toCamelCase())
-                    .annotateDeprecated(input)
+                        propertyBaseName,
+                        inputTypings
+                            .getInputType(
+                                bindingVersion,
+                                key,
+                                input,
+                                coords,
+                                className,
+                                untypedClass = false,
+                                typedInput = true,
+                            ),
+                    ).initializer("%N", propertyBaseName)
+                    .annotateDeprecated(bindingVersion, input)
                     .build(),
             )
         }
         addProperty(
             PropertySpec
-                .builder("${key.toCamelCase()}_Untyped", null.getInputType(key, input, coords, className, untypedClass, typedInput))
-                .initializer("${key.toCamelCase()}_Untyped")
-                .annotateDeprecated(input)
+                .builder(
+                    "${propertyBaseName}_Untyped",
+                    null
+                        .getInputType(
+                            bindingVersion,
+                            key,
+                            input,
+                            coords,
+                            className,
+                            untypedClass,
+                            typedInput,
+                        ),
+                ).initializer("%N", "${propertyBaseName}_Untyped")
+                .annotateDeprecated(bindingVersion, input, typedInput)
                 .build(),
         )
+        if (bindingVersion >= V2) {
+            addProperty(
+                PropertySpec
+                    .builder(
+                        "${propertyBaseName}Expression",
+                        Expression
+                            .parameterizedBy(
+                                inputTypings
+                                    .getInputType(
+                                        bindingVersion,
+                                        key,
+                                        input,
+                                        coords,
+                                        className,
+                                        untypedClass,
+                                        typedInput,
+                                    ).copy(nullable = false),
+                            ).copy(nullable = true),
+                    ).initializer("%N", "${propertyBaseName}Expression")
+                    .annotateDeprecated(bindingVersion, input)
+                    .build(),
+            )
+            if (inputTypings[key] is ListOfTypings) {
+                addProperty(
+                    PropertySpec
+                        .builder(
+                            "${propertyBaseName}Expressions",
+                            List::class
+                                .asClassName()
+                                .parameterizedBy(
+                                    Expression
+                                        .parameterizedBy(
+                                            (inputTypings[key] as ListOfTypings)
+                                                .typing
+                                                .getClassName(
+                                                    actionPackageName = coords.owner.toKotlinPackageName(),
+                                                    actionClassName = coords.buildActionClassName(),
+                                                    fieldName = key,
+                                                ),
+                                        ),
+                                ).copy(nullable = true),
+                        ).initializer("%N", "${propertyBaseName}Expressions")
+                        .annotateDeprecated(bindingVersion, input)
+                        .build(),
+                )
+            }
+        }
     }
     addProperty(PropertySpec.builder(CUSTOM_INPUTS, Types.mapStringString).initializer(CUSTOM_INPUTS).build())
     addProperty(PropertySpec.builder(CUSTOM_VERSION, Types.nullableString).initializer(CUSTOM_VERSION).build())
@@ -254,7 +336,12 @@ private fun TypeSpec.Builder.properties(
 
 private val OutputsBase = ClassName("io.github.typesafegithub.workflows.domain.actions", "Action", "Outputs")
 
-private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): TypeSpec.Builder {
+private fun TypeSpec.Builder.addOutputClassIfNecessary(
+    bindingVersion: BindingVersion,
+    metadata: Metadata,
+    coords: ActionCoords,
+    outputTypings: Map<String, Typing>,
+): TypeSpec.Builder {
     if (metadata.outputs.isEmpty()) {
         return this
     }
@@ -264,12 +351,39 @@ private fun TypeSpec.Builder.addOutputClassIfNecessary(metadata: Metadata): Type
             .builder("stepId", String::class)
             .build()
     val propertiesFromOutputs =
-        metadata.outputs.map { (key, value) ->
-            PropertySpec
-                .builder(key.toCamelCase(), String::class)
-                .initializer("\"steps.\$stepId.outputs.$key\"")
-                .addKdocIfNotEmpty(value.description.escapedForComments.removeTrailingWhitespacesForEachLine())
-                .build()
+        if (bindingVersion <= V1) {
+            metadata.outputs.map { (key, value) ->
+                PropertySpec
+                    .builder(key.toCamelCase(), String::class)
+                    .initializer("\"steps.\$stepId.outputs.$key\"")
+                    .addKdocIfNotEmpty(value.description.escapedForComments.removeTrailingWhitespacesForEachLine())
+                    .build()
+            }
+        } else {
+            metadata.outputs.flatMap { (key, value) ->
+                val outputClassName =
+                    outputTypings[key]
+                        ?.getClassName(coords.owner.toKotlinPackageName(), coords.buildActionClassName(), key)
+                val propertyBaseName = key.toCamelCase()
+                listOfNotNull(
+                    outputClassName?.let {
+                        PropertySpec
+                            .builder(
+                                propertyBaseName,
+                                Expression.parameterizedBy(it),
+                            ).initializer("%T(\"steps.\$stepId.outputs.%L\")", Expression, key)
+                            .addKdocIfNotEmpty(value.description.escapedForComments.removeTrailingWhitespacesForEachLine())
+                            .build()
+                    },
+                    PropertySpec
+                        .builder(
+                            "${propertyBaseName}_Untyped",
+                            Expression.parameterizedBy(Any::class.asClassName()),
+                        ).initializer("%T(\"steps.\$stepId.outputs.%L\")", Expression, key)
+                        .addKdocIfNotEmpty(value.description.escapedForComments.removeTrailingWhitespacesForEachLine())
+                        .build(),
+                )
+            }
         }
     addType(
         TypeSpec
@@ -314,26 +428,32 @@ private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: M
             .returns(if (metadata.outputs.isEmpty()) OutputsBase else ClassName("", "Outputs"))
             .addModifiers(KModifier.OVERRIDE)
             .addParameter("stepId", String::class)
-            .addCode(CodeBlock.of("return Outputs(stepId)"))
+            .addCode("return Outputs(stepId)")
             .build(),
     )
 
     return this
 }
 
-private fun PropertySpec.Builder.annotateDeprecated(input: Input) =
-    apply {
-        if (input.deprecationMessage != null) {
-            addAnnotation(
-                AnnotationSpec
-                    .builder(Deprecated::class.asClassName())
-                    .addMember("%S", input.deprecationMessage)
-                    .build(),
-            )
-        }
+private fun PropertySpec.Builder.annotateDeprecated(
+    bindingVersion: BindingVersion,
+    input: Input,
+    untypedSibling: Boolean = false,
+) = apply {
+    if (((bindingVersion >= V2) && untypedSibling) || (input.deprecationMessage != null)) {
+        addAnnotation(
+            AnnotationSpec
+                .builder(Deprecated::class.asClassName())
+                .addMember(
+                    "%S",
+                    input.deprecationMessage ?: "Use the typed property or expression property instead",
+                ).build(),
+        )
     }
+}
 
 private fun Metadata.buildToYamlArgumentsFunction(
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     untypedClass: Boolean,
 ) = FunSpec
@@ -343,12 +463,13 @@ private fun Metadata.buildToYamlArgumentsFunction(
     .addAnnotation(
         AnnotationSpec
             .builder(Suppress::class)
-            .addMember("\"SpreadOperator\"")
+            .addMember("%S", "SpreadOperator")
             .build(),
-    ).addCode(linkedMapOfInputs(inputTypings, untypedClass))
+    ).addCode(linkedMapOfInputs(bindingVersion, inputTypings, untypedClass))
     .build()
 
 private fun Metadata.linkedMapOfInputs(
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     untypedClass: Boolean,
 ) = if (inputs.isEmpty()) {
@@ -360,16 +481,36 @@ private fun Metadata.linkedMapOfInputs(
         add("*listOfNotNull(\n")
         indent()
         inputs.forEach { (key, value) ->
-            val propertyName = key.toCamelCase()
+            val propertyBaseName = key.toCamelCase()
             if (!untypedClass && inputTypings.containsKey(key)) {
                 val asStringCode = inputTypings.getInputTyping(key).asString()
-                add("%N?.let { %S to it$asStringCode },\n", propertyName, key)
+                add("%N?.let { %S to it$asStringCode },\n", propertyBaseName, key)
             }
             val asStringCode = null.getInputTyping(key).asString()
-            if (value.shouldBeRequiredInBinding() && !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))) {
-                add("%S to %N$asStringCode,\n", key, "${propertyName}_Untyped")
+            if (value.shouldBeRequiredInBinding() &&
+                !value.shouldBeNullable(
+                    bindingVersion,
+                    untypedClass,
+                    inputTypings.containsKey(key),
+                )
+            ) {
+                add("%S to %N$asStringCode,\n", key, "${propertyBaseName}_Untyped")
             } else {
-                add("%N?.let { %S to it$asStringCode },\n", "${propertyName}_Untyped", key)
+                add("%N?.let { %S to it$asStringCode },\n", "${propertyBaseName}_Untyped", key)
+            }
+            if (bindingVersion >= V2) {
+                add("%N?.let { %S to it.expressionString },\n", "${propertyBaseName}Expression", key)
+                if (inputTypings[key] is ListOfTypings) {
+                    add(
+                        "%N?.let { %S to it.joinToString(%S, transform = %T::expressionString) },\n",
+                        "${propertyBaseName}Expressions",
+                        key,
+                        " ",
+                        Expression.parameterizedBy(
+                            WildcardTypeName.producerOf(Any::class.asClassName().copy(nullable = true)),
+                        ),
+                    )
+                }
             }
         }
         add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
@@ -443,6 +584,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
 }
 
 private fun Metadata.primaryConstructor(
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
@@ -451,10 +593,11 @@ private fun Metadata.primaryConstructor(
     FunSpec
         .constructorBuilder()
         .addModifiers(KModifier.PRIVATE)
-        .addParameters(buildCommonConstructorParameters(inputTypings, coords, className, untypedClass))
+        .addParameters(buildCommonConstructorParameters(bindingVersion, inputTypings, coords, className, untypedClass))
         .build()
 
 private fun Metadata.secondaryConstructor(
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
@@ -467,22 +610,30 @@ private fun Metadata.secondaryConstructor(
                 .builder("pleaseUseNamedArguments", Unit::class)
                 .addModifiers(KModifier.VARARG)
                 .build(),
-        ).addParameters(buildCommonConstructorParameters(inputTypings, coords, className, untypedClass))
+        ).addParameters(buildCommonConstructorParameters(bindingVersion, inputTypings, coords, className, untypedClass))
         .callThisConstructor(
             inputs
                 .keys
                 .flatMap { inputName ->
+                    val propertyBaseName = inputName.toCamelCase()
                     val typedInput = inputTypings.containsKey(inputName)
                     listOfNotNull(
-                        untypedClass.takeIf { !it && typedInput }?.let { inputName.toCamelCase() },
-                        "${inputName.toCamelCase()}_Untyped",
+                        untypedClass.takeIf { !it && typedInput }?.let { propertyBaseName },
+                        "${propertyBaseName}_Untyped",
+                        if (bindingVersion >= V2) "${propertyBaseName}Expression" else null,
+                        if (bindingVersion >= V2) {
+                            (inputTypings[inputName] as? ListOfTypings)?.let { "${propertyBaseName}Expressions" }
+                        } else {
+                            null
+                        },
                     )
                 }.plus(CUSTOM_INPUTS)
                 .plus(CUSTOM_VERSION)
-                .map { CodeBlock.of("%N = %N", it, it) },
+                .map { CodeBlock.of("%1N = %1N", it) },
         ).build()
 
 private fun Metadata.buildCommonConstructorParameters(
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     coords: ActionCoords,
     className: String,
@@ -490,6 +641,7 @@ private fun Metadata.buildCommonConstructorParameters(
 ): List<ParameterSpec> =
     inputs
         .flatMap { (key, input) ->
+            val propertyBaseName = key.toCamelCase()
             val typedInput = inputTypings.containsKey(key)
             val description = input.description.escapedForComments.removeTrailingWhitespacesForEachLine()
             val kdoc =
@@ -507,26 +659,82 @@ private fun Metadata.buildCommonConstructorParameters(
                 untypedClass.takeIf { !it && typedInput }?.let {
                     ParameterSpec
                         .builder(
-                            key.toCamelCase(),
-                            inputTypings.getInputType(
-                                key,
-                                input,
-                                coords,
-                                className,
-                                untypedClass = false,
-                                typedInput = true,
-                            ),
+                            propertyBaseName,
+                            inputTypings
+                                .getInputType(
+                                    bindingVersion,
+                                    key,
+                                    input,
+                                    coords,
+                                    className,
+                                    untypedClass = false,
+                                    typedInput = true,
+                                ),
                         ).defaultValue("null")
                         .addKdocIfNotEmpty(kdoc)
                         .build()
                 },
                 ParameterSpec
                     .builder(
-                        "${key.toCamelCase()}_Untyped",
-                        null.getInputType(key, input, coords, className, untypedClass, typedInput),
-                    ).defaultValueIfNullable(input, untypedClass, typedInput)
+                        "${propertyBaseName}_Untyped",
+                        null
+                            .getInputType(
+                                bindingVersion,
+                                key,
+                                input,
+                                coords,
+                                className,
+                                untypedClass,
+                                typedInput,
+                            ),
+                    ).defaultValueIfNullable(bindingVersion, input, untypedClass, typedInput)
                     .addKdocIfNotEmpty(kdoc)
                     .build(),
+                bindingVersion.takeIf { it >= V2 }?.let {
+                    ParameterSpec
+                        .builder(
+                            "${propertyBaseName}Expression",
+                            Expression
+                                .parameterizedBy(
+                                    inputTypings
+                                        .getInputType(
+                                            bindingVersion,
+                                            key,
+                                            input,
+                                            coords,
+                                            className,
+                                            untypedClass,
+                                            typedInput,
+                                        ).copy(nullable = false),
+                                ).copy(nullable = true),
+                        ).defaultValue("null")
+                        .addKdocIfNotEmpty(kdoc)
+                        .build()
+                },
+                bindingVersion.takeIf { it >= V2 }?.let {
+                    (inputTypings[key] as? ListOfTypings)?.let { listOfTypings ->
+                        ParameterSpec
+                            .builder(
+                                "${propertyBaseName}Expressions",
+                                List::class
+                                    .asClassName()
+                                    .parameterizedBy(
+                                        Expression
+                                            .parameterizedBy(
+                                                listOfTypings
+                                                    .typing
+                                                    .getClassName(
+                                                        actionPackageName = coords.owner.toKotlinPackageName(),
+                                                        actionClassName = coords.buildActionClassName(),
+                                                        fieldName = key,
+                                                    ),
+                                            ),
+                                    ).copy(nullable = true),
+                            ).defaultValue("null")
+                            .addKdocIfNotEmpty(kdoc)
+                            .build()
+                    }
+                },
             )
         }.plus(
             ParameterSpec
@@ -545,11 +753,12 @@ private fun Metadata.buildCommonConstructorParameters(
         )
 
 private fun ParameterSpec.Builder.defaultValueIfNullable(
+    bindingVersion: BindingVersion,
     input: Input,
     untypedClass: Boolean,
     typedInput: Boolean,
 ): ParameterSpec.Builder {
-    if (input.shouldBeNullable(untypedClass, typedInput)) {
+    if (input.shouldBeNullable(bindingVersion, untypedClass, typedInput)) {
         defaultValue("null")
     }
     return this
@@ -564,7 +773,11 @@ private fun TypeSpec.Builder.addInitializerBlock(
 ): TypeSpec.Builder {
     if (!bindingVersion.isDeprecated &&
         !bindingVersion.isExperimental &&
-        (untypedClass || metadata.inputs.isEmpty() || metadata.inputs.none { inputTypings.containsKey(it.key) })
+        if (bindingVersion <= V1) {
+            untypedClass || metadata.inputs.isEmpty() || metadata.inputs.none { inputTypings.containsKey(it.key) }
+        } else {
+            metadata.inputs.isEmpty()
+        }
     ) {
         return this
     }
@@ -609,47 +822,67 @@ private fun TypeSpec.Builder.addInitializerBlock(
                 endControlFlow()
                 add("\n")
             }
-            add(metadata.initializerBlock(inputTypings))
+            add(metadata.initializerBlock(bindingVersion, inputTypings, untypedClass))
         },
     )
     return this
 }
 
-private fun Metadata.initializerBlock(inputTypings: Map<String, Typing>) =
-    buildCodeBlock {
-        var first = true
-        inputs
-            .filter { inputTypings.containsKey(it.key) }
-            .forEach { (key, input) ->
-                if (!first) {
-                    add("\n")
-                }
-                first = false
-                val propertyName = key.toCamelCase()
-                add(
-                    """
-                    require(!((%1N != null) && (%1L_Untyped != null))) {
-                        %2S
-                    }
-
-                    """.trimIndent(),
-                    propertyName,
-                    "Only $propertyName or ${propertyName}_Untyped must be set, but not both",
-                )
-                if (input.shouldBeRequiredInBinding()) {
-                    add(
-                        """
-                        require((%1N != null) || (%1L_Untyped != null)) {
-                            %2S
-                        }
-
-                        """.trimIndent(),
-                        propertyName,
-                        "Either $propertyName or ${propertyName}_Untyped must be set, one of them is required",
-                    )
-                }
+private fun Metadata.initializerBlock(
+    bindingVersion: BindingVersion,
+    inputTypings: Map<String, Typing>,
+    untypedClass: Boolean,
+) = buildCodeBlock {
+    var first = true
+    inputs
+        .filter { (bindingVersion >= V2) || inputTypings.containsKey(it.key) }
+        .forEach { (key, input) ->
+            if (!first) {
+                add("\n")
             }
-    }
+            first = false
+            val typedInput = inputTypings.containsKey(key)
+            val inputProperties =
+                listOfNotNull(
+                    if (!untypedClass && typedInput) "%1N" else null,
+                    "%1L_Untyped",
+                    if (bindingVersion >= V2) "%1LExpression" else null,
+                    if ((bindingVersion >= V2) && (inputTypings[key] is ListOfTypings)) "%1LExpressions" else null,
+                )
+            val inputPropertyNames =
+                listOfNotNull(
+                    if (!untypedClass && typedInput) "%1L" else null,
+                    "%1L_Untyped",
+                    if (bindingVersion >= V2) "%1LExpression" else null,
+                    if ((bindingVersion >= V2) && (inputTypings[key] is ListOfTypings)) "%1LExpressions" else null,
+                )
+            val propertyBaseName = key.toCamelCase()
+            beginControlFlow("require(listOfNotNull(${inputProperties.joinToString()}).size <= 1)", propertyBaseName)
+            addStatement(
+                "%S",
+                "Only one of ${
+                    CodeBlock.of(
+                        "${inputPropertyNames.dropLast(1).joinToString()}, and ${inputPropertyNames.last()}",
+                        propertyBaseName,
+                    )
+                } must be set, but not multiple",
+            )
+            endControlFlow()
+            if (input.shouldBeRequiredInBinding()) {
+                beginControlFlow("require(${inputProperties.joinToString(" || ") { "($it != null)" }})", propertyBaseName)
+                addStatement(
+                    "%S",
+                    "Either ${
+                        CodeBlock.of(
+                            "${inputPropertyNames.dropLast(1).joinToString()}, or ${inputPropertyNames.last()}",
+                            propertyBaseName,
+                        )
+                    } must be set, one of them is required",
+                )
+                endControlFlow()
+            }
+        }
+}
 
 private fun actionKdoc(
     metadata: Metadata,
@@ -695,6 +928,7 @@ private fun actionKdoc(
 private fun Map<String, Typing>?.getInputTyping(key: String) = this?.get(key) ?: StringTyping
 
 private fun Map<String, Typing>?.getInputType(
+    bindingVersion: BindingVersion,
     key: String,
     input: Input,
     coords: ActionCoords,
@@ -703,13 +937,19 @@ private fun Map<String, Typing>?.getInputType(
     typedInput: Boolean,
 ) = getInputTyping(key)
     .getClassName(coords.owner.toKotlinPackageName(), className, key)
-    .copy(nullable = input.shouldBeNullable(untypedClass, typedInput))
+    .copy(nullable = input.shouldBeNullable(bindingVersion, untypedClass, typedInput))
 
 private fun Input.shouldBeNullable(
+    bindingVersion: BindingVersion,
     untypedClass: Boolean,
     typedInput: Boolean,
-) = (untypedClass && !shouldBeRequiredInBinding()) ||
-    (!untypedClass && (typedInput || !shouldBeRequiredInBinding()))
+) = // untyped class => according to required status
+    (untypedClass && !shouldBeRequiredInBinding()) ||
+        // typed class, typed input => null
+        // typed class, untyped input => according to required status
+        (!untypedClass && (typedInput || !shouldBeRequiredInBinding())) ||
+        // expression siblings
+        (bindingVersion >= V2)
 
 private val String.escapedForComments
     get() =
