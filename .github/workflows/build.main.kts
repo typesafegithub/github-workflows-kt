@@ -32,7 +32,7 @@ workflow(
     ),
     sourceFile = __FILE__,
 ) {
-    listOf(Windows2022).forEach { runnerType ->
+    listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
         job(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
