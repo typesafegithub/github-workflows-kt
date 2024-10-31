@@ -16,6 +16,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.io.path.Path
+import kotlin.io.path.invariantSeparatorsPathString
 
 /**
  * Generate type-safe accessors for GitHub Event payloads
@@ -62,7 +63,7 @@ data class PayloadEventParams(
     val className: String,
     val path: String,
 ) {
-    val jsonFile = resourcesDir.resolve(path).toString()
+    val jsonFile = resourcesDir.resolve(path).invariantSeparatorsPathString
 
     init {
         check(className == className.toPascalCase())
