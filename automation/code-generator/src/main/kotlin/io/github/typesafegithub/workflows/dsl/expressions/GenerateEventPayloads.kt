@@ -44,7 +44,7 @@ fun generateEventPayloads(codeGenerator: CodeGenerator) {
 
 private val EXPRESSIONS = "io.github.typesafegithub.workflows.dsl.expressions"
 private val PACKAGE = "$EXPRESSIONS.contexts"
-private val resourcesDir = Path("/payloads")
+private val resourcesDir = Path("payloads")
 
 // ClassNames
 private val fakeList = ClassName(EXPRESSIONS, "FakeList")
