@@ -7,6 +7,7 @@ plugins {
     buildsrc.convention.`duplicate-versions`
 
     kotlin("plugin.serialization")
+    id("com.google.devtools.ksp") version "2.0.21-1.0.26"
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
@@ -24,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation(projects.sharedInternal)
+    ksp(projects.automation.codeGenerator)
 
     testImplementation("dev.zacsweers.kctfork:core:0.5.1")
     // Needed to use the right version of the compiler for the libraries that depend on it.
@@ -36,14 +38,6 @@ dependencies {
     testImplementation("actions:upload-artifact:v3")
     testImplementation("aws-actions:configure-aws-credentials:v4")
     testImplementation("EndBug:add-and-commit:v9")
-}
-
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src/gen/kotlin"))
-        }
-    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -68,7 +62,7 @@ kotlin {
 }
 
 fun ConfigurableKtLintTask.kotlinterConfig() {
-    exclude { it.file.invariantSeparatorsPath.contains("/gen/") }
+    exclude { it.file.invariantSeparatorsPath.contains("/generated/") }
 }
 
 tasks.lintKotlinMain {
