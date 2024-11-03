@@ -9,7 +9,7 @@ include(
     "maven-binding-builder",
     "jit-binding-server",
     "shared-internal",
-    ":automation:code-generator",
+    "code-generator",
 )
 
 plugins {
