@@ -25,7 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation(projects.sharedInternal)
-    ksp(projects.automation.codeGenerator)
+    ksp(projects.codeGenerator)
 
     testImplementation("dev.zacsweers.kctfork:core:0.5.1")
     // Needed to use the right version of the compiler for the libraries that depend on it.
