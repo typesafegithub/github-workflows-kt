@@ -3,11 +3,11 @@ import io.ktor.plugin.features.*
 plugins {
     buildsrc.convention.`kotlin-jvm-server`
     application
-    id("io.ktor.plugin") version "2.3.12"
+    id("io.ktor.plugin") version "3.0.0"
 }
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:2.3.12"))
+    implementation(platform("io.ktor:ktor-bom:3.0.0"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-client-core")
@@ -16,7 +16,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-2.0:2.3.0-alpha")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.10.0-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-logging:1.44.1")
