@@ -14,14 +14,12 @@ dependencies {
     implementation("io.ktor:ktor-client-cio")
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
-
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
     implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.1.0-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-logging:1.44.1")
-
     implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")
     implementation("io.github.oshai:kotlin-logging:7.0.0")
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.24.1"))
