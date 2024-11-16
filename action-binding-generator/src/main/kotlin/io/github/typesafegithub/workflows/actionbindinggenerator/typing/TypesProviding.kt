@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
+import com.charleskorn.kaml.AnchorsAndAliases
 import com.charleskorn.kaml.Yaml
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
@@ -171,7 +172,7 @@ private val yaml =
         configuration =
             Yaml.default.configuration.copy(
                 strictMode = false,
-                allowAnchorsAndAliases = true,
+                anchorsAndAliases = AnchorsAndAliases.Permitted(10u),
             ),
     )
 
