@@ -16,7 +16,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.1.0-alpha")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.10.0-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-logging:1.44.1")
