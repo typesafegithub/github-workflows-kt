@@ -30,16 +30,21 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
+      uses: 'actions/cache@v4'
+      with:
+        path: 'buildSrc/build'
+        key: 'gradle-buildSrc-build-dir-${{ runner.os }}'
+    - id: 'step-2'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '11'
         distribution: 'zulu'
-    - id: 'step-2'
+    - id: 'step-3'
       uses: 'gradle/actions/setup-gradle@v4'
       with:
         cache-encryption-key: '${{ secrets.GRADLE_ENCRYPTION_KEY }}'
-    - id: 'step-3'
+    - id: 'step-4'
       name: 'Build'
       env:
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
@@ -52,16 +57,21 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
+      uses: 'actions/cache@v4'
+      with:
+        path: 'buildSrc/build'
+        key: 'gradle-buildSrc-build-dir-${{ runner.os }}'
+    - id: 'step-2'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '11'
         distribution: 'zulu'
-    - id: 'step-2'
+    - id: 'step-3'
       uses: 'gradle/actions/setup-gradle@v4'
       with:
         cache-encryption-key: '${{ secrets.GRADLE_ENCRYPTION_KEY }}'
-    - id: 'step-3'
+    - id: 'step-4'
       name: 'Build'
       env:
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'

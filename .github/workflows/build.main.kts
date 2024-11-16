@@ -3,6 +3,7 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.1")
 
 @file:Repository("https://bindings.krzeminski.it")
+@file:DependsOn("actions:cache:v4")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("gradle:actions__setup-gradle:v4")
@@ -11,6 +12,7 @@
 @file:Import("setup-java.main.kts")
 @file:Import("setup-python.main.kts")
 
+import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
@@ -38,6 +40,10 @@ workflow(
             runsOn = runnerType,
         ) {
             uses(action = Checkout())
+            uses(action = Cache(
+                path = listOf("buildSrc/build"),
+                key = "gradle-buildSrc-build-dir-" + expr { runner.os },
+            ))
             setupJava()
             uses(action = ActionsSetupGradle(
                 cacheEncryptionKey = expr { GRADLE_ENCRYPTION_KEY },
