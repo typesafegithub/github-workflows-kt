@@ -40,6 +40,7 @@ workflow(
             runsOn = runnerType,
         ) {
             uses(action = Checkout())
+            // Workaround for https://github.com/gradle/gradle/issues/21265
             uses(action = Cache(
                 path = listOf("buildSrc/build"),
                 key = "gradle-buildSrc-build-dir-" + expr { runner.os },
