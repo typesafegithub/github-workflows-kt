@@ -1,6 +1,8 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
+import com.charleskorn.kaml.AnchorsAndAliases
 import com.charleskorn.kaml.Yaml
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
@@ -8,7 +10,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestFo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.repoName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
@@ -17,6 +18,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 import java.net.URI
+
+private val logger = logger { }
 
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
@@ -29,18 +32,18 @@ internal fun ActionCoords.provideTypes(
         ?: Pair(emptyMap(), null)
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yml"
+    "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yml"
 
 private fun ActionCoords.actionTypesFromCatalog() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$repoName/$version$subName/action-types.yml"
+        "main/typings/$owner/$name/$version$subName/action-types.yml"
 
 private fun ActionCoords.catalogMetadata() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$repoName/metadata.yml"
+        "main/typings/$owner/$name/metadata.yml"
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/$repoName/$gitRef$subName/action-types.yaml"
+    "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
@@ -55,7 +58,7 @@ private fun ActionCoords.fetchTypingMetadata(
     val typesMetadataYaml =
         list.firstNotNullOfOrNull { url ->
             try {
-                println("  ... types from $url")
+                logger.info { "  ... types from action $url" }
                 fetchUri(URI(url))
             } catch (e: IOException) {
                 null
@@ -75,7 +78,7 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
     val metadataUrl = this.catalogMetadata()
     val metadataYml =
         try {
-            println("  ... metadata from $metadataUrl")
+            logger.info { "  ... metadata from $metadataUrl" }
             fetchUri(URI(metadataUrl))
         } catch (e: IOException) {
             return null
@@ -87,10 +90,10 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
             .filter { it.versionToInt() < requestedVersionAsInt }
             .maxByOrNull { it.versionToInt() }
             ?: run {
-                println("  ... no fallback version found!")
+                logger.info { "  ... no fallback version found!" }
                 return null
             }
-    println("  ... using fallback version: $fallbackVersion")
+    logger.info { "  ... using fallback version: $fallbackVersion" }
     val adjustedCoords = this.copy(version = fallbackVersion)
     return fetchTypingsFromUrl(url = adjustedCoords.actionTypesFromCatalog(), fetchUri = fetchUri)
 }
@@ -101,7 +104,7 @@ private fun fetchTypingsFromUrl(
 ): ActionTypes? {
     val typesMetadataYml =
         try {
-            println("  ... types from $url")
+            logger.info { "  ... types from catalog $url" }
             fetchUri(URI(url))
         } catch (e: IOException) {
             null
@@ -169,7 +172,7 @@ private val yaml =
         configuration =
             Yaml.default.configuration.copy(
                 strictMode = false,
-                allowAnchorsAndAliases = true,
+                anchorsAndAliases = AnchorsAndAliases.Permitted(10u),
             ),
     )
 

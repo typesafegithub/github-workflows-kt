@@ -18,6 +18,9 @@ import com.squareup.kotlinpoet.buildCodeBlock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.isTopLevel
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_INPUTS
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_VERSION
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
@@ -351,13 +354,13 @@ private fun Metadata.linkedMapOfInputs(
             val propertyName = key.toCamelCase()
             if (!untypedClass && inputTypings.containsKey(key)) {
                 val asStringCode = inputTypings.getInputTyping(key).asString()
-                add("%N?.let { %S·to·it$asStringCode },\n", propertyName, key)
+                add("%N?.let { %S to it$asStringCode },\n", propertyName, key)
             }
             val asStringCode = null.getInputTyping(key).asString()
             if (value.shouldBeRequiredInBinding() && !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))) {
-                add("%S·to·%N$asStringCode,\n", key, "${propertyName}_Untyped")
+                add("%S to %N$asStringCode,\n", key, "${propertyName}_Untyped")
             } else {
-                add("%N?.let { %S·to·it$asStringCode },\n", "${propertyName}_Untyped", key)
+                add("%N?.let { %S to it$asStringCode },\n", "${propertyName}_Untyped", key)
             }
         }
         add("*$CUSTOM_INPUTS.%M().%M(),\n", Types.mapToList, Types.listToArray)
@@ -411,7 +414,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
     return this
         .superclass(superclass)
         .addSuperclassConstructorParameter("%S", coords.owner)
-        .addSuperclassConstructorParameter("%S", coords.name)
+        .addSuperclassConstructorParameter("%S", coords.fullName)
         .addSuperclassConstructorParameter("_customVersion ?: %S", coords.version)
 }
 
@@ -614,9 +617,7 @@ private fun actionKdoc(
        |
        |${metadata.description.escapedForComments.removeTrailingWhitespacesForEachLine()}
        |
-       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name.substringBefore(
-        '/',
-    )}${if ("/" in coords.name) "/tree/${coords.version}/${coords.name.substringAfter('/')}" else ""})
+       |[Action on GitHub](https://github.com/${coords.owner}/${coords.name}${if (coords.isTopLevel) "" else "/tree/${coords.version}${coords.subName}"})
     """.trimMargin()
 
 private fun Map<String, Typing>?.getInputTyping(key: String) = this?.get(key) ?: StringTyping

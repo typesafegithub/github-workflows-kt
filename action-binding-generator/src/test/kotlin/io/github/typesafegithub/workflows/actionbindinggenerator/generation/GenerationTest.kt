@@ -287,6 +287,30 @@ class GenerationTest :
             binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
         }
 
+        test("subaction") {
+            // given
+            val actionManifestHasNoInputs = emptyMap<String, Input>()
+            val actionManifest =
+                Metadata(
+                    inputs = actionManifestHasNoInputs,
+                    name = "Action With No Inputs",
+                    description = "Description",
+                )
+
+            val coords = ActionCoords("john-smith", "action-with", "v3", "sub/action")
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = Pair(emptyMap(), ACTION),
+                )
+
+            // then
+            binding.shouldContainAndMatchFile("ActionWithSubAction.kt")
+        }
+
         test("action with deprecated input resolving to the same Kotlin field name") {
             // given
             val actionManifest =

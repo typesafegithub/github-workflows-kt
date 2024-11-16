@@ -1,14 +1,18 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.metadata
 
 import com.charleskorn.kaml.Yaml
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
 import java.net.URI
+
+private val logger = logger { }
 
 /**
  * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
@@ -35,15 +39,9 @@ public data class Output(
     val description: String = "",
 )
 
-private fun ActionCoords.actionYmlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/${name.substringBefore(
-        '/',
-    )}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yml"
+private fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yml"
 
-private fun ActionCoords.actionYamlUrl(gitRef: String) =
-    "https://raw.githubusercontent.com/$owner/${name.substringBefore(
-        '/',
-    )}/$gitRef/${if ("/" in name) "${name.substringAfter('/')}/" else ""}action.yaml"
+private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
 
 internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
 
@@ -61,7 +59,7 @@ public fun ActionCoords.fetchMetadata(
     return list
         .firstNotNullOfOrNull { url ->
             try {
-                println("  ... from $url")
+                logger.info { "  ... from $url" }
                 fetchUri(URI(url))
             } catch (e: IOException) {
                 null

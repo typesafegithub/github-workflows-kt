@@ -26,13 +26,9 @@ internal data class Jars(
     val sourcesJar: () -> ByteArray,
 )
 
-internal fun buildJars(
-    owner: String,
-    name: String,
-    version: String,
-): Jars? {
+internal fun ActionCoords.buildJars(): Jars? {
     val binding =
-        generateBinding(owner = owner, name = name, version = version).also {
+        generateBinding(metadataRevision = NewestForVersion).also {
             if (it.isEmpty()) return null
         }
 
@@ -57,22 +53,6 @@ internal fun buildJars(
     return Jars(
         mainJar = { mainJar },
         sourcesJar = { sourcesJar },
-    )
-}
-
-private fun generateBinding(
-    owner: String,
-    name: String,
-    version: String,
-): List<ActionBinding> {
-    val actionCoords =
-        ActionCoords(
-            owner = owner,
-            name = name,
-            version = version,
-        )
-    return actionCoords.generateBinding(
-        metadataRevision = NewestForVersion,
     )
 }
 
@@ -101,8 +81,8 @@ private fun compileBinding(sourceFilePaths: List<Path>): Path {
             services = Services.EMPTY,
             arguments = args,
         )
-    require(exitCode == ExitCode.OK) {
-        "Binding compilation failed! Compiler messages: $compilerMessagesOutputStream"
+    check(exitCode == ExitCode.OK) {
+        "Binding compilation failed! Compiler messages:\n$compilerMessagesOutputStream"
     }
     return compilationOutput
 }

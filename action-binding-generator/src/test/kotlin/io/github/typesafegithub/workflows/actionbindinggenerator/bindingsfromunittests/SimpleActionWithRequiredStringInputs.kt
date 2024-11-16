@@ -35,10 +35,8 @@ import kotlin.collections.toTypedArray
  * with multiline description
  * @param bazGoo_Untyped &lt;required&gt; Just another input
  * with multiline description
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
 public data class SimpleActionWithRequiredStringInputs private constructor(
@@ -67,12 +65,10 @@ public data class SimpleActionWithRequiredStringInputs private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs",
-        _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs", _customVersion ?: "v3") {
     init {
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
@@ -97,8 +93,7 @@ public data class SimpleActionWithRequiredStringInputs private constructor(
         bazGoo_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped =
-            bazGoo_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped = bazGoo_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

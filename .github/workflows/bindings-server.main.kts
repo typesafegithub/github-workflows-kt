@@ -99,6 +99,16 @@ workflow(
             """.trimIndent(),
         )
 
+        cleanMavenLocal()
+
+        run(
+            name = "Compile a Gradle project using the bindings from the server",
+            command = """
+                cd .github/workflows/test-gradle-project-using-bindings-server
+                ./gradlew build
+            """.trimIndent(),
+        )
+
         run(
             name = "Fetch maven-metadata.xml for top-level action",
             command = "curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep '<version>v4</version>'",

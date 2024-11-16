@@ -59,10 +59,8 @@ import kotlin.collections.toTypedArray
  * @param listInts_Untyped List of integers
  * @param listEnums_Untyped List of enums
  * @param listIntSpecial_Untyped List of integer with special values
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     "Use the typed class instead",
@@ -123,12 +121,10 @@ public data class ActionWithAllTypesOfInputs_Untyped private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithAllTypesOfInputs_Untyped.Outputs>("john-smith",
-        "action-with-all-types-of-inputs", _customVersion ?: "v3") {
+) : RegularAction<ActionWithAllTypesOfInputs_Untyped.Outputs>("john-smith", "action-with-all-types-of-inputs", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         fooBar_Untyped: String,
@@ -145,12 +141,7 @@ public data class ActionWithAllTypesOfInputs_Untyped private constructor(
         listIntSpecial_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar_Untyped = fooBar_Untyped, bazGoo_Untyped = bazGoo_Untyped, binKin_Untyped =
-            binKin_Untyped, intPint_Untyped = intPint_Untyped, floPint_Untyped = floPint_Untyped,
-            finBin_Untyped = finBin_Untyped, gooZen_Untyped = gooZen_Untyped, bahEnum_Untyped =
-            bahEnum_Untyped, listStrings_Untyped = listStrings_Untyped, listInts_Untyped =
-            listInts_Untyped, listEnums_Untyped = listEnums_Untyped, listIntSpecial_Untyped =
-            listIntSpecial_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(fooBar_Untyped = fooBar_Untyped, bazGoo_Untyped = bazGoo_Untyped, binKin_Untyped = binKin_Untyped, intPint_Untyped = intPint_Untyped, floPint_Untyped = floPint_Untyped, finBin_Untyped = finBin_Untyped, gooZen_Untyped = gooZen_Untyped, bahEnum_Untyped = bahEnum_Untyped, listStrings_Untyped = listStrings_Untyped, listInts_Untyped = listInts_Untyped, listEnums_Untyped = listEnums_Untyped, listIntSpecial_Untyped = listIntSpecial_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

@@ -46,10 +46,8 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-no-typings)
  *
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
 public data class ActionWithNoTypings_Untyped private constructor(
@@ -60,8 +58,7 @@ public data class ActionWithNoTypings_Untyped private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "action-with-no-typings", _customVersion ?: "v3") {
@@ -71,8 +68,7 @@ public data class ActionWithNoTypings_Untyped private constructor(
         bar_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, _customInputs = _customInputs,
-            _customVersion = _customVersion)
+    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

@@ -1,16 +1,14 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-internal fun buildModuleFile(
-    owner: String,
-    name: String,
-    version: String,
-): String =
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+
+internal fun ActionCoords.buildModuleFile() =
     """
     {
       "formatVersion": "1.1",
       "component": {
         "group": "$owner",
-        "module": "$name",
+        "module": "$mavenName",
         "version": "$version",
         "attributes": {
           "org.gradle.status": "release"
@@ -36,8 +34,8 @@ internal fun buildModuleFile(
           "dependencies": [],
           "files": [
             {
-              "name": "$name-$version.jar",
-              "url": "$name-$version.jar",
+              "name": "$mavenName-$version.jar",
+              "url": "$mavenName-$version.jar",
               "size": 1
             }
           ]
@@ -56,8 +54,8 @@ internal fun buildModuleFile(
           "dependencies": [],
           "files": [
             {
-              "name": "$name-$version.jar",
-              "url": "$name-$version.jar",
+              "name": "$mavenName-$version.jar",
+              "url": "$mavenName-$version.jar",
               "size": 1
             }
           ]

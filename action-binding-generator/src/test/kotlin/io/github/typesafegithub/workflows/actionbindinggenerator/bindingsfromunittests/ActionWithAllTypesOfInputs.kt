@@ -54,10 +54,8 @@ import kotlin.collections.toTypedArray
  * @param listEnums_Untyped List of enums
  * @param listIntSpecial List of integer with special values
  * @param listIntSpecial_Untyped List of integer with special values
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
 public data class ActionWithAllTypesOfInputs private constructor(
@@ -162,12 +160,10 @@ public data class ActionWithAllTypesOfInputs private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithAllTypesOfInputs.Outputs>("john-smith",
-        "action-with-all-types-of-inputs", _customVersion ?: "v3") {
+) : RegularAction<ActionWithAllTypesOfInputs.Outputs>("john-smith", "action-with-all-types-of-inputs", _customVersion ?: "v3") {
     init {
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
@@ -267,15 +263,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
         listIntSpecial_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped =
-            bazGoo_Untyped, binKin = binKin, binKin_Untyped = binKin_Untyped, intPint = intPint,
-            intPint_Untyped = intPint_Untyped, floPint = floPint, floPint_Untyped = floPint_Untyped,
-            finBin = finBin, finBin_Untyped = finBin_Untyped, gooZen = gooZen, gooZen_Untyped =
-            gooZen_Untyped, bahEnum = bahEnum, bahEnum_Untyped = bahEnum_Untyped, listStrings =
-            listStrings, listStrings_Untyped = listStrings_Untyped, listInts = listInts,
-            listInts_Untyped = listInts_Untyped, listEnums = listEnums, listEnums_Untyped =
-            listEnums_Untyped, listIntSpecial = listIntSpecial, listIntSpecial_Untyped =
-            listIntSpecial_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped = bazGoo_Untyped, binKin = binKin, binKin_Untyped = binKin_Untyped, intPint = intPint, intPint_Untyped = intPint_Untyped, floPint = floPint, floPint_Untyped = floPint_Untyped, finBin = finBin, finBin_Untyped = finBin_Untyped, gooZen = gooZen, gooZen_Untyped = gooZen_Untyped, bahEnum = bahEnum, bahEnum_Untyped = bahEnum_Untyped, listStrings = listStrings, listStrings_Untyped = listStrings_Untyped, listInts = listInts, listInts_Untyped = listInts_Untyped, listEnums = listEnums, listEnums_Untyped = listEnums_Untyped, listIntSpecial = listIntSpecial, listIntSpecial_Untyped = listIntSpecial_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
@@ -302,8 +290,7 @@ public data class ActionWithAllTypesOfInputs private constructor(
             listInts_Untyped?.let { "list-ints" to it },
             listEnums?.let { "list-enums" to it.joinToString(",") { it.stringValue } },
             listEnums_Untyped?.let { "list-enums" to it },
-            listIntSpecial?.let { "list-int-special" to it.joinToString(",") {
-                    it.integerValue.toString() } },
+            listIntSpecial?.let { "list-int-special" to it.joinToString(",") { it.integerValue.toString() } },
             listIntSpecial_Untyped?.let { "list-int-special" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()

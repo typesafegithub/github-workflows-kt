@@ -47,10 +47,8 @@ import kotlin.collections.toTypedArray
  *
  * [Action on GitHub](https://github.com/john-smith/action-with-partly-typings)
  *
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @Deprecated(
     "Use the typed class instead",
@@ -66,12 +64,10 @@ public data class ActionWithPartlyTypings_Untyped private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings", _customVersion ?:
-        "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings", _customVersion ?: "v3") {
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         foo_Untyped: String,
@@ -79,8 +75,7 @@ public data class ActionWithPartlyTypings_Untyped private constructor(
         baz_Untyped: String,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, baz_Untyped = baz_Untyped,
-            _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, baz_Untyped = baz_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(

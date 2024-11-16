@@ -9,11 +9,11 @@ include(
     "maven-binding-builder",
     "jit-binding-server",
     "shared-internal",
-    ":automation:code-generator",
+    "code-generator",
 )
 
 plugins {
-    id("com.gradle.develocity") version "3.18.1"
+    id("com.gradle.develocity") version "3.18.2"
 }
 
 dependencyResolutionManagement {

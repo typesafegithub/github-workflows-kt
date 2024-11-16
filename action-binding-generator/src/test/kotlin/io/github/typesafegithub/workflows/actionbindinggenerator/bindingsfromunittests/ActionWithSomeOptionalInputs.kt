@@ -36,10 +36,8 @@ import kotlin.collections.toTypedArray
  * @param cooPoo_Untyped Required is false, default is default
  * @param package &lt;required&gt; Required is true, default is default
  * @param package_Untyped &lt;required&gt; Required is true, default is default
- * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by
- * the binding
- * @param _customVersion Allows overriding action's version, for example to use a specific minor
- * version, or a newer version that the binding doesn't yet know about
+ * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+ * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
 public data class ActionWithSomeOptionalInputs private constructor(
@@ -88,12 +86,10 @@ public data class ActionWithSomeOptionalInputs private constructor(
      */
     public val _customInputs: Map<String, String> = mapOf(),
     /**
-     * Allows overriding action's version, for example to use a specific minor version, or a newer
-     * version that the binding doesn't yet know about
+     * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-some-optional-inputs", _customVersion
-        ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-some-optional-inputs", _customVersion ?: "v3") {
     init {
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
@@ -133,10 +129,7 @@ public data class ActionWithSomeOptionalInputs private constructor(
         package_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped =
-            bazGoo_Untyped, zooDar = zooDar, zooDar_Untyped = zooDar_Untyped, cooPoo = cooPoo,
-            cooPoo_Untyped = cooPoo_Untyped, `package` = `package`, package_Untyped =
-            package_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped = bazGoo_Untyped, zooDar = zooDar, zooDar_Untyped = zooDar_Untyped, cooPoo = cooPoo, cooPoo_Untyped = cooPoo_Untyped, `package` = `package`, package_Untyped = package_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
