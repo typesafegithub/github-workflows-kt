@@ -21,7 +21,7 @@ internal fun Any.toYaml(): String {
     val settings =
         DumpSettings
             .builder()
-            // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
+            // Otherwise, line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
             // expressions.
             .setWidth(Int.MAX_VALUE)
             .build()
