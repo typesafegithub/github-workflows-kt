@@ -32,7 +32,7 @@ UI available at http://localhost:16686/
 */
 internal fun buildOpenTelemetryConfig(
     serviceName: String,
-    endpointConfig: String = "http://jaeger:4317",
+    endpointConfig: String = "http://traces_collector:4317",
 ): OpenTelemetry {
     val spanExporter =
         OtlpGrpcSpanExporter
