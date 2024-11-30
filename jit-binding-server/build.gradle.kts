@@ -21,7 +21,7 @@ dependencies {
     implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.44.1")
     implementation("io.opentelemetry:opentelemetry-exporter-logging:1.44.1")
     implementation("io.github.reactivecircus.cache4k:cache4k:0.13.0")
-    implementation("io.github.oshai:kotlin-logging:7.0.0")
+    implementation("io.github.oshai:kotlin-logging:7.0.3")
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.24.2"))
     implementation("org.apache.logging.log4j:log4j-jul")
     runtimeOnly("org.apache.logging.log4j:log4j-core")
