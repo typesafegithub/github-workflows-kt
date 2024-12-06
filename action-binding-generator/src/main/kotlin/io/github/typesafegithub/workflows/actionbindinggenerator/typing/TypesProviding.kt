@@ -13,7 +13,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
-import it.krzeminski.snakeyaml.engine.kmp.api.Load
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.IOException
@@ -83,7 +82,7 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
         } catch (e: IOException) {
             return null
         }
-    val metadata = yaml.protectedDecodeFromString<CatalogMetadata>(metadataYml)
+    val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
     val requestedVersionAsInt = this.version.versionToIntOrNull() ?: return null
     val fallbackVersion =
         metadata.versionsWithTypings
@@ -151,17 +150,10 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
     default: T,
 ): T =
     if (text.isNotBlank()) {
-        protectedDecodeFromString(text)
+        decodeFromString(text)
     } else {
         default
     }
-
-private inline fun <reified T> Yaml.protectedDecodeFromString(text: String): T {
-    // protect against billion laughs attack until
-    // https://github.com/charleskorn/kaml/pull/620 is available
-    Load().loadOne(text)
-    return decodeFromString(text)
-}
 
 private fun String.versionToInt() = this.versionToIntOrNull() ?: error("Version '$this' cannot be treated as numeric!")
 
@@ -172,7 +164,7 @@ private val yaml =
         configuration =
             Yaml.default.configuration.copy(
                 strictMode = false,
-                anchorsAndAliases = AnchorsAndAliases.Permitted(10u),
+                anchorsAndAliases = AnchorsAndAliases.Permitted(),
             ),
     )
 
