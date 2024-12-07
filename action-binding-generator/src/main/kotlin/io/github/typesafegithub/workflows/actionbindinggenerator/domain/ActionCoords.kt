@@ -1,9 +1,12 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.domain
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
+
 public data class ActionCoords(
     val owner: String,
     val name: String,
     val version: String,
+    val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
 )
 
@@ -13,7 +16,9 @@ public data class ActionCoords(
  */
 public val ActionCoords.isTopLevel: Boolean get() = path == null
 
-public val ActionCoords.prettyPrint: String get() = "$owner/$fullName@$version"
+public val ActionCoords.prettyPrint: String get() = "$owner/$fullName${
+    significantVersion.takeUnless { it == FULL }?.let { " with $it version" } ?: ""
+}@$version"
 
 /**
  * For most actions, it's empty.
