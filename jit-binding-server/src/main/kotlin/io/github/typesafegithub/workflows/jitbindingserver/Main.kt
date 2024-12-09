@@ -3,6 +3,8 @@ package io.github.typesafegithub.workflows.jitbindingserver
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.reactivecircus.cache4k.Cache
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
@@ -102,17 +104,8 @@ private fun Route.metadata(refresh: Boolean = false) {
             return@get
         }
 
-        val owner = call.parameters["owner"]!!
-        val nameAndPath = call.parameters["name"]!!.split("__")
-        val name = nameAndPath.first()
+        val actionCoords = call.toActionCoords(version = "irrelevant")
         val file = call.parameters["file"]!!
-        val actionCoords =
-            ActionCoords(
-                owner = owner,
-                name = name,
-                version = "irrelevant",
-                path = nameAndPath.drop(1).joinToString("/").takeUnless { it.isBlank() },
-            )
         val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = getGithubToken())
         if (file in bindingArtifacts) {
             when (val artifact = bindingArtifacts[file]) {
@@ -175,17 +168,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     bindingsCache: Cache<ActionCoords, Result<Map<String, Artifact>>>,
     refresh: Boolean,
 ): Map<String, Artifact>? {
-    val owner = parameters["owner"]!!
-    val nameAndPath = parameters["name"]!!.split("__")
-    val name = nameAndPath.first()
-    val version = parameters["version"]!!
-    val actionCoords =
-        ActionCoords(
-            owner = owner,
-            name = name,
-            version = version,
-            path = nameAndPath.drop(1).joinToString("/").takeUnless { it.isBlank() },
-        )
+    val actionCoords = toActionCoords()
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
     val bindingArtifacts =
         if (refresh) {
@@ -205,3 +188,28 @@ private fun Result.Companion.failure(): Result<Nothing> = failure(object : Throw
 private fun <T> Result.Companion.of(value: T?): Result<T> = value?.let { success(it) } ?: failure()
 
 private val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
+
+private fun ApplicationCall.toActionCoords(version: String = parameters["version"]!!): ActionCoords {
+    val owner = parameters["owner"]!!
+    val nameAndPathAndSignificantVersionParts = parameters["name"]!!.split("___", limit = 2)
+    val nameAndPath = nameAndPathAndSignificantVersionParts.first()
+    val significantVersion =
+        nameAndPathAndSignificantVersionParts
+            .drop(1)
+            .takeIf { it.isNotEmpty() }
+            ?.single()
+            ?.let { significantVersionString ->
+                SignificantVersion
+                    .entries
+                    .find { it.name.equals(significantVersionString, ignoreCase = true) }
+            } ?: FULL
+    val nameAndPathParts = nameAndPath.split("__")
+    val name = nameAndPathParts.first()
+    val path =
+        nameAndPathParts
+            .drop(1)
+            .joinToString("/")
+            .takeUnless { it.isBlank() }
+
+    return ActionCoords(owner, name, version, significantVersion, path)
+}
