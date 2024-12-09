@@ -1,12 +1,12 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
+import com.charleskorn.kaml.ForbiddenAnchorOrAliasException
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import it.krzeminski.snakeyaml.engine.kmp.exceptions.YamlEngineException
 import java.io.IOException
 import java.net.URI
 
@@ -535,10 +535,10 @@ class TypesProvidingTest :
 
                 // Expect
                 val exception =
-                    shouldThrow<YamlEngineException> {
+                    shouldThrow<ForbiddenAnchorOrAliasException> {
                         actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
                     }
-                exception.message shouldBe "Number of aliases for non-scalar nodes exceeds the specified max=50"
+                exception.message shouldBe "Maximum number of aliases has been reached."
             }
         }
 
