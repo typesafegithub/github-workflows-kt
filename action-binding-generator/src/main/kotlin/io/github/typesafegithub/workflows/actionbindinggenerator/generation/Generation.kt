@@ -20,6 +20,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.isTopLevel
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_INPUTS
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_VERSION
@@ -36,6 +37,8 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.provideT
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.removeTrailingWhitespacesForEachLine
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCase
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 
 public data class ActionBinding(
     val kotlinCode: String,
@@ -58,6 +61,7 @@ private object Properties {
 }
 
 public fun ActionCoords.generateBinding(
+    bindingVersion: BindingVersion = V1,
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
@@ -73,10 +77,11 @@ public fun ActionCoords.generateBinding(
 
     val actionBindingSourceCodeUntyped =
         generateActionBindingSourceCode(
-            metadataProcessed,
-            this,
-            emptyMap(),
-            classNameUntyped,
+            metadata = metadataProcessed,
+            coords = this,
+            bindingVersion = bindingVersion,
+            inputTypings = emptyMap(),
+            className = classNameUntyped,
             untypedClass = true,
             replaceWith = inputTypingsResolved.second?.let { CodeBlock.of("ReplaceWith(%S)", className) },
         )
@@ -94,6 +99,7 @@ public fun ActionCoords.generateBinding(
                 generateActionBindingSourceCode(
                     metadata = metadataProcessed,
                     coords = this,
+                    bindingVersion = bindingVersion,
                     inputTypings = inputTypingsResolved.first,
                     className = className,
                 )
@@ -124,6 +130,7 @@ private fun Metadata.removeDeprecatedInputsIfNameClash(): Metadata {
 private fun generateActionBindingSourceCode(
     metadata: Metadata,
     coords: ActionCoords,
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean = false,
@@ -140,7 +147,7 @@ private fun generateActionBindingSourceCode(
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            ).addType(generateActionClass(metadata, coords, inputTypings, className, untypedClass, replaceWith))
+            ).addType(generateActionClass(metadata, coords, bindingVersion, inputTypings, className, untypedClass, replaceWith))
             .addSuppressAnnotation(metadata)
             .indent("    ")
             .build()
@@ -169,6 +176,7 @@ private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata) =
 private fun generateActionClass(
     metadata: Metadata,
     coords: ActionCoords,
+    bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean,
@@ -178,12 +186,13 @@ private fun generateActionClass(
         .classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdocIfNotEmpty(actionKdoc(metadata, coords, untypedClass))
-        .replaceWith(replaceWith)
+        .deprecateBindingVersion(bindingVersion)
+        .replaceWith(bindingVersion, replaceWith)
         .addClassConstructorAnnotation()
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
         .properties(metadata, coords, inputTypings, className, untypedClass)
-        .addInitializerBlockIfNecessary(metadata, inputTypings, untypedClass)
+        .addInitializerBlock(metadata, bindingVersion, coords, inputTypings, untypedClass)
         .addFunction(metadata.secondaryConstructor(inputTypings, coords, className, untypedClass))
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings, untypedClass))
         .addCustomTypes(inputTypings, coords, className)
@@ -371,8 +380,23 @@ private fun Metadata.linkedMapOfInputs(
     }
 }
 
-private fun TypeSpec.Builder.replaceWith(replaceWith: CodeBlock?): TypeSpec.Builder {
-    if (replaceWith != null) {
+private fun TypeSpec.Builder.deprecateBindingVersion(bindingVersion: BindingVersion): TypeSpec.Builder {
+    if (bindingVersion.isDeprecated) {
+        addAnnotation(
+            AnnotationSpec
+                .builder(Deprecated::class.asClassName())
+                .addMember("%S", "Use a non-deprecated binding version in the repository URL")
+                .build(),
+        )
+    }
+    return this
+}
+
+private fun TypeSpec.Builder.replaceWith(
+    bindingVersion: BindingVersion,
+    replaceWith: CodeBlock?,
+): TypeSpec.Builder {
+    if (!bindingVersion.isDeprecated && replaceWith != null) {
         addAnnotation(
             AnnotationSpec
                 .builder(Deprecated::class.asClassName())
@@ -531,15 +555,63 @@ private fun ParameterSpec.Builder.defaultValueIfNullable(
     return this
 }
 
-private fun TypeSpec.Builder.addInitializerBlockIfNecessary(
+private fun TypeSpec.Builder.addInitializerBlock(
     metadata: Metadata,
+    bindingVersion: BindingVersion,
+    coords: ActionCoords,
     inputTypings: Map<String, Typing>,
     untypedClass: Boolean,
 ): TypeSpec.Builder {
-    if (untypedClass || metadata.inputs.isEmpty() || metadata.inputs.none { inputTypings.containsKey(it.key) }) {
+    if (!bindingVersion.isDeprecated &&
+        !bindingVersion.isExperimental &&
+        (untypedClass || metadata.inputs.isEmpty() || metadata.inputs.none { inputTypings.containsKey(it.key) })
+    ) {
         return this
     }
-    addInitializerBlock(metadata.initializerBlock(inputTypings))
+
+    addInitializerBlock(
+        buildCodeBlock {
+            if (bindingVersion.isDeprecated) {
+                val firstStableVersion = BindingVersion.entries.find { !it.isDeprecated && !it.isExperimental }
+                addStatement(
+                    "println(%S)",
+                    """
+                    WARNING: The used binding version $bindingVersion for ${coords.prettyPrint} is deprecated! First stable version is $firstStableVersion.
+                    """.trimIndent(),
+                )
+                beginControlFlow("""if (System.getenv("GITHUB_ACTIONS").toBoolean())""")
+                addStatement(
+                    "println(%S)",
+                    """
+
+                    ::warning title=Deprecated Binding Version Used::The used binding version $bindingVersion for ${coords.prettyPrint} is deprecated! First stable version is $firstStableVersion.
+                    """.trimIndent(),
+                )
+                endControlFlow()
+                add("\n")
+            }
+            if (bindingVersion.isExperimental) {
+                val lastStableVersion = BindingVersion.entries.findLast { !it.isDeprecated && !it.isExperimental }
+                addStatement(
+                    "println(%S)",
+                    """
+                    WARNING: The used binding version $bindingVersion for ${coords.prettyPrint} is experimental! Last stable version is $lastStableVersion.
+                    """.trimIndent(),
+                )
+                beginControlFlow("""if (System.getenv("GITHUB_ACTIONS").toBoolean())""")
+                addStatement(
+                    "println(%S)",
+                    """
+
+                    ::warning title=Experimental Binding Version Used::The used binding version $bindingVersion for ${coords.prettyPrint} is experimental! Last stable version is $lastStableVersion.
+                    """.trimIndent(),
+                )
+                endControlFlow()
+                add("\n")
+            }
+            add(metadata.initializerBlock(inputTypings))
+        },
+    )
     return this
 }
 
