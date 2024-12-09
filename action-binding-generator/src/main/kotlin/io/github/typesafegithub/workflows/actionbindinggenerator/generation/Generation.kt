@@ -61,11 +61,13 @@ public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
+    types: String? = null,
 ): List<ActionBinding> {
     val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
-    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
+    val (inputTypingsResolved, typingActualSource) =
+        inputTypings ?: this.provideTypes(metadataRevision, types = types)
 
     val packageName = owner.toKotlinPackageName()
     val className = this.buildActionClassName()
@@ -78,7 +80,7 @@ public fun ActionCoords.generateBinding(
             emptyMap(),
             classNameUntyped,
             untypedClass = true,
-            replaceWith = inputTypingsResolved.second?.let { CodeBlock.of("ReplaceWith(%S)", className) },
+            replaceWith = typingActualSource?.let { CodeBlock.of("ReplaceWith(%S)", className) },
         )
 
     return listOfNotNull(
@@ -89,12 +91,12 @@ public fun ActionCoords.generateBinding(
             packageName = packageName,
             typingActualSource = null,
         ),
-        inputTypingsResolved.second?.let {
+        typingActualSource?.let {
             val actionBindingSourceCode =
                 generateActionBindingSourceCode(
                     metadata = metadataProcessed,
                     coords = this,
-                    inputTypings = inputTypingsResolved.first,
+                    inputTypings = inputTypingsResolved,
                     className = className,
                 )
             ActionBinding(
