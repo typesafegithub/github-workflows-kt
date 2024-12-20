@@ -9,7 +9,7 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 
     implementation(projects.githubWorkflowsKt)
     implementation(projects.sharedInternal)
