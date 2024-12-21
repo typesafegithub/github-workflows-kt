@@ -23,7 +23,7 @@ For every action, a binding will be generated. However, some less popular action
 their inputs, so by default all inputs are of type `String`, have the suffix `_Untyped`, and additionally the class
 name will have an `_Untyped` suffix. The nullability of the inputs will be according to their required status.
 
-There are two ways of configuring typings:
+There are two and a half ways of configuring typings:
 1. Recommended: a typing manifest (`action-typing.yml`) in the action's repo, see
    [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/). Thanks to this, the action's owner
    is responsible for providing and maintaining the typings defined in a technology-agnostic way, to be used
@@ -34,6 +34,17 @@ There are two ways of configuring typings:
    [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog),
    a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
    sending a PR.
+3. Temporary: while developing a typing manifest it might be a good idea to test the result without needing to
+   release the action in question or merge a PR in the catalog. For this you can `POST` the typing manifest you have
+   on disk to the binding server using any valid URL for the action in question, for example using
+   ```bash
+   curl --data-binary @action-types.yml https://bindings.krzeminski.it/pbrisbin/setup-tool-action/v2/setup-tool-action-v2.pom
+   ```
+   The binding server generates a binding with only the given type manifest and answer with some unique coordinates
+   that you can use in a test workflow script. The binding will be available the normal cache time on the binding
+   server and locally as long as you do not delete it from your local Maven repository where it is cached. After
+   the cache period on the server ended requesting the same coordinates will return a binding as if no typing
+   information is available at all.
 
 Once there are any typings in place for the action, the `_Untyped` suffixed class is marked `@Deprecated`, and a class
 without that suffix is created additionally. In that class for each input that does not have type information available

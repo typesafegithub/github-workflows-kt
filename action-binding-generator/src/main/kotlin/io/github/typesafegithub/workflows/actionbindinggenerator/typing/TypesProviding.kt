@@ -9,6 +9,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.CUSTOM
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
@@ -23,10 +24,12 @@ private val logger = logger { }
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
+    types: String? = null,
 ): Pair<Map<String, Typing>, TypingActualSource?> =
     (
-        this.fetchTypingMetadata(metadataRevision, fetchUri)
-            ?: this.toMajorVersion().fetchFromTypingsFromCatalog(fetchUri)
+        customTypingMetadata(types)
+            ?: this.fetchTypingMetadata(metadataRevision, fetchUri)
+            ?: this.toMajorVersion().fetchTypingsFromCatalog(fetchUri)
     )?.let { Pair(it.first.toTypesMap(), it.second) }
         ?: Pair(emptyMap(), null)
 
@@ -43,6 +46,9 @@ private fun ActionCoords.catalogMetadata() =
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
+
+private fun customTypingMetadata(types: String? = null) =
+    types?.let { Pair(yaml.decodeFromStringOrDefaultIfEmpty(it, ActionTypes()), CUSTOM) }
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
@@ -67,7 +73,7 @@ private fun ActionCoords.fetchTypingMetadata(
     return Pair(yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }
 
-private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): Pair<ActionTypes, TypingActualSource>? =
+private fun ActionCoords.fetchTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): Pair<ActionTypes, TypingActualSource>? =
     (
         fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
             ?: fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
