@@ -13,6 +13,7 @@
 * [rankquest-studio](https://github.com/jillesvangurp/rankquest-studio/tree/main/.github/workflows)
 * [setup-wsl](https://github.com/Vampire/setup-wsl/tree/master/.github/workflows)
 * [snakeyaml-engine-kmp](https://github.com/krzema12/snakeyaml-engine-kmp/tree/main/.github/workflows)
+* [Spock](https://github.com/spockframework/spock/tree/master/.github/workflows)
 * [spring-cqs](https://github.com/prisma-capacity/spring-cqs/tree/main/.github/kts)
 * [twitch-announcement-discord-bot](https://github.com/NikkyAI/twitch-announcement-discord-bot/tree/main/.github/workflows)
 * [WalletConnectKotlinV2](https://github.com/WalletConnect/WalletConnectKotlinV2/tree/develop/.github/workflows/scripts)
