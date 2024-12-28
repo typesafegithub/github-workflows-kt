@@ -1,6 +1,8 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 
 sealed interface Artifact
 
@@ -12,9 +14,9 @@ data class JarArtifact(
     val data: () -> ByteArray,
 ) : Artifact
 
-fun ActionCoords.buildVersionArtifacts(): Map<String, Artifact>? {
-    val jars = buildJars() ?: return null
-    val pom = buildPomFile()
+fun ActionCoords.buildVersionArtifacts(bindingVersion: BindingVersion = V1): Map<String, Artifact>? {
+    val jars = buildJars(bindingVersion = bindingVersion) ?: return null
+    val pom = buildPomFile(libraryVersion = bindingVersion.libraryVersion)
     val module = buildModuleFile()
     return mapOf(
         "$mavenName-$version.jar" to JarArtifact(jars.mainJar),
