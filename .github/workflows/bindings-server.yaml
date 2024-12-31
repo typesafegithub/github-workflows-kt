@@ -89,7 +89,7 @@ jobs:
       run: 'unzip kotlin-compiler-1.8.0.zip -d kotlin-compiler-1.8.0'
     - id: 'step-2'
       name: 'Smoke-test the compiler works fine'
-      run: "\n                PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin\n                kotlinc -version\n            "
+      run: "\n                PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH\n                kotlinc -version\n            "
   deploy:
     name: 'Deploy to DockerHub'
     runs-on: 'ubuntu-latest'

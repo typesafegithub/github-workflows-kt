@@ -136,7 +136,7 @@ workflow(
         run(
             name = "Smoke-test the compiler works fine",
             command = """
-                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin
+                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
                 kotlinc -version
             """,
         )
