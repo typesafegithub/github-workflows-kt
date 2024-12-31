@@ -127,11 +127,18 @@ workflow(
         val version = "1.8.0"
         run(
             name = "Download older Kotlin compiler",
-            command = "curl -o kotlin-compiler-$version.zip https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip",
+            command = "curl -Lo kotlin-compiler-$version.zip https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip",
         )
         run(
-            name = "Unzip",
-            command = "unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version",
+            name = "Unzip and add to PATH",
+            command = """
+                unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version
+                PATH=${'$'}PATH:$(pwd)/kotlin-compiler-$version/kotlinc/bin
+            """.trimIndent(),
+        )
+        run(
+            name = "Smoke-test the compiler works fine",
+            command = "kotlinc -version",
         )
     }
 
