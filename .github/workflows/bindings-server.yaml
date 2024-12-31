@@ -80,7 +80,7 @@ jobs:
       name: 'Execute the script using the bindings from the server, using older Kotlin as consumer'
       run: |-
         PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH
-        mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+        cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
         .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
     - id: 'step-14'
       name: 'Compile a Gradle project using the bindings from the server'

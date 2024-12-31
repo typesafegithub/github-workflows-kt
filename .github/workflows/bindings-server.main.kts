@@ -124,7 +124,7 @@ workflow(
             name = "Execute the script using the bindings from the server, using older Kotlin as consumer",
             command = """
                 PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
-                mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
                 .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
             """.trimIndent(),
         )
