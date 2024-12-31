@@ -65,37 +65,39 @@ jobs:
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-9'
+      name: 'Download older Kotlin compiler'
+      run: 'curl -Lo kotlin-compiler-1.8.0.zip https://github.com/JetBrains/kotlin/releases/download/v1.8.0/kotlin-compiler-1.8.0.zip'
+    - id: 'step-10'
+      name: 'Unzip and add to PATH'
+      run: 'unzip kotlin-compiler-1.8.0.zip -d kotlin-compiler-1.8.0'
+    - id: 'step-11'
+      name: 'Smoke-test the compiler works fine'
+      run: "\n                PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH\n                kotlinc -version\n            "
+    - id: 'step-12'
+      name: 'Clean Maven Local to fetch required POMs again'
+      run: 'rm -rf ~/.m2/repository/'
+    - id: 'step-13'
+      name: 'Execute the script using the bindings from the server, using older Kotlin as consumer'
+      run: |-
+        PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH
+        mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+        .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+    - id: 'step-14'
       name: 'Compile a Gradle project using the bindings from the server'
       run: |-
         cd .github/workflows/test-gradle-project-using-bindings-server
         ./gradlew build
-    - id: 'step-10'
+    - id: 'step-15'
       name: 'Fetch maven-metadata.xml for top-level action'
       run: 'curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
-    - id: 'step-11'
+    - id: 'step-16'
       name: 'Fetch maven-metadata.xml for nested action'
       run: 'curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
-  test-with-older-kotlin-as-consumer:
-    name: 'Test with older Kotlin as consumer'
-    runs-on: 'ubuntu-latest'
-    needs:
-    - 'check_yaml_consistency'
-    steps:
-    - id: 'step-0'
-      name: 'Download older Kotlin compiler'
-      run: 'curl -Lo kotlin-compiler-1.8.0.zip https://github.com/JetBrains/kotlin/releases/download/v1.8.0/kotlin-compiler-1.8.0.zip'
-    - id: 'step-1'
-      name: 'Unzip and add to PATH'
-      run: 'unzip kotlin-compiler-1.8.0.zip -d kotlin-compiler-1.8.0'
-    - id: 'step-2'
-      name: 'Smoke-test the compiler works fine'
-      run: "\n                PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH\n                kotlinc -version\n            "
   deploy:
     name: 'Deploy to DockerHub'
     runs-on: 'ubuntu-latest'
     needs:
     - 'end-to-end-test'
-    - 'test-with-older-kotlin-as-consumer'
     - 'check_yaml_consistency'
     env:
       DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'

@@ -101,6 +101,34 @@ workflow(
 
         cleanMavenLocal()
 
+        val version = "1.8.0"
+        run(
+            name = "Download older Kotlin compiler",
+            command = "curl -Lo kotlin-compiler-$version.zip https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip",
+        )
+        run(
+            name = "Unzip and add to PATH",
+            command = "unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version",
+        )
+        run(
+            name = "Smoke-test the compiler works fine",
+            command = """
+                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
+                kotlinc -version
+            """,
+        )
+
+        cleanMavenLocal()
+
+        run(
+            name = "Execute the script using the bindings from the server, using older Kotlin as consumer",
+            command = """
+                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
+                mv .github/workflows/test-script-consuming-jit-bindings.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+                .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+            """.trimIndent(),
+        )
+
         run(
             name = "Compile a Gradle project using the bindings from the server",
             command = """
@@ -119,35 +147,12 @@ workflow(
         )
     }
 
-    val testWithOlderKotlinAsConsumer = job(
-        id = "test-with-older-kotlin-as-consumer",
-        name = "Test with older Kotlin as consumer",
-        runsOn = UbuntuLatest,
-    ) {
-        val version = "1.8.0"
-        run(
-            name = "Download older Kotlin compiler",
-            command = "curl -Lo kotlin-compiler-$version.zip https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip",
-        )
-        run(
-            name = "Unzip and add to PATH",
-            command = "unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version",
-        )
-        run(
-            name = "Smoke-test the compiler works fine",
-            command = """
-                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
-                kotlinc -version
-            """,
-        )
-    }
-
     job(
         id = "deploy",
         name = "Deploy to DockerHub",
         runsOn = UbuntuLatest,
         `if` = expr { "${github.event_name} == 'workflow_dispatch' || ${github.event_name} == 'schedule'" },
-        needs = listOf(endToEndTest, testWithOlderKotlinAsConsumer),
+        needs = listOf(endToEndTest),
         env = mapOf(
             "DOCKERHUB_USERNAME" to expr { DOCKERHUB_USERNAME },
             "DOCKERHUB_PASSWORD" to expr { DOCKERHUB_PASSWORD },
