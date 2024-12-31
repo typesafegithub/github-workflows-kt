@@ -86,12 +86,10 @@ jobs:
       run: 'curl -Lo kotlin-compiler-1.8.0.zip https://github.com/JetBrains/kotlin/releases/download/v1.8.0/kotlin-compiler-1.8.0.zip'
     - id: 'step-1'
       name: 'Unzip and add to PATH'
-      run: |-
-        unzip kotlin-compiler-1.8.0.zip -d kotlin-compiler-1.8.0
-        PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH
+      run: 'unzip kotlin-compiler-1.8.0.zip -d kotlin-compiler-1.8.0'
     - id: 'step-2'
       name: 'Smoke-test the compiler works fine'
-      run: 'kotlinc -version'
+      run: "\n                PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin\n                kotlinc -version\n            "
   deploy:
     name: 'Deploy to DockerHub'
     runs-on: 'ubuntu-latest'

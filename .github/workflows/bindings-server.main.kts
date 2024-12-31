@@ -131,14 +131,14 @@ workflow(
         )
         run(
             name = "Unzip and add to PATH",
-            command = """
-                unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version
-                PATH=$(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
-            """.trimIndent(),
+            command = "unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version",
         )
         run(
             name = "Smoke-test the compiler works fine",
-            command = "kotlinc -version",
+            command = """
+                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin
+                kotlinc -version
+            """,
         )
     }
 
