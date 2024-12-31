@@ -119,12 +119,28 @@ workflow(
         )
     }
 
+    val testWithOlderKotlinAsConsumer = job(
+        id = "test-with-older-kotlin-as-consumer",
+        name = "Test with older Kotlin as consumer",
+        runsOn = UbuntuLatest,
+    ) {
+        val version = "1.8.0"
+        run(
+            name = "Download older Kotlin compiler",
+            command = "curl -o kotlin-compiler-$version.zip https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip",
+        )
+        run(
+            name = "Unzip",
+            command = "unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version",
+        )
+    }
+
     job(
         id = "deploy",
         name = "Deploy to DockerHub",
         runsOn = UbuntuLatest,
         `if` = expr { "${github.event_name} == 'workflow_dispatch' || ${github.event_name} == 'schedule'" },
-        needs = listOf(endToEndTest),
+        needs = listOf(endToEndTest, testWithOlderKotlinAsConsumer),
         env = mapOf(
             "DOCKERHUB_USERNAME" to expr { DOCKERHUB_USERNAME },
             "DOCKERHUB_PASSWORD" to expr { DOCKERHUB_PASSWORD },
