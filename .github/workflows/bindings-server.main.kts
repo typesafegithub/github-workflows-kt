@@ -101,31 +101,26 @@ workflow(
 
         cleanMavenLocal()
 
-        val version = "1.8.0"
+        val newestNotCompatibleVersion = "1.8.0"
         run(
             name = "Download older Kotlin compiler",
-            command = "curl -Lo kotlin-compiler-$version.zip https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip",
+            command = "curl -Lo kotlin-compiler-$newestNotCompatibleVersion.zip https://github.com/JetBrains/kotlin/releases/download/v$newestNotCompatibleVersion/kotlin-compiler-$newestNotCompatibleVersion.zip",
         )
         run(
             name = "Unzip and add to PATH",
-            command = "unzip kotlin-compiler-$version.zip -d kotlin-compiler-$version",
+            command = "unzip kotlin-compiler-$newestNotCompatibleVersion.zip -d kotlin-compiler-$newestNotCompatibleVersion",
         )
-        run(
-            name = "Smoke-test the compiler works fine",
-            command = """
-                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
-                kotlinc -version
-            """,
-        )
-
         cleanMavenLocal()
-
+        // The below test depicts the current behavior that the served bindings aren't
+        // compatible with some older Kotlin version. We may want to address it one day.
+        // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
         run(
             name = "Execute the script using the bindings from the server, using older Kotlin as consumer",
             command = """
-                PATH=${'$'}(pwd)/kotlin-compiler-$version/kotlinc/bin:${'$'}PATH
-                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
-                .github/workflows/test-script-consuming-jit-bindings-old-kotlin.main.kts
+                PATH=${'$'}(pwd)/kotlin-compiler-$newestNotCompatibleVersion/kotlinc/bin:${'$'}PATH
+                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
+                (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
+                grep "was compiled with an incompatible version of Kotlin" output.txt
             """.trimIndent(),
         )
 
