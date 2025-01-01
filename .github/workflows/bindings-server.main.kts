@@ -99,7 +99,9 @@ workflow(
             """.trimIndent(),
         )
 
-        val newestNotCompatibleVersion = "1.8.0"
+        // There should be a difference of one (mostly minor) version between these two,
+        // to be able to see the newest non-working and oldest working version.
+        val newestNotCompatibleVersion = "1.9.0"
         val oldestCompatibleVersion = "2.0.0"
 
         runWithSpecificKotlinVersion(

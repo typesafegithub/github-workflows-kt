@@ -62,18 +62,18 @@ jobs:
         mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
         .github/workflows/test-served-bindings-depend-on-library.main.kts
     - id: 'step-8'
-      name: 'Download older Kotlin compiler (1.8.0)'
-      run: 'curl -Lo kotlin-compiler-1.8.0.zip https://github.com/JetBrains/kotlin/releases/download/v1.8.0/kotlin-compiler-1.8.0.zip'
+      name: 'Download older Kotlin compiler (1.9.0)'
+      run: 'curl -Lo kotlin-compiler-1.9.0.zip https://github.com/JetBrains/kotlin/releases/download/v1.9.0/kotlin-compiler-1.9.0.zip'
     - id: 'step-9'
       name: 'Unzip and add to PATH'
-      run: 'unzip kotlin-compiler-1.8.0.zip -d kotlin-compiler-1.8.0'
+      run: 'unzip kotlin-compiler-1.9.0.zip -d kotlin-compiler-1.9.0'
     - id: 'step-10'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-11'
-      name: 'Execute the script using the bindings from the server, using older Kotlin (1.8.0) as consumer'
+      name: 'Execute the script using the bindings from the server, using older Kotlin (1.9.0) as consumer'
       run: |2-
-                    PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH
+                    PATH=$(pwd)/kotlin-compiler-1.9.0/kotlinc/bin:$PATH
                                     cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
                         (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
         grep "was compiled with an incompatible version of Kotlin" output.txt
