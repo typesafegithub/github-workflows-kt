@@ -178,8 +178,11 @@ fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
 }
 
 fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(kotlinVersion: String, command: String) {
-    SetupKotlin_Untyped(
-        version_Untyped = kotlinVersion,
+    uses(
+        name = "Install Kotlin $kotlinVersion",
+        action = SetupKotlin_Untyped(
+            version_Untyped = kotlinVersion,
+        ),
     )
     cleanMavenLocal()
     run(
