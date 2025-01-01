@@ -5,8 +5,10 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("fwilhe2:setup-kotlin:0.10.0")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.fwilhe2.SetupKotlin_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Environment
@@ -176,21 +178,13 @@ fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
 }
 
 fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(kotlinVersion: String, command: String) {
-    run(
-        name = "Download older Kotlin compiler ($kotlinVersion)",
-        command = "curl -Lo kotlin-compiler-$kotlinVersion.zip https://github.com/JetBrains/kotlin/releases/download/v$kotlinVersion/kotlin-compiler-$kotlinVersion.zip",
-    )
-    run(
-        name = "Unzip and add to PATH",
-        command = "unzip kotlin-compiler-$kotlinVersion.zip -d kotlin-compiler-$kotlinVersion",
+    SetupKotlin_Untyped(
+        version_Untyped = kotlinVersion,
     )
     cleanMavenLocal()
     run(
         name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
-        command = """
-            PATH=${'$'}(pwd)/kotlin-compiler-$kotlinVersion/kotlinc/bin:${'$'}PATH
-            $command
-        """.trimIndent(),
+        command = command,
     )
 }
 
