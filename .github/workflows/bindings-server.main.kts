@@ -102,49 +102,26 @@ workflow(
         val newestNotCompatibleVersion = "1.8.0"
         val oldestCompatibleVersion = "2.0.0"
 
-        newestNotCompatibleVersion.also { kotlinVersion ->
-            run(
-                name = "Download older Kotlin compiler ($kotlinVersion)",
-                command = "curl -Lo kotlin-compiler-$kotlinVersion.zip https://github.com/JetBrains/kotlin/releases/download/v$kotlinVersion/kotlin-compiler-$kotlinVersion.zip",
-            )
-            run(
-                name = "Unzip and add to PATH",
-                command = "unzip kotlin-compiler-$kotlinVersion.zip -d kotlin-compiler-$kotlinVersion",
-            )
-            cleanMavenLocal()
-            // The below test depicts the current behavior that the served bindings aren't
-            // compatible with some older Kotlin version. We may want to address it one day.
-            // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
-            run(
-                name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
-                command = """
-                PATH=${'$'}(pwd)/kotlin-compiler-$kotlinVersion/kotlinc/bin:${'$'}PATH
+        runWithSpecificKotlinVersion(
+            kotlinVersion = newestNotCompatibleVersion,
+            command = """
                 cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
-                (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
-                grep "was compiled with an incompatible version of Kotlin" output.txt
+                ${failsWithPhraseInLogs(
+                    command = ".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts",
+                    // This test depicts the current behavior that the served bindings aren't
+                    // compatible with some older Kotlin version. We may want to address it one day.
+                    // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
+                    phrase = "was compiled with an incompatible version of Kotlin",
+                )}
             """.trimIndent(),
-            )
-        }
-
-        oldestCompatibleVersion.also { kotlinVersion ->
-            run(
-                name = "Download older Kotlin compiler ($kotlinVersion)",
-                command = "curl -Lo kotlin-compiler-$kotlinVersion.zip https://github.com/JetBrains/kotlin/releases/download/v$kotlinVersion/kotlin-compiler-$kotlinVersion.zip",
-            )
-            run(
-                name = "Unzip and add to PATH",
-                command = "unzip kotlin-compiler-$kotlinVersion.zip -d kotlin-compiler-$kotlinVersion",
-            )
-            cleanMavenLocal()
-            run(
-                name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
-                command = """
-                PATH=${'$'}(pwd)/kotlin-compiler-$kotlinVersion/kotlinc/bin:${'$'}PATH
+        )
+        runWithSpecificKotlinVersion(
+            kotlinVersion = oldestCompatibleVersion,
+            command = """
                 cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
                 .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
             """.trimIndent(),
-            )
-        }
+        )
 
         run(
             name = "Compile a Gradle project using the bindings from the server",
@@ -195,3 +172,31 @@ fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
         command = "rm -rf ~/.m2/repository/"
     )
 }
+
+fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(kotlinVersion: String, command: String) {
+    run(
+        name = "Download older Kotlin compiler ($kotlinVersion)",
+        command = "curl -Lo kotlin-compiler-$kotlinVersion.zip https://github.com/JetBrains/kotlin/releases/download/v$kotlinVersion/kotlin-compiler-$kotlinVersion.zip",
+    )
+    run(
+        name = "Unzip and add to PATH",
+        command = "unzip kotlin-compiler-$kotlinVersion.zip -d kotlin-compiler-$kotlinVersion",
+    )
+    cleanMavenLocal()
+    run(
+        name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
+        command = """
+            PATH=${'$'}(pwd)/kotlin-compiler-$kotlinVersion/kotlinc/bin:${'$'}PATH
+            $command
+        """.trimIndent(),
+    )
+}
+
+fun failsWithPhraseInLogs(
+    command: String,
+    phrase: String,
+): String =
+   """
+       ($command || true) >> output.txt 2>&1
+       grep "$phrase" output.txt
+   """.trimIndent()

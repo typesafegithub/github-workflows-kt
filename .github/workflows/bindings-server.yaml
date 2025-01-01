@@ -72,10 +72,10 @@ jobs:
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-11'
       name: 'Execute the script using the bindings from the server, using older Kotlin (1.8.0) as consumer'
-      run: |-
-        PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH
-        cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
-        (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
+      run: |2-
+                    PATH=$(pwd)/kotlin-compiler-1.8.0/kotlinc/bin:$PATH
+                                    cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
+                        (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
         grep "was compiled with an incompatible version of Kotlin" output.txt
     - id: 'step-12'
       name: 'Download older Kotlin compiler (2.0.0)'
@@ -88,9 +88,9 @@ jobs:
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-15'
       name: 'Execute the script using the bindings from the server, using older Kotlin (2.0.0) as consumer'
-      run: |-
-        PATH=$(pwd)/kotlin-compiler-2.0.0/kotlinc/bin:$PATH
-        cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
+      run: |2-
+                    PATH=$(pwd)/kotlin-compiler-2.0.0/kotlinc/bin:$PATH
+                    cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
         .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
     - id: 'step-16'
       name: 'Compile a Gradle project using the bindings from the server'
