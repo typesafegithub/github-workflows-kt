@@ -26,39 +26,82 @@
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
 <link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
 <script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
 <script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
 <script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer="defer"></script>
 <script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
     <div class="root">
-<nav class="navigation" id="navigation-wrapper">
-    <div class="navigation--inner">
-        <div class="navigation-title">
-            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-            <div class="library-name">
-                    <a class="library-name--link" href="../../index.html">
-                            github-workflows-kt
-                    </a>
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../index.html">
+                    github-workflows-kt
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+3.0.2        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":github-workflows-kt:dokkaHtml/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":github-workflows-kt:dokkaHtml/main"
+                                       data-filter=":github-workflows-kt:dokkaHtml/main"/>
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div class="library-version">
-3.0.1            </div>
         </div>
-        <div class="filter-section" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":github-workflows-kt:dokkaHtml/main">jvm</button>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
         </div>
-    </div>
-    <div class="navigation-controls">
-        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
-        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
-    </div>
-</nav>
+    </nav>
         <div id="container">
             <div class="sidebar" id="leftColumn">
-                <div class="sidebar--inner" id="sideMenu"></div>
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    github-workflows-kt
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
             <div id="main">
 <div class="main-content" data-page-type="package" id="content" pageIds="github-workflows-kt::io.github.typesafegithub.workflows.dsl.expressions.contexts////PointingToDeclaration//751164737">
@@ -116,561 +159,6 @@
               </div>
             </div>
           </div>
-<a data-name="1103566677%2FClasslikes%2F751164737" anchor-label="PullRequestEvent" id="1103566677%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Event</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1103566677%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event/index.html">PullRequestEvent</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-1110162077%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequest" id="-1110162077%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span><span>Request</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1110162077%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request/index.html">PullRequestEventPullRequest</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="737829522%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestBase" id="737829522%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-base/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Base</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="737829522%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-base/index.html">PullRequestEventPullRequestBase</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1898758848%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestBaseRepo" id="1898758848%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-base-repo/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Repo</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1898758848%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-base-repo/index.html">PullRequestEventPullRequestBaseRepo</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-1102027825%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestBaseRepoOwner" id="-1102027825%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-base-repo-owner/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Base</span><wbr></wbr><span>Repo</span><wbr></wbr><span><span>Owner</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1102027825%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-base-repo-owner/index.html">PullRequestEventPullRequestBaseRepoOwner</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-1483007865%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestBaseUser" id="-1483007865%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-base-user/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>User</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1483007865%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-base-user/index.html">PullRequestEventPullRequestBaseUser</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-577676701%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestHead" id="-577676701%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-head/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Head</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-577676701%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-head/index.html">PullRequestEventPullRequestHead</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="200370705%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestHeadRepo" id="200370705%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-head-repo/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Head</span><wbr></wbr><span><span>Repo</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="200370705%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-head-repo/index.html">PullRequestEventPullRequestHeadRepo</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-1047222498%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestHeadRepoOwner" id="-1047222498%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-head-repo-owner/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Head</span><wbr></wbr><span>Repo</span><wbr></wbr><span><span>Owner</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1047222498%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-head-repo-owner/index.html">PullRequestEventPullRequestHeadRepoOwner</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1113571288%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestHeadUser" id="1113571288%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-head-user/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Head</span><wbr></wbr><span><span>User</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1113571288%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-head-user/index.html">PullRequestEventPullRequestHeadUser</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1133200582%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinks" id="1133200582%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Links</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1133200582%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links/index.html">PullRequestEventPullRequestLinks</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1330142258%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksComments" id="1330142258%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-comments/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Comments</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1330142258%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-comments/index.html">PullRequestEventPullRequestLinksComments</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="54633344%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksCommits" id="54633344%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-commits/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Commits</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="54633344%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-commits/index.html">PullRequestEventPullRequestLinksCommits</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-2114273061%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksHtml" id="-2114273061%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-html/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Html</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2114273061%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-html/index.html">PullRequestEventPullRequestLinksHtml</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="516003363%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksIssue" id="516003363%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-issue/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Issue</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="516003363%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-issue/index.html">PullRequestEventPullRequestLinksIssue</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-902155307%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksReviewComment" id="-902155307%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-review-comment/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span>Review</span><wbr></wbr><span><span>Comment</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-902155307%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-review-comment/index.html">PullRequestEventPullRequestLinksReviewComment</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="2016838650%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksReviewComments" id="2016838650%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-review-comments/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span>Review</span><wbr></wbr><span><span>Comments</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2016838650%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-review-comments/index.html">PullRequestEventPullRequestLinksReviewComments</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-406773670%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksSelf" id="-406773670%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-self/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Self</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-406773670%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-self/index.html">PullRequestEventPullRequestLinksSelf</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-858252410%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestLinksStatuses" id="-858252410%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-links-statuses/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Statuses</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-858252410%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-links-statuses/index.html">PullRequestEventPullRequestLinksStatuses</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="557132504%2FClasslikes%2F751164737" anchor-label="PullRequestEventPullRequestUser" id="557132504%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-pull-request-user/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>User</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="557132504%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-pull-request-user/index.html">PullRequestEventPullRequestUser</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-670921173%2FClasslikes%2F751164737" anchor-label="PullRequestEventRepository" id="-670921173%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-repository/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-670921173%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-repository/index.html">PullRequestEventRepository</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1928856388%2FClasslikes%2F751164737" anchor-label="PullRequestEventRepositoryOwner" id="1928856388%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-repository-owner/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1928856388%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-repository-owner/index.html">PullRequestEventRepositoryOwner</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1026097056%2FClasslikes%2F751164737" anchor-label="PullRequestEventSender" id="1026097056%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-pull-request-event-sender/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1026097056%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-pull-request-event-sender/index.html">PullRequestEventSender</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="728501693%2FClasslikes%2F751164737" anchor-label="PushEvent" id="728501693%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event/index.html"><span>Push</span><wbr></wbr><span><span>Event</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="728501693%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event/index.html">PushEvent</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="262362950%2FClasslikes%2F751164737" anchor-label="PushEventHeadCommit" id="262362950%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-head-commit/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Head</span><wbr></wbr><span><span>Commit</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="262362950%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-head-commit/index.html">PushEventHeadCommit</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="907185211%2FClasslikes%2F751164737" anchor-label="PushEventHeadCommitAuthor" id="907185211%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-head-commit-author/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Head</span><wbr></wbr><span>Commit</span><wbr></wbr><span><span>Author</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="907185211%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-head-commit-author/index.html">PushEventHeadCommitAuthor</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="147583122%2FClasslikes%2F751164737" anchor-label="PushEventHeadCommitCommitter" id="147583122%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-head-commit-committer/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Head</span><wbr></wbr><span>Commit</span><wbr></wbr><span><span>Committer</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="147583122%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-head-commit-committer/index.html">PushEventHeadCommitCommitter</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1948876086%2FClasslikes%2F751164737" anchor-label="PushEventPusher" id="1948876086%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-pusher/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Pusher</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1948876086%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-pusher/index.html">PushEventPusher</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1163174547%2FClasslikes%2F751164737" anchor-label="PushEventRepository" id="1163174547%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-repository/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1163174547%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-repository/index.html">PushEventRepository</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1531604956%2FClasslikes%2F751164737" anchor-label="PushEventRepositoryOwner" id="1531604956%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-repository-owner/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1531604956%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-repository-owner/index.html">PushEventRepositoryOwner</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="373655560%2FClasslikes%2F751164737" anchor-label="PushEventSender" id="373655560%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-push-event-sender/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="373655560%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-push-event-sender/index.html">PushEventSender</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-938517486%2FClasslikes%2F751164737" anchor-label="ReleaseEvent" id="-938517486%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-release-event/index.html"><span>Release</span><wbr></wbr><span><span>Event</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-938517486%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-release-event/index.html">ReleaseEvent</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="955466537%2FClasslikes%2F751164737" anchor-label="ReleaseEventRelease" id="955466537%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-release-event-release/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Release</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="955466537%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-release-event-release/index.html">ReleaseEventRelease</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="682410462%2FClasslikes%2F751164737" anchor-label="ReleaseEventReleaseAuthor" id="682410462%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-release-event-release-author/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span>Release</span><wbr></wbr><span><span>Author</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="682410462%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-release-event-release-author/index.html">ReleaseEventReleaseAuthor</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-794965336%2FClasslikes%2F751164737" anchor-label="ReleaseEventRepository" id="-794965336%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-release-event-repository/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-794965336%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-release-event-repository/index.html">ReleaseEventRepository</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-615510809%2FClasslikes%2F751164737" anchor-label="ReleaseEventRepositoryOwner" id="-615510809%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-release-event-repository-owner/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-615510809%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-release-event-repository-owner/index.html">ReleaseEventRepositoryOwner</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="589824669%2FClasslikes%2F751164737" anchor-label="ReleaseEventSender" id="589824669%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-release-event-sender/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="589824669%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-release-event-sender/index.html">ReleaseEventSender</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
 <a data-name="-1709320226%2FClasslikes%2F751164737" anchor-label="RunnerContext" id="-1709320226%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
           <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
             <div class="main-subrow keyValue ">
@@ -701,106 +189,21 @@
               </div>
             </div>
           </div>
-<a data-name="1800082876%2FClasslikes%2F751164737" anchor-label="WorkflowDispatchEvent" id="1800082876%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-workflow-dispatch-event/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span><span>Event</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1800082876%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-workflow-dispatch-event/index.html">WorkflowDispatchEvent</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-1829953645%2FClasslikes%2F751164737" anchor-label="WorkflowDispatchEventInputs" id="-1829953645%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-workflow-dispatch-event-inputs/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Inputs</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1829953645%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-workflow-dispatch-event-inputs/index.html">WorkflowDispatchEventInputs</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="1204416329%2FClasslikes%2F751164737" anchor-label="WorkflowDispatchEventOrganization" id="1204416329%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-workflow-dispatch-event-organization/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Organization</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1204416329%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-workflow-dispatch-event-organization/index.html">WorkflowDispatchEventOrganization</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="186972114%2FClasslikes%2F751164737" anchor-label="WorkflowDispatchEventRepository" id="186972114%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-workflow-dispatch-event-repository/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="186972114%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-workflow-dispatch-event-repository/index.html">WorkflowDispatchEventRepository</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="786991613%2FClasslikes%2F751164737" anchor-label="WorkflowDispatchEventRepositoryOwner" id="786991613%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-workflow-dispatch-event-repository-owner/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="786991613%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-workflow-dispatch-event-repository-owner/index.html">WorkflowDispatchEventRepositoryOwner</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-1344777017%2FClasslikes%2F751164737" anchor-label="WorkflowDispatchEventSender" id="-1344777017%2FClasslikes%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-workflow-dispatch-event-sender/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1344777017%2FClasslikes%2F751164737"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-workflow-dispatch-event-sender/index.html">WorkflowDispatchEventSender</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-      <div class="footer">
-        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
-                class="pull-right"><span>Generated by </span><a
-                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
-      </div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
             </div>
         </div>
     </div>
