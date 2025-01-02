@@ -62,17 +62,45 @@ jobs:
         mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
         .github/workflows/test-served-bindings-depend-on-library.main.kts
     - id: 'step-8'
+      name: 'Download older Kotlin compiler (1.9.0)'
+      run: 'curl -Lo kotlin-compiler-1.9.0.zip https://github.com/JetBrains/kotlin/releases/download/v1.9.0/kotlin-compiler-1.9.0.zip'
+    - id: 'step-9'
+      name: 'Unzip and add to PATH'
+      run: 'unzip kotlin-compiler-1.9.0.zip -d kotlin-compiler-1.9.0'
+    - id: 'step-10'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
-    - id: 'step-9'
+    - id: 'step-11'
+      name: 'Execute the script using the bindings from the server, using older Kotlin (1.9.0) as consumer'
+      run: |2-
+                    PATH=$(pwd)/kotlin-compiler-1.9.0/kotlinc/bin:$PATH
+                                    cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
+                        (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
+        grep "was compiled with an incompatible version of Kotlin" output.txt
+    - id: 'step-12'
+      name: 'Download older Kotlin compiler (2.0.0)'
+      run: 'curl -Lo kotlin-compiler-2.0.0.zip https://github.com/JetBrains/kotlin/releases/download/v2.0.0/kotlin-compiler-2.0.0.zip'
+    - id: 'step-13'
+      name: 'Unzip and add to PATH'
+      run: 'unzip kotlin-compiler-2.0.0.zip -d kotlin-compiler-2.0.0'
+    - id: 'step-14'
+      name: 'Clean Maven Local to fetch required POMs again'
+      run: 'rm -rf ~/.m2/repository/'
+    - id: 'step-15'
+      name: 'Execute the script using the bindings from the server, using older Kotlin (2.0.0) as consumer'
+      run: |2-
+                    PATH=$(pwd)/kotlin-compiler-2.0.0/kotlinc/bin:$PATH
+                    cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
+        .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
+    - id: 'step-16'
       name: 'Compile a Gradle project using the bindings from the server'
       run: |-
         cd .github/workflows/test-gradle-project-using-bindings-server
         ./gradlew build
-    - id: 'step-10'
+    - id: 'step-17'
       name: 'Fetch maven-metadata.xml for top-level action'
       run: 'curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
-    - id: 'step-11'
+    - id: 'step-18'
       name: 'Fetch maven-metadata.xml for nested action'
       run: 'curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep ''<version>v4</version>'''
   deploy:

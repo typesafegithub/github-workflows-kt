@@ -7,14 +7,14 @@ plugins {
     buildsrc.convention.`duplicate-versions`
 
     kotlin("plugin.serialization")
-    id("com.google.devtools.ksp") version "2.0.21-1.0.28"
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
     id("info.solidsoft.pitest") version "1.15.0"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.16.3"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.17.0"
 
-    id("org.jetbrains.dokka") version "1.9.20"
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 group = rootProject.group
@@ -27,7 +27,7 @@ dependencies {
     implementation(projects.sharedInternal)
     ksp(projects.codeGenerator)
 
-    testImplementation("dev.zacsweers.kctfork:core:0.6.0")
+    testImplementation("dev.zacsweers.kctfork:core:0.7.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
