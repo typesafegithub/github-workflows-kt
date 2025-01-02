@@ -5,10 +5,10 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("gradle:actions__setup-gradle:v4")
-@file:DependsOn("fwilhe2:setup-kotlin:0.10.0")
+@file:DependsOn("fwilhe2:setup-kotlin:0.11.0")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
-import io.github.typesafegithub.workflows.actions.fwilhe2.SetupKotlin_Untyped
+import io.github.typesafegithub.workflows.actions.fwilhe2.SetupKotlin
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Environment
@@ -180,8 +180,8 @@ fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
 fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(kotlinVersion: String, command: String) {
     uses(
         name = "Install Kotlin $kotlinVersion",
-        action = SetupKotlin_Untyped(
-            version_Untyped = kotlinVersion,
+        action = SetupKotlin(
+            version = kotlinVersion,
         ),
     )
     cleanMavenLocal()
