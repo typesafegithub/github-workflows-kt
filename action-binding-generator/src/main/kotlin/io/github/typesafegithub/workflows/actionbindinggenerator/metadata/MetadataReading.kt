@@ -43,8 +43,6 @@ private fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubuserc
 
 private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
 
-internal val ActionCoords.gitHubUrl: String get() = "https://github.com/$owner/$name"
-
 public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
