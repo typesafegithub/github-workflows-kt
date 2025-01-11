@@ -20,16 +20,20 @@ jobs:
       name: 'Execute script'
       run: 'rm ''.github/workflows/test-workflow.yaml'' && ''.github/workflows/test-workflow.main.kts'''
     - id: 'start-server'
-      if: "steps.step-1.outcome != 'success'"
+      if: "always()"
+#      if: "steps.step-1.outcome != 'success'"
       run: 'docker run krzema12/github-workflows-kt-jit-binding-server &'
     - id: 'wait-for-server'
-      if: "steps.step-1.outcome != 'success'"
+      if: "always()"
+#      if: "steps.step-1.outcome != 'success'"
       run: 'sleep 30'
     - id: 'replace-server-url-in-script'
-      if: "steps.step-1.outcome != 'success'"
+      if: "always()"
+#      if: "steps.step-1.outcome != 'success'"
       run: sed -i -e 's/https:\/\/bindings.krzeminski.itt/http:\/\/localhost:8080/g' .github/workflows/test-workflow.main.kts
     - id: 'execute-script-again'
-      if: "steps.step-1.outcome != 'success'"
+      if: "always()"
+#      if: "steps.step-1.outcome != 'success'"
       run: 'rm ''.github/workflows/test-workflow.yaml'' && ''.github/workflows/test-workflow.main.kts'''
     - id: 'step-2'
       name: 'Consistency check'
