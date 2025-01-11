@@ -25,6 +25,6 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(action = Checkout())
-        run(command = "Hello world!")
+        run(command = "echo 'Hello world!'")
     }
 }

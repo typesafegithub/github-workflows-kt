@@ -31,4 +31,4 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
     - id: 'step-1'
-      run: 'Hello world!'
+      run: 'echo ''Hello world!'''
