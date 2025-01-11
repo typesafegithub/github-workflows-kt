@@ -20,21 +20,17 @@ jobs:
       name: 'Execute script'
       run: 'rm ''.github/workflows/test-workflow.yaml'' && ''.github/workflows/test-workflow.main.kts'''
     - id: 'start-server'
-      if: "always()"
-#      if: "steps.step-1.outcome != 'success'"
+      if: ${{ steps.step-1.outcome != 'success' }}
       run: 'docker run krzema12/github-workflows-kt-jit-binding-server &'
     - id: 'wait-for-server'
-      if: "always()"
-#      if: "steps.step-1.outcome != 'success'"
+      if: ${{ steps.step-1.outcome != 'success' }}
       run: 'sleep 30'
     - id: 'replace-server-url-in-script'
-      if: "always()"
-#      if: "steps.step-1.outcome != 'success'"
+      if: ${{ steps.step-1.outcome != 'success' }}
       run: sed -i -e 's/https:\/\/bindings.krzeminski.itt/http:\/\/localhost:8080/g' .github/workflows/test-workflow.main.kts
     - id: 'execute-script-again'
-      if: "always()"
-#      if: "steps.step-1.outcome != 'success'"
-      run: 'rm ''.github/workflows/test-workflow.yaml'' && ''.github/workflows/test-workflow.main.kts'''
+      if: ${{ steps.step-1.outcome != 'success' }}
+      run: 'rm -f ''.github/workflows/test-workflow.yaml'' && ''.github/workflows/test-workflow.main.kts'''
     - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/test-workflow.yaml'''
