@@ -22,7 +22,7 @@ jobs:
       continue-on-error: true
     - id: 'start-server'
       if: ${{ steps.step-1.outcome != 'success' }}
-      run: 'docker run krzema12/github-workflows-kt-jit-binding-server &'
+      run: 'docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server &'
     - id: 'wait-for-server'
       if: ${{ steps.step-1.outcome != 'success' }}
       run: 'sleep 30'
