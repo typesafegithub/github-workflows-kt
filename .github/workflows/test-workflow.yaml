@@ -19,6 +19,7 @@ jobs:
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/test-workflow.yaml'' && ''.github/workflows/test-workflow.main.kts'''
+      continue-on-error: true
     - id: 'start-server'
       if: ${{ steps.step-1.outcome != 'success' }}
       run: 'docker run krzema12/github-workflows-kt-jit-binding-server &'
