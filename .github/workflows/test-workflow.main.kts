@@ -2,7 +2,7 @@
 @file:Repository("https://repo.maven.apache.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.2")
 
-@file:Repository("https://bindings.krzeminski.it")
+@file:Repository("https://bindings.krzeminski.itt")
 @file:DependsOn("actions:checkout:v4")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
