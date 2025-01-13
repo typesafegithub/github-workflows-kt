@@ -63,26 +63,26 @@ internal fun WorkflowBuilder.consistencyCheckJob(
                 )
             val ifFirstCompilationFails = expr { firstCompilationStep.outcome.neq(Status.Success) }
             run(
-                name = "Start the local server",
+                name = "[Fallback] Start the local server",
                 command = "docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server &",
                 condition = ifFirstCompilationFails,
             )
             run(
-                name = "Wait for the server",
+                name = "[Fallback] Wait for the server",
                 command =
                     "curl --head -X GET --retry 60 --retry-all-errors --retry-delay 1 " +
                         "http://localhost:8080/status",
                 condition = ifFirstCompilationFails,
             )
             run(
-                name = "Replace server URL in script",
+                name = "[Fallback] Replace server URL in script",
                 command =
                     "sed -i -e 's/https:\\/\\/bindings.krzeminski.it/http:\\/\\/localhost:8080/g' " +
                         sourceFilePath,
                 condition = ifFirstCompilationFails,
             )
             run(
-                name = "Execute script again",
+                name = "[Fallback] Execute script again",
                 command = "rm -f '$targetFilePath' && '$sourceFilePath'",
                 condition = ifFirstCompilationFails,
             )
