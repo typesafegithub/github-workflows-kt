@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
-@file:Repository("https://repo.maven.apache.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.2")
+@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.3-20250113.083804-10")
 
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
@@ -19,6 +19,7 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import java.net.URI
 import java.net.ConnectException
 import java.net.http.HttpClient
@@ -40,6 +41,9 @@ workflow(
         PullRequest(),
         Schedule(triggers = listOf(Cron(minute = "0", hour = "0", dayWeek = "SUN"))),
         WorkflowDispatch(),
+    ),
+    consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        useLocalBindingsServerAsFallback = true,
     ),
     sourceFile = __FILE__,
 ) {
