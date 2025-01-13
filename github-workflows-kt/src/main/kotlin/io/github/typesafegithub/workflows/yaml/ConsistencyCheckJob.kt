@@ -1,14 +1,17 @@
 package io.github.typesafegithub.workflows.yaml
 
+import io.github.typesafegithub.workflows.domain.AbstractResult.Status
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.dsl.WorkflowBuilder
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import java.nio.file.Path
 import kotlin.io.path.invariantSeparatorsPathString
 
+@Suppress("LongMethod")
 internal fun WorkflowBuilder.consistencyCheckJob(
     sourceFilePath: String?,
     targetFileName: String?,
@@ -51,10 +54,45 @@ internal fun WorkflowBuilder.consistencyCheckJob(
             block()
         }
 
-        run(
-            name = "Execute script",
-            command = "rm '$targetFilePath' && '$sourceFilePath'",
-        )
+        if (consistencyCheckJobConfig.useLocalBindingsServerAsFallback) {
+            val firstCompilationStep =
+                run(
+                    name = "Execute script",
+                    command = "rm '$targetFilePath' && '$sourceFilePath'",
+                    continueOnError = true,
+                )
+            val ifFirstCompilationFails = expr { firstCompilationStep.outcome.neq(Status.Success) }
+            run(
+                name = "Start the local server",
+                command = "docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server &",
+                condition = ifFirstCompilationFails,
+            )
+            run(
+                name = "Wait for the server",
+                command =
+                    "curl --head -X GET --retry 60 --retry-all-errors --retry-delay 1 " +
+                        "http://localhost:8080/status",
+                condition = ifFirstCompilationFails,
+            )
+            run(
+                name = "Replace server URL in script",
+                command =
+                    "sed -i -e 's/https:\\/\\/bindings.krzeminski.it/http:\\/\\/localhost:8080/g' " +
+                        sourceFilePath,
+                condition = ifFirstCompilationFails,
+            )
+            run(
+                name = "Execute script again",
+                command = "rm -f '$targetFilePath' && '$sourceFilePath'",
+                condition = ifFirstCompilationFails,
+            )
+        } else {
+            run(
+                name = "Execute script",
+                command = "rm '$targetFilePath' && '$sourceFilePath'",
+            )
+        }
+
         run(
             name = "Consistency check",
             command = "git diff --exit-code '$targetFilePath'",
