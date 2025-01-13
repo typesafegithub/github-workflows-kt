@@ -240,6 +240,80 @@ class IntegrationTest :
                 """.trimIndent()
         }
 
+        test("fallback for bindings server") {
+            // when
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                consistencyCheckJobConfig =
+                    DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                        useLocalBindingsServerAsFallback = true,
+                    ),
+            ) {
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    run(
+                        name = "Hello world!",
+                        command = "echo 'hello!'",
+                    )
+                }
+            }
+
+            // then
+            targetTempFile.readText() shouldBe
+                """
+                # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+                # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+                # Generated with https://github.com/typesafegithub/github-workflows-kt
+
+                name: 'Test workflow'
+                on:
+                  push: {}
+                jobs:
+                  check_yaml_consistency:
+                    name: 'Check YAML consistency'
+                    runs-on: 'ubuntu-latest'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Check out'
+                      uses: 'actions/checkout@v4'
+                    - id: 'step-1'
+                      name: 'Execute script'
+                      continue-on-error: true
+                      run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                    - id: 'step-2'
+                      name: 'Start the local server'
+                      run: 'docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server &'
+                      if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
+                    - id: 'step-3'
+                      name: 'Wait for the server'
+                      run: 'curl --head -X GET --retry 60 --retry-connrefused --retry-delay 1 http://localhost:8080/status'
+                      if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
+                    - id: 'step-4'
+                      name: 'Replace server URL in script'
+                      run: 'sed -i -e ''s/https:\/\/bindings.krzeminski.it/http:\/\/localhost:8080/g'' .github/workflows/some_workflow.main.kts'
+                      if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
+                    - id: 'step-5'
+                      name: 'Execute script again'
+                      run: 'rm -f ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                    - id: 'step-6'
+                      name: 'Consistency check'
+                      run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
+                  test_job:
+                    runs-on: 'ubuntu-latest'
+                    needs:
+                    - 'check_yaml_consistency'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Hello world!'
+                      run: 'echo ''hello!'''
+
+                """.trimIndent()
+        }
+
         test("with concurrency, default behavior") {
             // when
             workflow(

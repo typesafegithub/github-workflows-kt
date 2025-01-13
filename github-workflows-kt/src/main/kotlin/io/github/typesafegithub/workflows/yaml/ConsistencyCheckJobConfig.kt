@@ -8,6 +8,7 @@ public val DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG: ConsistencyCheckJobConfig.Confi
         condition = null,
         env = emptyMap(),
         additionalSteps = null,
+        useLocalBindingsServerAsFallback = false,
     )
 
 public sealed interface ConsistencyCheckJobConfig {
@@ -17,5 +18,11 @@ public sealed interface ConsistencyCheckJobConfig {
         val condition: String?,
         val env: Map<String, String>,
         val additionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)?,
+        /**
+         * If the script execution step in the consistency check job fails, another attempt to execute is made with a
+         * local bindings server running. An assumption is made that the bindings server is under
+         * `https://bindings.krzeminski.it/`.
+         */
+        val useLocalBindingsServerAsFallback: Boolean,
     ) : ConsistencyCheckJobConfig
 }
