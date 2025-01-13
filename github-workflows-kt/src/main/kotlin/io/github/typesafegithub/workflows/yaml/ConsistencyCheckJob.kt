@@ -78,12 +78,13 @@ internal fun WorkflowBuilder.consistencyCheckJob(
                 name = "Replace server URL in script",
                 command =
                     "sed -i -e 's/https:\\/\\/bindings.krzeminski.it/http:\\/\\/localhost:8080/g' " +
-                        "$sourceFilePath",
+                        sourceFilePath,
                 condition = ifFirstCompilationFails,
             )
             run(
                 name = "Execute script again",
                 command = "rm -f '$targetFilePath' && '$sourceFilePath'",
+                condition = ifFirstCompilationFails,
             )
         } else {
             run(

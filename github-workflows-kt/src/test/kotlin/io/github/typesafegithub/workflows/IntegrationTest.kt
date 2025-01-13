@@ -299,6 +299,7 @@ class IntegrationTest :
                     - id: 'step-5'
                       name: 'Execute script again'
                       run: 'rm -f ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                      if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-6'
                       name: 'Consistency check'
                       run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
