@@ -25,7 +25,7 @@ jobs:
       run: 'docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server &'
     - id: 'wait-for-server'
       if: ${{ steps.step-1.outcome != 'success' }}
-      run: 'curl --head -X GET --retry 60 --retry-connrefused --retry-delay 1 http://localhost:8080/status'
+      run: 'curl --head -X GET --retry 60 --retry-all-errors --retry-delay 1 http://localhost:8080/status'
     - id: 'replace-server-url-in-script'
       if: ${{ steps.step-1.outcome != 'success' }}
       run: sed -i -e 's/https:\/\/bindings.krzeminski.itt/http:\/\/localhost:8080/g' .github/workflows/test-workflow.main.kts
