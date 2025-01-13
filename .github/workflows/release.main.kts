@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo.maven.apache.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.2")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.1.0")
 
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
