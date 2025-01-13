@@ -158,7 +158,7 @@ public fun Workflow.generateYaml(
                         run(
                             name = "Wait for the server",
                             command =
-                                "curl --head -X GET --retry 60 --retry-connrefused --retry-delay 1 " +
+                                "curl --head -X GET --retry 60 --retry-all-errors --retry-delay 1 " +
                                     "http://localhost:8080/status",
                             condition = ifFirstCompilationFails,
                         )

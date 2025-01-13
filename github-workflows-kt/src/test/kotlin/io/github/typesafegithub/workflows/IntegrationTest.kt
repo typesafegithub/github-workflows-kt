@@ -290,7 +290,7 @@ class IntegrationTest :
                       if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-3'
                       name: 'Wait for the server'
-                      run: 'curl --head -X GET --retry 60 --retry-connrefused --retry-delay 1 http://localhost:8080/status'
+                      run: 'curl --head -X GET --retry 60 --retry-all-errors --retry-delay 1 http://localhost:8080/status'
                       if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-4'
                       name: 'Replace server URL in script'
