@@ -2,7 +2,7 @@
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.3-20250113.083804-10")
 
-@file:Repository("https://bindings.krzeminski.it")
+@file:Repository("https://bindings.krzeminski.itt")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("gradle:actions__setup-gradle:v4")
 @file:DependsOn("fwilhe2:setup-kotlin:0.11.0")
