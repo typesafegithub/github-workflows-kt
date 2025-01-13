@@ -4,9 +4,7 @@ import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
-import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.Workflow
-import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
@@ -103,54 +101,13 @@ public fun Workflow.generateYaml(
 
     val jobsWithConsistencyCheck =
         if (consistencyCheckJobConfig is ConsistencyCheckJobConfig.Configuration) {
-            check(gitRootDir != null && sourceFile != null) {
-                "consistency check requires a valid sourceFile and Git root directory"
-            }
-
-            val targetFilePath =
-                gitRootDir
-                    .resolve(".github")
-                    .resolve("workflows")
-                    .resolve(targetFileName)
-                    .relativeToAbsolute(gitRootDir)
-                    .invariantSeparatorsPathString
-
             val consistencyCheckJob =
-                this.toBuilder().job(
-                    id = "check_yaml_consistency",
-                    name = "Check YAML consistency",
-                    runsOn = UbuntuLatest,
-                    condition = consistencyCheckJobConfig.condition,
-                    env = consistencyCheckJobConfig.env,
-                ) {
-                    uses(
-                        name = "Check out",
-                        // Since this action is used in a simple way, and we actually don't want to update the version
-                        // because it causes YAML regeneration, let's not use the type-safe binding here. It will also
-                        // let us avoid depending on a Maven-based action binding once bundled bindings are deprecated.
-                        action =
-                            CustomAction(
-                                actionOwner = "actions",
-                                actionName = "checkout",
-                                actionVersion = "v4",
-                            ),
-                    )
-
-                    consistencyCheckJobConfig.additionalSteps?.also { block ->
-                        block()
-                    }
-
-                    run(
-                        name = "Execute script",
-                        command =
-                            "rm '$targetFilePath' " +
-                                "&& '$sourceFilePath'",
-                    )
-                    run(
-                        name = "Consistency check",
-                        command = "git diff --exit-code '$targetFilePath'",
-                    )
-                }
+                this.toBuilder().consistencyCheckJob(
+                    sourceFilePath = sourceFilePath,
+                    targetFileName = targetFileName,
+                    gitRootDir = gitRootDir,
+                    consistencyCheckJobConfig = consistencyCheckJobConfig,
+                )
             listOf(consistencyCheckJob) +
                 jobs.map {
                     it.copy(needs = it.needs + consistencyCheckJob)
