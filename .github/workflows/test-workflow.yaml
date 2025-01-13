@@ -11,7 +11,7 @@ on:
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
-    runs-on: 'ubuntu-24.04'
+    runs-on: 'ubuntu-latest'
     steps:
     - id: 'step-0'
       name: 'Check out'
