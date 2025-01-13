@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.3-20250113.083804-10")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.3-20250113.090010-11")
 
 @file:Repository("https://bindings.krzeminski.itt")
 @file:DependsOn("actions:checkout:v4")
@@ -20,6 +20,7 @@ import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
+import java.io.File
 import java.net.URI
 import java.net.ConnectException
 import java.net.http.HttpClient
@@ -203,3 +204,7 @@ fun failsWithPhraseInLogs(
        ($command || true) >> output.txt 2>&1
        grep "$phrase" output.txt
    """.trimIndent()
+
+File(".github/workflows/bindings-server.yaml").also {
+    it.writeText(it.readText().replace(".it", ".itt"))
+}
