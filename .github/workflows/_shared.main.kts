@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.0.2")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.1.0")
 
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 
