@@ -20,8 +20,9 @@ public sealed interface ConsistencyCheckJobConfig {
         val additionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)?,
         /**
          * If the script execution step in the consistency check job fails, another attempt to execute is made with a
-         * local bindings server running. An assumption is made that the bindings server is under
-         * `https://bindings.krzeminski.it/`.
+         * local bindings server running.
+         * An assumption is made that the bindings server is under `https://bindings.krzeminski.it`. It's currently not
+         * configurable.
          */
         val useLocalBindingsServerAsFallback: Boolean,
     ) : ConsistencyCheckJobConfig
