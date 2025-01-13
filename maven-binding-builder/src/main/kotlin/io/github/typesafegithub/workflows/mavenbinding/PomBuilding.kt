@@ -4,8 +4,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 
-internal const val LATEST_RELASED_LIBRARY_VERSION = "3.1.0"
-
 internal fun ActionCoords.buildPomFile() =
     """
     <?xml version="1.0" encoding="UTF-8"?>
@@ -22,13 +20,5 @@ internal fun ActionCoords.buildPomFile() =
         <developerConnection>scm:git:ssh://github.com:$owner/$name.git</developerConnection>
         <url>https://github.com/$owner/$name.git</url>
       </scm>
-      <dependencies>
-        <dependency>
-            <groupId>io.github.typesafegithub</groupId>
-            <artifactId>github-workflows-kt</artifactId>
-            <version>$LATEST_RELASED_LIBRARY_VERSION</version>
-            <scope>compile</scope>
-        </dependency>
-      </dependencies>
     </project>
     """.trimIndent()
