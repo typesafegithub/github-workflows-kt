@@ -23,6 +23,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 
 val GRADLE_ENCRYPTION_KEY by Contexts.secrets
 
@@ -31,6 +32,9 @@ workflow(
     on = listOf(
         Push(branches = listOf("main")),
         PullRequest(),
+    ),
+    consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        useLocalBindingsServerAsFallback = true,
     ),
     sourceFile = __FILE__,
 ) {
