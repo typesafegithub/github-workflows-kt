@@ -150,3 +150,4 @@ class LoggingMetricExporter(private val delegate: OtlpGrpcMetricExporter) : Metr
         return result
     }
 }
+
