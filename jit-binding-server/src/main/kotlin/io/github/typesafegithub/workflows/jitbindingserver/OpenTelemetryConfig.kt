@@ -110,10 +110,6 @@ internal fun buildOpenTelemetryConfig(
     LoggingTracer(openTelemetry.tracerProvider[serviceName])
     LoggingMeter(openTelemetry.meterProvider[serviceName])
     logger.debug { "LoggingTracer and LoggingMeter are now active" }
-
-
-
-
     Runtime.getRuntime().addShutdownHook(Thread {
         logger.debug { "Closing OpenTelemetry" }
         openTelemetry.close()
