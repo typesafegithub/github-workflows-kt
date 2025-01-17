@@ -112,8 +112,6 @@ internal fun buildOpenTelemetryConfig(
     logger.debug { "LoggingTracer and LoggingMeter are now active" }
 
 
-    logger.debug { "Periodic metric reader initialized with interval: 10 seconds" }
-
 
 
     Runtime.getRuntime().addShutdownHook(Thread {
