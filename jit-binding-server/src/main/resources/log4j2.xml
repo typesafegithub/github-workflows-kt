@@ -9,7 +9,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="INFO">
+        <Root level="${env:LOG_LEVEL:-INFO}">
             <AppenderRef ref="Console Appender"/>
         </Root>
     </Loggers>
