@@ -29,17 +29,7 @@ import io.opentelemetry.sdk.trace.SdkTracerProvider
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor
 import java.util.concurrent.TimeUnit
 
-private val logger =
-    System
-        /*
-         * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         * !! IMPORTANT:                                                                       !!
-         * !!     This statement has to always be executed first before **any** other code,    !!
-         * !!     or else the property "java.util.logging.manager" may have no effect anymore! !!
-         * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         */
-        .setProperty("java.util.logging.manager", org.apache.logging.log4j.jul.LogManager::class.java.name)
-        .let { logger { } }
+private val logger = logger { }
 
 /*
 How to test locally:
