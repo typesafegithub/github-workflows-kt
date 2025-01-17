@@ -4,11 +4,11 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import java.time.format.DateTimeFormatter
 
-internal suspend fun ActionCoords.buildMavenMetadataFile(githubToken: String): String {
+internal suspend fun ActionCoords.buildMavenMetadataFile(githubToken: String): String? {
     val availableMajorVersions =
         fetchAvailableVersions(owner = owner, name = name, githubToken = githubToken)
             .filter { it.isMajorVersion() }
-    val newest = availableMajorVersions.max()
+    val newest = availableMajorVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter
             .ofPattern("yyyyMMddHHmmss")
