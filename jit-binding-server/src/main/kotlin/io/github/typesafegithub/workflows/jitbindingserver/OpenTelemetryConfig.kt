@@ -6,12 +6,9 @@ import io.opentelemetry.api.common.AttributeKey
 import io.opentelemetry.api.metrics.DoubleHistogramBuilder
 import io.opentelemetry.api.metrics.LongCounterBuilder
 import io.opentelemetry.api.metrics.Meter
-import io.opentelemetry.api.metrics.MeterBuilder
-import io.opentelemetry.api.trace.Span
 import io.opentelemetry.api.trace.SpanBuilder
 import io.opentelemetry.api.trace.Tracer
 import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator
-import io.opentelemetry.context.Context
 import io.opentelemetry.context.propagation.ContextPropagators
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
 import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter
@@ -69,7 +66,6 @@ internal fun buildOpenTelemetryConfig(
             .build()
     logger.debug { "Resource initialized with service name: $serviceName" }
 
-
     val tracerProvider =
         SdkTracerProvider
             .builder()
@@ -96,7 +92,6 @@ internal fun buildOpenTelemetryConfig(
             .build()
     logger.debug { "Logger provider configured" }
 
-
     val openTelemetry =
         OpenTelemetrySdk
             .builder()
@@ -110,24 +105,29 @@ internal fun buildOpenTelemetryConfig(
     LoggingTracer(openTelemetry.tracerProvider[serviceName])
     LoggingMeter(openTelemetry.meterProvider[serviceName])
     logger.debug { "LoggingTracer and LoggingMeter are now active" }
-    Runtime.getRuntime().addShutdownHook(Thread {
-        logger.debug { "Closing OpenTelemetry" }
-        openTelemetry.close()
-    })
+    Runtime.getRuntime().addShutdownHook(
+        Thread {
+            logger.debug { "Closing OpenTelemetry" }
+            openTelemetry.close()
+        },
+    )
     logger.debug { "Shutdown hook registered for OpenTelemetry components" }
 
     return openTelemetry
 }
 
-class LoggingTracer(private val delegate: Tracer) : Tracer by delegate {
+class LoggingTracer(
+    private val delegate: Tracer,
+) : Tracer by delegate {
     override fun spanBuilder(spanName: String): SpanBuilder {
         logger.debug { "Creating span builder for span: $spanName" }
         return delegate.spanBuilder(spanName)
     }
-
 }
 
-class LoggingMeter(private val delegate: Meter) : Meter by delegate {
+class LoggingMeter(
+    private val delegate: Meter,
+) : Meter by delegate {
     override fun counterBuilder(name: String): LongCounterBuilder {
         logger.debug { "Creating counter metric: $name" }
         return delegate.counterBuilder(name)
@@ -139,7 +139,9 @@ class LoggingMeter(private val delegate: Meter) : Meter by delegate {
     }
 }
 
-class LoggingMetricExporter(private val delegate: OtlpGrpcMetricExporter) : MetricExporter by delegate {
+class LoggingMetricExporter(
+    private val delegate: OtlpGrpcMetricExporter,
+) : MetricExporter by delegate {
     override fun export(metrics: Collection<MetricData>): CompletableResultCode {
         val result = delegate.export(metrics)
         if (result.isSuccess) {
@@ -150,4 +152,3 @@ class LoggingMetricExporter(private val delegate: OtlpGrpcMetricExporter) : Metr
         return result
     }
 }
-
