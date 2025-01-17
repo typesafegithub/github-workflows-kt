@@ -119,7 +119,6 @@ internal fun buildOpenTelemetryConfig(
     return openTelemetry
 }
 
-
 class LoggingTracer(private val delegate: Tracer) : Tracer by delegate {
     override fun spanBuilder(spanName: String): SpanBuilder {
         logger.debug { "Creating span builder for span: $spanName" }
