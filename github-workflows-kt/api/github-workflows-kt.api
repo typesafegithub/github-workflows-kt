@@ -1554,12 +1554,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPa
 public final class io/github/typesafegithub/workflows/domain/triggers/Release : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Release$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Release;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Release;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Release;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Release;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Release;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Release;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

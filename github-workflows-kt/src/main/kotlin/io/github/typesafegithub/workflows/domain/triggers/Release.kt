@@ -8,5 +8,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class Release(
+    val types: List<String>? = null,
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()
