@@ -122,7 +122,7 @@ class OtherTriggersTest :
                     PullRequestTarget(),
                     Push(),
                     RegistryPackage(types("published", "updated")),
-                    Release(types("published", "unpublished")),
+                    Release(types = listOf("published", "unpublished")),
                     RepositoryDispatch(types = listOf("foo", "bar")),
                     Schedule(emptyList()),
                     Status(types("started")),

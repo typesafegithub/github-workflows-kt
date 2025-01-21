@@ -57,6 +57,7 @@ public fun Trigger.toMap(): Map<String, List<String>> =
         is PullRequest -> toMap()
         is PullRequestTarget -> toMap()
         is RepositoryDispatch -> toMap()
+        is Release -> toMap()
         else -> emptyMap()
     }
 
@@ -89,6 +90,11 @@ private fun PullRequestTarget.toMap() =
     )
 
 private fun RepositoryDispatch.toMap() =
+    mapOfNotNullValues(
+        "types" to types,
+    )
+
+private fun Release.toMap() =
     mapOfNotNullValues(
         "types" to types,
     )
