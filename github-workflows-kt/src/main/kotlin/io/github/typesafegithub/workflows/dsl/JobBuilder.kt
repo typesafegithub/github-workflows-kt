@@ -194,7 +194,6 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 condition = `if` ?: condition,
                 continueOnError = continueOnError,
                 timeoutMinutes = timeoutMinutes,
-                outputs = action.buildOutputObject(stepId),
                 _customArguments = _customArguments,
             )
         job = job.copy(steps = job.steps + newStep)

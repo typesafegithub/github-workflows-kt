@@ -8,7 +8,6 @@ import io.github.typesafegithub.workflows.actions.actions.UploadArtifact
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Shell
-import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -28,7 +27,6 @@ class StepsToYamlTest :
                         id = "someId",
                         name = "Some external action",
                         action = Checkout(),
-                        outputs = Action.Outputs("someId"),
                     ),
                 )
 
@@ -239,7 +237,6 @@ class StepsToYamlTest :
                         ActionStep(
                             id = "someId",
                             action = Checkout(),
-                            outputs = Action.Outputs("someId"),
                         ),
                     )
 
@@ -276,7 +273,6 @@ class StepsToYamlTest :
                                         """.trimIndent(),
                                 ),
                             condition = "\${{ matrix.foo == 'bar' }}",
-                            outputs = Action.Outputs("someId"),
                             _customArguments =
                                 mapOf(
                                     "foo" to true,
@@ -339,7 +335,6 @@ class StepsToYamlTest :
                                             "compiler" to "latexmk",
                                         ),
                                 ),
-                            outputs = Action.Outputs("someId"),
                         ),
                     )
 
@@ -378,7 +373,6 @@ class StepsToYamlTest :
                                             "answer" to "42",
                                         ),
                                 ),
-                            outputs = Action.Outputs("someId"),
                         ),
                     )
 
@@ -413,7 +407,6 @@ class StepsToYamlTest :
                                     path = listOf("path1", "path2"),
                                     _customVersion = "v2.3.4",
                                 ),
-                            outputs = Action.Outputs("someId"),
                         ),
                     )
 
@@ -447,7 +440,6 @@ class StepsToYamlTest :
                             id = "someId",
                             name = "Will be overridden",
                             action = Checkout(),
-                            outputs = Action.Outputs("someId"),
                             _customArguments =
                                 mapOf(
                                     "name" to "Overridden!",
