@@ -126,4 +126,87 @@ class JobBuilderTest :
                 workflow!!.jobs[0].condition shouldBe "b"
             }
         }
+
+        context("step custom IDs") {
+            test("set custom ID for a 'run' step") {
+                // When
+                var workflow: Workflow? = null
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                    sourceFile = sourceTempFile,
+                    useWorkflow = { workflow = it },
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                        run(command = "command with default ID")
+                        run(id = "foobar", command = "command with custom ID")
+                    }
+                }
+
+                // Then
+                workflow!!.jobs[0].steps[0].id shouldBe "step-0"
+                workflow.jobs[0].steps[1].id shouldBe "foobar"
+            }
+
+            test("set custom ID for a 'uses' step") {
+                // When
+                var workflow: Workflow? = null
+                workflow(
+                    name = "test",
+                    on = listOf(Push()),
+                    sourceFile = sourceTempFile,
+                    useWorkflow = { workflow = it },
+                ) {
+                    job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                        uses(
+                            name = "step with default ID",
+                            action = Checkout(),
+                        )
+                        uses(
+                            name = "step with default ID",
+                            id = "foobar",
+                            action = Checkout(),
+                        )
+                    }
+                }
+
+                // Then
+                workflow!!.jobs[0].steps[0].id shouldBe "step-0"
+                workflow.jobs[0].steps[1].id shouldBe "foobar"
+            }
+
+            test("custom ID is equal to existing default step ID") {
+                shouldThrow<IllegalArgumentException> {
+                    workflow(
+                        name = "test",
+                        on = listOf(Push()),
+                        sourceFile = sourceTempFile,
+                    ) {
+                        job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                            run(command = "command with default ID")
+                            run(id = "step-0", command = "command with custom ID")
+                        }
+                    }
+                }.also {
+                    it.message shouldBe "Duplicated step IDs for job 'test': [step-0]"
+                }
+            }
+
+            test("two equal custom IDs set") {
+                shouldThrow<IllegalArgumentException> {
+                    workflow(
+                        name = "test",
+                        on = listOf(Push()),
+                        sourceFile = sourceTempFile,
+                    ) {
+                        job(id = "test", runsOn = RunnerType.UbuntuLatest) {
+                            run(id = "foobar", command = "command #1 with custom ID")
+                            run(id = "foobar", command = "command #2 with custom ID")
+                        }
+                    }
+                }.also {
+                    it.message shouldBe "Duplicated step IDs for job 'test': [foobar]"
+                }
+            }
+        }
     })

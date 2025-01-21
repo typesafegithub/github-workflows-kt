@@ -100,6 +100,7 @@ public class WorkflowBuilder(
         require(newJob.steps.isNotEmpty()) {
             "There are no steps defined!"
         }
+        newJob.requireUniqueStepIds()
 
         workflow = workflow.copy(jobs = workflow.jobs + newJob)
         return newJob
@@ -236,17 +237,30 @@ public fun workflow(
 }
 
 private fun List<Job<*>>.requireUniqueJobIds() {
-    val countPerJobName =
+    val duplicatedJobNames =
         this
             .map { it.id }
-            .groupBy { it }
-            .mapValues { it.value.count() }
+            .findDuplicates()
 
-    require(countPerJobName.none { it.value > 1 }) {
-        val duplicatedJobNames =
-            countPerJobName
-                .filter { it.value > 1 }
-                .map { it.key }
+    require(duplicatedJobNames.isEmpty()) {
         "Duplicated job names: $duplicatedJobNames"
     }
 }
+
+private fun Job<*>.requireUniqueStepIds() {
+    val duplicatedStepIds =
+        this.steps
+            .map { it.id }
+            .findDuplicates()
+
+    require(duplicatedStepIds.isEmpty()) {
+        "Duplicated step IDs for job '${this.id}': $duplicatedStepIds"
+    }
+}
+
+private fun <T> Iterable<T>.findDuplicates(): Set<T> =
+    this
+        .groupingBy { it }
+        .eachCount()
+        .filter { it.value > 1 }
+        .keys
