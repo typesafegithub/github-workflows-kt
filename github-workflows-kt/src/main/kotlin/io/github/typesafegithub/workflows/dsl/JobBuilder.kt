@@ -65,6 +65,10 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         vararg pleaseUseNamedArguments: Unit,
         command: String,
         name: String? = null,
+        /**
+         * Provide custom step ID. If not given, it will be auto-generated.
+         */
+        id: String? = null,
         env: Map<String, String> = mapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
@@ -82,7 +86,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
 
         val newStep =
             CommandStep(
-                id = "step-${job.steps.size}",
+                id = id ?: "step-${job.steps.size}",
                 name = name,
                 command = command,
                 env = env,
@@ -164,6 +168,10 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         vararg pleaseUseNamedArguments: Unit,
         action: Action<T>,
         name: String? = null,
+        /**
+         * Provide custom step ID. If not given, it will be auto-generated.
+         */
+        id: String? = null,
         env: Map<String, String> = mapOf(),
         @SuppressWarnings("FunctionParameterNaming")
         `if`: String? = null,
@@ -173,7 +181,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         @SuppressWarnings("FunctionParameterNaming")
         _customArguments: Map<String, @Contextual Any> = mapOf(),
     ): ActionStep<T> {
-        val stepId = "step-${job.steps.size}"
+        val stepId = id ?: "step-${job.steps.size}"
         require(!(`if` != null && condition != null)) {
             "Either 'if' or 'condition' have to be set, not both!"
         }
