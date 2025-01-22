@@ -12,6 +12,30 @@ import java.net.URI
 
 class TypesProvidingTest :
     FunSpec({
+        test("copes with blank typing") {
+            // Given
+            val actionTypesYml = " "
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+
+            // Then
+            types.first shouldBe emptyMap()
+        }
+
+        test("copes with comment-only typing") {
+            // Given
+            val actionTypesYml = "#"
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+
+            // Then
+            types.first shouldBe emptyMap()
+        }
+
         test("parses all allowed elements of valid typing") {
             // Given
             val actionTypesYml =
