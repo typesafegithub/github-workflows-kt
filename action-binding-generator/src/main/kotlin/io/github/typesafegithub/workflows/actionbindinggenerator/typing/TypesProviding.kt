@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 import com.charleskorn.kaml.AnchorsAndAliases
+import com.charleskorn.kaml.EmptyYamlDocumentException
 import com.charleskorn.kaml.Yaml
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
@@ -150,7 +151,14 @@ private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(
     default: T,
 ): T =
     if (text.isNotBlank()) {
-        decodeFromString(text)
+        runCatching {
+            decodeFromString<T>(text)
+        }.getOrElse {
+            if (it is EmptyYamlDocumentException) {
+                return default
+            }
+            throw it
+        }
     } else {
         default
     }
