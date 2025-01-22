@@ -2,7 +2,6 @@ package io.github.typesafegithub.workflows.domain
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.domain.AbstractResult.Status
-import io.github.typesafegithub.workflows.domain.actions.Action
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -21,7 +20,6 @@ class StepTest :
                 ActionStep(
                     id = "whatever",
                     action = Checkout(),
-                    outputs = Action.Outputs("whatever"),
                 )
             someStep.conclusion.toString() shouldBe "steps.whatever.conclusion"
             someStep.conclusion eq Status.Failure shouldBe "steps.whatever.conclusion == 'failure'"

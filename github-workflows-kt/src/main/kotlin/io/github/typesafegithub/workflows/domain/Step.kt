@@ -76,7 +76,6 @@ public open class ActionStep<out OUTPUTS : Outputs>(
     override val condition: String? = null,
     override val continueOnError: Boolean? = null,
     override val timeoutMinutes: Int? = null,
-    override val outputs: OUTPUTS,
     override val _customArguments: Map<String, @Contextual Any?> = emptyMap(),
 ) : Step<OUTPUTS>(
         id = id,
@@ -84,6 +83,9 @@ public open class ActionStep<out OUTPUTS : Outputs>(
         continueOnError = continueOnError,
         timeoutMinutes = timeoutMinutes,
         env = env,
-        outputs = outputs,
+        outputs = action.buildOutputObject(id),
         _customArguments = _customArguments,
-    )
+    ) {
+    override val outputs: OUTPUTS
+        get() = super.outputs
+}

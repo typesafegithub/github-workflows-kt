@@ -19,8 +19,8 @@ public final class io/github/typesafegithub/workflows/domain/AbstractResult$Stat
 }
 
 public class io/github/typesafegithub/workflows/domain/ActionStep : io/github/typesafegithub/workflows/domain/Step {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/domain/actions/Action;Ljava/util/Map;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAction ()Lio/github/typesafegithub/workflows/domain/actions/Action;
 	public fun getCondition ()Ljava/lang/String;
 	public fun getContinueOnError ()Ljava/lang/Boolean;
