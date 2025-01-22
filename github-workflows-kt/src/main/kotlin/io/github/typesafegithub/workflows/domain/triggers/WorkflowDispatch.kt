@@ -21,6 +21,9 @@ public data class WorkflowDispatch(
         @SerialName("boolean")
         Boolean,
 
+        @SerialName("number")
+        Number,
+
         @SerialName("string")
         String,
     }

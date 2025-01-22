@@ -68,6 +68,12 @@ class TriggersToYamlTest :
                                             type = WorkflowDispatch.Type.Boolean,
                                             required = false,
                                         ),
+                                    "retries" to
+                                        WorkflowDispatch.Input(
+                                            description = "Number of retries",
+                                            type = WorkflowDispatch.Type.Number,
+                                            required = false,
+                                        ),
                                     "environment" to
                                         WorkflowDispatch.Input(
                                             description = "Environment to run tests against",
@@ -106,6 +112,12 @@ class TriggersToYamlTest :
                                             mapOf(
                                                 "description" to "Test scenario tags",
                                                 "type" to "boolean",
+                                                "required" to false,
+                                            ),
+                                        "retries" to
+                                            mapOf(
+                                                "description" to "Number of retries",
+                                                "type" to "number",
                                                 "required" to false,
                                             ),
                                         "environment" to
