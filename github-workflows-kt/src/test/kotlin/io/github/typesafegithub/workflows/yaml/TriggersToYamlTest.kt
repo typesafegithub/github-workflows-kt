@@ -6,6 +6,7 @@ import io.github.typesafegithub.workflows.domain.triggers.PullRequestTarget
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.domain.triggers.Schedule
 import io.github.typesafegithub.workflows.domain.triggers.Trigger
+import io.github.typesafegithub.workflows.domain.triggers.WorkflowCall
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -125,6 +126,115 @@ class TriggersToYamlTest :
             }
         }
 
+        describe("workflow call") {
+            it("renders without parameters") {
+                // given
+                val triggers = listOf(WorkflowCall())
+
+                // when
+                val yaml = triggers.triggersToYaml()
+
+                // then
+                yaml shouldBe
+                    mapOf(
+                        "workflow_call" to emptyMap<Any, Any>(),
+                    )
+            }
+
+            it("renders with all parameters") {
+                // given
+                val triggers =
+                    listOf(
+                        WorkflowCall(
+                            inputs =
+                                mapOf(
+                                    "tags" to
+                                        WorkflowCall.Input(
+                                            description = "Test scenario tags",
+                                            type = WorkflowCall.Type.Boolean,
+                                            required = false,
+                                        ),
+                                    "retries" to
+                                        WorkflowCall.Input(
+                                            description = "How many retries",
+                                            type = WorkflowCall.Type.Number,
+                                            required = false,
+                                        ),
+                                    "greeting" to
+                                        WorkflowCall.Input(
+                                            description = "Hello {greeting}",
+                                            type = WorkflowCall.Type.String,
+                                            required = true,
+                                        ),
+                                ),
+                            outputs =
+                                mapOf(
+                                    "some-output" to
+                                        WorkflowCall.Output(
+                                            description = "Cool output",
+                                            value = "{{foobar}}",
+                                        ),
+                                ),
+                            secrets =
+                                mapOf(
+                                    "top-secret" to
+                                        WorkflowCall.Secret(
+                                            description = "Cloud key",
+                                            required = true,
+                                        ),
+                                ),
+                        ),
+                    )
+
+                // when
+                val yaml = triggers.triggersToYaml()
+
+                // then
+                yaml shouldBe
+                    mapOf(
+                        "workflow_call" to
+                            mapOf(
+                                "inputs" to
+                                    mapOf(
+                                        "tags" to
+                                            mapOf(
+                                                "description" to "Test scenario tags",
+                                                "type" to "boolean",
+                                                "required" to false,
+                                            ),
+                                        "retries" to
+                                            mapOf(
+                                                "description" to "How many retries",
+                                                "type" to "number",
+                                                "required" to false,
+                                            ),
+                                        "greeting" to
+                                            mapOf(
+                                                "description" to "Hello {greeting}",
+                                                "type" to "string",
+                                                "required" to true,
+                                            ),
+                                    ),
+                                "outputs" to
+                                    mapOf(
+                                        "some-output" to
+                                            mapOf(
+                                                "description" to "Cool output",
+                                                "value" to "{{foobar}}",
+                                            ),
+                                    ),
+                                "secrets" to
+                                    mapOf(
+                                        "top-secret" to
+                                            mapOf(
+                                                "description" to "Cloud key",
+                                                "required" to true,
+                                            ),
+                                    ),
+                            ),
+                    )
+            }
+        }
         describe("push") {
             it("renders without parameters") {
                 // given

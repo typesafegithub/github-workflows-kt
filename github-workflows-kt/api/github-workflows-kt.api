@@ -1692,12 +1692,18 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Watch$Comp
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInputs ()Ljava/util/Map;
+	public final fun getOutputs ()Ljava/util/Map;
+	public final fun getSecrets ()Ljava/util/Map;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1714,6 +1720,86 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Companion;
+	public fun <init> (Ljava/lang/String;ZLio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ZLio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getDefault ()Ljava/lang/String;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getRequired ()Z
+	public final fun getType ()Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
+}
+
+public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+}
+
+public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$Companion;
+	public fun <init> (Ljava/lang/String;Z)V
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getRequired ()Z
+}
+
+public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type : java/lang/Enum {
+	public static final field Boolean Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type$Companion;
+	public static final field Number Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
+	public static final field String Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
+	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

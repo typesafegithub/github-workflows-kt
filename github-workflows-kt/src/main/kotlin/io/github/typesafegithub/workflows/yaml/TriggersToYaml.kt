@@ -144,6 +144,7 @@ private fun Trigger.toAdditionalYaml(): Any? =
     when (this) {
         is Schedule -> toAdditionalYaml()
         is WorkflowDispatch -> toAdditionalYaml()
+        is WorkflowCall -> toAdditionalYaml()
         else -> null
     }
 
@@ -165,4 +166,35 @@ private fun WorkflowDispatch.Input.toYaml(): Map<String, Any> =
         "required" to required,
         "default" to default,
         "options" to options.ifEmpty { null },
+    )
+
+private fun WorkflowCall.toAdditionalYaml(): Map<String, Any?> =
+    when {
+        inputs.isEmpty() -> emptyMap()
+        else ->
+            mapOf(
+                "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
+                "outputs" to outputs.mapValues { (_, value) -> value.toYaml() },
+                "secrets" to secrets.mapValues { (_, value) -> value.toYaml() },
+            )
+    }
+
+private fun WorkflowCall.Input.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "description" to description,
+        "type" to type.toSnakeCase(),
+        "required" to required,
+        "default" to default,
+    )
+
+private fun WorkflowCall.Output.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "description" to description,
+        "value" to value,
+    )
+
+private fun WorkflowCall.Secret.toYaml(): Map<String, Any> =
+    mapOfNotNullValues(
+        "description" to description,
+        "required" to required,
     )
