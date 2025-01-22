@@ -200,5 +200,13 @@ public class JobBuilder<OUTPUT : JobOutputs>(
         return newStep
     }
 
+    /**
+     * Useful when you need to build your action step outside the job, then you can call this function to register the
+     * step in the job.
+     */
+    public fun <T : Action.Outputs> uses(actionStep: ActionStep<T>) {
+        job = job.copy(steps = job.steps + actionStep)
+    }
+
     public fun build(): Job<OUTPUT> = job
 }

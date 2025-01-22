@@ -1,11 +1,15 @@
 package io.github.typesafegithub.workflows.dsl
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.DeployPages
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.actions.SetupJava.Distribution.Adopt
+import io.github.typesafegithub.workflows.domain.ActionStep
+import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -208,5 +212,37 @@ class JobBuilderTest :
                     it.message shouldBe "Duplicated step IDs for job 'test': [foobar]"
                 }
             }
+        }
+
+        test("action output passed to environment") {
+            // When
+            var workflow: Workflow? = null
+            workflow(
+                name = "test",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                useWorkflow = { workflow = it },
+            ) {
+                val deploymentStep =
+                    ActionStep(
+                        id = "deployment",
+                        name = "Deploy to GitHub Pages",
+                        action = DeployPages(),
+                    )
+                job(
+                    id = "deploy",
+                    runsOn = RunnerType.UbuntuLatest,
+                    environment =
+                        Environment(
+                            name = "github-pages",
+                            url = expr(deploymentStep.outputs.pageUrl),
+                        ),
+                ) {
+                    uses(actionStep = deploymentStep)
+                }
+            }
+
+            // Then
+            workflow!!.jobs[0].environment?.url shouldBe "${'$'}{{ steps.deployment.outputs.page_url }}"
         }
     })
