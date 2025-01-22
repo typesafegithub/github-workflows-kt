@@ -10,8 +10,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class WorkflowCall(
     val inputs: Map<String, Input> = emptyMap(),
-    val outputs: Map<String, Output> = emptyMap(),
-    val secrets: Map<String, Secret> = emptyMap(),
+    val outputs: Map<String, Output>? = null,
+    val secrets: Map<String, Secret>? = null,
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
     @Serializable

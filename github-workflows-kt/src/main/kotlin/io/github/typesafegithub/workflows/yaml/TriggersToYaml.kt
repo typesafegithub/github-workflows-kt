@@ -172,10 +172,10 @@ private fun WorkflowCall.toAdditionalYaml(): Map<String, Any?> =
     when {
         inputs.isEmpty() -> emptyMap()
         else ->
-            mapOf(
+            mapOfNotNullValues(
                 "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
-                "outputs" to outputs.mapValues { (_, value) -> value.toYaml() },
-                "secrets" to secrets.mapValues { (_, value) -> value.toYaml() },
+                "outputs" to outputs?.mapValues { (_, value) -> value.toYaml() },
+                "secrets" to secrets?.mapValues { (_, value) -> value.toYaml() },
             )
     }
 
