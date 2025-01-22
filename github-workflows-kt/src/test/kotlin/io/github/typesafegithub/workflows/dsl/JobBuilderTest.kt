@@ -224,15 +224,10 @@ class JobBuilderTest :
                 useWorkflow = { workflow = it },
             ) {
                 val deploymentStep =
-                    // TODO: think if it's possible to omit specifying .Outputs
-                    ActionStep<DeployPages.Outputs>(
+                    ActionStep(
                         id = "deployment",
                         name = "Deploy to GitHub Pages",
                         action = DeployPages(),
-                        // TODO: think if it's possible to omit specifying `outputs` here.
-                        //  Maybe by creating a helper function, or building this object internally in the action's
-                        //  constructor? How we could make this change backward-compatible?
-                        outputs = DeployPages().buildOutputObject("deployment"),
                     )
                 job(
                     id = "deploy",
