@@ -155,16 +155,20 @@ class TriggersToYamlTest :
 
             it("renders with just inputs") {
                 // given
-                val triggers = listOf(WorkflowCall(
-                    inputs = mapOf(
-                        "tags" to
-                            WorkflowCall.Input(
-                                description = "Test scenario tags",
-                                type = WorkflowCall.Type.Boolean,
-                                required = false,
-                            ),
+                val triggers =
+                    listOf(
+                        WorkflowCall(
+                            inputs =
+                                mapOf(
+                                    "tags" to
+                                        WorkflowCall.Input(
+                                            description = "Test scenario tags",
+                                            type = WorkflowCall.Type.Boolean,
+                                            required = false,
+                                        ),
+                                ),
+                        ),
                     )
-                ))
 
                 // when
                 val yaml = triggers.triggersToYaml()
@@ -172,16 +176,18 @@ class TriggersToYamlTest :
                 // then
                 yaml shouldBe
                     mapOf(
-                        "workflow_call" to mapOf(
-                            "inputs" to mapOf(
-                                "tags" to
+                        "workflow_call" to
+                            mapOf(
+                                "inputs" to
                                     mapOf(
-                                        "description" to "Test scenario tags",
-                                        "type" to "boolean",
-                                        "required" to false,
+                                        "tags" to
+                                            mapOf(
+                                                "description" to "Test scenario tags",
+                                                "type" to "boolean",
+                                                "required" to false,
+                                            ),
                                     ),
                             ),
-                        ),
                     )
             }
 
