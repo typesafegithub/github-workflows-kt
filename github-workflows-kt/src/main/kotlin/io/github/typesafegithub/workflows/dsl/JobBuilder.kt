@@ -148,7 +148,7 @@ public class JobBuilder<OUTPUT : JobOutputs>(
                 name = name,
                 command = "GHWKT_RUN_STEP='${this.id}:$id' '$sourceFilePath'",
                 logic = logic,
-                env = env + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "${'$'}{{ toJSON(github) }}"),
+                env = env + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "\${{ toJSON(github) }}"),
                 condition =
                     conditionCheckingStep?.let {
                         expr { "steps.${conditionCheckingStep.id}.outputs.$evaluationResultOutput" }

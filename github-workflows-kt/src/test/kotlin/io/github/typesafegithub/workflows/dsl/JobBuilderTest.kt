@@ -243,6 +243,6 @@ class JobBuilderTest :
             }
 
             // Then
-            workflow!!.jobs[0].environment?.url shouldBe "${'$'}{{ steps.deployment.outputs.page_url }}"
+            workflow!!.jobs[0].environment?.url shouldBe "\${{ steps.deployment.outputs.page_url }}"
         }
     })
