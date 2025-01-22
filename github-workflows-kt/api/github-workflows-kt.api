@@ -1863,6 +1863,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public static final field Choice Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type$Companion;
 	public static final field Environment Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
+	public static final field Number Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 	public static final field String Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
