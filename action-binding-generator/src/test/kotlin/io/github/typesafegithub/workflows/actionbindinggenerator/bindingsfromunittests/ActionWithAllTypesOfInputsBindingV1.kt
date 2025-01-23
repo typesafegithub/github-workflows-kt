@@ -165,73 +165,73 @@ public data class ActionWithAllTypesOfInputsBindingV1 private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<ActionWithAllTypesOfInputsBindingV1.Outputs>("john-smith", "action-with-all-types-of-inputs-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((fooBar != null) && (fooBar_Untyped != null))) {
-            "Only fooBar or fooBar_Untyped must be set, but not both"
+        require(listOfNotNull(fooBar, fooBar_Untyped).size <= 1) {
+            "Only one of fooBar, and fooBar_Untyped must be set, but not multiple"
         }
         require((fooBar != null) || (fooBar_Untyped != null)) {
-            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+            "Either fooBar, or fooBar_Untyped must be set, one of them is required"
         }
 
-        require(!((bazGoo != null) && (bazGoo_Untyped != null))) {
-            "Only bazGoo or bazGoo_Untyped must be set, but not both"
+        require(listOfNotNull(bazGoo, bazGoo_Untyped).size <= 1) {
+            "Only one of bazGoo, and bazGoo_Untyped must be set, but not multiple"
         }
         require((bazGoo != null) || (bazGoo_Untyped != null)) {
-            "Either bazGoo or bazGoo_Untyped must be set, one of them is required"
+            "Either bazGoo, or bazGoo_Untyped must be set, one of them is required"
         }
 
-        require(!((binKin != null) && (binKin_Untyped != null))) {
-            "Only binKin or binKin_Untyped must be set, but not both"
+        require(listOfNotNull(binKin, binKin_Untyped).size <= 1) {
+            "Only one of binKin, and binKin_Untyped must be set, but not multiple"
         }
 
-        require(!((intPint != null) && (intPint_Untyped != null))) {
-            "Only intPint or intPint_Untyped must be set, but not both"
+        require(listOfNotNull(intPint, intPint_Untyped).size <= 1) {
+            "Only one of intPint, and intPint_Untyped must be set, but not multiple"
         }
         require((intPint != null) || (intPint_Untyped != null)) {
-            "Either intPint or intPint_Untyped must be set, one of them is required"
+            "Either intPint, or intPint_Untyped must be set, one of them is required"
         }
 
-        require(!((floPint != null) && (floPint_Untyped != null))) {
-            "Only floPint or floPint_Untyped must be set, but not both"
+        require(listOfNotNull(floPint, floPint_Untyped).size <= 1) {
+            "Only one of floPint, and floPint_Untyped must be set, but not multiple"
         }
         require((floPint != null) || (floPint_Untyped != null)) {
-            "Either floPint or floPint_Untyped must be set, one of them is required"
+            "Either floPint, or floPint_Untyped must be set, one of them is required"
         }
 
-        require(!((finBin != null) && (finBin_Untyped != null))) {
-            "Only finBin or finBin_Untyped must be set, but not both"
+        require(listOfNotNull(finBin, finBin_Untyped).size <= 1) {
+            "Only one of finBin, and finBin_Untyped must be set, but not multiple"
         }
         require((finBin != null) || (finBin_Untyped != null)) {
-            "Either finBin or finBin_Untyped must be set, one of them is required"
+            "Either finBin, or finBin_Untyped must be set, one of them is required"
         }
 
-        require(!((gooZen != null) && (gooZen_Untyped != null))) {
-            "Only gooZen or gooZen_Untyped must be set, but not both"
+        require(listOfNotNull(gooZen, gooZen_Untyped).size <= 1) {
+            "Only one of gooZen, and gooZen_Untyped must be set, but not multiple"
         }
         require((gooZen != null) || (gooZen_Untyped != null)) {
-            "Either gooZen or gooZen_Untyped must be set, one of them is required"
+            "Either gooZen, or gooZen_Untyped must be set, one of them is required"
         }
 
-        require(!((bahEnum != null) && (bahEnum_Untyped != null))) {
-            "Only bahEnum or bahEnum_Untyped must be set, but not both"
+        require(listOfNotNull(bahEnum, bahEnum_Untyped).size <= 1) {
+            "Only one of bahEnum, and bahEnum_Untyped must be set, but not multiple"
         }
         require((bahEnum != null) || (bahEnum_Untyped != null)) {
-            "Either bahEnum or bahEnum_Untyped must be set, one of them is required"
+            "Either bahEnum, or bahEnum_Untyped must be set, one of them is required"
         }
 
-        require(!((listStrings != null) && (listStrings_Untyped != null))) {
-            "Only listStrings or listStrings_Untyped must be set, but not both"
+        require(listOfNotNull(listStrings, listStrings_Untyped).size <= 1) {
+            "Only one of listStrings, and listStrings_Untyped must be set, but not multiple"
         }
 
-        require(!((listInts != null) && (listInts_Untyped != null))) {
-            "Only listInts or listInts_Untyped must be set, but not both"
+        require(listOfNotNull(listInts, listInts_Untyped).size <= 1) {
+            "Only one of listInts, and listInts_Untyped must be set, but not multiple"
         }
 
-        require(!((listEnums != null) && (listEnums_Untyped != null))) {
-            "Only listEnums or listEnums_Untyped must be set, but not both"
+        require(listOfNotNull(listEnums, listEnums_Untyped).size <= 1) {
+            "Only one of listEnums, and listEnums_Untyped must be set, but not multiple"
         }
 
-        require(!((listIntSpecial != null) && (listIntSpecial_Untyped != null))) {
-            "Only listIntSpecial or listIntSpecial_Untyped must be set, but not both"
+        require(listOfNotNull(listIntSpecial, listIntSpecial_Untyped).size <= 1) {
+            "Only one of listIntSpecial, and listIntSpecial_Untyped must be set, but not multiple"
         }
     }
 
@@ -362,8 +362,63 @@ public data class ActionWithAllTypesOfInputsBindingV1 private constructor(
         stepId: String,
     ) : Action.Outputs(stepId) {
         /**
-         * Cool output!
+         * Short description output
+         */
+        public val fooBar: String = "steps.$stepId.outputs.foo-bar"
+
+        /**
+         * First boolean input! output
          */
         public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
+
+        /**
+         * Boolean and nullable output
+         */
+        public val binKin: String = "steps.$stepId.outputs.bin-kin"
+
+        /**
+         * Integer output
+         */
+        public val intPint: String = "steps.$stepId.outputs.int-pint"
+
+        /**
+         * Float output
+         */
+        public val floPint: String = "steps.$stepId.outputs.flo-pint"
+
+        /**
+         * Enumeration output
+         */
+        public val finBin: String = "steps.$stepId.outputs.fin-bin"
+
+        /**
+         * Integer with special value output
+         */
+        public val gooZen: String = "steps.$stepId.outputs.goo-zen"
+
+        /**
+         * Enum with custom naming output
+         */
+        public val bahEnum: String = "steps.$stepId.outputs.bah-enum"
+
+        /**
+         * List of strings output
+         */
+        public val listStrings: String = "steps.$stepId.outputs.list-strings"
+
+        /**
+         * List of integers output
+         */
+        public val listInts: String = "steps.$stepId.outputs.list-ints"
+
+        /**
+         * List of enums output
+         */
+        public val listEnums: String = "steps.$stepId.outputs.list-enums"
+
+        /**
+         * List of integer with special values output
+         */
+        public val listIntSpecial: String = "steps.$stepId.outputs.list-int-special"
     }
 }

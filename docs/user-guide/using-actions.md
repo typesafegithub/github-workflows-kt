@@ -21,7 +21,7 @@ To add a dependency on an action:
 
 For every action, a binding will be generated. However, some less popular actions don't have typings configured for
 their inputs, so by default all inputs are of type `String`, have the suffix `_Untyped`, and additionally the class
-name will have an `_Untyped` suffix. The nullability of the inputs will be according to their required status.
+name will have an `_Untyped` suffix.
 
 There are two ways of configuring typings:
 1. Recommended: a typing manifest (`action-typing.yml`) in the action's repo, see
@@ -37,11 +37,15 @@ There are two ways of configuring typings:
 
 Once there are any typings in place for the action, the `_Untyped` suffixed class is marked `@Deprecated`, and a class
 without that suffix is created additionally. In that class for each input that does not have type information available
-there will still be only the property with `_Untyped` suffix and nullability according to required status. For each
-input that does have type information available, there will still be the `_Untyped` property and additionally a
-properly typed property. Both of these properties will be nullable. It is a runtime error to set both of these
-properties as well as setting none if the input is required. The `_Untyped` properties are not marked `@Deprecated`,
-as it could still make sense to use them, for example if you want to set the value from a GitHub Actions expression.
+there will still be only the property with `_Untyped` suffix. For each input that does have type information available,
+there will still be the `_Untyped` property and additionally a properly typed property. It is a runtime error to set
+both of these properties as well as setting none if the input is required.
+
+All inputs also get another `Expression` suffixed property and list-typed inputs yet another `Expressions` suffixed
+property. These properties can e.g. be set type-safely from outputs, as they are of type `Expression`. Each output also
+has an `_Untyped` suffixed property that you can feed to any input expression property. Like with the `_Untyped` input
+property, all up to four properties for the same input are mutually exclusive and for required inputs exactly one has
+to be set, or a runtime error occurs.
 
 This approach supports dependency updating bots that support Kotlin Script's `.main.kts` files. E.g. Renovate is known
 to support it.
@@ -108,7 +112,7 @@ This table lists which library versions are compatible with which repository URL
 |-------------------------------------|-------------------|
 | `https://bindings.krzeminski.it`    | `3.0.0` and newer |
 | `https://bindings.krzeminski.it/v1` | `3.0.0` and newer |
-| `https://bindings.krzeminski.it/v2` | `3.0.0` and newer |
+| `https://bindings.krzeminski.it/v2` | `4.0.0` and newer |
 
 #### Breaking changes
 
@@ -119,7 +123,12 @@ anyway as defined above.
 
 `https://bindings.krzeminski.it/v2`
 
-:   TBD
+:   - Outputs of actions are no longer plain `String`s with the GitHub expression. Instead they are of type
+      `Expression<*>` with the type parameter set according to the action typing definition. Those expressions can be
+      wired directly to the new `Expression` suffixed sibling properties each input property has now. In case you need
+      to wire non-matching types, you can use the `_Untyped` property for the output or get it by name. Those return
+      `Expression<Any>` which can be given to all types. You can also still get the plain expression from that
+      object to use it within a bigger expression.
 
 `https://bindings.krzeminski.it` / `https://bindings.krzeminski.it/v1`
 
