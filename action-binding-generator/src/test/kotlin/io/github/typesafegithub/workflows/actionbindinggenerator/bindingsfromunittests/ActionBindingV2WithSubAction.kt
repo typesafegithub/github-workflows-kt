@@ -22,13 +22,13 @@ import kotlin.collections.Map
  *
  * Description
  *
- * [Action on GitHub](https://github.com/john-smith/action-with/tree/v3/sub/action)
+ * [Action on GitHub](https://github.com/john-smith/action-binding-v2-with/tree/v3/sub/action)
  *
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithSubAction private constructor(
+public data class ActionBindingV2WithSubAction private constructor(
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -37,7 +37,18 @@ public data class ActionWithSubAction private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with/sub/action", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-binding-v2-with/sub/action", _customVersion ?: "v3") {
+    init {
+        println("WARNING: The used binding version v2 for john-smith/action-binding-v2-with/sub/action@v3 is experimental! Last stable version is v1.")
+        if (System.getenv("GITHUB_ACTIONS").toBoolean()) {
+            println("""
+                    |
+                    |::warning title=Experimental Binding Version Used::The used binding version v2 for john-smith/action-binding-v2-with/sub/action@v3 is experimental! Last stable version is v1.
+                    """.trimMargin())
+        }
+
+    }
+
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
         _customInputs: Map<String, String> = mapOf(),
