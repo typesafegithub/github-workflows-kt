@@ -65,8 +65,9 @@ public fun ActionCoords.generateBinding(
     metadata: Metadata? = null,
     inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
     types: String? = null,
+    explicitMetadata: String? = null,
 ): List<ActionBinding> {
-    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return emptyList()
+    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision, explicitMetadata) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
     val (inputTypingsResolved, typingActualSource) =
