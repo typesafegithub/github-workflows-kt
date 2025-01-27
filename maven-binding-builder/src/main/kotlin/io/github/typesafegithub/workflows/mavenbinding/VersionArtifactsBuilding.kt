@@ -21,10 +21,11 @@ data class VersionArtifacts(
 suspend fun buildVersionArtifacts(
     bindingsServerRequest: BindingsServerRequest,
     types: String? = null,
+    metadata: String? = null,
     httpClient: HttpClient,
 ): VersionArtifacts? {
     with(bindingsServerRequest) {
-        val jars = actionCoords.buildJars(types = types, httpClient = httpClient) ?: return null
+        val jars = actionCoords.buildJars(types = types, metadata = metadata, httpClient = httpClient) ?: return null
         val pom = this.buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
