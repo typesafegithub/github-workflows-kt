@@ -13,6 +13,8 @@ import io.github.typesafegithub.workflows.shared.internal.getGithubToken
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders.XRequestId
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.PartData
+import io.ktor.http.content.asFlow
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
@@ -21,6 +23,7 @@ import io.ktor.server.plugins.callid.CallId
 import io.ktor.server.plugins.callid.callIdMdc
 import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
+import io.ktor.server.request.receiveMultipart
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
@@ -30,10 +33,17 @@ import io.ktor.server.routing.head
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
+import io.ktor.utils.io.readRemaining
+import io.ktor.utils.io.readText
 import io.opentelemetry.instrumentation.ktor.v3_0.server.KtorServerTracing
 import it.krzeminski.snakeyaml.engine.kmp.api.Load
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import java.util.UUID.randomUUID
 import kotlin.time.Duration.Companion.hours
+
+private const val METADATA_PARAMETER = "actionYaml"
+private const val TYPES_PARAMETER = "types"
 
 private val logger =
     System
@@ -178,17 +188,88 @@ private fun Route.artifact(
         val owner = "${call.parameters["owner"]}__types__${randomUUID()}"
         val name = call.parameters["name"]!!
         val version = call.parameters["version"]!!
-        val types = call.receiveText()
+
+        val (metadata, types) =
+            runCatching {
+                val parts =
+                    call
+                        .receiveMultipart()
+                        .asFlow()
+                        .map {
+                            it.name to
+                                when (it) {
+                                    is PartData.FileItem -> Result.success(it.provider().readRemaining().readText())
+                                    is PartData.FormItem -> Result.success(it.value)
+                                    else -> {
+                                        logger.error { "Unexpected part data ${it::class.simpleName}" }
+                                        Result.failure()
+                                    }
+                                }
+                        }.toList()
+                        .map { (name, result) ->
+                            name to
+                                when {
+                                    result.isSuccess -> result.getOrThrow()
+                                    else -> {
+                                        call.respondText(
+                                            text = HttpStatusCode.InternalServerError.description,
+                                            status = HttpStatusCode.InternalServerError,
+                                        )
+                                        return@post
+                                    }
+                                }
+                        }.associate { it }
+
+                if (parts.keys.any { (it != METADATA_PARAMETER) && (it != TYPES_PARAMETER) }) {
+                    call.respondText(
+                        text = "Only '$METADATA_PARAMETER' and '$TYPES_PARAMETER' are allowed as form data fields",
+                        status = HttpStatusCode.BadRequest,
+                    )
+                    return@post
+                }
+                if (!parts.containsKey(TYPES_PARAMETER)) {
+                    call.respondText(
+                        text = "'$TYPES_PARAMETER' field is mandatory",
+                        status = HttpStatusCode.BadRequest,
+                    )
+                    return@post
+                }
+                parts[METADATA_PARAMETER] to parts[TYPES_PARAMETER]!!
+            }.recover {
+                null to call.receiveText()
+            }.getOrThrow()
+
+        if (metadata != null) {
+            if (metadata.isEmpty()) {
+                call.respondText(
+                    text = "Supplied $METADATA_PARAMETER is empty",
+                    status = HttpStatusCode.UnprocessableEntity,
+                )
+                return@post
+            }
+
+            runCatching {
+                Load().loadOne(metadata)
+            }.onFailure {
+                call.respondText(
+                    text = "Exception while parsing supplied $METADATA_PARAMETER:\n${it.stackTraceToString()}",
+                    status = HttpStatusCode.UnprocessableEntity,
+                )
+                return@post
+            }
+        }
+
         runCatching {
             Load().loadOne(types)
         }.onFailure {
             call.respondText(
-                text = "Exception while parsing supplied typings:\n${it.stackTraceToString()}",
+                text = "Exception while parsing supplied $TYPES_PARAMETER:\n${it.stackTraceToString()}",
                 status = HttpStatusCode.UnprocessableEntity,
             )
             return@post
         }
-        call.toBindingArtifacts(bindingsCache, refresh = true, owner = owner, types = types)
+
+        call.toBindingArtifacts(bindingsCache, refresh = true, owner = owner, types = types, metadata = metadata)
         call.respondText(text = "$owner:$name:$version")
     }
 }
@@ -198,6 +279,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
     owner: String = parameters["owner"]!!,
     types: String? = null,
+    metadata: String? = null,
 ): Map<String, Artifact>? {
     val nameAndPath = parameters["name"]!!.split("__")
     val name = nameAndPath.first()
@@ -223,13 +305,23 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
     val bindingArtifacts =
         if (refresh) {
-            actionCoords.buildVersionArtifacts(types ?: typesUuid?.let { "" }).also {
-                bindingsCache.put(actionCoords, Result.of(it))
-            }
+            actionCoords
+                .buildVersionArtifacts(
+                    types ?: typesUuid?.let { "" },
+                    metadata,
+                ).also {
+                    bindingsCache.put(actionCoords, Result.of(it))
+                }
         } else {
             bindingsCache
-                .get(actionCoords) { Result.of(actionCoords.buildVersionArtifacts(types ?: typesUuid?.let { "" })) }
-                .getOrNull()
+                .get(actionCoords) {
+                    Result.of(
+                        actionCoords.buildVersionArtifacts(
+                            types ?: typesUuid?.let { "" },
+                            metadata,
+                        ),
+                    )
+                }.getOrNull()
         }
     return bindingArtifacts
 }
