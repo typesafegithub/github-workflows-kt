@@ -28,9 +28,12 @@ internal data class Jars(
     val typingActualSource: TypingActualSource?,
 )
 
-internal fun ActionCoords.buildJars(types: String?): Jars? {
+internal fun ActionCoords.buildJars(
+    types: String?,
+    metadata: String?,
+): Jars? {
     val binding =
-        generateBinding(metadataRevision = NewestForVersion, types = types).also {
+        generateBinding(metadataRevision = NewestForVersion, types = types, explicitMetadata = metadata).also {
             if (it.isEmpty()) return null
         }
 

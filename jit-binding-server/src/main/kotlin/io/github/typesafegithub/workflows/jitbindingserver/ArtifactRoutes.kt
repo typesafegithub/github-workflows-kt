@@ -11,8 +11,10 @@ import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.asFlow
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.httpMethod
+import io.ktor.server.request.receiveMultipart
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
@@ -28,8 +30,13 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import it.krzeminski.snakeyaml.engine.kmp.api.Load
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import java.util.UUID.randomUUID
+
+private const val METADATA_PARAMETER = "actionYaml"
+private const val TYPES_PARAMETER = "types"
 
 private val logger = logger { }
 
@@ -124,14 +131,45 @@ private fun Route.postArtifact(
         val owner = "${call.parameters["owner"]}__types__${randomUUID()}"
         val name = call.parameters["name"]!!
         val version = call.parameters["version"]!!
-        val types = call.receiveText()
-        runCatching {
-            Load().loadOne(types)
-        }.onFailure {
-            call.respondText(
-                text = "Exception while parsing supplied typings:\n${it.stackTraceToString()}",
-                status = HttpStatusCode.UnprocessableEntity,
-            )
+
+        val (metadata, types) =
+            runCatching {
+                val parts =
+                    call
+                        .receiveMultipart()
+                        .asFlow()
+                        .map { it.name to it.asString() }
+                        .toList()
+                        .map { (name, result) ->
+                            name to
+                                when {
+                                    result.isSuccess -> result.getOrThrow()
+                                    else -> {
+                                        call.respondText(
+                                            text = HttpStatusCode.InternalServerError.description,
+                                            status = HttpStatusCode.InternalServerError,
+                                        )
+                                        return@post
+                                    }
+                                }
+                        }.associate { it }
+
+                if (parts.keys.any { (it != METADATA_PARAMETER) && (it != TYPES_PARAMETER) }) {
+                    call.respondBadRequest(
+                        text = "Only '$METADATA_PARAMETER' and '$TYPES_PARAMETER' are allowed as form data fields",
+                    )
+                    return@post
+                }
+                if (!parts.containsKey(TYPES_PARAMETER)) {
+                    call.respondBadRequest(text = "'$TYPES_PARAMETER' field is mandatory")
+                    return@post
+                }
+                parts[METADATA_PARAMETER] to parts[TYPES_PARAMETER]!!
+            }.recover {
+                null to call.receiveText()
+            }.getOrThrow()
+
+        if (!call.validateMetadata(metadata) || !call.validateTypes(types)) {
             return@post
         }
         val typingActualSource =
@@ -141,6 +179,7 @@ private fun Route.postArtifact(
                     bindingsCache = bindingsCache,
                     owner = owner,
                     types = types,
+                    metadata = metadata,
                 )?.typingActualSource ?: TypingActualSource.CUSTOM
         call.respondText(text = "$owner:$name:$version")
 
@@ -148,11 +187,49 @@ private fun Route.postArtifact(
     }
 }
 
+private suspend fun ApplicationCall.validateTypes(types: String): Boolean {
+    runCatching {
+        Load().loadOne(types)
+    }.onFailure {
+        respondText(
+            text = "Exception while parsing supplied $TYPES_PARAMETER:\n${it.stackTraceToString()}",
+            status = HttpStatusCode.UnprocessableEntity,
+        )
+        return false
+    }
+    return true
+}
+
+private suspend fun ApplicationCall.validateMetadata(metadata: String?): Boolean {
+    var result = true
+    if (metadata != null) {
+        if (metadata.isEmpty()) {
+            respondText(
+                text = "Supplied $METADATA_PARAMETER is empty",
+                status = HttpStatusCode.UnprocessableEntity,
+            )
+            result = false
+        }
+
+        runCatching {
+            Load().loadOne(metadata)
+        }.onFailure {
+            respondText(
+                text = "Exception while parsing supplied $METADATA_PARAMETER:\n${it.stackTraceToString()}",
+                status = HttpStatusCode.UnprocessableEntity,
+            )
+            result = false
+        }
+    }
+    return result
+}
+
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
     bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
     owner: String = parameters["owner"]!!,
     types: String? = null,
+    metadata: String? = null,
 ): VersionArtifacts? {
     val actionCoords = parameters.extractActionCoords(extractVersion = true, owner = owner)
 
@@ -162,7 +239,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     }
     return (
         if (types != null) {
-            bindingsCache.get(actionCoords) { buildVersionArtifacts(actionCoords, types) }
+            bindingsCache.get(actionCoords) { buildVersionArtifacts(actionCoords, types, metadata) }
         } else {
             bindingsCache.get(actionCoords)
         }
