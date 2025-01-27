@@ -73,10 +73,11 @@ public suspend fun ActionCoords.generateBinding(
     metadata: Metadata? = null,
     inputTypings: ActionTypings? = null,
     types: String? = null,
+    explicitMetadata: String? = null,
     httpClient: HttpClient = HttpClient(CIO),
 ): List<ActionBinding> {
     val metadataResolved =
-        metadata ?: this.fetchMetadata(metadataRevision, httpClient = httpClient) ?: return emptyList()
+        metadata ?: this.fetchMetadata(metadataRevision, explicitMetadata, httpClient = httpClient) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
     val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision, types = types, httpClient = httpClient)
