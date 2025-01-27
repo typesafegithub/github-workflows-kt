@@ -12,8 +12,11 @@ data class JarArtifact(
     val data: () -> ByteArray,
 ) : Artifact
 
-fun ActionCoords.buildVersionArtifacts(types: String? = null): Map<String, Artifact>? {
-    val jars = buildJars(types = types) ?: return null
+fun ActionCoords.buildVersionArtifacts(
+    types: String? = null,
+    metadata: String? = null,
+): Map<String, Artifact>? {
+    val jars = buildJars(types = types, metadata = metadata) ?: return null
     val pom = buildPomFile()
     val module = buildModuleFile()
     return mapOf(

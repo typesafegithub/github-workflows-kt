@@ -12,9 +12,12 @@ import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.PartData
+import io.ktor.http.content.asFlow
 import io.ktor.http.parameters
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.httpMethod
+import io.ktor.server.request.receiveMultipart
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
@@ -24,12 +27,19 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.head
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import io.ktor.utils.io.readRemaining
+import io.ktor.utils.io.readText
 import io.micrometer.core.instrument.Tag
 import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import it.krzeminski.snakeyaml.engine.kmp.api.Load
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import java.util.UUID.randomUUID
 import kotlin.time.Duration.Companion.hours
+
+private const val METADATA_PARAMETER = "actionYaml"
+private const val TYPES_PARAMETER = "types"
 
 private val logger = logger { }
 
@@ -109,17 +119,90 @@ private fun Route.postArtifact(prometheusRegistry: PrometheusMeterRegistry) {
         val owner = "${call.parameters["owner"]}__types__${randomUUID()}"
         val name = call.parameters["name"]!!
         val version = call.parameters["version"]!!
-        val types = call.receiveText()
+
+        val (metadata, types) =
+            runCatching {
+                val parts =
+                    call
+                        .receiveMultipart()
+                        .asFlow()
+                        .map {
+                            it.name to
+                                runCatching {
+                                    when (it) {
+                                        is PartData.FileItem -> it.provider().readRemaining().readText()
+                                        is PartData.FormItem -> it.value
+                                        else -> {
+                                            logger.error { "Unexpected part data ${it::class.simpleName}" }
+                                            error("Unexpected part data ${it::class.simpleName}")
+                                        }
+                                    }
+                                }
+                        }.toList()
+                        .map { (name, result) ->
+                            name to
+                                when {
+                                    result.isSuccess -> result.getOrThrow()
+                                    else -> {
+                                        call.respondText(
+                                            text = HttpStatusCode.InternalServerError.description,
+                                            status = HttpStatusCode.InternalServerError,
+                                        )
+                                        return@post
+                                    }
+                                }
+                        }.associate { it }
+
+                if (parts.keys.any { (it != METADATA_PARAMETER) && (it != TYPES_PARAMETER) }) {
+                    call.respondText(
+                        text = "Only '$METADATA_PARAMETER' and '$TYPES_PARAMETER' are allowed as form data fields",
+                        status = HttpStatusCode.BadRequest,
+                    )
+                    return@post
+                }
+                if (!parts.containsKey(TYPES_PARAMETER)) {
+                    call.respondText(
+                        text = "'$TYPES_PARAMETER' field is mandatory",
+                        status = HttpStatusCode.BadRequest,
+                    )
+                    return@post
+                }
+                parts[METADATA_PARAMETER] to parts[TYPES_PARAMETER]!!
+            }.recover {
+                null to call.receiveText()
+            }.getOrThrow()
+
+        if (metadata != null) {
+            if (metadata.isEmpty()) {
+                call.respondText(
+                    text = "Supplied $METADATA_PARAMETER is empty",
+                    status = HttpStatusCode.UnprocessableEntity,
+                )
+                return@post
+            }
+
+            runCatching {
+                Load().loadOne(metadata)
+            }.onFailure {
+                call.respondText(
+                    text = "Exception while parsing supplied $METADATA_PARAMETER:\n${it.stackTraceToString()}",
+                    status = HttpStatusCode.UnprocessableEntity,
+                )
+                return@post
+            }
+        }
+
         runCatching {
             Load().loadOne(types)
         }.onFailure {
             call.respondText(
-                text = "Exception while parsing supplied typings:\n${it.stackTraceToString()}",
+                text = "Exception while parsing supplied $TYPES_PARAMETER:\n${it.stackTraceToString()}",
                 status = HttpStatusCode.UnprocessableEntity,
             )
             return@post
         }
-        call.toBindingArtifacts(refresh = true, owner = owner, types = types)
+
+        call.toBindingArtifacts(refresh = true, owner = owner, types = types, metadata = metadata)
         call.respondText(text = "$owner:$name:$version")
 
         incrementArtifactCounter(prometheusRegistry, call)
@@ -130,16 +213,29 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
     owner: String = parameters["owner"]!!,
     types: String? = null,
+    metadata: String? = null,
 ): Map<String, Artifact>? {
     val actionCoords = parameters.extractActionCoords(extractVersion = true, owner = owner)
 
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
     return if (refresh) {
-        actionCoords.buildVersionArtifacts(types ?: actionCoords.typesUuid?.let { "" }).also {
-            bindingsCache.put(actionCoords, runCatching { it!! })
-        }
+        actionCoords
+            .buildVersionArtifacts(
+                types ?: actionCoords.typesUuid?.let { "" },
+                metadata,
+            ).also {
+                bindingsCache.put(actionCoords, runCatching { it!! })
+            }
     } else {
-        bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts(types ?: actionCoords.typesUuid?.let { "" })!! } }.getOrNull()
+        bindingsCache
+            .get(actionCoords) {
+                runCatching {
+                    actionCoords.buildVersionArtifacts(
+                        types ?: actionCoords.typesUuid?.let { "" },
+                        metadata,
+                    )!!
+                }
+            }.getOrNull()
     }
 }
 
