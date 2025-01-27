@@ -32,9 +32,13 @@ internal data class Jars(
     val typingActualSource: TypingActualSource?,
 )
 
-internal suspend fun ActionCoords.buildJars(types: String?, httpClient: HttpClient): Jars? {
+internal suspend fun ActionCoords.buildJars(
+    types: String?,
+    metadata: String?,
+    httpClient: HttpClient
+): Jars? {
     val binding =
-        generateBinding(metadataRevision = NewestForVersion, types = types, httpClient = httpClient).also {
+        generateBinding(metadataRevision = NewestForVersion, types = types, explicitMetadata = metadata, httpClient = httpClient).also {
             if (it.isEmpty()) return null
         }
 
