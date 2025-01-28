@@ -9,14 +9,17 @@ You can use any action you want. Read on to learn about your options.
     This is the recommended, default approach. Start with this.
 
 To add a dependency on an action:
+
 1. If you haven't already, add a dependency on a Maven repository that generates the action bindings on the fly:
    `@file:Repository("https://bindings.krzeminski.it")`.
+
 2. Add a dependency on a Maven artifact, e.g. for `actions/checkout@v3` the right way to add the dependency in the
    script is: `@file:DependsOn("actions:checkout:v3")`. As you can see, the group ID was adopted to model the action's
    owner, the artifact ID models the action name, and the version is just action's version (a tag or a branch
    corresponding to a released version). If an action's manifest is defined in a subdirectory, like the popular
    `gradle/actions/setup-gradle@v3`, replace the slashes in the action name with `__`, so in this case it would be
    `@file:DependsOn("gradle:actions__setup-gradle:v3")`.
+
 3. Use the action by importing a class like `io.github.typesafegithub.workflows.actions.actions.Checkout`.
 
 For every action, a binding will be generated. However, some less popular actions don't have typings configured for
@@ -24,12 +27,14 @@ their inputs, so by default all inputs are of type `String`, have the suffix `_U
 name will have an `_Untyped` suffix. The nullability of the inputs will be according to their required status.
 
 There are two ways of configuring typings:
+
 1. Recommended: a typing manifest (`action-typing.yml`) in the action's repo, see
    [github-actions-typing](https://github.com/typesafegithub/github-actions-typing/). Thanks to this, the action's owner
    is responsible for providing and maintaining the typings defined in a technology-agnostic way, to be used
    **not only** with this Kotlin library. There are also no synchronization issues between the action itself and its
    typings. When trying to use a new action that has no typings, always discuss this approach with the action owner
    first.
+
 2. Fallback: if it's not possible to host the typings with the action, use
    [github-actions-typing-catalog](https://github.com/typesafegithub/github-actions-typing-catalog),
    a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
