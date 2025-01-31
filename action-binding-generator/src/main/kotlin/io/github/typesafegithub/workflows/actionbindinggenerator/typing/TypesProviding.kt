@@ -113,9 +113,9 @@ private fun fetchTypingsFromUrl(
 }
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
-    inputs.mapValues { (key, value) ->
+    inputs?.mapValues { (key, value) ->
         value.toTyping(key)
-    }
+    } ?: emptyMap()
 
 private fun ActionCoords.toMajorVersion(): ActionCoords = this.copy(version = this.version.substringBefore("."))
 

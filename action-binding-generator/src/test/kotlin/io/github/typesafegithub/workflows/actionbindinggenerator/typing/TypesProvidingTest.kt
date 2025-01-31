@@ -36,6 +36,46 @@ class TypesProvidingTest :
             types.first shouldBe emptyMap()
         }
 
+        test("copes with empty inputs") {
+            // Given
+            val actionTypesYml = "inputs:"
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+
+            // Then
+            types.first shouldBe emptyMap()
+        }
+
+        test("copes with empty outputs") {
+            // Given
+            val actionTypesYml = "outputs:"
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+
+            // Then
+            types.first shouldBe emptyMap()
+        }
+
+        test("copes with empty inputs and outputs") {
+            // Given
+            val actionTypesYml =
+                """
+                inputs:
+                outputs:
+                """.trimIndent()
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+
+            // When
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+
+            // Then
+            types.first shouldBe emptyMap()
+        }
+
         test("parses all allowed elements of valid typing") {
             // Given
             val actionTypesYml =

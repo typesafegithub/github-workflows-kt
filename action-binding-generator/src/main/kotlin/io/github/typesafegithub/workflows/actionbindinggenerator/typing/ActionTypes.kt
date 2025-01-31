@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ActionTypes(
-    val inputs: Map<String, ActionType> = emptyMap(),
-    val outputs: Map<String, ActionType> = emptyMap(),
+    val inputs: Map<String, ActionType>? = null,
+    val outputs: Map<String, ActionType>? = null,
 )
 
 @Serializable
