@@ -24,7 +24,7 @@ private val logger = logger { }
 
 typealias ArtifactResult = Result<Map<String, Artifact>>
 
-val bindingsCache = Cache.Builder<ActionCoords, ArtifactResult>().expireAfterWrite(1.hours).build()
+private val bindingsCache = Cache.Builder<ActionCoords, ArtifactResult>().expireAfterWrite(1.hours).build()
 
 fun Routing.artifactRoutes() {
     route("{owner}/{name}/{version}/{file}") {
