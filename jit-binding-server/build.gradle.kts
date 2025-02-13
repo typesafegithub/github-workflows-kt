@@ -16,10 +16,9 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.10.0-alpha")
-    implementation("io.opentelemetry:opentelemetry-sdk:1.47.0")
-    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.47.0")
-    implementation("io.opentelemetry:opentelemetry-exporter-logging:1.47.0")
+    implementation("io.ktor:ktor-server-metrics-micrometer")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.14.4")
+    
     implementation("io.github.reactivecircus.cache4k:cache4k:0.14.0")
     implementation("io.github.oshai:kotlin-logging:7.0.4")
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.24.3"))
