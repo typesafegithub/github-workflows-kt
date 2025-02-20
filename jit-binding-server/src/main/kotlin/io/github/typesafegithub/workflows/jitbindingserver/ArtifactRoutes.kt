@@ -56,13 +56,13 @@ private fun Route.headArtifact(
 
         val file = call.parameters["file"] ?: return@head call.respondNotFound()
 
-        incrementArtifactCounter(prometheusRegistry, call)
-
         if (file in bindingArtifacts) {
             call.respondText("Exists", status = HttpStatusCode.OK)
         } else {
             call.respondNotFound()
         }
+
+        incrementArtifactCounter(prometheusRegistry, call)
     }
 }
 
@@ -77,8 +77,6 @@ private fun Route.getArtifact(
 
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
 
-        incrementArtifactCounter(prometheusRegistry, call)
-
         val artifact = bindingArtifacts[file] ?: return@get call.respondNotFound()
 
         when (artifact) {
@@ -86,6 +84,8 @@ private fun Route.getArtifact(
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
             else -> call.respondNotFound()
         }
+
+        incrementArtifactCounter(prometheusRegistry, call)
     }
 }
 
