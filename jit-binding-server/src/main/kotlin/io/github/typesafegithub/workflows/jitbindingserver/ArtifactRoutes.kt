@@ -84,7 +84,6 @@ private fun Route.getArtifact(
         when (artifact) {
             is TextArtifact -> call.respondText(artifact.data())
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
-            else -> call.respondNotFound()
         }
     }
 }
