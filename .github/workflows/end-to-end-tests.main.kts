@@ -1,7 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.2.1-SNAPSHOT")
-@file:DependsOn("io.github.typesafegithub:action-updates-checker:3.2.1-SNAPSHOT")
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:github-script:v7")
@@ -27,7 +26,7 @@ import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
-import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
+//import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
 
 fun JobBuilder<*>.publishToMavenLocal() {
@@ -56,10 +55,10 @@ workflow(
             "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
         ),
         additionalSteps = {
-            publishToMavenLocal()
+             publishToMavenLocal()
         },
     ),
-    useWorkflow = { it.reportAvailableUpdates() },
+    useWorkflow = { /*it.reportAvailableUpdates()*/ },
     sourceFile = __FILE__,
 ) {
     val GREETING by Contexts.env
