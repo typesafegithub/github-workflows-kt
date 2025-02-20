@@ -3,13 +3,14 @@ package io.github.typesafegithub.workflows.jitbindingserver
 import io.ktor.http.HttpHeaders
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.plugins.callid.CallId
 import io.ktor.server.plugins.callid.callIdMdc
 import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
-import io.opentelemetry.instrumentation.ktor.v3_0.server.KtorServerTracing
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
-fun Application.installPlugins() {
+fun Application.installPlugins(prometheusRegistry: PrometheusMeterRegistry) {
     install(CallId) {
         generate(15, "abcdefghijklmnopqrstuvwxyz0123456789")
         replyToHeader(HttpHeaders.XRequestId)
@@ -19,7 +20,7 @@ fun Application.installPlugins() {
         callIdMdc("request-id")
     }
 
-    install(KtorServerTracing) {
-        setOpenTelemetry(buildOpenTelemetryConfig("github-actions-bindings"))
+    install(MicrometerMetrics) {
+        registry = prometheusRegistry
     }
 }

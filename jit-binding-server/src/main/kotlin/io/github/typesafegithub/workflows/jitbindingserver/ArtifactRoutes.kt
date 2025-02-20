@@ -11,6 +11,7 @@ import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.request.httpMethod
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -18,6 +19,8 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.head
 import io.ktor.server.routing.route
+import io.micrometer.core.instrument.Tag
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import kotlin.time.Duration.Companion.hours
 
 private val logger = logger { }
@@ -26,22 +29,28 @@ typealias ArtifactResult = Result<Map<String, Artifact>>
 
 private val bindingsCache = Cache.Builder<ActionCoords, ArtifactResult>().expireAfterWrite(1.hours).build()
 
-fun Routing.artifactRoutes() {
+fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
     route("{owner}/{name}/{version}/{file}") {
-        artifact(refresh = false)
+        artifact(prometheusRegistry, refresh = false)
     }
 
     route("/refresh/{owner}/{name}/{version}/{file}") {
-        artifact(refresh = true)
+        artifact(prometheusRegistry, refresh = true)
     }
 }
 
-private fun Route.artifact(refresh: Boolean = false) {
-    headArtifact(refresh)
-    getArtifact(refresh)
+private fun Route.artifact(
+    prometheusRegistry: PrometheusMeterRegistry,
+    refresh: Boolean = false,
+) {
+    headArtifact(prometheusRegistry, refresh)
+    getArtifact(prometheusRegistry, refresh)
 }
 
-private fun Route.headArtifact(refresh: Boolean) {
+private fun Route.headArtifact(
+    prometheusRegistry: PrometheusMeterRegistry,
+    refresh: Boolean,
+) {
     head {
         val bindingArtifacts = call.toBindingArtifacts(refresh) ?: return@head call.respondNotFound()
 
@@ -52,10 +61,15 @@ private fun Route.headArtifact(refresh: Boolean) {
         } else {
             call.respondNotFound()
         }
+
+        incrementArtifactCounter(prometheusRegistry, call)
     }
 }
 
-private fun Route.getArtifact(refresh: Boolean) {
+private fun Route.getArtifact(
+    prometheusRegistry: PrometheusMeterRegistry,
+    refresh: Boolean,
+) {
     get {
         val bindingArtifacts = call.toBindingArtifacts(refresh) ?: return@get call.respondNotFound()
 
@@ -68,8 +82,9 @@ private fun Route.getArtifact(refresh: Boolean) {
         when (artifact) {
             is TextArtifact -> call.respondText(artifact.data())
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
-            else -> call.respondNotFound()
         }
+
+        incrementArtifactCounter(prometheusRegistry, call)
     }
 }
 
@@ -84,4 +99,34 @@ private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<St
     } else {
         bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts()!! } }.getOrNull()
     }
+}
+
+private fun incrementArtifactCounter(
+    prometheusRegistry: PrometheusMeterRegistry,
+    call: ApplicationCall,
+) {
+    val owner = call.parameters["owner"] ?: "unknown"
+    val name = call.parameters["name"] ?: "unknown"
+    val version = call.parameters["version"] ?: "unknown"
+    val file = call.parameters["file"] ?: "unknown"
+    val method = call.request.httpMethod.value
+    val status =
+        call.response
+            .status()
+            ?.value
+            ?.toString() ?: "unknown"
+
+    val counter =
+        prometheusRegistry.counter(
+            "artifact_requests_total",
+            listOf(
+                Tag.of("owner", owner),
+                Tag.of("name", name),
+                Tag.of("version", version),
+                Tag.of("file", file),
+                Tag.of("method", method),
+                Tag.of("status", status),
+            ),
+        )
+    counter.increment()
 }

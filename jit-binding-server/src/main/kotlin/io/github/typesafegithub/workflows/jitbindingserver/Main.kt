@@ -7,7 +7,20 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.routing
+import io.micrometer.prometheusmetrics.PrometheusConfig
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import java.time.Duration
 
+private val prometheusRegistry =
+    PrometheusMeterRegistry(
+        object : PrometheusConfig {
+            override fun get(key: String): String? = null
+
+            override fun prefix(): String = "github-actions-binding-server"
+
+            override fun step() = Duration.ofSeconds(10)
+        },
+    )
 private val logger =
     System
         /*
@@ -25,12 +38,12 @@ fun main() {
         logger.error(throwable) { "Uncaught exception in thread $thread" }
     }
     embeddedServer(Netty, port = 8080) {
-        installPlugins()
+        installPlugins(prometheusRegistry)
 
         routing {
-            internalRoutes()
+            internalRoutes(prometheusRegistry)
 
-            artifactRoutes()
+            artifactRoutes(prometheusRegistry)
             metadataRoutes()
         }
     }.start(wait = true)
