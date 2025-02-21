@@ -6,26 +6,34 @@ data class Version(
     val version: String,
     private val dateProvider: suspend () -> ZonedDateTime? = { null },
 ) : Comparable<Version> {
-    val input: String = version.removePrefix("v").removePrefix("V")
-    val major = input.substringBefore(".").toIntOrNull() ?: 0
-    val minor = input.substringAfter(".").substringBefore(".").toIntOrNull() ?: 0
-    val patch = input.substringAfterLast(".").toIntOrNull() ?: 0
+    private val versionParts: List<String> = version.removePrefix("v").removePrefix("V").split('.')
+    private val versionIntParts: List<Int?> = versionParts.map { it.toIntOrNull() }
+    val major: Int = versionIntParts.getOrNull(0) ?: 0
+    val minor: Int = versionIntParts.getOrNull(1) ?: 0
+    val patch: Int = versionIntParts.getOrNull(2) ?: 0
 
     override fun compareTo(other: Version): Int {
-        val c1 = major.compareTo(other.major)
-        val c2 = minor.compareTo(other.minor)
-        val c3 = patch.compareTo(other.patch)
-        return when {
-            c1 != 0 -> c1
-            c2 != 0 -> c2
-            c3 != 0 -> c3
-            else -> version.compareTo(other.version)
+        versionParts.forEachIndexed { i, part ->
+            val otherPart = other.versionParts.getOrNull(i)
+            if (otherPart == null) return 1
+            val intPart = versionIntParts[i]
+            val otherIntPart = other.versionIntParts[i]
+            if ((intPart == null) && (otherIntPart == null)) {
+                val comparison = part.compareTo(otherPart)
+                if (comparison != 0) return comparison
+            } else if (intPart == null) {
+                return -1
+            } else if (otherIntPart == null) {
+                return 1
+            }
         }
+        if (versionParts.size < other.versionParts.size) return -1
+        return version.compareTo(other.version)
     }
 
     override fun toString(): String = version
 
-    fun isMajorVersion(): Boolean = version.removePrefix("v").removePrefix("V").toIntOrNull() != null
+    fun isMajorVersion(): Boolean = versionIntParts.singleOrNull() != null
 
     suspend fun getReleaseDate() = dateProvider()
 }
