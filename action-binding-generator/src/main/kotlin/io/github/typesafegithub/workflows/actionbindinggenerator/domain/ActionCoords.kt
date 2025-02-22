@@ -28,15 +28,3 @@ public val ActionCoords.subName: String get() = path?.let { "/$path" } ?: ""
  * action lives.
  */
 public val ActionCoords.fullName: String get() = "$name$subName"
-
-internal fun String.toActionCoords(): ActionCoords {
-    val (coordinates, version) = this.split('@')
-    val coordinateParts = coordinates.split('/')
-    val (owner, name) = coordinateParts
-    return ActionCoords(
-        owner = owner,
-        name = name,
-        version = version,
-        path = coordinateParts.drop(2).joinToString("/").takeUnless { it.isBlank() },
-    )
-}
