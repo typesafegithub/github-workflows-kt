@@ -1,7 +1,9 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.sksamuel.aedile.core.asCache
+import com.sksamuel.aedile.core.expireAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import io.github.reactivecircus.cache4k.Cache
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
@@ -20,6 +22,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.head
 import io.ktor.server.routing.route
 import io.micrometer.core.instrument.Tag
+import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import kotlin.time.Duration.Companion.hours
 
@@ -27,9 +30,16 @@ private val logger = logger { }
 
 typealias ArtifactResult = Result<Map<String, Artifact>>
 
-private val bindingsCache = Cache.Builder<ActionCoords, ArtifactResult>().expireAfterWrite(1.hours).build()
+private val bindingsCache =
+    Caffeine
+        .newBuilder()
+        .expireAfterWrite(1.hours)
+        .recordStats()
+        .asCache<ActionCoords, ArtifactResult>()
 
 fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
+    CaffeineCacheMetrics.monitor(prometheusRegistry, bindingsCache.underlying(), "bindings_cache")
+
     route("{owner}/{name}/{version}/{file}") {
         artifact(prometheusRegistry, refresh = false)
     }
