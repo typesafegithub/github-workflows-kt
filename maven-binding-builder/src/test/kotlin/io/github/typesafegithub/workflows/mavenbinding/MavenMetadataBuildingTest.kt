@@ -18,7 +18,7 @@ class MavenMetadataBuildingTest :
 
         test("various kinds of versions available") {
             // Given
-            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { owner, name, _ ->
+            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { _, _, _ ->
                 listOf(
                     Version(version = "v3-beta", dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") }),
                     Version(version = "v2", dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") }),
@@ -58,7 +58,7 @@ class MavenMetadataBuildingTest :
 
         test("no major versions") {
             // Given
-            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { owner, name, _ ->
+            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { _, _, _ ->
                 listOf(
                     Version(version = "v1.1", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
                     Version(version = "v1.1.0", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
@@ -79,7 +79,7 @@ class MavenMetadataBuildingTest :
 
         test("no versions available") {
             // Given
-            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { owner, name, _ ->
+            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { _, _, _ ->
                 emptyList()
             }
 
