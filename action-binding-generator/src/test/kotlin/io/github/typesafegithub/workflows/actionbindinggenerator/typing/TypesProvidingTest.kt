@@ -3,6 +3,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 import com.charleskorn.kaml.ForbiddenAnchorOrAliasException
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -193,7 +194,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -230,7 +231,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -272,7 +273,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -314,7 +315,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -366,7 +367,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name", "v3", "some-sub")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
@@ -418,7 +419,7 @@ class TypesProvidingTest :
                         else -> throw IOException()
                     }
                 }
-                val actionCoord = ActionCoords("some-owner", "some-name", "v6", "some-sub")
+                val actionCoord = ActionCoords("some-owner", "some-name", "v6", FULL, "some-sub")
 
                 // When
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
