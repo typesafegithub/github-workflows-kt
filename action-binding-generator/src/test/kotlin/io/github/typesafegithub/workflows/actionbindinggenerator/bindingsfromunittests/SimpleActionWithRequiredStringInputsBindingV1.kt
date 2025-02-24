@@ -27,7 +27,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs)
+ * [Action on GitHub](https://github.com/john-smith/simple-action-with-required-string-inputs-binding-v1)
  *
  * @param fooBar &lt;required&gt; Short description
  * @param fooBar_Untyped &lt;required&gt; Short description
@@ -39,7 +39,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class SimpleActionWithRequiredStringInputs private constructor(
+public data class SimpleActionWithRequiredStringInputsBindingV1 private constructor(
     /**
      * &lt;required&gt; Short description
      */
@@ -68,7 +68,7 @@ public data class SimpleActionWithRequiredStringInputs private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs-binding-v1", _customVersion ?: "v3") {
     init {
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"

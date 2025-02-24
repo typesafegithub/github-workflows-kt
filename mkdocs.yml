@@ -33,6 +33,11 @@ markdown_extensions:
       check_paths: True
       dedent_subsections: True
   - admonition
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - def_list
+  - attr_list
 
 plugins:
   - search

@@ -184,6 +184,7 @@ public abstract interface class io/github/typesafegithub/workflows/actionbinding
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion : java/lang/Enum {
 	public static final field V1 Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;
+	public static final field V2 Lio/github/typesafegithub/workflows/actionbindinggenerator/versioning/BindingVersion;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getLibraryVersion ()Ljava/lang/String;
 	public final fun isDeprecated ()Z
