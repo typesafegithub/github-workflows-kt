@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actions
 
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -25,6 +26,6 @@ class CustomActionTest :
             val outputs = customAction.buildOutputObject("someStepId")
 
             // when & then
-            outputs["custom-output"] shouldBe "steps.someStepId.outputs.custom-output"
+            outputs["custom-output"] shouldBe Expression("steps.someStepId.outputs.custom-output")
         }
     })
