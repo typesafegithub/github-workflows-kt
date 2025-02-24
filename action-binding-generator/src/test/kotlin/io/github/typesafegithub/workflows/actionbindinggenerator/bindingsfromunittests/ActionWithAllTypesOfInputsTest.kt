@@ -226,7 +226,6 @@ class ActionWithAllTypesOfInputsTest : DescribeSpec({
                 V2 -> {
                     // when
                     action as ActionWithAllTypesOfInputsBindingV2
-                    @Suppress("DATA_CLASS_INVISIBLE_COPY_USAGE_WARNING")
                     val actionWithOneChange = action.copy(fooBar = "another")
 
                     // then
