@@ -52,6 +52,9 @@ class VersionTest :
                     Triple("alpha", "beta", false),
                     Triple("1.2.3", "1.2.3.4", false),
                     Triple("3.2.1", "v3", true),
+                    Triple("v1.2.1", "v2", false),
+                    Triple("v1.2", "v2", false),
+                    Triple("v1.2.1", "v1.3", false),
                 ).forEach { (left, right, leftIsGreater) ->
                     test("compareTo works correctly for $left vs. $right") {
                         if (leftIsGreater) {

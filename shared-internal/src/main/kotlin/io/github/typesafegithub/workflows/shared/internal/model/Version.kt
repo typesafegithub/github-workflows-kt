@@ -25,6 +25,9 @@ data class Version(
                 return -1
             } else if (otherIntPart == null) {
                 return 1
+            } else {
+                val comparison = intPart.compareTo(otherIntPart)
+                if (comparison != 0) return comparison
             }
         }
         if (versionParts.size < other.versionParts.size) return -1
