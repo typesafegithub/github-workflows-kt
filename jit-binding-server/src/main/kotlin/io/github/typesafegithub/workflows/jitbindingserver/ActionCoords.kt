@@ -17,7 +17,7 @@ fun Parameters.extractActionCoords(extractVersion: Boolean): ActionCoords {
             ?.let { significantVersionString ->
                 SignificantVersion
                     .entries
-                    .find { it.name.lowercase() == significantVersionString }
+                    .find { "$it" == significantVersionString }
             } ?: FULL
     val nameAndPathParts = nameAndPath.split("__")
     val name = nameAndPathParts.first()

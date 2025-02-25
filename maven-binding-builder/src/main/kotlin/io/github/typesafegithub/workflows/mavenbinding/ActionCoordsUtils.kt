@@ -5,5 +5,5 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Signific
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 
 internal val ActionCoords.mavenName: String get() = "$name${subName.replace("/", "__")}${
-    significantVersion.takeUnless { it == FULL }?.let { "___${it.name.lowercase()}" } ?: ""
+    significantVersion.takeUnless { it == FULL }?.let { "___$it" } ?: ""
 }"
