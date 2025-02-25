@@ -29,7 +29,7 @@ private fun Route.metadata(refresh: Boolean = false) {
         val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = getGithubToken())
         if (file in bindingArtifacts) {
             when (val artifact = bindingArtifacts[file]) {
-                is String -> call.respondText(artifact)
+                is String -> call.respondText(text = artifact)
                 else -> call.respondText(text = "Not found", status = HttpStatusCode.NotFound)
             }
         } else {
