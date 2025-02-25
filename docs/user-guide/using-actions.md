@@ -20,6 +20,40 @@ To add a dependency on an action:
    `gradle/actions/setup-gradle@v3`, replace the slashes in the action name with `__`, so in this case it would be
    `@file:DependsOn("gradle:actions__setup-gradle:v3")`.
 
+    ??? tip "Dealing with stale Maven cache, a.k.a. using version ranges"
+        Additionally, the name part can have the suffix `___major` or `___minor` (three leading underscores).
+        Without these suffixes if you request a version `v1.2.3`, the generated YAML will also use exactly
+        `v1.2.3` unless you use a custom version override. With the `___major` suffix, it would only write `v1`
+        to the generated YAML, with the `___minor` suffix - `v1.2`.
+
+        This is especially useful when combined with a version range. The problem with using `v1` or `v1.2` is that for
+        GitHub Actions, these are changing tags or changing branches and not static releases. In the Maven world,
+        however, a version that does not end with `-SNAPSHOT` is considered immutable and is not expected to change.
+        This means that if a new version of the action is released that adds a new input, you cannot use it easily
+        as you still have the old `v1` artifact in your Maven cache and it will not be updated usually,
+        even though the binding server provides a new binding including the added input. And even if you remove the
+        old version from the Maven cache and get a new version from the bindings server, other people might also have
+        this outdated version in their Maven cache and then fail compilation with your changes.
+        It's worth emphasizing that this problem is currently present only when iterating
+        on your workflows locally. When running on GitHub Actions, this problem doesn't
+        exist because the state of Maven Local repo isn't cached between the runs.
+
+        To mitigate this problem, you can for example use a dependency like
+        `gradle:actions__setup-gradle___major:[v3,v4)` (from `v3` inclusive to `v4` exclusive).
+        This will resolve to the latest `v3.x.y` version and thus include any newly added inputs,
+        but still only write `v3` to the YAML. Without the `___major` suffix or a not semantically matching
+        range like `[v3,v5)` or even `[v3,v4]`, you will get problems with the consistency check as
+        then the YAML output changes as soon as a new version is released. For a minor version
+        you would accordingly use the `___minor` suffix together with a range like `[v4.0,v4.1)` to get
+        the latest `v4.0` release if the action in question provides such a tag or branch.
+
+        !!! info
+            If an action maintainer provides pre-releases that follow certain naming conventions as documented in the
+            [Maven Documentation](https://maven.apache.org/pom.html#Version_Order_Specification), you might need to
+            adjust the upper bound. For exmple a version `v4.0-beta` is less than `v4` and thus part of the range
+            `[v3,v4)`. In such a case - or always, to be on the safe side - you might want to change the range to
+            `[v3,v4-alpha)`, as the `alpha` version is the lowest possible version in Maven semantics.
+
 3. Use the action by importing a class like `io.github.typesafegithub.workflows.actions.actions.Checkout`.
 
 For every action, a binding will be generated. However, some less popular actions don't have typings configured for

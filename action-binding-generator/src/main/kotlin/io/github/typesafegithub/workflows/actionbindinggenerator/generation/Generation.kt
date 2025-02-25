@@ -17,6 +17,9 @@ import com.squareup.kotlinpoet.asTypeName
 import com.squareup.kotlinpoet.buildCodeBlock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MAJOR
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MINOR
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.isTopLevel
@@ -415,8 +418,18 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
         .superclass(superclass)
         .addSuperclassConstructorParameter("%S", coords.owner)
         .addSuperclassConstructorParameter("%S", coords.fullName)
-        .addSuperclassConstructorParameter("_customVersion ?: %S", coords.version)
+        .addSuperclassConstructorParameter(
+            "_customVersion ?: %S",
+            when (coords.significantVersion) {
+                MAJOR -> coords.version.majorVersion
+                MINOR -> coords.version.minorVersion
+                FULL -> coords.version
+            },
+        )
 }
+
+private val String.majorVersion get() = substringBefore('.')
+private val String.minorVersion get() = split('.', limit = 3).take(2).joinToString(".")
 
 private fun Metadata.primaryConstructor(
     inputTypings: Map<String, Typing>,

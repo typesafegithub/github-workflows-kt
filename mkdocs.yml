@@ -24,6 +24,7 @@ theme:
         name: Switch to light mode
 
 markdown_extensions:
+  - pymdownx.details
   - pymdownx.magiclink
   - pymdownx.inlinehilite
   - pymdownx.superfences

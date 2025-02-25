@@ -1,9 +1,19 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.domain
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
+
 public data class ActionCoords(
     val owner: String,
     val name: String,
     val version: String,
+    /**
+     * The version part that is significant when generating the YAML output,
+     * i.e. whether to write the full version, only the major version or major and minor version.
+     * This is used to enable usage of Maven ranges without needing to specify a custom version
+     * each time instantiating an action.
+     * The value of this property is part of the Maven coordinates as a suffix for the [name] property.
+     */
+    val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
 )
 
@@ -13,7 +23,9 @@ public data class ActionCoords(
  */
 public val ActionCoords.isTopLevel: Boolean get() = path == null
 
-public val ActionCoords.prettyPrint: String get() = "$owner/$fullName@$version"
+public val ActionCoords.prettyPrint: String get() = "$owner/$fullName${
+    significantVersion.takeUnless { it == FULL }?.let { " with $it version" } ?: ""
+}@$version"
 
 /**
  * For most actions, it's empty.
