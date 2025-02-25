@@ -28,18 +28,22 @@ To add a dependency on an action:
 
         This is especially useful when combined with a version range. The problem with using `v1` or `v1.2` is that for
         GitHub Actions, these are changing tags or changing branches and not static releases. In the Maven world,
-        however, a version that does not end in `-SNAPSHOT` is considered immutable and is not expected to change.
+        however, a version that does not end with `-SNAPSHOT` is considered immutable and is not expected to change.
         This means that if a new version of the action is released that adds a new input, you cannot use it easily
         as you still have the old `v1` artifact in your Maven cache and it will not be updated usually,
         even though the binding server provides a new binding including the added input. And even if you remove the
         old version from the Maven cache and get a new version from the bindings server, other people might also have
         this outdated version in their Maven cache and then fail compilation with your changes.
+        It's worth emphasizing that this problem is currently present only when iterating
+        on your workflows locally. When running on GitHub Actions, this problem doesn't
+        exist because the state of Maven Local repo isn't cached between the runs.
 
         To mitigate this problem, you can for example use a dependency like
-        `gradle:actions__setup-gradle___major:[v3,v4)`. This will resolve to the latest `v3.x.y` version and thus
-        include any newly added inputs, but still only write `v3` to the YAML. Without the `___major` suffix
-        or a not semantically matching range like `[v3,v5)` or even `[v3,v4]`, you will get problems with the
-        consistency check as then the YAML output changes as soon as a new version is released. For a minor version
+        `gradle:actions__setup-gradle___major:[v3,v4)` (from `v3` inclusive to `v4` exclusive).
+        This will resolve to the latest `v3.x.y` version and thus include any newly added inputs,
+        but still only write `v3` to the YAML. Without the `___major` suffix or a not semantically matching
+        range like `[v3,v5)` or even `[v3,v4]`, you will get problems with the consistency check as
+        then the YAML output changes as soon as a new version is released. For a minor version
         you would accordingly use the `___minor` suffix together with a range like `[v4.0,v4.1)` to get
         the latest `v4.0` release if the action in question provides such a tag or branch.
 
