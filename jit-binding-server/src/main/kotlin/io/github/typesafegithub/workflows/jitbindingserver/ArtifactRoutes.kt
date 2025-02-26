@@ -67,7 +67,7 @@ private fun Route.headArtifact(
         val file = call.parameters["file"] ?: return@head call.respondNotFound()
 
         if (file in bindingArtifacts) {
-            call.respondText("Exists", status = HttpStatusCode.OK)
+            call.respondText(text = "Exists", status = HttpStatusCode.OK)
         } else {
             call.respondNotFound()
         }
@@ -83,14 +83,14 @@ private fun Route.getArtifact(
     get {
         val bindingArtifacts = call.toBindingArtifacts(refresh) ?: return@get call.respondNotFound()
 
-        if (refresh && !deliverOnRefreshRoute) return@get call.respondText("OK")
+        if (refresh && !deliverOnRefreshRoute) return@get call.respondText(text = "OK")
 
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
 
         val artifact = bindingArtifacts[file] ?: return@get call.respondNotFound()
 
         when (artifact) {
-            is TextArtifact -> call.respondText(artifact.data())
+            is TextArtifact -> call.respondText(text = artifact.data())
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
         }
 

@@ -51,4 +51,4 @@ fun main() {
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
 
-suspend fun ApplicationCall.respondNotFound() = respondText("Not found", status = HttpStatusCode.NotFound)
+suspend fun ApplicationCall.respondNotFound() = respondText(text = "Not found", status = HttpStatusCode.NotFound)
