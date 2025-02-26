@@ -6,6 +6,8 @@ import com.sksamuel.aedile.core.expireAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
@@ -35,17 +37,27 @@ private val bindingsCache =
         .newBuilder()
         .expireAfterWrite(1.hours)
         .recordStats()
-        .asCache<ActionCoords, ArtifactResult>()
+        .asCache<CacheKey, ArtifactResult>()
 
 fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
     CaffeineCacheMetrics.monitor(prometheusRegistry, bindingsCache.underlying(), "bindings_cache")
 
     route("{owner}/{name}/{version}/{file}") {
-        artifact(prometheusRegistry, refresh = false)
+        artifact(prometheusRegistry)
     }
 
     route("/refresh/{owner}/{name}/{version}/{file}") {
         artifact(prometheusRegistry, refresh = true)
+    }
+
+    route("""(?<bindingVersion>v\d+)""".toRegex()) {
+        route("{owner}/{name}/{version}/{file}") {
+            artifact(prometheusRegistry)
+        }
+
+        route("/refresh/{owner}/{name}/{version}/{file}") {
+            artifact(prometheusRegistry, refresh = true)
+        }
     }
 }
 
@@ -98,16 +110,30 @@ private fun Route.getArtifact(
     }
 }
 
+val ApplicationCall.bindingVersion: BindingVersion?
+    get() {
+        val bindingVersion = parameters["bindingVersion"]
+        return if (bindingVersion == null) {
+            V1
+        } else {
+            BindingVersion
+                .entries
+                .find { it.name.lowercase() == bindingVersion }
+        }
+    }
+
 private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<String, Artifact>? {
+    val bindingVersion = bindingVersion ?: return null
     val actionCoords = parameters.extractActionCoords(extractVersion = true)
 
-    logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
+    logger.info { "➡️ Requesting ${actionCoords.prettyPrint} binding version $bindingVersion" }
+    val cacheKey = CacheKey(actionCoords, bindingVersion)
     return if (refresh) {
-        actionCoords.buildVersionArtifacts().also {
-            bindingsCache.put(actionCoords, runCatching { it!! })
+        actionCoords.buildVersionArtifacts(bindingVersion).also {
+            bindingsCache.put(cacheKey, runCatching { it!! })
         }
     } else {
-        bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts()!! } }.getOrNull()
+        bindingsCache.get(cacheKey) { runCatching { actionCoords.buildVersionArtifacts(bindingVersion)!! } }.getOrNull()
     }
 }
 
@@ -115,6 +141,7 @@ private fun incrementArtifactCounter(
     prometheusRegistry: PrometheusMeterRegistry,
     call: ApplicationCall,
 ) {
+    val bindingVersion = call.parameters["bindingVersion"] ?: "v1"
     val owner = call.parameters["owner"] ?: "unknown"
     val name = call.parameters["name"] ?: "unknown"
     val version = call.parameters["version"] ?: "unknown"
@@ -130,6 +157,7 @@ private fun incrementArtifactCounter(
         prometheusRegistry.counter(
             "artifact_requests_total",
             listOf(
+                Tag.of("bindingVersion", bindingVersion),
                 Tag.of("owner", owner),
                 Tag.of("name", name),
                 Tag.of("version", version),
@@ -140,3 +168,8 @@ private fun incrementArtifactCounter(
         )
     counter.increment()
 }
+
+private data class CacheKey(
+    val actionCoords: ActionCoords,
+    val bindingVersion: BindingVersion,
+)
