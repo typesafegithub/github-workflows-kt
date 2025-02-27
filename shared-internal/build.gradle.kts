@@ -23,5 +23,5 @@ dependencies {
     // leading to a runtime failure of not being able to find a class or a function.
     // I'm bumping kotlinx-io to 0.6.0 in kotlinx.serialization here: https://github.com/Kotlin/kotlinx.serialization/pull/2933
     // Here's a ticket to remember to remove this workaround: https://github.com/typesafegithub/github-workflows-kt/issues/1832
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.6.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
 }
