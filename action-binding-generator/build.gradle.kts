@@ -14,7 +14,7 @@ version = rootProject.version
 dependencies {
     implementation("com.squareup:kotlinpoet:2.1.0")
     implementation("com.charleskorn.kaml:kaml:0.72.0")
-    implementation("io.github.oshai:kotlin-logging:7.0.4")
+    implementation("io.github.oshai:kotlin-logging:7.0.5")
     implementation(projects.sharedInternal)
 
     testImplementation(projects.githubWorkflowsKt)
