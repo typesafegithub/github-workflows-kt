@@ -143,7 +143,7 @@ jobs:
     - id: 'step-1'
       uses: 'actions/setup-python@v5'
       with:
-        python-version: '3.8'
+        python-version: '3.13'
     - id: 'step-2'
       run: 'pip install -r docs/requirements.txt'
     - id: 'step-3'
