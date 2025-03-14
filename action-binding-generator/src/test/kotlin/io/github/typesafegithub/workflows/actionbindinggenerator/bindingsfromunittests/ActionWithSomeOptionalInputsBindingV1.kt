@@ -91,27 +91,27 @@ public data class ActionWithSomeOptionalInputsBindingV1 private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "action-with-some-optional-inputs-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((fooBar != null) && (fooBar_Untyped != null))) {
-            "Only fooBar or fooBar_Untyped must be set, but not both"
+        require(listOfNotNull(fooBar, fooBar_Untyped).size <= 1) {
+            "Only one of fooBar, and fooBar_Untyped must be set, but not multiple"
         }
 
-        require(!((bazGoo != null) && (bazGoo_Untyped != null))) {
-            "Only bazGoo or bazGoo_Untyped must be set, but not both"
+        require(listOfNotNull(bazGoo, bazGoo_Untyped).size <= 1) {
+            "Only one of bazGoo, and bazGoo_Untyped must be set, but not multiple"
         }
 
-        require(!((zooDar != null) && (zooDar_Untyped != null))) {
-            "Only zooDar or zooDar_Untyped must be set, but not both"
+        require(listOfNotNull(zooDar, zooDar_Untyped).size <= 1) {
+            "Only one of zooDar, and zooDar_Untyped must be set, but not multiple"
         }
 
-        require(!((cooPoo != null) && (cooPoo_Untyped != null))) {
-            "Only cooPoo or cooPoo_Untyped must be set, but not both"
+        require(listOfNotNull(cooPoo, cooPoo_Untyped).size <= 1) {
+            "Only one of cooPoo, and cooPoo_Untyped must be set, but not multiple"
         }
 
-        require(!((`package` != null) && (package_Untyped != null))) {
-            "Only package or package_Untyped must be set, but not both"
+        require(listOfNotNull(`package`, package_Untyped).size <= 1) {
+            "Only one of package, and package_Untyped must be set, but not multiple"
         }
         require((`package` != null) || (package_Untyped != null)) {
-            "Either package or package_Untyped must be set, one of them is required"
+            "Either package, or package_Untyped must be set, one of them is required"
         }
     }
 
