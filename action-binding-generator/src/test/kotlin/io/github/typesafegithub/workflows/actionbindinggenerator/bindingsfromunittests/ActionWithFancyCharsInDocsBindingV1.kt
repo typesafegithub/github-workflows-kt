@@ -24,7 +24,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-fancy-chars-in-docs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-fancy-chars-in-docs-binding-v1)
  *
  * @param nestedKotlinComments This is a /&#42; test &#42;/
  * @param nestedKotlinComments_Untyped This is a /&#42; test &#42;/
@@ -34,7 +34,7 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithFancyCharsInDocs private constructor(
+public data class ActionWithFancyCharsInDocsBindingV1 private constructor(
     /**
      * This is a /&#42; test &#42;/
      */
@@ -59,7 +59,7 @@ public data class ActionWithFancyCharsInDocs private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs-binding-v1", _customVersion ?: "v3") {
     init {
         require(!((nestedKotlinComments != null) && (nestedKotlinComments_Untyped != null))) {
             "Only nestedKotlinComments or nestedKotlinComments_Untyped must be set, but not both"
