@@ -34,9 +34,7 @@ data class Version(
         return version.compareTo(other.version)
     }
 
-    override fun equals(other: Any?): Boolean {
-        return this.compareTo(other as Version) == 0
-    }
+    override fun equals(other: Any?): Boolean = this.compareTo(other as Version) == 0
 
     override fun toString(): String = version
 
