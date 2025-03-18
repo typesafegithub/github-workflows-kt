@@ -11,6 +11,7 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
@@ -72,7 +73,7 @@ private suspend fun fetchGithubRefs(
                     }
                 }
         ensure(response.status.isSuccess()) {
-            "Unexpected response when fetching refs from $url. Status: ${response.status}, response: {\"message\":  \"There was a problem!\"}"
+            "Unexpected response when fetching refs from $url. Status: ${response.status}, response: ${response.bodyAsText()}"
         }
         response.body()
     }
