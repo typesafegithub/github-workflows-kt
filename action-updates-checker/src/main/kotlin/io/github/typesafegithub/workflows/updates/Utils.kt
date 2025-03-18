@@ -55,9 +55,8 @@ internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: 
             owner = actionOwner,
             name = actionName.substringBefore('/'),
             githubToken = githubToken,
-        ).getOrElse {
-            println(it)
-            emptyList()
+        ) .getOrElse {
+            throw Exception(it)
         }
     } catch (e: Exception) {
         githubError(
