@@ -1,17 +1,16 @@
 package io.github.typesafegithub.workflows.shared.internal.model
 
+import arrow.core.left
+import arrow.core.right
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldContain
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
-import io.ktor.serialization.JsonConvertException
 import io.ktor.utils.io.ByteReadChannel
 
 class GithubApiTest :
@@ -95,7 +94,7 @@ class GithubApiTest :
                 }
 
             // When
-            val versions =
+            val versionsOrError =
                 fetchAvailableVersions(
                     owner = "some-owner",
                     name = "some-name",
@@ -104,13 +103,13 @@ class GithubApiTest :
                 )
 
             // Then
-            versions shouldBe
+            versionsOrError shouldBe
                 listOf(
                     Version("v1.0.0"),
                     Version("v1.0.1"),
                     Version("v1"),
                     Version("v2"),
-                )
+                ).right()
         }
 
         test("error occurs when fetching branches and tags") {
@@ -125,20 +124,21 @@ class GithubApiTest :
                     )
                 }
 
-            // Then
-            // TODO: fix - right now, the logic fails if it gets something unparseable.
-            //  The test just shows the current behavior, not the intended behavior.
-            //  To be fixed in https://github.com/typesafegithub/github-workflows-kt/issues/1855
-            shouldThrow<JsonConvertException> {
-                // When
+            // When
+            val versionsOrError =
                 fetchAvailableVersions(
                     owner = "some-owner",
                     name = "some-name",
                     githubToken = "token",
                     httpClientEngine = mockEngine,
                 )
-            }.also {
-                it.message shouldContain "Unexpected JSON token"
-            }
+
+            // Then
+            versionsOrError shouldBe
+                (
+                    "Unexpected response when fetching refs from " +
+                        "https://api.github.com/repos/some-owner/some-name/git/matching-refs/tags/v. " +
+                        "Status: 403 Forbidden, response: {\"message\":  \"There was a problem!\"}"
+                ).left()
         }
     })

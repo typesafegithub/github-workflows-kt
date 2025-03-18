@@ -1,5 +1,8 @@
 package io.github.typesafegithub.workflows.shared.internal
 
+import arrow.core.Either
+import arrow.core.raise.either
+import arrow.core.raise.ensure
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -8,6 +11,8 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -18,36 +23,39 @@ suspend fun fetchAvailableVersions(
     name: String,
     githubToken: String?,
     httpClientEngine: HttpClientEngine = CIO.create(),
-): List<Version> {
-    val httpClient = buildHttpClient(engine = httpClientEngine)
-    return listOf(
-        apiTagsUrl(owner = owner, name = name),
-        apiBranchesUrl(owner = owner, name = name),
-    ).flatMap { url -> fetchGithubRefs(url, githubToken, httpClient) }
-        .versions(githubToken, httpClient)
-}
+): Either<String, List<Version>> =
+    either {
+        val httpClient = buildHttpClient(engine = httpClientEngine)
+        return listOf(
+            apiTagsUrl(owner = owner, name = name),
+            apiBranchesUrl(owner = owner, name = name),
+        ).flatMap { url -> fetchGithubRefs(url, githubToken, httpClient).bind() }
+            .versions(githubToken, httpClient)
+    }
 
 private fun List<GithubRef>.versions(
     githubToken: String?,
     httpClient: HttpClient,
-): List<Version> =
-    this.map { githubRef ->
-        val version = githubRef.ref.substringAfterLast("/")
-        Version(version) {
-            val response =
-                httpClient
-                    .get(urlString = githubRef.`object`.url) {
-                        if (githubToken != null) {
-                            bearerAuth(githubToken)
+): Either<String, List<Version>> =
+    either {
+        this@versions.map { githubRef ->
+            val version = githubRef.ref.substringAfterLast("/")
+            Version(version) {
+                val response =
+                    httpClient
+                        .get(urlString = githubRef.`object`.url) {
+                            if (githubToken != null) {
+                                bearerAuth(githubToken)
+                            }
                         }
-                    }
-            val releaseDate =
-                when (githubRef.`object`.type) {
-                    "tag" -> response.body<Tag>().tagger
-                    "commit" -> response.body<Commit>().author
-                    else -> error("Unexpected target object type ${githubRef.`object`.type}")
-                }.date
-            ZonedDateTime.parse(releaseDate)
+                val releaseDate =
+                    when (githubRef.`object`.type) {
+                        "tag" -> response.body<Tag>().tagger
+                        "commit" -> response.body<Commit>().author
+                        else -> error("Unexpected target object type ${githubRef.`object`.type}")
+                    }.date
+                ZonedDateTime.parse(releaseDate)
+            }
         }
     }
 
@@ -55,13 +63,20 @@ private suspend fun fetchGithubRefs(
     url: String,
     githubToken: String?,
     httpClient: HttpClient,
-): List<GithubRef> =
-    httpClient
-        .get(urlString = url) {
-            if (githubToken != null) {
-                bearerAuth(githubToken)
-            }
-        }.body()
+): Either<String, List<GithubRef>> =
+    either {
+        val response =
+            httpClient
+                .get(urlString = url) {
+                    if (githubToken != null) {
+                        bearerAuth(githubToken)
+                    }
+                }
+        ensure(response.status.isSuccess()) {
+            "Unexpected response when fetching refs from $url. Status: ${response.status}, response: ${response.bodyAsText()}"
+        }
+        response.body()
+    }
 
 private fun apiTagsUrl(
     owner: String,

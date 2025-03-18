@@ -1,18 +1,30 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
+import arrow.core.Either
+import arrow.core.getOrElse
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import java.time.format.DateTimeFormatter
 
+private val logger = logger { }
+
 internal suspend fun ActionCoords.buildMavenMetadataFile(
     githubToken: String,
-    fetchAvailableVersions: suspend (owner: String, name: String, githubToken: String?) -> List<Version> = ::fetchAvailableVersions,
+    fetchAvailableVersions: suspend (
+        owner: String,
+        name: String,
+        githubToken: String?,
+    ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
 ): String? {
     val availableVersions =
         fetchAvailableVersions(owner, name, githubToken)
-            .filter { it.isMajorVersion() || (significantVersion < FULL) }
+            .getOrElse {
+                logger.error { it }
+                emptyList()
+            }.filter { it.isMajorVersion() || (significantVersion < FULL) }
     val newest = availableVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter
