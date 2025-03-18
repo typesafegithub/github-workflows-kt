@@ -11,7 +11,7 @@ version = rootProject.version
 dependencies {
     // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
     // note: see https://youtrack.jetbrains.com/issue/KT-67618
-    implementation("io.ktor:ktor-client-core:3.1.1")
+    api("io.ktor:ktor-client-core:3.1.1")
     implementation("io.ktor:ktor-client-cio:3.1.1")
     implementation("io.ktor:ktor-client-content-negotiation:3.1.1")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.1")
@@ -24,4 +24,6 @@ dependencies {
     // I'm bumping kotlinx-io to 0.6.0 in kotlinx.serialization here: https://github.com/Kotlin/kotlinx.serialization/pull/2933
     // Here's a ticket to remember to remove this workaround: https://github.com/typesafegithub/github-workflows-kt/issues/1832
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
+
+    testImplementation("io.ktor:ktor-client-mock:3.1.1")
 }
