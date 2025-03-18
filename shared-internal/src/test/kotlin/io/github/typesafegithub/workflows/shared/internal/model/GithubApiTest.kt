@@ -1,14 +1,17 @@
 package io.github.typesafegithub.workflows.shared.internal.model
 
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
+import io.ktor.serialization.JsonConvertException
 import io.ktor.utils.io.ByteReadChannel
 
 class GithubApiTest :
@@ -108,5 +111,34 @@ class GithubApiTest :
                     Version("v1"),
                     Version("v2"),
                 )
+        }
+
+        test("error occurs when fetching branches and tags") {
+            // Given
+            val mockEngine =
+                MockEngine { request ->
+                    respond(
+                        // language=json
+                        content = ByteReadChannel("""{"message":  "There was a problem!"}"""),
+                        status = HttpStatusCode.Forbidden,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    )
+                }
+
+            // Then
+            // TODO: fix - right now, the logic fails if it gets something unparseable.
+            //  The test just shows the current behavior, not the intended behavior.
+            //  To be fixed in https://github.com/typesafegithub/github-workflows-kt/issues/1855
+            shouldThrow<JsonConvertException> {
+                // When
+                fetchAvailableVersions(
+                    owner = "some-owner",
+                    name = "some-name",
+                    githubToken = "token",
+                    httpClientEngine = mockEngine,
+                )
+            }.also {
+                it.message shouldContain "Unexpected JSON token"
+            }
         }
     })
