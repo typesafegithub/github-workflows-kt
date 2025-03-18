@@ -4,6 +4,7 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class VersionTest :
     FunSpec(
@@ -61,6 +62,26 @@ class VersionTest :
                             Version(left) shouldBeGreaterThan Version(right)
                         } else {
                             Version(right) shouldBeGreaterThan Version(left)
+                        }
+                    }
+                }
+            }
+
+            context("equals") {
+                listOf(
+                    Triple("v1", "v1", true),
+                    Triple("v1", "v2", false),
+                    Triple("v1.0", "v1", false),
+                    Triple("v1.2", "v1.2", true),
+                    Triple("v1.2", "v1.3", false),
+                    Triple("v1.2.3", "v1.2.3", true),
+                    Triple("v1.2", "v1.2.3", false),
+                ).forEach { (left, right, equals) ->
+                    test("equals works correctly for $left vs. $right") {
+                        if (equals) {
+                            Version(left) shouldBe Version(right)
+                        } else {
+                            Version(right) shouldNotBe Version(left)
                         }
                     }
                 }
