@@ -1,5 +1,7 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
+import arrow.core.Either
+import arrow.core.right
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
@@ -20,7 +22,7 @@ class MavenMetadataBuildingTest :
 
         test("various kinds of versions available") {
             // Given
-            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { _, _, _ ->
+            val fetchAvailableVersions: suspend (String, String, String?) -> Either<String, List<Version>> = { _, _, _ ->
                 listOf(
                     Version(version = "v3-beta", dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") }),
                     Version(version = "v2", dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") }),
@@ -30,7 +32,7 @@ class MavenMetadataBuildingTest :
                     Version(version = "v1.0.1", dateProvider = { ZonedDateTime.parse("2024-03-05T00:00:00Z") }),
                     Version(version = "v1.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
                     Version(version = "v1.0.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
-                )
+                ).right()
             }
 
             val xml =
@@ -60,14 +62,14 @@ class MavenMetadataBuildingTest :
 
         test("no major versions") {
             // Given
-            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { _, _, _ ->
+            val fetchAvailableVersions: suspend (String, String, String?) -> Either<String, List<Version>> = { _, _, _ ->
                 listOf(
                     Version(version = "v1.1", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
                     Version(version = "v1.1.0", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
                     Version(version = "v1.0.1", dateProvider = { ZonedDateTime.parse("2024-03-05T00:00:00Z") }),
                     Version(version = "v1.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
                     Version(version = "v1.0.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
-                )
+                ).right()
             }
 
             val xml =
@@ -81,8 +83,8 @@ class MavenMetadataBuildingTest :
 
         test("no versions available") {
             // Given
-            val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { _, _, _ ->
-                emptyList()
+            val fetchAvailableVersions: suspend (String, String, String?) -> Either<String, List<Version>> = { _, _, _ ->
+                emptyList<Version>().right()
             }
 
             val xml =
@@ -97,7 +99,7 @@ class MavenMetadataBuildingTest :
         (SignificantVersion.entries - FULL).forEach { significantVersion ->
             test("significant version $significantVersion requested") {
                 // Given
-                val fetchAvailableVersions: suspend (String, String, String?) -> List<Version> = { owner, name, _ ->
+                val fetchAvailableVersions: suspend (String, String, String?) -> Either<String, List<Version>> = { owner, name, _ ->
                     listOf(
                         Version(version = "v3-beta", dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") }),
                         Version(version = "v2", dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") }),
@@ -107,7 +109,7 @@ class MavenMetadataBuildingTest :
                         Version(version = "v1.0.1", dateProvider = { ZonedDateTime.parse("2024-03-05T00:00:00Z") }),
                         Version(version = "v1.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
                         Version(version = "v1.0.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
-                    )
+                    ).right()
                 }
 
                 val xml =

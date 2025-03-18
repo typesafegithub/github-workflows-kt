@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.updates
 
+import arrow.core.getOrElse
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
@@ -54,7 +55,10 @@ internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: 
             owner = actionOwner,
             name = actionName.substringBefore('/'),
             githubToken = githubToken,
-        )
+        ).getOrElse {
+            println(it)
+            emptyList()
+        }
     } catch (e: Exception) {
         githubError(
             "failed to fetch versions for $actionOwner/$actionName, skipping",
