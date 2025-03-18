@@ -3,6 +3,8 @@ package io.github.typesafegithub.workflows.shared.internal
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
@@ -15,14 +17,20 @@ suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
     githubToken: String?,
-): List<Version> =
-    listOf(
+    httpClientEngine: HttpClientEngine = CIO.create(),
+): List<Version> {
+    val httpClient = buildHttpClient(engine = httpClientEngine)
+    return listOf(
         apiTagsUrl(owner = owner, name = name),
         apiBranchesUrl(owner = owner, name = name),
-    ).flatMap { url -> fetchGithubRefs(url, githubToken) }
-        .versions(githubToken)
+    ).flatMap { url -> fetchGithubRefs(url, githubToken, httpClient) }
+        .versions(githubToken, httpClient)
+}
 
-private fun List<GithubRef>.versions(githubToken: String?): List<Version> =
+private fun List<GithubRef>.versions(
+    githubToken: String?,
+    httpClient: HttpClient,
+): List<Version> =
     this.map { githubRef ->
         val version = githubRef.ref.substringAfterLast("/")
         Version(version) {
@@ -46,6 +54,7 @@ private fun List<GithubRef>.versions(githubToken: String?): List<Version> =
 private suspend fun fetchGithubRefs(
     url: String,
     githubToken: String?,
+    httpClient: HttpClient,
 ): List<GithubRef> =
     httpClient
         .get(urlString = url) {
@@ -91,8 +100,8 @@ private data class Person(
     val date: String,
 )
 
-private val httpClient by lazy {
-    HttpClient {
+private fun buildHttpClient(engine: HttpClientEngine) =
+    HttpClient(engine) {
         install(ContentNegotiation) {
             json(
                 Json {
@@ -101,4 +110,3 @@ private val httpClient by lazy {
             )
         }
     }
-}
