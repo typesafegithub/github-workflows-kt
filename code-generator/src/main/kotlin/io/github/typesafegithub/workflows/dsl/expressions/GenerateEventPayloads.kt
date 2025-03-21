@@ -160,8 +160,5 @@ fun Map.Entry<String, JsonElement>.generatePropertySpec(
                 .initializer("%T(%S)", fakeList, "github.$key.$child")
                 .build()
         }
-        else -> {
-            null
-        }
     }
 }
