@@ -2,7 +2,6 @@ package io.github.typesafegithub.workflows.shared.internal.app
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.io.File
 import java.security.KeyPairGenerator
 import java.security.interfaces.RSAPrivateKey
 import java.util.Base64

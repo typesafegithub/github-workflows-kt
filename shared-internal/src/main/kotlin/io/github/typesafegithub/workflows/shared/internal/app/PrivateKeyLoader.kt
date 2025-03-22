@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.shared.internal.app
 
-import java.io.File
 import java.security.KeyFactory
 import java.security.interfaces.RSAPrivateKey
 import java.security.spec.PKCS8EncodedKeySpec
