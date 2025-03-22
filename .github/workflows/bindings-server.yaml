@@ -48,7 +48,7 @@ jobs:
     needs:
     - 'check_yaml_consistency'
     env:
-      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      PRIVATE_KEY: '${{ secrets.PRIVATE_KEY }}'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
