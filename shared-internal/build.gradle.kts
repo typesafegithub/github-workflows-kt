@@ -16,6 +16,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:3.1.1")
     implementation("io.ktor:ktor-client-content-negotiation:3.1.1")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.1")
+    implementation("com.auth0:java-jwt:4.4.0")
 
     // It's a workaround for a problem with Kotlin Scripting, and how it resolves
     // conflicting versions: https://youtrack.jetbrains.com/issue/KT-69145
