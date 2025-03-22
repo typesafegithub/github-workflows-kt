@@ -7,10 +7,10 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.util.Base64
 
 class PrivateKeyLoader(
-    val privateKey: File,
+    val privateKey: String,
 ) {
     fun load(): RSAPrivateKey {
-        val content = privateKey.readLines()
+        val content = privateKey.lines()
         val filtered = content.filter { !it.trim().startsWith("-----") }.joinToString("").replace("\\s".toRegex(), "")
         val keyBytes = Base64.getDecoder().decode(filtered)
         val keySpec = PKCS8EncodedKeySpec(keyBytes)

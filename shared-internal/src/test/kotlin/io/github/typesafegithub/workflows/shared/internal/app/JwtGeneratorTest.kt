@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.date.shouldBeCloseTo
 import io.kotest.matchers.shouldBe
-import java.io.File
 import java.security.KeyPairGenerator
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -33,15 +32,11 @@ class JwtGeneratorTest :
                 -----END PRIVATE KEY-----
                 """.trimIndent()
 
-            // Write the PEM content to a temporary file.
-            val tempFile = File.createTempFile("testkey", ".pem")
-            tempFile.writeText(pemContent)
-
             // Define a test GitHub client ID.
             val testClientId = "TestClientId"
 
             // Create the JwtGenerator instance using the temporary private key file.
-            val jwtGenerator = JwtGenerator(testClientId, tempFile)
+            val jwtGenerator = JwtGenerator(testClientId, pemContent)
 
             // Generate the JWT token.
             val token = jwtGenerator.generateJWT()

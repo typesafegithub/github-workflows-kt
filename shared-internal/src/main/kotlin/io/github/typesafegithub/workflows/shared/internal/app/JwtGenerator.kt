@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import java.io.File
 import java.time.Instant
+import kotlin.io.path.createTempFile
+import kotlin.io.path.writeText
 
 /**
  * JWT generator that creates JSON Web Tokens (JWT) signed with RSA256.
@@ -15,7 +17,7 @@ import java.time.Instant
  */
 class JwtGenerator(
     val githubClientId: String = "Iv23liIZ17VJKUpjacBs", // Public Client ID
-    val privateKey: File = File("/config/app.pem"), // Either mounted via docker or present at location
+    val privateKey: String = System.getenv("PRIVATE_KEY")
 ) {
     fun generateJWT(): String {
         val key = PrivateKeyLoader(privateKey).load()

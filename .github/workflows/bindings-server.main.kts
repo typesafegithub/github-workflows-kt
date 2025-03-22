@@ -31,7 +31,7 @@ import kotlin.time.TimeSource
 val DOCKERHUB_USERNAME by Contexts.secrets
 val DOCKERHUB_PASSWORD by Contexts.secrets
 val TRIGGER_IMAGE_PULL by Contexts.secrets
-val GITHUB_TOKEN by Contexts.secrets
+val PRIVATE_KEY by Contexts.secrets
 
 @OptIn(ExperimentalKotlinLogicStep::class)
 workflow(
@@ -52,7 +52,7 @@ workflow(
         name = "End-to-end test",
         runsOn = UbuntuLatest,
         env = mapOf(
-            "GITHUB_TOKEN" to expr { GITHUB_TOKEN },
+            "PRIVATE_KEY" to expr { PRIVATE_KEY },
         ),
     ) {
         uses(action = Checkout())

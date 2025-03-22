@@ -29,12 +29,8 @@ class PrivateKeyLoaderTest :
                 -----END PRIVATE KEY-----
                 """.trimIndent()
 
-            // Write the PEM content to a temporary file.
-            val tempFile = File.createTempFile("testkey_header_footer", ".pem")
-            tempFile.writeText(pemContent)
-
             // Load the private key using PrivateKeyLoader.
-            val loadedKey = PrivateKeyLoader(tempFile).load()
+            val loadedKey = PrivateKeyLoader(pemContent).load()
 
             // Assert that the loaded key matches the original key.
             loadedKey shouldBe originalPrivateKey
@@ -54,12 +50,8 @@ class PrivateKeyLoaderTest :
             // Create content without header and footer (only the Base64-encoded key).
             val pemContent = base64Key.chunked(64).joinToString("\n")
 
-            // Write the content to a temporary file.
-            val tempFile = File.createTempFile("testkey_no_header_footer", ".pem")
-            tempFile.writeText(pemContent)
-
             // Load the private key using PrivateKeyLoader.
-            val loadedKey = PrivateKeyLoader(tempFile).load()
+            val loadedKey = PrivateKeyLoader(pemContent).load()
 
             // Assert that the loaded key matches the original key.
             loadedKey shouldBe originalPrivateKey
