@@ -14,14 +14,15 @@ import java.time.Instant
  * @param privateKey the RSA private key file used to sign tokens (expected to be in PKCS#8 format).
  */
 class JwtGenerator(
-    val githubClientId: String = "Iv23liIZ17VJKUpjacBs",         // Public Client ID
-    val privateKey: File = File("/config/app.pem"),  // Either mounted via docker or present at location
+    val githubClientId: String = "Iv23liIZ17VJKUpjacBs", // Public Client ID
+    val privateKey: File = File("/config/app.pem"), // Either mounted via docker or present at location
 ) {
     fun generateJWT(): String {
         val key = PrivateKeyLoader(privateKey).load()
         val algorithm = Algorithm.RSA256(null, key)
         val now = Instant.now()
-        return JWT.create()
+        return JWT
+            .create()
             .withIssuer(githubClientId)
             .withIssuedAt(now.minusMinutes(1))
             .withExpiresAt(now.plusMinutes(9))
@@ -30,4 +31,5 @@ class JwtGenerator(
 }
 
 private fun Instant.minusMinutes(minutes: Long): Instant = minusSeconds(minutes * 60)
+
 private fun Instant.plusMinutes(minutes: Long): Instant = plusSeconds(minutes * 60)

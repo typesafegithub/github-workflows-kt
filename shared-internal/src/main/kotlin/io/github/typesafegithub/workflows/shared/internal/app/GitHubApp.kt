@@ -14,29 +14,30 @@ import java.time.ZonedDateTime
 class GitHubApp(
     private val installationId: String = "62885502",
 ) {
-    val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json { ignoreUnknownKeys = false },
-            )
+    val httpClient =
+        HttpClient {
+            install(ContentNegotiation) {
+                json(
+                    Json { ignoreUnknownKeys = false },
+                )
+            }
         }
-    }
 
     var token: Token? = null
 
     suspend fun accessToken(): String {
         if (token?.isExpired() == false) return token!!.token
-        token = httpClient.post("https://api.github.com/app/installations/$installationId/access_tokens") {
-            header("Accept", "application/vnd.github+json")
-            header("Authorization", "Bearer ${generateJWT()}")
-            header("X-GitHub-Api-Version", "2022-11-28")
-        }.body()
+        token =
+            httpClient
+                .post("https://api.github.com/app/installations/$installationId/access_tokens") {
+                    header("Accept", "application/vnd.github+json")
+                    header("Authorization", "Bearer ${generateJWT()}")
+                    header("X-GitHub-Api-Version", "2022-11-28")
+                }.body()
         return token!!.token
     }
 
-    private fun generateJWT(): String {
-        return JwtGenerator().generateJWT()
-    }
+    private fun generateJWT(): String = JwtGenerator().generateJWT()
 
     @Serializable
     data class Token(

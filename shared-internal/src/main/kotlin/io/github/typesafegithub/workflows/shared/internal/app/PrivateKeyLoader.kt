@@ -6,7 +6,9 @@ import java.security.interfaces.RSAPrivateKey
 import java.security.spec.PKCS8EncodedKeySpec
 import java.util.Base64
 
-class PrivateKeyLoader(val privateKey: File) {
+class PrivateKeyLoader(
+    val privateKey: File,
+) {
     fun load(): RSAPrivateKey {
         val content = privateKey.readLines()
         val filtered = content.filter { !it.trim().startsWith("-----") }.joinToString("").replace("\\s".toRegex(), "")
