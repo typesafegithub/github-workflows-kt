@@ -31,7 +31,7 @@ import kotlin.time.TimeSource
 val DOCKERHUB_USERNAME by Contexts.secrets
 val DOCKERHUB_PASSWORD by Contexts.secrets
 val TRIGGER_IMAGE_PULL by Contexts.secrets
-val GITHUB_APP_PRIVATE_KEY by Contexts.secrets
+val APP_PRIVATE_KEY by Contexts.secrets
 
 @OptIn(ExperimentalKotlinLogicStep::class)
 workflow(
