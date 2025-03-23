@@ -52,7 +52,7 @@ workflow(
         name = "End-to-end test",
         runsOn = UbuntuLatest,
         env = mapOf(
-            "GITHUB_APP_PRIVATE_KEY" to expr { APP_PRIVATE_KEY },
+            "APP_PRIVATE_KEY" to expr { APP_PRIVATE_KEY },
         ),
     ) {
         uses(action = Checkout())

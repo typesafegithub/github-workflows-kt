@@ -14,7 +14,7 @@ import java.time.Instant
  */
 class JwtGenerator(
     val githubClientId: String = "Iv23liIZ17VJKUpjacBs", // Public Client ID
-    val privateKey: String = System.getenv("GITHUB_APP_PRIVATE_KEY"),
+    val privateKey: String = System.getenv("APP_PRIVATE_KEY"),
 ) {
     fun generateJWT(): String {
         val key = PrivateKeyLoader(privateKey).load()
