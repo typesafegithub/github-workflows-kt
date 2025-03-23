@@ -9,8 +9,12 @@ class PrivateKeyLoader(
     val privateKey: String,
 ) {
     fun load(): RSAPrivateKey {
-        val content = privateKey.lines()
-        val filtered = content.filter { !it.trim().startsWith("-----") }.joinToString("").replace("\\s".toRegex(), "")
+        val filtered = privateKey
+            // Remove the standard PEM headers if present (even if they're on the same line)
+            .replace("-----BEGIN PRIVATE KEY-----", "")
+            .replace("-----END PRIVATE KEY-----", "")
+            // Remove all remaining whitespace
+            .replace("\\s".toRegex(), "")
         val keyBytes = Base64.getDecoder().decode(filtered)
         val keySpec = PKCS8EncodedKeySpec(keyBytes)
         val keyFactory = KeyFactory.getInstance("RSA")
