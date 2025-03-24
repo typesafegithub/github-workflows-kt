@@ -2,7 +2,7 @@ package io.github.typesafegithub.workflows.updates
 
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
-import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
+import io.github.typesafegithub.workflows.shared.internal.getAppAccessTokenOrNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.toList
@@ -28,19 +28,19 @@ public fun Workflow.reportAvailableUpdates(
         if (System.getenv("GHWKT_RUN_STEP") == null) {
             reportAvailableUpdatesInternal(
                 reportWhenTokenUnset = reportWhenTokenUnset,
-                githubToken = githubToken,
+                githubAppAccessToken = githubToken,
             )
         }
     }
 
 internal suspend fun Workflow.reportAvailableUpdatesInternal(
     reportWhenTokenUnset: Boolean = false,
-    githubToken: String? = null,
+    githubAppAccessToken: String? = null,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
 ) {
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,
-        githubToken = githubToken ?: getGithubTokenOrNull(),
+        githubAppAccessToken = githubAppAccessToken ?: getAppAccessTokenOrNull(),
     ).onEach { regularActionVersions ->
         val usesString =
             with(regularActionVersions.action) {
