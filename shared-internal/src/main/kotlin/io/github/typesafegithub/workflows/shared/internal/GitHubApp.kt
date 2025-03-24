@@ -33,29 +33,28 @@ data class Token(
     fun isExpired() = expiresAtDate.isBefore(ZonedDateTime.now())
 }
 
-private val httpClient = HttpClient {
-    install(ContentNegotiation) {
-        json(
-          Json { ignoreUnknownKeys = false },
-        )
+private val httpClient =
+    HttpClient {
+        install(ContentNegotiation) {
+            json(
+                Json { ignoreUnknownKeys = false },
+            )
+        }
     }
-}
 
-suspend fun getInstallationAccessToken(
-    installationId: String = "62885502",
-): String {
+suspend fun getInstallationAccessToken(installationId: String = "62885502"): String {
     if (cachedAccessToken?.isExpired() == false) return cachedAccessToken!!.token
-    cachedAccessToken = httpClient.post("https://api.github.com/app/installations/$installationId/access_tokens") {
-        header("Accept", "application/vnd.github+json")
-        header("Authorization", "Bearer ${generateJWTToken()}")
-        header("X-GitHub-Api-Version", "2022-11-28")
-    }.body()
+    cachedAccessToken =
+        httpClient
+            .post("https://api.github.com/app/installations/$installationId/access_tokens") {
+                header("Accept", "application/vnd.github+json")
+                header("Authorization", "Bearer ${generateJWTToken()}")
+                header("X-GitHub-Api-Version", "2022-11-28")
+            }.body()
     return cachedAccessToken!!.token
 }
 
-private fun generateJWTToken(
-    githubClientId: String = "Iv23liIZ17VJKUpjacBs",
-): String {
+private fun generateJWTToken(githubClientId: String = "Iv23liIZ17VJKUpjacBs"): String {
     val key = loadRsaKey()
     val algorithm = Algorithm.RSA256(null, key)
     val now = Instant.now()
@@ -67,9 +66,7 @@ private fun generateJWTToken(
         .sign(algorithm)
 }
 
-private fun loadRsaKey(
-    privateKey: String = System.getenv("APP_PRIVATE_KEY"),
-): RSAPrivateKey {
+private fun loadRsaKey(privateKey: String = System.getenv("APP_PRIVATE_KEY")): RSAPrivateKey {
     val filtered =
         privateKey
             .replace("-----BEGIN PRIVATE KEY-----", "")
@@ -82,4 +79,5 @@ private fun loadRsaKey(
 }
 
 private fun Instant.minusMinutes(minutes: Long): Instant = minusSeconds(minutes * 60)
+
 private fun Instant.plusMinutes(minutes: Long): Instant = plusSeconds(minutes * 60)
