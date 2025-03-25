@@ -77,6 +77,6 @@ pitest {
     junit5PluginVersion.set("1.1.0")
 }
 
-tasks.dokkaHtml {
+dokka {
     moduleName.set("github-workflows-kt")
 }
