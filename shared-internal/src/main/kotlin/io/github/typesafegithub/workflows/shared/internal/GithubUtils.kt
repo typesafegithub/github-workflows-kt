@@ -8,20 +8,23 @@ import kotlinx.coroutines.runBlocking
  * The token may be of various kind, e.g. a Personal Access Token, or an
  * Application Installation Token.
  */
-fun getGithubAuthTokenOrNull(): String? = runBlocking {
-    (System.getenv("GITHUB_TOKEN") ?: getInstallationAccessToken())
-        .also {
-            if (it == null) {
-                println(
-                    """
-                    Missing environment variable export GITHUB_TOKEN=token
-                    Create a personal token at https://github.com/settings/tokens
-                    The token needs to have public_repo scope.
-                    """.trimIndent(),
-                )
-            }
-        }
-}
+fun getGithubAuthTokenOrNull(): String? =
+    runBlocking {
+        (System.getenv("GITHUB_TOKEN") ?: getInstallationAccessToken())
+        // TODO: make this function return null if GitHub app's private key is unset,
+        //  so that we have this nice error message.
+//        .also {
+//            if (it == null) {
+//                println(
+//                    """
+//                    Missing environment variable export GITHUB_TOKEN=token
+//                    Create a personal token at https://github.com/settings/tokens
+//                    The token needs to have public_repo scope.
+//                    """.trimIndent(),
+//                )
+//            }
+//        }
+    }
 
 /**
  * Returns a token that should be used to make authorized calls to GitHub,
