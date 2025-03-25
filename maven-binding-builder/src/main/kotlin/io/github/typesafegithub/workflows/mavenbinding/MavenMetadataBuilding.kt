@@ -12,15 +12,15 @@ import java.time.format.DateTimeFormatter
 private val logger = logger { }
 
 internal suspend fun ActionCoords.buildMavenMetadataFile(
-    githubToken: String,
+    githubAuthToken: String,
     fetchAvailableVersions: suspend (
         owner: String,
         name: String,
-        githubToken: String?,
+        githubAuthToken: String?,
     ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
 ): String? {
     val availableVersions =
-        fetchAvailableVersions(owner, name, githubToken)
+        fetchAvailableVersions(owner, name, githubAuthToken)
             .getOrElse {
                 logger.error { it }
                 emptyList()

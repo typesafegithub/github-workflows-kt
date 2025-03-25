@@ -1,6 +1,12 @@
 package io.github.typesafegithub.workflows.shared.internal
 
-fun getGithubTokenOrNull(): String? =
+/**
+ * Returns a token that should be used to make authorized calls to GitHub,
+ * or null if no token was configured.
+ * The token may be of various kind, e.g. a Personal Access Token, or an
+ * Application Installation Token.
+ */
+fun getGithubAuthTokenOrNull(): String? =
     System
         .getenv("GITHUB_TOKEN")
         .also {
@@ -15,7 +21,13 @@ fun getGithubTokenOrNull(): String? =
             }
         }
 
-fun getGithubToken(): String =
+/**
+ * Returns a token that should be used to make authorized calls to GitHub,
+ * or throws an exception if no token was configured.
+ * The token may be of various kind, e.g. a Personal Access Token, or an
+ * Application Installation Token.
+ */
+fun getGithubAuthToken(): String =
     System.getenv("GITHUB_TOKEN")
         ?: error(
             """

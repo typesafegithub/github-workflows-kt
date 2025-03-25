@@ -5,7 +5,7 @@ import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
-import io.github.typesafegithub.workflows.shared.internal.getGithubTokenOrNull
+import io.github.typesafegithub.workflows.shared.internal.getGithubAuthTokenOrNull
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.github.typesafegithub.workflows.updates.model.RegularActionVersions
 import kotlinx.coroutines.flow.Flow
@@ -17,9 +17,9 @@ import kotlin.io.path.readText
 
 internal suspend fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
-    githubToken: String? = getGithubTokenOrNull(),
+    githubAuthToken: String? = getGithubAuthTokenOrNull(),
 ): Flow<RegularActionVersions> {
-    if (githubToken == null && !reportWhenTokenUnset) {
+    if (githubAuthToken == null && !reportWhenTokenUnset) {
         githubWarning("github token is required, but not set, skipping api calls")
         return emptyFlow()
     }
@@ -28,7 +28,7 @@ internal suspend fun Workflow.availableVersionsForEachAction(
         groupedSteps.forEach { (action, steps) ->
             val availableVersions =
                 action.fetchAvailableVersionsOrWarn(
-                    githubToken = githubToken,
+                    githubAuthToken = githubAuthToken,
                 )
             val currentVersion = Version(action.actionVersion)
             if (availableVersions != null) {
@@ -49,12 +49,12 @@ internal suspend fun Workflow.availableVersionsForEachAction(
     }
 }
 
-internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String?): List<Version>? =
+internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubAuthToken: String?): List<Version>? =
     try {
         fetchAvailableVersions(
             owner = actionOwner,
             name = actionName.substringBefore('/'),
-            githubToken = githubToken,
+            githubAuthToken = githubAuthToken,
         ).getOrElse {
             throw Exception(it)
         }
