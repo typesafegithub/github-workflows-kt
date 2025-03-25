@@ -28,19 +28,19 @@ public fun Workflow.reportAvailableUpdates(
         if (System.getenv("GHWKT_RUN_STEP") == null) {
             reportAvailableUpdatesInternal(
                 reportWhenTokenUnset = reportWhenTokenUnset,
-                githubAppAccessToken = githubToken,
+                githubToken = githubToken,
             )
         }
     }
 
 internal suspend fun Workflow.reportAvailableUpdatesInternal(
     reportWhenTokenUnset: Boolean = false,
-    githubAppAccessToken: String? = null,
+    githubToken: String? = null,
     stepSummary: GithubStepSummary? = GithubStepSummary.fromEnv(),
 ) {
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,
-        githubAppAccessToken = githubAppAccessToken ?: getAppAccessTokenOrNull(),
+        githubToken = githubToken ?: getAppAccessTokenOrNull(),
     ).onEach { regularActionVersions ->
         val usesString =
             with(regularActionVersions.action) {

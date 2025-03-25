@@ -17,9 +17,9 @@ import kotlin.io.path.readText
 
 internal fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
-    githubAppAccessToken: String? = getAppAccessTokenOrNull(),
+    githubToken: String? = getAppAccessTokenOrNull(),
 ): Flow<RegularActionVersions> {
-    if (githubAppAccessToken == null && !reportWhenTokenUnset) {
+    if (githubToken == null && !reportWhenTokenUnset) {
         githubWarning("github app token is required, but not set, skipping api calls")
         return emptyFlow()
     }
@@ -28,7 +28,7 @@ internal fun Workflow.availableVersionsForEachAction(
         groupedSteps.forEach { (action, steps) ->
             val availableVersions =
                 action.fetchAvailableVersionsOrWarn(
-                    githubToken = githubAppAccessToken,
+                    githubToken = githubToken,
                 )
             val currentVersion = Version(action.actionVersion)
             if (availableVersions != null) {
@@ -54,7 +54,7 @@ internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: 
         fetchAvailableVersions(
             owner = actionOwner,
             name = actionName.substringBefore('/'),
-            githubAppAccessToken = githubToken,
+            githubToken = githubToken,
         ).getOrElse {
             throw Exception(it)
         }

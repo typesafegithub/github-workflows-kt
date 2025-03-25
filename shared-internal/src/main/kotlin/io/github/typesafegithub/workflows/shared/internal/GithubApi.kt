@@ -21,7 +21,7 @@ import java.time.ZonedDateTime
 suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
-    githubAppAccessToken: String?,
+    githubToken: String?,
     httpClientEngine: HttpClientEngine = CIO.create(),
 ): Either<String, List<Version>> =
     either {
@@ -29,8 +29,8 @@ suspend fun fetchAvailableVersions(
         return listOf(
             apiTagsUrl(owner = owner, name = name),
             apiBranchesUrl(owner = owner, name = name),
-        ).flatMap { url -> fetchGithubRefs(url, githubAppAccessToken, httpClient).bind() }
-            .versions(githubAppAccessToken, httpClient)
+        ).flatMap { url -> fetchGithubRefs(url, githubToken, httpClient).bind() }
+            .versions(githubToken, httpClient)
     }
 
 private fun List<GithubRef>.versions(

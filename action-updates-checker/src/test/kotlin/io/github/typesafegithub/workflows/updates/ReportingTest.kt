@@ -107,7 +107,7 @@ class ReportingTest :
                         runBlocking {
                             it.availableVersionsForEachAction(
                                 reportWhenTokenUnset = false,
-                                githubAppAccessToken = null,
+                                githubToken = null,
                             )
                         }
                     }.toList()
