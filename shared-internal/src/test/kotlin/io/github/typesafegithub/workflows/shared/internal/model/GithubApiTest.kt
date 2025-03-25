@@ -98,7 +98,7 @@ class GithubApiTest :
                 fetchAvailableVersions(
                     owner = "some-owner",
                     name = "some-name",
-                    githubToken = "token",
+                    githubAuthToken = "token",
                     httpClientEngine = mockEngine,
                 )
 
@@ -129,7 +129,7 @@ class GithubApiTest :
                 fetchAvailableVersions(
                     owner = "some-owner",
                     name = "some-name",
-                    githubToken = "token",
+                    githubAuthToken = "token",
                     httpClientEngine = mockEngine,
                 )
 

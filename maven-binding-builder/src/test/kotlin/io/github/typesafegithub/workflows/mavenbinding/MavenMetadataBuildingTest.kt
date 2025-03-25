@@ -37,7 +37,7 @@ class MavenMetadataBuildingTest :
 
             val xml =
                 actionCoords.buildMavenMetadataFile(
-                    githubToken = "SOME_TOKEN",
+                    githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
                 )
 
@@ -74,7 +74,7 @@ class MavenMetadataBuildingTest :
 
             val xml =
                 actionCoords.buildMavenMetadataFile(
-                    githubToken = "SOME_TOKEN",
+                    githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
                 )
 
@@ -89,7 +89,7 @@ class MavenMetadataBuildingTest :
 
             val xml =
                 actionCoords.buildMavenMetadataFile(
-                    githubToken = "SOME_TOKEN",
+                    githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
                 )
 
@@ -114,7 +114,7 @@ class MavenMetadataBuildingTest :
 
                 val xml =
                     actionCoords.copy(significantVersion = significantVersion).buildMavenMetadataFile(
-                        githubToken = "SOME_TOKEN",
+                        githubAuthToken = "SOME_TOKEN",
                         fetchAvailableVersions = fetchAvailableVersions,
                     )
 
