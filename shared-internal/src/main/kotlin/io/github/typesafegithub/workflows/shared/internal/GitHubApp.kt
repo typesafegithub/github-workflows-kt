@@ -18,6 +18,10 @@ import java.time.Instant
 import java.time.ZonedDateTime
 import java.util.Base64
 
+/**
+ * Returns an installation access token for the GitHub app, usable with API call to GitHub.
+ * If `null` is returned, it means that the environment wasn't configured to generate the token.
+ */
 suspend fun getInstallationAccessToken(): String? {
     if (cachedAccessToken?.isExpired() == false) return cachedAccessToken!!.token
     val jwtToken = generateJWTToken() ?: return null
