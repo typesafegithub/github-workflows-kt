@@ -98,7 +98,7 @@ jobs:
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-16'
       name: 'Generate API docs'
-      run: './gradlew :github-workflows-kt:dokkaGeneratePublicationHtml --no-configuration-cache'
+      run: './gradlew :github-workflows-kt:dokkaGenerate --no-configuration-cache'
     - id: 'step-17'
       name: 'Prepare target directory for API docs'
       run: 'mkdir -p to-gh-pages/api-docs'

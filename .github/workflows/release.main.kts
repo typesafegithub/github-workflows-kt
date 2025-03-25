@@ -80,7 +80,7 @@ private fun JobBuilder<*>.deployDocs() {
     uses(action = ActionsSetupGradle())
     run(
         name = "Generate API docs",
-        command = "./gradlew :github-workflows-kt:dokkaGeneratePublicationHtml --no-configuration-cache",
+        command = "./gradlew :github-workflows-kt:dokkaGenerate --no-configuration-cache",
     )
     run(
         name = "Prepare target directory for API docs",
