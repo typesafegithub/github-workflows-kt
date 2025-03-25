@@ -42,20 +42,21 @@ private val httpClient =
         }
     }
 
-suspend fun getInstallationAccessToken(installationId: String = "62885502"): String {
+suspend fun getInstallationAccessToken(installationId: String = "62885502"): String? {
     if (cachedAccessToken?.isExpired() == false) return cachedAccessToken!!.token
+    val jwtToken = generateJWTToken() ?: return null
     cachedAccessToken =
         httpClient
             .post("https://api.github.com/app/installations/$installationId/access_tokens") {
                 header("Accept", "application/vnd.github+json")
-                header("Authorization", "Bearer ${generateJWTToken()}")
+                header("Authorization", "Bearer $jwtToken")
                 header("X-GitHub-Api-Version", "2022-11-28")
             }.body()
     return cachedAccessToken!!.token
 }
 
-private fun generateJWTToken(githubClientId: String = "Iv23liIZ17VJKUpjacBs"): String {
-    val key = loadRsaKey()
+private fun generateJWTToken(githubClientId: String = "Iv23liIZ17VJKUpjacBs"): String? {
+    val key = loadRsaKey() ?: return null
     val algorithm = Algorithm.RSA256(null, key)
     val now = Instant.now()
     return JWT
@@ -66,7 +67,8 @@ private fun generateJWTToken(githubClientId: String = "Iv23liIZ17VJKUpjacBs"): S
         .sign(algorithm)
 }
 
-private fun loadRsaKey(privateKey: String = System.getenv("APP_PRIVATE_KEY")): RSAPrivateKey {
+private fun loadRsaKey(privateKey: String? = System.getenv("APP_PRIVATE_KEY")): RSAPrivateKey? {
+    if(privateKey == null) return null
     val filtered =
         privateKey
             .replace("-----BEGIN PRIVATE KEY-----", "")
