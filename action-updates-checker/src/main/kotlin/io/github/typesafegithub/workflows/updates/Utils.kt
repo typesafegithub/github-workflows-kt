@@ -20,7 +20,7 @@ internal suspend fun Workflow.availableVersionsForEachAction(
     githubAuthToken: String? = getGithubAuthTokenOrNull(),
 ): Flow<RegularActionVersions> {
     if (githubAuthToken == null && !reportWhenTokenUnset) {
-        githubWarning("github token is required, but not set, skipping api calls")
+        githubWarning("github auth token is required, but not set, skipping api calls")
         return emptyFlow()
     }
     val groupedSteps = groupStepsByAction()
