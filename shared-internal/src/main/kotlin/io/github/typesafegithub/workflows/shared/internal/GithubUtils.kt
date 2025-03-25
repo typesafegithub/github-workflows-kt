@@ -11,17 +11,17 @@ import kotlinx.coroutines.runBlocking
 fun getGithubAuthTokenOrNull(): String? =
     runBlocking {
         (System.getenv("GITHUB_TOKEN") ?: getInstallationAccessToken())
-        .also {
-            if (it == null) {
-                println(
-                    """
-                    Missing environment variable export GITHUB_TOKEN=token
-                    Create a personal token at https://github.com/settings/tokens
-                    The token needs to have public_repo scope.
-                    """.trimIndent(),
-                )
+            .also {
+                if (it == null) {
+                    println(
+                        """
+                        Missing environment variable export GITHUB_TOKEN=token
+                        Create a personal token at https://github.com/settings/tokens
+                        The token needs to have public_repo scope.
+                        """.trimIndent(),
+                    )
+                }
             }
-        }
     }
 
 /**

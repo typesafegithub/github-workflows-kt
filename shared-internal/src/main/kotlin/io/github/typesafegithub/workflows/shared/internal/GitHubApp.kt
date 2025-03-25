@@ -68,7 +68,7 @@ private fun generateJWTToken(githubClientId: String = "Iv23liIZ17VJKUpjacBs"): S
 }
 
 private fun loadRsaKey(privateKey: String? = System.getenv("APP_PRIVATE_KEY")): RSAPrivateKey? {
-    if(privateKey == null) return null
+    if (privateKey == null) return null
     val filtered =
         privateKey
             .replace("-----BEGIN PRIVATE KEY-----", "")
