@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
-import io.github.typesafegithub.workflows.shared.internal.getAppAccessToken
+import io.github.typesafegithub.workflows.shared.internal.getGithubAuthToken
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -26,7 +26,7 @@ private fun Route.metadata(refresh: Boolean = false) {
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
         val actionCoords = call.parameters.extractActionCoords(extractVersion = false)
 
-        val bindingArtifacts = actionCoords.buildPackageArtifacts(githubToken = getAppAccessToken())
+        val bindingArtifacts = actionCoords.buildPackageArtifacts(githubAuthToken = getGithubAuthToken())
         if (file in bindingArtifacts) {
             when (val artifact = bindingArtifacts[file]) {
                 is String -> call.respondText(text = artifact)

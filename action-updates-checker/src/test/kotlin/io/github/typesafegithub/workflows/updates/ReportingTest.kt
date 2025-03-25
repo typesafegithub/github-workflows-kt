@@ -5,7 +5,7 @@ import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.shared.internal.getAppAccessTokenOrNull
+import io.github.typesafegithub.workflows.shared.internal.getGithubAuthTokenOrNull
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -19,7 +19,7 @@ import kotlinx.coroutines.runBlocking
 class ReportingTest :
     FunSpec(
         {
-            val token = getAppAccessTokenOrNull()
+            val token = getGithubAuthTokenOrNull()
             context("tests using github token").config(enabled = token != null) {
                 val gitRootDir =
                     tempdir()
@@ -107,7 +107,7 @@ class ReportingTest :
                         runBlocking {
                             it.availableVersionsForEachAction(
                                 reportWhenTokenUnset = false,
-                                githubToken = null,
+                                githubAuthToken = null,
                             )
                         }
                     }.toList()

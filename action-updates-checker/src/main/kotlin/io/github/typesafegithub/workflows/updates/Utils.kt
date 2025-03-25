@@ -5,7 +5,7 @@ import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
-import io.github.typesafegithub.workflows.shared.internal.getAppAccessTokenOrNull
+import io.github.typesafegithub.workflows.shared.internal.getGithubAuthTokenOrNull
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.github.typesafegithub.workflows.updates.model.RegularActionVersions
 import kotlinx.coroutines.flow.Flow
@@ -15,12 +15,12 @@ import java.nio.file.Path
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 
-internal fun Workflow.availableVersionsForEachAction(
+internal suspend fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
-    githubToken: String? = getAppAccessTokenOrNull(),
+    githubAuthToken: String? = getGithubAuthTokenOrNull(),
 ): Flow<RegularActionVersions> {
-    if (githubToken == null && !reportWhenTokenUnset) {
-        githubWarning("github app token is required, but not set, skipping api calls")
+    if (githubAuthToken == null && !reportWhenTokenUnset) {
+        githubWarning("github auth token is required, but not set, skipping api calls")
         return emptyFlow()
     }
     val groupedSteps = groupStepsByAction()
@@ -28,7 +28,7 @@ internal fun Workflow.availableVersionsForEachAction(
         groupedSteps.forEach { (action, steps) ->
             val availableVersions =
                 action.fetchAvailableVersionsOrWarn(
-                    githubToken = githubToken,
+                    githubAuthToken = githubAuthToken,
                 )
             val currentVersion = Version(action.actionVersion)
             if (availableVersions != null) {
@@ -49,12 +49,12 @@ internal fun Workflow.availableVersionsForEachAction(
     }
 }
 
-internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubToken: String?): List<Version>? =
+internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubAuthToken: String?): List<Version>? =
     try {
         fetchAvailableVersions(
             owner = actionOwner,
             name = actionName.substringBefore('/'),
-            githubToken = githubToken,
+            githubAuthToken = githubAuthToken,
         ).getOrElse {
             throw Exception(it)
         }

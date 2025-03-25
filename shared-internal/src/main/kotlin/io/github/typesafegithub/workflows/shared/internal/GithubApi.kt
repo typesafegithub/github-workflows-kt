@@ -21,7 +21,7 @@ import java.time.ZonedDateTime
 suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
-    githubToken: String?,
+    githubAuthToken: String?,
     httpClientEngine: HttpClientEngine = CIO.create(),
 ): Either<String, List<Version>> =
     either {
@@ -29,12 +29,12 @@ suspend fun fetchAvailableVersions(
         return listOf(
             apiTagsUrl(owner = owner, name = name),
             apiBranchesUrl(owner = owner, name = name),
-        ).flatMap { url -> fetchGithubRefs(url, githubToken, httpClient).bind() }
-            .versions(githubToken, httpClient)
+        ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
+            .versions(githubAuthToken, httpClient)
     }
 
 private fun List<GithubRef>.versions(
-    githubAppAccessToken: String?,
+    githubAuthToken: String?,
     httpClient: HttpClient,
 ): Either<String, List<Version>> =
     either {
@@ -44,8 +44,8 @@ private fun List<GithubRef>.versions(
                 val response =
                     httpClient
                         .get(urlString = githubRef.`object`.url) {
-                            if (githubAppAccessToken != null) {
-                                bearerAuth(githubAppAccessToken)
+                            if (githubAuthToken != null) {
+                                bearerAuth(githubAuthToken)
                             }
                         }
                 val releaseDate =
@@ -61,15 +61,15 @@ private fun List<GithubRef>.versions(
 
 private suspend fun fetchGithubRefs(
     url: String,
-    githubAppAccessToken: String?,
+    githubAuthToken: String?,
     httpClient: HttpClient,
 ): Either<String, List<GithubRef>> =
     either {
         val response =
             httpClient
                 .get(urlString = url) {
-                    if (githubAppAccessToken != null) {
-                        bearerAuth(githubAppAccessToken)
+                    if (githubAuthToken != null) {
+                        bearerAuth(githubAuthToken)
                     }
                 }
         ensure(response.status.isSuccess()) {
