@@ -273,3 +273,37 @@ workflow(
         )
     }
 }
+
+workflow(
+    name = "End-to-end tests (2nd workflow)",
+    on = listOf(
+        Push(branches = listOf("main")),
+        PullRequest(),
+    ),
+    consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        env = mapOf(
+            "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
+        ),
+        additionalSteps = {
+            publishToMavenLocal()
+        },
+    ),
+    sourceFile = __FILE__,
+    targetFileName = "end-to-end-tests-2nd-workflow.yaml",
+) {
+    job(
+        id = "another_job",
+        runsOn = RunnerType.UbuntuLatest,
+    ) {
+        uses(
+            name = "Check out",
+            action = Checkout(),
+        )
+
+        run(
+            name = "Step with a Kotlin-based logic, in a different workflow",
+        ) {
+            println("Hello from Kotlin!")
+        }
+    }
+}
