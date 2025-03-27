@@ -61,7 +61,7 @@ jobs:
       name: 'Wait for the server to respond'
       env:
         GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
-      run: 'GHWKT_RUN_STEP=''end-to-end-test:step-3'' ''.github/workflows/bindings-server.main.kts'''
+      run: 'GHWKT_RUN_STEP=''bindings-server.yaml:end-to-end-test:step-3'' ''.github/workflows/bindings-server.main.kts'''
     - id: 'step-4'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
