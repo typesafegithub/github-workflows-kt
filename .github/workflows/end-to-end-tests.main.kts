@@ -281,9 +281,6 @@ workflow(
         PullRequest(),
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
-        env = mapOf(
-            "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
-        ),
         additionalSteps = {
             publishToMavenLocal()
         },
