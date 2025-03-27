@@ -297,6 +297,8 @@ workflow(
             action = Checkout(),
         )
 
+        publishToMavenLocal()
+
         run(
             name = "Step with a Kotlin-based logic, in a different workflow",
         ) {
