@@ -142,11 +142,17 @@ public class JobBuilder<OUTPUT : JobOutputs>(
             workflowBuilder.gitRootDir?.let {
                 sourceFile.toPath().relativeToAbsolute(it).invariantSeparatorsPathString
             }
+        val commandParts =
+            listOf(
+                this.workflowBuilder.workflow.targetFileName,
+                this.id,
+                id,
+            )
         val newStep =
             KotlinLogicStep(
                 id = id,
                 name = name,
-                command = "GHWKT_RUN_STEP='${this.id}:$id' '$sourceFilePath'",
+                command = "GHWKT_RUN_STEP='${commandParts.joinToString(":")}' '$sourceFilePath'",
                 logic = logic,
                 env = env + mapOf("GHWKT_GITHUB_CONTEXT_JSON" to "\${{ toJSON(github) }}"),
                 condition =

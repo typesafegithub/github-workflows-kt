@@ -56,4 +56,4 @@ jobs:
       name: 'Step with a Kotlin-based logic, in a different workflow'
       env:
         GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
-      run: 'GHWKT_RUN_STEP=''another_job:step-4'' ''.github/workflows/end-to-end-tests.main.kts'''
+      run: 'GHWKT_RUN_STEP=''end-to-end-tests-2nd-workflow.yaml:another_job:step-4'' ''.github/workflows/end-to-end-tests.main.kts'''
