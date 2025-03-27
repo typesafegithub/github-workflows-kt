@@ -131,12 +131,12 @@ jobs:
       name: 'Evaluating condition for ''Step with a Kotlin-based logic'''
       env:
         GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
-      run: 'GHWKT_RUN_STEP=''test_job_1:step-18'' ''.github/workflows/end-to-end-tests.main.kts'''
+      run: 'GHWKT_RUN_STEP=''end-to-end-tests.yaml:test_job_1:step-18'' ''.github/workflows/end-to-end-tests.main.kts'''
     - id: 'step-19'
       name: 'Step with a Kotlin-based logic'
       env:
         GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
-      run: 'GHWKT_RUN_STEP=''test_job_1:step-19'' ''.github/workflows/end-to-end-tests.main.kts'''
+      run: 'GHWKT_RUN_STEP=''end-to-end-tests.yaml:test_job_1:step-19'' ''.github/workflows/end-to-end-tests.main.kts'''
       if: '${{ steps.step-18.outputs.evaluation-result }}'
     - id: 'step-20'
       uses: 'actions/github-script@v7'

@@ -37,7 +37,15 @@ internal fun Workflow.writeToFile(
     val runStepEnvVar = getenv("GHWKT_RUN_STEP")
 
     if (runStepEnvVar != null) {
-        val (jobId, stepId) = runStepEnvVar.split(":")
+        val (targetFileName, jobId, stepId) = runStepEnvVar.split(":")
+
+        if (this.targetFileName != targetFileName) {
+            // Handles a case where there are multiple workflows with Kotlin-based
+            // steps in a single .main.kts file. Thanks to this check, only the step
+            // from the desired workflow is run.
+            return
+        }
+
         val kotlinLogicStep =
             this.jobs
                 .first { it.id == jobId }
