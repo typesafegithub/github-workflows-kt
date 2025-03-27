@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -256,6 +256,7 @@
   
   <span class="md-ellipsis">
     Introduction
+    
   </span>
   
 
@@ -288,6 +289,7 @@
   
   <span class="md-ellipsis">
     User guide
+    
   </span>
   
 
@@ -313,6 +315,7 @@
   
   <span class="md-ellipsis">
     Getting started
+    
   </span>
   
 
@@ -343,6 +346,7 @@
   
   <span class="md-ellipsis">
     Using actions
+    
   </span>
   
 
@@ -354,6 +358,7 @@
   
   <span class="md-ellipsis">
     Using actions
+    
   </span>
   
 
@@ -503,6 +508,7 @@
   
   <span class="md-ellipsis">
     Type-safe expressions
+    
   </span>
   
 
@@ -524,6 +530,7 @@
   
   <span class="md-ellipsis">
     Job outputs
+    
   </span>
   
 
@@ -545,6 +552,7 @@
   
   <span class="md-ellipsis">
     Migrating to Maven-based bindings
+    
   </span>
   
 
@@ -566,6 +574,7 @@
   
   <span class="md-ellipsis">
     Compensating library's missing features
+    
   </span>
   
 
@@ -587,6 +596,7 @@
   
   <span class="md-ellipsis">
     Nightly builds
+    
   </span>
   
 
@@ -615,6 +625,7 @@
   
   <span class="md-ellipsis">
     Feature coverage
+    
   </span>
   
 
@@ -635,6 +646,7 @@
   
   <span class="md-ellipsis">
     FAQ
+    
   </span>
   
 
@@ -655,6 +667,7 @@
   
   <span class="md-ellipsis">
     API docs
+    
   </span>
   
 
@@ -675,6 +688,7 @@
   
   <span class="md-ellipsis">
     Projects using this library
+    
   </span>
   
 
@@ -831,6 +845,7 @@
                 
                   
 
+
   
   
 
@@ -843,30 +858,78 @@ You can use any action you want. Read on to learn about your options.</p>
 <p class="admonition-title">When to use this approach</p>
 <p>This is the recommended, default approach. Start with this.</p>
 </div>
-<p>To add a dependency on an action:
-1. If you haven't already, add a dependency on a Maven repository that generates the action bindings on the fly:
-   <code>@file:Repository("https://bindings.krzeminski.it")</code>.
-2. Add a dependency on a Maven artifact, e.g. for <code>actions/checkout@v3</code> the right way to add the dependency in the
+<p>To add a dependency on an action:</p>
+<ol>
+<li>
+<p>If you haven't already, add a dependency on a Maven repository that generates the action bindings on the fly:
+   <code>@file:Repository("https://bindings.krzeminski.it")</code>.</p>
+</li>
+<li>
+<p>Add a dependency on a Maven artifact, e.g. for <code>actions/checkout@v3</code> the right way to add the dependency in the
    script is: <code>@file:DependsOn("actions:checkout:v3")</code>. As you can see, the group ID was adopted to model the action's
    owner, the artifact ID models the action name, and the version is just action's version (a tag or a branch
    corresponding to a released version). If an action's manifest is defined in a subdirectory, like the popular
    <code>gradle/actions/setup-gradle@v3</code>, replace the slashes in the action name with <code>__</code>, so in this case it would be
-   <code>@file:DependsOn("gradle:actions__setup-gradle:v3")</code>.
-3. Use the action by importing a class like <code>io.github.typesafegithub.workflows.actions.actions.Checkout</code>.</p>
+   <code>@file:DependsOn("gradle:actions__setup-gradle:v3")</code>.</p>
+<details class="tip">
+<summary>Dealing with stale Maven cache, a.k.a. using version ranges</summary>
+<p>Additionally, the name part can have the suffix <code>___major</code> or <code>___minor</code> (three leading underscores).
+Without these suffixes if you request a version <code>v1.2.3</code>, the generated YAML will also use exactly
+<code>v1.2.3</code> unless you use a custom version override. With the <code>___major</code> suffix, it would only write <code>v1</code>
+to the generated YAML, with the <code>___minor</code> suffix - <code>v1.2</code>.</p>
+<p>This is especially useful when combined with a version range. The problem with using <code>v1</code> or <code>v1.2</code> is that for
+GitHub Actions, these are changing tags or changing branches and not static releases. In the Maven world,
+however, a version that does not end with <code>-SNAPSHOT</code> is considered immutable and is not expected to change.
+This means that if a new version of the action is released that adds a new input, you cannot use it easily
+as you still have the old <code>v1</code> artifact in your Maven cache and it will not be updated usually,
+even though the binding server provides a new binding including the added input. And even if you remove the
+old version from the Maven cache and get a new version from the bindings server, other people might also have
+this outdated version in their Maven cache and then fail compilation with your changes.
+It's worth emphasizing that this problem is currently present only when iterating
+on your workflows locally. When running on GitHub Actions, this problem doesn't
+exist because the state of Maven Local repo isn't cached between the runs.</p>
+<p>To mitigate this problem, you can for example use a dependency like
+<code>gradle:actions__setup-gradle___major:[v3,v4)</code> (from <code>v3</code> inclusive to <code>v4</code> exclusive).
+This will resolve to the latest <code>v3.x.y</code> version and thus include any newly added inputs,
+but still only write <code>v3</code> to the YAML. Without the <code>___major</code> suffix or a not semantically matching
+range like <code>[v3,v5)</code> or even <code>[v3,v4]</code>, you will get problems with the consistency check as
+then the YAML output changes as soon as a new version is released. For a minor version
+you would accordingly use the <code>___minor</code> suffix together with a range like <code>[v4.0,v4.1)</code> to get
+the latest <code>v4.0</code> release if the action in question provides such a tag or branch.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If an action maintainer provides pre-releases that follow certain naming conventions as documented in the
+<a href="https://maven.apache.org/pom.html#Version_Order_Specification">Maven Documentation</a>, you might need to
+adjust the upper bound. For exmple a version <code>v4.0-beta</code> is less than <code>v4</code> and thus part of the range
+<code>[v3,v4)</code>. In such a case - or always, to be on the safe side - you might want to change the range to
+<code>[v3,v4-alpha)</code>, as the <code>alpha</code> version is the lowest possible version in Maven semantics.</p>
+</div>
+</details>
+</li>
+<li>
+<p>Use the action by importing a class like <code>io.github.typesafegithub.workflows.actions.actions.Checkout</code>.</p>
+</li>
+</ol>
 <p>For every action, a binding will be generated. However, some less popular actions don't have typings configured for
 their inputs, so by default all inputs are of type <code>String</code>, have the suffix <code>_Untyped</code>, and additionally the class
 name will have an <code>_Untyped</code> suffix. The nullability of the inputs will be according to their required status.</p>
-<p>There are two ways of configuring typings:
-1. Recommended: a typing manifest (<code>action-typing.yml</code>) in the action's repo, see
+<p>There are two ways of configuring typings:</p>
+<ol>
+<li>
+<p>Recommended: a typing manifest (<code>action-typing.yml</code>) in the action's repo, see
    <a href="https://github.com/typesafegithub/github-actions-typing/">github-actions-typing</a>. Thanks to this, the action's owner
    is responsible for providing and maintaining the typings defined in a technology-agnostic way, to be used
    <strong>not only</strong> with this Kotlin library. There are also no synchronization issues between the action itself and its
    typings. When trying to use a new action that has no typings, always discuss this approach with the action owner
-   first.
-2. Fallback: if it's not possible to host the typings with the action, use
+   first.</p>
+</li>
+<li>
+<p>Fallback: if it's not possible to host the typings with the action, use
    <a href="https://github.com/typesafegithub/github-actions-typing-catalog">github-actions-typing-catalog</a>,
    a community-maintained place to host the typings. You can contribute or fix typings for your favorite action by
    sending a PR.</p>
+</li>
+</ol>
 <p>Once there are any typings in place for the action, the <code>_Untyped</code> suffixed class is marked <code>@Deprecated</code>, and a class
 without that suffix is created additionally. In that class for each input that does not have type information available
 there will still be only the property with <code>_Untyped</code> suffix and nullability according to required status. For each
@@ -1048,7 +1111,7 @@ use a <a href="https://github.com/typesafegithub/github-workflows-kt/blob/main/g
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>

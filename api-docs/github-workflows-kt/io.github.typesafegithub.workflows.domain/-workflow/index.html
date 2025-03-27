@@ -46,11 +46,11 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-3.2.0        </div>
+3.3.0        </div>
         <div class="navigation-controls">
         <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active=""
-                        data-filter=":github-workflows-kt:dokkaHtml/main">jvm</button>
+                        data-filter=":github-workflows-kt/main">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
                         data-role="dropdown-toggle"
@@ -67,8 +67,8 @@
                     </div>
                         <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
                             <label class="checkbox">
-                                <input type="checkbox" class="checkbox--input" id=":github-workflows-kt:dokkaHtml/main"
-                                       data-filter=":github-workflows-kt:dokkaHtml/main"/>
+                                <input type="checkbox" class="checkbox--input" id=":github-workflows-kt/main"
+                                       data-filter=":github-workflows-kt/main"/>
                                 <span class="checkbox--icon"></span>
                                 jvm
                             </label>
@@ -104,28 +104,28 @@
                 </div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="classlike" id="content" pageIds="github-workflows-kt::io.github.typesafegithub.workflows.domain/Workflow///PointingToDeclaration//751164737">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="github-workflows-kt::io.github.typesafegithub.workflows.domain/Workflow///PointingToDeclaration//501414042">
   <div class="breadcrumbs"><a href="../../../index.html">github-workflows-kt</a><span class="delimiter">/</span><a href="../index.html">io.github.typesafegithub.workflows.domain</a><span class="delimiter">/</span><span class="current">Workflow</span></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Workflow</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">Workflow</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>on<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../io.github.typesafegithub.workflows.domain.triggers/-trigger/index.html">Trigger</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>env<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>sourceFile<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>targetFileName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>consistencyCheckJobConfig<span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-consistency-check-job-config/index.html">ConsistencyCheckJobConfig</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>concurrency<span class="token operator">: </span><a href="../-concurrency/index.html">Concurrency</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>permissions<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../-permission/index.html">Permission</a><span class="token punctuation">, </span><a href="../-mode/index.html">Mode</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>jobs<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-job/index.html">Job</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>_customArguments<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>mapOf()</span></span><span class="token punctuation">)</span> : <a href="../../io.github.typesafegithub.workflows.dsl/-has-custom-arguments/index.html">HasCustomArguments</a></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">Workflow</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>on<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../io.github.typesafegithub.workflows.domain.triggers/-trigger/index.html">Trigger</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>env<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>sourceFile<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html">File</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>targetFileName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>consistencyCheckJobConfig<span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-consistency-check-job-config/index.html">ConsistencyCheckJobConfig</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>concurrency<span class="token operator">: </span><a href="../-concurrency/index.html">Concurrency</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>permissions<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../-permission/index.html">Permission</a><span class="token punctuation">, </span><a href="../-mode/index.html">Mode</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>jobs<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-job/index.html">Job</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>_customArguments<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>mapOf()</span></span><span class="token punctuation">)</span> : <a href="../../io.github.typesafegithub.workflows.dsl/-has-custom-arguments/index.html">HasCustomArguments</a></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
         <h2 class="">Constructors</h2>
-        <div class="table"><a data-name="723047720%2FConstructors%2F751164737" anchor-label="Workflow" id="723047720%2FConstructors%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+        <div class="table"><a data-name="723047720%2FConstructors%2F501414042" anchor-label="Workflow" id="723047720%2FConstructors%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow.html"><span><span>Workflow</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="723047720%2FConstructors%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="723047720%2FConstructors%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">on<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../io.github.typesafegithub.workflows.domain.triggers/-trigger/index.html">Trigger</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">env<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">sourceFile<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">targetFileName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">consistencyCheckJobConfig<span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-consistency-check-job-config/index.html">ConsistencyCheckJobConfig</a><span class="token punctuation">, </span></span><span class="parameter ">concurrency<span class="token operator">: </span><a href="../-concurrency/index.html">Concurrency</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">permissions<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../-permission/index.html">Permission</a><span class="token punctuation">, </span><a href="../-mode/index.html">Mode</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">jobs<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-job/index.html">Job</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">_customArguments<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>mapOf()</span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">on<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../io.github.typesafegithub.workflows.domain.triggers/-trigger/index.html">Trigger</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">env<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">sourceFile<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html">File</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">targetFileName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">consistencyCheckJobConfig<span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-consistency-check-job-config/index.html">ConsistencyCheckJobConfig</a><span class="token punctuation">, </span></span><span class="parameter ">concurrency<span class="token operator">: </span><a href="../-concurrency/index.html">Concurrency</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">permissions<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../-permission/index.html">Permission</a><span class="token punctuation">, </span><a href="../-mode/index.html">Mode</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">jobs<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-job/index.html">Job</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">_customArguments<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>mapOf()</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -134,152 +134,152 @@
       </div>
       <div data-togglable="PROPERTY">
         <h2 class="">Properties</h2>
-        <div class="table"><a data-name="-795122281%2FProperties%2F751164737" anchor-label="_customArguments" id="-795122281%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+        <div class="table"><a data-name="-795122281%2FProperties%2F501414042" anchor-label="_customArguments" id="-795122281%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="_custom-arguments.html"><span>_</span><wbr></wbr><span>custom</span><wbr></wbr><span><span>Arguments</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-795122281%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-795122281%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="_custom-arguments.html">_customArguments</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="_custom-arguments.html">_customArguments</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1132890570%2FProperties%2F751164737" anchor-label="concurrency" id="1132890570%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="1132890570%2FProperties%2F501414042" anchor-label="concurrency" id="1132890570%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="concurrency.html"><span><span>concurrency</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1132890570%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1132890570%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="concurrency.html">concurrency</a><span class="token operator">: </span><a href="../-concurrency/index.html">Concurrency</a><span class="token operator">?</span><span class="token operator"> = </span>null</div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="concurrency.html">concurrency</a><span class="token operator">: </span><a href="../-concurrency/index.html">Concurrency</a><span class="token operator">?</span><span class="token operator"> = </span>null</div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="545090414%2FProperties%2F751164737" anchor-label="consistencyCheckJobConfig" id="545090414%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="545090414%2FProperties%2F501414042" anchor-label="consistencyCheckJobConfig" id="545090414%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="consistency-check-job-config.html"><span>consistency</span><wbr></wbr><span>Check</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>Config</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="545090414%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="545090414%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="consistency-check-job-config.html">consistencyCheckJobConfig</a><span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-consistency-check-job-config/index.html">ConsistencyCheckJobConfig</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="consistency-check-job-config.html">consistencyCheckJobConfig</a><span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-consistency-check-job-config/index.html">ConsistencyCheckJobConfig</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="56191408%2FProperties%2F751164737" anchor-label="env" id="56191408%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="56191408%2FProperties%2F501414042" anchor-label="env" id="56191408%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="env.html"><span><span>env</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="56191408%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="56191408%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="env.html">env</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="env.html">env</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="171581927%2FProperties%2F751164737" anchor-label="jobs" id="171581927%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="171581927%2FProperties%2F501414042" anchor-label="jobs" id="171581927%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="jobs.html"><span><span>jobs</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="171581927%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="171581927%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="jobs.html">jobs</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-job/index.html">Job</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="jobs.html">jobs</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-job/index.html">Job</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-526091950%2FProperties%2F751164737" anchor-label="name" id="-526091950%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="-526091950%2FProperties%2F501414042" anchor-label="name" id="-526091950%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="name.html"><span><span>name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-526091950%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-526091950%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-272434050%2FProperties%2F751164737" anchor-label="on" id="-272434050%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="-272434050%2FProperties%2F501414042" anchor-label="on" id="-272434050%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="on.html"><span><span>on</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-272434050%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-272434050%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="on.html">on</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../io.github.typesafegithub.workflows.domain.triggers/-trigger/index.html">Trigger</a><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="on.html">on</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../io.github.typesafegithub.workflows.domain.triggers/-trigger/index.html">Trigger</a><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1174919687%2FProperties%2F751164737" anchor-label="permissions" id="-1174919687%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="-1174919687%2FProperties%2F501414042" anchor-label="permissions" id="-1174919687%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="permissions.html"><span><span>permissions</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1174919687%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1174919687%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="permissions.html">permissions</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../-permission/index.html">Permission</a><span class="token punctuation">, </span><a href="../-mode/index.html">Mode</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="permissions.html">permissions</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="../-permission/index.html">Permission</a><span class="token punctuation">, </span><a href="../-mode/index.html">Mode</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="2026197286%2FProperties%2F751164737" anchor-label="sourceFile" id="2026197286%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="2026197286%2FProperties%2F501414042" anchor-label="sourceFile" id="2026197286%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="source-file.html"><span>source</span><wbr></wbr><span><span>File</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2026197286%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2026197286%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="source-file.html">sourceFile</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html">File</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="source-file.html">sourceFile</a><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html">File</a><span class="token operator">?</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1561807269%2FProperties%2F751164737" anchor-label="targetFileName" id="1561807269%2FProperties%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="1561807269%2FProperties%2F501414042" anchor-label="targetFileName" id="1561807269%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="target-file-name.html"><span>target</span><wbr></wbr><span>File</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1561807269%2FProperties%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1561807269%2FProperties%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="target-file-name.html">targetFileName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="target-file-name.html">targetFileName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -288,32 +288,32 @@
       </div>
       <div data-togglable="EXTENSION_FUNCTION">
         <h2 class="">Functions</h2>
-        <div class="table"><a data-name="-611062813%2FFunctions%2F751164737" anchor-label="generateYaml" id="-611062813%2FFunctions%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+        <div class="table"><a data-name="-611062813%2FFunctions%2F501414042" anchor-label="generateYaml" id="-611062813%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.yaml/generate-yaml.html"><span>generate</span><wbr></wbr><span><span>Yaml</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-611062813%2FFunctions%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-611062813%2FFunctions%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">Workflow</a><span class="token punctuation">.</span><a href="../../io.github.typesafegithub.workflows.yaml/generate-yaml.html"><span class="token function">generateYaml</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">gitRootDir<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html">Path</a><span class="token operator">?</span><span class="token operator"> = </span>sourceFile?.toPath()?.absolute()?.findGitRoot()<span class="token punctuation">, </span></span><span class="parameter ">preamble<span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-preamble/index.html">Preamble</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Return a YAML for a workflow passed as the receiver.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">Workflow</a><span class="token punctuation">.</span><a href="../../io.github.typesafegithub.workflows.yaml/generate-yaml.html"><span class="token function">generateYaml</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">gitRootDir<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Path.html">Path</a><span class="token operator">?</span><span class="token operator"> = </span>sourceFile?.toPath()?.absolute()?.findGitRoot()<span class="token punctuation">, </span></span><span class="parameter ">preamble<span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.yaml/-preamble/index.html">Preamble</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Return a YAML for a workflow passed as the receiver.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="524713165%2FFunctions%2F751164737" anchor-label="toBuilder" id="524713165%2FFunctions%2F751164737" data-filterable-set=":github-workflows-kt:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt:dokkaHtml/main" data-filterable-set=":github-workflows-kt:dokkaHtml/main">
+<a data-name="524713165%2FFunctions%2F501414042" anchor-label="toBuilder" id="524713165%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl/to-builder.html"><span>to</span><wbr></wbr><span><span>Builder</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="524713165%2FFunctions%2F751164737"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="524713165%2FFunctions%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">Workflow</a><span class="token punctuation">.</span><a href="../../io.github.typesafegithub.workflows.dsl/to-builder.html"><span class="token function">toBuilder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.dsl/-workflow-builder/index.html">WorkflowBuilder</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">Workflow</a><span class="token punctuation">.</span><a href="../../io.github.typesafegithub.workflows.dsl/to-builder.html"><span class="token function">toBuilder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../io.github.typesafegithub.workflows.dsl/-workflow-builder/index.html">WorkflowBuilder</a></div></div></div>
                 </div>
               </div>
             </div>

@@ -1,1 +1,1 @@
-sourceset_dependencies='{":github-workflows-kt:dokkaHtml/main":[]}'
+sourceset_dependencies='{":github-workflows-kt/main":[]}'
