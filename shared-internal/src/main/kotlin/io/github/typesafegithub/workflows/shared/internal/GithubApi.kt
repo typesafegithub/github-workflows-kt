@@ -3,12 +3,16 @@ package io.github.typesafegithub.workflows.shared.internal
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel.ALL
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
@@ -17,6 +21,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.time.ZonedDateTime
+
+private val logger = logger { }
 
 suspend fun fetchAvailableVersions(
     owner: String,
@@ -117,6 +123,16 @@ private data class Person(
 
 private fun buildHttpClient(engine: HttpClientEngine) =
     HttpClient(engine) {
+        val klogger = logger
+        install(Logging) {
+            logger =
+                object : Logger {
+                    override fun log(message: String) {
+                        klogger.trace { message }
+                    }
+                }
+            level = ALL
+        }
         install(ContentNegotiation) {
             json(
                 Json {
