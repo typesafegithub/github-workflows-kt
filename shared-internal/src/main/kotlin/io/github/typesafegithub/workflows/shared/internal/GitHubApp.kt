@@ -2,9 +2,13 @@ package io.github.typesafegithub.workflows.shared.internal
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel.ALL
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.serialization.kotlinx.json.json
@@ -17,6 +21,8 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.time.Instant
 import java.time.ZonedDateTime
 import java.util.Base64
+
+private val logger = logger { }
 
 /**
  * Returns an installation access token for the GitHub app, usable with API call to GitHub.
@@ -54,6 +60,16 @@ private data class Token(
 
 private val httpClient =
     HttpClient {
+        val klogger = logger
+        install(Logging) {
+            logger =
+                object : Logger {
+                    override fun log(message: String) {
+                        klogger.trace { message }
+                    }
+                }
+            level = ALL
+        }
         install(ContentNegotiation) {
             json(
                 Json { ignoreUnknownKeys = false },

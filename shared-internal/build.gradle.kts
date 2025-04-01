@@ -15,7 +15,9 @@ dependencies {
     api("io.ktor:ktor-client-core:3.1.2")
     implementation("io.ktor:ktor-client-cio:3.1.2")
     implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
+    implementation("io.ktor:ktor-client-logging:3.1.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+    implementation("io.github.oshai:kotlin-logging:7.0.6")
     implementation("com.auth0:java-jwt:4.5.0")
 
     // It's a workaround for a problem with Kotlin Scripting, and how it resolves
