@@ -4,7 +4,7 @@
     <Appenders>
         <Console name="Console Appender">
             <PatternLayout>
-                <Pattern><![CDATA[%highlight{%d <%-5p> <%-35.35t> <%x> <%X> <%50.50c> %m}%n]]></Pattern>
+                <Pattern><![CDATA[%highlight{%d <%-5p> <%-35.35t> <%x> <%X> <%50.50c> %m}{TRACE = magenta}%n]]></Pattern>
             </PatternLayout>
         </Console>
     </Appenders>
