@@ -136,6 +136,3 @@ jobs:
     - id: 'step-2'
       name: 'Build and publish image'
       run: './gradlew :jit-binding-server:publishImage'
-    - id: 'step-3'
-      name: 'Use newest image on the server'
-      run: 'curl -X POST ${{ secrets.TRIGGER_IMAGE_PULL }} --insecure'
