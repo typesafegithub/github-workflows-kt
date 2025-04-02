@@ -31,17 +31,16 @@ private val logger = logger { }
 suspend fun getInstallationAccessToken(): String? {
     if (cachedAccessToken?.isExpired() == false) return cachedAccessToken!!.token
     val jwtToken = generateJWTToken() ?: return null
+    val appInstallationId = System.getenv("APP_INSTALLATION_ID") ?: return null
     cachedAccessToken =
         httpClient
-            .post("https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens") {
+            .post("https://api.github.com/app/installations/$appInstallationId/access_tokens") {
                 header("Accept", "application/vnd.github+json")
                 header("Authorization", "Bearer $jwtToken")
                 header("X-GitHub-Api-Version", "2022-11-28")
             }.body()
     return cachedAccessToken!!.token
 }
-
-private const val INSTALLATION_ID = "62885502"
 
 private var cachedAccessToken: Token? = null
 
@@ -77,15 +76,14 @@ private val httpClient =
         }
     }
 
-private const val GITHUB_CLIENT_ID = "Iv23liIZ17VJKUpjacBs"
-
 private fun generateJWTToken(): String? {
     val key = loadRsaKey() ?: return null
+    val appClientId = System.getenv("APP_CLIENT_ID") ?: return null
     val algorithm = Algorithm.RSA256(null, key)
     val now = Instant.now()
     return JWT
         .create()
-        .withIssuer(GITHUB_CLIENT_ID)
+        .withIssuer(appClientId)
         .withIssuedAt(now.minusMinutes(1))
         .withExpiresAt(now.plusMinutes(9))
         .sign(algorithm)
