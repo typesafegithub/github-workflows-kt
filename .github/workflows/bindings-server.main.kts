@@ -52,8 +52,6 @@ workflow(
         runsOn = UbuntuLatest,
         env = mapOf(
             "APP_PRIVATE_KEY" to expr { APP_PRIVATE_KEY },
-            "APP_INSTALLATION_ID" to "62885502",
-            "APP_CLIENT_ID" to "Iv23liIZ17VJKUpjacBs",
         ),
     ) {
         uses(action = Checkout())
