@@ -49,8 +49,6 @@ jobs:
     - 'check_yaml_consistency'
     env:
       APP_PRIVATE_KEY: '${{ secrets.APP_PRIVATE_KEY }}'
-      APP_INSTALLATION_ID: '62885502'
-      APP_CLIENT_ID: 'Iv23liIZ17VJKUpjacBs'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v4'
