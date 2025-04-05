@@ -1,6 +1,9 @@
 package io.github.typesafegithub.workflows.shared.internal
 
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlinx.coroutines.runBlocking
+
+private val logger = logger { }
 
 /**
  * Returns a token that should be used to make authorized calls to GitHub,
@@ -10,12 +13,9 @@ import kotlinx.coroutines.runBlocking
  */
 fun getGithubAuthTokenOrNull(): String? =
     runBlocking {
-        (System.getenv("GITHUB_TOKEN") ?: getInstallationAccessToken())
-            .also {
-                if (it == null) {
-                    println(ERROR_NO_CONFIGURATION)
-                }
-            }
+        runCatching { getInstallationAccessToken() }
+            .onFailure { logger.warn(it) { "Failed to get GitHub App Installation token, falling back to GITHUB_TOKEN." } }
+            .getOrNull() ?: System.getenv("GITHUB_TOKEN")
     }
 
 /**
