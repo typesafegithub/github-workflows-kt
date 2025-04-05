@@ -16,7 +16,7 @@ fun getGithubAuthTokenOrNull(): String? =
         runCatching { getInstallationAccessToken() }
             .onFailure { logger.warn(it) { "Failed to get GitHub App Installation token, falling back to GITHUB_TOKEN." } }
             .getOrNull() ?: System.getenv("GITHUB_TOKEN")
-    }
+    }.also { if (it == null) logger.warn { ERROR_NO_CONFIGURATION } }
 
 /**
  * Returns a token that should be used to make authorized calls to GitHub,
