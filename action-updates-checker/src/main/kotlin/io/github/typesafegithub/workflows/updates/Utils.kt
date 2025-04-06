@@ -17,7 +17,7 @@ import kotlin.io.path.readText
 
 internal suspend fun Workflow.availableVersionsForEachAction(
     reportWhenTokenUnset: Boolean = true,
-    githubAuthToken: String? = getGithubAuthTokenOrNull(),
+    githubAuthToken: String? = getGithubAuthTokenOrNull()?.first,
 ): Flow<RegularActionVersions> {
     if (githubAuthToken == null && !reportWhenTokenUnset) {
         githubWarning("github auth token is required, but not set, skipping api calls")

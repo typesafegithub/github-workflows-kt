@@ -26,7 +26,10 @@ private fun Route.metadata(refresh: Boolean = false) {
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
         val actionCoords = call.parameters.extractActionCoords(extractVersion = false)
 
-        val bindingArtifacts = actionCoords.buildPackageArtifacts(githubAuthToken = getGithubAuthToken())
+        val (githubAuthToken, tokenType) = getGithubAuthToken()
+        // TODO: use tokenType to register a metric on the fallback
+        // TODO: what if getGithubAuthToken() returns null? Looks like destructuring asserts non-null?
+        val bindingArtifacts = actionCoords.buildPackageArtifacts(githubAuthToken = githubAuthToken)
         if (file in bindingArtifacts) {
             when (val artifact = bindingArtifacts[file]) {
                 is String -> call.respondText(text = artifact)
