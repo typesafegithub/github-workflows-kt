@@ -39,7 +39,7 @@ internal suspend fun Workflow.reportAvailableUpdatesInternal(
 ) {
     availableVersionsForEachAction(
         reportWhenTokenUnset = reportWhenTokenUnset,
-        githubAuthToken = githubAuthToken ?: getGithubAuthTokenOrNull(),
+        githubAuthToken = githubAuthToken ?: getGithubAuthTokenOrNull()?.first,
     ).onEach { regularActionVersions ->
         val usesString =
             with(regularActionVersions.action) {

@@ -11,11 +11,13 @@ private val logger = logger { }
  * The token may be of various kind, e.g. a Personal Access Token, or an
  * Application Installation Token.
  */
-fun getGithubAuthTokenOrNull(): String? =
+fun getGithubAuthTokenOrNull(): Pair<String, TokenType>? =
     runBlocking {
         runCatching { getInstallationAccessToken() }
             .onFailure { logger.warn(it) { "Failed to get GitHub App Installation token, falling back to GITHUB_TOKEN." } }
-            .getOrNull() ?: System.getenv("GITHUB_TOKEN")
+            .getOrNull()
+            ?.let { Pair(it, TokenType.InstallationAccessToken) }
+            ?: System.getenv("GITHUB_TOKEN")?.let { Pair(it, TokenType.PersonalAccessToken) }
     }.also { if (it == null) logger.warn { ERROR_NO_CONFIGURATION } }
 
 /**
@@ -24,7 +26,12 @@ fun getGithubAuthTokenOrNull(): String? =
  * The token may be of various kind, e.g. a Personal Access Token, or an
  * Application Installation Token.
  */
-fun getGithubAuthToken(): String = getGithubAuthTokenOrNull() ?: error(ERROR_NO_CONFIGURATION)
+fun getGithubAuthToken(): Pair<String, TokenType> = getGithubAuthTokenOrNull() ?: error(ERROR_NO_CONFIGURATION)
+
+enum class TokenType {
+    InstallationAccessToken,
+    PersonalAccessToken,
+}
 
 private val ERROR_NO_CONFIGURATION =
     """
