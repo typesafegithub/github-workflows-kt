@@ -28,6 +28,7 @@ private val logger = logger { }
  * Returns an installation access token for the GitHub app, usable with API call to GitHub.
  * If `null` is returned, it means that the environment wasn't configured to generate the token.
  */
+@Suppress("ReturnCount")
 suspend fun getInstallationAccessToken(): String? {
     if (cachedAccessToken?.isExpired() == false) return cachedAccessToken!!.token
     val jwtToken = generateJWTToken() ?: return null
@@ -44,6 +45,7 @@ suspend fun getInstallationAccessToken(): String? {
 
 private var cachedAccessToken: Token? = null
 
+@Suppress("ConstructorParameterNaming")
 @Serializable
 private data class Token(
     val token: String,
@@ -76,6 +78,7 @@ private val httpClient =
         }
     }
 
+@Suppress("ReturnCount", "MagicNumber")
 private fun generateJWTToken(): String? {
     val key = loadRsaKey() ?: return null
     val appClientId = System.getenv("APP_CLIENT_ID") ?: return null
@@ -102,6 +105,8 @@ private fun loadRsaKey(): RSAPrivateKey? {
     return keyFactory.generatePrivate(keySpec) as RSAPrivateKey
 }
 
+@Suppress("MagicNumber")
 private fun Instant.minusMinutes(minutes: Long): Instant = minusSeconds(minutes * 60)
 
+@Suppress("MagicNumber")
 private fun Instant.plusMinutes(minutes: Long): Instant = plusSeconds(minutes * 60)

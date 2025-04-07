@@ -3,6 +3,7 @@ plugins {
     buildsrc.convention.publishing
 
     kotlin("plugin.serialization")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 group = rootProject.group

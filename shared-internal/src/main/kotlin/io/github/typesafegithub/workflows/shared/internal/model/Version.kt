@@ -12,6 +12,7 @@ data class Version(
     val minor: Int = versionIntParts.getOrNull(1) ?: 0
     val patch: Int = versionIntParts.getOrNull(2) ?: 0
 
+    @Suppress("ReturnCount")
     override fun compareTo(other: Version): Int {
         versionParts.forEachIndexed { i, part ->
             val otherPart = other.versionParts.getOrNull(i)

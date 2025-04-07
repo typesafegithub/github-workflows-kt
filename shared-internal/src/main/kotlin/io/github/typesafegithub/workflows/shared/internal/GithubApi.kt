@@ -79,7 +79,8 @@ private suspend fun fetchGithubRefs(
                     }
                 }
         ensure(response.status.isSuccess()) {
-            "Unexpected response when fetching refs from $url. Status: ${response.status}, response: ${response.bodyAsText()}"
+            "Unexpected response when fetching refs from $url. " +
+                "Status: ${response.status}, response: ${response.bodyAsText()}"
         }
         response.body()
     }
