@@ -11,15 +11,13 @@ private val logger = logger { }
  * The token may be of various kind, e.g. a Personal Access Token, or an
  * Application Installation Token.
  */
-fun getGithubAuthTokenOrNull(): String? =
-    runBlocking {
-        runCatching { getInstallationAccessToken() }
-            .onFailure {
-                logger.warn(it) {
-                    "Failed to get GitHub App Installation token, falling back to GITHUB_TOKEN."
-                }
-            }.getOrNull() ?: System.getenv("GITHUB_TOKEN")
-    }.also { if (it == null) logger.warn { ERROR_NO_CONFIGURATION } }
+fun getGithubAuthTokenOrNull(): String? {
+    val installationAccessToken = runCatching {
+        getInstallationAccessToken()
+    }.onFailure { logger.warn(it) { "Failed to get GitHub App Installation token." } }.getOrNull()
+
+    return installationAccessToken ?: System.getenv("GITHUB_TOKEN")
+}
 
 /**
  * Returns a token that should be used to make authorized calls to GitHub,

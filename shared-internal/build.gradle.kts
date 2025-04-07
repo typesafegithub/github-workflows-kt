@@ -20,7 +20,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
     implementation("io.github.oshai:kotlin-logging:7.0.6")
     implementation("com.auth0:java-jwt:4.5.0")
-    implementation("org.kohsuke:github-api:2.0-rc.1")
+    implementation("org.kohsuke:github-api:1.327")
     
     // It's a workaround for a problem with Kotlin Scripting, and how it resolves
     // conflicting versions: https://youtrack.jetbrains.com/issue/KT-69145
