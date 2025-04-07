@@ -14,8 +14,11 @@ private val logger = logger { }
 fun getGithubAuthTokenOrNull(): String? =
     runBlocking {
         runCatching { getInstallationAccessToken() }
-            .onFailure { logger.warn(it) { "Failed to get GitHub App Installation token, falling back to GITHUB_TOKEN." } }
-            .getOrNull() ?: System.getenv("GITHUB_TOKEN")
+            .onFailure {
+                logger.warn(it) {
+                    "Failed to get GitHub App Installation token, falling back to GITHUB_TOKEN."
+                }
+            }.getOrNull() ?: System.getenv("GITHUB_TOKEN")
     }.also { if (it == null) logger.warn { ERROR_NO_CONFIGURATION } }
 
 /**
