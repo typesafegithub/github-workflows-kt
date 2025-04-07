@@ -12,7 +12,7 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
 fun Application.installPlugins(prometheusRegistry: PrometheusMeterRegistry) {
     install(CallId) {
-        generate(15, "abcdefghijklmnopqrstuvwxyz0123456789")
+        generate(length = 15, dictionary = "abcdefghijklmnopqrstuvwxyz0123456789")
         replyToHeader(HttpHeaders.XRequestId)
     }
 

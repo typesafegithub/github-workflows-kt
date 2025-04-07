@@ -4,6 +4,7 @@ plugins {
     buildsrc.convention.`kotlin-jvm-server`
     application
     id("io.ktor.plugin") version "3.1.2"
+    id("io.gitlab.arturbosch.detekt")
 }
 
 dependencies {
