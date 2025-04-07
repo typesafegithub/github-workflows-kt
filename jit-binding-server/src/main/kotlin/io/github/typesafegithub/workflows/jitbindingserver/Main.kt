@@ -18,6 +18,7 @@ private val prometheusRegistry =
 
             override fun prefix(): String = "github-actions-binding-server"
 
+            @Suppress("MagicNumber")
             override fun step() = Duration.ofSeconds(10)
         },
     )
