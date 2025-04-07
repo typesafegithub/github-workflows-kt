@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.shared.internal
 
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import kotlinx.coroutines.runBlocking
 
 private val logger = logger { }
 
@@ -12,9 +11,10 @@ private val logger = logger { }
  * Application Installation Token.
  */
 fun getGithubAuthTokenOrNull(): String? {
-    val installationAccessToken = runCatching {
-        getInstallationAccessToken()
-    }.onFailure { logger.warn(it) { "Failed to get GitHub App Installation token." } }.getOrNull()
+    val installationAccessToken =
+        runCatching {
+            getInstallationAccessToken()
+        }.onFailure { logger.warn(it) { "Failed to get GitHub App Installation token." } }.getOrNull()
 
     return installationAccessToken ?: System.getenv("GITHUB_TOKEN")
 }
