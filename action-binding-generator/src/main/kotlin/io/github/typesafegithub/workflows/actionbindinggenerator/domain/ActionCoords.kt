@@ -23,9 +23,11 @@ public data class ActionCoords(
  */
 public val ActionCoords.isTopLevel: Boolean get() = path == null
 
-public val ActionCoords.prettyPrint: String get() = "$owner/$fullName${
+public val ActionCoords.prettyPrint: String get() = "$prettyPrintWithoutVersion@$version"
+
+public val ActionCoords.prettyPrintWithoutVersion: String get() = "$owner/$fullName${
     significantVersion.takeUnless { it == FULL }?.let { " with $it version" } ?: ""
-}@$version"
+}"
 
 /**
  * For most actions, it's empty.

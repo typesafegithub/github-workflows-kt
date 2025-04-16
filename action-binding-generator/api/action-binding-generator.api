@@ -21,6 +21,7 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/dom
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoordsKt {
 	public static final fun getFullName (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;)Ljava/lang/String;
 	public static final fun getPrettyPrint (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;)Ljava/lang/String;
+	public static final fun getPrettyPrintWithoutVersion (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;)Ljava/lang/String;
 	public static final fun getSubName (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;)Ljava/lang/String;
 	public static final fun isTopLevel (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;)Z
 }
