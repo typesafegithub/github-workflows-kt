@@ -13,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2016
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2019
 import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
+import io.github.typesafegithub.workflows.domain.RunnerType.Windows2025
 import io.github.typesafegithub.workflows.domain.RunnerType.WindowsLatest
 import io.github.typesafegithub.workflows.internal.InternalGithubActionsApi
 
@@ -71,6 +72,7 @@ public fun RunnerType.toYaml(): Any =
         UbuntuLatest -> "ubuntu-latest"
         WindowsLatest -> "windows-latest"
         MacOSLatest -> "macos-latest"
+        Windows2025 -> "windows-2025"
         Windows2022 -> "windows-2022"
         Windows2019 -> "windows-2019"
         Windows2016 -> "windows-2016"

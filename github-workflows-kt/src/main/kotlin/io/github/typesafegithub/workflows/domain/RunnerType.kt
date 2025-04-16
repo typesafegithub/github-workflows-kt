@@ -39,6 +39,8 @@ public sealed interface RunnerType {
     public object MacOSLatest : RunnerType
 
     // Windows runners
+    public object Windows2025 : RunnerType
+
     public object Windows2022 : RunnerType
 
     public object Windows2019 : RunnerType
