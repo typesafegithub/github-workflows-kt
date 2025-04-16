@@ -102,13 +102,10 @@ private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<St
     val actionCoords = parameters.extractActionCoords(extractVersion = true)
 
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
-    return if (refresh) {
-        actionCoords.buildVersionArtifacts().also {
-            bindingsCache.put(actionCoords, runCatching { it!! })
-        }
-    } else {
-        bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts()!! } }.getOrNull()
+    if (refresh) {
+        bindingsCache.invalidate(actionCoords)
     }
+    return bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts()!! } }.getOrNull()
 }
 
 private fun incrementArtifactCounter(
