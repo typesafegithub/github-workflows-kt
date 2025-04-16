@@ -28,7 +28,7 @@ private val metadataCache =
         .recordStats()
         .asLoadingCache<ActionCoords, MetadataResult> {
             runCatching {
-                it.buildPackageArtifacts(githubAuthToken = getGithubAuthToken())
+                it.buildPackageArtifacts(githubAuthToken = getGithubAuthToken(), ::prefetchBindingArtifacts)
             }
         }
 
