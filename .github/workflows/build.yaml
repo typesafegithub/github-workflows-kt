@@ -67,7 +67,7 @@ jobs:
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       run: './gradlew build'
   build-for-Windows2022:
-    runs-on: 'windows-2022'
+    runs-on: 'windows-2025'
     needs:
     - 'check_yaml_consistency'
     steps:
