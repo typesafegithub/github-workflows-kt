@@ -399,6 +399,10 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows2022;
 }
 
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2025 : io/github/typesafegithub/workflows/domain/RunnerType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows2025;
+}
+
 public final class io/github/typesafegithub/workflows/domain/RunnerType$WindowsLatest : io/github/typesafegithub/workflows/domain/RunnerType {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$WindowsLatest;
 }
