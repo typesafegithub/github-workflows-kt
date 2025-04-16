@@ -60,6 +60,7 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
         mapOf("steps" to steps.stepsToYaml())
 
 @InternalGithubActionsApi
+@Suppress("CyclomaticComplexMethod")
 public fun RunnerType.toYaml(): Any =
     when (this) {
         is Custom -> runsOn
