@@ -17,7 +17,7 @@ import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
+import io.github.typesafegithub.workflows.domain.RunnerType.WindowsLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
@@ -38,7 +38,7 @@ workflow(
     ),
     sourceFile = __FILE__,
 ) {
-    listOf(UbuntuLatest, Windows2022).forEach { runnerType ->
+    listOf(UbuntuLatest, WindowsLatest).forEach { runnerType ->
         job(
             id = "build-for-${runnerType::class.simpleName}",
             runsOn = runnerType,
