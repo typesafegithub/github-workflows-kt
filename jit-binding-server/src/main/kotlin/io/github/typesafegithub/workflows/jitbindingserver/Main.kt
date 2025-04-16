@@ -45,7 +45,7 @@ fun main() {
             internalRoutes(prometheusRegistry)
 
             artifactRoutes(prometheusRegistry)
-            metadataRoutes()
+            metadataRoutes(prometheusRegistry)
         }
     }.start(wait = true)
 }
