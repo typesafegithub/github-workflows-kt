@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.sksamuel.aedile.core.asCache
+import com.sksamuel.aedile.core.asLoadingCache
 import com.sksamuel.aedile.core.expireAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
@@ -35,7 +35,7 @@ private val bindingsCache =
         .newBuilder()
         .expireAfterWrite(1.hours)
         .recordStats()
-        .asCache<ActionCoords, ArtifactResult>()
+        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts()!! } }
 
 fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
     CaffeineCacheMetrics.monitor(prometheusRegistry, bindingsCache.underlying(), "bindings_cache")
@@ -105,7 +105,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<St
     if (refresh) {
         bindingsCache.invalidate(actionCoords)
     }
-    return bindingsCache.get(actionCoords) { runCatching { actionCoords.buildVersionArtifacts()!! } }.getOrNull()
+    return bindingsCache.get(actionCoords).getOrNull()
 }
 
 private fun incrementArtifactCounter(
