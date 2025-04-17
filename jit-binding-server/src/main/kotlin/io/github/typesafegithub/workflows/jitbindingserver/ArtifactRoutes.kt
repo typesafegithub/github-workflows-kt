@@ -2,7 +2,7 @@ package io.github.typesafegithub.workflows.jitbindingserver
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.sksamuel.aedile.core.asLoadingCache
-import com.sksamuel.aedile.core.expireAfterWrite
+import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
@@ -33,7 +33,7 @@ typealias ArtifactResult = Result<Map<String, Artifact>>
 private val bindingsCache =
     Caffeine
         .newBuilder()
-        .expireAfterWrite(1.hours)
+        .refreshAfterWrite(1.hours)
         .recordStats()
         .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts()!! } }
 
