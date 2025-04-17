@@ -7,7 +7,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel.ALL
@@ -28,32 +28,35 @@ suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
     githubAuthToken: String?,
-    httpClientEngine: HttpClientEngine = CIO.create(),
+    httpClientEngineFactory: HttpClientEngineFactory<*> = CIO,
 ): Either<String, List<Version>> =
     either {
-        val httpClient = buildHttpClient(engine = httpClientEngine)
-        return listOf(
-            apiTagsUrl(owner = owner, name = name),
-            apiBranchesUrl(owner = owner, name = name),
-        ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
-            .versions(githubAuthToken, httpClient)
+        buildHttpClient(engineFactory = httpClientEngineFactory).use { httpClient ->
+            return listOf(
+                apiTagsUrl(owner = owner, name = name),
+                apiBranchesUrl(owner = owner, name = name),
+            ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
+                .versions(githubAuthToken, httpClientEngineFactory)
+        }
     }
 
 private fun List<GithubRef>.versions(
     githubAuthToken: String?,
-    httpClient: HttpClient,
+    httpClientEngineFactory: HttpClientEngineFactory<*>,
 ): Either<String, List<Version>> =
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
             Version(version) {
                 val response =
-                    httpClient
-                        .get(urlString = githubRef.`object`.url) {
-                            if (githubAuthToken != null) {
-                                bearerAuth(githubAuthToken)
+                    buildHttpClient(engineFactory = httpClientEngineFactory).use { httpClient ->
+                        httpClient
+                            .get(urlString = githubRef.`object`.url) {
+                                if (githubAuthToken != null) {
+                                    bearerAuth(githubAuthToken)
+                                }
                             }
-                        }
+                    }
                 val releaseDate =
                     when (githubRef.`object`.type) {
                         "tag" -> response.body<Tag>().tagger
@@ -122,8 +125,8 @@ private data class Person(
     val date: String,
 )
 
-private fun buildHttpClient(engine: HttpClientEngine) =
-    HttpClient(engine) {
+private fun buildHttpClient(engineFactory: HttpClientEngineFactory<*>) =
+    HttpClient(engineFactory) {
         val klogger = logger
         install(Logging) {
             logger =
