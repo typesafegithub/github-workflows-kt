@@ -15,6 +15,7 @@ import io.github.typesafegithub.workflows.actions.actions.*
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.wandalen.WretryAction
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
@@ -81,9 +82,9 @@ workflow(
                 Permission.Contents to Mode.None,
             ),
             outputs = object : JobOutputs() {
-                var scriptKey by output()
-                var scriptKey2 by output()
-                var scriptResult by output()
+                var scriptKey by output<String>()
+                var scriptKey2 by output<String>()
+                var scriptResult by output<String>()
             },
         ) {
             run(
@@ -179,7 +180,7 @@ workflow(
                 name = "Some step consuming other step's output",
                 action = Checkout(
                     sshKey = expr(addAndCommit.outputs.pythonVersion),
-                    path = expr(addAndCommit.outputs["my-unsafe-output"]),
+                    path = addAndCommit.outputs["my-unsafe-output"].expressionString,
                 ),
             )
 
@@ -234,7 +235,7 @@ workflow(
                 )
             jobOutputs.scriptKey = scriptStep.outputs["key"]
             jobOutputs.scriptKey2 = scriptStep.outputs["key2"]
-            jobOutputs.scriptResult = scriptStep.outputs.result
+            jobOutputs.scriptResult = Expression(scriptStep.outputs.result)
         }
 
     job(
@@ -250,9 +251,9 @@ workflow(
         run(
             name = "use output of script",
             command = """
-                echo ${expr { testJob1.outputs.scriptKey }}
-                echo ${expr { testJob1.outputs.scriptKey2 }}
-                echo ${expr { testJob1.outputs.scriptResult }}
+                echo ${testJob1.outputs.scriptKey.expressionString}
+                echo ${expr(testJob1.outputs.scriptKey2.expression)}
+                echo ${expr { testJob1.outputs.scriptResult.expression }}
             """.trimIndent(),
         )
 
