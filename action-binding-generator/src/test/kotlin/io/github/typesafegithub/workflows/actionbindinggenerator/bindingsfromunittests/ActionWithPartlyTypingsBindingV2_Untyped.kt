@@ -2,8 +2,8 @@
 // changes will be overwritten with the next binding code regeneration.
 // See https://github.com/typesafegithub/github-workflows-kt for more info.
 @file:Suppress(
-    "DataClassPrivateConstructor",
     "UNUSED_PARAMETER",
+    "DEPRECATION",
 )
 
 package io.github.typesafegithub.workflows.actions.johnsmith
@@ -11,8 +11,11 @@ package io.github.typesafegithub.workflows.actions.johnsmith
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
+import java.util.Objects
+import kotlin.Any
+import kotlin.Boolean
 import kotlin.Deprecated
-import kotlin.ExposedCopyVisibility
+import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -54,8 +57,8 @@ import kotlin.collections.toTypedArray
     "Use the typed class instead",
     ReplaceWith("ActionWithPartlyTypingsBindingV2"),
 )
-@ExposedCopyVisibility
-public data class ActionWithPartlyTypingsBindingV2_Untyped private constructor(
+public class ActionWithPartlyTypingsBindingV2_Untyped(
+    vararg pleaseUseNamedArguments: Unit,
     public val foo_Untyped: String,
     public val bar_Untyped: String? = null,
     public val baz_Untyped: String,
@@ -79,15 +82,6 @@ public data class ActionWithPartlyTypingsBindingV2_Untyped private constructor(
 
     }
 
-    public constructor(
-        vararg pleaseUseNamedArguments: Unit,
-        foo_Untyped: String,
-        bar_Untyped: String? = null,
-        baz_Untyped: String,
-        _customInputs: Map<String, String> = mapOf(),
-        _customVersion: String? = null,
-    ) : this(foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, baz_Untyped = baz_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
-
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
@@ -96,6 +90,58 @@ public data class ActionWithPartlyTypingsBindingV2_Untyped private constructor(
             "baz" to baz_Untyped,
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
+    )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as ActionWithPartlyTypingsBindingV2_Untyped
+        return foo_Untyped == other.foo_Untyped &&
+            bar_Untyped == other.bar_Untyped &&
+            baz_Untyped == other.baz_Untyped &&
+            _customInputs == other._customInputs &&
+            _customVersion == other._customVersion
+    }
+
+    override fun hashCode(): Int = Objects.hash(
+        foo_Untyped,
+        bar_Untyped,
+        baz_Untyped,
+        _customInputs,
+        _customVersion,
+    )
+
+    override fun toString(): String = buildString {
+        append("ActionWithPartlyTypingsBindingV2_Untyped(")
+        append("""foo_Untyped=$foo_Untyped""")
+        append(", ")
+        append("""bar_Untyped=$bar_Untyped""")
+        append(", ")
+        append("""baz_Untyped=$baz_Untyped""")
+        append(", ")
+        append("""_customInputs=$_customInputs""")
+        append(", ")
+        append("""_customVersion=$_customVersion""")
+        append(")")
+    }
+
+    /**
+     * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
+     * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
+     */
+    public fun copy(
+        vararg pleaseUseNamedArguments: Unit,
+        foo_Untyped: String = this.foo_Untyped,
+        bar_Untyped: String? = this.bar_Untyped,
+        baz_Untyped: String = this.baz_Untyped,
+        _customInputs: Map<String, String> = this._customInputs,
+        _customVersion: String? = this._customVersion,
+    ): ActionWithPartlyTypingsBindingV2_Untyped = ActionWithPartlyTypingsBindingV2_Untyped(
+        foo_Untyped = foo_Untyped,
+        bar_Untyped = bar_Untyped,
+        baz_Untyped = baz_Untyped,
+        _customInputs = _customInputs,
+        _customVersion = _customVersion,
     )
 
     override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
