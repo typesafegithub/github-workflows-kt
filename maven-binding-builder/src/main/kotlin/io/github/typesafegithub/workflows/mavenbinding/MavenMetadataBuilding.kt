@@ -1,23 +1,23 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-import arrow.core.Either
 import arrow.core.getOrElse
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
-import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.model.Version
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions as defaultFetchAvailableVersions
 
 private val logger = logger { }
 
 internal suspend fun ActionCoords.buildMavenMetadataFile(
     githubAuthToken: String,
-    fetchAvailableVersions: suspend (
+    fetchAvailableVersions: (
         owner: String,
         name: String,
-        githubAuthToken: String?,
-    ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
+        githubAuthToken: String,
+    ) -> Result<List<Version>> = ::defaultFetchAvailableVersions,
     prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit = {},
 ): String? {
     val availableVersions =
@@ -31,7 +31,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
     val lastUpdated =
         DateTimeFormatter
             .ofPattern("yyyyMMddHHmmss")
-            .format(newest.getReleaseDate())
+            .format(newest.getReleaseDate() ?: ZonedDateTime.now())
     return """
         <?xml version="1.0" encoding="UTF-8"?>
         <metadata>

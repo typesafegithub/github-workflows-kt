@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.updates
 
-import arrow.core.getOrElse
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.Workflow
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
@@ -28,7 +27,7 @@ internal suspend fun Workflow.availableVersionsForEachAction(
         groupedSteps.forEach { (action, steps) ->
             val availableVersions =
                 action.fetchAvailableVersionsOrWarn(
-                    githubAuthToken = githubAuthToken,
+                    githubAuthToken = githubAuthToken ?: error("github auth token is required"),
                 )
             val currentVersion = Version(action.actionVersion)
             if (availableVersions != null) {
@@ -49,7 +48,7 @@ internal suspend fun Workflow.availableVersionsForEachAction(
     }
 }
 
-internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubAuthToken: String?): List<Version>? =
+internal fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubAuthToken: String): List<Version>? =
     try {
         fetchAvailableVersions(
             owner = actionOwner,
@@ -58,7 +57,7 @@ internal suspend fun RegularAction<*>.fetchAvailableVersionsOrWarn(githubAuthTok
         ).getOrElse {
             throw Exception(it)
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         githubError(
             "failed to fetch versions for $actionOwner/$actionName, skipping",
         )

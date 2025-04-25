@@ -1,0 +1,22 @@
+[
+  {
+    "ref":"refs/heads/v1",
+    "node_id":"MDM6UmVmMTk3ODE0NjI5OnJlZnMvaGVhZHMvdm1qb3NlcGgvc2lsZW50LXJldi1wYXJzZQ==",
+    "url":"https://api.github.com/repos/some-owner/some-name/git/refs/heads/v1",
+    "object": {
+      "sha":"af5130cb8882054eda385840657dcbd1e19ab8f4",
+      "type":"commit",
+      "url":"https://api.github.com/repos/some-owner/some-name/git/commits/af5130cb8882054eda385840657dcbd1e19ab8f4"
+    }
+  },
+  {
+    "ref":"refs/heads/v2",
+    "node_id":"MDM6UmVmMTk3ODE0NjI5OnJlZnMvaGVhZHMvdm1qb3NlcGgvdG9vbGtpdC13aW5kb3dzLWV4ZWM=",
+    "url":"https://api.github.com/repos/some-owner/some-name/git/refs/heads/v2",
+    "object": {
+      "sha":"c22ccee38a13e34cb01a103c324adb1db665821e",
+      "type":"commit",
+      "url":"https://api.github.com/repos/some-owner/some-name/git/commits/c22ccee38a13e34cb01a103c324adb1db665821e"
+    }
+  }
+]
