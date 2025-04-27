@@ -52,6 +52,7 @@ workflow(
         runsOn = UbuntuLatest,
         env = mapOf(
             "APP_PRIVATE_KEY" to expr { APP_PRIVATE_KEY },
+            "GITHUB_TOKEN" to expr { secrets.GITHUB_TOKEN },
             "APP_INSTALLATION_ID" to "62885502",
             "APP_CLIENT_ID" to "Iv23liIZ17VJKUpjacBs",
         ),
