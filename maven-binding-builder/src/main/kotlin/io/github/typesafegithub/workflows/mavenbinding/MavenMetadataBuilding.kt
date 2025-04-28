@@ -18,6 +18,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
         name: String,
         githubAuthToken: String?,
     ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
+    prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit = {},
 ): String? {
     val availableVersions =
         fetchAvailableVersions(owner, name, githubAuthToken)
@@ -25,6 +26,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
                 logger.error { it }
                 emptyList()
             }.filter { it.isMajorVersion() || (significantVersion < FULL) }
+    prefetchBindingArtifacts(availableVersions.map { copy(version = "$it") })
     val newest = availableVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter

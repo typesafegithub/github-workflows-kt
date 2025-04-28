@@ -24,11 +24,16 @@ import io.ktor.server.routing.route
 import io.micrometer.core.instrument.Tag
 import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.hours
 
 private val logger = logger { }
 
 typealias ArtifactResult = Result<Map<String, Artifact>>
+
+private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
 private val bindingsCache =
     Caffeine
@@ -95,6 +100,12 @@ private fun Route.getArtifact(
         }
 
         incrementArtifactCounter(prometheusRegistry, call)
+    }
+}
+
+internal fun prefetchBindingArtifacts(coords: Collection<ActionCoords>) {
+    prefetchScope.launch {
+        bindingsCache.getAll(coords)
     }
 }
 
