@@ -31,7 +31,7 @@ import kotlin.time.Duration.Companion.hours
 
 private val logger = logger { }
 
-typealias ArtifactResult = Result<Map<String, Artifact>>
+typealias ArtifactResult = Result<Map<String, Artifact>?>
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
@@ -40,7 +40,7 @@ private val bindingsCache =
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts()!! } }
+        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts() } }
 
 fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
     CaffeineCacheMetrics.monitor(prometheusRegistry, bindingsCache.underlying(), "bindings_cache")
@@ -116,7 +116,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<St
     if (refresh) {
         bindingsCache.invalidate(actionCoords)
     }
-    return bindingsCache.get(actionCoords).getOrNull()
+    return bindingsCache.get(actionCoords).getOrThrow()
 }
 
 private fun incrementArtifactCounter(
