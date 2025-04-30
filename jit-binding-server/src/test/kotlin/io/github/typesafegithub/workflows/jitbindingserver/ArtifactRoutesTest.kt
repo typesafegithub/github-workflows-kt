@@ -25,6 +25,8 @@ class ArtifactRoutesTest :
 
                     // When
                     val response = client.get("some-owner/some-action/v4/some-action-v4.pom")
+
+                    // Then
                     // This is incorrect, and will be fixed in
                     //  https://github.com/typesafegithub/github-workflows-kt/pull/1924/
                     response.status shouldBe HttpStatusCode.NotFound
