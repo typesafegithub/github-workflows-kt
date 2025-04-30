@@ -38,14 +38,15 @@ fun main() {
     Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
         logger.error(throwable) { "Uncaught exception in thread $thread" }
     }
+    val bindingsCache = buildBindingsCache()
     embeddedServer(Netty, port = 8080) {
         installPlugins(prometheusRegistry)
 
         routing {
             internalRoutes(prometheusRegistry)
 
-            artifactRoutes(prometheusRegistry)
-            metadataRoutes(prometheusRegistry)
+            artifactRoutes(bindingsCache, prometheusRegistry)
+            metadataRoutes(bindingsCache, prometheusRegistry)
         }
     }.start(wait = true)
 }
