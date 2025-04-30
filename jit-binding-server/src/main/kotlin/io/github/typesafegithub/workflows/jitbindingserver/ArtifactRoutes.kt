@@ -42,8 +42,10 @@ private val bindingsCache =
         .recordStats()
         .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts()!! } }
 
-fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
-    CaffeineCacheMetrics.monitor(prometheusRegistry, bindingsCache.underlying(), "bindings_cache")
+fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry? = null) {
+    prometheusRegistry?.let {
+        CaffeineCacheMetrics.monitor(it, bindingsCache.underlying(), "bindings_cache")
+    }
 
     route("{owner}/{name}/{version}/{file}") {
         artifact(prometheusRegistry, refresh = false)
@@ -55,7 +57,7 @@ fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
 }
 
 private fun Route.artifact(
-    prometheusRegistry: PrometheusMeterRegistry,
+    prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean = false,
 ) {
     headArtifact(prometheusRegistry, refresh)
@@ -63,7 +65,7 @@ private fun Route.artifact(
 }
 
 private fun Route.headArtifact(
-    prometheusRegistry: PrometheusMeterRegistry,
+    prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
     head {
@@ -77,12 +79,12 @@ private fun Route.headArtifact(
             call.respondNotFound()
         }
 
-        incrementArtifactCounter(prometheusRegistry, call)
+        prometheusRegistry?.incrementArtifactCounter(call)
     }
 }
 
 private fun Route.getArtifact(
-    prometheusRegistry: PrometheusMeterRegistry,
+    prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
     get {
@@ -99,7 +101,7 @@ private fun Route.getArtifact(
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
         }
 
-        incrementArtifactCounter(prometheusRegistry, call)
+        prometheusRegistry?.incrementArtifactCounter(call)
     }
 }
 
@@ -119,10 +121,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<St
     return bindingsCache.get(actionCoords).getOrNull()
 }
 
-private fun incrementArtifactCounter(
-    prometheusRegistry: PrometheusMeterRegistry,
-    call: ApplicationCall,
-) {
+private fun PrometheusMeterRegistry.incrementArtifactCounter(call: ApplicationCall) {
     val owner = call.parameters["owner"] ?: "unknown"
     val name = call.parameters["name"] ?: "unknown"
     val version = call.parameters["version"] ?: "unknown"
@@ -135,7 +134,7 @@ private fun incrementArtifactCounter(
             ?.toString() ?: "unknown"
 
     val counter =
-        prometheusRegistry.counter(
+        this.counter(
             "artifact_requests_total",
             listOf(
                 Tag.of("owner", owner),

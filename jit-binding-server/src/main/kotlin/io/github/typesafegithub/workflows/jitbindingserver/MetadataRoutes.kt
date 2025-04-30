@@ -32,8 +32,10 @@ private val metadataCache =
             }
         }
 
-fun Routing.metadataRoutes(prometheusRegistry: PrometheusMeterRegistry) {
-    CaffeineCacheMetrics.monitor(prometheusRegistry, metadataCache.underlying(), "metadata_cache")
+fun Routing.metadataRoutes(prometheusRegistry: PrometheusMeterRegistry? = null) {
+    prometheusRegistry?.let {
+        CaffeineCacheMetrics.monitor(it, metadataCache.underlying(), "metadata_cache")
+    }
 
     route("{owner}/{name}/{file}") {
         metadata()
