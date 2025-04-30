@@ -36,12 +36,14 @@ typealias ArtifactResult = Result<Map<String, Artifact>>
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
-internal fun buildBindingsCache(): LoadingCache<ActionCoords, ArtifactResult> =
+internal fun buildBindingsCache(
+    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>? = ::buildVersionArtifacts,
+): LoadingCache<ActionCoords, ArtifactResult> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts()!! } }
+        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { buildVersionArtifacts(it)!! } }
 
 fun Routing.artifactRoutes(
     bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
