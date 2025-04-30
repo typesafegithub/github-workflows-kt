@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import com.github.benmanes.caffeine.cache.Caffeine
+import com.sksamuel.aedile.core.LoadingCache
 import com.sksamuel.aedile.core.asLoadingCache
 import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -35,39 +36,48 @@ typealias ArtifactResult = Result<Map<String, Artifact>?>
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
-private val bindingsCache =
+internal fun buildBindingsCache(
+    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>? = ::buildVersionArtifacts,
+): LoadingCache<ActionCoords, ArtifactResult> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { it.buildVersionArtifacts() } }
+        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { buildVersionArtifacts(it) } }
 
-fun Routing.artifactRoutes(prometheusRegistry: PrometheusMeterRegistry) {
-    CaffeineCacheMetrics.monitor(prometheusRegistry, bindingsCache.underlying(), "bindings_cache")
+fun Routing.artifactRoutes(
+    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    prometheusRegistry: PrometheusMeterRegistry? = null,
+) {
+    prometheusRegistry?.let {
+        CaffeineCacheMetrics.monitor(it, bindingsCache.underlying(), "bindings_cache")
+    }
 
     route("{owner}/{name}/{version}/{file}") {
-        artifact(prometheusRegistry, refresh = false)
+        artifact(prometheusRegistry, bindingsCache, refresh = false)
     }
 
     route("/refresh/{owner}/{name}/{version}/{file}") {
-        artifact(prometheusRegistry, refresh = true)
+        artifact(prometheusRegistry, bindingsCache, refresh = true)
     }
 }
 
 private fun Route.artifact(
-    prometheusRegistry: PrometheusMeterRegistry,
+    prometheusRegistry: PrometheusMeterRegistry?,
+    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
     refresh: Boolean = false,
 ) {
-    headArtifact(prometheusRegistry, refresh)
-    getArtifact(prometheusRegistry, refresh)
+    headArtifact(bindingsCache, prometheusRegistry, refresh)
+    getArtifact(bindingsCache, prometheusRegistry, refresh)
 }
 
 private fun Route.headArtifact(
-    prometheusRegistry: PrometheusMeterRegistry,
+    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
     head {
-        val bindingArtifacts = call.toBindingArtifacts(refresh) ?: return@head call.respondNotFound()
+        val bindingArtifacts = call.toBindingArtifacts(refresh, bindingsCache) ?: return@head call.respondNotFound()
 
         val file = call.parameters["file"] ?: return@head call.respondNotFound()
 
@@ -77,16 +87,17 @@ private fun Route.headArtifact(
             call.respondNotFound()
         }
 
-        incrementArtifactCounter(prometheusRegistry, call)
+        prometheusRegistry?.incrementArtifactCounter(call)
     }
 }
 
 private fun Route.getArtifact(
-    prometheusRegistry: PrometheusMeterRegistry,
+    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
     get {
-        val bindingArtifacts = call.toBindingArtifacts(refresh) ?: return@get call.respondNotFound()
+        val bindingArtifacts = call.toBindingArtifacts(refresh, bindingsCache) ?: return@get call.respondNotFound()
 
         if (refresh && !deliverOnRefreshRoute) return@get call.respondText(text = "OK")
 
@@ -99,17 +110,23 @@ private fun Route.getArtifact(
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
         }
 
-        incrementArtifactCounter(prometheusRegistry, call)
+        prometheusRegistry?.incrementArtifactCounter(call)
     }
 }
 
-internal fun prefetchBindingArtifacts(coords: Collection<ActionCoords>) {
+internal fun prefetchBindingArtifacts(
+    coords: Collection<ActionCoords>,
+    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+) {
     prefetchScope.launch {
         bindingsCache.getAll(coords)
     }
 }
 
-private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<String, Artifact>? {
+private suspend fun ApplicationCall.toBindingArtifacts(
+    refresh: Boolean,
+    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+): Map<String, Artifact>? {
     val actionCoords = parameters.extractActionCoords(extractVersion = true)
 
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
@@ -119,10 +136,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(refresh: Boolean): Map<St
     return bindingsCache.get(actionCoords).getOrThrow()
 }
 
-private fun incrementArtifactCounter(
-    prometheusRegistry: PrometheusMeterRegistry,
-    call: ApplicationCall,
-) {
+private fun PrometheusMeterRegistry.incrementArtifactCounter(call: ApplicationCall) {
     val owner = call.parameters["owner"] ?: "unknown"
     val name = call.parameters["name"] ?: "unknown"
     val version = call.parameters["version"] ?: "unknown"
@@ -135,7 +149,7 @@ private fun incrementArtifactCounter(
             ?.toString() ?: "unknown"
 
     val counter =
-        prometheusRegistry.counter(
+        this.counter(
             "artifact_requests_total",
             listOf(
                 Tag.of("owner", owner),
