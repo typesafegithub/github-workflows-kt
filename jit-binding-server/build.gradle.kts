@@ -26,6 +26,8 @@ dependencies {
 
     implementation(projects.mavenBindingBuilder)
     implementation(projects.sharedInternal)
+
+    testImplementation("io.ktor:ktor-server-test-host")
 }
 
 application {
