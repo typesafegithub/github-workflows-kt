@@ -7,10 +7,27 @@
                 <Pattern><![CDATA[%highlight{%d <%-5p> <%-35.35t> <%x> <%X> <%50.50c> %m}{TRACE = magenta}%n]]></Pattern>
             </PatternLayout>
         </Console>
+        <RollingFile
+                name="Rolling File Appender"
+                fileName="logs/server.log"
+                filePattern="logs/server-%i.log"
+                append="false"
+                bufferedIO="false"
+        >
+            <Policies>
+                <OnStartupTriggeringPolicy minSize="1"/>
+                <SizeBasedTriggeringPolicy size="1KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+            <PatternLayout>
+                <Pattern><![CDATA[%highlight{%d <%-5p> <%-35.35t> <%x> <%X> <%50.50c> %m}{TRACE = magenta}%n]]></Pattern>
+            </PatternLayout>
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Root level="${env:LOG_LEVEL:-INFO}">
             <AppenderRef ref="Console Appender"/>
+            <AppenderRef ref="Rolling File Appender"/>
         </Root>
     </Loggers>
 </Configuration>
