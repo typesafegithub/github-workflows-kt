@@ -76,8 +76,12 @@ private fun EnumTyping.buildEnumCustomType(
     fieldName: String,
     className: String,
 ): TypeSpec {
-    val itemsNames = itemsNames ?: items.map { it.toPascalCase() }
-    val itemsNameMap = items.zip(itemsNames).toMap()
+    val itemsNames =
+        itemsNames ?: items
+            .map { it.toPascalCase() }
+            .groupBy { it }
+            .values
+            .flatMap { it.mapIndexed { index, name -> "$name${if (index > 0) (index + 1) else ""}" } }
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
     val sealedClassName = this.getClassName(actionPackageName, className, fieldName)
@@ -92,11 +96,11 @@ private fun EnumTyping.buildEnumCustomType(
                 .build(),
         ).addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
         .addTypes(
-            this.items.map {
+            this.items.mapIndexed { i, it ->
                 val itemName =
-                    itemsNameMap[it]?.let {
+                    itemsNames[i].let {
                         if (it == "Custom") "CustomEnum" else it
-                    } ?: error("FIXME: key=$it absent from $itemsNameMap")
+                    }
                 TypeSpec
                     .objectBuilder(itemName)
                     .superclass(sealedClassName)

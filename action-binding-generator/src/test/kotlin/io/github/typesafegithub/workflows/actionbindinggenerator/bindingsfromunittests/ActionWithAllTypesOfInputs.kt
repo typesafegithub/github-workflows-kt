@@ -309,6 +309,10 @@ public data class ActionWithAllTypesOfInputs private constructor(
 
         public object Bam123 : ActionWithAllTypesOfInputs.Bin("bam:123")
 
+        public object Bam1232 : ActionWithAllTypesOfInputs.Bin("bam-123")
+
+        public object Bam1233 : ActionWithAllTypesOfInputs.Bin("bam/123")
+
         public class Custom(
             customStringValue: String,
         ) : ActionWithAllTypesOfInputs.Bin(customStringValue)
