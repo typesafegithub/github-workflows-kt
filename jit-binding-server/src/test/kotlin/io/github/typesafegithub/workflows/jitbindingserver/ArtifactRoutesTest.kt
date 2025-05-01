@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.routing.routing
 import io.ktor.server.testing.testApplication
 
 class ArtifactRoutesTest :
@@ -16,15 +15,11 @@ class ArtifactRoutesTest :
                 testApplication {
                     // Given
                     application {
-                        routing {
-                            artifactRoutes(
-                                buildBindingsCache(
-                                    buildVersionArtifacts = {
-                                        mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
-                                    },
-                                ),
-                            )
-                        }
+                        appModule(
+                            buildVersionArtifacts = {
+                                mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
+                            },
+                        )
                     }
 
                     // When
@@ -40,13 +35,9 @@ class ArtifactRoutesTest :
                 testApplication {
                     // Given
                     application {
-                        routing {
-                            artifactRoutes(
-                                buildBindingsCache(
-                                    buildVersionArtifacts = { null },
-                                ),
-                            )
-                        }
+                        appModule(
+                            buildVersionArtifacts = { null },
+                        )
                     }
 
                     // When
@@ -61,13 +52,9 @@ class ArtifactRoutesTest :
                 testApplication {
                     // Given
                     application {
-                        routing {
-                            artifactRoutes(
-                                buildBindingsCache(
-                                    buildVersionArtifacts = { error("An internal error occurred!") },
-                                ),
-                            )
-                        }
+                        appModule(
+                            buildVersionArtifacts = { error("An internal error occurred!") },
+                        )
                     }
 
                     // When

@@ -1,16 +1,12 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import com.github.benmanes.caffeine.cache.Caffeine
 import com.sksamuel.aedile.core.LoadingCache
-import com.sksamuel.aedile.core.asLoadingCache
-import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
-import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -28,22 +24,12 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.hours
 
 private val logger = logger { }
 
 typealias ArtifactResult = Result<Map<String, Artifact>?>
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
-
-internal fun buildBindingsCache(
-    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>? = ::buildVersionArtifacts,
-): LoadingCache<ActionCoords, ArtifactResult> =
-    Caffeine
-        .newBuilder()
-        .refreshAfterWrite(1.hours)
-        .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { buildVersionArtifacts(it) } }
 
 fun Routing.artifactRoutes(
     bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,

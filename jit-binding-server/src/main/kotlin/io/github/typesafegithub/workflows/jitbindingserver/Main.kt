@@ -1,7 +1,15 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.sksamuel.aedile.core.LoadingCache
+import com.sksamuel.aedile.core.asLoadingCache
+import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.mavenbinding.Artifact
+import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -10,6 +18,7 @@ import io.ktor.server.routing.routing
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import java.time.Duration
+import kotlin.time.Duration.Companion.hours
 
 private val prometheusRegistry =
     PrometheusMeterRegistry(
@@ -38,18 +47,31 @@ fun main() {
     Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
         logger.error(throwable) { "Uncaught exception in thread $thread" }
     }
-    val bindingsCache = buildBindingsCache()
     embeddedServer(Netty, port = 8080) {
-        installPlugins(prometheusRegistry)
-
-        routing {
-            internalRoutes(prometheusRegistry)
-
-            artifactRoutes(bindingsCache, prometheusRegistry)
-            metadataRoutes(bindingsCache, prometheusRegistry)
-        }
+        appModule(buildVersionArtifacts = ::buildVersionArtifacts)
     }.start(wait = true)
 }
+
+fun Application.appModule(buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?) {
+    val bindingsCache = buildBindingsCache(buildVersionArtifacts)
+    installPlugins(prometheusRegistry)
+
+    routing {
+        internalRoutes(prometheusRegistry)
+
+        artifactRoutes(bindingsCache, prometheusRegistry)
+        metadataRoutes(bindingsCache, prometheusRegistry)
+    }
+}
+
+private fun buildBindingsCache(
+    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
+): LoadingCache<ActionCoords, ArtifactResult> =
+    Caffeine
+        .newBuilder()
+        .refreshAfterWrite(1.hours)
+        .recordStats()
+        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { buildVersionArtifacts(it) } }
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
 
