@@ -3,120 +3,108 @@ package io.github.typesafegithub.workflows.mavenbinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 
 internal fun ActionCoords.buildModuleFile(
-    mainJarSize: () -> Int,
-    mainJarMd5Checksum: () -> String,
-    mainJarSha1Checksum: () -> String,
-    mainJarSha256Checksum: () -> String,
-    mainJarSha512Checksum: () -> String,
-    sourcesJarSize: () -> Int,
-    sourcesJarMd5Checksum: () -> String,
-    sourcesJarSha1Checksum: () -> String,
-    sourcesJarSha256Checksum: () -> String,
-    sourcesJarSha512Checksum: () -> String,
-): String {
-    val mainJarSize = mainJarSize()
-    val mainJarMd5Checksum = mainJarMd5Checksum()
-    val mainJarSha1Checksum = mainJarSha1Checksum()
-    val mainJarSha256Checksum = mainJarSha256Checksum()
-    val mainJarSha512Checksum = mainJarSha512Checksum()
-    val sourcesJarSize = sourcesJarSize()
-    val sourcesJarMd5Checksum = sourcesJarMd5Checksum()
-    val sourcesJarSha1Checksum = sourcesJarSha1Checksum()
-    val sourcesJarSha256Checksum = sourcesJarSha256Checksum()
-    val sourcesJarSha512Checksum = sourcesJarSha512Checksum()
-    return """
+    mainJarSize: Int,
+    mainJarMd5Checksum: String,
+    mainJarSha1Checksum: String,
+    mainJarSha256Checksum: String,
+    mainJarSha512Checksum: String,
+    sourcesJarSize: Int,
+    sourcesJarMd5Checksum: String,
+    sourcesJarSha1Checksum: String,
+    sourcesJarSha256Checksum: String,
+    sourcesJarSha512Checksum: String,
+) = """
+    {
+      "formatVersion": "1.1",
+      "component": {
+        "group": "$owner",
+        "module": "$mavenName",
+        "version": "$version",
+        "attributes": {
+          "org.gradle.status": "release"
+        }
+      },
+      "createdBy": {
+        "gradle": {
+          "version": "8.7"
+        }
+      },
+      "variants": [
         {
-          "formatVersion": "1.1",
-          "component": {
-            "group": "$owner",
-            "module": "$mavenName",
-            "version": "$version",
-            "attributes": {
-              "org.gradle.status": "release"
-            }
+          "name": "apiElements",
+          "attributes": {
+            "org.gradle.category": "library",
+            "org.gradle.dependency.bundling": "external",
+            "org.gradle.jvm.environment": "standard-jvm",
+            "org.gradle.jvm.version": 11,
+            "org.gradle.libraryelements": "jar",
+            "org.gradle.usage": "java-api",
+            "org.jetbrains.kotlin.platform.type": "jvm"
           },
-          "createdBy": {
-            "gradle": {
-              "version": "8.7"
+          "files": [
+            {
+              "name": "$mavenName-$version.jar",
+              "url": "$mavenName-$version.jar",
+              "size": $mainJarSize,
+              "sha512": "$mainJarSha512Checksum",
+              "sha256": "$mainJarSha256Checksum",
+              "sha1": "$mainJarSha1Checksum",
+              "md5": "$mainJarMd5Checksum"
             }
+          ]
+        },
+        {
+          "name": "runtimeElements",
+          "attributes": {
+            "org.gradle.category": "library",
+            "org.gradle.dependency.bundling": "external",
+            "org.gradle.jvm.environment": "standard-jvm",
+            "org.gradle.jvm.version": 11,
+            "org.gradle.libraryelements": "jar",
+            "org.gradle.usage": "java-runtime",
+            "org.jetbrains.kotlin.platform.type": "jvm"
           },
-          "variants": [
+          "dependencies": [
             {
-              "name": "apiElements",
-              "attributes": {
-                "org.gradle.category": "library",
-                "org.gradle.dependency.bundling": "external",
-                "org.gradle.jvm.environment": "standard-jvm",
-                "org.gradle.jvm.version": 11,
-                "org.gradle.libraryelements": "jar",
-                "org.gradle.usage": "java-api",
-                "org.jetbrains.kotlin.platform.type": "jvm"
-              },
-              "files": [
-                {
-                  "name": "$mavenName-$version.jar",
-                  "url": "$mavenName-$version.jar",
-                  "size": $mainJarSize,
-                  "sha512": "$mainJarSha512Checksum",
-                  "sha256": "$mainJarSha256Checksum",
-                  "sha1": "$mainJarSha1Checksum",
-                  "md5": "$mainJarMd5Checksum"
-                }
-              ]
-            },
+              "group": "io.github.typesafegithub",
+              "module": "github-workflows-kt",
+              "version": {
+                "requires": "$LATEST_RELASED_LIBRARY_VERSION"
+              }
+            }
+          ],
+          "files": [
             {
-              "name": "runtimeElements",
-              "attributes": {
-                "org.gradle.category": "library",
-                "org.gradle.dependency.bundling": "external",
-                "org.gradle.jvm.environment": "standard-jvm",
-                "org.gradle.jvm.version": 11,
-                "org.gradle.libraryelements": "jar",
-                "org.gradle.usage": "java-runtime",
-                "org.jetbrains.kotlin.platform.type": "jvm"
-              },
-              "dependencies": [
-                {
-                  "group": "io.github.typesafegithub",
-                  "module": "github-workflows-kt",
-                  "version": {
-                    "requires": "$LATEST_RELASED_LIBRARY_VERSION"
-                  }
-                }
-              ],
-              "files": [
-                {
-                  "name": "$mavenName-$version.jar",
-                  "url": "$mavenName-$version.jar",
-                  "size": $mainJarSize,
-                  "sha512": "$mainJarSha512Checksum",
-                  "sha256": "$mainJarSha256Checksum",
-                  "sha1": "$mainJarSha1Checksum",
-                  "md5": "$mainJarMd5Checksum"
-                }
-              ]
-            },
+              "name": "$mavenName-$version.jar",
+              "url": "$mavenName-$version.jar",
+              "size": $mainJarSize,
+              "sha512": "$mainJarSha512Checksum",
+              "sha256": "$mainJarSha256Checksum",
+              "sha1": "$mainJarSha1Checksum",
+              "md5": "$mainJarMd5Checksum"
+            }
+          ]
+        },
+        {
+          "name": "sourcesElements",
+          "attributes": {
+            "org.gradle.category": "documentation",
+            "org.gradle.dependency.bundling": "external",
+            "org.gradle.docstype": "sources",
+            "org.gradle.usage": "java-runtime"
+          },
+          "files": [
             {
-              "name": "sourcesElements",
-              "attributes": {
-                "org.gradle.category": "documentation",
-                "org.gradle.dependency.bundling": "external",
-                "org.gradle.docstype": "sources",
-                "org.gradle.usage": "java-runtime"
-              },
-              "files": [
-                {
-                  "name": "$mavenName-$version-sources.jar",
-                  "url": "$mavenName-$version-sources.jar",
-                  "size": $sourcesJarSize,
-                  "sha512": "$sourcesJarSha512Checksum",
-                  "sha256": "$sourcesJarSha256Checksum",
-                  "sha1": "$sourcesJarSha1Checksum",
-                  "md5": "$sourcesJarMd5Checksum"
-                }
-              ]
+              "name": "$mavenName-$version-sources.jar",
+              "url": "$mavenName-$version-sources.jar",
+              "size": $sourcesJarSize,
+              "sha512": "$sourcesJarSha512Checksum",
+              "sha256": "$sourcesJarSha256Checksum",
+              "sha1": "$sourcesJarSha1Checksum",
+              "md5": "$sourcesJarMd5Checksum"
             }
           ]
         }
-        """.trimIndent()
-}
+      ]
+    }
+    """.trimIndent()
