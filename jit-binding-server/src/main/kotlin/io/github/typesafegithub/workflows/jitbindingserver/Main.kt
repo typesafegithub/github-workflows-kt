@@ -71,7 +71,7 @@ private fun buildBindingsCache(
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { buildVersionArtifacts(it) } }
+        .asLoadingCache<ActionCoords, ArtifactResult> { buildVersionArtifacts(it) }
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
 
