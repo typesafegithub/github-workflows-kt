@@ -81,7 +81,7 @@ private fun EnumTyping.buildEnumCustomType(
             .map { it.toPascalCase() }
             .groupBy { it }
             .values
-            .flatMap { it.mapIndexed { index, name -> "$name${if (index > 0) (index + 1) else ""}" } }
+            .flatMap { it.mapIndexed { index, name -> "$name${if (index > 0) "_${index + 1}" else ""}" } }
     val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
     val actionPackageName = coords.owner.toKotlinPackageName()
     val sealedClassName = this.getClassName(actionPackageName, className, fieldName)
