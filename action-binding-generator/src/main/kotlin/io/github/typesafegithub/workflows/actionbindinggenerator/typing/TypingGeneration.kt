@@ -76,8 +76,9 @@ private fun EnumTyping.buildEnumCustomType(
     fieldName: String,
     className: String,
 ): TypeSpec {
+    val sortedItems = items.sorted()
     val itemsNames =
-        itemsNames ?: items
+        itemsNames ?: sortedItems
             .map { it.toPascalCase() }
             .groupBy { it }
             .values
@@ -96,7 +97,7 @@ private fun EnumTyping.buildEnumCustomType(
                 .build(),
         ).addProperty(PropertySpec.builder("stringValue", String::class).initializer("stringValue").build())
         .addTypes(
-            this.items.mapIndexed { i, it ->
+            sortedItems.mapIndexed { i, it ->
                 val itemName =
                     itemsNames[i].let {
                         if (it == "Custom") "CustomEnum" else it
