@@ -96,7 +96,7 @@ class GenerationTest :
                 "bin-kin" to BooleanTyping,
                 "int-pint" to IntegerTyping,
                 "flo-pint" to FloatTyping,
-                "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123", "bam:123")),
+                "fin-bin" to EnumTyping("Bin", listOf("foo", "boo-bar", "baz123", "bam:123", "bam-123", "bam/123")),
                 "goo-zen" to IntegerWithSpecialValueTyping("Zen", mapOf("Special1" to 3, "Special2" to -1)),
                 "bah-enum" to EnumTyping(null, listOf("helloworld"), listOf("HelloWorld")),
                 "list-strings" to ListOfTypings(",", StringTyping),

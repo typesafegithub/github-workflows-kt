@@ -301,13 +301,17 @@ public data class ActionWithAllTypesOfInputs private constructor(
     public sealed class Bin(
         public val stringValue: String,
     ) {
-        public object Foo : ActionWithAllTypesOfInputs.Bin("foo")
+        public object Bam123 : ActionWithAllTypesOfInputs.Bin("bam-123")
 
-        public object BooBar : ActionWithAllTypesOfInputs.Bin("boo-bar")
+        public object Bam123_2 : ActionWithAllTypesOfInputs.Bin("bam/123")
+
+        public object Bam123_3 : ActionWithAllTypesOfInputs.Bin("bam:123")
 
         public object Baz123 : ActionWithAllTypesOfInputs.Bin("baz123")
 
-        public object Bam123 : ActionWithAllTypesOfInputs.Bin("bam:123")
+        public object BooBar : ActionWithAllTypesOfInputs.Bin("boo-bar")
+
+        public object Foo : ActionWithAllTypesOfInputs.Bin("foo")
 
         public class Custom(
             customStringValue: String,
@@ -341,9 +345,9 @@ public data class ActionWithAllTypesOfInputs private constructor(
     ) {
         public object One : ActionWithAllTypesOfInputs.MyEnum("one")
 
-        public object Two : ActionWithAllTypesOfInputs.MyEnum("two")
-
         public object Three : ActionWithAllTypesOfInputs.MyEnum("three")
+
+        public object Two : ActionWithAllTypesOfInputs.MyEnum("two")
 
         public class Custom(
             customStringValue: String,
