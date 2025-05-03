@@ -14,10 +14,10 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
 private val logger = logger { }
 
-typealias MetadataResult = Result<Map<String, String>>
+typealias CachedMetadataArtifact = Result<Map<String, String>>
 
 fun Routing.metadataRoutes(
-    metadataCache: LoadingCache<ActionCoords, MetadataResult>,
+    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -34,7 +34,7 @@ fun Routing.metadataRoutes(
 }
 
 private fun Route.metadata(
-    metadataCache: LoadingCache<ActionCoords, MetadataResult>,
+    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
     refresh: Boolean = false,
 ) {
     get {
