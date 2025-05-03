@@ -77,24 +77,24 @@ fun Application.appModule(
 
 private fun buildBindingsCache(
     buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
-): LoadingCache<ActionCoords, ArtifactResult> =
+): LoadingCache<ActionCoords, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { runCatching { buildVersionArtifacts(it) } }
+        .asLoadingCache<ActionCoords, CachedVersionArtifact> { runCatching { buildVersionArtifacts(it) } }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
     getGithubAuthToken: () -> String,
-): LoadingCache<ActionCoords, MetadataResult> =
+): LoadingCache<ActionCoords, CachedMetadataArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, MetadataResult> {
+        .asLoadingCache<ActionCoords, CachedMetadataArtifact> {
             runCatching {
                 buildPackageArtifacts(
                     it,
