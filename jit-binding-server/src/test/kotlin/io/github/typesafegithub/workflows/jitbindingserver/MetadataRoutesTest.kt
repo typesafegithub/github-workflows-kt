@@ -112,15 +112,9 @@ class MetadataRoutesTest :
                     // When
                     val response2 = client.get("some-owner/some-action/maven-metadata.xml")
                     // Then
-                    // This assertion represents an undesired behavior - it should retry generating the artifact
-                    // and return the actual POM.
-                    // TODO fix in https://github.com/typesafegithub/github-workflows-kt/issues/1938
-                    response2.status shouldBe HttpStatusCode.InternalServerError
+                    response2.status shouldBe HttpStatusCode.OK
 
-                    // This assertion represents an undesired behavior - it should call the artifact generation twice,
-                    // first with exception, and then when it's successful.
-                    // TODO fix in https://github.com/typesafegithub/github-workflows-kt/issues/1938
-                    verify(exactly = 1) { mockBuildPackageArtifacts(any(), any(), any()) }
+                    verify(exactly = 2) { mockBuildPackageArtifacts(any(), any(), any()) }
                 }
             }
         }

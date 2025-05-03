@@ -102,15 +102,9 @@ class ArtifactRoutesTest :
                     // When
                     val response2 = client.get("some-owner/some-action/v4/some-action-v4.pom")
                     // Then
-                    // This assertion represents an undesired behavior - it should retry generating the binding
-                    // and return the actual POM.
-                    // TODO fix in https://github.com/typesafegithub/github-workflows-kt/issues/1938
-                    response2.status shouldBe HttpStatusCode.InternalServerError
+                    response2.status shouldBe HttpStatusCode.OK
 
-                    // This assertion represents an undesired behavior - it should call the binding generation twice,
-                    // first with exception, and then when it's successful.
-                    // TODO fix in https://github.com/typesafegithub/github-workflows-kt/issues/1938
-                    verify(exactly = 1) { mockBuildVersionArtifacts(any()) }
+                    verify(exactly = 2) { mockBuildVersionArtifacts(any()) }
                 }
             }
         }

@@ -82,7 +82,7 @@ private fun buildBindingsCache(
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, CachedVersionArtifact> { runCatching { buildVersionArtifacts(it) } }
+        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it) }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
@@ -95,13 +95,11 @@ private fun buildMetadataCache(
         .refreshAfterWrite(1.hours)
         .recordStats()
         .asLoadingCache<ActionCoords, CachedMetadataArtifact> {
-            runCatching {
-                buildPackageArtifacts(
-                    it,
-                    getGithubAuthToken(),
-                    { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
-                )
-            }
+            buildPackageArtifacts(
+                it,
+                getGithubAuthToken(),
+                { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
+            )
         }
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()

@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 
 private val logger = logger { }
 
-typealias CachedVersionArtifact = Result<Map<String, Artifact>?>
+typealias CachedVersionArtifact = Map<String, Artifact>?
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
@@ -119,7 +119,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     if (refresh) {
         bindingsCache.invalidate(actionCoords)
     }
-    return bindingsCache.get(actionCoords).getOrThrow()
+    return bindingsCache.get(actionCoords)
 }
 
 private fun PrometheusMeterRegistry.incrementArtifactCounter(call: ApplicationCall) {
