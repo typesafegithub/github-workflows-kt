@@ -53,6 +53,7 @@ fun main() {
         appModule(
             buildVersionArtifacts = ::buildVersionArtifacts,
             buildPackageArtifacts = ::buildPackageArtifacts,
+            getGithubAuthToken = ::getGithubAuthToken,
         )
     }.start(wait = true)
 }
@@ -60,9 +61,10 @@ fun main() {
 fun Application.appModule(
     buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    getGithubAuthToken: () -> String,
 ) {
     val bindingsCache = buildBindingsCache(buildVersionArtifacts)
-    val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts)
+    val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts, getGithubAuthToken)
     installPlugins(prometheusRegistry)
 
     routing {
@@ -86,6 +88,7 @@ private fun buildBindingsCache(
 private fun buildMetadataCache(
     bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    getGithubAuthToken: () -> String,
 ): LoadingCache<ActionCoords, MetadataResult> =
     Caffeine
         .newBuilder()
