@@ -95,13 +95,11 @@ private fun buildMetadataCache(
         .refreshAfterWrite(1.hours)
         .recordStats()
         .asLoadingCache<ActionCoords, CachedMetadataArtifact> {
-            runCatching {
-                buildPackageArtifacts(
-                    it,
-                    getGithubAuthToken(),
-                    { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
-                )
-            }
+            buildPackageArtifacts(
+                it,
+                getGithubAuthToken(),
+                { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
+            )
         }
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()

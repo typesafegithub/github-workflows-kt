@@ -14,7 +14,7 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
 private val logger = logger { }
 
-typealias CachedMetadataArtifact = Result<Map<String, String>>
+typealias CachedMetadataArtifact = Map<String, String>
 
 fun Routing.metadataRoutes(
     metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
@@ -45,7 +45,7 @@ private fun Route.metadata(
         if (refresh) {
             metadataCache.invalidate(actionCoords)
         }
-        val metadataArtifacts = metadataCache.get(actionCoords).getOrThrow()
+        val metadataArtifacts = metadataCache.get(actionCoords)
 
         if (refresh && !deliverOnRefreshRoute) return@get call.respondText(text = "OK")
 
