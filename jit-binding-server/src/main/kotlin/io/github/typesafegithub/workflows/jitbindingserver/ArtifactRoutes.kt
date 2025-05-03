@@ -27,12 +27,12 @@ import kotlinx.coroutines.launch
 
 private val logger = logger { }
 
-typealias ArtifactResult = Map<String, Artifact>?
+typealias CachedVersionArtifact = Map<String, Artifact>?
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
 fun Routing.artifactRoutes(
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -50,7 +50,7 @@ fun Routing.artifactRoutes(
 
 private fun Route.artifact(
     prometheusRegistry: PrometheusMeterRegistry?,
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
     refresh: Boolean = false,
 ) {
     headArtifact(bindingsCache, prometheusRegistry, refresh)
@@ -58,7 +58,7 @@ private fun Route.artifact(
 }
 
 private fun Route.headArtifact(
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -78,7 +78,7 @@ private fun Route.headArtifact(
 }
 
 private fun Route.getArtifact(
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -102,7 +102,7 @@ private fun Route.getArtifact(
 
 internal fun prefetchBindingArtifacts(
     coords: Collection<ActionCoords>,
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
 ) {
     prefetchScope.launch {
         bindingsCache.getAll(coords)
@@ -111,7 +111,7 @@ internal fun prefetchBindingArtifacts(
 
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
-    bindingsCache: LoadingCache<ActionCoords, ArtifactResult>,
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
 ): Map<String, Artifact>? {
     val actionCoords = parameters.extractActionCoords(extractVersion = true)
 

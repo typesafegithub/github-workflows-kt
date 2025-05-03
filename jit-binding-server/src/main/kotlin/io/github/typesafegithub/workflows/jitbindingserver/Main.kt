@@ -7,7 +7,9 @@ import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.mavenbinding.Artifact
+import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
+import io.github.typesafegithub.workflows.shared.internal.getGithubAuthToken
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
@@ -48,30 +50,59 @@ fun main() {
         logger.error(throwable) { "Uncaught exception in thread $thread" }
     }
     embeddedServer(Netty, port = 8080) {
-        appModule(buildVersionArtifacts = ::buildVersionArtifacts)
+        appModule(
+            buildVersionArtifacts = ::buildVersionArtifacts,
+            buildPackageArtifacts = ::buildPackageArtifacts,
+            getGithubAuthToken = ::getGithubAuthToken,
+        )
     }.start(wait = true)
 }
 
-fun Application.appModule(buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?) {
+fun Application.appModule(
+    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
+    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    getGithubAuthToken: () -> String,
+) {
     val bindingsCache = buildBindingsCache(buildVersionArtifacts)
+    val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts, getGithubAuthToken)
     installPlugins(prometheusRegistry)
 
     routing {
         internalRoutes(prometheusRegistry)
 
         artifactRoutes(bindingsCache, prometheusRegistry)
-        metadataRoutes(bindingsCache, prometheusRegistry)
+        metadataRoutes(metadataCache, prometheusRegistry)
     }
 }
 
 private fun buildBindingsCache(
     buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
-): LoadingCache<ActionCoords, ArtifactResult> =
+): LoadingCache<ActionCoords, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, ArtifactResult> { buildVersionArtifacts(it) }
+        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it) }
+
+@Suppress("ktlint:standard:function-signature") // Conflict with detekt.
+private fun buildMetadataCache(
+    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    getGithubAuthToken: () -> String,
+): LoadingCache<ActionCoords, CachedMetadataArtifact> =
+    Caffeine
+        .newBuilder()
+        .refreshAfterWrite(1.hours)
+        .recordStats()
+        .asLoadingCache<ActionCoords, CachedMetadataArtifact> {
+            runCatching {
+                buildPackageArtifacts(
+                    it,
+                    getGithubAuthToken(),
+                    { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
+                )
+            }
+        }
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
 

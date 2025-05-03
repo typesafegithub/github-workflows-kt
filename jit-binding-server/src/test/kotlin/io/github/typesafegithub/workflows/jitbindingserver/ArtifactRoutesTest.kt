@@ -23,6 +23,9 @@ class ArtifactRoutesTest :
                             buildVersionArtifacts = {
                                 mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
                             },
+                            // Irrelevant for these tests.
+                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            getGithubAuthToken = { "" },
                         )
                     }
 
@@ -41,6 +44,9 @@ class ArtifactRoutesTest :
                     application {
                         appModule(
                             buildVersionArtifacts = { null },
+                            // Irrelevant for these tests.
+                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            getGithubAuthToken = { "" },
                         )
                     }
 
@@ -58,6 +64,9 @@ class ArtifactRoutesTest :
                     application {
                         appModule(
                             buildVersionArtifacts = { error("An internal error occurred!") },
+                            // Irrelevant for these tests.
+                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            getGithubAuthToken = { "" },
                         )
                     }
 
@@ -79,6 +88,9 @@ class ArtifactRoutesTest :
                     application {
                         appModule(
                             buildVersionArtifacts = mockBuildVersionArtifacts,
+                            // Irrelevant for these tests.
+                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            getGithubAuthToken = { "" },
                         )
                     }
 
