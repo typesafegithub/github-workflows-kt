@@ -2,12 +2,13 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 
-suspend fun ActionCoords.buildPackageArtifacts(
+suspend fun buildPackageArtifacts(
+    actionCoords: ActionCoords,
     githubAuthToken: String,
     prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit,
 ): Map<String, String> {
     val mavenMetadata =
-        buildMavenMetadataFile(
+        actionCoords.buildMavenMetadataFile(
             githubAuthToken = githubAuthToken,
             prefetchBindingArtifacts = prefetchBindingArtifacts,
         ) ?: return emptyMap()
