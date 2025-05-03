@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.ktor.client.request.get
@@ -12,29 +11,29 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 
-class ArtifactRoutesTest :
+class MetadataRoutesTest :
     FunSpec({
-        context("artifacts for a given version") {
+        context("artifacts for a given package") {
             test("when some artifacts were generated") {
                 testApplication {
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = {
-                                mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
+                            buildPackageArtifacts = { _, _, _ ->
+                                mapOf("maven-metadata.xml" to "Some XML contents")
                             },
+                            getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
-                            getGithubAuthToken = { "" },
+                            buildVersionArtifacts = { emptyMap() },
                         )
                     }
 
                     // When
-                    val response = client.get("some-owner/some-action/v4/some-action-v4.pom")
+                    val response = client.get("some-owner/some-action/maven-metadata.xml")
 
                     // Then
                     response.status shouldBe HttpStatusCode.OK
-                    response.bodyAsText() shouldBe "Some POM contents"
+                    response.bodyAsText() shouldBe "Some XML contents"
                 }
             }
 
@@ -43,35 +42,39 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { null },
+                            buildPackageArtifacts = { _, _, _ ->
+                                emptyMap()
+                            },
+                            getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
-                            getGithubAuthToken = { "" },
+                            buildVersionArtifacts = { emptyMap() },
                         )
                     }
 
                     // When
-                    val response = client.get("some-owner/some-action/v4/some-action-v4.pom")
+                    val response = client.get("some-owner/some-action/maven-metadata.xml")
 
                     // Then
                     response.status shouldBe HttpStatusCode.NotFound
                 }
             }
 
-            test("when binding generation fails") {
+            test("when artifact generation fails") {
                 testApplication {
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { error("An internal error occurred!") },
+                            buildPackageArtifacts = { _, _, _ ->
+                                error("An internal error occurred!")
+                            },
+                            getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
-                            getGithubAuthToken = { "" },
+                            buildVersionArtifacts = { emptyMap() },
                         )
                     }
 
                     // When
-                    val response = client.get("some-owner/some-action/v4/some-action-v4.pom")
+                    val response = client.get("some-owner/some-action/maven-metadata.xml")
 
                     // Then
                     response.status shouldBe HttpStatusCode.InternalServerError
@@ -81,36 +84,43 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords) -> Map<String, TextArtifact>?>()
-                    every { mockBuildVersionArtifacts(any()) } throws
+                    val mockBuildPackageArtifacts =
+                        mockk<
+                            (
+                                ActionCoords,
+                                String,
+                                (Collection<ActionCoords>) -> Unit,
+                            ) -> Map<String, String>,
+                        >()
+                    every { mockBuildPackageArtifacts(any(), any(), any()) } throws
                         Exception("An internal error occurred!") andThen
-                        mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
+                        mapOf("maven-metadata.xml" to "Some XML contents")
                     application {
                         appModule(
-                            buildVersionArtifacts = mockBuildVersionArtifacts,
+                            buildPackageArtifacts = mockBuildPackageArtifacts,
+                            getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
-                            getGithubAuthToken = { "" },
+                            buildVersionArtifacts = { emptyMap() },
                         )
                     }
 
                     // When
-                    val response = client.get("some-owner/some-action/v4/some-action-v4.pom")
+                    val response = client.get("some-owner/some-action/maven-metadata.xml")
                     // Then
                     response.status shouldBe HttpStatusCode.InternalServerError
 
                     // When
-                    val response2 = client.get("some-owner/some-action/v4/some-action-v4.pom")
+                    val response2 = client.get("some-owner/some-action/maven-metadata.xml")
                     // Then
-                    // This assertion represents an undesired behavior - it should retry generating the binding
+                    // This assertion represents an undesired behavior - it should retry generating the artifact
                     // and return the actual POM.
                     // TODO fix in https://github.com/typesafegithub/github-workflows-kt/issues/1938
                     response2.status shouldBe HttpStatusCode.InternalServerError
 
-                    // This assertion represents an undesired behavior - it should call the binding generation twice,
+                    // This assertion represents an undesired behavior - it should call the artifact generation twice,
                     // first with exception, and then when it's successful.
                     // TODO fix in https://github.com/typesafegithub/github-workflows-kt/issues/1938
-                    verify(exactly = 1) { mockBuildVersionArtifacts(any()) }
+                    verify(exactly = 1) { mockBuildPackageArtifacts(any(), any(), any()) }
                 }
             }
         }
