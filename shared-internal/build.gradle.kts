@@ -13,11 +13,11 @@ dependencies {
     api("io.arrow-kt:arrow-core:2.1.1")
     // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
     // note: see https://youtrack.jetbrains.com/issue/KT-67618
-    api("io.ktor:ktor-client-core:3.1.2")
-    implementation("io.ktor:ktor-client-cio:3.1.2")
-    implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
-    implementation("io.ktor:ktor-client-logging:3.1.2")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+    api("io.ktor:ktor-client-core:3.1.3")
+    implementation("io.ktor:ktor-client-cio:3.1.3")
+    implementation("io.ktor:ktor-client-content-negotiation:3.1.3")
+    implementation("io.ktor:ktor-client-logging:3.1.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.3")
     implementation("io.github.oshai:kotlin-logging:7.0.7")
     implementation("com.auth0:java-jwt:4.5.0")
     implementation("org.kohsuke:github-api:1.327")
@@ -31,5 +31,5 @@ dependencies {
     // Here's a ticket to remember to remove this workaround: https://github.com/typesafegithub/github-workflows-kt/issues/1832
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
 
-    testImplementation("io.ktor:ktor-client-mock:3.1.2")
+    testImplementation("io.ktor:ktor-client-mock:3.1.3")
 }
