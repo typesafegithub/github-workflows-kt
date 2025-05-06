@@ -5,15 +5,12 @@ import io.github.typesafegithub.workflows.domain.KotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Mode
 import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.Workflow
-import io.github.typesafegithub.workflows.domain.contexts.Contexts
-import io.github.typesafegithub.workflows.domain.contexts.GithubContext
 import io.github.typesafegithub.workflows.dsl.toBuilder
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import io.github.typesafegithub.workflows.shared.internal.findGitRoot
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalAfter
 import io.github.typesafegithub.workflows.yaml.Preamble.WithOriginalBefore
-import kotlinx.serialization.json.Json
 import java.nio.file.Path
 import kotlin.io.path.absolute
 import kotlin.io.path.invariantSeparatorsPathString
@@ -70,16 +67,6 @@ internal fun Workflow.writeToFile(
         it.parentFile.mkdirs()
         it.writeText(yaml)
     }
-}
-
-private fun loadContextsFromEnvVars(getenv: (String) -> String?): Contexts {
-    fun getEnvVarOrFail(varName: String): String = getenv(varName) ?: error("$varName should be set!")
-
-    val githubContextRaw = getEnvVarOrFail("GHWKT_GITHUB_CONTEXT_JSON")
-    val githubContext = json.decodeFromString<GithubContext>(githubContextRaw)
-    return Contexts(
-        github = githubContext,
-    )
 }
 
 private fun commentify(preamble: String): String {
@@ -174,5 +161,3 @@ private fun Workflow.toYamlInternal(jobsWithConsistencyCheck: List<Job<*>>): Map
         *_customArguments.toList().toTypedArray(),
         "jobs" to jobsWithConsistencyCheck.jobsToYaml(),
     )
-
-private val json = Json { ignoreUnknownKeys = true }
