@@ -5,6 +5,8 @@ import arrow.core.getOrElse
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import java.time.format.DateTimeFormatter
@@ -18,7 +20,8 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
         name: String,
         githubAuthToken: String?,
     ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
-    prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit = {},
+    prefetchBindingArtifacts: (Collection<ActionCoords>, BindingVersion) -> Unit = { _, _ -> },
+    bindingVersion: BindingVersion = V1,
 ): String? {
     val availableVersions =
         fetchAvailableVersions(owner, name, githubAuthToken)
@@ -26,7 +29,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
                 logger.error { it }
                 emptyList()
             }.filter { it.isMajorVersion() || (significantVersion < FULL) }
-    prefetchBindingArtifacts(availableVersions.map { copy(version = "$it") })
+    prefetchBindingArtifacts(availableVersions.map { copy(version = "$it") }, bindingVersion)
     val newest = availableVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter
