@@ -4,6 +4,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
 import org.jetbrains.kotlin.cli.common.ExitCode
@@ -24,6 +25,7 @@ import kotlin.io.path.writeText
 internal data class Jars(
     val mainJar: () -> ByteArray,
     val sourcesJar: () -> ByteArray,
+    val typingActualSource: TypingActualSource?,
 )
 
 internal fun ActionCoords.buildJars(): Jars? {
@@ -53,6 +55,7 @@ internal fun ActionCoords.buildJars(): Jars? {
     return Jars(
         mainJar = { mainJar },
         sourcesJar = { sourcesJar },
+        typingActualSource = binding.firstNotNullOfOrNull { it.typingActualSource },
     )
 }
 
