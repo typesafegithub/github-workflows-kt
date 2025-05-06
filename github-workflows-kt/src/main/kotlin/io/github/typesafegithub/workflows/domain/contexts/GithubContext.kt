@@ -9,6 +9,7 @@ public data class GithubContext(
     val repository: String,
     val sha: String,
     val ref: String? = null,
+    val base_ref: String? = null,
     val event: GithubContextEvent,
     val event_name: String,
 )

@@ -28,6 +28,7 @@ class ContextMappingTest :
                             repository = "some-owner/some-repo",
                             sha = "db76dd0f1149901e1cdf60ec98d568b32fa7eb71",
                             ref = "refs/heads/main",
+                            base_ref = "refs/heads/develop",
                             event =
                                 GithubContextEvent(
                                     after = "1383af4847629428f1675f5c2e81e67cc3a4efb0",
