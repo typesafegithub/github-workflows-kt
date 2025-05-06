@@ -3,7 +3,6 @@ package io.github.typesafegithub.workflows.jitbindingserver
 import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
@@ -74,7 +73,7 @@ private fun Route.headArtifact(
             call.respondNotFound()
         }
 
-        prometheusRegistry?.incrementArtifactCounter(call, bindingArtifacts.typingActualSource)
+        prometheusRegistry?.incrementArtifactCounter(call)
     }
 }
 
@@ -97,7 +96,7 @@ private fun Route.getArtifact(
             is JarArtifact -> call.respondBytes(artifact.data(), ContentType.parse("application/java-archive"))
         }
 
-        prometheusRegistry?.incrementArtifactCounter(call, bindingArtifacts.typingActualSource)
+        prometheusRegistry?.incrementArtifactCounter(call)
     }
 }
 
@@ -123,10 +122,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     return bindingsCache.get(actionCoords)
 }
 
-private fun PrometheusMeterRegistry.incrementArtifactCounter(
-    call: ApplicationCall,
-    typingActualSource: TypingActualSource?,
-) {
+private fun PrometheusMeterRegistry.incrementArtifactCounter(call: ApplicationCall) {
     val owner = call.parameters["owner"] ?: "unknown"
     val name = call.parameters["name"] ?: "unknown"
     val version = call.parameters["version"] ?: "unknown"
@@ -137,12 +133,6 @@ private fun PrometheusMeterRegistry.incrementArtifactCounter(
             .status()
             ?.value
             ?.toString() ?: "unknown"
-    val typingActualSourceString =
-        when (typingActualSource) {
-            TypingActualSource.ACTION -> "action"
-            TypingActualSource.TYPING_CATALOG -> "typing_catalog"
-            null -> "no_typing"
-        }
 
     val counter =
         this.counter(
@@ -154,7 +144,6 @@ private fun PrometheusMeterRegistry.incrementArtifactCounter(
                 Tag.of("file", file),
                 Tag.of("method", method),
                 Tag.of("status", status),
-                Tag.of("typing_actual_source", typingActualSourceString),
             ),
         )
     counter.increment()

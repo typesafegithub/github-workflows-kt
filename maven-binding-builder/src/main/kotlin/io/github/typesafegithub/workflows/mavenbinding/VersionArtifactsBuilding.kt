@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 
 sealed interface Artifact
 
@@ -15,7 +14,6 @@ data class JarArtifact(
 
 data class VersionArtifacts(
     val files: Map<String, Artifact>,
-    val typingActualSource: TypingActualSource?,
 )
 
 fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
@@ -70,7 +68,6 @@ fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
                     "$mavenName-$version.module.sha256" to TextArtifact { module.sha256Checksum() },
                     "$mavenName-$version.module.sha512" to TextArtifact { module.sha512Checksum() },
                 ),
-            typingActualSource = jars.typingActualSource,
         )
     }
 }

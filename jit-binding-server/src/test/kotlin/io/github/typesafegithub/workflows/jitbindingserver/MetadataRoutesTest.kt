@@ -28,7 +28,6 @@ class MetadataRoutesTest :
                             buildVersionArtifacts = {
                                 VersionArtifacts(
                                     files = emptyMap(),
-                                    typingActualSource = null,
                                 )
                             },
                         )
@@ -56,7 +55,6 @@ class MetadataRoutesTest :
                             buildVersionArtifacts = {
                                 VersionArtifacts(
                                     files = emptyMap(),
-                                    typingActualSource = null,
                                 )
                             },
                         )
@@ -83,7 +81,6 @@ class MetadataRoutesTest :
                             buildVersionArtifacts = {
                                 VersionArtifacts(
                                     files = emptyMap(),
-                                    typingActualSource = null,
                                 )
                             },
                         )
@@ -119,7 +116,6 @@ class MetadataRoutesTest :
                             buildVersionArtifacts = {
                                 VersionArtifacts(
                                     files = emptyMap(),
-                                    typingActualSource = null,
                                 )
                             },
                         )

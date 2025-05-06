@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
@@ -25,7 +24,6 @@ class ArtifactRoutesTest :
                             buildVersionArtifacts = {
                                 VersionArtifacts(
                                     files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
-                                    typingActualSource = TypingActualSource.TYPING_CATALOG,
                                 )
                             },
                             // Irrelevant for these tests.
@@ -91,7 +89,6 @@ class ArtifactRoutesTest :
                         Exception("An internal error occurred!") andThen
                         VersionArtifacts(
                             files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
-                            typingActualSource = TypingActualSource.TYPING_CATALOG,
                         )
                     application {
                         appModule(
