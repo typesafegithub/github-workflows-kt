@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.ktor.client.request.get
@@ -24,7 +25,11 @@ class MetadataRoutesTest :
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { emptyMap() },
+                            buildVersionArtifacts = {
+                                VersionArtifacts(
+                                    files = emptyMap(),
+                                )
+                            },
                         )
                     }
 
@@ -47,7 +52,11 @@ class MetadataRoutesTest :
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { emptyMap() },
+                            buildVersionArtifacts = {
+                                VersionArtifacts(
+                                    files = emptyMap(),
+                                )
+                            },
                         )
                     }
 
@@ -69,7 +78,11 @@ class MetadataRoutesTest :
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { emptyMap() },
+                            buildVersionArtifacts = {
+                                VersionArtifacts(
+                                    files = emptyMap(),
+                                )
+                            },
                         )
                     }
 
@@ -100,7 +113,11 @@ class MetadataRoutesTest :
                             buildPackageArtifacts = mockBuildPackageArtifacts,
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { emptyMap() },
+                            buildVersionArtifacts = {
+                                VersionArtifacts(
+                                    files = emptyMap(),
+                                )
+                            },
                         )
                     }
 

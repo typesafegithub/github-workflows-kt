@@ -4,9 +4,9 @@ import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
-import io.github.typesafegithub.workflows.mavenbinding.Artifact
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
+import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 
 private val logger = logger { }
 
-typealias CachedVersionArtifact = Map<String, Artifact>?
+typealias CachedVersionArtifact = VersionArtifacts?
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
@@ -67,7 +67,7 @@ private fun Route.headArtifact(
 
         val file = call.parameters["file"] ?: return@head call.respondNotFound()
 
-        if (file in bindingArtifacts) {
+        if (file in bindingArtifacts.files) {
             call.respondText(text = "Exists", status = HttpStatusCode.OK)
         } else {
             call.respondNotFound()
@@ -89,7 +89,7 @@ private fun Route.getArtifact(
 
         val file = call.parameters["file"] ?: return@get call.respondNotFound()
 
-        val artifact = bindingArtifacts[file] ?: return@get call.respondNotFound()
+        val artifact = bindingArtifacts.files[file] ?: return@get call.respondNotFound()
 
         when (artifact) {
             is TextArtifact -> call.respondText(text = artifact.data())
@@ -112,7 +112,7 @@ internal fun prefetchBindingArtifacts(
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
     bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
-): Map<String, Artifact>? {
+): VersionArtifacts? {
     val actionCoords = parameters.extractActionCoords(extractVersion = true)
 
     logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }

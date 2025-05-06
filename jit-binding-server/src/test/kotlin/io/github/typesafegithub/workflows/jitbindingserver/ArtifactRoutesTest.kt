@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
+import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.ktor.client.request.get
@@ -21,7 +22,9 @@ class ArtifactRoutesTest :
                     application {
                         appModule(
                             buildVersionArtifacts = {
-                                mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
+                                VersionArtifacts(
+                                    files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
+                                )
                             },
                             // Irrelevant for these tests.
                             buildPackageArtifacts = { _, _, _ -> emptyMap() },
@@ -81,10 +84,12 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords) -> Map<String, TextArtifact>?>()
+                    val mockBuildVersionArtifacts = mockk<(ActionCoords) -> VersionArtifacts?>()
                     every { mockBuildVersionArtifacts(any()) } throws
                         Exception("An internal error occurred!") andThen
-                        mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" })
+                        VersionArtifacts(
+                            files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
+                        )
                     application {
                         appModule(
                             buildVersionArtifacts = mockBuildVersionArtifacts,
