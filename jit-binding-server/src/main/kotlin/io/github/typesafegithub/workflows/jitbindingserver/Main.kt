@@ -6,7 +6,7 @@ import com.sksamuel.aedile.core.asLoadingCache
 import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-import io.github.typesafegithub.workflows.mavenbinding.Artifact
+import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.github.typesafegithub.workflows.shared.internal.getGithubAuthToken
@@ -59,7 +59,7 @@ fun main() {
 }
 
 fun Application.appModule(
-    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
+    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
@@ -76,7 +76,7 @@ fun Application.appModule(
 }
 
 private fun buildBindingsCache(
-    buildVersionArtifacts: (ActionCoords) -> Map<String, Artifact>?,
+    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
 ): LoadingCache<ActionCoords, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
