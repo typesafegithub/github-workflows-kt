@@ -15,6 +15,7 @@ public data class ActionCoords(
      */
     val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
+    val typesUuid: String? = null,
 )
 
 /**
@@ -23,9 +24,11 @@ public data class ActionCoords(
  */
 public val ActionCoords.isTopLevel: Boolean get() = path == null
 
-public val ActionCoords.prettyPrint: String get() = "$prettyPrintWithoutVersion@$version"
+public val ActionCoords.prettyPrint: String get() = "$prettyPrintBase@$version${typesUuid?.let { " (types: $it)" } ?: ""}"
 
-public val ActionCoords.prettyPrintWithoutVersion: String get() = "$owner/$fullName${
+public val ActionCoords.prettyPrintWithoutVersion: String get() = "$prettyPrintBase${typesUuid?.let { " (types: $it)" } ?: ""}"
+
+private val ActionCoords.prettyPrintBase: String get() = "$owner/$fullName${
     significantVersion.takeUnless { it == FULL }?.let { " with $it version" } ?: ""
 }"
 

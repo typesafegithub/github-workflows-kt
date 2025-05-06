@@ -12,9 +12,13 @@ data class JarArtifact(
     val data: () -> ByteArray,
 ) : Artifact
 
-fun buildVersionArtifacts(actionCoords: ActionCoords): Map<String, Artifact>? {
+fun buildVersionArtifacts(
+    actionCoords: ActionCoords,
+    types: String? = null,
+    metadata: String? = null,
+): Map<String, Artifact>? {
     with(actionCoords) {
-        val jars = buildJars() ?: return null
+        val jars = buildJars(types = types, metadata = metadata) ?: return null
         val pom = buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
