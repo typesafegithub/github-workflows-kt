@@ -193,7 +193,7 @@ workflow(
                     $GREETING $FIRST_NAME
                     EOF
                     cat << EOF > expected
-                    Hello Patrick
+                    Hello Patrick2
                     EOF
                     diff actual expected
                 """.trimIndent(),
