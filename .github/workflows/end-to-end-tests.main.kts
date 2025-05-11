@@ -73,7 +73,7 @@ workflow(
             id = "test_job_1",
             runsOn = RunnerType.UbuntuLatest,
             env = mapOf(
-                GREETING to "World",
+                "GREETING" to "Hello",
             ),
             permissions = mapOf(
                 Permission.Actions to Mode.Read,
@@ -186,9 +186,17 @@ workflow(
             run(
                 name = "Custom environment variable",
                 env = mapOf(
-                    FIRST_NAME to "Patrick",
+                    "FIRST_NAME" to "Patrick",
                 ),
-                command = "echo $GREETING $FIRST_NAME",
+                command = """
+                    cat << EOF > actual
+                    $GREETING $FIRST_NAME
+                    EOF
+                    cat << EOF > expected
+                    Hello Patrick
+                    EOF
+                    diff actual expected
+                """.trimIndent(),
             )
             run(
                 name = "Encrypted secret",
