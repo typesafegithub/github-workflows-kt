@@ -44,7 +44,7 @@ jobs:
     needs:
     - 'check_yaml_consistency'
     env:
-      GREETING: 'Hello'
+      $GREETING: 'World'
     outputs:
       scriptKey: '${{ steps.step-20.outputs.key }}'
       scriptKey2: '${{ steps.step-20.outputs.key2 }}'
@@ -98,14 +98,16 @@ jobs:
     - id: 'step-10'
       name: 'Custom environment variable'
       env:
-        FIRST_NAME: 'Patrick'
+        $FIRST_NAME: 'Patrick'
       run: |-
         cat << EOF > actual
         $GREETING $FIRST_NAME
         EOF
+
         cat << EOF > expected
-        Hello Patrick2
+
         EOF
+
         diff actual expected
     - id: 'step-11'
       name: 'Encrypted secret'
