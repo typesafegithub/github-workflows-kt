@@ -99,7 +99,16 @@ jobs:
       name: 'Custom environment variable'
       env:
         $FIRST_NAME: 'Patrick'
-      run: 'echo $GREETING $FIRST_NAME'
+      run: |-
+        cat << EOF > actual
+        $GREETING-$FIRST_NAME
+        EOF
+
+        cat << EOF > expected
+        -
+        EOF
+
+        diff actual expected
     - id: 'step-11'
       name: 'Encrypted secret'
       env:
