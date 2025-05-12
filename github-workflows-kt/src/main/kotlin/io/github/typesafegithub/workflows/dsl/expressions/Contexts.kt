@@ -5,6 +5,7 @@ import io.github.typesafegithub.workflows.dsl.expressions.contexts.FunctionsCont
 import io.github.typesafegithub.workflows.dsl.expressions.contexts.GitHubContext
 import io.github.typesafegithub.workflows.dsl.expressions.contexts.RunnerContext
 import io.github.typesafegithub.workflows.dsl.expressions.contexts.SecretsContext
+import io.github.typesafegithub.workflows.dsl.expressions.contexts.VarsContext
 
 /**
  * Root elements of GitHub expressions.
@@ -17,4 +18,5 @@ public object Contexts : FunctionsContext() {
     public val github: GitHubContext = GitHubContext
     public val runner: RunnerContext = RunnerContext
     public val secrets: SecretsContext = SecretsContext
+    public val vars: VarsContext = VarsContext
 }

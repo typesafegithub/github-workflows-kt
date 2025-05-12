@@ -103,4 +103,23 @@ class TypeSafeExpressionsSnippets :
                 // --8<-- [end:secrets]
             }
         }
+
+        test("vars") {
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+            ) {
+                // --8<-- [start:secrets]
+                val SOME_VARIABLE by Contexts.vars
+
+                job(id = "job1", runsOn = RunnerType.UbuntuLatest) {
+                    run(
+                        name = "Some Variable",
+                        command = "echo someVariable=${expr { SOME_VARIABLE }}",
+                    )
+                }
+                // --8<-- [end:secrets]
+            }
+        }
     })
