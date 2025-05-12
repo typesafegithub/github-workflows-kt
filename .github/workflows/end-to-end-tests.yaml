@@ -101,11 +101,11 @@ jobs:
         $FIRST_NAME: 'Patrick'
       run: |-
         cat << EOF > actual
-        $GREETING $FIRST_NAME
+        $GREETING-$FIRST_NAME
         EOF
 
         cat << EOF > expected
-
+        -
         EOF
 
         diff actual expected
