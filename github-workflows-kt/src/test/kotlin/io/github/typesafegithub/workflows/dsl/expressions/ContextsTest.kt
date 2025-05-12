@@ -33,6 +33,13 @@ class ContextsTest :
             }
         }
 
+        test("Vars") {
+            assertSoftly {
+                val SOME_VARIABLE by Contexts.vars
+                expr { SOME_VARIABLE } shouldBe expr("vars.SOME_VARIABLE")
+            }
+        }
+
         test("Runner context") {
             assertSoftly {
                 expr { runner.name } shouldBe expr("runner.name")

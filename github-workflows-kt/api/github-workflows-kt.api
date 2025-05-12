@@ -1978,6 +1978,7 @@ public final class io/github/typesafegithub/workflows/dsl/expressions/Contexts :
 	public final fun getGithub ()Lio/github/typesafegithub/workflows/dsl/expressions/contexts/GitHubContext;
 	public final fun getRunner ()Lio/github/typesafegithub/workflows/dsl/expressions/contexts/RunnerContext;
 	public final fun getSecrets ()Lio/github/typesafegithub/workflows/dsl/expressions/contexts/SecretsContext;
+	public final fun getVars ()Lio/github/typesafegithub/workflows/dsl/expressions/contexts/VarsContext;
 }
 
 public class io/github/typesafegithub/workflows/dsl/expressions/ExpressionContext : java/util/Map, kotlin/jvm/internal/markers/KMappedMarker {
@@ -3019,6 +3020,10 @@ public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/R
 public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/SecretsContext : io/github/typesafegithub/workflows/dsl/expressions/ExpressionContext {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/dsl/expressions/contexts/SecretsContext;
 	public final fun getGITHUB_TOKEN ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/VarsContext : io/github/typesafegithub/workflows/dsl/expressions/ExpressionContext {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/dsl/expressions/contexts/VarsContext;
 }
 
 public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/WorkflowDispatchEvent {
