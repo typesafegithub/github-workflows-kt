@@ -22,17 +22,6 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import java.time.Duration
 import kotlin.time.Duration.Companion.hours
 
-private val prometheusRegistry =
-    PrometheusMeterRegistry(
-        object : PrometheusConfig {
-            override fun get(key: String): String? = null
-
-            override fun prefix(): String = "github-actions-binding-server"
-
-            @Suppress("MagicNumber")
-            override fun step() = Duration.ofSeconds(10)
-        },
-    )
 private val logger =
     System
         /*
@@ -44,6 +33,18 @@ private val logger =
          */
         .setProperty("java.util.logging.manager", org.apache.logging.log4j.jul.LogManager::class.java.name)
         .let { logger { } }
+
+private val prometheusRegistry =
+    PrometheusMeterRegistry(
+        object : PrometheusConfig {
+            override fun get(key: String): String? = null
+
+            override fun prefix(): String = "github-actions-binding-server"
+
+            @Suppress("MagicNumber")
+            override fun step() = Duration.ofSeconds(10)
+        },
+    )
 
 fun main() {
     Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
