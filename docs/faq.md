@@ -91,3 +91,8 @@ Here's a list of tickets on the JetBrains side, along with proposed workarounds:
   IntelliJ will not re-resolve the dependency and even doing so in another way like actually executing the workflow
   script, IntelliJ still treats the classes as unresolved symbols. To get to a usable state again, you need to restart
   the whole IDE, just closing and re-opening the project is not sufficient.
+
+## How do I add support for a given action?
+
+By default, you can use any action you want, it's just it may not have typings configured yet. To learn more, see
+[Using actions](user-guide/using-actions.md).
