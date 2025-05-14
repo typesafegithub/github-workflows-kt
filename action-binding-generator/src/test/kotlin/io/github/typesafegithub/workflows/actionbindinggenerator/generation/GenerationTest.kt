@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.generation
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MAJOR
@@ -151,7 +152,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                    inputTypings =
+                        ActionTypings(
+                            inputTypings = actionManifest.allInputsAsStrings(),
+                            source = ACTION,
+                        ),
                 )
 
             // then
@@ -201,7 +206,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                    inputTypings =
+                        ActionTypings(
+                            inputTypings = actionManifest.allInputsAsStrings(),
+                            source = ACTION,
+                        ),
                 )
 
             // then
@@ -218,9 +227,9 @@ class GenerationTest :
                     metadataRevision = NewestForVersion,
                     metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
                     inputTypings =
-                        Pair(
-                            typingsForAllTypesOfInputs,
-                            ACTION,
+                        ActionTypings(
+                            inputTypings = typingsForAllTypesOfInputs,
+                            source = ACTION,
                         ),
                 )
 
@@ -259,7 +268,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                    inputTypings =
+                        ActionTypings(
+                            inputTypings = actionManifest.allInputsAsStrings(),
+                            source = ACTION,
+                        ),
                 )
 
             // then
@@ -283,11 +296,35 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(emptyMap(), ACTION),
+                    inputTypings = ActionTypings(source = ACTION),
                 )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
+        }
+
+        test("action with no inputs from fallback version") {
+            // given
+            val actionManifestHasNoInputs = emptyMap<String, Input>()
+            val actionManifest =
+                Metadata(
+                    inputs = actionManifestHasNoInputs,
+                    name = "Action With No Inputs From Fallback Version",
+                    description = "Description",
+                )
+
+            val coords = ActionCoords("john-smith", "action-with-no-inputs-from-fallback-version", "v3")
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
+                )
+
+            // then
+            binding.shouldContainAndMatchFile("ActionWithNoInputsFromFallbackVersion.kt")
         }
 
         test("subaction") {
@@ -307,7 +344,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(emptyMap(), ACTION),
+                    inputTypings = ActionTypings(source = ACTION),
                 )
 
             // then
@@ -345,7 +382,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                    inputTypings =
+                        ActionTypings(
+                            inputTypings = actionManifest.allInputsAsStrings(),
+                            source = ACTION,
+                        ),
                 )
 
             // then
@@ -385,13 +426,14 @@ class GenerationTest :
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
                     inputTypings =
-                        Pair(
-                            mapOf(
-                                "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                                "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                                "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
-                            ),
-                            ACTION,
+                        ActionTypings(
+                            inputTypings =
+                                mapOf(
+                                    "foo-one" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                                    "foo-two" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                                    "foo-three" to IntegerWithSpecialValueTyping("Foo", mapOf("Special1" to 3)),
+                                ),
+                            source = ACTION,
                         ),
                 )
 
@@ -424,7 +466,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(actionManifest.allInputsAsStrings(), ACTION),
+                    inputTypings =
+                        ActionTypings(
+                            inputTypings = actionManifest.allInputsAsStrings(),
+                            source = ACTION,
+                        ),
                 )
 
             // then
@@ -458,7 +504,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(emptyMap(), null),
+                    inputTypings = ActionTypings(source = null),
                 )
 
             // then
@@ -497,7 +543,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(mapOf("foo" to IntegerTyping), TYPING_CATALOG),
+                    inputTypings =
+                        ActionTypings(
+                            mapOf(pair = "foo" to IntegerTyping),
+                            TYPING_CATALOG,
+                        ),
                 )
 
             // then
@@ -524,7 +574,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(emptyMap(), ACTION),
+                    inputTypings = ActionTypings(source = ACTION),
                 )
 
             // then
@@ -551,7 +601,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = Pair(emptyMap(), ACTION),
+                    inputTypings = ActionTypings(source = ACTION),
                 )
 
             // then

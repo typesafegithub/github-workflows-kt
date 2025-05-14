@@ -5,6 +5,7 @@ import com.charleskorn.kaml.EmptyYamlDocumentException
 import com.charleskorn.kaml.Yaml
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
@@ -24,12 +25,17 @@ private val logger = logger { }
 internal fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
-): Pair<Map<String, Typing>, TypingActualSource?> =
+): ActionTypings =
     (
         this.fetchTypingMetadata(metadataRevision, fetchUri)
             ?: this.toMajorVersion().fetchFromTypingsFromCatalog(fetchUri)
-    )?.let { Pair(it.first.toTypesMap(), it.second) }
-        ?: Pair(emptyMap(), null)
+    )?.let { (typings, typingActualSource) ->
+        ActionTypings(
+            inputTypings = typings.toTypesMap(),
+            source = typingActualSource,
+            fromFallbackVersion = typings.fromFallbackVersion,
+        )
+    } ?: ActionTypings()
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yml"
@@ -95,12 +101,17 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
             }
     logger.info { "  ... using fallback version: $fallbackVersion" }
     val adjustedCoords = this.copy(version = fallbackVersion)
-    return fetchTypingsFromUrl(url = adjustedCoords.actionTypesFromCatalog(), fetchUri = fetchUri)
+    return fetchTypingsFromUrl(
+        url = adjustedCoords.actionTypesFromCatalog(),
+        fetchUri = fetchUri,
+        fromFallbackVersion = true,
+    )
 }
 
 private fun fetchTypingsFromUrl(
     url: String,
     fetchUri: (URI) -> String,
+    fromFallbackVersion: Boolean = false,
 ): ActionTypes? {
     val typesMetadataYml =
         try {
@@ -109,7 +120,9 @@ private fun fetchTypingsFromUrl(
         } catch (e: IOException) {
             null
         } ?: return null
-    return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
+    return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes()).let {
+        if (fromFallbackVersion) it.copy(fromFallbackVersion = true) else it
+    }
 }
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
