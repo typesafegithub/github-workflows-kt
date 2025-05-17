@@ -148,6 +148,12 @@ workflow(
             name = "Fetch maven-metadata.xml for nested action",
             command = "curl --fail http://localhost:8080/actions/cache__save/maven-metadata.xml | grep '<version>v4</version>'",
         )
+
+        run(
+            name = "Print server logs",
+            command = "cat jit-binding-server/logs/server.log",
+            condition = expr { always() }
+        )
     }
 
     job(
