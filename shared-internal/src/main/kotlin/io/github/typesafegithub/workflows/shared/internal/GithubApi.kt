@@ -34,11 +34,11 @@ suspend fun fetchAvailableVersions(
                 apiTagsUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
                 apiBranchesUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
             ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
-                .versions(githubEndpoint = githubEndpoint, githubAuthToken)
+                .versions(githubAuthToken)
         }
     }
 
-private fun List<GithubRef>.versions(githubEndpoint: String, githubAuthToken: String?): Either<String, List<Version>> =
+private fun List<GithubRef>.versions(githubAuthToken: String?): Either<String, List<Version>> =
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
