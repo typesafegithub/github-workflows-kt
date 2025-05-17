@@ -31,5 +31,6 @@ dependencies {
     // Here's a ticket to remember to remove this workaround: https://github.com/typesafegithub/github-workflows-kt/issues/1832
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
 
-    testImplementation("io.ktor:ktor-client-mock:3.1.3")
+    testImplementation("io.kotest.extensions:kotest-extensions-mockserver:1.3.0")
+    testImplementation("org.slf4j:slf4j-simple:2.0.12")
 }

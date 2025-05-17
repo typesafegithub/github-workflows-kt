@@ -7,8 +7,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel.ALL
 import io.ktor.client.plugins.logging.Logger
@@ -28,28 +26,25 @@ suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
     githubAuthToken: String?,
-    httpClientEngineFactory: HttpClientEngineFactory<*> = CIO,
+    githubEndpoint: String = "https://api.github.com",
 ): Either<String, List<Version>> =
     either {
-        buildHttpClient(engineFactory = httpClientEngineFactory).use { httpClient ->
+        buildHttpClient().use { httpClient ->
             return listOf(
-                apiTagsUrl(owner = owner, name = name),
-                apiBranchesUrl(owner = owner, name = name),
+                apiTagsUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
+                apiBranchesUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
             ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
-                .versions(githubAuthToken, httpClientEngineFactory)
+                .versions(githubAuthToken)
         }
     }
 
-private fun List<GithubRef>.versions(
-    githubAuthToken: String?,
-    httpClientEngineFactory: HttpClientEngineFactory<*>,
-): Either<String, List<Version>> =
+private fun List<GithubRef>.versions(githubAuthToken: String?): Either<String, List<Version>> =
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
             Version(version) {
                 val response =
-                    buildHttpClient(engineFactory = httpClientEngineFactory).use { httpClient ->
+                    buildHttpClient().use { httpClient ->
                         httpClient
                             .get(urlString = githubRef.`object`.url) {
                                 if (githubAuthToken != null) {
@@ -89,14 +84,16 @@ private suspend fun fetchGithubRefs(
     }
 
 private fun apiTagsUrl(
+    githubEndpoint: String,
     owner: String,
     name: String,
-): String = "https://api.github.com/repos/$owner/$name/git/matching-refs/tags/v"
+): String = "$githubEndpoint/repos/$owner/$name/git/matching-refs/tags/v"
 
 private fun apiBranchesUrl(
+    githubEndpoint: String,
     owner: String,
     name: String,
-): String = "https://api.github.com/repos/$owner/$name/git/matching-refs/heads/v"
+): String = "$githubEndpoint/repos/$owner/$name/git/matching-refs/heads/v"
 
 @Serializable
 private data class GithubRef(
@@ -125,8 +122,8 @@ private data class Person(
     val date: String,
 )
 
-private fun buildHttpClient(engineFactory: HttpClientEngineFactory<*>) =
-    HttpClient(engineFactory) {
+private fun buildHttpClient() =
+    HttpClient {
         val klogger = logger
         install(Logging) {
             logger =
