@@ -50,7 +50,7 @@ class GithubApiTest :
 
             test("error occurs when fetching branches and tags") {
                 // Given
-                // No mocks setup (will fail)
+                mockServer.mockFailedResponses()
 
                 // When
                 val versionOrError =
@@ -103,6 +103,16 @@ private fun ClientAndServer.mockResponse(
                 .withStatusCode(200)
                 .withHeader("Content-Type", "application/json")
                 .withBody(readResource(resource)),
+        )
+}
+
+private fun ClientAndServer.mockFailedResponses() {
+    `when`(request())
+        .respond(
+            response()
+                .withStatusCode(403)
+                .withHeader("Content-Type", "application/json")
+                .withBody("""{"message":  "There was a problem!"}"""),
         )
 }
 
