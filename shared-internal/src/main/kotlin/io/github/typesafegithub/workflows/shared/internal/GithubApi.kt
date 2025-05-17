@@ -2,10 +2,8 @@ package io.github.typesafegithub.workflows.shared.internal
 
 import arrow.core.Either
 import arrow.core.raise.either
-import arrow.core.right
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import org.kohsuke.github.GHRef
-import org.kohsuke.github.GHRepository
 import org.kohsuke.github.GitHubBuilder
 
 fun fetchAvailableVersions(

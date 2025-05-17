@@ -10,7 +10,7 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    api("io.arrow-kt:arrow-core:2.1.1")
+    api("io.arrow-kt:arrow-core:2.1.2")
     // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
     // note: see https://youtrack.jetbrains.com/issue/KT-67618
     api("io.ktor:ktor-client-core:3.1.3")
@@ -32,5 +32,5 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
 
     testImplementation("io.kotest.extensions:kotest-extensions-mockserver:1.3.0")
-    testImplementation("org.slf4j:slf4j-simple:2.0.12")
+    testImplementation("org.slf4j:slf4j-simple:2.0.17")
 }
