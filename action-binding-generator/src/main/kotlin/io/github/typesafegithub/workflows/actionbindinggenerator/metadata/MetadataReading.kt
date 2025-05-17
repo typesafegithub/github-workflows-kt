@@ -45,8 +45,13 @@ private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubuser
 
 public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
+    explicitMetadata: String? = null,
     fetchUri: (URI) -> String = ::fetchUri,
 ): Metadata? {
+    if (explicitMetadata != null) {
+        return yaml.decodeFromString(explicitMetadata)
+    }
+
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
