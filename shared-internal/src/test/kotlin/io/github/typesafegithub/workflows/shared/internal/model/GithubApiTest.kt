@@ -65,7 +65,8 @@ class GithubApiTest :
                 versionOrError shouldBe
                     (
                         "Unexpected response when fetching refs from " +
-                            "http://localhost:${mockServer.port}/repos/some-owner/some-name/git/matching-refs/tags/v. " +
+                            "http://localhost:${mockServer.port}/" +
+                            "repos/some-owner/some-name/git/matching-refs/tags/v. " +
                             "Status: 403 Forbidden, response: {\"message\":  \"There was a problem!\"}"
                     ).left()
             }
