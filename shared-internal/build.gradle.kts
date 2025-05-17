@@ -32,5 +32,5 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
 
     testImplementation("io.kotest.extensions:kotest-extensions-mockserver:1.3.0")
-    testImplementation("org.slf4j:slf4j-simple:2.0.12")
+    testImplementation("org.slf4j:slf4j-simple:2.0.17")
 }
