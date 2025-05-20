@@ -7,6 +7,8 @@ public abstract class AbstractResult internal constructor(
 
     public infix fun neq(status: Status): String = "$value != $status"
 
+    public fun toExpression(): Expression<Boolean> = Expression(value)
+
     override fun toString(): String = value
 
     public enum class Status {

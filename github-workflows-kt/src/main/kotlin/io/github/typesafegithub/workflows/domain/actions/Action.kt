@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.domain.actions
 
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
 import io.github.typesafegithub.workflows.yaml.toYaml
 
@@ -15,7 +16,7 @@ public abstract class Action<out OUTPUTS : Outputs> {
     public open class Outputs(
         private val stepId: String,
     ) {
-        public operator fun get(outputName: String): String = "steps.$stepId.outputs.$outputName"
+        public operator fun get(outputName: String): Expression<Any> = Expression("steps.$stepId.outputs.$outputName")
     }
 }
 

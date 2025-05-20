@@ -61,12 +61,12 @@ public data class ActionWithFancyCharsInDocsBindingV1 private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((nestedKotlinComments != null) && (nestedKotlinComments_Untyped != null))) {
-            "Only nestedKotlinComments or nestedKotlinComments_Untyped must be set, but not both"
+        require(listOfNotNull(nestedKotlinComments, nestedKotlinComments_Untyped).size <= 1) {
+            "Only one of nestedKotlinComments, and nestedKotlinComments_Untyped must be set, but not multiple"
         }
 
-        require(!((percent != null) && (percent_Untyped != null))) {
-            "Only percent or percent_Untyped must be set, but not both"
+        require(listOfNotNull(percent, percent_Untyped).size <= 1) {
+            "Only one of percent, and percent_Untyped must be set, but not multiple"
         }
     }
 

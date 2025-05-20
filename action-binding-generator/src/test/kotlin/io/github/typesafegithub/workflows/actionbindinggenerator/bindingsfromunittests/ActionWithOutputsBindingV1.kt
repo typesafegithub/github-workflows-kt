@@ -51,11 +51,11 @@ public data class ActionWithOutputsBindingV1 private constructor(
     public val _customVersion: String? = null,
 ) : RegularAction<ActionWithOutputsBindingV1.Outputs>("john-smith", "action-with-outputs-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((fooBar != null) && (fooBar_Untyped != null))) {
-            "Only fooBar or fooBar_Untyped must be set, but not both"
+        require(listOfNotNull(fooBar, fooBar_Untyped).size <= 1) {
+            "Only one of fooBar, and fooBar_Untyped must be set, but not multiple"
         }
         require((fooBar != null) || (fooBar_Untyped != null)) {
-            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+            "Either fooBar, or fooBar_Untyped must be set, one of them is required"
         }
     }
 
