@@ -20,25 +20,25 @@ import kotlin.collections.toList
 import kotlin.collections.toTypedArray
 
 /**
- * Action: Do something cool
+ * Action: Some Action
  *
- * This is a test description that should be put in the KDoc comment for a class
+ * Description
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-outputs)
+ * [Action on GitHub](https://github.com/john-smith/action-with-deprecated-input-and-name-clash-binding-v2)
  *
- * @param fooBar &lt;required&gt; Short description
- * @param fooBar_Untyped &lt;required&gt; Short description
+ * @param fooBar &lt;required&gt; Foo bar - new
+ * @param fooBar_Untyped &lt;required&gt; Foo bar - new
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithOutputs private constructor(
+public data class ActionWithDeprecatedInputAndNameClashBindingV2 private constructor(
     /**
-     * &lt;required&gt; Short description
+     * &lt;required&gt; Foo bar - new
      */
     public val fooBar: String? = null,
     /**
-     * &lt;required&gt; Short description
+     * &lt;required&gt; Foo bar - new
      */
     public val fooBar_Untyped: String? = null,
     /**
@@ -49,8 +49,16 @@ public data class ActionWithOutputs private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<ActionWithOutputs.Outputs>("john-smith", "action-with-outputs", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-deprecated-input-and-name-clash-binding-v2", _customVersion ?: "v2") {
     init {
+        println("WARNING: The used binding version v2 for john-smith/action-with-deprecated-input-and-name-clash-binding-v2@v2 is experimental! Last stable version is v1.")
+        if (System.getenv("GITHUB_ACTIONS").toBoolean()) {
+            println("""
+                    |
+                    |::warning title=Experimental Binding Version Used::The used binding version v2 for john-smith/action-with-deprecated-input-and-name-clash-binding-v2@v2 is experimental! Last stable version is v1.
+                    """.trimMargin())
+        }
+
         require(!((fooBar != null) && (fooBar_Untyped != null))) {
             "Only fooBar or fooBar_Untyped must be set, but not both"
         }
@@ -70,25 +78,11 @@ public data class ActionWithOutputs private constructor(
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            fooBar?.let { "foo-bar" to it },
-            fooBar_Untyped?.let { "foo-bar" to it },
+            fooBar?.let { "fooBar" to it },
+            fooBar_Untyped?.let { "fooBar" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
 
-    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
-
-    public class Outputs(
-        stepId: String,
-    ) : Action.Outputs(stepId) {
-        /**
-         * Cool output!
-         */
-        public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
-
-        /**
-         * Another output...
-         */
-        public val looWoz: String = "steps.$stepId.outputs.loo-woz"
-    }
+    override fun buildOutputObject(stepId: String): Action.Outputs = Outputs(stepId)
 }
