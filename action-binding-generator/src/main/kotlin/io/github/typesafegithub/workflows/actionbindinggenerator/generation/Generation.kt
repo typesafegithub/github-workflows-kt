@@ -16,6 +16,7 @@ import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import com.squareup.kotlinpoet.buildCodeBlock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MAJOR
@@ -63,7 +64,7 @@ private object Properties {
 public fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
-    inputTypings: Pair<Map<String, Typing>, TypingActualSource?>? = null,
+    inputTypings: ActionTypings? = null,
 ): List<ActionBinding> {
     val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
@@ -81,7 +82,7 @@ public fun ActionCoords.generateBinding(
             emptyMap(),
             classNameUntyped,
             untypedClass = true,
-            replaceWith = inputTypingsResolved.second?.let { CodeBlock.of("ReplaceWith(%S)", className) },
+            replaceWith = inputTypingsResolved.source?.let { CodeBlock.of("ReplaceWith(%S)", className) },
         )
 
     return listOfNotNull(
@@ -92,13 +93,22 @@ public fun ActionCoords.generateBinding(
             packageName = packageName,
             typingActualSource = null,
         ),
-        inputTypingsResolved.second?.let {
+        inputTypingsResolved.source?.let {
             val actionBindingSourceCode =
                 generateActionBindingSourceCode(
                     metadata = metadataProcessed,
                     coords = this,
-                    inputTypings = inputTypingsResolved.first,
+                    inputTypings = inputTypingsResolved.inputTypings,
                     className = className,
+                    deprecationMessage =
+                        inputTypingsResolved.takeIf { it.fromFallbackVersion }?.let {
+                            "These typings were create from a fallback version in " +
+                                "https://github.com/typesafegithub/github-actions-typing-catalog, " +
+                                "as soon as typings for this version are added, there could be breaking changes, " +
+                                "and you need to delete these typings from your local Maven cache typically found " +
+                                "in ~/.m2/repository/ to get the updated typing. Consider contributing updated " +
+                                "typings to the catalog before using this version."
+                        },
                 )
             ActionBinding(
                 kotlinCode = actionBindingSourceCode,
@@ -130,6 +140,7 @@ private fun generateActionBindingSourceCode(
     inputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean = false,
+    deprecationMessage: String? = null,
     replaceWith: CodeBlock? = null,
 ): String {
     val fileSpec =
@@ -143,7 +154,7 @@ private fun generateActionBindingSourceCode(
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            ).addType(generateActionClass(metadata, coords, inputTypings, className, untypedClass, replaceWith))
+            ).addType(generateActionClass(metadata, coords, inputTypings, className, untypedClass, deprecationMessage, replaceWith))
             .addSuppressAnnotation(metadata)
             .indent("    ")
             .build()
@@ -175,13 +186,14 @@ private fun generateActionClass(
     inputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean,
+    deprecationMessage: String?,
     replaceWith: CodeBlock?,
 ): TypeSpec =
     TypeSpec
         .classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdocIfNotEmpty(actionKdoc(metadata, coords, untypedClass))
-        .replaceWith(replaceWith)
+        .replaceWith(deprecationMessage, replaceWith)
         .addClassConstructorAnnotation()
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
@@ -374,14 +386,20 @@ private fun Metadata.linkedMapOfInputs(
     }
 }
 
-private fun TypeSpec.Builder.replaceWith(replaceWith: CodeBlock?): TypeSpec.Builder {
-    if (replaceWith != null) {
+private fun TypeSpec.Builder.replaceWith(
+    deprecationMessage: String?,
+    replaceWith: CodeBlock?,
+): TypeSpec.Builder {
+    if ((deprecationMessage != null) || (replaceWith != null)) {
         addAnnotation(
             AnnotationSpec
                 .builder(Deprecated::class.asClassName())
-                .addMember("%S", "Use the typed class instead")
-                .addMember(replaceWith)
-                .build(),
+                .addMember("%S", deprecationMessage ?: "Use the typed class instead")
+                .apply {
+                    if (replaceWith != null) {
+                        addMember(replaceWith)
+                    }
+                }.build(),
         )
     }
     return this
