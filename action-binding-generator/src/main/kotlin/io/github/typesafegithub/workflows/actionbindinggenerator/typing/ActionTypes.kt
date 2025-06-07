@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 internal data class ActionTypes(
     val inputs: Map<String, ActionType>? = null,
     val outputs: Map<String, ActionType>? = null,
+    val fromFallbackVersion: Boolean = false,
 )
 
 @Serializable
