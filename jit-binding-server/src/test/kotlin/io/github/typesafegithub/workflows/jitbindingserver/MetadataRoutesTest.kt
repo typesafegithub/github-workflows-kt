@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -20,7 +21,7 @@ class MetadataRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildPackageArtifacts = { _, _, _ ->
+                            buildPackageArtifacts = { _, _, _, _ ->
                                 mapOf("maven-metadata.xml" to "Some XML contents")
                             },
                             getGithubAuthToken = { "some-token" },
@@ -48,7 +49,7 @@ class MetadataRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildPackageArtifacts = { _, _, _ ->
+                            buildPackageArtifacts = { _, _, _, _ ->
                                 emptyMap()
                             },
                             getGithubAuthToken = { "some-token" },
@@ -75,7 +76,7 @@ class MetadataRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildPackageArtifacts = { _, _, _ ->
+                            buildPackageArtifacts = { _, _, _, _ ->
                                 error("An internal error occurred!")
                             },
                             getGithubAuthToken = { "some-token" },
@@ -105,10 +106,11 @@ class MetadataRoutesTest :
                             (
                                 ActionCoords,
                                 String,
-                                (Collection<ActionCoords>) -> Unit,
+                                (Collection<ActionCoords>, BindingVersion) -> Unit,
+                                BindingVersion,
                             ) -> Map<String, String>,
                         >()
-                    every { mockBuildPackageArtifacts(any(), any(), any()) } throws
+                    every { mockBuildPackageArtifacts(any(), any(), any(), any()) } throws
                         Exception("An internal error occurred!") andThen
                         mapOf("maven-metadata.xml" to "Some XML contents")
                     application {
@@ -135,7 +137,7 @@ class MetadataRoutesTest :
                     // Then
                     response2.status shouldBe HttpStatusCode.OK
 
-                    verify(exactly = 2) { mockBuildPackageArtifacts(any(), any(), any()) }
+                    verify(exactly = 2) { mockBuildPackageArtifacts(any(), any(), any(), any()) }
                 }
             }
         }
