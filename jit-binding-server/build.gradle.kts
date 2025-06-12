@@ -8,7 +8,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:3.1.3"))
+    implementation(platform("io.ktor:ktor-bom:3.2.0"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-call-logging")
