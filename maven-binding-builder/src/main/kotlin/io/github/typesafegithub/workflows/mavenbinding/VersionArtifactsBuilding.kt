@@ -18,9 +18,13 @@ data class VersionArtifacts(
     val typingActualSource: TypingActualSource?,
 )
 
-fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
+fun buildVersionArtifacts(
+    actionCoords: ActionCoords,
+    types: String? = null,
+    metadata: String? = null,
+): VersionArtifacts? {
     with(actionCoords) {
-        val jars = buildJars() ?: return null
+        val jars = buildJars(types = types, metadata = metadata) ?: return null
         val pom = buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }

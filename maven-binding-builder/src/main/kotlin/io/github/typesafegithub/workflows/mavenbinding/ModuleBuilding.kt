@@ -17,7 +17,7 @@ internal fun ActionCoords.buildModuleFile(
     {
       "formatVersion": "1.1",
       "component": {
-        "group": "$owner",
+        "group": "$mavenGroup",
         "module": "$mavenName",
         "version": "$version",
         "attributes": {

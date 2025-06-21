@@ -4,6 +4,8 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 
+internal val ActionCoords.mavenGroup: String get() = "$owner${typesUuid?.let { "__types__$it" } ?: ""}"
+
 internal val ActionCoords.mavenName: String get() = "$name${subName.replace("/", "__")}${
     significantVersion.takeUnless { it == FULL }?.let { "___$it" } ?: ""
 }"
