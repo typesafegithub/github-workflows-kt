@@ -6,6 +6,7 @@ import com.sksamuel.aedile.core.asLoadingCache
 import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
@@ -52,16 +53,24 @@ fun main() {
     }
     embeddedServer(Netty, port = 8080) {
         appModule(
-            buildVersionArtifacts = ::buildVersionArtifacts,
+            buildVersionArtifacts = { buildVersionArtifacts(it.actionCoords, it.bindingVersion) },
             buildPackageArtifacts = ::buildPackageArtifacts,
             getGithubAuthToken = ::getGithubAuthToken,
         )
     }.start(wait = true)
 }
 
+private typealias VersionArtifactsBuilder = (CacheKey) -> VersionArtifacts?
+
 fun Application.appModule(
-    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
-    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    buildVersionArtifacts: VersionArtifactsBuilder,
+    buildPackageArtifacts:
+        suspend (
+            ActionCoords,
+            String,
+            (Collection<ActionCoords>, BindingVersion) -> Unit,
+            bindingVersion: BindingVersion,
+        ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
     val bindingsCache = buildBindingsCache(buildVersionArtifacts)
@@ -76,33 +85,48 @@ fun Application.appModule(
     }
 }
 
-private fun buildBindingsCache(
-    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
-): LoadingCache<ActionCoords, CachedVersionArtifact> =
-    Caffeine
-        .newBuilder()
-        .refreshAfterWrite(1.hours)
-        .recordStats()
-        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it) }
+typealias BindingsCache = LoadingCache<CacheKey, CachedVersionArtifact>
 
-@Suppress("ktlint:standard:function-signature") // Conflict with detekt.
-private fun buildMetadataCache(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
-    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
-    getGithubAuthToken: () -> String,
-): LoadingCache<ActionCoords, CachedMetadataArtifact> =
+private fun buildBindingsCache(buildVersionArtifacts: VersionArtifactsBuilder): BindingsCache =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, CachedMetadataArtifact> {
+        .asLoadingCache { buildVersionArtifacts(it) }
+
+typealias MetadataCache = LoadingCache<CacheKey, CachedMetadataArtifact>
+
+private fun buildMetadataCache(
+    bindingsCache: BindingsCache,
+    buildPackageArtifacts:
+        suspend (
+            ActionCoords,
+            String,
+            (Collection<ActionCoords>, BindingVersion) -> Unit,
+            bindingVersion: BindingVersion,
+        ) -> Map<String, String>,
+    getGithubAuthToken: () -> String,
+): MetadataCache =
+    Caffeine
+        .newBuilder()
+        .refreshAfterWrite(1.hours)
+        .recordStats()
+        .asLoadingCache {
             buildPackageArtifacts(
-                it,
+                it.actionCoords,
                 getGithubAuthToken(),
-                { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
+                { coords, bindingsVersion ->
+                    prefetchBindingArtifacts(coords, bindingsVersion, bindingsCache)
+                },
+                it.bindingVersion,
             )
         }
 
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
 
 suspend fun ApplicationCall.respondNotFound() = respondText(text = "Not found", status = HttpStatusCode.NotFound)
+
+data class CacheKey(
+    val actionCoords: ActionCoords,
+    val bindingVersion: BindingVersion,
+)

@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
@@ -29,7 +28,7 @@ class ArtifactRoutesTest :
                                 )
                             },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -50,7 +49,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = { null },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -70,7 +69,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = { error("An internal error occurred!") },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -86,7 +85,7 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords) -> VersionArtifacts?>()
+                    val mockBuildVersionArtifacts = mockk<(CacheKey) -> VersionArtifacts?>()
                     every { mockBuildVersionArtifacts(any()) } throws
                         Exception("An internal error occurred!") andThen
                         VersionArtifacts(
@@ -97,7 +96,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = mockBuildVersionArtifacts,
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
