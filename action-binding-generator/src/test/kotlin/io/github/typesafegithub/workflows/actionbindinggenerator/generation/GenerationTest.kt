@@ -152,11 +152,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings = actionManifest.allInputsAsStrings(),
-                            source = ACTION,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
                 )
 
             // then
@@ -206,11 +202,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings = actionManifest.allInputsAsStrings(),
-                            source = ACTION,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
                 )
 
             // then
@@ -226,11 +218,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings = typingsForAllTypesOfInputs,
-                            source = ACTION,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = typingsForAllTypesOfInputs, source = ACTION),
                 )
 
             // then
@@ -268,11 +256,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings = actionManifest.allInputsAsStrings(),
-                            source = ACTION,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
                 )
 
             // then
@@ -296,35 +280,11 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = ActionTypings(source = ACTION),
+                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
                 )
 
             // then
             binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
-        }
-
-        test("action with no inputs from fallback version") {
-            // given
-            val actionManifestHasNoInputs = emptyMap<String, Input>()
-            val actionManifest =
-                Metadata(
-                    inputs = actionManifestHasNoInputs,
-                    name = "Action With No Inputs From Fallback Version",
-                    description = "Description",
-                )
-
-            val coords = ActionCoords("john-smith", "action-with-no-inputs-from-fallback-version", "v3")
-
-            // when
-            val binding =
-                coords.generateBinding(
-                    metadataRevision = NewestForVersion,
-                    metadata = actionManifest,
-                    inputTypings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
-                )
-
-            // then
-            binding.shouldContainAndMatchFile("ActionWithNoInputsFromFallbackVersion.kt")
         }
 
         test("subaction") {
@@ -344,7 +304,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = ActionTypings(source = ACTION),
+                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
                 )
 
             // then
@@ -382,11 +342,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings = actionManifest.allInputsAsStrings(),
-                            source = ACTION,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
                 )
 
             // then
@@ -466,11 +422,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            inputTypings = actionManifest.allInputsAsStrings(),
-                            source = ACTION,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
                 )
 
             // then
@@ -504,7 +456,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = ActionTypings(source = null),
+                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = null),
                 )
 
             // then
@@ -543,11 +495,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings =
-                        ActionTypings(
-                            mapOf(pair = "foo" to IntegerTyping),
-                            TYPING_CATALOG,
-                        ),
+                    inputTypings = ActionTypings(inputTypings = mapOf("foo" to IntegerTyping), source = TYPING_CATALOG),
                 )
 
             // then
@@ -574,7 +522,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = ActionTypings(source = ACTION),
+                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
                 )
 
             // then
@@ -601,7 +549,7 @@ class GenerationTest :
                 coords.generateBinding(
                     metadataRevision = NewestForVersion,
                     metadata = actionManifest,
-                    inputTypings = ActionTypings(source = ACTION),
+                    inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
                 )
 
             // then

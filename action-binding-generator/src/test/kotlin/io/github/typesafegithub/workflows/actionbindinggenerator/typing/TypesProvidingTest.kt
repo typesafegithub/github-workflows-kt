@@ -497,7 +497,7 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe ActionTypings()
+                types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
             }
 
             test("no typings at all") {
@@ -509,7 +509,7 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe ActionTypings()
+                types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
             }
         }
 
@@ -687,6 +687,6 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
             // Then
-            types shouldBe ActionTypings()
+            types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
         }
     })
