@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.actionbindinggenerator.typing
 
 import com.charleskorn.kaml.ForbiddenAnchorOrAliasException
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
@@ -22,7 +23,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("copes with comment-only typing") {
@@ -34,7 +35,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("copes with empty inputs") {
@@ -46,7 +47,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("copes with empty outputs") {
@@ -58,7 +59,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("copes with empty inputs and outputs") {
@@ -74,7 +75,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe emptyMap()
+            types.inputTypings shouldBe emptyMap()
         }
 
         test("parses all allowed elements of valid typing") {
@@ -120,7 +121,7 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
 
             // Then
-            types.first shouldBe
+            types.inputTypings shouldBe
                 mapOf(
                     "name" to StringTyping,
                     "verbose" to BooleanTyping,
@@ -446,7 +447,7 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(emptyMap(), null)
+                types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
             }
 
             test("no typings at all") {
@@ -458,7 +459,7 @@ class TypesProvidingTest :
                 val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
                 // Then
-                types shouldBe Pair(emptyMap(), null)
+                types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
             }
         }
 
@@ -632,6 +633,6 @@ class TypesProvidingTest :
             val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
 
             // Then
-            types shouldBe Pair(emptyMap(), null)
+            types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
         }
     })
