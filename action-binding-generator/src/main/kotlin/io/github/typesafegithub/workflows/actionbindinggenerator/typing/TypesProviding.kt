@@ -74,7 +74,9 @@ private fun ActionCoords.fetchTypingMetadata(
     return Pair(yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }
 
-private fun ActionCoords.fetchFromTypingsFromCatalog(fetchUri: (URI) -> String = ::fetchUri): Pair<ActionTypes, TypingActualSource>? =
+private fun ActionCoords.fetchFromTypingsFromCatalog(
+    fetchUri: (URI) -> String = ::fetchUri,
+): Pair<ActionTypes, TypingActualSource>? =
     (
         fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
             ?: fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)

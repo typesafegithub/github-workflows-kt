@@ -171,7 +171,10 @@ class TypesProvidingTest :
                 // Given
                 val fetchUri: (URI) -> String = {
                     when (it) {
-                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml") -> hostedByActionYml
+                        URI(
+                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
+                        ),
+                        -> hostedByActionYml
                         else -> throw IOException()
                     }
                 }
@@ -216,7 +219,10 @@ class TypesProvidingTest :
                 // Given
                 val fetchUri: (URI) -> String = {
                     when (it) {
-                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml") -> hostedByActionYaml
+                        URI(
+                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml",
+                        ),
+                        -> hostedByActionYaml
                         else -> throw IOException()
                     }
                 }
@@ -261,8 +267,14 @@ class TypesProvidingTest :
                 // Given
                 val fetchUri: (URI) -> String = {
                     when (it) {
-                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml") -> hostedByActionYml
-                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml") -> hostedByActionYaml
+                        URI(
+                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
+                        ),
+                        -> hostedByActionYml
+                        URI(
+                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml",
+                        ),
+                        -> hostedByActionYaml
                         else -> throw IOException()
                     }
                 }
@@ -543,7 +555,10 @@ class TypesProvidingTest :
                 // Given
                 val fetchUri: (URI) -> String = {
                     when (it) {
-                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml") -> typingYml
+                        URI(
+                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
+                        ),
+                        -> typingYml
                         else -> throw IOException()
                     }
                 }
@@ -557,9 +572,12 @@ class TypesProvidingTest :
                     ActionTypings(
                         inputTypings =
                             mapOf(
-                                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                                "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                                "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes" to
+                                    ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes2" to
+                                    ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes3" to
+                                    ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
                             ),
                         source = TypingActualSource.ACTION,
                     )
@@ -587,9 +605,12 @@ class TypesProvidingTest :
                     ActionTypings(
                         inputTypings =
                             mapOf(
-                                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                                "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                                "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes" to
+                                    ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes2" to
+                                    ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes3" to
+                                    ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
                             ),
                         source = TypingActualSource.TYPING_CATALOG,
                     )
@@ -622,9 +643,12 @@ class TypesProvidingTest :
                     ActionTypings(
                         inputTypings =
                             mapOf(
-                                "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                                "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                                "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes" to
+                                    ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes2" to
+                                    ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
+                                "granted-scopes3" to
+                                    ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
                             ),
                         source = TypingActualSource.TYPING_CATALOG,
                         fromFallbackVersion = true,
@@ -647,7 +671,10 @@ class TypesProvidingTest :
                     """.trimIndent()
                 val fetchUri: (URI) -> String = {
                     when (it) {
-                        URI("https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml") -> billionLaughsAttack
+                        URI(
+                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
+                        ),
+                        -> billionLaughsAttack
                         else -> throw IOException()
                     }
                 }

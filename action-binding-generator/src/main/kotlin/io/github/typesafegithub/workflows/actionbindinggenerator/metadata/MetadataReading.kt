@@ -39,9 +39,11 @@ public data class Output(
     val description: String = "",
 )
 
-private fun ActionCoords.actionYmlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yml"
+private fun ActionCoords.actionYmlUrl(gitRef: String) =
+    "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yml"
 
-private fun ActionCoords.actionYamlUrl(gitRef: String) = "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
+private fun ActionCoords.actionYamlUrl(gitRef: String) =
+    "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
 
 public fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,

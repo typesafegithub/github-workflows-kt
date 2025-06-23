@@ -12,8 +12,9 @@ fun List<ActionBinding>.shouldContainAndMatchFile(path: String) {
             ?: error("Binding with path ending with $path not found!")
     val file =
         Paths
-            .get("src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path")
-            .toFile()
+            .get(
+                "src/test/kotlin/io/github/typesafegithub/workflows/actionbindinggenerator/bindingsfromunittests/$path",
+            ).toFile()
     val expectedContent =
         when {
             file.canRead() -> file.readText().removeWindowsNewLines()
