@@ -28,7 +28,7 @@ import kotlin.collections.Map
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
-@Deprecated("These typings were create from a fallback version in https://github.com/typesafegithub/github-actions-typing-catalog, as soon as typings for this version are added, there could be breaking changes, and you need to delete these typings from your local Maven cache typically found in ~/.m2/repository/ to get the updated typing. Consider contributing updated typings to the catalog before using this version.")
+@Deprecated("This typed binding was created from typings for an older version in https://github.com/typesafegithub/github-actions-typing-catalog. As soon as typings for the requested version are added, there could be breaking changes, and you need to delete these typings from your local Maven cache typically found in ~/.m2/repository/ to get the updated typing. In some cases, though, you may be lucky and things will work fine. To be on the safe side, consider contributing updated typings to the catalog before using this version, or even better: ask the action's owner to host the typings together with the action using https://github.com/typesafegithub/github-actions-typing.")
 @ExposedCopyVisibility
 public data class ActionWithNoInputsFromFallbackVersion private constructor(
     /**

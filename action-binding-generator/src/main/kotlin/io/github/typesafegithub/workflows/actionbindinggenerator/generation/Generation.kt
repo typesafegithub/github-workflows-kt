@@ -102,12 +102,15 @@ public fun ActionCoords.generateBinding(
                     className = className,
                     deprecationMessage =
                         inputTypingsResolved.takeIf { it.fromFallbackVersion }?.let {
-                            "These typings were create from a fallback version in " +
-                                "https://github.com/typesafegithub/github-actions-typing-catalog, " +
-                                "as soon as typings for this version are added, there could be breaking changes, " +
-                                "and you need to delete these typings from your local Maven cache typically found " +
-                                "in ~/.m2/repository/ to get the updated typing. Consider contributing updated " +
-                                "typings to the catalog before using this version."
+                            "This typed binding was created from typings for an older version in " +
+                                "https://github.com/typesafegithub/github-actions-typing-catalog. " +
+                                "As soon as typings for the requested version are added, there could be breaking " +
+                                "changes, and you need to delete these typings from your local Maven cache typically " +
+                                "found in ~/.m2/repository/ to get the updated typing. In some cases, though, you " +
+                                "may be lucky and things will work fine. To be on the safe side, consider " +
+                                "contributing updated typings to the catalog before using this version, or even " +
+                                "better: ask the action's owner to host the typings together with the action using " +
+                                "https://github.com/typesafegithub/github-actions-typing."
                         },
                 )
             ActionBinding(
@@ -193,7 +196,7 @@ private fun generateActionClass(
         .classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdocIfNotEmpty(actionKdoc(metadata, coords, untypedClass))
-        .replaceWith(deprecationMessage, replaceWith)
+        .markDeprecated(deprecationMessage, replaceWith)
         .addClassConstructorAnnotation()
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
@@ -386,7 +389,7 @@ private fun Metadata.linkedMapOfInputs(
     }
 }
 
-private fun TypeSpec.Builder.replaceWith(
+private fun TypeSpec.Builder.markDeprecated(
     deprecationMessage: String?,
     replaceWith: CodeBlock?,
 ): TypeSpec.Builder {

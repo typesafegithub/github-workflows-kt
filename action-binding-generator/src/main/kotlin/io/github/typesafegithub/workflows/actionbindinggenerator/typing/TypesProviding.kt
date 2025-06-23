@@ -104,14 +104,12 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
     return fetchTypingsFromUrl(
         url = adjustedCoords.actionTypesFromCatalog(),
         fetchUri = fetchUri,
-        fromFallbackVersion = true,
-    )
+    )?.copy(fromFallbackVersion = true)
 }
 
 private fun fetchTypingsFromUrl(
     url: String,
     fetchUri: (URI) -> String,
-    fromFallbackVersion: Boolean = false,
 ): ActionTypes? {
     val typesMetadataYml =
         try {
@@ -120,9 +118,7 @@ private fun fetchTypingsFromUrl(
         } catch (e: IOException) {
             null
         } ?: return null
-    return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes()).let {
-        if (fromFallbackVersion) it.copy(fromFallbackVersion = true) else it
-    }
+    return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
 internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
