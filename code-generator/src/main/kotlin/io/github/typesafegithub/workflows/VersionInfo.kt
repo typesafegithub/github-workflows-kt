@@ -4,6 +4,7 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ksp.writeTo
 
 fun generateVersionInfo(
@@ -13,6 +14,7 @@ fun generateVersionInfo(
     val funSpec =
         FunSpec
             .builder(name = "getLibraryVersion")
+            .addModifiers(KModifier.INTERNAL)
             .returns(String::class)
             .addCode(CodeBlock.of("return \"$libraryVersion\""))
             .build()
