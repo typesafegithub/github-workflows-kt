@@ -50,7 +50,11 @@ public data class ActionBinding(
 )
 
 private object Types {
-    val mapStringString = Map::class.asTypeName().parameterizedBy(String::class.asTypeName(), String::class.asTypeName())
+    val mapStringString =
+        Map::class.asTypeName().parameterizedBy(
+            String::class.asTypeName(),
+            String::class.asTypeName(),
+        )
     val nullableString = String::class.asTypeName().copy(nullable = true)
     val mapToList = MemberName("kotlin.collections", "toList")
     val listToArray = MemberName("kotlin.collections", "toTypedArray")
@@ -157,8 +161,17 @@ private fun generateActionBindingSourceCode(
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            ).addType(generateActionClass(metadata, coords, inputTypings, className, untypedClass, deprecationMessage, replaceWith))
-            .addSuppressAnnotation(metadata)
+            ).addType(
+                generateActionClass(
+                    metadata,
+                    coords,
+                    inputTypings,
+                    className,
+                    untypedClass,
+                    deprecationMessage,
+                    replaceWith,
+                ),
+            ).addSuppressAnnotation(metadata)
             .indent("    ")
             .build()
     return buildString {
@@ -250,8 +263,10 @@ private fun TypeSpec.Builder.properties(
         }
         addProperty(
             PropertySpec
-                .builder("${key.toCamelCase()}_Untyped", null.getInputType(key, input, coords, className, untypedClass, typedInput))
-                .initializer("${key.toCamelCase()}_Untyped")
+                .builder(
+                    "${key.toCamelCase()}_Untyped",
+                    null.getInputType(key, input, coords, className, untypedClass, typedInput),
+                ).initializer("${key.toCamelCase()}_Untyped")
                 .annotateDeprecated(input)
                 .build(),
         )
@@ -375,7 +390,9 @@ private fun Metadata.linkedMapOfInputs(
                 add("%N?.let { %S to it$asStringCode },\n", propertyName, key)
             }
             val asStringCode = null.getInputTyping(key).asString()
-            if (value.shouldBeRequiredInBinding() && !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))) {
+            if (value.shouldBeRequiredInBinding() &&
+                !value.shouldBeNullable(untypedClass, inputTypings.containsKey(key))
+            ) {
                 add("%S to %N$asStringCode,\n", key, "${propertyName}_Untyped")
             } else {
                 add("%N?.let { %S to it$asStringCode },\n", "${propertyName}_Untyped", key)
@@ -542,8 +559,9 @@ private fun Metadata.buildCommonConstructorParameters(
             ParameterSpec
                 .builder(CUSTOM_INPUTS, Types.mapStringString)
                 .defaultValue("mapOf()")
-                .addKdocIfNotEmpty("Type-unsafe map where you can put any inputs that are not yet supported by the binding")
-                .build(),
+                .addKdocIfNotEmpty(
+                    "Type-unsafe map where you can put any inputs that are not yet supported by the binding",
+                ).build(),
         ).plus(
             ParameterSpec
                 .builder(CUSTOM_VERSION, Types.nullableString)

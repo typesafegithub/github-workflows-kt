@@ -389,28 +389,44 @@ class IntegrationTest :
                     uses(
                         action =
                             ConfigureAwsCredentials(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${"1234567890".repeat(3)}",
+                                roleToAssume =
+                                    "arn:aws:iam::" +
+                                        "1234567890".repeat(2) +
+                                        ":role/github-actions-role/" +
+                                        "1234567890".repeat(3),
                                 awsRegion = "us-west-1",
                             ),
                     )
                     uses(
                         action =
                             ConfigureAwsCredentials(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(0)}:role/github-actions-role/${expr { github.token }}",
+                                roleToAssume =
+                                    "arn:aws:iam::" +
+                                        "1234567890".repeat(0) +
+                                        ":role/github-actions-role/" +
+                                        expr { github.token },
                                 awsRegion = "us-west-1",
                             ),
                     )
                     uses(
                         action =
                             ConfigureAwsCredentials(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(1)}:role/github-actions-role/${expr { github.token }}",
+                                roleToAssume =
+                                    "arn:aws:iam::" +
+                                        "1234567890".repeat(1) +
+                                        ":role/github-actions-role/" +
+                                        expr { github.token },
                                 awsRegion = "us-west-1",
                             ),
                     )
                     uses(
                         action =
                             ConfigureAwsCredentials(
-                                roleToAssume = "arn:aws:iam::${"1234567890".repeat(2)}:role/github-actions-role/${expr { github.token }}",
+                                roleToAssume =
+                                    "arn:aws:iam::" +
+                                        "1234567890".repeat(2) +
+                                        ":role/github-actions-role/" +
+                                        expr { github.token },
                                 awsRegion = "us-west-1",
                             ),
                     )
