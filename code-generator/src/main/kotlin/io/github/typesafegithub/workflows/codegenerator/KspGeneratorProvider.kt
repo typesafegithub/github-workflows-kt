@@ -8,5 +8,6 @@ class KspGeneratorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
         KspGenerator(
             codeGenerator = environment.codeGenerator,
+            libraryVersion = environment.options["library-version"] ?: error("No library version specified"),
         )
 }

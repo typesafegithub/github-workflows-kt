@@ -3186,6 +3186,10 @@ public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/W
 public abstract interface annotation class io/github/typesafegithub/workflows/internal/InternalGithubActionsApi : java/lang/annotation/Annotation {
 }
 
+public final class io/github/typesafegithub/workflows/internal/VersionInfo_ktKt {
+	public static final fun getLibraryVersion ()Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/yaml/CaseKt {
 	public static final fun snakeCaseOf (Ljava/lang/String;)Ljava/lang/String;
 }
