@@ -4,6 +4,7 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
 import io.github.typesafegithub.workflows.domain.contexts.Contexts
 import io.github.typesafegithub.workflows.dsl.HasCustomArguments
+import io.github.typesafegithub.workflows.internal.getLibraryVersion
 import kotlinx.serialization.Contextual
 
 @Suppress("LongParameterList")
@@ -88,4 +89,10 @@ public open class ActionStep<out OUTPUTS : Outputs>(
     ) {
     override val outputs: OUTPUTS
         get() = super.outputs
+
+    init {
+        assert(action.isCompatibleWithLibraryVersion(getLibraryVersion())) {
+            "This version of the library is not compatible with the provided action binding!"
+        }
+    }
 }
