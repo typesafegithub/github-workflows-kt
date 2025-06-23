@@ -25,6 +25,12 @@ java {
     }
 }
 
+tasks.jar {
+    manifest {
+        attributes("Library-Version" to project.version)
+    }
+}
+
 kotlin {
     jvmToolchain {
         requiredJdkVersion()
