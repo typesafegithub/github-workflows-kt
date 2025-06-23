@@ -287,6 +287,30 @@ class GenerationTest :
             binding.shouldContainAndMatchFile("ActionWithNoInputs.kt")
         }
 
+        test("action with no inputs from fallback version") {
+            // given
+            val actionManifestHasNoInputs = emptyMap<String, Input>()
+            val actionManifest =
+                Metadata(
+                    inputs = actionManifestHasNoInputs,
+                    name = "Action With No Inputs From Fallback Version",
+                    description = "Description",
+                )
+
+            val coords = ActionCoords("john-smith", "action-with-no-inputs-from-fallback-version", "v3")
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
+                )
+
+            // then
+            binding.shouldContainAndMatchFile("ActionWithNoInputsFromFallbackVersion.kt")
+        }
+
         test("subaction") {
             // given
             val actionManifestHasNoInputs = emptyMap<String, Input>()

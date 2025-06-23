@@ -33,9 +33,9 @@ internal fun ActionCoords.provideTypes(
         ActionTypings(
             inputTypings = typings.toTypesMap(),
             source = typingActualSource,
+            fromFallbackVersion = typings.fromFallbackVersion,
         )
-    }
-        ?: ActionTypings()
+    } ?: ActionTypings()
 
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yml"
@@ -101,7 +101,10 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
             }
     logger.info { "  ... using fallback version: $fallbackVersion" }
     val adjustedCoords = this.copy(version = fallbackVersion)
-    return fetchTypingsFromUrl(url = adjustedCoords.actionTypesFromCatalog(), fetchUri = fetchUri)
+    return fetchTypingsFromUrl(
+        url = adjustedCoords.actionTypesFromCatalog(),
+        fetchUri = fetchUri,
+    )?.copy(fromFallbackVersion = true)
 }
 
 private fun fetchTypingsFromUrl(

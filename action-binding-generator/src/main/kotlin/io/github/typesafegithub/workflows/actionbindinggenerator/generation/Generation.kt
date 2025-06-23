@@ -100,6 +100,18 @@ public fun ActionCoords.generateBinding(
                     coords = this,
                     inputTypings = inputTypingsResolved.inputTypings,
                     className = className,
+                    deprecationMessage =
+                        inputTypingsResolved.takeIf { it.fromFallbackVersion }?.let {
+                            "This typed binding was created from typings for an older version in " +
+                                "https://github.com/typesafegithub/github-actions-typing-catalog. " +
+                                "As soon as typings for the requested version are added, there could be breaking " +
+                                "changes, and you need to delete these typings from your local Maven cache typically " +
+                                "found in ~/.m2/repository/ to get the updated typing. In some cases, though, you " +
+                                "may be lucky and things will work fine. To be on the safe side, consider " +
+                                "contributing updated typings to the catalog before using this version, or even " +
+                                "better: ask the action's owner to host the typings together with the action using " +
+                                "https://github.com/typesafegithub/github-actions-typing."
+                        },
                 )
             ActionBinding(
                 kotlinCode = actionBindingSourceCode,
@@ -131,6 +143,7 @@ private fun generateActionBindingSourceCode(
     inputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean = false,
+    deprecationMessage: String? = null,
     replaceWith: CodeBlock? = null,
 ): String {
     val fileSpec =
@@ -144,7 +157,7 @@ private fun generateActionBindingSourceCode(
                 changes will be overwritten with the next binding code regeneration.
                 See https://github.com/typesafegithub/github-workflows-kt for more info.
                 """.trimIndent(),
-            ).addType(generateActionClass(metadata, coords, inputTypings, className, untypedClass, replaceWith))
+            ).addType(generateActionClass(metadata, coords, inputTypings, className, untypedClass, deprecationMessage, replaceWith))
             .addSuppressAnnotation(metadata)
             .indent("    ")
             .build()
@@ -176,13 +189,14 @@ private fun generateActionClass(
     inputTypings: Map<String, Typing>,
     className: String,
     untypedClass: Boolean,
+    deprecationMessage: String?,
     replaceWith: CodeBlock?,
 ): TypeSpec =
     TypeSpec
         .classBuilder(className)
         .addModifiers(KModifier.DATA)
         .addKdocIfNotEmpty(actionKdoc(metadata, coords, untypedClass))
-        .replaceWith(replaceWith)
+        .markDeprecated(deprecationMessage, replaceWith)
         .addClassConstructorAnnotation()
         .inheritsFromRegularAction(coords, metadata, className)
         .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
@@ -375,14 +389,20 @@ private fun Metadata.linkedMapOfInputs(
     }
 }
 
-private fun TypeSpec.Builder.replaceWith(replaceWith: CodeBlock?): TypeSpec.Builder {
-    if (replaceWith != null) {
+private fun TypeSpec.Builder.markDeprecated(
+    deprecationMessage: String?,
+    replaceWith: CodeBlock?,
+): TypeSpec.Builder {
+    if ((deprecationMessage != null) || (replaceWith != null)) {
         addAnnotation(
             AnnotationSpec
                 .builder(Deprecated::class.asClassName())
-                .addMember("%S", "Use the typed class instead")
-                .addMember(replaceWith)
-                .build(),
+                .addMember("%S", deprecationMessage ?: "Use the typed class instead")
+                .apply {
+                    if (replaceWith != null) {
+                        addMember(replaceWith)
+                    }
+                }.build(),
         )
     }
     return this

@@ -444,6 +444,7 @@ class TypesProvidingTest :
                     ActionTypings(
                         inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
                         source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
@@ -474,6 +475,7 @@ class TypesProvidingTest :
                     ActionTypings(
                         inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
                         source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
@@ -625,6 +627,7 @@ class TypesProvidingTest :
                                 "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
                             ),
                         source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
