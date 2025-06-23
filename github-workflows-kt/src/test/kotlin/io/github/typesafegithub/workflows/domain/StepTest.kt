@@ -36,19 +36,18 @@ class StepTest :
 
         test("incompatible library version with the binding") {
             // Given
-            val incompatibleAction = object : Action<Action.Outputs>() {
-                override fun isCompatibleWithLibraryVersion(libraryVersion: String): Boolean =
-                    false
+            val incompatibleAction =
+                object : Action<Action.Outputs>() {
+                    override fun isCompatibleWithLibraryVersion(libraryVersion: String): Boolean = false
 
-                override fun toYamlArguments(): LinkedHashMap<String, String> =
-                    throw NotImplementedError("Irrelevant for this test")
+                    override fun toYamlArguments(): LinkedHashMap<String, String> =
+                        throw NotImplementedError("Irrelevant for this test")
 
-                override fun buildOutputObject(stepId: String): Outputs =
-                    Outputs(stepId)
+                    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
 
-                override val usesString: String
-                    get() = throw NotImplementedError("Irrelevant for this test")
-            }
+                    override val usesString: String
+                        get() = throw NotImplementedError("Irrelevant for this test")
+                }
 
             // When
             shouldThrow<AssertionError> {
@@ -57,7 +56,7 @@ class StepTest :
                     action = incompatibleAction,
                 )
             }.also {
-                it.message shouldBe  "This version of the library is not compatible with the provided action binding!"
+                it.message shouldBe "This version of the library is not compatible with the provided action binding!"
             }
         }
     })
