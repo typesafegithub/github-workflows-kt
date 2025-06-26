@@ -12,6 +12,8 @@ public abstract class Action<out OUTPUTS : Outputs> {
 
     public abstract val usesString: String
 
+    public open fun isCompatibleWithLibraryVersion(libraryVersion: String): Boolean = true
+
     public open class Outputs(
         private val stepId: String,
     ) {

@@ -62,6 +62,10 @@ kotlin {
     explicitApi()
 }
 
+ksp {
+    arg("library-version", project.version.toString())
+}
+
 fun ConfigurableKtLintTask.kotlinterConfig() {
     exclude { it.file.invariantSeparatorsPath.contains("/generated/") }
 }
