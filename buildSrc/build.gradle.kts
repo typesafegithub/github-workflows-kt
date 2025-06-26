@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version embeddedKotlinVersion
+    kotlin("jvm") version "2.2.0"
 }
 
 dependencies {
