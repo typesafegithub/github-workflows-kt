@@ -1,5 +1,6 @@
 package buildsrc.convention
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -36,14 +37,12 @@ fun JavaToolchainSpec.requiredJdkVersion() {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        // It's available without extra setup on GitHub Actions runners.
-        jvmTarget = "11"
-
-        allWarningsAsErrors = true
-    }
-
     compilerOptions {
+        // It's available without extra setup on GitHub Actions runners.
+        jvmTarget.set(JvmTarget.JVM_11)
+
+        allWarningsAsErrors.set(true)
+
         freeCompilerArgs.addAll(
             "-opt-in=kotlin.ExperimentalStdlibApi",
             "-opt-in=kotlin.time.ExperimentalTime",
