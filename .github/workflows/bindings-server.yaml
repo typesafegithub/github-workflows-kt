@@ -81,29 +81,29 @@ jobs:
         mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
         .github/workflows/test-served-bindings-depend-on-library.main.kts
     - id: 'step-8'
-      name: 'Install Kotlin 2.0.0'
+      name: 'Install Kotlin 1.9.0'
       uses: 'fwilhe2/setup-kotlin@v1'
       with:
-        version: '2.0.0'
+        version: '1.9.0'
     - id: 'step-9'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-10'
-      name: 'Execute the script using the bindings from the server, using older Kotlin (2.0.0) as consumer'
+      name: 'Execute the script using the bindings from the server, using older Kotlin (1.9.0) as consumer'
       run: |2-
                         cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
                         (.github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts || true) >> output.txt 2>&1
         grep "was compiled with an incompatible version of Kotlin" output.txt
     - id: 'step-11'
-      name: 'Install Kotlin 2.1.0'
+      name: 'Install Kotlin 2.0.0'
       uses: 'fwilhe2/setup-kotlin@v1'
       with:
-        version: '2.1.0'
+        version: '2.0.0'
     - id: 'step-12'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-13'
-      name: 'Execute the script using the bindings from the server, using older Kotlin (2.1.0) as consumer'
+      name: 'Execute the script using the bindings from the server, using older Kotlin (2.0.0) as consumer'
       run: |-
         cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
         .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
