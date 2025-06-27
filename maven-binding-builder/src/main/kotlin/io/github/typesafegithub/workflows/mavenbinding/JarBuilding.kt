@@ -59,6 +59,8 @@ internal fun ActionCoords.buildJars(): Jars? {
     )
 }
 
+private const val TARGET_KOTLIN_VERSION = "2.0"
+
 private fun compileBinding(sourceFilePaths: List<Path>): Path {
     val compilationOutput = createTempDirectory(prefix = "gwkt-classes_")
 
@@ -67,6 +69,8 @@ private fun compileBinding(sourceFilePaths: List<Path>): Path {
             destination = compilationOutput.toString()
             classpath = System.getProperty("java.class.path")
             freeArgs = sourceFilePaths.map { it.toString() }
+            languageVersion = TARGET_KOTLIN_VERSION
+            apiVersion = TARGET_KOTLIN_VERSION
             noStdlib = true
             noReflect = true
             includeRuntime = false
