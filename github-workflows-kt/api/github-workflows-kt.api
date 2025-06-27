@@ -77,7 +77,7 @@ public final class io/github/typesafegithub/workflows/domain/Concurrency {
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/Concurrency$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/Concurrency$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Concurrency$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/Concurrency;
@@ -85,6 +85,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/Concurrency$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/Concurrency;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/Concurrency$Companion {
@@ -641,7 +642,7 @@ public final class io/github/typesafegithub/workflows/domain/contexts/GithubCont
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/contexts/GithubContext$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/contexts/GithubContext$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/contexts/GithubContext$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;
@@ -649,6 +650,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/contexts/Github
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/contexts/GithubContext;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/contexts/GithubContext$Companion {
@@ -669,7 +671,7 @@ public final class io/github/typesafegithub/workflows/domain/contexts/GithubCont
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;
@@ -677,6 +679,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/contexts/Github
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/contexts/GithubContextEvent;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/contexts/GithubContextEvent$Companion {
@@ -702,7 +705,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/BranchProt
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;
@@ -710,6 +713,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Branch
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$Companion {
@@ -730,7 +734,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun :
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/CheckRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/CheckRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;
@@ -738,6 +742,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/CheckR
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$Companion {
@@ -758,7 +763,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;
@@ -766,6 +771,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/CheckS
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$Companion {
@@ -786,7 +792,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Create : i
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Create$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Create$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Create$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Create;
@@ -794,6 +800,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Create
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Create;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Create$Companion {
@@ -812,7 +819,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Cron {
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Cron$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Cron$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Cron$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Cron;
@@ -820,6 +827,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Cron$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Cron;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Cron$Companion {
@@ -840,7 +848,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Delete : i
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Delete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Delete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Delete$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Delete;
@@ -848,6 +856,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Delete
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Delete;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Delete$Companion {
@@ -868,7 +877,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Deployment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Deployment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Deployment$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Deployment;
@@ -876,6 +885,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Deploy
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Deployment;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Deployment$Companion {
@@ -896,7 +906,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/DeploymentStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/DeploymentStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/DeploymentStatus$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/DeploymentStatus;
@@ -904,6 +914,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Deploy
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/DeploymentStatus;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/DeploymentStatus$Companion {
@@ -924,7 +935,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Discussion$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Discussion$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion;
@@ -932,6 +943,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Discus
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Discussion;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$Companion {
@@ -952,7 +964,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;
@@ -960,6 +972,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Discus
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$Companion {
@@ -980,7 +993,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Fork : io/
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Fork$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Fork$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Fork$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Fork;
@@ -988,6 +1001,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Fork$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Fork;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Fork$Companion {
@@ -1008,7 +1022,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Gollum : i
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Gollum$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Gollum$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Gollum$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Gollum;
@@ -1016,6 +1030,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Gollum
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Gollum;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Gollum$Companion {
@@ -1036,7 +1051,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/IssueComme
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/IssueComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/IssueComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;
@@ -1044,6 +1059,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/IssueC
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$Companion {
@@ -1064,7 +1080,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Issues : i
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Issues$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Issues$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Issues;
@@ -1072,6 +1088,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Issues
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Issues;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Issues$Companion {
@@ -1092,7 +1109,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Label : io
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Label$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Label$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Label$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Label;
@@ -1100,6 +1117,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Label$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Label;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Label$Companion {
@@ -1120,7 +1138,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;
@@ -1128,6 +1146,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/MergeG
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$Companion {
@@ -1148,7 +1167,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Milestone 
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Milestone$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Milestone$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Milestone$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone;
@@ -1156,6 +1175,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Milest
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Milestone;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$Companion {
@@ -1176,7 +1196,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild 
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/PageBuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/PageBuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PageBuild$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/PageBuild;
@@ -1184,6 +1204,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/PageBu
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/PageBuild;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild$Companion {
@@ -1204,7 +1225,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Project : 
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Project$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Project$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Project;
@@ -1212,6 +1233,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Projec
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Project;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Project$Companion {
@@ -1232,7 +1254,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCar
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;
@@ -1240,6 +1262,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Projec
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$Companion {
@@ -1260,7 +1283,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCol
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;
@@ -1268,6 +1291,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Projec
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$Companion {
@@ -1288,7 +1312,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PublicWork
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/PublicWorkflow$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/PublicWorkflow$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PublicWorkflow$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/PublicWorkflow;
@@ -1296,6 +1320,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Public
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/PublicWorkflow;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PublicWorkflow$Companion {
@@ -1326,7 +1351,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequest;
@@ -1334,6 +1359,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRe
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/PullRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$Companion {
@@ -1382,7 +1408,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;
@@ -1390,6 +1416,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRe
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$Companion {
@@ -1410,7 +1437,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;
@@ -1418,6 +1445,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRe
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$Companion {
@@ -1448,7 +1476,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget;
@@ -1456,6 +1484,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/PullRe
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$Companion {
@@ -1516,7 +1545,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Push : io/
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Push$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Push$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Push$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Push;
@@ -1524,6 +1553,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Push$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Push;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Push$Companion {
@@ -1544,7 +1574,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPa
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;
@@ -1552,6 +1582,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Regist
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$Companion {
@@ -1574,7 +1605,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Release : 
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Release$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Release$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Release$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Release;
@@ -1582,6 +1613,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Releas
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Release;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Release$Companion {
@@ -1604,7 +1636,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Repository
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch;
@@ -1612,6 +1644,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Reposi
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/RepositoryDispatch$Companion {
@@ -1651,7 +1684,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Status : i
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Status$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Status$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Status$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Status;
@@ -1659,6 +1692,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Status
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Status;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Status$Companion {
@@ -1682,7 +1716,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Watch : io
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/Watch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/Watch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Watch$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/Watch;
@@ -1690,6 +1724,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Watch$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/Watch;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Watch$Companion {
@@ -1716,7 +1751,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;
@@ -1724,6 +1759,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Companion {
@@ -1740,7 +1776,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 	public final fun getType ()Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Type;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input;
@@ -1748,6 +1784,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Companion {
@@ -1761,7 +1798,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 	public final fun getValue ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output;
@@ -1769,6 +1806,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output$Companion {
@@ -1782,7 +1820,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 	public final fun getRequired ()Z
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret;
@@ -1790,6 +1828,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Secret$Companion {
@@ -1826,7 +1865,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch;
@@ -1834,6 +1873,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Companion {
@@ -1851,7 +1891,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public final fun getType ()Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Type;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input;
@@ -1859,6 +1899,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Companion {
@@ -1895,7 +1936,7 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRu
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;
@@ -1903,6 +1944,7 @@ public synthetic class io/github/typesafegithub/workflows/domain/triggers/Workfl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$Companion {
