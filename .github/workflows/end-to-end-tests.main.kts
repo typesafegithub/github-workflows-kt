@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.4.1-SNAPSHOT")
-@file:DependsOn("io.github.typesafegithub:action-updates-checker:3.4.1-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.5.0")
+@file:DependsOn("io.github.typesafegithub:action-updates-checker:3.5.0")
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:github-script:v7")

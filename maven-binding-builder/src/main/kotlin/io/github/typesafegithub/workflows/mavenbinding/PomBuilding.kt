@@ -4,7 +4,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 
-internal const val LATEST_RELASED_LIBRARY_VERSION = "3.4.0"
+internal const val LATEST_RELASED_LIBRARY_VERSION = "3.5.0"
 
 internal fun ActionCoords.buildPomFile() =
     """
