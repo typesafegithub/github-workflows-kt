@@ -63,10 +63,6 @@ scripting. It's lagging behind the support provided by Kotlin itself.
 
 Here's a list of tickets on the JetBrains side, along with proposed workarounds:
 
-* **[\[KTIJ-14580\] Imported script are not supported for scripts outside of a source root](https://youtrack.jetbrains.com/issue/KTIJ-14580)**  
-  It's possible to partially mitigate it by adding dependencies from the imported files directly in the top-level
-  script.
-
 * **[\[KTIJ-16532\] Scripting: dependencies do not open source files](https://youtrack.jetbrains.com/issue/KTIJ-16532)**  
   There are several workarounds: browse the code in GitHub, add a dependency on the library in your main project which
   will let you browse the source code in the IDE, or maybe it's enough to use
