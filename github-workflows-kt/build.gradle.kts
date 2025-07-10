@@ -12,7 +12,7 @@ plugins {
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
     id("info.solidsoft.pitest") version "1.15.0"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.1"
 
     id("org.jetbrains.dokka") version "2.0.0"
 }

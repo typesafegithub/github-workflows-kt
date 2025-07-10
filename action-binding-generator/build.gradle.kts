@@ -5,7 +5,7 @@ plugins {
     buildsrc.convention.publishing
     kotlin("plugin.serialization")
 
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.1"
 }
 
 group = rootProject.group
