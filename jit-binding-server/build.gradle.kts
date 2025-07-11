@@ -18,7 +18,7 @@ dependencies {
 
     implementation("com.sksamuel.aedile:aedile-core:2.1.2")
     implementation("io.github.oshai:kotlin-logging:7.0.7")
-    implementation(platform("org.apache.logging.log4j:log4j-bom:2.25.0"))
+    implementation(platform("org.apache.logging.log4j:log4j-bom:2.25.1"))
     implementation("org.apache.logging.log4j:log4j-jul")
     runtimeOnly("org.apache.logging.log4j:log4j-core")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
