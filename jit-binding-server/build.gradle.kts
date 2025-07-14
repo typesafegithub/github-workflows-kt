@@ -14,7 +14,7 @@ dependencies {
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
     implementation("io.ktor:ktor-server-metrics-micrometer")
-    implementation("io.micrometer:micrometer-registry-prometheus:1.15.1")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.15.2")
 
     implementation("com.sksamuel.aedile:aedile-core:2.1.2")
     implementation("io.github.oshai:kotlin-logging:7.0.7")
