@@ -9,7 +9,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.io.IOException
+import java.io.FileNotFoundException
 import java.net.URI
 
 class TypesProvidingTest :
@@ -175,7 +175,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
                         ),
                         -> hostedByActionYml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -199,7 +199,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yml",
                         ),
                         -> hostedByActionYml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
@@ -223,7 +223,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml",
                         ),
                         -> hostedByActionYaml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -247,7 +247,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yaml",
                         ),
                         -> hostedByActionYaml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
@@ -275,7 +275,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml",
                         ),
                         -> hostedByActionYaml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -303,7 +303,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yaml",
                         ),
                         -> hostedByActionYaml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
@@ -328,7 +328,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v3/action-types.yml",
                         ),
                         -> storedInTypingCatalog
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -353,7 +353,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v3/some-sub/action-types.yml",
                         ),
                         -> storedInTypingCatalog
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
@@ -383,7 +383,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v3/action-types.yml",
                         ),
                         -> storedInTypingCatalog
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -413,7 +413,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v3/some-sub/action-types.yml",
                         ),
                         -> storedInTypingCatalog
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
@@ -443,7 +443,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v4/action-types.yml",
                         ),
                         -> storedInTypingCatalogForOlderVersion
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v6")
@@ -474,7 +474,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v4/some-sub/action-types.yml",
                         ),
                         -> storedInTypingCatalogForOlderVersion
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v6", FULL, "some-sub")
@@ -500,7 +500,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/metadata.yml",
                         ),
                         -> metadata
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v1")
@@ -514,7 +514,7 @@ class TypesProvidingTest :
 
             test("no typings at all") {
                 // Given
-                val fetchUri: (URI) -> String = { throw IOException() }
+                val fetchUri: (URI) -> String = { throw FileNotFoundException() }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
@@ -559,7 +559,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
                         ),
                         -> typingYml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -592,7 +592,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v3/action-types.yml",
                         ),
                         -> typingYml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -630,7 +630,7 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v4/action-types.yml",
                         ),
                         -> typingYml
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v6")
@@ -675,7 +675,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
                         ),
                         -> billionLaughsAttack
-                        else -> throw IOException()
+                        else -> throw FileNotFoundException()
                     }
                 }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
@@ -705,7 +705,7 @@ class TypesProvidingTest :
                             "main/typings/some-owner/some-name/metadata.yml",
                     ),
                     -> metadata
-                    else -> throw IOException()
+                    else -> throw FileNotFoundException()
                 }
             }
             val actionCoord = ActionCoords("some-owner", "some-name", "v6-beta")

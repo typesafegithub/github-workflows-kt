@@ -17,7 +17,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchU
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
-import java.io.IOException
+import java.io.FileNotFoundException
 import java.net.URI
 
 private val logger = logger { }
@@ -66,7 +66,7 @@ private fun ActionCoords.fetchTypingMetadata(
             try {
                 logger.info { "  ... types from action $url" }
                 fetchUri(URI(url))
-            } catch (e: IOException) {
+            } catch (e: FileNotFoundException) {
                 logger.info { "  ... types from action were not found: $url" }
                 null
             }
@@ -89,7 +89,7 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
         try {
             logger.info { "  ... metadata from $metadataUrl" }
             fetchUri(URI(metadataUrl))
-        } catch (e: IOException) {
+        } catch (e: FileNotFoundException) {
             return null
         }
     val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
@@ -118,7 +118,7 @@ private fun fetchTypingsFromUrl(
         try {
             logger.info { "  ... types from catalog $url" }
             fetchUri(URI(url))
-        } catch (e: IOException) {
+        } catch (e: FileNotFoundException) {
             logger.info { "  ... types from catalog were not found: $url" }
             null
         } ?: return null
