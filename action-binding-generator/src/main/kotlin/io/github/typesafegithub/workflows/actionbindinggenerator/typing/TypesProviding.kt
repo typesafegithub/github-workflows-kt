@@ -67,6 +67,7 @@ private fun ActionCoords.fetchTypingMetadata(
                 logger.info { "  ... types from action $url" }
                 fetchUri(URI(url))
             } catch (e: IOException) {
+                logger.info { "  ... types from action were not found: $url" }
                 null
             }
         } ?: return null
@@ -118,6 +119,7 @@ private fun fetchTypingsFromUrl(
             logger.info { "  ... types from catalog $url" }
             fetchUri(URI(url))
         } catch (e: IOException) {
+            logger.info { "  ... types from catalog were not found: $url" }
             null
         } ?: return null
     return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
