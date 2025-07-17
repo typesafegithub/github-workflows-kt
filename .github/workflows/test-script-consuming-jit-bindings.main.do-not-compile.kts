@@ -26,6 +26,7 @@
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.SetupNode
 import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.gradle.ActionsDependencySubmission_Untyped
@@ -39,6 +40,7 @@ println(Checkout(fetchTags_Untyped = "false"))
 println(AlwaysUntypedActionForTests_Untyped(foobar_Untyped = "baz"))
 println(ActionsSetupGradle())
 println(Cache(path = listOf("some-path"), key = "some-key"))
+println(SetupNode())
 
 ActionsDependencySubmission_Untyped().actionVersion shouldBe "v3"
 ActionsWrapperValidation().actionVersion shouldBe "v4.2"
