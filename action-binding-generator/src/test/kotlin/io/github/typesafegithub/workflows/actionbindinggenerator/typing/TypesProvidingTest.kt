@@ -344,6 +344,31 @@ class TypesProvidingTest :
                     )
             }
 
+            test("only stored in typing catalog, under lowercase name and owner") {
+                // Given
+                val fetchUri: (URI) -> String = {
+                    when (it) {
+                        URI(
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml",
+                        ),
+                            -> storedInTypingCatalog
+                        else -> throw FileNotFoundException()
+                    }
+                }
+                val actionCoord = ActionCoords("Some-owner", "Some-name", "v3")
+
+                // When
+                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+                // Then
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                    )
+            }
+
             test("only stored in typing catalog for subaction") {
                 // Given
                 val fetchUri: (URI) -> String = {
@@ -443,6 +468,37 @@ class TypesProvidingTest :
                                 "main/typings/some-owner/some-name/v4/action-types.yml",
                         ),
                         -> storedInTypingCatalogForOlderVersion
+                        else -> throw FileNotFoundException()
+                    }
+                }
+                val actionCoord = ActionCoords("Some-owner", "Some-name", "v6")
+
+                // When
+                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+
+                // Then
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
+                    )
+            }
+
+            test("only stored in typing catalog for older version, under lowercase name and owner") {
+                // Given
+                val fetchUri: (URI) -> String = {
+                    when (it) {
+                        URI(
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml",
+                        ),
+                            -> metadata
+                        URI(
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml",
+                        ),
+                            -> storedInTypingCatalogForOlderVersion
                         else -> throw FileNotFoundException()
                     }
                 }
