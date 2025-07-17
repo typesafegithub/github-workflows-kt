@@ -352,7 +352,7 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
                                 "main/typings/some-owner/some-name/v3/action-types.yml",
                         ),
-                            -> storedInTypingCatalog
+                        -> storedInTypingCatalog
                         else -> throw FileNotFoundException()
                     }
                 }
@@ -493,12 +493,12 @@ class TypesProvidingTest :
                             "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
                                 "main/typings/some-owner/some-name/metadata.yml",
                         ),
-                            -> metadata
+                        -> metadata
                         URI(
                             "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
                                 "main/typings/some-owner/some-name/v4/action-types.yml",
                         ),
-                            -> storedInTypingCatalogForOlderVersion
+                        -> storedInTypingCatalogForOlderVersion
                         else -> throw FileNotFoundException()
                     }
                 }
