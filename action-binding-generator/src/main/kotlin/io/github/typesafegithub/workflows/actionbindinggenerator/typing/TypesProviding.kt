@@ -51,6 +51,12 @@ private fun ActionCoords.catalogMetadata() =
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
 
+private fun ActionCoords.nameAndOwnerToLowerCase() =
+    this.copy(
+        owner = this.owner.lowercase(),
+        name = this.name.lowercase(),
+    )
+
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
     fetchUri: (URI) -> String = ::fetchUri,
@@ -80,7 +86,9 @@ private fun ActionCoords.fetchFromTypingsFromCatalog(
 ): Pair<ActionTypes, TypingActualSource>? =
     (
         fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
+            ?: fetchTypingsFromUrl(url = this.nameAndOwnerToLowerCase().actionTypesFromCatalog(), fetchUri = fetchUri)
             ?: fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
+            ?: this.nameAndOwnerToLowerCase().fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
     )?.let { Pair(it, TYPING_CATALOG) }
 
 private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) -> String): ActionTypes? {
