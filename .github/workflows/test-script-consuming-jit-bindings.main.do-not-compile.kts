@@ -19,7 +19,7 @@
 @file:DependsOn("gradle:actions__wrapper-validation___minor:[v4.2.1,v4.3-alpha)")
 
 // To test case-insensitivity when referring to action names/owners.
-@file:DependsOn("aCtIoNs:SeTuP-NoDe:v4")
+@file:DependsOn("Actions:Setup-Node:v4")
 
 // Always untyped action.
 @file:DependsOn("typesafegithub:always-untyped-action-for-tests:v1")
