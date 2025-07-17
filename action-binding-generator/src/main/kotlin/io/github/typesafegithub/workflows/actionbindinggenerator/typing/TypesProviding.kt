@@ -42,20 +42,14 @@ private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
 
 private fun ActionCoords.actionTypesFromCatalog() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$name/$version$subName/action-types.yml"
+        "main/typings/${owner.lowercase()}/${name.lowercase()}/$version$subName/action-types.yml"
 
 private fun ActionCoords.catalogMetadata() =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/$owner/$name/metadata.yml"
+        "main/typings/${owner.lowercase()}/${name.lowercase()}/metadata.yml"
 
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
-
-private fun ActionCoords.nameAndOwnerToLowerCase() =
-    this.copy(
-        owner = this.owner.lowercase(),
-        name = this.name.lowercase(),
-    )
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
@@ -85,10 +79,8 @@ private fun ActionCoords.fetchFromTypingsFromCatalog(
     fetchUri: (URI) -> String = ::fetchUri,
 ): Pair<ActionTypes, TypingActualSource>? =
     (
-        fetchTypingsFromUrl(url = actionTypesFromCatalog(), fetchUri = fetchUri)
-            ?: fetchTypingsFromUrl(url = this.nameAndOwnerToLowerCase().actionTypesFromCatalog(), fetchUri = fetchUri)
-            ?: fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
-            ?: this.nameAndOwnerToLowerCase().fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
+        fetchTypingsFromUrl(url = this.actionTypesFromCatalog(), fetchUri = fetchUri)
+            ?: this.fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
     )?.let { Pair(it, TYPING_CATALOG) }
 
 private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) -> String): ActionTypes? {
