@@ -40,16 +40,15 @@ internal fun ActionCoords.provideTypes(
 private fun ActionCoords.actionTypesYmlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yml"
 
-private fun ActionCoords.actionTypesFromCatalog() =
-    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/${owner.lowercase()}/${name.lowercase()}/$version$subName/action-types.yml"
-
-private fun ActionCoords.catalogMetadata() =
-    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-        "main/typings/${owner.lowercase()}/${name.lowercase()}/metadata.yml"
-
 private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
+
+private const val CATALOG_BASE_URL = "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/main/typings"
+
+private fun ActionCoords.actionTypesFromCatalog() =
+    "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/$version$subName/action-types.yml"
+
+private fun ActionCoords.catalogMetadata() = "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/metadata.yml"
 
 private fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
