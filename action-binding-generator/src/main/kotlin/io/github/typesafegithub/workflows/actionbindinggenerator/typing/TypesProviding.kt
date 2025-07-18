@@ -44,7 +44,8 @@ private fun ActionCoords.actionTypesYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action-types.yaml"
 
 private const val CATALOG_BASE_URL =
-    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/main/typings"
+    "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+        "1b3c189cd9fa84f61b60d0f58fdfa251e25a0377/typings"
 
 private fun ActionCoords.actionTypesFromCatalog() =
     "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/$version$subName/action-types.yml"
