@@ -32,7 +32,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
     - id: 'step-1'
       name: 'Validate wrapper'
       uses: 'gradle/wrapper-validation-action@v3'

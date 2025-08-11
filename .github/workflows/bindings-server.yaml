@@ -53,7 +53,7 @@ jobs:
       APP_CLIENT_ID: 'Iv23liIZ17VJKUpjacBs'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
     - id: 'step-1'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-2'
@@ -136,7 +136,7 @@ jobs:
       name: 'DockerHub'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
     - id: 'step-1'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-2'

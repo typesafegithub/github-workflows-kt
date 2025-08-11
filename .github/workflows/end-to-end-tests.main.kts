@@ -3,7 +3,7 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.5.1-SNAPSHOT")
 @file:DependsOn("io.github.typesafegithub:action-updates-checker:3.5.1-SNAPSHOT")
 @file:Repository("https://bindings.krzeminski.it")
-@file:DependsOn("actions:checkout:v4")
+@file:DependsOn("actions:checkout:v5")
 @file:DependsOn("actions:github-script:v7")
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("actions:setup-python:v5")
@@ -106,7 +106,7 @@ workflow(
                 action = CustomAction(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v4",
+                    actionVersion = "v5",
                 ),
             )
 
@@ -133,7 +133,7 @@ workflow(
                 action = object : RegularAction<Action.Outputs>(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v4",
+                    actionVersion = "v5",
                 ) {
                     override fun toYamlArguments() =
                         linkedMapOf(
