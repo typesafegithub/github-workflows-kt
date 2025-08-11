@@ -19,7 +19,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v5'
+      uses: 'actions/checkout@v4'
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/gradle-wrapper-validation.yaml'' && ''.github/workflows/gradle-wrapper-validation.main.kts'''
