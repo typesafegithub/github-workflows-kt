@@ -62,7 +62,7 @@ jobs:
         > result.txt
     - id: 'step-2'
       name: 'Check out'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
     - id: 'step-3'
       name: 'Run local action'
       uses: './.github/workflows/test-local-action'
@@ -73,7 +73,7 @@ jobs:
       uses: 'docker://alpine:latest'
     - id: 'step-5'
       name: 'Check out again'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
       with:
         repository: 'actions/checkout'
         ref: 'v3'
@@ -91,7 +91,7 @@ jobs:
       uses: 'actions/setup-python@v5'
     - id: 'step-9'
       name: 'Some step consuming other step''s output'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
       with:
         ssh-key: '${{ steps.step-8.outputs.python-version }}'
         path: '${{ steps.step-8.outputs.my-unsafe-output }}'
