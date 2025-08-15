@@ -21,7 +21,7 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    implementation("it.krzeminski:snakeyaml-engine-kmp:3.1.1")
+    implementation("it.krzeminski:snakeyaml-engine-kmp:3.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation(projects.sharedInternal)
