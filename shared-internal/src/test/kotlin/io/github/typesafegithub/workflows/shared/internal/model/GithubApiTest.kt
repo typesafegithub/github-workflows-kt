@@ -24,6 +24,119 @@ class GithubApiTest :
 
             test("branches with major versions and tags with other versions") {
                 // Given
+                val repositoryResponse =
+                    """
+                    {
+                      "id": 429460367,
+                      "node_id": "R_kgDOGZkLjw",
+                      "name": "some-name",
+                      "full_name": "some-owner/some-name",
+                      "private": false,
+                      "owner": {
+                        "login": "some-owner",
+                        "id": 1577251,
+                        "node_id": "MDQ6VXNlcjE1NzcyNTE=",
+                        "avatar_url": "https://avatars.githubusercontent.com/u/1577251?v=4",
+                        "gravatar_id": "",
+                        "url": "https://api.github.com/users/LeoColman",
+                        "html_url": "https://github.com/LeoColman",
+                        "followers_url": "https://api.github.com/users/LeoColman/followers",
+                        "following_url": "https://api.github.com/users/LeoColman/following{/other_user}",
+                        "gists_url": "https://api.github.com/users/LeoColman/gists{/gist_id}",
+                        "starred_url": "https://api.github.com/users/LeoColman/starred{/owner}{/repo}",
+                        "subscriptions_url": "https://api.github.com/users/LeoColman/subscriptions",
+                        "organizations_url": "https://api.github.com/users/LeoColman/orgs",
+                        "repos_url": "https://api.github.com/users/LeoColman/repos",
+                        "events_url": "https://api.github.com/users/LeoColman/events{/privacy}",
+                        "received_events_url": "https://api.github.com/users/LeoColman/received_events",
+                        "type": "User",
+                        "user_view_type": "public",
+                        "site_admin": false
+                      },
+                      "html_url": "https://github.com/LeoColman/MyStack",
+                      "description": null,
+                      "fork": false,
+                      "url": "https://api.github.com/repos/LeoColman/MyStack",
+                      "forks_url": "https://api.github.com/repos/LeoColman/MyStack/forks",
+                      "keys_url": "https://api.github.com/repos/LeoColman/MyStack/keys{/key_id}",
+                      "collaborators_url": "https://api.github.com/repos/LeoColman/MyStack/collaborators{/collaborator}",
+                      "teams_url": "https://api.github.com/repos/LeoColman/MyStack/teams",
+                      "hooks_url": "https://api.github.com/repos/LeoColman/MyStack/hooks",
+                      "issue_events_url": "https://api.github.com/repos/LeoColman/MyStack/issues/events{/number}",
+                      "events_url": "https://api.github.com/repos/LeoColman/MyStack/events",
+                      "assignees_url": "https://api.github.com/repos/LeoColman/MyStack/assignees{/user}",
+                      "branches_url": "https://api.github.com/repos/LeoColman/MyStack/branches{/branch}",
+                      "tags_url": "https://api.github.com/repos/LeoColman/MyStack/tags",
+                      "blobs_url": "https://api.github.com/repos/LeoColman/MyStack/git/blobs{/sha}",
+                      "git_tags_url": "https://api.github.com/repos/LeoColman/MyStack/git/tags{/sha}",
+                      "git_refs_url": "https://api.github.com/repos/LeoColman/MyStack/git/refs{/sha}",
+                      "trees_url": "https://api.github.com/repos/LeoColman/MyStack/git/trees{/sha}",
+                      "statuses_url": "https://api.github.com/repos/LeoColman/MyStack/statuses/{sha}",
+                      "languages_url": "https://api.github.com/repos/LeoColman/MyStack/languages",
+                      "stargazers_url": "https://api.github.com/repos/LeoColman/MyStack/stargazers",
+                      "contributors_url": "https://api.github.com/repos/LeoColman/MyStack/contributors",
+                      "subscribers_url": "https://api.github.com/repos/LeoColman/MyStack/subscribers",
+                      "subscription_url": "https://api.github.com/repos/LeoColman/MyStack/subscription",
+                      "commits_url": "https://api.github.com/repos/LeoColman/MyStack/commits{/sha}",
+                      "git_commits_url": "https://api.github.com/repos/LeoColman/MyStack/git/commits{/sha}",
+                      "comments_url": "https://api.github.com/repos/LeoColman/MyStack/comments{/number}",
+                      "issue_comment_url": "https://api.github.com/repos/LeoColman/MyStack/issues/comments{/number}",
+                      "contents_url": "https://api.github.com/repos/LeoColman/MyStack/contents/{+path}",
+                      "compare_url": "https://api.github.com/repos/LeoColman/MyStack/compare/{base}...{head}",
+                      "merges_url": "https://api.github.com/repos/LeoColman/MyStack/merges",
+                      "archive_url": "https://api.github.com/repos/LeoColman/MyStack/{archive_format}{/ref}",
+                      "downloads_url": "https://api.github.com/repos/LeoColman/MyStack/downloads",
+                      "issues_url": "https://api.github.com/repos/LeoColman/MyStack/issues{/number}",
+                      "pulls_url": "https://api.github.com/repos/LeoColman/MyStack/pulls{/number}",
+                      "milestones_url": "https://api.github.com/repos/LeoColman/MyStack/milestones{/number}",
+                      "notifications_url": "https://api.github.com/repos/LeoColman/MyStack/notifications{?since,all,participating}",
+                      "labels_url": "https://api.github.com/repos/LeoColman/MyStack/labels{/name}",
+                      "releases_url": "https://api.github.com/repos/LeoColman/MyStack/releases{/id}",
+                      "deployments_url": "https://api.github.com/repos/LeoColman/MyStack/deployments",
+                      "created_at": "2021-11-18T14:26:50Z",
+                      "updated_at": "2025-04-23T19:38:18Z",
+                      "pushed_at": "2025-04-23T19:38:15Z",
+                      "git_url": "git://github.com/LeoColman/MyStack.git",
+                      "ssh_url": "git@github.com:LeoColman/MyStack.git",
+                      "clone_url": "https://github.com/LeoColman/MyStack.git",
+                      "svn_url": "https://github.com/LeoColman/MyStack",
+                      "homepage": null,
+                      "size": 24074,
+                      "stargazers_count": 1,
+                      "watchers_count": 1,
+                      "language": null,
+                      "has_issues": true,
+                      "has_projects": false,
+                      "has_downloads": true,
+                      "has_wiki": false,
+                      "has_pages": false,
+                      "has_discussions": false,
+                      "forks_count": 1,
+                      "mirror_url": null,
+                      "archived": false,
+                      "disabled": false,
+                      "open_issues_count": 1,
+                      "license": {
+                        "key": "mit",
+                        "name": "MIT License",
+                        "spdx_id": "MIT",
+                        "url": "https://api.github.com/licenses/mit",
+                        "node_id": "MDc6TGljZW5zZTEz"
+                      },
+                      "allow_forking": true,
+                      "is_template": false,
+                      "web_commit_signoff_required": false,
+                      "topics": [],
+                      "visibility": "public",
+                      "forks": 1,
+                      "open_issues": 1,
+                      "watchers": 1,
+                      "default_branch": "main",
+                      "temp_clone_token": null,
+                      "network_count": 1,
+                      "subscribers_count": 1
+                    }
+                    """.trimIndent()
                 val tagsResponse =
                     """
                     [
@@ -74,6 +187,14 @@ class GithubApiTest :
                         }
                     ]
                     """.trimIndent()
+                mockServer
+                    .`when`(request().withPath("/repos/$owner/$name"))
+                    .respond(
+                        response()
+                            .withStatusCode(200)
+                            .withHeader("Content-Type", "application/json")
+                            .withBody(repositoryResponse),
+                    )
                 mockServer
                     .`when`(request().withPath("/repos/$owner/$name/git/matching-refs/tags/v"))
                     .respond(
