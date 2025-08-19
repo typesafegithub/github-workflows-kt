@@ -7,7 +7,7 @@ dependencies {
     api("io.arrow-kt:arrow-core:2.1.2")
     api(projects.actionBindingGenerator)
     implementation(projects.sharedInternal)
-    implementation("io.github.oshai:kotlin-logging:7.0.12")
+    implementation("io.github.oshai:kotlin-logging:7.0.13")
 
     runtimeOnly(projects.githubWorkflowsKt)
 }
