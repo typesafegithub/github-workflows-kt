@@ -53,7 +53,7 @@ jobs:
         key: 'gradle-buildSrc-build-dir-${{ runner.os }}'
     - id: 'step-2'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@v4'
+      uses: 'actions/setup-java@v5'
       with:
         java-version: '11'
         distribution: 'zulu'
@@ -80,7 +80,7 @@ jobs:
         key: 'gradle-buildSrc-build-dir-${{ runner.os }}'
     - id: 'step-2'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@v4'
+      uses: 'actions/setup-java@v5'
       with:
         java-version: '11'
         distribution: 'zulu'
@@ -107,7 +107,7 @@ jobs:
       uses: 'actions/checkout@v5'
     - id: 'step-1'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@v4'
+      uses: 'actions/setup-java@v5'
       with:
         java-version: '11'
         distribution: 'zulu'
@@ -179,7 +179,7 @@ jobs:
       uses: 'actions/checkout@v5'
     - id: 'step-1'
       name: 'Set up Java in proper version'
-      uses: 'actions/setup-java@v4'
+      uses: 'actions/setup-java@v5'
       with:
         java-version: '17'
         distribution: 'zulu'
