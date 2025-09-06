@@ -4,7 +4,7 @@
 @file:DependsOn("io.github.typesafegithub:action-updates-checker:3.5.1-SNAPSHOT")
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v5")
-@file:DependsOn("actions:github-script:v7")
+@file:DependsOn("actions:github-script:v8")
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("actions:setup-python:v5")
 @file:DependsOn("gradle:actions__setup-gradle:v4")
