@@ -40,6 +40,7 @@ val dockerAppName = "github-workflows-kt-jit-binding-server"
 ktor {
     docker {
         localImageName.set(dockerAppName)
+        jreVersion.set(JavaVersion.VERSION_21)
 
         externalRegistry.set(
             DockerImageRegistry.dockerHub(
