@@ -10,4 +10,6 @@ dependencies {
     implementation("io.github.oshai:kotlin-logging:7.0.13")
 
     runtimeOnly(projects.githubWorkflowsKt)
+
+    testImplementation(projects.testUtils)
 }
