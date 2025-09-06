@@ -20,6 +20,7 @@ class JavaBytecodeVersionTest :
                         val major = dataInputStream.readUnsignedShort()
 
                         // Corresponds to JDK 11
+                        // See https://javaalmanac.io/bytecode/versions/
                         major shouldBe 55
                         minor shouldBe 0
                     }
