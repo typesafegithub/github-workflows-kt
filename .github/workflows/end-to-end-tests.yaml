@@ -148,7 +148,7 @@ jobs:
       run: 'GHWKT_RUN_STEP=''end-to-end-tests.yaml:test_job_1:step-19'' ''.github/workflows/end-to-end-tests.main.kts'''
       if: '${{ steps.step-18.outputs.evaluation-result }}'
     - id: 'step-20'
-      uses: 'actions/github-script@v7'
+      uses: 'actions/github-script@v8'
       with:
         script: |-
           core.setOutput("key", "value")
