@@ -63,9 +63,12 @@ internal fun ActionCoords.buildJars(): Jars? {
     // Used for testing
     val randomClassFile by lazy {
         val (_, pathWithJarContents) = prepareJarContents()
-        val firstClassFile = Files.walk(pathWithJarContents).asSequence()
-            .filter { Files.isRegularFile(it) && it.fileName.toString().endsWith(".class") }
-            .first()
+        val firstClassFile =
+            Files
+                .walk(pathWithJarContents)
+                .asSequence()
+                .filter { Files.isRegularFile(it) && it.fileName.toString().endsWith(".class") }
+                .first()
         firstClassFile.toFile().readBytes()
     }
 
