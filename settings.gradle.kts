@@ -10,6 +10,7 @@ include(
     "jit-binding-server",
     "shared-internal",
     "code-generator",
+    "test-utils",
 )
 
 plugins {

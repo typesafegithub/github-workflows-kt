@@ -31,6 +31,7 @@ dependencies {
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
+    testImplementation(projects.testUtils)
 
     // GitHub action bindings
     testImplementation("actions:checkout:v4")
