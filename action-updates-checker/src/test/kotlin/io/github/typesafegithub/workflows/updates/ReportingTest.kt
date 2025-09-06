@@ -63,7 +63,7 @@ class ReportingTest :
                                     CustomAction(
                                         actionOwner = "google-github-actions",
                                         actionName = "setup-gcloud",
-                                        actionVersion = "v2",
+                                        actionVersion = "v3", // Keep newest, to test no updates reported.
                                     ),
                             )
                         }
