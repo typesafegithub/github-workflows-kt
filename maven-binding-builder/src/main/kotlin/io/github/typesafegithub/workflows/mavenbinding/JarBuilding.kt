@@ -15,16 +15,19 @@ import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.config.Services
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.div
 import kotlin.io.path.writeText
+import kotlin.streams.asSequence
 
 internal data class Jars(
     val mainJar: () -> ByteArray,
     val sourcesJar: () -> ByteArray,
+    val randomClassFile: () -> ByteArray,
     val typingActualSource: TypingActualSource?,
 )
 
@@ -34,9 +37,14 @@ internal fun ActionCoords.buildJars(): Jars? {
             if (it.isEmpty()) return null
         }
 
-    val mainJar by lazy {
+    fun prepareJarContents(): Pair<Path, Path> {
         val (sourceFilePaths, compilationInputDir) = binding.prepareDirectoryWithSources()
         val pathWithJarContents = compileBinding(sourceFilePaths = sourceFilePaths)
+        return Pair(compilationInputDir, pathWithJarContents)
+    }
+
+    val mainJar by lazy {
+        val (compilationInputDir, pathWithJarContents) = prepareJarContents()
         val mainJarByteArrayOutputStream = ByteArrayOutputStream()
         mainJarByteArrayOutputStream.createZipFile(pathWithJarContents)
         pathWithJarContents.toFile().deleteRecursively()
@@ -52,9 +60,22 @@ internal fun ActionCoords.buildJars(): Jars? {
         sourcesJarByteArrayOutputStream.toByteArray()
     }
 
+    // Used for testing
+    val randomClassFile by lazy {
+        val (_, pathWithJarContents) = prepareJarContents()
+        val firstClassFile =
+            Files
+                .walk(pathWithJarContents)
+                .asSequence()
+                .filter { Files.isRegularFile(it) && it.fileName.toString().endsWith(".class") }
+                .first()
+        firstClassFile.toFile().readBytes()
+    }
+
     return Jars(
         mainJar = { mainJar },
         sourcesJar = { sourcesJar },
+        randomClassFile = { randomClassFile },
         typingActualSource = binding.firstNotNullOfOrNull { it.typingActualSource },
     )
 }
