@@ -20,7 +20,7 @@ jobs:
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
-        java-version: '24'
+        java-version: '22'
         distribution: 'zulu'
     - id: 'step-2'
       uses: 'gradle/actions/setup-gradle@v4'
@@ -45,7 +45,7 @@ jobs:
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
-        java-version: '24'
+        java-version: '22'
         distribution: 'zulu'
     - id: 'step-2'
       uses: 'gradle/actions/setup-gradle@v4'
