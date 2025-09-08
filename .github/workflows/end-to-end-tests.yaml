@@ -176,7 +176,7 @@ jobs:
       name: 'Setup Java 11 and 20'
       uses: 'Wandalen/wretry.action@v3'
       with:
-        action: 'actions/setup-java@v4'
+        action: 'actions/setup-java@v5'
         with: |
           java-version: |-
             11
