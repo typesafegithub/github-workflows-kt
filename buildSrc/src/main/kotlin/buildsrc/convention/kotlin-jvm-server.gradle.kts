@@ -20,20 +20,6 @@ dependencies {
 java {
     withJavadocJar()
     withSourcesJar()
-
-    toolchain {
-        requiredJdkVersion()
-    }
-}
-
-kotlin {
-    jvmToolchain {
-        requiredJdkVersion()
-    }
-}
-
-fun JavaToolchainSpec.requiredJdkVersion() {
-    languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 tasks.withType<KotlinCompile> {
