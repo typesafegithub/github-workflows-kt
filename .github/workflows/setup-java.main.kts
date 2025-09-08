@@ -14,5 +14,6 @@ fun JobBuilder<*>.setupJava() =
         action = SetupJava(
             javaVersion = "24",
             distribution = SetupJava.Distribution.Zulu,
+            cache = SetupJava.BuildPlatform.Gradle,
         )
     )
