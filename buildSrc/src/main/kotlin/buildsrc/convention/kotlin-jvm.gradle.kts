@@ -18,6 +18,7 @@ dependencies {
 }
 
 java {
+    // It's available without extra setup on GitHub Actions runners.
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 
