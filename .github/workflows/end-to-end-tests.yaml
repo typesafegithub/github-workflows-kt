@@ -24,6 +24,7 @@ jobs:
       with:
         java-version: '22'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-2'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-3'
@@ -131,6 +132,7 @@ jobs:
       with:
         java-version: '22'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-16'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-17'
