@@ -14,7 +14,6 @@
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
-import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.RunnerType.WindowsLatest
@@ -133,14 +132,7 @@ workflow(
         runsOn = UbuntuLatest,
     ) {
         uses(action = Checkout())
-        uses(
-            name = "Set up Java in proper version",
-            action = SetupJava(
-                javaVersion = "17",
-                distribution = SetupJava.Distribution.Zulu,
-                cache = SetupJava.BuildPlatform.Gradle,
-            ),
-        )
+        setupJava()
         run(command = "cd .github/workflows")
         run(
             name = "Regenerate all workflow YAMLs",

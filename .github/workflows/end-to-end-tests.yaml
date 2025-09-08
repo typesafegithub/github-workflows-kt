@@ -22,8 +22,9 @@ jobs:
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
-        java-version: '11'
+        java-version: '22'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-2'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-3'
@@ -129,8 +130,9 @@ jobs:
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
-        java-version: '11'
+        java-version: '22'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-16'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-17'

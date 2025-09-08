@@ -18,22 +18,12 @@ dependencies {
 }
 
 java {
+    // It's available without extra setup on GitHub Actions runners.
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
     withJavadocJar()
     withSourcesJar()
-
-    toolchain {
-        requiredJdkVersion()
-    }
-}
-
-kotlin {
-    jvmToolchain {
-        requiredJdkVersion()
-    }
-}
-
-fun JavaToolchainSpec.requiredJdkVersion() {
-    languageVersion.set(JavaLanguageVersion.of(11))
 }
 
 tasks.withType<KotlinCompile> {
@@ -49,6 +39,8 @@ tasks.withType<KotlinCompile> {
         )
     }
 }
+
+
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
