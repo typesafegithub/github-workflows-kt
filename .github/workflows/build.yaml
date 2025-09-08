@@ -57,6 +57,7 @@ jobs:
       with:
         java-version: '24'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-3'
       uses: 'gradle/actions/setup-gradle@v4'
       with:
@@ -84,6 +85,7 @@ jobs:
       with:
         java-version: '24'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-3'
       uses: 'gradle/actions/setup-gradle@v4'
       with:
@@ -111,6 +113,7 @@ jobs:
       with:
         java-version: '24'
         distribution: 'zulu'
+        cache: 'gradle'
     - id: 'step-2'
       uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-3'
@@ -178,10 +181,10 @@ jobs:
     - id: 'step-0'
       uses: 'actions/checkout@v5'
     - id: 'step-1'
-      name: 'Set up Java in proper version'
+      name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
-        java-version: '17'
+        java-version: '24'
         distribution: 'zulu'
         cache: 'gradle'
     - id: 'step-2'
