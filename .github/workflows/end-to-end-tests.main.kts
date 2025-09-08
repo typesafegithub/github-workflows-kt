@@ -11,6 +11,8 @@
 @file:DependsOn("Wandalen:wretry.action:v3")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
+@file:Import("setup-java.main.kts")
+
 import io.github.typesafegithub.workflows.actions.actions.*
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.wandalen.WretryAction
@@ -31,13 +33,7 @@ import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
 
 fun JobBuilder<*>.publishToMavenLocal() {
-    uses(
-        name = "Set up JDK",
-        action = SetupJava(
-            javaVersion = "11",
-            distribution = SetupJava.Distribution.Zulu,
-        ),
-    )
+    setupJava()
     uses(action = ActionsSetupGradle())
     run(
         name = "Publish to Maven local",
