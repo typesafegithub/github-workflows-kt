@@ -1,4 +1,6 @@
 import org.jmailen.gradle.kotlinter.tasks.ConfigurableKtLintTask
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     buildsrc.convention.`kotlin-jvm`
@@ -28,10 +30,10 @@ fun ConfigurableKtLintTask.kotlinterConfig() {
     exclude("**/bindingsfromunittests/**")
 }
 
-tasks.lintKotlinTest {
+tasks.withType<LintTask> {
     kotlinterConfig()
 }
 
-tasks.formatKotlinTest {
+tasks.withType<FormatTask> {
     kotlinterConfig()
 }
