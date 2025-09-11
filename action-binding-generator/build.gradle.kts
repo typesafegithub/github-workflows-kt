@@ -15,7 +15,7 @@ version = rootProject.version
 
 dependencies {
     implementation("com.squareup:kotlinpoet:2.2.0")
-    implementation("com.charleskorn.kaml:kaml:0.94.0")
+    implementation("com.charleskorn.kaml:kaml:0.95.0")
     implementation("io.github.oshai:kotlin-logging:7.0.13")
     implementation(projects.sharedInternal)
 
