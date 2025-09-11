@@ -12,8 +12,9 @@ plugins {
 }
 
 dependencies {
-    testImplementation(platform("io.kotest:kotest-bom:5.9.1"))
+    testImplementation(platform("io.kotest:kotest-bom:6.0.3"))
     testImplementation("io.kotest:kotest-assertions-core")
+    testImplementation("io.kotest:kotest-assertions-table")
     testImplementation("io.kotest:kotest-runner-junit5")
 }
 
