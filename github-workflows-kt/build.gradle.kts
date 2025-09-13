@@ -10,7 +10,7 @@ plugins {
     buildsrc.convention.`duplicate-versions`
 
     kotlin("plugin.serialization")
-    id("com.google.devtools.ksp") version "2.2.20-2.0.2"
+    id("com.google.devtools.ksp") version "2.2.20-2.0.3"
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
