@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.dsl.expressions
 
 import io.github.typesafegithub.workflows.dsl.expressions.contexts.RunnerContext
-import io.kotest.assertions.fail
+import io.kotest.assertions.AssertionErrorBuilder.Companion.fail
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
