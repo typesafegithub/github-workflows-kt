@@ -1,7 +1,6 @@
 package io.github.typesafegithub.workflows.testutils
 
 import io.kotest.matchers.shouldBe
-import io.kotest.mpp.qualifiedNameOrNull
 import java.io.ByteArrayInputStream
 import java.io.DataInputStream
 import java.io.InputStream
@@ -10,7 +9,7 @@ import kotlin.reflect.KClass
 infix fun KClass<*>.shouldHaveBytecodeVersion(expectedVersion: String) {
     this::class.java.classLoader
         .getResourceAsStream(
-            this.qualifiedNameOrNull()!!.replace(".", "/") + ".class",
+            this.qualifiedName!!.replace(".", "/") + ".class",
         )!!
         .use { inputStream ->
             inputStream shouldHaveBytecodeVersion expectedVersion
