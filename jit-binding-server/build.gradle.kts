@@ -28,7 +28,7 @@ dependencies {
     implementation(projects.sharedInternal)
 
     testImplementation("io.ktor:ktor-server-test-host")
-    testImplementation("io.mockk:mockk:1.14.5")
+    testImplementation("io.mockk:mockk:1.14.6")
 }
 
 application {
