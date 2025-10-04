@@ -6,7 +6,7 @@
 @file:DependsOn("actions:cache:v4")
 @file:DependsOn("actions:checkout:v5")
 @file:DependsOn("actions:setup-java:v5")
-@file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v5")
 
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
