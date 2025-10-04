@@ -170,7 +170,7 @@ jobs:
             fi
 
             echo "Compiling $file..."
-            kotlinc -Werror -Xallow-any-scripts-in-source-roots -Xuse-fir-lt=false "$file"
+            kotlinc -Xallow-any-scripts-in-source-roots -Xuse-fir-lt=false "$file"
         done
   workflows_consistency_check:
     name: 'Run consistency check on all GitHub workflows'

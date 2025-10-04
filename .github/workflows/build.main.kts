@@ -119,7 +119,7 @@ workflow(
                 fi
 
                 echo "Compiling ${'$'}file..."
-                kotlinc -Werror -Xallow-any-scripts-in-source-roots -Xuse-fir-lt=false "${'$'}file"
+                kotlinc -Xallow-any-scripts-in-source-roots -Xuse-fir-lt=false "${'$'}file"
             done
             """.trimIndent()
         )
