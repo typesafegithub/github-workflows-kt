@@ -7,7 +7,7 @@
 @file:DependsOn("actions:github-script:v8")
 @file:DependsOn("actions:setup-java:v5")
 @file:DependsOn("actions:setup-python:v6")
-@file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v5")
 @file:DependsOn("Wandalen:wretry.action:v3")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 

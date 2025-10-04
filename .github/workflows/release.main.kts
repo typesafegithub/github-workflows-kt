@@ -4,7 +4,7 @@
 
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v5")
-@file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v5")
 @file:DependsOn("JamesIves:github-pages-deploy-action:v4")
 
 @file:Import("_shared.main.kts")
