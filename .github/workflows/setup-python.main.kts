@@ -9,4 +9,4 @@ import io.github.typesafegithub.workflows.actions.actions.SetupPython
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 
 fun JobBuilder<*>.setupPython() =
-    uses(action = SetupPython(pythonVersion = "3.13"))
+    uses(action = SetupPython(pythonVersion = "3.14"))
