@@ -146,7 +146,7 @@ jobs:
     - id: 'step-1'
       uses: 'actions/setup-python@v6'
       with:
-        python-version: '3.13'
+        python-version: '3.14'
     - id: 'step-2'
       run: 'pip install -r docs/requirements.txt'
     - id: 'step-3'
