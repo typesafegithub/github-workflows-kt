@@ -286,7 +286,8 @@ class IntegrationTest :
                       run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
                     - id: 'step-2'
                       name: '[Fallback] Start the local server'
-                      run: 'docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server &'
+                      run: 'docker run -p 8080:8080 krzema12/github-workflows-kt-jit-binding-server
+                        &'
                       if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-3'
                       name: '[Fallback] Wait for the server'
@@ -294,7 +295,8 @@ class IntegrationTest :
                       if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-4'
                       name: '[Fallback] Replace server URL in script'
-                      run: 'sed -i -e ''s/https:\/\/bindings.krzeminski.it/http:\/\/localhost:8080/g'' .github/workflows/some_workflow.main.kts'
+                      run: 'sed -i -e ''s/https:\/\/bindings.krzeminski.it/http:\/\/localhost:8080/g''
+                        .github/workflows/some_workflow.main.kts'
                       if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-5'
                       name: '[Fallback] Execute script again'
@@ -461,12 +463,14 @@ class IntegrationTest :
                       uses: 'aws-actions/configure-aws-credentials@v4'
                       with:
                         aws-region: 'us-west-1'
-                        role-to-assume: 'arn:aws:iam::1234567890:role/github-actions-role/${'$'}{{ github.token }}'
+                        role-to-assume: 'arn:aws:iam::1234567890:role/github-actions-role/${'$'}{{ github.token
+                          }}'
                     - id: 'step-3'
                       uses: 'aws-actions/configure-aws-credentials@v4'
                       with:
                         aws-region: 'us-west-1'
-                        role-to-assume: 'arn:aws:iam::12345678901234567890:role/github-actions-role/${'$'}{{ github.token }}'
+                        role-to-assume: 'arn:aws:iam::12345678901234567890:role/github-actions-role/${'$'}{{
+                          github.token }}'
 
                 """.trimIndent()
         }
