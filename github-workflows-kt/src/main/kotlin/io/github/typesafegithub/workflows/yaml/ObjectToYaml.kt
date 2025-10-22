@@ -18,13 +18,11 @@ import it.krzeminski.snakeyaml.engine.kmp.events.StreamStartEvent
 import java.io.StringWriter
 
 internal fun Any.toYaml(): String {
-    val settings =
-        DumpSettings
-            .builder()
-            // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
-            // expressions.
-            .setWidth(Int.MAX_VALUE)
-            .build()
+    val settings = DumpSettings(
+        // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
+        // expressions.
+        width = INT.MAX_VALUE,
+    )
     val writer =
         object : StringWriter(), StreamDataWriter {
             override fun flush() {
