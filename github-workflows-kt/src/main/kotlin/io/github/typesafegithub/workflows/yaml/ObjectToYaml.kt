@@ -19,12 +19,11 @@ import java.io.StringWriter
 
 internal fun Any.toYaml(): String {
     val settings =
-        DumpSettings
-            .builder()
+        DumpSettings(
             // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
             // expressions.
-            .setWidth(Int.MAX_VALUE)
-            .build()
+            width = Int.MAX_VALUE,
+        )
     val writer =
         object : StringWriter(), StreamDataWriter {
             override fun flush() {
