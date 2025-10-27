@@ -6,6 +6,9 @@ import io.github.typesafegithub.workflows.actions.endbug.AddAndCommit
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.actions.Action
+import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -911,5 +914,58 @@ class IntegrationTest :
 
                 """.trimIndent()
             targetTempFile.exists() shouldBe false
+        }
+
+        test("action version with comment") {
+            // when
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                consistencyCheckJobConfig = Disabled,
+            ) {
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    uses(
+                        name = "Check out",
+                        action =
+                            object : RegularAction<Outputs>(
+                                "actions",
+                                "checkout",
+                                "08c6903cd8c0fde910a37f88322edcfb5dd907a8",
+                                "v5.0.0",
+                            ) {
+                                override fun toYamlArguments(): LinkedHashMap<String, String> =
+                                    linkedMapOf("path" to "my-repo")
+
+                                override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+                            },
+                    )
+                }
+            }
+
+            // then
+            targetTempFile.readText() shouldBe
+                """
+                # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+                # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+                # Generated with https://github.com/typesafegithub/github-workflows-kt
+
+                name: 'Test workflow'
+                on:
+                  push: {}
+                jobs:
+                  test_job:
+                    runs-on: 'ubuntu-latest'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Check out'
+                      uses: 'actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8' # v5.0.0
+                      with:
+                        path: 'my-repo'
+
+                """.trimIndent()
         }
     })
