@@ -49,7 +49,7 @@ public data class ActionWithComment private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-comment", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-comment", _customVersion ?: "v3", "some-comment") {
     init {
         require(!((foo != null) && (foo_Untyped != null))) {
             "Only foo or foo_Untyped must be set, but not both"
