@@ -14,8 +14,6 @@ public abstract class Action<out OUTPUTS : Outputs> {
 
     public open fun isCompatibleWithLibraryVersion(libraryVersion: String): Boolean = true
 
-    public val comment: String? = null
-
     public open class Outputs(
         private val stepId: String,
     ) {
@@ -27,7 +25,14 @@ public abstract class RegularAction<out OUTPUTS : Outputs>(
     public open val actionOwner: String,
     public open val actionName: String,
     public open val actionVersion: String,
+    public open val comment: String? = null,
 ) : Action<OUTPUTS>() {
+    public constructor(
+        actionOwner: String,
+        actionName: String,
+        actionVersion: String,
+    ) : this(actionOwner, actionName, actionVersion, null)
+
     override val usesString: String
         get() = "$actionOwner/$actionName@$actionVersion"
 }
