@@ -8,7 +8,9 @@ import io.github.typesafegithub.workflows.actions.actions.UploadArtifact
 import io.github.typesafegithub.workflows.domain.ActionStep
 import io.github.typesafegithub.workflows.domain.CommandStep
 import io.github.typesafegithub.workflows.domain.Shell
+import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -457,6 +459,41 @@ class StepsToYamlTest :
                             "id" to "someId",
                             "name" to "Overridden!",
                             "uses" to "actions/checkout@v4",
+                        ),
+                    )
+            }
+
+            it("renders with comment") {
+                // given
+                val steps =
+                    listOf(
+                        ActionStep(
+                            id = "someId",
+                            action =
+                                object : RegularAction<Action.Outputs>(
+                                    "some-owner",
+                                    "some-name",
+                                    "some-version",
+                                    "some-comment",
+                                ) {
+                                    override fun toYamlArguments(): LinkedHashMap<String, String> =
+                                        linkedMapOf("foo" to "bar")
+
+                                    override fun buildOutputObject(stepId: String): Outputs = Outputs(stepId)
+                                },
+                        ),
+                    )
+
+                // when
+                val yaml = steps.stepsToYaml()
+
+                // then
+                yaml shouldBe
+                    listOf(
+                        mapOf(
+                            "id" to "someId",
+                            "uses" to StringWithComment("some-owner/some-name@some-version", "some-comment"),
+                            "with" to mapOf("foo" to "bar"),
                         ),
                     )
             }

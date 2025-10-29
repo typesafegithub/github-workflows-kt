@@ -529,19 +529,21 @@ public class io/github/typesafegithub/workflows/domain/actions/Action$Outputs {
 }
 
 public final class io/github/typesafegithub/workflows/domain/actions/CustomAction : io/github/typesafegithub/workflows/domain/actions/RegularAction {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun buildOutputObject (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/actions/Action$Outputs;
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/actions/CustomAction;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/actions/CustomAction;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/actions/CustomAction;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/actions/CustomAction;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/actions/CustomAction;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/actions/CustomAction;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getActionName ()Ljava/lang/String;
 	public fun getActionOwner ()Ljava/lang/String;
 	public fun getActionVersion ()Ljava/lang/String;
+	public fun getComment ()Ljava/lang/String;
 	public final fun getInputs ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -601,9 +603,12 @@ public abstract class io/github/typesafegithub/workflows/domain/actions/LocalAct
 
 public abstract class io/github/typesafegithub/workflows/domain/actions/RegularAction : io/github/typesafegithub/workflows/domain/actions/Action {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getActionName ()Ljava/lang/String;
 	public fun getActionOwner ()Ljava/lang/String;
 	public fun getActionVersion ()Ljava/lang/String;
+	public fun getComment ()Ljava/lang/String;
 	public fun getUsesString ()Ljava/lang/String;
 }
 
