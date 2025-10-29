@@ -543,8 +543,8 @@ public final class io/github/typesafegithub/workflows/domain/actions/CustomActio
 	public fun getActionName ()Ljava/lang/String;
 	public fun getActionOwner ()Ljava/lang/String;
 	public fun getActionVersion ()Ljava/lang/String;
-	public fun getComment ()Ljava/lang/String;
 	public final fun getInputs ()Ljava/util/Map;
+	public fun getIntendedVersion ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun toYamlArguments ()Ljava/util/LinkedHashMap;
@@ -608,7 +608,7 @@ public abstract class io/github/typesafegithub/workflows/domain/actions/RegularA
 	public fun getActionName ()Ljava/lang/String;
 	public fun getActionOwner ()Ljava/lang/String;
 	public fun getActionVersion ()Ljava/lang/String;
-	public fun getComment ()Ljava/lang/String;
+	public fun getIntendedVersion ()Ljava/lang/String;
 	public fun getUsesString ()Ljava/lang/String;
 }
 
