@@ -36,7 +36,7 @@ public abstract class RegularAction<out OUTPUTS : Outputs>(
         actionOwner: String,
         actionName: String,
         actionVersion: String,
-    ) : this(actionOwner, actionName, actionVersion, null)
+    ) : this(actionOwner = actionOwner, actionName = actionName, actionVersion = actionVersion, intendedVersion = null)
 
     override val usesString: String
         get() = "$actionOwner/$actionName@$actionVersion"
