@@ -140,4 +140,24 @@ class ObjectToYamlTest :
 
                 """.trimIndent()
         }
+
+        it("correctly serializes string with comment") {
+            // given
+            val objectToSerialize =
+                mapOf(
+                    "foo" to "bar",
+                    "baz" to StringWithComment("goo", "cool-comment"),
+                )
+
+            // when
+            val yaml = objectToSerialize.toYaml()
+
+            // then
+            yaml shouldBe
+                """
+                foo: 'bar'
+                baz: 'goo' # cool-comment
+
+                """.trimIndent()
+        }
     })

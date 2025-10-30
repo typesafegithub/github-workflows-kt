@@ -25,7 +25,19 @@ public abstract class RegularAction<out OUTPUTS : Outputs>(
     public open val actionOwner: String,
     public open val actionName: String,
     public open val actionVersion: String,
+    /**
+     * Can be set if [actionVersion] is set to a commit hash. Then, [intendedVersion] should be set to the version of
+     * the action corresponding to the commit hash. Thanks to this, the intended version will be used in the resulting
+     * workflow's YAML, as a hint for humans and automation tools related to version management.
+     */
+    public open val intendedVersion: String? = null,
 ) : Action<OUTPUTS>() {
+    public constructor(
+        actionOwner: String,
+        actionName: String,
+        actionVersion: String,
+    ) : this(actionOwner = actionOwner, actionName = actionName, actionVersion = actionVersion, intendedVersion = null)
+
     override val usesString: String
         get() = "$actionOwner/$actionName@$actionVersion"
 }

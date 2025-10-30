@@ -2,9 +2,12 @@ package io.github.typesafegithub.workflows.yaml
 
 import it.krzeminski.snakeyaml.engine.kmp.api.DumpSettings
 import it.krzeminski.snakeyaml.engine.kmp.api.StreamDataWriter
+import it.krzeminski.snakeyaml.engine.kmp.comments.CommentType
+import it.krzeminski.snakeyaml.engine.kmp.comments.CommentType.IN_LINE
 import it.krzeminski.snakeyaml.engine.kmp.common.FlowStyle
 import it.krzeminski.snakeyaml.engine.kmp.common.ScalarStyle
 import it.krzeminski.snakeyaml.engine.kmp.emitter.Emitter
+import it.krzeminski.snakeyaml.engine.kmp.events.CommentEvent
 import it.krzeminski.snakeyaml.engine.kmp.events.DocumentEndEvent
 import it.krzeminski.snakeyaml.engine.kmp.events.DocumentStartEvent
 import it.krzeminski.snakeyaml.engine.kmp.events.ImplicitTuple
@@ -23,6 +26,7 @@ internal fun Any.toYaml(): String {
             // Otherwise line breaks appear in places that create an incorrect YAML, e.g. in the middle of GitHub
             // expressions.
             width = Int.MAX_VALUE,
+            dumpComments = true,
         )
     val writer =
         object : StringWriter(), StreamDataWriter {
@@ -46,6 +50,10 @@ private fun Any?.elementToYaml(emitter: Emitter) {
         is Map<*, *> -> this.mapToYaml(emitter)
         is List<*> -> this.listToYaml(emitter)
         is String, is Int, is Float, is Double, is Boolean, null -> this.scalarToYaml(emitter)
+        is StringWithComment -> {
+            this.value.scalarToYaml(emitter)
+            (" " + this.comment).commentToYaml(emitter)
+        }
         else -> error("Serializing $this is not supported!")
     }
 }
@@ -94,5 +102,16 @@ private fun Any?.scalarToYaml(emitter: Emitter) {
         }
     emitter.emit(
         ScalarEvent(null, null, ImplicitTuple(true, true), this.toString(), scalarStyle),
+    )
+}
+
+private fun String.commentToYaml(emitter: Emitter) {
+    emitter.emit(
+        CommentEvent(
+            commentType = IN_LINE,
+            value = this,
+            startMark = null,
+            endMark = null,
+        ),
     )
 }
