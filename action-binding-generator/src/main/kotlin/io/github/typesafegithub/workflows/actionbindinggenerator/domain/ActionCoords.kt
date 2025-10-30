@@ -15,6 +15,7 @@ public data class ActionCoords(
      */
     val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
+    val comment: String? = null,
 )
 
 /**
