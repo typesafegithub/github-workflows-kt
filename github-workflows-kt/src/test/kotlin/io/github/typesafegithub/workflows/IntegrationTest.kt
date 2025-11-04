@@ -932,10 +932,10 @@ class IntegrationTest :
                         name = "Check out",
                         action =
                             object : RegularAction<Outputs>(
-                                "actions",
-                                "checkout",
-                                "08c6903cd8c0fde910a37f88322edcfb5dd907a8",
-                                "v5.0.0",
+                                actionOwner = "actions",
+                                actionName = "checkout",
+                                actionVersion = "08c6903cd8c0fde910a37f88322edcfb5dd907a8",
+                                intendedVersion = "v5.0.0",
                             ) {
                                 override fun toYamlArguments(): LinkedHashMap<String, String> =
                                     linkedMapOf("path" to "my-repo")

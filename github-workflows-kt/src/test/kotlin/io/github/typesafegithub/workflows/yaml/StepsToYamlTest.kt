@@ -471,10 +471,10 @@ class StepsToYamlTest :
                             id = "someId",
                             action =
                                 object : RegularAction<Action.Outputs>(
-                                    "some-owner",
-                                    "some-name",
-                                    "some-version",
-                                    "some-comment",
+                                    actionOwner = "some-owner",
+                                    actionName = "some-name",
+                                    actionVersion = "some-commit-hash",
+                                    intendedVersion = "some-version",
                                 ) {
                                     override fun toYamlArguments(): LinkedHashMap<String, String> =
                                         linkedMapOf("foo" to "bar")
@@ -492,7 +492,7 @@ class StepsToYamlTest :
                     listOf(
                         mapOf(
                             "id" to "someId",
-                            "uses" to StringWithComment("some-owner/some-name@some-version", "some-comment"),
+                            "uses" to StringWithComment("some-owner/some-name@some-commit-hash", "some-version"),
                             "with" to mapOf("foo" to "bar"),
                         ),
                     )

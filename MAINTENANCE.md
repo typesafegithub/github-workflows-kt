@@ -11,5 +11,5 @@ It currently happens whenever necessary, there's no agreed cadence. Whenever we 
    VERSION=${COMMIT_TITLE#"chore: prepare for releasing version "}
    git tag -a "v$VERSION" -m "chore: release version $VERSION" && git push origin "v$VERSION"
    ```
-1. On `main` branch, change version to prepare for the next development cycle, e.g. if it was `1.2.3-SNAPSHOT` before and we released it as `1.2.3`, change the version to `1.2.3-SNAPSHOT`.
+1. On `main` branch, change version to prepare for the next development cycle, e.g. if it was `1.2.3-SNAPSHOT` before and we released it as `1.2.3`, change the version to `1.2.4-SNAPSHOT` (a minimal increase, in the patch version number).
 1. Ensure that the release job has succeeded.

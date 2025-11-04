@@ -31,8 +31,8 @@ private fun ActionStep<*>.toYaml(): Map<String, Any?> =
         "timeout-minutes" to timeoutMinutes,
         "uses" to
             this.action.let {
-                if (it is RegularAction && it.comment != null) {
-                    StringWithComment(it.usesString, it.comment!!)
+                if (it is RegularAction && it.intendedVersion != null) {
+                    StringWithComment(it.usesString, it.intendedVersion!!)
                 } else {
                     it.usesString
                 }
