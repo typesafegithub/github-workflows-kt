@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo.maven.apache.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.4.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.6.0")
 @file:DependsOn("io.kotest:kotest-assertions-core:5.9.1")
 
 @file:Repository("http://localhost:8080")
@@ -24,6 +24,9 @@
 // Always untyped action.
 @file:DependsOn("typesafegithub:always-untyped-action-for-tests:v1")
 
+// Action version pinned to a commit.
+@file:DependsOn("actions:setup-python___commit_lenient:v6.0.0__e797f83bcb11b83ae66e0230d6156d7c80228e7c")
+
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupNode
@@ -41,6 +44,7 @@ println(AlwaysUntypedActionForTests_Untyped(foobar_Untyped = "baz"))
 println(ActionsSetupGradle())
 println(Cache(path = listOf("some-path"), key = "some-key"))
 println(SetupNode())
+println(SetupPython())
 
 ActionsDependencySubmission_Untyped().actionVersion shouldBe "v3"
 ActionsWrapperValidation().actionVersion shouldBe "v4.2"
