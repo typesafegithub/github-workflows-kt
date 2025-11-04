@@ -12,6 +12,7 @@ public data class CustomAction(
     override val actionOwner: String,
     override val actionName: String,
     override val actionVersion: String,
+    override val intendedVersion: String? = null,
     public val inputs: Map<String, String> = emptyMap(),
 ) : RegularAction<Outputs>(actionOwner, actionName, actionVersion) {
     override fun toYamlArguments(): LinkedHashMap<String, String> = LinkedHashMap(inputs)
