@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>PullRequestEventSender</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
-    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+        <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
@@ -25,20 +25,18 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
 <script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-            <a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../../index.html" tabindex="1">
                     github-workflows-kt
             </a>
         <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
@@ -46,10 +44,10 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-3.5.0        </div>
+3.6.0        </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active=""
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true"
                         data-filter=":github-workflows-kt/main">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
@@ -59,9 +57,9 @@
                         aria-expanded="false"
                         aria-label="Toggle source sets"
                 ></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -76,7 +74,7 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
                     type="button">Switch theme
             </button>
@@ -84,26 +82,28 @@
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
-                        data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     github-workflows-kt
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageIds="github-workflows-kt::io.github.typesafegithub.workflows.dsl.expressions.contexts/PullRequestEventSender///PointingToDeclaration//501414042">
   <div class="breadcrumbs"><a href="../../../index.html">github-workflows-kt</a><span class="delimiter">/</span><a href="../index.html">io.github.typesafegithub.workflows.dsl.expressions.contexts</a><span class="delimiter">/</span><span class="current">PullRequestEventSender</span></div>
   <div class="cover ">
@@ -114,9 +114,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-334060810%2FProperties%2F501414042" anchor-label="avatar_url" id="-334060810%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="avatar_url.html"><span>avatar_</span><wbr></wbr><span>url</span></a></div>
@@ -131,7 +131,7 @@
             </div>
           </div>
 <a data-name="-609576138%2FProperties%2F501414042" anchor-label="events_url" id="-609576138%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="events_url.html"><span>events_</span><wbr></wbr><span>url</span></a></div>
@@ -146,7 +146,7 @@
             </div>
           </div>
 <a data-name="1679779126%2FProperties%2F501414042" anchor-label="followers_url" id="1679779126%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="followers_url.html"><span>followers_</span><wbr></wbr><span>url</span></a></div>
@@ -161,7 +161,7 @@
             </div>
           </div>
 <a data-name="690305082%2FProperties%2F501414042" anchor-label="following_url" id="690305082%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="following_url.html"><span>following_</span><wbr></wbr><span>url</span></a></div>
@@ -176,7 +176,7 @@
             </div>
           </div>
 <a data-name="1048510491%2FProperties%2F501414042" anchor-label="gists_url" id="1048510491%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="gists_url.html"><span>gists_</span><wbr></wbr><span>url</span></a></div>
@@ -191,7 +191,7 @@
             </div>
           </div>
 <a data-name="367610597%2FProperties%2F501414042" anchor-label="gravatar_id" id="367610597%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="gravatar_id.html"><span>gravatar_</span><wbr></wbr><span>id</span></a></div>
@@ -206,7 +206,7 @@
             </div>
           </div>
 <a data-name="1948374628%2FProperties%2F501414042" anchor-label="html_url" id="1948374628%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="html_url.html"><span>html_</span><wbr></wbr><span>url</span></a></div>
@@ -221,7 +221,7 @@
             </div>
           </div>
 <a data-name="1684242852%2FProperties%2F501414042" anchor-label="id" id="1684242852%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="id.html"><span><span>id</span></span></a></div>
@@ -236,7 +236,7 @@
             </div>
           </div>
 <a data-name="-1367602542%2FProperties%2F501414042" anchor-label="login" id="-1367602542%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="login.html"><span><span>login</span></span></a></div>
@@ -251,7 +251,7 @@
             </div>
           </div>
 <a data-name="-1627554589%2FProperties%2F501414042" anchor-label="node_id" id="-1627554589%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="node_id.html"><span>node_</span><wbr></wbr><span>id</span></a></div>
@@ -266,7 +266,7 @@
             </div>
           </div>
 <a data-name="-1164861301%2FProperties%2F501414042" anchor-label="organizations_url" id="-1164861301%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="organizations_url.html"><span>organizations_</span><wbr></wbr><span>url</span></a></div>
@@ -281,7 +281,7 @@
             </div>
           </div>
 <a data-name="-909942572%2FProperties%2F501414042" anchor-label="received_events_url" id="-909942572%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="received_events_url.html"><span>received_</span><wbr></wbr><span>events_</span><wbr></wbr><span>url</span></a></div>
@@ -296,7 +296,7 @@
             </div>
           </div>
 <a data-name="-429861750%2FProperties%2F501414042" anchor-label="repos_url" id="-429861750%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="repos_url.html"><span>repos_</span><wbr></wbr><span>url</span></a></div>
@@ -311,7 +311,7 @@
             </div>
           </div>
 <a data-name="2071835624%2FProperties%2F501414042" anchor-label="site_admin" id="2071835624%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="site_admin.html"><span>site_</span><wbr></wbr><span>admin</span></a></div>
@@ -326,7 +326,7 @@
             </div>
           </div>
 <a data-name="-428482548%2FProperties%2F501414042" anchor-label="starred_url" id="-428482548%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="starred_url.html"><span>starred_</span><wbr></wbr><span>url</span></a></div>
@@ -341,7 +341,7 @@
             </div>
           </div>
 <a data-name="-1117989131%2FProperties%2F501414042" anchor-label="subscriptions_url" id="-1117989131%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="subscriptions_url.html"><span>subscriptions_</span><wbr></wbr><span>url</span></a></div>
@@ -356,7 +356,7 @@
             </div>
           </div>
 <a data-name="1185755109%2FProperties%2F501414042" anchor-label="type" id="1185755109%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="type.html"><span><span>type</span></span></a></div>
@@ -371,7 +371,7 @@
             </div>
           </div>
 <a data-name="-458107188%2FProperties%2F501414042" anchor-label="url" id="-458107188%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="url.html"><span><span>url</span></span></a></div>
@@ -391,17 +391,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2025 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

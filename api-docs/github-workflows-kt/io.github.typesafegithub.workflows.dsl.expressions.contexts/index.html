@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>io.github.typesafegithub.workflows.dsl.expressions.contexts</title>
     <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
-    <script>var pathToRoot = "../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+        <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
@@ -25,20 +25,18 @@
 <link href="../../styles/main.css" rel="Stylesheet">
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
 <script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
 <script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
 <script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer="defer"></script>
-<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-            <a class="library-name--link" href="../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../index.html" tabindex="1">
                     github-workflows-kt
             </a>
         <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
@@ -46,10 +44,10 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-3.5.0        </div>
+3.6.0        </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active=""
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true"
                         data-filter=":github-workflows-kt/main">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
@@ -59,9 +57,9 @@
                         aria-expanded="false"
                         aria-label="Toggle source sets"
                 ></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -76,7 +74,7 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
                     type="button">Switch theme
             </button>
@@ -84,26 +82,28 @@
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
-                        data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     github-workflows-kt
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="package" id="content" pageIds="github-workflows-kt::io.github.typesafegithub.workflows.dsl.expressions.contexts////PointingToDeclaration//501414042">
   <div class="breadcrumbs"><a href="../../index.html">github-workflows-kt</a><span class="delimiter">/</span><span class="current">io.github.typesafegithub.workflows.dsl.expressions.contexts</span></div>
   <div class="cover ">
@@ -113,9 +113,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="886930115%2FClasslikes%2F501414042" anchor-label="EnvContext" id="886930115%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-env-context/index.html"><span>Env</span><wbr></wbr><span><span>Context</span></span></a></div>
@@ -130,7 +130,7 @@
             </div>
           </div>
 <a data-name="-742542735%2FClasslikes%2F501414042" anchor-label="FunctionsContext" id="-742542735%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-functions-context/index.html"><span>Functions</span><wbr></wbr><span><span>Context</span></span></a></div>
@@ -145,7 +145,7 @@
             </div>
           </div>
 <a data-name="-377319311%2FClasslikes%2F501414042" anchor-label="GitHubContext" id="-377319311%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-git-hub-context/index.html"><span>Git</span><wbr></wbr><span>Hub</span><wbr></wbr><span><span>Context</span></span></a></div>
@@ -160,7 +160,7 @@
             </div>
           </div>
 <a data-name="1103566677%2FClasslikes%2F501414042" anchor-label="PullRequestEvent" id="1103566677%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Event</span></span></a></div>
@@ -175,7 +175,7 @@
             </div>
           </div>
 <a data-name="-1110162077%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequest" id="-1110162077%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span><span>Request</span></span></a></div>
@@ -190,7 +190,7 @@
             </div>
           </div>
 <a data-name="737829522%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestBase" id="737829522%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-base/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Base</span></span></a></div>
@@ -205,7 +205,7 @@
             </div>
           </div>
 <a data-name="1898758848%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestBaseRepo" id="1898758848%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-base-repo/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Repo</span></span></a></div>
@@ -220,7 +220,7 @@
             </div>
           </div>
 <a data-name="-1102027825%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestBaseRepoOwner" id="-1102027825%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-base-repo-owner/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Base</span><wbr></wbr><span>Repo</span><wbr></wbr><span><span>Owner</span></span></a></div>
@@ -235,7 +235,7 @@
             </div>
           </div>
 <a data-name="-1483007865%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestBaseUser" id="-1483007865%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-base-user/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>User</span></span></a></div>
@@ -250,7 +250,7 @@
             </div>
           </div>
 <a data-name="-577676701%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestHead" id="-577676701%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-head/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Head</span></span></a></div>
@@ -265,7 +265,7 @@
             </div>
           </div>
 <a data-name="200370705%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestHeadRepo" id="200370705%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-head-repo/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Head</span><wbr></wbr><span><span>Repo</span></span></a></div>
@@ -280,7 +280,7 @@
             </div>
           </div>
 <a data-name="-1047222498%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestHeadRepoOwner" id="-1047222498%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-head-repo-owner/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Head</span><wbr></wbr><span>Repo</span><wbr></wbr><span><span>Owner</span></span></a></div>
@@ -295,7 +295,7 @@
             </div>
           </div>
 <a data-name="1113571288%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestHeadUser" id="1113571288%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-head-user/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Head</span><wbr></wbr><span><span>User</span></span></a></div>
@@ -310,7 +310,7 @@
             </div>
           </div>
 <a data-name="1133200582%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinks" id="1133200582%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>Links</span></span></a></div>
@@ -325,7 +325,7 @@
             </div>
           </div>
 <a data-name="1330142258%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksComments" id="1330142258%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-comments/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Comments</span></span></a></div>
@@ -340,7 +340,7 @@
             </div>
           </div>
 <a data-name="54633344%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksCommits" id="54633344%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-commits/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Commits</span></span></a></div>
@@ -355,7 +355,7 @@
             </div>
           </div>
 <a data-name="-2114273061%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksHtml" id="-2114273061%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-html/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Html</span></span></a></div>
@@ -370,7 +370,7 @@
             </div>
           </div>
 <a data-name="516003363%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksIssue" id="516003363%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-issue/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Issue</span></span></a></div>
@@ -385,7 +385,7 @@
             </div>
           </div>
 <a data-name="-902155307%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksReviewComment" id="-902155307%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-review-comment/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span>Review</span><wbr></wbr><span><span>Comment</span></span></a></div>
@@ -400,7 +400,7 @@
             </div>
           </div>
 <a data-name="2016838650%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksReviewComments" id="2016838650%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-review-comments/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span>Review</span><wbr></wbr><span><span>Comments</span></span></a></div>
@@ -415,7 +415,7 @@
             </div>
           </div>
 <a data-name="-406773670%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksSelf" id="-406773670%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-self/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Self</span></span></a></div>
@@ -430,7 +430,7 @@
             </div>
           </div>
 <a data-name="-858252410%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestLinksStatuses" id="-858252410%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-links-statuses/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Links</span><wbr></wbr><span><span>Statuses</span></span></a></div>
@@ -445,7 +445,7 @@
             </div>
           </div>
 <a data-name="557132504%2FClasslikes%2F501414042" anchor-label="PullRequestEventPullRequestUser" id="557132504%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-pull-request-user/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span><span>User</span></span></a></div>
@@ -460,7 +460,7 @@
             </div>
           </div>
 <a data-name="-670921173%2FClasslikes%2F501414042" anchor-label="PullRequestEventRepository" id="-670921173%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-repository/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
@@ -475,7 +475,7 @@
             </div>
           </div>
 <a data-name="1928856388%2FClasslikes%2F501414042" anchor-label="PullRequestEventRepositoryOwner" id="1928856388%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-repository-owner/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
@@ -490,7 +490,7 @@
             </div>
           </div>
 <a data-name="1026097056%2FClasslikes%2F501414042" anchor-label="PullRequestEventSender" id="1026097056%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-pull-request-event-sender/index.html"><span>Pull</span><wbr></wbr><span>Request</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
@@ -505,7 +505,7 @@
             </div>
           </div>
 <a data-name="728501693%2FClasslikes%2F501414042" anchor-label="PushEvent" id="728501693%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event/index.html"><span>Push</span><wbr></wbr><span><span>Event</span></span></a></div>
@@ -520,7 +520,7 @@
             </div>
           </div>
 <a data-name="262362950%2FClasslikes%2F501414042" anchor-label="PushEventHeadCommit" id="262362950%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-head-commit/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Head</span><wbr></wbr><span><span>Commit</span></span></a></div>
@@ -535,7 +535,7 @@
             </div>
           </div>
 <a data-name="907185211%2FClasslikes%2F501414042" anchor-label="PushEventHeadCommitAuthor" id="907185211%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-head-commit-author/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Head</span><wbr></wbr><span>Commit</span><wbr></wbr><span><span>Author</span></span></a></div>
@@ -550,7 +550,7 @@
             </div>
           </div>
 <a data-name="147583122%2FClasslikes%2F501414042" anchor-label="PushEventHeadCommitCommitter" id="147583122%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-head-commit-committer/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Head</span><wbr></wbr><span>Commit</span><wbr></wbr><span><span>Committer</span></span></a></div>
@@ -565,7 +565,7 @@
             </div>
           </div>
 <a data-name="1948876086%2FClasslikes%2F501414042" anchor-label="PushEventPusher" id="1948876086%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-pusher/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Pusher</span></span></a></div>
@@ -580,7 +580,7 @@
             </div>
           </div>
 <a data-name="1163174547%2FClasslikes%2F501414042" anchor-label="PushEventRepository" id="1163174547%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-repository/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
@@ -595,7 +595,7 @@
             </div>
           </div>
 <a data-name="1531604956%2FClasslikes%2F501414042" anchor-label="PushEventRepositoryOwner" id="1531604956%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-repository-owner/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
@@ -610,7 +610,7 @@
             </div>
           </div>
 <a data-name="373655560%2FClasslikes%2F501414042" anchor-label="PushEventSender" id="373655560%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-push-event-sender/index.html"><span>Push</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
@@ -625,7 +625,7 @@
             </div>
           </div>
 <a data-name="-938517486%2FClasslikes%2F501414042" anchor-label="ReleaseEvent" id="-938517486%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-release-event/index.html"><span>Release</span><wbr></wbr><span><span>Event</span></span></a></div>
@@ -640,7 +640,7 @@
             </div>
           </div>
 <a data-name="955466537%2FClasslikes%2F501414042" anchor-label="ReleaseEventRelease" id="955466537%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-release-event-release/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Release</span></span></a></div>
@@ -655,7 +655,7 @@
             </div>
           </div>
 <a data-name="682410462%2FClasslikes%2F501414042" anchor-label="ReleaseEventReleaseAuthor" id="682410462%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-release-event-release-author/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span>Release</span><wbr></wbr><span><span>Author</span></span></a></div>
@@ -670,7 +670,7 @@
             </div>
           </div>
 <a data-name="-794965336%2FClasslikes%2F501414042" anchor-label="ReleaseEventRepository" id="-794965336%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-release-event-repository/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
@@ -685,7 +685,7 @@
             </div>
           </div>
 <a data-name="-615510809%2FClasslikes%2F501414042" anchor-label="ReleaseEventRepositoryOwner" id="-615510809%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-release-event-repository-owner/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
@@ -700,7 +700,7 @@
             </div>
           </div>
 <a data-name="589824669%2FClasslikes%2F501414042" anchor-label="ReleaseEventSender" id="589824669%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-release-event-sender/index.html"><span>Release</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
@@ -715,7 +715,7 @@
             </div>
           </div>
 <a data-name="-1709320226%2FClasslikes%2F501414042" anchor-label="RunnerContext" id="-1709320226%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-runner-context/index.html"><span>Runner</span><wbr></wbr><span><span>Context</span></span></a></div>
@@ -730,7 +730,7 @@
             </div>
           </div>
 <a data-name="2146588569%2FClasslikes%2F501414042" anchor-label="SecretsContext" id="2146588569%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-secrets-context/index.html"><span>Secrets</span><wbr></wbr><span><span>Context</span></span></a></div>
@@ -745,7 +745,7 @@
             </div>
           </div>
 <a data-name="-1594129958%2FClasslikes%2F501414042" anchor-label="VarsContext" id="-1594129958%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-vars-context/index.html"><span>Vars</span><wbr></wbr><span><span>Context</span></span></a></div>
@@ -760,7 +760,7 @@
             </div>
           </div>
 <a data-name="1800082876%2FClasslikes%2F501414042" anchor-label="WorkflowDispatchEvent" id="1800082876%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow-dispatch-event/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span><span>Event</span></span></a></div>
@@ -775,7 +775,7 @@
             </div>
           </div>
 <a data-name="-1829953645%2FClasslikes%2F501414042" anchor-label="WorkflowDispatchEventInputs" id="-1829953645%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow-dispatch-event-inputs/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Inputs</span></span></a></div>
@@ -790,7 +790,7 @@
             </div>
           </div>
 <a data-name="1204416329%2FClasslikes%2F501414042" anchor-label="WorkflowDispatchEventOrganization" id="1204416329%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow-dispatch-event-organization/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Organization</span></span></a></div>
@@ -805,7 +805,7 @@
             </div>
           </div>
 <a data-name="186972114%2FClasslikes%2F501414042" anchor-label="WorkflowDispatchEventRepository" id="186972114%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow-dispatch-event-repository/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Repository</span></span></a></div>
@@ -820,7 +820,7 @@
             </div>
           </div>
 <a data-name="786991613%2FClasslikes%2F501414042" anchor-label="WorkflowDispatchEventRepositoryOwner" id="786991613%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow-dispatch-event-repository-owner/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span>Repository</span><wbr></wbr><span><span>Owner</span></span></a></div>
@@ -835,7 +835,7 @@
             </div>
           </div>
 <a data-name="-1344777017%2FClasslikes%2F501414042" anchor-label="WorkflowDispatchEventSender" id="-1344777017%2FClasslikes%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-workflow-dispatch-event-sender/index.html"><span>Workflow</span><wbr></wbr><span>Dispatch</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Sender</span></span></a></div>
@@ -855,17 +855,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2025 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

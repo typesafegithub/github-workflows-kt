@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>EnvContext</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
-    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+        <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
@@ -25,20 +25,18 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
 <script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-            <a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../../index.html" tabindex="1">
                     github-workflows-kt
             </a>
         <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
@@ -46,10 +44,10 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-3.5.0        </div>
+3.6.0        </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active=""
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true"
                         data-filter=":github-workflows-kt/main">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
@@ -59,9 +57,9 @@
                         aria-expanded="false"
                         aria-label="Toggle source sets"
                 ></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -76,7 +74,7 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
                     type="button">Switch theme
             </button>
@@ -84,26 +82,28 @@
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
-                        data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     github-workflows-kt
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageIds="github-workflows-kt::io.github.typesafegithub.workflows.dsl.expressions.contexts/EnvContext///PointingToDeclaration//501414042">
   <div class="breadcrumbs"><a href="../../../index.html">github-workflows-kt</a><span class="delimiter">/</span><a href="../index.html">io.github.typesafegithub.workflows.dsl.expressions.contexts</a><span class="delimiter">/</span><span class="current">EnvContext</span></div>
   <div class="cover ">
@@ -114,9 +114,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="1681182390%2FProperties%2F501414042" anchor-label="CI" id="1681182390%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-c-i.html"><span><span>CI</span></span></a></div>
@@ -131,7 +131,7 @@
             </div>
           </div>
 <a data-name="43098407%2FProperties%2F501414042" anchor-label="entries" id="43098407%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#43098407%2FProperties%2F501414042"><span><span>entries</span></span></a></div>
@@ -146,7 +146,7 @@
             </div>
           </div>
 <a data-name="-1464822804%2FProperties%2F501414042" anchor-label="GITHUB_ACTION" id="-1464822804%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n.html"><span>GITHUB_</span><wbr></wbr><span>ACTION</span></a></div>
@@ -161,7 +161,7 @@
             </div>
           </div>
 <a data-name="522145898%2FProperties%2F501414042" anchor-label="GITHUB_ACTION_PATH" id="522145898%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n_-p-a-t-h.html"><span>GITHUB_</span><wbr></wbr><span>ACTION_</span><wbr></wbr><span>PATH</span></a></div>
@@ -176,7 +176,7 @@
             </div>
           </div>
 <a data-name="-1722082459%2FProperties%2F501414042" anchor-label="GITHUB_ACTION_REPOSITORY" id="-1722082459%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n_-r-e-p-o-s-i-t-o-r-y.html"><span>GITHUB_</span><wbr></wbr><span>ACTION_</span><wbr></wbr><span>REPOSITORY</span></a></div>
@@ -191,7 +191,7 @@
             </div>
           </div>
 <a data-name="-1886212997%2FProperties%2F501414042" anchor-label="GITHUB_ACTIONS" id="-1886212997%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-a-c-t-i-o-n-s.html"><span>GITHUB_</span><wbr></wbr><span>ACTIONS</span></a></div>
@@ -206,7 +206,7 @@
             </div>
           </div>
 <a data-name="1507023171%2FProperties%2F501414042" anchor-label="GITHUB_ACTOR" id="1507023171%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-a-c-t-o-r.html"><span>GITHUB_</span><wbr></wbr><span>ACTOR</span></a></div>
@@ -221,7 +221,7 @@
             </div>
           </div>
 <a data-name="-1575992210%2FProperties%2F501414042" anchor-label="GITHUB_API_URL" id="-1575992210%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-a-p-i_-u-r-l.html"><span>GITHUB_</span><wbr></wbr><span>API_</span><wbr></wbr><span>URL</span></a></div>
@@ -236,7 +236,7 @@
             </div>
           </div>
 <a data-name="-124146243%2FProperties%2F501414042" anchor-label="GITHUB_BASE_REF" id="-124146243%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-b-a-s-e_-r-e-f.html"><span>GITHUB_</span><wbr></wbr><span>BASE_</span><wbr></wbr><span>REF</span></a></div>
@@ -251,7 +251,7 @@
             </div>
           </div>
 <a data-name="-868616181%2FProperties%2F501414042" anchor-label="GITHUB_ENV" id="-868616181%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-e-n-v.html"><span>GITHUB_</span><wbr></wbr><span>ENV</span></a></div>
@@ -266,7 +266,7 @@
             </div>
           </div>
 <a data-name="264104882%2FProperties%2F501414042" anchor-label="GITHUB_EVENT_NAME" id="264104882%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-e-v-e-n-t_-n-a-m-e.html"><span>GITHUB_</span><wbr></wbr><span>EVENT_</span><wbr></wbr><span>NAME</span></a></div>
@@ -281,7 +281,7 @@
             </div>
           </div>
 <a data-name="-115268776%2FProperties%2F501414042" anchor-label="GITHUB_EVENT_PATH" id="-115268776%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-e-v-e-n-t_-p-a-t-h.html"><span>GITHUB_</span><wbr></wbr><span>EVENT_</span><wbr></wbr><span>PATH</span></a></div>
@@ -296,7 +296,7 @@
             </div>
           </div>
 <a data-name="272003967%2FProperties%2F501414042" anchor-label="GITHUB_GRAPHQL_URL" id="272003967%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-g-r-a-p-h-q-l_-u-r-l.html"><span>GITHUB_</span><wbr></wbr><span>GRAPHQL_</span><wbr></wbr><span>URL</span></a></div>
@@ -311,7 +311,7 @@
             </div>
           </div>
 <a data-name="-1822534386%2FProperties%2F501414042" anchor-label="GITHUB_HEAD_REF" id="-1822534386%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-h-e-a-d_-r-e-f.html"><span>GITHUB_</span><wbr></wbr><span>HEAD_</span><wbr></wbr><span>REF</span></a></div>
@@ -326,7 +326,7 @@
             </div>
           </div>
 <a data-name="-1801081029%2FProperties%2F501414042" anchor-label="GITHUB_JOB" id="-1801081029%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-j-o-b.html"><span>GITHUB_</span><wbr></wbr><span>JOB</span></a></div>
@@ -341,7 +341,7 @@
             </div>
           </div>
 <a data-name="-502363619%2FProperties%2F501414042" anchor-label="GITHUB_PATH" id="-502363619%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-p-a-t-h.html"><span>GITHUB_</span><wbr></wbr><span>PATH</span></a></div>
@@ -356,7 +356,7 @@
             </div>
           </div>
 <a data-name="-446132443%2FProperties%2F501414042" anchor-label="GITHUB_REF" id="-446132443%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-f.html"><span>GITHUB_</span><wbr></wbr><span>REF</span></a></div>
@@ -371,7 +371,7 @@
             </div>
           </div>
 <a data-name="84752683%2FProperties%2F501414042" anchor-label="GITHUB_REF_NAME" id="84752683%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-f_-n-a-m-e.html"><span>GITHUB_</span><wbr></wbr><span>REF_</span><wbr></wbr><span>NAME</span></a></div>
@@ -386,7 +386,7 @@
             </div>
           </div>
 <a data-name="-2000644618%2FProperties%2F501414042" anchor-label="GITHUB_REF_PROTECTED" id="-2000644618%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-f_-p-r-o-t-e-c-t-e-d.html"><span>GITHUB_</span><wbr></wbr><span>REF_</span><wbr></wbr><span>PROTECTED</span></a></div>
@@ -401,7 +401,7 @@
             </div>
           </div>
 <a data-name="1014527836%2FProperties%2F501414042" anchor-label="GITHUB_REF_TYPE" id="1014527836%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-f_-t-y-p-e.html"><span>GITHUB_</span><wbr></wbr><span>REF_</span><wbr></wbr><span>TYPE</span></a></div>
@@ -416,7 +416,7 @@
             </div>
           </div>
 <a data-name="1832321752%2FProperties%2F501414042" anchor-label="GITHUB_REPOSITORY" id="1832321752%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-p-o-s-i-t-o-r-y.html"><span>GITHUB_</span><wbr></wbr><span>REPOSITORY</span></a></div>
@@ -431,7 +431,7 @@
             </div>
           </div>
 <a data-name="-1707846780%2FProperties%2F501414042" anchor-label="GITHUB_REPOSITORY_OWNER" id="-1707846780%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-p-o-s-i-t-o-r-y_-o-w-n-e-r.html"><span>GITHUB_</span><wbr></wbr><span>REPOSITORY_</span><wbr></wbr><span>OWNER</span></a></div>
@@ -446,7 +446,7 @@
             </div>
           </div>
 <a data-name="826863210%2FProperties%2F501414042" anchor-label="GITHUB_RETENTION_DAYS" id="826863210%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-e-t-e-n-t-i-o-n_-d-a-y-s.html"><span>GITHUB_</span><wbr></wbr><span>RETENTION_</span><wbr></wbr><span>DAYS</span></a></div>
@@ -461,7 +461,7 @@
             </div>
           </div>
 <a data-name="738858623%2FProperties%2F501414042" anchor-label="GITHUB_RUN_ATTEMPT" id="738858623%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-u-n_-a-t-t-e-m-p-t.html"><span>GITHUB_</span><wbr></wbr><span>RUN_</span><wbr></wbr><span>ATTEMPT</span></a></div>
@@ -476,7 +476,7 @@
             </div>
           </div>
 <a data-name="1744671955%2FProperties%2F501414042" anchor-label="GITHUB_RUN_ID" id="1744671955%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-u-n_-i-d.html"><span>GITHUB_</span><wbr></wbr><span>RUN_</span><wbr></wbr><span>ID</span></a></div>
@@ -491,7 +491,7 @@
             </div>
           </div>
 <a data-name="339226085%2FProperties%2F501414042" anchor-label="GITHUB_RUN_NUMBER" id="339226085%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-r-u-n_-n-u-m-b-e-r.html"><span>GITHUB_</span><wbr></wbr><span>RUN_</span><wbr></wbr><span>NUMBER</span></a></div>
@@ -506,7 +506,7 @@
             </div>
           </div>
 <a data-name="-1112288273%2FProperties%2F501414042" anchor-label="GITHUB_SERVER_URL" id="-1112288273%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-s-e-r-v-e-r_-u-r-l.html"><span>GITHUB_</span><wbr></wbr><span>SERVER_</span><wbr></wbr><span>URL</span></a></div>
@@ -521,7 +521,7 @@
             </div>
           </div>
 <a data-name="2028874028%2FProperties%2F501414042" anchor-label="GITHUB_SHA" id="2028874028%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-s-h-a.html"><span>GITHUB_</span><wbr></wbr><span>SHA</span></a></div>
@@ -536,7 +536,7 @@
             </div>
           </div>
 <a data-name="1543013699%2FProperties%2F501414042" anchor-label="GITHUB_WORKFLOW" id="1543013699%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-w-o-r-k-f-l-o-w.html"><span>GITHUB_</span><wbr></wbr><span>WORKFLOW</span></a></div>
@@ -551,7 +551,7 @@
             </div>
           </div>
 <a data-name="866577699%2FProperties%2F501414042" anchor-label="GITHUB_WORKSPACE" id="866577699%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-i-t-h-u-b_-w-o-r-k-s-p-a-c-e.html"><span>GITHUB_</span><wbr></wbr><span>WORKSPACE</span></a></div>
@@ -566,7 +566,7 @@
             </div>
           </div>
 <a data-name="-915758449%2FProperties%2F501414042" anchor-label="keys" id="-915758449%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-915758449%2FProperties%2F501414042"><span><span>keys</span></span></a></div>
@@ -581,7 +581,7 @@
             </div>
           </div>
 <a data-name="1144911067%2FProperties%2F501414042" anchor-label="propertyToExprPath" id="1144911067%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/property-to-expr-path.html"><span>property</span><wbr></wbr><span>To</span><wbr></wbr><span>Expr</span><wbr></wbr><span><span>Path</span></span></a></div>
@@ -596,7 +596,7 @@
             </div>
           </div>
 <a data-name="-963099239%2FProperties%2F501414042" anchor-label="RUNNER_ARCH" id="-963099239%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-u-n-n-e-r_-a-r-c-h.html"><span>RUNNER_</span><wbr></wbr><span>ARCH</span></a></div>
@@ -611,7 +611,7 @@
             </div>
           </div>
 <a data-name="425988356%2FProperties%2F501414042" anchor-label="RUNNER_NAME" id="425988356%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-u-n-n-e-r_-n-a-m-e.html"><span>RUNNER_</span><wbr></wbr><span>NAME</span></a></div>
@@ -626,7 +626,7 @@
             </div>
           </div>
 <a data-name="-771558325%2FProperties%2F501414042" anchor-label="RUNNER_OS" id="-771558325%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-u-n-n-e-r_-o-s.html"><span>RUNNER_</span><wbr></wbr><span>OS</span></a></div>
@@ -641,7 +641,7 @@
             </div>
           </div>
 <a data-name="-388097061%2FProperties%2F501414042" anchor-label="RUNNER_TEMP" id="-388097061%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-u-n-n-e-r_-t-e-m-p.html"><span>RUNNER_</span><wbr></wbr><span>TEMP</span></a></div>
@@ -656,7 +656,7 @@
             </div>
           </div>
 <a data-name="2067560980%2FProperties%2F501414042" anchor-label="RUNNER_TOOL_CACHE" id="2067560980%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-u-n-n-e-r_-t-o-o-l_-c-a-c-h-e.html"><span>RUNNER_</span><wbr></wbr><span>TOOL_</span><wbr></wbr><span>CACHE</span></a></div>
@@ -671,7 +671,7 @@
             </div>
           </div>
 <a data-name="-157521630%2FProperties%2F501414042" anchor-label="size" id="-157521630%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-157521630%2FProperties%2F501414042"><span><span>size</span></span></a></div>
@@ -686,7 +686,7 @@
             </div>
           </div>
 <a data-name="1310951841%2FProperties%2F501414042" anchor-label="values" id="1310951841%2FProperties%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1310951841%2FProperties%2F501414042"><span><span>values</span></span></a></div>
@@ -703,54 +703,54 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
-        <div class="table"><a data-name="182506349%2FFunctions%2F501414042" anchor-label="containsKey" id="182506349%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="189495335%2FFunctions%2F501414042" anchor-label="containsKey" id="189495335%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#182506349%2FFunctions%2F501414042"><span>contains</span><wbr></wbr><span><span>Key</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="182506349%2FFunctions%2F501414042"></span>
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#189495335%2FFunctions%2F501414042"><span>contains</span><wbr></wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="189495335%2FFunctions%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#182506349%2FFunctions%2F501414042"><span class="token function">containsKey</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#189495335%2FFunctions%2F501414042"><span class="token function">containsKey</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="810257215%2FFunctions%2F501414042" anchor-label="containsValue" id="810257215%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+<a data-name="-337993863%2FFunctions%2F501414042" anchor-label="containsValue" id="-337993863%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#810257215%2FFunctions%2F501414042"><span>contains</span><wbr></wbr><span><span>Value</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="810257215%2FFunctions%2F501414042"></span>
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-337993863%2FFunctions%2F501414042"><span>contains</span><wbr></wbr><span><span>Value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-337993863%2FFunctions%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#810257215%2FFunctions%2F501414042"><span class="token function">containsValue</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-337993863%2FFunctions%2F501414042"><span class="token function">containsValue</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1885167485%2FFunctions%2F501414042" anchor-label="get" id="-1885167485%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+<a data-name="1589144509%2FFunctions%2F501414042" anchor-label="get" id="1589144509%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1885167485%2FFunctions%2F501414042"><span><span>get</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1885167485%2FFunctions%2F501414042"></span>
+                  <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1589144509%2FFunctions%2F501414042"><span><span>get</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1589144509%2FFunctions%2F501414042"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1885167485%2FFunctions%2F501414042"><span class="token function">get</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":github-workflows-kt/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#1589144509%2FFunctions%2F501414042"><span class="token function">get</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1708477740%2FFunctions%2F501414042" anchor-label="isEmpty" id="-1708477740%2FFunctions%2F501414042" data-filterable-set=":github-workflows-kt/main"></a>
-          <div class="table-row" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
+          <div class="table-row table-row_content" data-filterable-current=":github-workflows-kt/main" data-filterable-set=":github-workflows-kt/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../io.github.typesafegithub.workflows.dsl.expressions/-expression-context/index.html#-1708477740%2FFunctions%2F501414042"><span>is</span><wbr></wbr><span><span>Empty</span></span></a></div>
@@ -770,17 +770,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2025 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
