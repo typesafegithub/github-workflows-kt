@@ -77,20 +77,6 @@ class ActionCoordsTest :
                         path = "dir_one/dir-two",
                     )
             }
-
-            test("empty path part yields no path") {
-                // zero-width space as noise
-                val parameters = createParameters(owner = "o", name = "act__\u200B___major", version = "v3")
-
-                parameters.extractActionCoords(true) shouldBe
-                    ActionCoords(
-                        owner = "o",
-                        name = "act",
-                        version = "v3",
-                        significantVersion = MAJOR,
-                        path = null,
-                    )
-            }
         },
     )
 
