@@ -79,7 +79,8 @@ class ActionCoordsTest :
             }
 
             test("empty path part yields no path") {
-                val parameters = createParameters(owner = "o", name = "act__\u200B___major", version = "v3") // zero-width space as noise
+                // zero-width space as noise
+                val parameters = createParameters(owner = "o", name = "act__\u200B___major", version = "v3")
 
                 parameters.extractActionCoords(true) shouldBe
                     ActionCoords(
