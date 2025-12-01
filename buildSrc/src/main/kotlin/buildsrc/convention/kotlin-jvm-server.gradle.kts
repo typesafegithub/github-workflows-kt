@@ -12,7 +12,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation(platform("io.kotest:kotest-bom:6.0.6"))
+    testImplementation(platform("io.kotest:kotest-bom:6.0.7"))
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest:kotest-runner-junit5")
 }
