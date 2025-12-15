@@ -12,5 +12,6 @@ dependencies {
 
     runtimeOnly(projects.githubWorkflowsKt)
 
+    testImplementation("io.ktor:ktor-client-cio:3.3.3")
     testImplementation(projects.testUtils)
 }
