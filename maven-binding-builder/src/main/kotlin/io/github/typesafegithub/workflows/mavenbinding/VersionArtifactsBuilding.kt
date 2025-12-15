@@ -18,7 +18,7 @@ data class VersionArtifacts(
     val typingActualSource: TypingActualSource?,
 )
 
-fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
+suspend fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
     with(actionCoords) {
         val jars = buildJars() ?: return null
         val pom = buildPomFile()

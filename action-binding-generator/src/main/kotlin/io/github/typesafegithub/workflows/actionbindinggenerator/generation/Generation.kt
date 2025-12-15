@@ -65,7 +65,7 @@ private object Properties {
     val CUSTOM_VERSION = "_customVersion"
 }
 
-public fun ActionCoords.generateBinding(
+public suspend fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
     inputTypings: ActionTypings? = null,

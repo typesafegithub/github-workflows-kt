@@ -6,11 +6,14 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTy
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.actionbindinggenerator.mockClientReturning
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.io.FileNotFoundException
-import java.net.URI
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.http.HttpStatusCode
 
 class TypesProvidingTest :
     FunSpec({
@@ -20,7 +23,11 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+            val types =
+                actionCoord.provideTypes(
+                    metadataRevision = CommitHash("some-hash"),
+                    mockClientReturning(actionTypesYml),
+                )
 
             // Then
             types.inputTypings shouldBe emptyMap()
@@ -32,7 +39,11 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+            val types =
+                actionCoord.provideTypes(
+                    metadataRevision = CommitHash("some-hash"),
+                    mockClientReturning(actionTypesYml),
+                )
 
             // Then
             types.inputTypings shouldBe emptyMap()
@@ -44,7 +55,11 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+            val types =
+                actionCoord.provideTypes(
+                    metadataRevision = CommitHash("some-hash"),
+                    mockClientReturning(actionTypesYml),
+                )
 
             // Then
             types.inputTypings shouldBe emptyMap()
@@ -56,7 +71,11 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+            val types =
+                actionCoord.provideTypes(
+                    metadataRevision = CommitHash("some-hash"),
+                    mockClientReturning(actionTypesYml),
+                )
 
             // Then
             types.inputTypings shouldBe emptyMap()
@@ -72,7 +91,11 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+            val types =
+                actionCoord.provideTypes(
+                    metadataRevision = CommitHash("some-hash"),
+                    mockClientReturning(actionTypesYml),
+                )
 
             // Then
             types.inputTypings shouldBe emptyMap()
@@ -118,7 +141,11 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), { actionTypesYml })
+            val types =
+                actionCoord.provideTypes(
+                    metadataRevision = CommitHash("some-hash"),
+                    mockClientReturning(actionTypesYml),
+                )
 
             // Then
             types.inputTypings shouldBe
@@ -169,19 +196,26 @@ class TypesProvidingTest :
 
             test("only hosted by the action (.yml)") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -193,19 +227,26 @@ class TypesProvidingTest :
 
             test("only hosted by the subaction (.yml)") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -217,19 +258,26 @@ class TypesProvidingTest :
 
             test("only hosted by the action (.yaml)") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml",
-                        ),
-                        -> hostedByActionYaml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml"
+                            ) {
+                                respond(hostedByActionYaml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -241,19 +289,26 @@ class TypesProvidingTest :
 
             test("only hosted by the subaction (.yaml)") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yaml",
-                        ),
-                        -> hostedByActionYaml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yaml"
+                            ) {
+                                respond(hostedByActionYaml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -265,23 +320,30 @@ class TypesProvidingTest :
 
             test("only hosted by the action, both extensions") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml",
-                        ),
-                        -> hostedByActionYaml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yaml"
+                            ) {
+                                respond(hostedByActionYaml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -293,23 +355,30 @@ class TypesProvidingTest :
 
             test("only hosted by the subaction, both extensions") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yaml",
-                        ),
-                        -> hostedByActionYaml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/some-sub/action-types.yaml"
+                            ) {
+                                respond(hostedByActionYaml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -321,20 +390,27 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -346,20 +422,27 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog, under lowercase name and owner") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("Some-owner", "Some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -371,20 +454,27 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog for subaction") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -396,25 +486,31 @@ class TypesProvidingTest :
 
             test("hosted by action and stored in typing catalog") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/" +
-                                "some-hash/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() == "https://raw.githubusercontent.com/some-owner/some-name/" +
+                                "some-hash/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -426,25 +522,31 @@ class TypesProvidingTest :
 
             test("hosted by subaction and stored in typing catalog") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/" +
-                                "some-hash/some-sub/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() == "https://raw.githubusercontent.com/some-owner/some-name/" +
+                                "some-hash/some-sub/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -456,25 +558,32 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog for older version") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/metadata.yml",
-                        ),
-                        -> metadata
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v4/action-types.yml",
-                        ),
-                        -> storedInTypingCatalogForOlderVersion
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("Some-owner", "Some-name", "v6")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -487,25 +596,32 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog for older version, under lowercase name and owner") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/metadata.yml",
-                        ),
-                        -> metadata
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v4/action-types.yml",
-                        ),
-                        -> storedInTypingCatalogForOlderVersion
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v6")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -518,25 +634,32 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog for older version of subaction") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/metadata.yml",
-                        ),
-                        -> metadata
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v4/some-sub/action-types.yml",
-                        ),
-                        -> storedInTypingCatalogForOlderVersion
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v6", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -549,20 +672,27 @@ class TypesProvidingTest :
 
             test("metadata available but no version available") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/metadata.yml",
-                        ),
-                        -> metadata
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v1")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
@@ -570,11 +700,20 @@ class TypesProvidingTest :
 
             test("no typings at all") {
                 // Given
-                val fetchUri: (URI) -> String = { throw FileNotFoundException() }
+                val mockClient =
+                    HttpClient(
+                        MockEngine {
+                            respond("Not found", status = HttpStatusCode.NotFound)
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
@@ -609,19 +748,26 @@ class TypesProvidingTest :
 
             test("hosted by the action") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
-                        ),
-                        -> typingYml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml"
+                            ) {
+                                respond(typingYml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -641,20 +787,27 @@ class TypesProvidingTest :
 
             test("hosted by typing catalog") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/action-types.yml",
-                        ),
-                        -> typingYml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(typingYml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -674,25 +827,32 @@ class TypesProvidingTest :
 
             test("only stored in typing catalog for older version") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/metadata.yml",
-                        ),
-                        -> metadata
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v4/action-types.yml",
-                        ),
-                        -> typingYml
-                        else -> throw FileNotFoundException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml"
+                            ) {
+                                respond(typingYml)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v6")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
@@ -725,21 +885,15 @@ class TypesProvidingTest :
                     h: &h [*g,*g,*g,*g,*g,*g,*g,*g,*g]
                     i: &i [*h,*h,*h,*h,*h,*h,*h,*h,*h]
                     """.trimIndent()
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/some-hash/action-types.yml",
-                        ),
-                        -> billionLaughsAttack
-                        else -> throw FileNotFoundException()
-                    }
-                }
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // Expect
                 val exception =
                     shouldThrow<ForbiddenAnchorOrAliasException> {
-                        actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+                        actionCoord.provideTypes(
+                            metadataRevision = CommitHash("some-hash"),
+                            httpClient = mockClientReturning(billionLaughsAttack),
+                        )
                     }
                 exception.message shouldBe "Maximum number of aliases has been reached."
             }
@@ -754,20 +908,23 @@ class TypesProvidingTest :
                 - "v3"
                 - "v4"
                 """.trimIndent()
-            val fetchUri: (URI) -> String = {
-                when (it) {
-                    URI(
-                        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                            "main/typings/some-owner/some-name/metadata.yml",
-                    ),
-                    -> metadata
-                    else -> throw FileNotFoundException()
-                }
-            }
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        if (request.url.toString() ==
+                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                            "main/typings/some-owner/some-name/metadata.yml"
+                        ) {
+                            respond(metadata)
+                        } else {
+                            respond("Not found", status = HttpStatusCode.NotFound)
+                        }
+                    },
+                )
             val actionCoord = ActionCoords("some-owner", "some-name", "v6-beta")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri)
+            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), httpClient = mockClient)
 
             // Then
             types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
