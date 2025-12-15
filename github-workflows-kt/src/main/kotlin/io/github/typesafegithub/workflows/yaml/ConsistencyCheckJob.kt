@@ -37,6 +37,12 @@ internal fun WorkflowBuilder.consistencyCheckJob(
         condition = consistencyCheckJobConfig.condition,
         env = consistencyCheckJobConfig.env,
     ) {
+        val checkoutActionVersion = when (consistencyCheckJobConfig.checkoutActionVersion) {
+            CheckoutActionVersionSource.BundledWithLibrary -> "v4"
+            is CheckoutActionVersionSource.Given -> consistencyCheckJobConfig.checkoutActionVersion.version
+            CheckoutActionVersionSource.InferredFromClasspath -> inferCheckoutActionVersionFromClasspath()
+        }
+
         uses(
             name = "Check out",
             // Since this action is used in a simple way, and we actually don't want to update the version
@@ -46,7 +52,7 @@ internal fun WorkflowBuilder.consistencyCheckJob(
                 CustomAction(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v4",
+                    actionVersion = checkoutActionVersion,
                 ),
         )
 
@@ -98,4 +104,17 @@ internal fun WorkflowBuilder.consistencyCheckJob(
             command = "git diff --exit-code '$targetFilePath'",
         )
     }
+}
+
+private fun inferCheckoutActionVersionFromClasspath(): String {
+    val clazz = Class.forName("io.github.typesafegithub.workflows.actions.actions.Checkout")
+    println("Constructors!")
+    clazz.declaredConstructors.forEach {
+        println(it)
+    }
+    // TODO: how to call the constructor with default args?
+    //  Or: how to get the version?
+    val instance = clazz.declaredConstructors.first().newInstance()
+    val version = clazz.getDeclaredMethod("getVersion").invoke(instance)
+    return version as String
 }

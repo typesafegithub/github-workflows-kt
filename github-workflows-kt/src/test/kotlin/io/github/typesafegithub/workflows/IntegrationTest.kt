@@ -6,12 +6,12 @@ import io.github.typesafegithub.workflows.actions.endbug.AddAndCommit
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
 import io.github.typesafegithub.workflows.domain.Concurrency
 import io.github.typesafegithub.workflows.domain.RunnerType
-import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.Action.Outputs
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.ConsistencyCheckJobConfig.Disabled
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import io.github.typesafegithub.workflows.yaml.Preamble.Just
@@ -304,6 +304,122 @@ class IntegrationTest :
                       run: 'rm -f ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
                       if: '${'$'}{{ steps.step-1.outcome != ''success'' }}'
                     - id: 'step-6'
+                      name: 'Consistency check'
+                      run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
+                  test_job:
+                    runs-on: 'ubuntu-latest'
+                    needs:
+                    - 'check_yaml_consistency'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Hello world!'
+                      run: 'echo ''hello!'''
+
+                """.trimIndent()
+        }
+
+        test("actions/checkout's version given explicitly") {
+            // when
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                consistencyCheckJobConfig =
+                    DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                        checkoutActionVersion = CheckoutActionVersionSource.Given("v123"),
+                    ),
+            ) {
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    run(
+                        name = "Hello world!",
+                        command = "echo 'hello!'",
+                    )
+                }
+            }
+
+            // then
+            targetTempFile.readText() shouldBe
+                """
+                # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+                # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+                # Generated with https://github.com/typesafegithub/github-workflows-kt
+
+                name: 'Test workflow'
+                on:
+                  push: {}
+                jobs:
+                  check_yaml_consistency:
+                    name: 'Check YAML consistency'
+                    runs-on: 'ubuntu-latest'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Check out'
+                      uses: 'actions/checkout@v123'
+                    - id: 'step-1'
+                      name: 'Execute script'
+                      run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                    - id: 'step-2'
+                      name: 'Consistency check'
+                      run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
+                  test_job:
+                    runs-on: 'ubuntu-latest'
+                    needs:
+                    - 'check_yaml_consistency'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Hello world!'
+                      run: 'echo ''hello!'''
+
+                """.trimIndent()
+        }
+
+        test("actions/checkout's version inferred from classpath") {
+            // when
+            workflow(
+                name = "Test workflow",
+                on = listOf(Push()),
+                sourceFile = sourceTempFile,
+                consistencyCheckJobConfig =
+                    DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                        checkoutActionVersion = CheckoutActionVersionSource.InferredFromClasspath
+                    ),
+            ) {
+                job(
+                    id = "test_job",
+                    runsOn = RunnerType.UbuntuLatest,
+                ) {
+                    run(
+                        name = "Hello world!",
+                        command = "echo 'hello!'",
+                    )
+                }
+            }
+
+            // then
+            targetTempFile.readText() shouldBe
+                """
+                # This file was generated using Kotlin DSL (.github/workflows/some_workflow.main.kts).
+                # If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+                # Generated with https://github.com/typesafegithub/github-workflows-kt
+
+                name: 'Test workflow'
+                on:
+                  push: {}
+                jobs:
+                  check_yaml_consistency:
+                    name: 'Check YAML consistency'
+                    runs-on: 'ubuntu-latest'
+                    steps:
+                    - id: 'step-0'
+                      name: 'Check out'
+                      uses: 'actions/checkout@v4'
+                    - id: 'step-1'
+                      name: 'Execute script'
+                      run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
+                    - id: 'step-2'
                       name: 'Consistency check'
                       run: 'git diff --exit-code ''.github/workflows/some_workflow.yaml'''
                   test_job:
