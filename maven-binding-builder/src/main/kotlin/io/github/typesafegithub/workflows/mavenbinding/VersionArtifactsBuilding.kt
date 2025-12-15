@@ -19,7 +19,10 @@ data class VersionArtifacts(
     val typingActualSource: TypingActualSource?,
 )
 
-suspend fun buildVersionArtifacts(actionCoords: ActionCoords, httpClient: HttpClient): VersionArtifacts? {
+suspend fun buildVersionArtifacts(
+    actionCoords: ActionCoords,
+    httpClient: HttpClient,
+): VersionArtifacts? {
     with(actionCoords) {
         val jars = buildJars(httpClient = httpClient) ?: return null
         val pom = buildPomFile()
