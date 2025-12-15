@@ -40,6 +40,8 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.typing.provideT
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.removeTrailingWhitespacesForEachLine
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCase
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 
 public data class ActionBinding(
     val kotlinCode: String,
@@ -69,11 +71,13 @@ public suspend fun ActionCoords.generateBinding(
     metadataRevision: MetadataRevision,
     metadata: Metadata? = null,
     inputTypings: ActionTypings? = null,
+    httpClient: HttpClient = HttpClient(CIO),
 ): List<ActionBinding> {
-    val metadataResolved = metadata ?: this.fetchMetadata(metadataRevision) ?: return emptyList()
+    val metadataResolved =
+        metadata ?: this.fetchMetadata(metadataRevision, httpClient = httpClient) ?: return emptyList()
     val metadataProcessed = metadataResolved.removeDeprecatedInputsIfNameClash()
 
-    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision)
+    val inputTypingsResolved = inputTypings ?: this.provideTypes(metadataRevision, httpClient = httpClient)
 
     val packageName = owner.toKotlinPackageName()
     val className = this.buildActionClassName()

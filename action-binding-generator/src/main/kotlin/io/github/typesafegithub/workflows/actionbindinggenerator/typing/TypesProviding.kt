@@ -15,7 +15,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
@@ -24,11 +23,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 
 private val logger = logger { }
-private val defaultHttpClient = HttpClient(CIO)
 
 internal suspend fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
-    httpClient: HttpClient = defaultHttpClient,
+    httpClient: HttpClient,
 ): ActionTypings =
     (
         this.fetchTypingMetadata(metadataRevision, httpClient)

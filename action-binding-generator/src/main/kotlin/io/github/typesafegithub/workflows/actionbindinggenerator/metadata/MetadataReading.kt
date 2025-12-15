@@ -8,7 +8,6 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
@@ -49,11 +48,9 @@ private fun ActionCoords.actionYmlUrl(gitRef: String) =
 private fun ActionCoords.actionYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
 
-private val defaultHttpClient = HttpClient(CIO)
-
 public suspend fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
-    httpClient: HttpClient = defaultHttpClient,
+    httpClient: HttpClient,
 ): Metadata? {
     val gitRef =
         when (metadataRevision) {
