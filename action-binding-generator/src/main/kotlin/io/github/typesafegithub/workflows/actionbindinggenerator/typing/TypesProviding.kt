@@ -13,22 +13,26 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
-import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchUri
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
+import kotlinx.io.IOException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
-import java.io.FileNotFoundException
-import java.net.URI
 
 private val logger = logger { }
+private val defaultHttpClient = HttpClient(CIO)
 
-internal fun ActionCoords.provideTypes(
+internal suspend fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
-    fetchUri: (URI) -> String = ::fetchUri,
+    httpClient: HttpClient = defaultHttpClient,
 ): ActionTypings =
     (
-        this.fetchTypingMetadata(metadataRevision, fetchUri)
-            ?: this.toMajorVersion().fetchFromTypingsFromCatalog(fetchUri)
+        this.fetchTypingMetadata(metadataRevision, httpClient)
+            ?: this.toMajorVersion().fetchFromTypingsFromCatalog(httpClient)
     )?.let { (typings, typingActualSource) ->
         ActionTypings(
             inputTypings = typings.toTypesMap(),
@@ -51,9 +55,9 @@ private fun ActionCoords.actionTypesFromCatalog() =
 
 private fun ActionCoords.catalogMetadata() = "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/metadata.yml"
 
-private fun ActionCoords.fetchTypingMetadata(
+private suspend fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
-    fetchUri: (URI) -> String = ::fetchUri,
+    httpClient: HttpClient,
 ): Pair<ActionTypes, TypingActualSource>? {
     val gitRef =
         when (metadataRevision) {
@@ -63,34 +67,38 @@ private fun ActionCoords.fetchTypingMetadata(
     val list = listOf(actionTypesYmlUrl(gitRef), actionTypesYamlUrl(gitRef))
     val typesMetadataYaml =
         list.firstNotNullOfOrNull { url ->
-            try {
-                logger.info { "  ... types from action $url" }
-                fetchUri(URI(url))
-            } catch (e: FileNotFoundException) {
-                logger.info { "  ... types from action were not found: $url" }
-                null
+            logger.info { "  ... types from action $url" }
+            val response = httpClient.get(url)
+            when (response.status) {
+                HttpStatusCode.OK -> response.bodyAsText()
+                HttpStatusCode.NotFound -> {
+                    logger.info { "  ... types from action were not found: $url" }
+                    null
+                }
+                else -> throw IOException("Failed fetching from $url")
             }
         } ?: return null
 
     return Pair(yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }
 
-private fun ActionCoords.fetchFromTypingsFromCatalog(
-    fetchUri: (URI) -> String = ::fetchUri,
+private suspend fun ActionCoords.fetchFromTypingsFromCatalog(
+    httpClient: HttpClient,
 ): Pair<ActionTypes, TypingActualSource>? =
     (
-        fetchTypingsFromUrl(url = this.actionTypesFromCatalog(), fetchUri = fetchUri)
-            ?: this.fetchTypingsForOlderVersionFromCatalog(fetchUri = fetchUri)
+        fetchTypingsFromUrl(url = this.actionTypesFromCatalog(), httpClient = httpClient)
+            ?: this.fetchTypingsForOlderVersionFromCatalog(httpClient = httpClient)
     )?.let { Pair(it, TYPING_CATALOG) }
 
-private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) -> String): ActionTypes? {
+private suspend fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(httpClient: HttpClient): ActionTypes? {
     val metadataUrl = this.catalogMetadata()
+    logger.info { "  ... metadata from $metadataUrl" }
+    val response = httpClient.get(metadataUrl)
     val metadataYml =
-        try {
-            logger.info { "  ... metadata from $metadataUrl" }
-            fetchUri(URI(metadataUrl))
-        } catch (e: FileNotFoundException) {
-            return null
+        when (response.status) {
+            HttpStatusCode.OK -> response.bodyAsText()
+            HttpStatusCode.NotFound -> return null
+            else -> throw IOException("Failed fetching from $metadataUrl")
         }
     val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
     val requestedVersionAsInt = this.version.versionToIntOrNull() ?: return null
@@ -106,22 +114,25 @@ private fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(fetchUri: (URI) 
     val adjustedCoords = this.copy(version = fallbackVersion)
     return fetchTypingsFromUrl(
         url = adjustedCoords.actionTypesFromCatalog(),
-        fetchUri = fetchUri,
+        httpClient = httpClient,
     )?.copy(fromFallbackVersion = true)
 }
 
-private fun fetchTypingsFromUrl(
+private suspend fun fetchTypingsFromUrl(
     url: String,
-    fetchUri: (URI) -> String,
+    httpClient: HttpClient,
 ): ActionTypes? {
+    logger.info { "  ... types from catalog $url" }
+    val response = httpClient.get(url)
     val typesMetadataYml =
-        try {
-            logger.info { "  ... types from catalog $url" }
-            fetchUri(URI(url))
-        } catch (e: FileNotFoundException) {
-            logger.info { "  ... types from catalog were not found: $url" }
-            null
-        } ?: return null
+        when (response.status) {
+            HttpStatusCode.OK -> response.bodyAsText()
+            HttpStatusCode.NotFound -> {
+                logger.info { "  ... types from catalog were not found: $url" }
+                return null
+            }
+            else -> throw IOException("Failed fetching from $url")
+        }
     return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 

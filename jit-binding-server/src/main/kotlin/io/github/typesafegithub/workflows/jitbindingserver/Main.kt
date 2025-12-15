@@ -60,7 +60,7 @@ fun main() {
 }
 
 fun Application.appModule(
-    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (ActionCoords) -> VersionArtifacts?,
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
@@ -77,7 +77,7 @@ fun Application.appModule(
 }
 
 private fun buildBindingsCache(
-    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (ActionCoords) -> VersionArtifacts?,
 ): LoadingCache<ActionCoords, CachedVersionArtifact> =
     Caffeine
         .newBuilder()

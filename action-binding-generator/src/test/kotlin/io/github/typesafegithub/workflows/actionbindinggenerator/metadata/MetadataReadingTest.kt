@@ -8,8 +8,11 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.http.HttpStatusCode
 import kotlinx.io.IOException
-import java.net.URI
 
 class MetadataReadingTest :
     FunSpec({
@@ -53,155 +56,175 @@ class MetadataReadingTest :
 
         test("success, commit hash, .yml exists") {
             // Given
-            var requestedUris = mutableListOf<URI>()
+            var requestedUris = mutableListOf<String>()
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        requestedUris.add(request.url.toString())
+                        if (request.url.toString().endsWith(".yml")) {
+                            respond(metadataYaml)
+                        } else {
+                            respond("Not found", status = HttpStatusCode.NotFound)
+                        }
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = CommitHash("commit-hash"),
-                    fetchUri = {
-                        requestedUris.add(it)
-
-                        if (it.toURL().toString().endsWith(".yml")) {
-                            metadataYaml
-                        } else {
-                            throw IOException("Failed to fetch the file")
-                        }
-                    },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata shouldBe expectedMetadata
             requestedUris shouldBe
                 listOf(
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yml"),
+                    "https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yml",
                 )
         }
 
         test("success, commit hash, .yaml exists") {
             // Given
-            var requestedUris = mutableListOf<URI>()
+            var requestedUris = mutableListOf<String>()
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        requestedUris.add(request.url.toString())
+                        if (request.url.toString().endsWith(".yaml")) {
+                            respond(metadataYaml)
+                        } else {
+                            respond("Not found", status = HttpStatusCode.NotFound)
+                        }
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = CommitHash("commit-hash"),
-                    fetchUri = {
-                        requestedUris.add(it)
-
-                        if (it.toURL().toString().endsWith(".yaml")) {
-                            metadataYaml
-                        } else {
-                            throw IOException("Failed to fetch the file")
-                        }
-                    },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata shouldBe expectedMetadata
             requestedUris shouldBe
                 listOf(
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yml"),
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yaml"),
+                    "https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yml",
+                    "https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yaml",
                 )
         }
 
         test("success, commit hash, both .yml and .yaml exist") {
             // Given
-            var requestedUris = mutableListOf<URI>()
+            var requestedUris = mutableListOf<String>()
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        requestedUris.add(request.url.toString())
+                        respond(metadataYaml)
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = CommitHash("commit-hash"),
-                    fetchUri = {
-                        requestedUris.add(it)
-                        metadataYaml
-                    },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata shouldBe expectedMetadata
             requestedUris shouldBe
                 listOf(
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yml"),
+                    "https://raw.githubusercontent.com/test-owner/test-name/commit-hash/action.yml",
                 )
         }
 
         test("success, newest for version, .yml exists") {
             // Given
-            var requestedUris = mutableListOf<URI>()
+            var requestedUris = mutableListOf<String>()
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        requestedUris.add(request.url.toString())
+                        if (request.url.toString().endsWith(".yml")) {
+                            respond(metadataYaml)
+                        } else {
+                            respond("Not found", status = HttpStatusCode.NotFound)
+                        }
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = NewestForVersion,
-                    fetchUri = {
-                        requestedUris.add(it)
-
-                        if (it.toURL().toString().endsWith(".yml")) {
-                            metadataYaml
-                        } else {
-                            throw IOException("Failed to fetch the file")
-                        }
-                    },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata shouldBe expectedMetadata
             requestedUris shouldBe
                 listOf(
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/v1/action.yml"),
+                    "https://raw.githubusercontent.com/test-owner/test-name/v1/action.yml",
                 )
         }
 
         test("success, newest for version, .yaml exists") {
             // Given
-            var requestedUris = mutableListOf<URI>()
+            var requestedUris = mutableListOf<String>()
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        requestedUris.add(request.url.toString())
+                        if (request.url.toString().endsWith(".yaml")) {
+                            respond(metadataYaml)
+                        } else {
+                            respond("Not found", status = HttpStatusCode.NotFound)
+                        }
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = NewestForVersion,
-                    fetchUri = {
-                        requestedUris.add(it)
-
-                        if (it.toURL().toString().endsWith(".yaml")) {
-                            metadataYaml
-                        } else {
-                            throw IOException("Failed to fetch the file")
-                        }
-                    },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata shouldBe expectedMetadata
             requestedUris shouldBe
                 listOf(
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/v1/action.yml"),
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/v1/action.yaml"),
+                    "https://raw.githubusercontent.com/test-owner/test-name/v1/action.yml",
+                    "https://raw.githubusercontent.com/test-owner/test-name/v1/action.yaml",
                 )
         }
 
         test("success, newest for version, both .yml and .yaml exist") {
             // Given
-            var requestedUris = mutableListOf<URI>()
+            var requestedUris = mutableListOf<String>()
+            val mockClient =
+                HttpClient(
+                    MockEngine { request ->
+                        requestedUris.add(request.url.toString())
+                        respond(metadataYaml)
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = NewestForVersion,
-                    fetchUri = {
-                        requestedUris.add(it)
-                        metadataYaml
-                    },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata shouldBe expectedMetadata
             requestedUris shouldBe
                 listOf(
-                    URI("https://raw.githubusercontent.com/test-owner/test-name/v1/action.yml"),
+                    "https://raw.githubusercontent.com/test-owner/test-name/v1/action.yml",
                 )
         }
 
@@ -222,12 +245,18 @@ class MetadataReadingTest :
                   output-1:
                     description: Some output
                 """.trimIndent()
+            val mockClient =
+                HttpClient(
+                    MockEngine {
+                        respond(metadataYaml)
+                    },
+                )
 
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = CommitHash("commit-hash"),
-                    fetchUri = { metadataYaml },
+                    httpClient = mockClient,
                 )
 
             // Then
@@ -250,26 +279,59 @@ class MetadataReadingTest :
                   output-1:
                     description: Some output
                 """.trimIndent()
+            val mockClient =
+                HttpClient(
+                    MockEngine {
+                        respond(metadataYaml)
+                    },
+                )
 
             // Then
             shouldThrow<MissingRequiredPropertyException> {
                 // When
                 coords.fetchMetadata(
                     metadataRevision = CommitHash("commit-hash"),
-                    fetchUri = { metadataYaml },
+                    httpClient = mockClient,
                 )
             }
         }
 
-        test("all requests fail") {
+        test("no resources exist") {
+            // Given
+            val mockClient =
+                HttpClient(
+                    MockEngine {
+                        respond("Not found", status = HttpStatusCode.NotFound)
+                    },
+                )
+
             // When
             val metadata =
                 coords.fetchMetadata(
                     metadataRevision = CommitHash("commit-hash"),
-                    fetchUri = { throw IOException("Failed to fetch the file") },
+                    httpClient = mockClient,
                 )
 
             // Then
             metadata.shouldBeNull()
+        }
+
+        test("all requests fail") {
+            // Given
+            val mockClient =
+                HttpClient(
+                    MockEngine {
+                        respond("Internal error", status = HttpStatusCode.InternalServerError)
+                    },
+                )
+
+            // Then
+            shouldThrow<IOException> {
+                // When
+                coords.fetchMetadata(
+                    metadataRevision = CommitHash("commit-hash"),
+                    httpClient = mockClient,
+                )
+            }
         }
     })
