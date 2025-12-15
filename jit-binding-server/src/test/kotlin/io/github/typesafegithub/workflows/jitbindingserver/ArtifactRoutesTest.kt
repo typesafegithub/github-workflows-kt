@@ -6,6 +6,7 @@ import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
@@ -22,7 +23,7 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = {
+                            buildVersionArtifacts = { _, _ ->
                                 VersionArtifacts(
                                     files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
                                     typingActualSource = TypingActualSource.TYPING_CATALOG,
@@ -48,7 +49,7 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { null },
+                            buildVersionArtifacts = { _, _ -> null },
                             // Irrelevant for these tests.
                             buildPackageArtifacts = { _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
@@ -68,7 +69,7 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { error("An internal error occurred!") },
+                            buildVersionArtifacts = { _, _ -> error("An internal error occurred!") },
                             // Irrelevant for these tests.
                             buildPackageArtifacts = { _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
@@ -86,8 +87,8 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords) -> VersionArtifacts?>()
-                    every { mockBuildVersionArtifacts(any()) } throws
+                    val mockBuildVersionArtifacts = mockk<(ActionCoords, HttpClient) -> VersionArtifacts?>()
+                    every { mockBuildVersionArtifacts(any(), any()) } throws
                         Exception("An internal error occurred!") andThen
                         VersionArtifacts(
                             files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
@@ -112,7 +113,7 @@ class ArtifactRoutesTest :
                     // Then
                     response2.status shouldBe HttpStatusCode.OK
 
-                    verify(exactly = 2) { mockBuildVersionArtifacts(any()) }
+                    verify(exactly = 2) { mockBuildVersionArtifacts(any(), any()) }
                 }
             }
         }
