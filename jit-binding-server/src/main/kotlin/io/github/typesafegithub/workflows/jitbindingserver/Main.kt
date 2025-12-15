@@ -12,6 +12,8 @@ import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.github.typesafegithub.workflows.shared.internal.getGithubAuthToken
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpSend
+import io.ktor.client.plugins.plugin
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
@@ -66,7 +68,19 @@ fun Application.appModule(
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
-    val httpClient = HttpClient(CIO)
+    val httpClient =
+        HttpClient(CIO).apply {
+            plugin(HttpSend).intercept { request ->
+                if (request.url.host == "raw.githubusercontent.com") {
+                    val counter =
+                        prometheusRegistry.counter(
+                            "calls_to_github",
+                        )
+                    counter.increment()
+                }
+                execute(request)
+            }
+        }
     val bindingsCache = buildBindingsCache(buildVersionArtifacts, httpClient)
     val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts, getGithubAuthToken)
     installPlugins(prometheusRegistry)
