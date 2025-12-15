@@ -7,6 +7,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestFo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.generateBinding
+import io.ktor.client.HttpClient
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
@@ -31,9 +32,9 @@ internal data class Jars(
     val typingActualSource: TypingActualSource?,
 )
 
-internal suspend fun ActionCoords.buildJars(): Jars? {
+internal suspend fun ActionCoords.buildJars(httpClient: HttpClient): Jars? {
     val binding =
-        generateBinding(metadataRevision = NewestForVersion).also {
+        generateBinding(metadataRevision = NewestForVersion, httpClient = httpClient).also {
             if (it.isEmpty()) return null
         }
 
