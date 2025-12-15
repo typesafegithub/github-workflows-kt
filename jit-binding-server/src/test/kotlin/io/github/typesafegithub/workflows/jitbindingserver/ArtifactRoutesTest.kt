@@ -30,7 +30,7 @@ class ArtifactRoutesTest :
                                 )
                             },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -51,7 +51,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = { _, _ -> null },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -71,7 +71,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = { _, _ -> error("An internal error occurred!") },
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }
@@ -98,7 +98,7 @@ class ArtifactRoutesTest :
                         appModule(
                             buildVersionArtifacts = mockBuildVersionArtifacts,
                             // Irrelevant for these tests.
-                            buildPackageArtifacts = { _, _, _ -> emptyMap() },
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
                         )
                     }

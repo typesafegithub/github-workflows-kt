@@ -1,16 +1,19 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.micrometer.core.instrument.MeterRegistry
 
 suspend fun buildPackageArtifacts(
     actionCoords: ActionCoords,
     githubAuthToken: String,
     prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit,
+    meterRegistry: MeterRegistry,
 ): Map<String, String> {
     val mavenMetadata =
         actionCoords.buildMavenMetadataFile(
             githubAuthToken = githubAuthToken,
             prefetchBindingArtifacts = prefetchBindingArtifacts,
+            meterRegistry = meterRegistry,
         ) ?: return emptyMap()
     return mapOf(
         "maven-metadata.xml" to mavenMetadata,

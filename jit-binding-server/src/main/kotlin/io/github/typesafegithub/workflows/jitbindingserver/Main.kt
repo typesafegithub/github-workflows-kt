@@ -21,6 +21,8 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.routing
+import io.micrometer.core.instrument.MeterRegistry
+import io.micrometer.core.instrument.Tag
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import java.time.Duration
@@ -65,7 +67,12 @@ fun main() {
 
 fun Application.appModule(
     buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
-    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    buildPackageArtifacts: suspend (
+        ActionCoords,
+        String,
+        (Collection<ActionCoords>) -> Unit,
+        MeterRegistry,
+    ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
     val httpClient =
@@ -75,6 +82,7 @@ fun Application.appModule(
                     val counter =
                         prometheusRegistry.counter(
                             "calls_to_github",
+                            listOf(Tag.of("type", "static")),
                         )
                     counter.increment()
                 }
@@ -106,7 +114,12 @@ private fun buildBindingsCache(
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
     bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
-    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    buildPackageArtifacts: suspend (
+        ActionCoords,
+        String,
+        (Collection<ActionCoords>) -> Unit,
+        MeterRegistry,
+    ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ): LoadingCache<ActionCoords, CachedMetadataArtifact> =
     Caffeine
@@ -118,6 +131,7 @@ private fun buildMetadataCache(
                 it,
                 getGithubAuthToken(),
                 { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
+                prometheusRegistry,
             )
         }
 

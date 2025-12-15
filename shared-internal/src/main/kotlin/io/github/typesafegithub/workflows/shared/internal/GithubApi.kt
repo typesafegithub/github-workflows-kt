@@ -7,15 +7,18 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel.ALL
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.plugin
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import io.micrometer.core.instrument.MeterRegistry
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.time.ZonedDateTime
@@ -26,25 +29,29 @@ suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
     githubAuthToken: String?,
+    meterRegistry: MeterRegistry? = null,
     githubEndpoint: String = "https://api.github.com",
 ): Either<String, List<Version>> =
     either {
-        buildHttpClient().use { httpClient ->
+        buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
             return listOf(
                 apiTagsUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
                 apiBranchesUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
             ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
-                .versions(githubAuthToken)
+                .versions(githubAuthToken, meterRegistry = meterRegistry)
         }
     }
 
-private fun List<GithubRef>.versions(githubAuthToken: String?): Either<String, List<Version>> =
+private fun List<GithubRef>.versions(
+    githubAuthToken: String?,
+    meterRegistry: MeterRegistry?,
+): Either<String, List<Version>> =
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
             Version(version) {
                 val response =
-                    buildHttpClient().use { httpClient ->
+                    buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
                         httpClient
                             .get(urlString = githubRef.`object`.url) {
                                 if (githubAuthToken != null) {
@@ -122,7 +129,7 @@ private data class Person(
     val date: String,
 )
 
-private fun buildHttpClient() =
+private fun buildHttpClient(meterRegistry: MeterRegistry?) =
     HttpClient {
         val klogger = logger
         install(Logging) {
@@ -140,5 +147,22 @@ private fun buildHttpClient() =
                     ignoreUnknownKeys = true
                 },
             )
+        }
+    }.apply {
+        if (meterRegistry != null) {
+            plugin(HttpSend).intercept { request ->
+                if (request.url.host == "api.github.com") {
+                    val counter =
+                        meterRegistry.counter(
+                            "calls_to_github",
+                            listOf(
+                                io.micrometer.core.instrument.Tag
+                                    .of("type", "api"),
+                            ),
+                        )
+                    counter.increment()
+                }
+                execute(request)
+            }
         }
     }
