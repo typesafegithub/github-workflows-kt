@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.ktor.client.HttpClient
 
 sealed interface Artifact
 
@@ -18,9 +19,9 @@ data class VersionArtifacts(
     val typingActualSource: TypingActualSource?,
 )
 
-suspend fun buildVersionArtifacts(actionCoords: ActionCoords): VersionArtifacts? {
+suspend fun buildVersionArtifacts(actionCoords: ActionCoords, httpClient: HttpClient): VersionArtifacts? {
     with(actionCoords) {
-        val jars = buildJars() ?: return null
+        val jars = buildJars(httpClient = httpClient) ?: return null
         val pom = buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }

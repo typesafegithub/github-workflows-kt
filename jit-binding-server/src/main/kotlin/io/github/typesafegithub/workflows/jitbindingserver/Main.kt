@@ -10,6 +10,8 @@ import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.github.typesafegithub.workflows.shared.internal.getGithubAuthToken
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
@@ -60,11 +62,12 @@ fun main() {
 }
 
 fun Application.appModule(
-    buildVersionArtifacts: suspend (ActionCoords) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
     buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
-    val bindingsCache = buildBindingsCache(buildVersionArtifacts)
+    val httpClient = HttpClient(CIO)
+    val bindingsCache = buildBindingsCache(buildVersionArtifacts, httpClient)
     val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts, getGithubAuthToken)
     installPlugins(prometheusRegistry)
 
@@ -77,13 +80,14 @@ fun Application.appModule(
 }
 
 private fun buildBindingsCache(
-    buildVersionArtifacts: suspend (ActionCoords) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
+    httpClient: HttpClient,
 ): LoadingCache<ActionCoords, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it) }
+        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it, httpClient) }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
