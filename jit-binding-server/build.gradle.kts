@@ -14,6 +14,8 @@ dependencies {
     implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-call-id")
     implementation("io.ktor:ktor-server-metrics-micrometer")
+    implementation("io.ktor:ktor-client-core")
+    implementation("io.ktor:ktor-client-cio")
     implementation("io.micrometer:micrometer-registry-prometheus:1.15.5")
 
     implementation("com.sksamuel.aedile:aedile-core:3.0.1")
