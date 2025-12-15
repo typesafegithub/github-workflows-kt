@@ -12,6 +12,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpStatusCode
+import kotlinx.io.IOException
 
 class MetadataReadingTest :
     FunSpec({
@@ -295,7 +296,7 @@ class MetadataReadingTest :
             }
         }
 
-        test("all requests fail") {
+        test("no resources exist") {
             // Given
             val mockClient =
                 HttpClient(
@@ -313,5 +314,24 @@ class MetadataReadingTest :
 
             // Then
             metadata.shouldBeNull()
+        }
+
+        test("all requests fail") {
+            // Given
+            val mockClient =
+                HttpClient(
+                    MockEngine {
+                        respond("Internal error", status = HttpStatusCode.InternalServerError)
+                    },
+                )
+
+            // Then
+            shouldThrow<IOException> {
+                // When
+                coords.fetchMetadata(
+                    metadataRevision = CommitHash("commit-hash"),
+                    httpClient = mockClient,
+                )
+            }
         }
     })

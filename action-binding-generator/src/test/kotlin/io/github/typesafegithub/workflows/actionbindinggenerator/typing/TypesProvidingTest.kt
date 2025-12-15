@@ -4,6 +4,7 @@ import com.charleskorn.kaml.ForbiddenAnchorOrAliasException
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHash
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.mockClientReturning
@@ -14,6 +15,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpStatusCode
+import kotlinx.io.IOException
 
 class TypesProvidingTest :
     FunSpec({
@@ -928,5 +930,25 @@ class TypesProvidingTest :
 
             // Then
             types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
+        }
+
+        test("failure to fetch newest typings for version") {
+            // Given
+            val actionCoord = ActionCoords("some-owner", "some-name", "v1")
+            val mockClient =
+                HttpClient(
+                    MockEngine {
+                        respond("Internal error", status = HttpStatusCode.InternalServerError)
+                    },
+                )
+
+            // Then
+            shouldThrow<IOException> {
+                // When
+                actionCoord.provideTypes(
+                    metadataRevision = NewestForVersion,
+                    httpClient = mockClient,
+                )
+            }
         }
     })
