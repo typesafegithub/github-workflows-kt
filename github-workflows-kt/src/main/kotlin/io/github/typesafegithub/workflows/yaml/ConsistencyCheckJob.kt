@@ -108,13 +108,6 @@ internal fun WorkflowBuilder.consistencyCheckJob(
 
 private fun inferCheckoutActionVersionFromClasspath(): String {
     val clazz = Class.forName("io.github.typesafegithub.workflows.actions.actions.Checkout")
-    println("Constructors!")
-    clazz.declaredConstructors.forEach {
-        println(it)
-    }
-    // TODO: how to call the constructor with default args?
-    //  Or: how to get the version?
-    val instance = clazz.declaredConstructors.first().newInstance()
-    val version = clazz.getDeclaredMethod("getVersion").invoke(instance)
-    return version as String
+    val jarName = clazz.protectionDomain.codeSource.location.toString().substringAfterLast("/")
+    return jarName.substringAfterLast("-").substringBeforeLast(".")
 }
