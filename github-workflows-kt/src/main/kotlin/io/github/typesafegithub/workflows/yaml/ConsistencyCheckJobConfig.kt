@@ -36,6 +36,10 @@ public sealed interface ConsistencyCheckJobConfig {
 
 public sealed interface CheckoutActionVersionSource {
     public object BundledWithLibrary : CheckoutActionVersionSource
+
     public object InferredFromClasspath : CheckoutActionVersionSource
-    public class Given(public val version: String) : CheckoutActionVersionSource
+
+    public class Given(
+        public val version: String,
+    ) : CheckoutActionVersionSource
 }

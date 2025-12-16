@@ -37,11 +37,12 @@ internal fun WorkflowBuilder.consistencyCheckJob(
         condition = consistencyCheckJobConfig.condition,
         env = consistencyCheckJobConfig.env,
     ) {
-        val checkoutActionVersion = when (consistencyCheckJobConfig.checkoutActionVersion) {
-            CheckoutActionVersionSource.BundledWithLibrary -> "v4"
-            is CheckoutActionVersionSource.Given -> consistencyCheckJobConfig.checkoutActionVersion.version
-            CheckoutActionVersionSource.InferredFromClasspath -> inferCheckoutActionVersionFromClasspath()
-        }
+        val checkoutActionVersion =
+            when (consistencyCheckJobConfig.checkoutActionVersion) {
+                CheckoutActionVersionSource.BundledWithLibrary -> "v4"
+                is CheckoutActionVersionSource.Given -> consistencyCheckJobConfig.checkoutActionVersion.version
+                CheckoutActionVersionSource.InferredFromClasspath -> inferCheckoutActionVersionFromClasspath()
+            }
 
         uses(
             name = "Check out",
@@ -108,6 +109,9 @@ internal fun WorkflowBuilder.consistencyCheckJob(
 
 private fun inferCheckoutActionVersionFromClasspath(): String {
     val clazz = Class.forName("io.github.typesafegithub.workflows.actions.actions.Checkout")
-    val jarName = clazz.protectionDomain.codeSource.location.toString().substringAfterLast("/")
+    val jarName =
+        clazz.protectionDomain.codeSource.location
+            .toString()
+            .substringAfterLast("/")
     return jarName.substringAfterLast("-").substringBeforeLast(".")
 }

@@ -384,7 +384,7 @@ class IntegrationTest :
                 sourceFile = sourceTempFile,
                 consistencyCheckJobConfig =
                     DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
-                        checkoutActionVersion = CheckoutActionVersionSource.InferredFromClasspath
+                        checkoutActionVersion = CheckoutActionVersionSource.InferredFromClasspath,
                     ),
             ) {
                 job(
