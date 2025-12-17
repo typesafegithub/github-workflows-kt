@@ -384,7 +384,7 @@ class IntegrationTest :
                 sourceFile = sourceTempFile,
                 consistencyCheckJobConfig =
                     DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
-                        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath,
+                        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
                     ),
             ) {
                 job(
@@ -443,8 +443,10 @@ class IntegrationTest :
                     sourceFile = sourceTempFile,
                     consistencyCheckJobConfig =
                         DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
-                            checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath,
-                            checkoutActionClassFQN = "does.not.Exist",
+                            checkoutActionVersion =
+                                CheckoutActionVersionSource.InferFromClasspath(
+                                    checkoutActionClassFQN = "does.not.Exist",
+                                ),
                         ),
                 ) {
                     job(
@@ -460,7 +462,7 @@ class IntegrationTest :
             }.also {
                 it.message shouldBe "actions/checkout is not found in the classpath! " +
                     "Either add a dependency on it (`@file:DependsOn(\"actions:checkout:<version>\")`), " +
-                    "or don't use CheckoutActionVersionSource.InferFromClasspath"
+                    "or don't use CheckoutActionVersionSource.InferFromClasspath()"
             }
         }
 

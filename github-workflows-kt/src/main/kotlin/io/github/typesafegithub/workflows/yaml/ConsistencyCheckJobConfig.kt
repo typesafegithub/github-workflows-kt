@@ -8,7 +8,6 @@ public val DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG: ConsistencyCheckJobConfig.Confi
         condition = null,
         env = emptyMap(),
         checkoutActionVersion = CheckoutActionVersionSource.BundledWithLibrary,
-        checkoutActionClassFQN = "io.github.typesafegithub.workflows.actions.actions.Checkout",
         additionalSteps = null,
         useLocalBindingsServerAsFallback = false,
     )
@@ -24,11 +23,6 @@ public sealed interface ConsistencyCheckJobConfig {
          * Lets the user choose between convenience of automatic updates and more determinism and control if required.
          */
         val checkoutActionVersion: CheckoutActionVersionSource,
-        /**
-         * Specifies the fully qualified name of a binding class for actions/checkout. Can be overridden if a custom
-         * binding class is provided for this action, under a different FQN.
-         */
-        val checkoutActionClassFQN: String,
         val additionalSteps: (JobBuilder<JobOutputs.EMPTY>.() -> Unit)?,
         /**
          * If the script execution step in the consistency check job fails, another attempt to execute is made with a
@@ -57,7 +51,13 @@ public sealed interface CheckoutActionVersionSource {
      *
      * This is the most convenient option, and a candidate to become the default one.
      */
-    public object InferFromClasspath : CheckoutActionVersionSource
+    public class InferFromClasspath(
+        /**
+         * Specifies the fully qualified name of a binding class for actions/checkout. Can be overridden if a custom
+         * binding class is provided for this action, under a different FQN.
+         */
+        public val checkoutActionClassFQN: String = "io.github.typesafegithub.workflows.actions.actions.Checkout",
+    ) : CheckoutActionVersionSource
 
     /**
      * Useful if it's desired to specify a concrete version by hand, right in your workflow.

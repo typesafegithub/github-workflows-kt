@@ -3250,7 +3250,10 @@ public final class io/github/typesafegithub/workflows/yaml/CheckoutActionVersion
 }
 
 public final class io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource$InferFromClasspath : io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource$InferFromClasspath;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCheckoutActionClassFQN ()Ljava/lang/String;
 }
 
 public abstract interface class io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig {

@@ -45,9 +45,9 @@ internal fun WorkflowBuilder.consistencyCheckJob(
             when (consistencyCheckJobConfig.checkoutActionVersion) {
                 CheckoutActionVersionSource.BundledWithLibrary -> "v4"
                 is CheckoutActionVersionSource.Given -> consistencyCheckJobConfig.checkoutActionVersion.version
-                CheckoutActionVersionSource.InferFromClasspath ->
+                is CheckoutActionVersionSource.InferFromClasspath ->
                     inferCheckoutActionVersionFromClasspath(
-                        consistencyCheckJobConfig.checkoutActionClassFQN,
+                        consistencyCheckJobConfig.checkoutActionVersion.checkoutActionClassFQN,
                     )
             }
 
@@ -122,7 +122,7 @@ private fun inferCheckoutActionVersionFromClasspath(checkoutActionClassFQN: Stri
             error(
                 "actions/checkout is not found in the classpath! " +
                     "Either add a dependency on it (`@file:DependsOn(\"actions:checkout:<version>\")`), " +
-                    "or don't use CheckoutActionVersionSource.InferFromClasspath",
+                    "or don't use CheckoutActionVersionSource.InferFromClasspath()",
             )
         } as Class<*>
     // It's easier to call the primary constructor, even though it's private, because
