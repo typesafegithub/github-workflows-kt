@@ -5,11 +5,16 @@ import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.dsl.WorkflowBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import java.nio.file.Path
 import kotlin.io.path.invariantSeparatorsPathString
+import kotlin.reflect.KParameter
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.jvm.isAccessible
 
 @Suppress("LongMethod")
 internal fun WorkflowBuilder.consistencyCheckJob(
@@ -109,13 +114,14 @@ internal fun WorkflowBuilder.consistencyCheckJob(
 
 private fun inferCheckoutActionVersionFromClasspath(): String {
     val clazz = Class.forName("io.github.typesafegithub.workflows.actions.actions.Checkout")
-    // HACK: Ideally we'd instantiate the binding class and ask it for version, however
-    // it turned out to be difficult due to default arguments in Kotlin. Using Java's
-    // reflection, the constructors require passing ~40 arguments. As a workaround,
-    // the version is extracted from JAR's name, like: 'checkout-v4.jar' -> 'v4'.
-    val jarName =
-        clazz.protectionDomain.codeSource.location
-            .toString()
-            .substringAfterLast("/")
-    return jarName.substringAfterLast("-").substringBeforeLast(".")
+    // It's easier to call the primary constructor, even though it's private, because
+    // the public constructor requires named arguments, and I'm not sure how to call
+    // it with these.
+    val constructor =
+        clazz.kotlin.primaryConstructor!!.also {
+            it.isAccessible = true
+        }
+    val args: Map<KParameter, Any?> = constructor.parameters.associateWith { null }
+    val bindingObject = constructor.callBy(args) as RegularAction<*>
+    return bindingObject.actionVersion
 }
