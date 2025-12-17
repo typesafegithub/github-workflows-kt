@@ -88,13 +88,19 @@ fun PayloadEventParams.findAllObjects(
         element
             .flatMap { (subpath, entry) ->
                 when (entry) {
-                    is JsonObject -> findAllObjects(entry, "$path.$subpath")
+                    is JsonObject -> {
+                        findAllObjects(entry, "$path.$subpath")
+                    }
+
                     is JsonArray -> {
                         (entry.firstOrNull() as? JsonObject)
                             ?.let { firtSchild -> findAllObjects(firtSchild, "$path/$subpath") }
                             ?: nothing
                     }
-                    else -> nothing
+
+                    else -> {
+                        nothing
+                    }
                 }.toList()
             }.toMap()
     return result + Pair(path, element)
@@ -149,11 +155,14 @@ fun Map.Entry<String, JsonElement>.generatePropertySpec(
                 .initializer("%S", "github.$key.$child")
                 .build()
         }
-        is JsonObject ->
+
+        is JsonObject -> {
             PropertySpec
                 .builder(child, ClassName(PACKAGE, payloadClassName("$key.$child", filename)))
                 .initializer("%L", payloadClassName("$key.$child", filename))
                 .build()
+        }
+
         is JsonArray -> {
             PropertySpec
                 .builder(child, listOfStrings)

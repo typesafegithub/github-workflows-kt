@@ -43,12 +43,19 @@ internal fun WorkflowBuilder.consistencyCheckJob(
     ) {
         val checkoutActionVersion =
             when (consistencyCheckJobConfig.checkoutActionVersion) {
-                CheckoutActionVersionSource.BundledWithLibrary -> "v4"
-                is CheckoutActionVersionSource.Given -> consistencyCheckJobConfig.checkoutActionVersion.version
-                is CheckoutActionVersionSource.InferFromClasspath ->
+                CheckoutActionVersionSource.BundledWithLibrary -> {
+                    "v4"
+                }
+
+                is CheckoutActionVersionSource.Given -> {
+                    consistencyCheckJobConfig.checkoutActionVersion.version
+                }
+
+                is CheckoutActionVersionSource.InferFromClasspath -> {
                     inferCheckoutActionVersionFromClasspath(
                         consistencyCheckJobConfig.checkoutActionVersion.checkoutActionClassFQN,
                     )
+                }
             }
 
         uses(
