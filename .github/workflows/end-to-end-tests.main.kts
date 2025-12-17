@@ -104,7 +104,7 @@ workflow(
                 action = CustomAction(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v5",
+                    actionVersion = "v6",
                 ),
             )
 
@@ -131,7 +131,7 @@ workflow(
                 action = object : RegularAction<Action.Outputs>(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v5",
+                    actionVersion = "v6",
                 ) {
                     override fun toYamlArguments() =
                         linkedMapOf(
