@@ -49,6 +49,7 @@ workflow(
         PullRequest(),
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        useLocalBindingsServerAsFallback = true,
         env = mapOf(
             "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
         ),
@@ -292,6 +293,7 @@ workflow(
         PullRequest(),
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        useLocalBindingsServerAsFallback = true,
         checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
