@@ -12,7 +12,6 @@ import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import java.nio.file.Path
 import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.reflect.KParameter
-import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.isAccessible
 
@@ -46,7 +45,10 @@ internal fun WorkflowBuilder.consistencyCheckJob(
             when (consistencyCheckJobConfig.checkoutActionVersion) {
                 CheckoutActionVersionSource.BundledWithLibrary -> "v4"
                 is CheckoutActionVersionSource.Given -> consistencyCheckJobConfig.checkoutActionVersion.version
-                CheckoutActionVersionSource.InferredFromClasspath -> inferCheckoutActionVersionFromClasspath()
+                CheckoutActionVersionSource.InferFromClasspath ->
+                    inferCheckoutActionVersionFromClasspath(
+                        consistencyCheckJobConfig.checkoutActionClassFQN,
+                    )
             }
 
         uses(
@@ -112,8 +114,17 @@ internal fun WorkflowBuilder.consistencyCheckJob(
     }
 }
 
-private fun inferCheckoutActionVersionFromClasspath(): String {
-    val clazz = Class.forName("io.github.typesafegithub.workflows.actions.actions.Checkout")
+private fun inferCheckoutActionVersionFromClasspath(checkoutActionClassFQN: String): String {
+    val clazz: Class<*> =
+        try {
+            Class.forName(checkoutActionClassFQN)
+        } catch (_: ClassNotFoundException) {
+            error(
+                "actions/checkout is not found in the classpath! " +
+                    "Either add a dependency on it (`@file:DependsOn(\"actions:checkout:<version>\")`), " +
+                    "or don't use CheckoutActionVersionSource.InferFromClasspath",
+            )
+        } as Class<*>
     // It's easier to call the primary constructor, even though it's private, because
     // the public constructor requires named arguments, and I'm not sure how to call
     // it with these.

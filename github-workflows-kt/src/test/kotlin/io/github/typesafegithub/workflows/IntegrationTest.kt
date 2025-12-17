@@ -384,7 +384,7 @@ class IntegrationTest :
                 sourceFile = sourceTempFile,
                 consistencyCheckJobConfig =
                     DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
-                        checkoutActionVersion = CheckoutActionVersionSource.InferredFromClasspath,
+                        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath,
                     ),
             ) {
                 job(
@@ -432,6 +432,36 @@ class IntegrationTest :
                       run: 'echo ''hello!'''
 
                 """.trimIndent()
+        }
+
+        test("actions/checkout's version inferred from classpath but binding class is not available") {
+            // when
+            shouldThrow<IllegalStateException> {
+                workflow(
+                    name = "Test workflow",
+                    on = listOf(Push()),
+                    sourceFile = sourceTempFile,
+                    consistencyCheckJobConfig =
+                        DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                            checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath,
+                            checkoutActionClassFQN = "does.not.Exist",
+                        ),
+                ) {
+                    job(
+                        id = "test_job",
+                        runsOn = RunnerType.UbuntuLatest,
+                    ) {
+                        run(
+                            name = "Hello world!",
+                            command = "echo 'hello!'",
+                        )
+                    }
+                }
+            }.also {
+                it.message shouldBe "actions/checkout is not found in the classpath! " +
+                    "Either add a dependency on it (`@file:DependsOn(\"actions:checkout:<version>\")`), " +
+                    "or don't use CheckoutActionVersionSource.InferFromClasspath"
+            }
         }
 
         test("with concurrency, default behavior") {

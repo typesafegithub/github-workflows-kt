@@ -3249,8 +3249,8 @@ public final class io/github/typesafegithub/workflows/yaml/CheckoutActionVersion
 	public final fun getVersion ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource$InferredFromClasspath : io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource$InferredFromClasspath;
+public final class io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource$InferFromClasspath : io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource$InferFromClasspath;
 }
 
 public abstract interface class io/github/typesafegithub/workflows/yaml/ConsistencyCheckJobConfig {
