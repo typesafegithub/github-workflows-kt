@@ -109,6 +109,10 @@ internal fun WorkflowBuilder.consistencyCheckJob(
 
 private fun inferCheckoutActionVersionFromClasspath(): String {
     val clazz = Class.forName("io.github.typesafegithub.workflows.actions.actions.Checkout")
+    // HACK: Ideally we'd instantiate the binding class and ask it for version, however
+    // it turned out to be difficult due to default arguments in Kotlin. Using Java's
+    // reflection, the constructors require passing ~40 arguments. As a workaround,
+    // the version is extracted from JAR's name, like: 'checkout-v4.jar' -> 'v4'.
     val jarName =
         clazz.protectionDomain.codeSource.location
             .toString()
