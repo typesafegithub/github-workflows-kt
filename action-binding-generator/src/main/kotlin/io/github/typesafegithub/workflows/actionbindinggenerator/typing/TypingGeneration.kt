@@ -20,31 +20,61 @@ internal fun Typing.getClassName(
     fieldName: String,
 ): TypeName =
     when (this) {
-        BooleanTyping -> Boolean::class.asTypeName()
+        BooleanTyping -> {
+            Boolean::class.asTypeName()
+        }
+
         is EnumTyping -> {
             val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
             ClassName("io.github.typesafegithub.workflows.actions.$actionPackageName", "$actionClassName.$typeName")
         }
-        FloatTyping -> Float::class.asTypeName()
-        IntegerTyping -> Integer::class.asTypeName()
+
+        FloatTyping -> {
+            Float::class.asTypeName()
+        }
+
+        IntegerTyping -> {
+            Integer::class.asTypeName()
+        }
+
         is IntegerWithSpecialValueTyping -> {
             val typeName = this.typeName?.toPascalCase() ?: fieldName.toPascalCase()
             ClassName("io.github.typesafegithub.workflows.actions.$actionPackageName", "$actionClassName.$typeName")
         }
-        is ListOfTypings ->
+
+        is ListOfTypings -> {
             List::class
                 .asClassName()
                 .parameterizedBy(typing.getClassName(actionPackageName, actionClassName, fieldName))
-        StringTyping -> String::class.asTypeName()
+        }
+
+        StringTyping -> {
+            String::class.asTypeName()
+        }
     }
 
 internal fun Typing.asString(): String =
     when (this) {
-        BooleanTyping -> ".toString()"
-        is EnumTyping -> ".stringValue"
-        FloatTyping -> ".toString()"
-        IntegerTyping -> ".toString()"
-        is IntegerWithSpecialValueTyping -> ".integerValue.toString()"
+        BooleanTyping -> {
+            ".toString()"
+        }
+
+        is EnumTyping -> {
+            ".stringValue"
+        }
+
+        FloatTyping -> {
+            ".toString()"
+        }
+
+        IntegerTyping -> {
+            ".toString()"
+        }
+
+        is IntegerWithSpecialValueTyping -> {
+            ".integerValue.toString()"
+        }
+
         is ListOfTypings -> {
             val mapValue: String =
                 when (typing) {
@@ -56,7 +86,10 @@ internal fun Typing.asString(): String =
                 }
             ".joinToString(\"${if (delimiter == "\n") "\\n" else delimiter}\")$mapValue"
         }
-        else -> ""
+
+        else -> {
+            ""
+        }
     }
 
 internal fun Typing.buildCustomType(

@@ -68,12 +68,18 @@ private suspend fun ActionCoords.fetchTypingMetadata(
             logger.info { "  ... types from action $url" }
             val response = httpClient.get(url)
             when (response.status) {
-                HttpStatusCode.OK -> response.bodyAsText()
+                HttpStatusCode.OK -> {
+                    response.bodyAsText()
+                }
+
                 HttpStatusCode.NotFound -> {
                     logger.info { "  ... types from action were not found: $url" }
                     null
                 }
-                else -> throw IOException("Failed fetching from $url")
+
+                else -> {
+                    throw IOException("Failed fetching from $url")
+                }
             }
         } ?: return null
 
@@ -124,12 +130,18 @@ private suspend fun fetchTypingsFromUrl(
     val response = httpClient.get(url)
     val typesMetadataYml =
         when (response.status) {
-            HttpStatusCode.OK -> response.bodyAsText()
+            HttpStatusCode.OK -> {
+                response.bodyAsText()
+            }
+
             HttpStatusCode.NotFound -> {
                 logger.info { "  ... types from catalog were not found: $url" }
                 return null
             }
-            else -> throw IOException("Failed fetching from $url")
+
+            else -> {
+                throw IOException("Failed fetching from $url")
+            }
         }
     return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
@@ -143,8 +155,14 @@ private fun ActionCoords.toMajorVersion(): ActionCoords = this.copy(version = th
 
 private fun ActionType.toTyping(fieldName: String): Typing =
     when (this.type) {
-        ActionTypeEnum.String -> StringTyping
-        ActionTypeEnum.Boolean -> BooleanTyping
+        ActionTypeEnum.String -> {
+            StringTyping
+        }
+
+        ActionTypeEnum.Boolean -> {
+            BooleanTyping
+        }
+
         ActionTypeEnum.Integer -> {
             if (this.namedValues.isEmpty()) {
                 IntegerTyping
@@ -155,17 +173,24 @@ private fun ActionType.toTyping(fieldName: String): Typing =
                 )
             }
         }
-        ActionTypeEnum.Float -> FloatTyping
-        ActionTypeEnum.List ->
+
+        ActionTypeEnum.Float -> {
+            FloatTyping
+        }
+
+        ActionTypeEnum.List -> {
             ListOfTypings(
                 delimiter = separator,
                 typing = listItem?.toTyping(fieldName) ?: error("Lists should have list-item set!"),
             )
-        ActionTypeEnum.Enum ->
+        }
+
+        ActionTypeEnum.Enum -> {
             EnumTyping(
                 items = allowedValues,
                 typeName = name?.toPascalCase() ?: fieldName.toPascalCase(),
             )
+        }
     }
 
 private inline fun <reified T> Yaml.decodeFromStringOrDefaultIfEmpty(

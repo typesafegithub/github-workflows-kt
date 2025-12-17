@@ -47,14 +47,26 @@ internal fun Any.toYaml(): String {
 
 private fun Any?.elementToYaml(emitter: Emitter) {
     when (this) {
-        is Map<*, *> -> this.mapToYaml(emitter)
-        is List<*> -> this.listToYaml(emitter)
-        is String, is Int, is Float, is Double, is Boolean, null -> this.scalarToYaml(emitter)
+        is Map<*, *> -> {
+            this.mapToYaml(emitter)
+        }
+
+        is List<*> -> {
+            this.listToYaml(emitter)
+        }
+
+        is String, is Int, is Float, is Double, is Boolean, null -> {
+            this.scalarToYaml(emitter)
+        }
+
         is StringWithComment -> {
             this.value.scalarToYaml(emitter)
             (" " + this.comment).commentToYaml(emitter)
         }
-        else -> error("Serializing $this is not supported!")
+
+        else -> {
+            error("Serializing $this is not supported!")
+        }
     }
 }
 
