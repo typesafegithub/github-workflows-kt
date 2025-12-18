@@ -10,7 +10,7 @@ group = rootProject.group
 version = rootProject.version
 
 dependencies {
-    api("io.arrow-kt:arrow-core:2.2.1")
+    api("io.arrow-kt:arrow-core:2.2.1.1")
     // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
     // note: see https://youtrack.jetbrains.com/issue/KT-67618
     api("io.ktor:ktor-client-core:3.3.3")
