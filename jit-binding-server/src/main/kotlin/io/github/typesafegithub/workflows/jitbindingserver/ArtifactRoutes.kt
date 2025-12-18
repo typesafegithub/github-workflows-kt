@@ -25,10 +25,12 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 private val logger = logger { }
 
-typealias CachedVersionArtifact = VersionArtifacts?
+typealias CachedVersionArtifact = Optional<VersionArtifacts>
 
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
@@ -120,7 +122,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     if (refresh) {
         bindingsCache.invalidate(actionCoords)
     }
-    return bindingsCache.get(actionCoords)
+    return bindingsCache.get(actionCoords).getOrNull()
 }
 
 private fun PrometheusMeterRegistry.incrementArtifactCounter(
