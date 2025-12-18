@@ -26,6 +26,7 @@ import io.micrometer.core.instrument.Tag
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import java.time.Duration
+import java.util.Optional
 import kotlin.time.Duration.Companion.hours
 
 private val logger =
@@ -109,7 +110,7 @@ private fun buildBindingsCache(
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache { buildVersionArtifacts(it, httpClient).toCachedVersionArtifact() }
+        .asLoadingCache { Optional.ofNullable(buildVersionArtifacts(it, httpClient)) }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
