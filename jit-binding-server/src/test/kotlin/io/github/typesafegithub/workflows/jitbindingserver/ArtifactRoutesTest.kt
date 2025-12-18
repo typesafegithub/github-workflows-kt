@@ -88,11 +88,9 @@ class ArtifactRoutesTest :
                     // Then
                     response2.status shouldBe HttpStatusCode.NotFound
 
-                    // This test shows the current behavior where requesting a resource
-                    // that doesn't exist twice in a row causes calling the version artifact
-                    // twice.
-                    // Fix in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2160
-                    verify(exactly = 2) { mockBuildVersionArtifacts(any(), any()) }
+                    // The fact that the resource doesn't exist is cached, and the
+                    // resource generation logic isn't called in the second request.
+                    verify(exactly = 1) { mockBuildVersionArtifacts(any(), any()) }
                 }
             }
 

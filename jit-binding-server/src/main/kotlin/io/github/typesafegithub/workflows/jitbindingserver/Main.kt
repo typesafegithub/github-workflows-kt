@@ -109,7 +109,7 @@ private fun buildBindingsCache(
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it, httpClient) }
+        .asLoadingCache { buildVersionArtifacts(it, httpClient).toCachedVersionArtifact() }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(

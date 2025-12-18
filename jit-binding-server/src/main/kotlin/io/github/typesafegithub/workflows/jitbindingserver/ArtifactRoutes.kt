@@ -28,8 +28,6 @@ import kotlinx.coroutines.launch
 
 private val logger = logger { }
 
-typealias CachedVersionArtifact = VersionArtifacts?
-
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
 fun Routing.artifactRoutes(
@@ -120,7 +118,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     if (refresh) {
         bindingsCache.invalidate(actionCoords)
     }
-    return bindingsCache.get(actionCoords)
+    return bindingsCache.get(actionCoords).toNullableVersionArtifacts()
 }
 
 private fun PrometheusMeterRegistry.incrementArtifactCounter(
