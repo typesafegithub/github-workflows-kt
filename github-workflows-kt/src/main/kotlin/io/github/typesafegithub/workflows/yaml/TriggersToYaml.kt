@@ -152,11 +152,15 @@ private fun Schedule.toAdditionalYaml(): List<Map<String, String>> = triggers.ma
 
 private fun WorkflowDispatch.toAdditionalYaml(): Map<String, Any?> =
     when {
-        inputs.isEmpty() -> emptyMap()
-        else ->
+        inputs.isEmpty() -> {
+            emptyMap()
+        }
+
+        else -> {
             mapOf(
                 "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
             )
+        }
     }
 
 private fun WorkflowDispatch.Input.toYaml(): Map<String, Any> =
@@ -170,13 +174,17 @@ private fun WorkflowDispatch.Input.toYaml(): Map<String, Any> =
 
 private fun WorkflowCall.toAdditionalYaml(): Map<String, Any?> =
     when {
-        inputs.isEmpty() -> emptyMap()
-        else ->
+        inputs.isEmpty() -> {
+            emptyMap()
+        }
+
+        else -> {
             mapOfNotNullValues(
                 "inputs" to inputs.mapValues { (_, value) -> value.toYaml() },
                 "outputs" to outputs?.mapValues { (_, value) -> value.toYaml() },
                 "secrets" to secrets?.mapValues { (_, value) -> value.toYaml() },
             )
+        }
     }
 
 private fun WorkflowCall.Input.toYaml(): Map<String, Any> =

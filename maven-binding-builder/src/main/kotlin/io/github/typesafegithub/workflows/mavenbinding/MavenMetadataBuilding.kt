@@ -7,21 +7,24 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.model.Version
+import io.micrometer.core.instrument.MeterRegistry
 import java.time.format.DateTimeFormatter
 
 private val logger = logger { }
 
 internal suspend fun ActionCoords.buildMavenMetadataFile(
     githubAuthToken: String,
+    meterRegistry: MeterRegistry? = null,
     fetchAvailableVersions: suspend (
         owner: String,
         name: String,
         githubAuthToken: String?,
+        meterRegistry: MeterRegistry?,
     ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
     prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit = {},
 ): String? {
     val availableVersions =
-        fetchAvailableVersions(owner, name, githubAuthToken)
+        fetchAvailableVersions(owner, name, githubAuthToken, meterRegistry)
             .getOrElse {
                 logger.error { it }
                 emptyList()

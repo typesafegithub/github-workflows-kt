@@ -19,7 +19,7 @@ class GettingStartedSnippets :
         #!/usr/bin/env kotlin
 
         @file:Repository("https://repo.maven.apache.org/maven2/")
-        @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.6.1-SNAPSHOT")
+        @file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.7.1-SNAPSHOT")
         @file:Repository("https://bindings.krzeminski.it")
         @file:DependsOn("actions:checkout:v4")
 

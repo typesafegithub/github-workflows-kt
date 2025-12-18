@@ -63,22 +63,62 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
 @Suppress("CyclomaticComplexMethod")
 public fun RunnerType.toYaml(): Any =
     when (this) {
-        is Custom -> runsOn
-        is Labelled -> labels.toList()
-        is RunnerType.Group ->
+        is Custom -> {
+            runsOn
+        }
+
+        is Labelled -> {
+            labels.toList()
+        }
+
+        is RunnerType.Group -> {
             mapOfNotNullValues(
                 "group" to name,
                 "labels" to labels?.toList(),
             )
-        UbuntuLatest -> "ubuntu-latest"
-        WindowsLatest -> "windows-latest"
-        MacOSLatest -> "macos-latest"
-        Windows2025 -> "windows-2025"
-        Windows2022 -> "windows-2022"
-        Windows2019 -> "windows-2019"
-        Windows2016 -> "windows-2016"
-        Ubuntu2004 -> "ubuntu-20.04"
-        Ubuntu1804 -> "ubuntu-18.04"
-        MacOS11 -> "macos-11"
-        MacOS1015 -> "macos-10.15"
+        }
+
+        UbuntuLatest -> {
+            "ubuntu-latest"
+        }
+
+        WindowsLatest -> {
+            "windows-latest"
+        }
+
+        MacOSLatest -> {
+            "macos-latest"
+        }
+
+        Windows2025 -> {
+            "windows-2025"
+        }
+
+        Windows2022 -> {
+            "windows-2022"
+        }
+
+        Windows2019 -> {
+            "windows-2019"
+        }
+
+        Windows2016 -> {
+            "windows-2016"
+        }
+
+        Ubuntu2004 -> {
+            "ubuntu-20.04"
+        }
+
+        Ubuntu1804 -> {
+            "ubuntu-18.04"
+        }
+
+        MacOS11 -> {
+            "macos-11"
+        }
+
+        MacOS1015 -> {
+            "macos-10.15"
+        }
     }

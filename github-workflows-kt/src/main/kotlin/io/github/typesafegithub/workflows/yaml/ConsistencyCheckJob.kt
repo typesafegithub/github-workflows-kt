@@ -5,11 +5,15 @@ import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import io.github.typesafegithub.workflows.dsl.WorkflowBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.internal.relativeToAbsolute
 import java.nio.file.Path
 import kotlin.io.path.invariantSeparatorsPathString
+import kotlin.reflect.KParameter
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.jvm.isAccessible
 
 @Suppress("LongMethod")
 internal fun WorkflowBuilder.consistencyCheckJob(
@@ -37,6 +41,23 @@ internal fun WorkflowBuilder.consistencyCheckJob(
         condition = consistencyCheckJobConfig.condition,
         env = consistencyCheckJobConfig.env,
     ) {
+        val checkoutActionVersion =
+            when (consistencyCheckJobConfig.checkoutActionVersion) {
+                CheckoutActionVersionSource.BundledWithLibrary -> {
+                    "v4"
+                }
+
+                is CheckoutActionVersionSource.Given -> {
+                    consistencyCheckJobConfig.checkoutActionVersion.version
+                }
+
+                is CheckoutActionVersionSource.InferFromClasspath -> {
+                    inferCheckoutActionVersionFromClasspath(
+                        consistencyCheckJobConfig.checkoutActionVersion.checkoutActionClassFQN,
+                    )
+                }
+            }
+
         uses(
             name = "Check out",
             // Since this action is used in a simple way, and we actually don't want to update the version
@@ -46,7 +67,7 @@ internal fun WorkflowBuilder.consistencyCheckJob(
                 CustomAction(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v4",
+                    actionVersion = checkoutActionVersion,
                 ),
         )
 
@@ -98,4 +119,27 @@ internal fun WorkflowBuilder.consistencyCheckJob(
             command = "git diff --exit-code '$targetFilePath'",
         )
     }
+}
+
+private fun inferCheckoutActionVersionFromClasspath(checkoutActionClassFQN: String): String {
+    val clazz: Class<*> =
+        try {
+            Class.forName(checkoutActionClassFQN)
+        } catch (_: ClassNotFoundException) {
+            error(
+                "actions/checkout is not found in the classpath! " +
+                    "Either add a dependency on it (`@file:DependsOn(\"actions:checkout:<version>\")`), " +
+                    "or don't use CheckoutActionVersionSource.InferFromClasspath()",
+            )
+        } as Class<*>
+    // It's easier to call the primary constructor, even though it's private, because
+    // the public constructor requires named arguments, and I'm not sure how to call
+    // it with these.
+    val constructor =
+        clazz.kotlin.primaryConstructor!!.also {
+            it.isAccessible = true
+        }
+    val args: Map<KParameter, Any?> = constructor.parameters.associateWith { null }
+    val bindingObject = constructor.callBy(args) as RegularAction<*>
+    return bindingObject.actionVersion
 }

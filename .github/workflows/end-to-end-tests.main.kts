@@ -1,9 +1,9 @@
 #!/usr/bin/env kotlin
 @file:Repository("file://~/.m2/repository/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.6.1-SNAPSHOT")
-@file:DependsOn("io.github.typesafegithub:action-updates-checker:3.6.1-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.7.1-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:action-updates-checker:3.7.1-SNAPSHOT")
 @file:Repository("https://bindings.krzeminski.it")
-@file:DependsOn("actions:checkout:v5")
+@file:DependsOn("actions:checkout:v6")
 @file:DependsOn("actions:github-script:v8")
 @file:DependsOn("actions:setup-java:v5")
 @file:DependsOn("actions:setup-python:v6")
@@ -28,6 +28,7 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
@@ -48,9 +49,11 @@ workflow(
         PullRequest(),
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        useLocalBindingsServerAsFallback = true,
         env = mapOf(
             "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
         ),
+        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
         },
@@ -102,7 +105,7 @@ workflow(
                 action = CustomAction(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v5",
+                    actionVersion = "v6",
                 ),
             )
 
@@ -129,7 +132,7 @@ workflow(
                 action = object : RegularAction<Action.Outputs>(
                     actionOwner = "actions",
                     actionName = "checkout",
-                    actionVersion = "v5",
+                    actionVersion = "v6",
                 ) {
                     override fun toYamlArguments() =
                         linkedMapOf(
@@ -290,6 +293,8 @@ workflow(
         PullRequest(),
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+        useLocalBindingsServerAsFallback = true,
+        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
         },
