@@ -6,6 +6,7 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/typesafegithub/github-workflows-kt)](https://star-history.com/#typesafegithub/github-workflows-kt&Date)
 [![License](https://img.shields.io/github/license/typesafegithub/github-workflows-kt)](https://github.com/typesafegithub/github-workflows-kt/blob/main/LICENSE)
 [![github-workflows-kt @ kotlinlang.slack.com](https://img.shields.io/static/v1?label=kotlinlang&message=github-workflows-kt&color=blue&logo=slack)](https://kotlinlang.slack.com/archives/C02UUATR7RC)
+[![Server status](https://img.shields.io/badge/server-status-orange)](https://stats.uptimerobot.com/kfnd554qER)
 
 [github-workflows-kt](https://github.com/typesafegithub/github-workflows-kt/) is a tool for generating
 [GitHub Actions workflow](https://docs.github.com/en/actions/using-workflows) YAML files in a **type-safe** script, helping you to
