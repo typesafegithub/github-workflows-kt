@@ -12,70 +12,72 @@ import io.ktor.http.ParametersBuilder
 class ActionCoordsTest :
     FunSpec(
         {
-            test("extractActionCoords parses owner/name with version and no path, FULL by default") {
-                val parameters = createParameters(owner = "o", name = "act", version = "v1")
+            context("extractActionCoords") {
+                test("parses owner/name with version and no path, FULL by default") {
+                    val parameters = createParameters(owner = "o", name = "act", version = "v1")
 
-                parameters.extractActionCoords(true) shouldBe
-                    ActionCoords(
-                        owner = "o",
-                        name = "act",
-                        version = "v1",
-                        significantVersion = FULL,
-                        path = null,
-                    )
-            }
+                    parameters.extractActionCoords(extractVersion = true) shouldBe
+                        ActionCoords(
+                            owner = "o",
+                            name = "act",
+                            version = "v1",
+                            significantVersion = FULL,
+                            path = null,
+                        )
+                }
 
-            test("extractActionCoords parses owner/name with path and significant version suffix") {
-                val parameters = createParameters(owner = "o", name = "act__p1__p2___major", version = "v9")
+                test("parses owner/name with path and significant version suffix") {
+                    val parameters = createParameters(owner = "o", name = "act__p1__p2___major", version = "v9")
 
-                parameters.extractActionCoords(true) shouldBe
-                    ActionCoords(
-                        owner = "o",
-                        name = "act",
-                        version = "v9",
-                        significantVersion = MAJOR,
-                        path = "p1/p2",
-                    )
-            }
+                    parameters.extractActionCoords(extractVersion = true) shouldBe
+                        ActionCoords(
+                            owner = "o",
+                            name = "act",
+                            version = "v9",
+                            significantVersion = MAJOR,
+                            path = "p1/p2",
+                        )
+                }
 
-            test("when extractVersion=false, version field is set to 'irrelevant'") {
-                val parameters = createParameters(owner = "o", name = "act___minor")
+                test("when extractVersion=false, version field is set to 'irrelevant'") {
+                    val parameters = createParameters(owner = "o", name = "act___minor")
 
-                parameters.extractActionCoords(false) shouldBe
-                    ActionCoords(
-                        owner = "o",
-                        name = "act",
-                        version = "irrelevant",
-                        significantVersion = MINOR,
-                        path = null,
-                    )
-            }
+                    parameters.extractActionCoords(extractVersion = false) shouldBe
+                        ActionCoords(
+                            owner = "o",
+                            name = "act",
+                            version = "irrelevant",
+                            significantVersion = MINOR,
+                            path = null,
+                        )
+                }
 
-            test("unknown significant version part falls back to FULL") {
-                val parameters = createParameters(owner = "o", name = "act___weird")
+                test("unknown significant version part falls back to FULL") {
+                    val parameters = createParameters(owner = "o", name = "act___weird")
 
-                parameters.extractActionCoords(false) shouldBe
-                    ActionCoords(
-                        owner = "o",
-                        name = "act",
-                        version = "irrelevant",
-                        significantVersion = FULL,
-                        path = null,
-                    )
-            }
+                    parameters.extractActionCoords(extractVersion = false) shouldBe
+                        ActionCoords(
+                            owner = "o",
+                            name = "act",
+                            version = "irrelevant",
+                            significantVersion = FULL,
+                            path = null,
+                        )
+                }
 
-            test("handles name with underscores/hyphens and path segments") {
-                val parameters =
-                    createParameters(owner = "o", name = "my_action-name__dir_one__dir-two___minor", version = "v2")
+                test("handles name with underscores/hyphens and path segments") {
+                    val parameters =
+                        createParameters(owner = "o", name = "my_action-name__dir_one__dir-two___minor", version = "v2")
 
-                parameters.extractActionCoords(true) shouldBe
-                    ActionCoords(
-                        owner = "o",
-                        name = "my_action-name",
-                        version = "v2",
-                        significantVersion = MINOR,
-                        path = "dir_one/dir-two",
-                    )
+                    parameters.extractActionCoords(extractVersion = true) shouldBe
+                        ActionCoords(
+                            owner = "o",
+                            name = "my_action-name",
+                            version = "v2",
+                            significantVersion = MINOR,
+                            path = "dir_one/dir-two",
+                        )
+                }
             }
         },
     )
