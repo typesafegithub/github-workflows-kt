@@ -1,9 +1,9 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo.maven.apache.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.6.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.7.0")
 
 @file:Repository("https://bindings.krzeminski.it")
-@file:DependsOn("actions:checkout:v5")
+@file:DependsOn("actions:checkout:v6")
 @file:DependsOn("gradle:actions__setup-gradle:v5")
 @file:DependsOn("fwilhe2:setup-kotlin:v1")
 
@@ -19,6 +19,7 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import java.net.URI
 import java.net.ConnectException
@@ -43,6 +44,7 @@ workflow(
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
         useLocalBindingsServerAsFallback = true,
+        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
     ),
     sourceFile = __FILE__,
 ) {

@@ -7,10 +7,13 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.CommitHa
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
+import kotlinx.io.IOException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
-import java.io.IOException
-import java.net.URI
 
 private val logger = logger { }
 
@@ -45,9 +48,9 @@ private fun ActionCoords.actionYmlUrl(gitRef: String) =
 private fun ActionCoords.actionYamlUrl(gitRef: String) =
     "https://raw.githubusercontent.com/$owner/$name/$gitRef$subName/action.yaml"
 
-public fun ActionCoords.fetchMetadata(
+public suspend fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
-    fetchUri: (URI) -> String = ::fetchUri,
+    httpClient: HttpClient,
 ): Metadata? {
     val gitRef =
         when (metadataRevision) {
@@ -58,16 +61,15 @@ public fun ActionCoords.fetchMetadata(
 
     return list
         .firstNotNullOfOrNull { url ->
-            try {
-                logger.info { "  ... from $url" }
-                fetchUri(URI(url))
-            } catch (e: IOException) {
-                null
+            logger.info { "  ... from $url" }
+            val response = httpClient.get(url)
+            when (response.status) {
+                HttpStatusCode.OK -> response.bodyAsText()
+                HttpStatusCode.NotFound -> null
+                else -> throw IOException("Failed fetching from $url")
             }
         }?.let { yaml.decodeFromString(it) }
 }
-
-internal fun fetchUri(uri: URI): String = uri.toURL().readText()
 
 private val yaml =
     Yaml(

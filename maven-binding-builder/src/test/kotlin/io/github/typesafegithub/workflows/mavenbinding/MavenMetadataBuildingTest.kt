@@ -9,6 +9,7 @@ import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.micrometer.core.instrument.MeterRegistry
 import java.time.ZonedDateTime
 
 class MavenMetadataBuildingTest :
@@ -26,7 +27,8 @@ class MavenMetadataBuildingTest :
                 String,
                 String,
                 String?,
-            ) -> Either<String, List<Version>> = { _, _, _ ->
+                MeterRegistry?,
+            ) -> Either<String, List<Version>> = { _, _, _, _ ->
                 listOf(
                     Version(version = "v3-beta", dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") }),
                     Version(version = "v2", dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") }),
@@ -70,7 +72,8 @@ class MavenMetadataBuildingTest :
                 String,
                 String,
                 String?,
-            ) -> Either<String, List<Version>> = { _, _, _ ->
+                MeterRegistry?,
+            ) -> Either<String, List<Version>> = { _, _, _, _ ->
                 listOf(
                     Version(version = "v1.1", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
                     Version(version = "v1.1.0", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
@@ -95,7 +98,8 @@ class MavenMetadataBuildingTest :
                 String,
                 String,
                 String?,
-            ) -> Either<String, List<Version>> = { _, _, _ ->
+                MeterRegistry?,
+            ) -> Either<String, List<Version>> = { _, _, _, _ ->
                 emptyList<Version>().right()
             }
 
@@ -115,7 +119,8 @@ class MavenMetadataBuildingTest :
                     String,
                     String,
                     String?,
-                ) -> Either<String, List<Version>> = { owner, name, _ ->
+                    MeterRegistry?,
+                ) -> Either<String, List<Version>> = { owner, name, _, _ ->
                     listOf(
                         Version(version = "v3-beta", dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") }),
                         Version(version = "v2", dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") }),

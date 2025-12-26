@@ -10,7 +10,7 @@ plugins {
     buildsrc.convention.`duplicate-versions`
 
     kotlin("plugin.serialization")
-    id("com.google.devtools.ksp") version "2.3.1"
+    id("com.google.devtools.ksp") version "2.3.4"
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
@@ -26,10 +26,11 @@ dependencies {
     implementation("it.krzeminski:snakeyaml-engine-kmp:4.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation(kotlin("reflect"))
     implementation(projects.sharedInternal)
     ksp(projects.codeGenerator)
 
-    testImplementation("dev.zacsweers.kctfork:core:0.11.0")
+    testImplementation("dev.zacsweers.kctfork:core:0.12.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))

@@ -8,6 +8,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.testing.testApplication
+import io.micrometer.core.instrument.MeterRegistry
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -20,12 +21,12 @@ class MetadataRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildPackageArtifacts = { _, _, _ ->
+                            buildPackageArtifacts = { _, _, _, _ ->
                                 mapOf("maven-metadata.xml" to "Some XML contents")
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = {
+                            buildVersionArtifacts = { _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -48,12 +49,12 @@ class MetadataRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildPackageArtifacts = { _, _, _ ->
+                            buildPackageArtifacts = { _, _, _, _ ->
                                 emptyMap()
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = {
+                            buildVersionArtifacts = { _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -75,12 +76,12 @@ class MetadataRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildPackageArtifacts = { _, _, _ ->
+                            buildPackageArtifacts = { _, _, _, _ ->
                                 error("An internal error occurred!")
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = {
+                            buildVersionArtifacts = { _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -106,9 +107,10 @@ class MetadataRoutesTest :
                                 ActionCoords,
                                 String,
                                 (Collection<ActionCoords>) -> Unit,
+                                MeterRegistry?,
                             ) -> Map<String, String>,
                         >()
-                    every { mockBuildPackageArtifacts(any(), any(), any()) } throws
+                    every { mockBuildPackageArtifacts(any(), any(), any(), any()) } throws
                         Exception("An internal error occurred!") andThen
                         mapOf("maven-metadata.xml" to "Some XML contents")
                     application {
@@ -116,7 +118,7 @@ class MetadataRoutesTest :
                             buildPackageArtifacts = mockBuildPackageArtifacts,
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = {
+                            buildVersionArtifacts = { _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -135,7 +137,7 @@ class MetadataRoutesTest :
                     // Then
                     response2.status shouldBe HttpStatusCode.OK
 
-                    verify(exactly = 2) { mockBuildPackageArtifacts(any(), any(), any()) }
+                    verify(exactly = 2) { mockBuildPackageArtifacts(any(), any(), any(), any()) }
                 }
             }
         }

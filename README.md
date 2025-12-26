@@ -2,11 +2,11 @@
 ![Logo white](images/Logo-Black.svg#gh-light-mode-only)
 
 <!-- maven coordinates -->
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.typesafegithub/github-workflows-kt/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.typesafegithub/github-workflows-kt)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![GitHub Repo stars](https://img.shields.io/github/stars/typesafegithub/github-workflows-kt)](https://star-history.com/#typesafegithub/github-workflows-kt&Date)
 [![License](https://img.shields.io/github/license/typesafegithub/github-workflows-kt)](https://github.com/typesafegithub/github-workflows-kt/blob/main/LICENSE)
 [![github-workflows-kt @ kotlinlang.slack.com](https://img.shields.io/static/v1?label=kotlinlang&message=github-workflows-kt&color=blue&logo=slack)](https://kotlinlang.slack.com/archives/C02UUATR7RC)
+[![Server status](https://img.shields.io/badge/server-status-orange)](https://stats.uptimerobot.com/kfnd554qER)
 
 [github-workflows-kt](https://github.com/typesafegithub/github-workflows-kt/) is a tool for generating
 [GitHub Actions workflow](https://docs.github.com/en/actions/using-workflows) YAML files in a **type-safe** script, helping you to

@@ -10,6 +10,10 @@ import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.github.typesafegithub.workflows.shared.internal.getGithubAuthToken
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpSend
+import io.ktor.client.plugins.plugin
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
@@ -17,9 +21,12 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.routing
+import io.micrometer.core.instrument.MeterRegistry
+import io.micrometer.core.instrument.Tag
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import java.time.Duration
+import java.util.Optional
 import kotlin.time.Duration.Companion.hours
 
 private val logger =
@@ -60,11 +67,30 @@ fun main() {
 }
 
 fun Application.appModule(
-    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
-    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
+    buildPackageArtifacts: suspend (
+        ActionCoords,
+        String,
+        (Collection<ActionCoords>) -> Unit,
+        MeterRegistry,
+    ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ) {
-    val bindingsCache = buildBindingsCache(buildVersionArtifacts)
+    val httpClient =
+        HttpClient(CIO).apply {
+            plugin(HttpSend).intercept { request ->
+                if (request.url.host == "raw.githubusercontent.com") {
+                    val counter =
+                        prometheusRegistry.counter(
+                            "calls_to_github",
+                            listOf(Tag.of("type", "static")),
+                        )
+                    counter.increment()
+                }
+                execute(request)
+            }
+        }
+    val bindingsCache = buildBindingsCache(buildVersionArtifacts, httpClient)
     val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts, getGithubAuthToken)
     installPlugins(prometheusRegistry)
 
@@ -77,18 +103,24 @@ fun Application.appModule(
 }
 
 private fun buildBindingsCache(
-    buildVersionArtifacts: (ActionCoords) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
+    httpClient: HttpClient,
 ): LoadingCache<ActionCoords, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, CachedVersionArtifact> { buildVersionArtifacts(it) }
+        .asLoadingCache { Optional.ofNullable(buildVersionArtifacts(it, httpClient)) }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
     bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
-    buildPackageArtifacts: suspend (ActionCoords, String, (Collection<ActionCoords>) -> Unit) -> Map<String, String>,
+    buildPackageArtifacts: suspend (
+        ActionCoords,
+        String,
+        (Collection<ActionCoords>) -> Unit,
+        MeterRegistry,
+    ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
 ): LoadingCache<ActionCoords, CachedMetadataArtifact> =
     Caffeine
@@ -100,6 +132,7 @@ private fun buildMetadataCache(
                 it,
                 getGithubAuthToken(),
                 { coords -> prefetchBindingArtifacts(coords, bindingsCache) },
+                prometheusRegistry,
             )
         }
 
