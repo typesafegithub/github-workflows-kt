@@ -582,6 +582,36 @@ class GenerationTest :
                 binding.shouldContainAndMatchFile("ActionWithNoInputsWithMinorVersion_Untyped.kt")
             }
         }
+
+        test("action with comment") {
+            // given
+            val actionManifest =
+                Metadata(
+                    name = "Action with comment",
+                    description = "Do something cool",
+                    inputs =
+                        mapOf(
+                            "foo" to
+                                Input(
+                                    description = "Short description",
+                                    required = true,
+                                    default = null,
+                                ),
+                        ),
+                )
+            val coords = ActionCoords("john-smith", "action-with-comment", "v3", comment = "some-comment")
+
+            // when
+            val binding =
+                coords.generateBinding(
+                    metadataRevision = NewestForVersion,
+                    metadata = actionManifest,
+                    inputTypings = ActionTypings(inputTypings = actionManifest.allInputsAsStrings(), source = ACTION),
+                )
+
+            // then
+            binding.shouldContainAndMatchFile("ActionWithComment.kt")
+        }
     })
 
 private fun Metadata.allInputsAsStrings(): Map<String, Typing> = this.inputs.mapValues { StringTyping }

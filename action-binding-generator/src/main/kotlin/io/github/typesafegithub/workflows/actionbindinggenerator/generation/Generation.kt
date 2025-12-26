@@ -467,7 +467,11 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
                 MINOR -> coords.version.minorVersion
                 FULL -> coords.version
             },
-        )
+        ).also {
+            if (coords.comment != null) {
+                addSuperclassConstructorParameter("%S", coords.comment)
+            }
+        }
 }
 
 private val String.majorVersion get() = substringBefore('.')

@@ -19,6 +19,11 @@ fun Parameters.extractActionCoords(extractVersion: Boolean): ActionCoords {
                     .entries
                     .find { "$it" == significantVersionString }
             } ?: FULL
+    val pinToCommit =
+        nameAndPathAndSignificantVersionParts
+            .drop(1)
+            .takeIf { it.isNotEmpty() }
+            ?.single() == "commit_lenient"
     val nameAndPathParts = nameAndPath.split("__")
     val name = nameAndPathParts.first()
     val path =
@@ -26,7 +31,25 @@ fun Parameters.extractActionCoords(extractVersion: Boolean): ActionCoords {
             .drop(1)
             .joinToString("/")
             .takeUnless { it.isBlank() }
-    val version = if (extractVersion) this["version"]!! else "irrelevant"
+    val version =
+        if (extractVersion) {
+            val versionPart = this["version"]!!
+            if (pinToCommit) {
+                versionPart.split("__")[1]
+            } else {
+                versionPart
+            }
+        } else {
+            "irrelevant"
+        }
+    val comment = if (pinToCommit) this["version"]!!.split("__")[0] else null
 
-    return ActionCoords(owner, name, version, significantVersion, path)
+    return ActionCoords(
+        owner = owner,
+        name = name,
+        version = version,
+        significantVersion = significantVersion,
+        path = path,
+        comment = comment,
+    )
 }
