@@ -86,7 +86,7 @@ private fun Route.getArtifact(
     refresh: Boolean,
 ) {
     get {
-        // TODO: there'a problem with caching the artifacts under certain keys,
+        // To fix: there'a problem with caching the artifacts under certain keys,
         //   and parameters.extractActionCoords returning certain (different) ActionCoords.
         //   Because of this problem, the artifact that uses commit pinning is now not found.
         val bindingArtifacts = call.toBindingArtifacts(refresh, bindingsCache) ?: return@get call.respondNotFound()
