@@ -5,7 +5,7 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:cache:v5")
 @file:DependsOn("actions:checkout:v6")
-@file:DependsOn("actions:setup-java:v5")
+@file:DependsOn("actions:setup-java___commit_lenient:v5.0.0__dded0888837ed1f317902acf8a20df0ad188d165")
 @file:DependsOn("gradle:actions__setup-gradle:v5")
 
 @file:Import("_shared.main.kts")
