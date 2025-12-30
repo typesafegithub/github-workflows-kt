@@ -8,16 +8,16 @@ import io.kotest.matchers.shouldBe
 
 class ClassNamingTest :
     FunSpec({
-//        context("buildActionClassName") {
-//            listOf(
-//                ActionCoords("irrelevant", "some-action-name", "v2") to "SomeActionName",
-//                ActionCoords("irrelevant", "some-action-name", "v2", FULL, "subaction") to "SomeActionNameSubaction",
-//                ActionCoords("irrelevant", "some-action-name", "v2", FULL, "foo/bar/baz") to "SomeActionNameFooBarBaz",
-//                ActionCoords("irrelevant", "some-action-name", "v2", MAJOR, "foo/bar/baz") to "SomeActionNameFooBarBaz",
-//            ).forEach { (input, output) ->
-//                test("should get '$input' and produce '$output'") {
-//                    input.buildActionClassName() shouldBe output
-//                }
-//            }
-//        }
+        context("buildActionClassName") {
+            listOf(
+                ActionCoords("irrelevant", "some-action-name", "v2") to "SomeActionName",
+                ActionCoords("irrelevant", "some-action-name", "v2", FULL, "subaction") to "SomeActionNameSubaction",
+                ActionCoords("irrelevant", "some-action-name", "v2", FULL, "foo/bar/baz") to "SomeActionNameFooBarBaz",
+                ActionCoords("irrelevant", "some-action-name", "v2", MAJOR, "foo/bar/baz") to "SomeActionNameFooBarBaz",
+            ).forEach { (input, output) ->
+                test("should get '$input' and produce '$output'") {
+                    input.buildActionClassName() shouldBe output
+                }
+            }
+        }
     })
