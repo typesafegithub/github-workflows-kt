@@ -30,6 +30,7 @@
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupNode
+import io.github.typesafegithub.workflows.actions.actions.SetupPython
 import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.gradle.ActionsDependencySubmission_Untyped
@@ -44,10 +45,11 @@ println(AlwaysUntypedActionForTests_Untyped(foobar_Untyped = "baz"))
 println(ActionsSetupGradle())
 println(Cache(path = listOf("some-path"), key = "some-key"))
 println(SetupNode())
-println(SetupPython())
 
 ActionsDependencySubmission_Untyped().actionVersion shouldBe "v3"
 ActionsWrapperValidation().actionVersion shouldBe "v4.2"
 
 // Ensure that 'copy(...)' method is exposed.
 Checkout(fetchTags = false).copy(fetchTags = true)
+
+SetupPython().actionVersion shouldBe "e797f83bcb11b83ae66e0230d6156d7c80228e7c
