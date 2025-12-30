@@ -24,9 +24,13 @@
 // Always untyped action.
 @file:DependsOn("typesafegithub:always-untyped-action-for-tests:v1")
 
+// Action version pinned to a commit.
+@file:DependsOn("actions:setup-python___commit_lenient:v6.0.0__e797f83bcb11b83ae66e0230d6156d7c80228e7c")
+
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupNode
+import io.github.typesafegithub.workflows.actions.actions.SetupPython
 import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.gradle.ActionsDependencySubmission_Untyped
@@ -47,3 +51,5 @@ ActionsWrapperValidation().actionVersion shouldBe "v4.2"
 
 // Ensure that 'copy(...)' method is exposed.
 Checkout(fetchTags = false).copy(fetchTags = true)
+
+SetupPython().actionVersion shouldBe "e797f83bcb11b83ae66e0230d6156d7c80228e7c"

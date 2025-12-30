@@ -20,6 +20,11 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
                     .entries
                     .find { "$it" == significantVersionString }
             } ?: FULL
+    val pinToCommit =
+        nameAndPathAndSignificantVersionParts
+            .drop(1)
+            .takeIf { it.isNotEmpty() }
+            ?.single() == "commit_lenient"
     val nameAndPathParts = nameAndPath.split("__")
     val name = nameAndPathParts.first()
     val path =
@@ -27,11 +32,32 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
             .drop(1)
             .joinToString("/")
             .takeUnless { it.isBlank() }
-    val version = if (extractVersion) this["version"]!! else "irrelevant"
+    val version =
+        if (extractVersion) {
+            val versionPart = this["version"]!!
+            if (pinToCommit) {
+                versionPart.split("__")[1]
+            } else {
+                versionPart
+            }
+        } else {
+            "irrelevant"
+        }
+    val comment = if (pinToCommit && extractVersion) this["version"]!!.split("__")[0] else null
+    val versionForTypings = if (extractVersion) this["version"]!!.split("__")[0] else "irrelevant"
 
     return BindingsServerRequest(
         rawName = this["name"]!!,
         rawVersion = this["version"],
-        actionCoords = ActionCoords(owner, name, version, significantVersion, path),
+        actionCoords =
+            ActionCoords(
+                owner = owner,
+                name = name,
+                version = version,
+                versionForTypings = versionForTypings,
+                significantVersion = significantVersion,
+                path = path,
+                comment = comment,
+            ),
     )
 }
