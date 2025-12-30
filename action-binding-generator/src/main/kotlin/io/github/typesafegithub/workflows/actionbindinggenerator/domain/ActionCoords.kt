@@ -16,7 +16,14 @@ public data class ActionCoords(
     val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
     val comment: String? = null,
-    val versionForExtractingTypings: String = version,
+    /**
+     * Contrary to [version] which is used in the YAML to call the action,
+     * [versionForTypings] is used internally to check the typings, where
+     * using [version] wouldn't provide desired typings (e.g. when it's
+     * a commit hash), then we can provide [versionForTypings] for which
+     * the typings are defined.
+     */
+    val versionForTypings: String = version,
 )
 
 /**

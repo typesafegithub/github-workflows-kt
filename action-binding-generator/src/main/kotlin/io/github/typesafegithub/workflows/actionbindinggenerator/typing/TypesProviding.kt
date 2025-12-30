@@ -60,7 +60,7 @@ private suspend fun ActionCoords.fetchTypingMetadata(
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
-            NewestForVersion -> this.versionForExtractingTypings
+            NewestForVersion -> this.versionForTypings
         }
     val list = listOf(actionTypesYmlUrl(gitRef), actionTypesYamlUrl(gitRef))
     val typesMetadataYaml =
@@ -105,7 +105,7 @@ private suspend fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(httpClie
             else -> throw IOException("Failed fetching from $metadataUrl")
         }
     val metadata = yaml.decodeFromString<CatalogMetadata>(metadataYml)
-    val requestedVersionAsInt = this.versionForExtractingTypings.versionToIntOrNull() ?: return null
+    val requestedVersionAsInt = this.versionForTypings.versionToIntOrNull() ?: return null
     val fallbackVersion =
         metadata.versionsWithTypings
             .filter { it.versionToInt() < requestedVersionAsInt }
@@ -152,7 +152,7 @@ internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
     } ?: emptyMap()
 
 private fun ActionCoords.toMajorVersion(): ActionCoords =
-    this.copy(version = this.versionForExtractingTypings.substringBefore("."))
+    this.copy(version = this.versionForTypings.substringBefore("."))
 
 private fun ActionType.toTyping(fieldName: String): Typing =
     when (this.type) {

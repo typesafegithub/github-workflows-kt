@@ -44,7 +44,7 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
             "irrelevant"
         }
     val comment = if (pinToCommit && extractVersion) this["version"]!!.split("__")[0] else null
-    val versionForExtractingTypings = if (extractVersion) this["version"]!!.split("__")[0] else "irrelevant"
+    val versionForTypings = if (extractVersion) this["version"]!!.split("__")[0] else "irrelevant"
 
     return BindingsServerRequest(
         rawName = this["name"]!!,
@@ -54,7 +54,7 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
                 owner = owner,
                 name = name,
                 version = version,
-                versionForExtractingTypings = versionForExtractingTypings,
+                versionForTypings = versionForTypings,
                 significantVersion = significantVersion,
                 path = path,
                 comment = comment,

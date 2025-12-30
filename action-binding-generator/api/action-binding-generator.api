@@ -17,7 +17,7 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/dom
 	public final fun getPath ()Ljava/lang/String;
 	public final fun getSignificantVersion ()Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;
 	public final fun getVersion ()Ljava/lang/String;
-	public final fun getVersionForExtractingTypings ()Ljava/lang/String;
+	public final fun getVersionForTypings ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
