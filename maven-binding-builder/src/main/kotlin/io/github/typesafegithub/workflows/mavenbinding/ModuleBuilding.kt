@@ -1,8 +1,6 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
-
-internal fun ActionCoords.buildModuleFile(
+internal fun BindingsServerRequest.buildModuleFile(
     mainJarSize: Int,
     mainJarMd5Checksum: String,
     mainJarSha1Checksum: String,
@@ -17,9 +15,9 @@ internal fun ActionCoords.buildModuleFile(
     {
       "formatVersion": "1.1",
       "component": {
-        "group": "$owner",
-        "module": "$mavenName",
-        "version": "$version",
+        "group": "${actionCoords.owner}",
+        "module": "${actionCoords.name}",
+        "version": "${actionCoords.version}",
         "attributes": {
           "org.gradle.status": "release"
         }
@@ -43,8 +41,8 @@ internal fun ActionCoords.buildModuleFile(
           },
           "files": [
             {
-              "name": "$mavenName-$version.jar",
-              "url": "$mavenName-$version.jar",
+              "name": "$rawName-$rawVersion.jar",
+              "url": "$rawName-$rawName.jar",
               "size": $mainJarSize,
               "sha512": "$mainJarSha512Checksum",
               "sha256": "$mainJarSha256Checksum",
@@ -75,8 +73,8 @@ internal fun ActionCoords.buildModuleFile(
           ],
           "files": [
             {
-              "name": "$mavenName-$version.jar",
-              "url": "$mavenName-$version.jar",
+              "name": "$rawName-$rawVersion.jar",
+              "url": "$rawName-$rawVersion.jar",
               "size": $mainJarSize,
               "sha512": "$mainJarSha512Checksum",
               "sha256": "$mainJarSha256Checksum",
@@ -95,8 +93,8 @@ internal fun ActionCoords.buildModuleFile(
           },
           "files": [
             {
-              "name": "$mavenName-$version-sources.jar",
-              "url": "$mavenName-$version-sources.jar",
+              "name": "$rawName-$rawVersion-sources.jar",
+              "url": "$rawName-$rawVersion-sources.jar",
               "size": $sourcesJarSize,
               "sha512": "$sourcesJarSha512Checksum",
               "sha256": "$sourcesJarSha256Checksum",

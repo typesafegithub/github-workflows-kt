@@ -4,13 +4,13 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCo
 import io.micrometer.core.instrument.MeterRegistry
 
 suspend fun buildPackageArtifacts(
-    actionCoords: ActionCoords,
+    bindingsServerRequest: BindingsServerRequest,
     githubAuthToken: String,
     prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit,
     meterRegistry: MeterRegistry,
 ): Map<String, String> {
     val mavenMetadata =
-        actionCoords.buildMavenMetadataFile(
+        bindingsServerRequest.actionCoords.buildMavenMetadataFile(
             githubAuthToken = githubAuthToken,
             prefetchBindingArtifacts = prefetchBindingArtifacts,
             meterRegistry = meterRegistry,

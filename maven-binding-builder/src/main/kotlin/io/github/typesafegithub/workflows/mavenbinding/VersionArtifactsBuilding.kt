@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.ktor.client.HttpClient
 
@@ -20,12 +19,12 @@ data class VersionArtifacts(
 )
 
 suspend fun buildVersionArtifacts(
-    actionCoords: ActionCoords,
+    bindingsServerRequest: BindingsServerRequest,
     httpClient: HttpClient,
 ): VersionArtifacts? {
-    with(actionCoords) {
-        val jars = buildJars(httpClient = httpClient) ?: return null
-        val pom = buildPomFile()
+    with(bindingsServerRequest) {
+        val jars = actionCoords.buildJars(httpClient = httpClient) ?: return null
+        val pom = actionCoords.buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
         val mainJarSha1Checksum by lazy { jars.mainJar().sha1Checksum() }
@@ -53,26 +52,26 @@ suspend fun buildVersionArtifacts(
         return VersionArtifacts(
             files =
                 mapOf(
-                    "$mavenName-$version.jar" to JarArtifact(jars.mainJar),
-                    "$mavenName-$version.jar.md5" to TextArtifact { mainJarMd5Checksum },
-                    "$mavenName-$version.jar.sha1" to TextArtifact { mainJarSha1Checksum },
-                    "$mavenName-$version.jar.sha256" to TextArtifact { mainJarSha256Checksum },
-                    "$mavenName-$version.jar.sha512" to TextArtifact { mainJarSha512Checksum },
-                    "$mavenName-$version-sources.jar" to JarArtifact(jars.sourcesJar),
-                    "$mavenName-$version-sources.jar.md5" to TextArtifact { sourcesJarMd5Checksum },
-                    "$mavenName-$version-sources.jar.sha1" to TextArtifact { sourcesJarSha1Checksum },
-                    "$mavenName-$version-sources.jar.sha256" to TextArtifact { sourcesJarSha256Checksum },
-                    "$mavenName-$version-sources.jar.sha512" to TextArtifact { sourcesJarSha512Checksum },
-                    "$mavenName-$version.pom" to TextArtifact { pom },
-                    "$mavenName-$version.pom.md5" to TextArtifact { pom.md5Checksum() },
-                    "$mavenName-$version.pom.sha1" to TextArtifact { pom.sha1Checksum() },
-                    "$mavenName-$version.pom.sha256" to TextArtifact { pom.sha256Checksum() },
-                    "$mavenName-$version.pom.sha512" to TextArtifact { pom.sha512Checksum() },
-                    "$mavenName-$version.module" to TextArtifact { module },
-                    "$mavenName-$version.module.md5" to TextArtifact { module.md5Checksum() },
-                    "$mavenName-$version.module.sha1" to TextArtifact { module.sha1Checksum() },
-                    "$mavenName-$version.module.sha256" to TextArtifact { module.sha256Checksum() },
-                    "$mavenName-$version.module.sha512" to TextArtifact { module.sha512Checksum() },
+                    "$rawName-$rawVersion.jar" to JarArtifact(jars.mainJar),
+                    "$rawName-$rawVersion.jar.md5" to TextArtifact { mainJarMd5Checksum },
+                    "$rawName-$rawVersion.jar.sha1" to TextArtifact { mainJarSha1Checksum },
+                    "$rawName-$rawVersion.jar.sha256" to TextArtifact { mainJarSha256Checksum },
+                    "$rawName-$rawVersion.jar.sha512" to TextArtifact { mainJarSha512Checksum },
+                    "$rawName-$rawVersion-sources.jar" to JarArtifact(jars.sourcesJar),
+                    "$rawName-$rawVersion-sources.jar.md5" to TextArtifact { sourcesJarMd5Checksum },
+                    "$rawName-$rawVersion-sources.jar.sha1" to TextArtifact { sourcesJarSha1Checksum },
+                    "$rawName-$rawVersion-sources.jar.sha256" to TextArtifact { sourcesJarSha256Checksum },
+                    "$rawName-$rawVersion-sources.jar.sha512" to TextArtifact { sourcesJarSha512Checksum },
+                    "$rawName-$rawVersion.pom" to TextArtifact { pom },
+                    "$rawName-$rawVersion.pom.md5" to TextArtifact { pom.md5Checksum() },
+                    "$rawName-$rawVersion.pom.sha1" to TextArtifact { pom.sha1Checksum() },
+                    "$rawName-$rawVersion.pom.sha256" to TextArtifact { pom.sha256Checksum() },
+                    "$rawName-$rawVersion.pom.sha512" to TextArtifact { pom.sha512Checksum() },
+                    "$rawName-$rawVersion.module" to TextArtifact { module },
+                    "$rawName-$rawVersion.module.md5" to TextArtifact { module.md5Checksum() },
+                    "$rawName-$rawVersion.module.sha1" to TextArtifact { module.sha1Checksum() },
+                    "$rawName-$rawVersion.module.sha256" to TextArtifact { module.sha256Checksum() },
+                    "$rawName-$rawVersion.module.sha512" to TextArtifact { module.sha512Checksum() },
                 ),
             typingActualSource = jars.typingActualSource,
         )
