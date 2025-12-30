@@ -7,6 +7,8 @@ public data class ActionCoords(
     val name: String,
     val version: String,
     val versionForExtractingTypings: String = version,
+    val rawName: String,
+    val rawVersion: String? = null,
     /**
      * The version part that is significant when generating the YAML output,
      * i.e. whether to write the full version, only the major version or major and minor version.
