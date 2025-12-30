@@ -6,6 +6,7 @@ import com.sksamuel.aedile.core.asLoadingCache
 import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
@@ -67,9 +68,9 @@ fun main() {
 }
 
 fun Application.appModule(
-    buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?,
     buildPackageArtifacts: suspend (
-        ActionCoords,
+        BindingsServerRequest,
         String,
         (Collection<ActionCoords>) -> Unit,
         MeterRegistry,
@@ -103,9 +104,9 @@ fun Application.appModule(
 }
 
 private fun buildBindingsCache(
-    buildVersionArtifacts: suspend (ActionCoords, HttpClient) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?,
     httpClient: HttpClient,
-): LoadingCache<ActionCoords, CachedVersionArtifact> =
+): LoadingCache<BindingsServerRequest, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
@@ -114,20 +115,20 @@ private fun buildBindingsCache(
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
     buildPackageArtifacts: suspend (
-        ActionCoords,
+        BindingsServerRequest,
         String,
         (Collection<ActionCoords>) -> Unit,
         MeterRegistry,
     ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
-): LoadingCache<ActionCoords, CachedMetadataArtifact> =
+): LoadingCache<BindingsServerRequest, CachedMetadataArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<ActionCoords, CachedMetadataArtifact> {
+        .asLoadingCache<BindingsServerRequest, CachedMetadataArtifact> {
             buildPackageArtifacts(
                 it,
                 getGithubAuthToken(),

@@ -2,8 +2,8 @@ package io.github.typesafegithub.workflows.jitbindingserver
 
 import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrintWithoutVersion
+import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -19,7 +19,7 @@ private val logger = logger { }
 typealias CachedMetadataArtifact = Map<String, String>
 
 fun Routing.metadataRoutes(
-    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
+    metadataCache: LoadingCache<BindingsServerRequest, CachedMetadataArtifact>,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -38,16 +38,16 @@ fun Routing.metadataRoutes(
 }
 
 private fun Route.headMetadata(
-    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
+    metadataCache: LoadingCache<BindingsServerRequest, CachedMetadataArtifact>,
     refresh: Boolean = false,
 ) {
     head {
-        val actionCoords = call.parameters.extractActionCoords(extractVersion = false)
+        val request = call.parameters.parseRequest(extractVersion = false)
 
         if (refresh) {
-            metadataCache.invalidate(actionCoords)
+            metadataCache.invalidate(request)
         }
-        val metadataArtifacts = metadataCache.get(actionCoords)
+        val metadataArtifacts = metadataCache.get(request)
 
         if (refresh && !deliverOnRefreshRoute) return@head call.respondText(text = "OK")
 
@@ -62,18 +62,18 @@ private fun Route.headMetadata(
 }
 
 private fun Route.getMetadata(
-    metadataCache: LoadingCache<ActionCoords, CachedMetadataArtifact>,
+    metadataCache: LoadingCache<BindingsServerRequest, CachedMetadataArtifact>,
     refresh: Boolean = false,
 ) {
     get {
-        val actionCoords = call.parameters.extractActionCoords(extractVersion = false)
+        val request = call.parameters.parseRequest(extractVersion = false)
 
-        logger.info { "➡️ Requesting metadata for ${actionCoords.prettyPrintWithoutVersion}" }
+        logger.info { "➡️ Requesting metadata for ${request.actionCoords.prettyPrintWithoutVersion}" }
 
         if (refresh) {
-            metadataCache.invalidate(actionCoords)
+            metadataCache.invalidate(request)
         }
-        val metadataArtifacts = metadataCache.get(actionCoords)
+        val metadataArtifacts = metadataCache.get(request)
 
         if (refresh && !deliverOnRefreshRoute) return@get call.respondText(text = "OK")
 

@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
@@ -67,7 +68,7 @@ class ArtifactRoutesTest :
             test("when artifacts is not available, two requests in a row") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords, HttpClient) -> VersionArtifacts?>()
+                    val mockBuildVersionArtifacts = mockk<(BindingsServerRequest, HttpClient) -> VersionArtifacts?>()
                     every { mockBuildVersionArtifacts(any(), any()) } returns null
                     application {
                         appModule(
@@ -117,7 +118,7 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(ActionCoords, HttpClient) -> VersionArtifacts?>()
+                    val mockBuildVersionArtifacts = mockk<(BindingsServerRequest, HttpClient) -> VersionArtifacts?>()
                     every { mockBuildVersionArtifacts(any(), any()) } throws
                         Exception("An internal error occurred!") andThen
                         VersionArtifacts(
