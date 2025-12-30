@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo.maven.apache.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.4.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.7.0")
 @file:DependsOn("io.kotest:kotest-assertions-core:5.9.1")
 
 @file:Repository("http://localhost:8080")
