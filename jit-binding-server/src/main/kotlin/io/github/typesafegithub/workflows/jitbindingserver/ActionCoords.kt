@@ -42,7 +42,7 @@ fun Parameters.extractActionCoords(extractVersion: Boolean): ActionCoords {
         } else {
             "irrelevant"
         }
-    val comment = if (pinToCommit) this["version"]!!.split("__")[0] else null
+    val comment = if (pinToCommit && extractVersion) this["version"]!!.split("__")[0] else null
 
     return ActionCoords(
         owner = owner,
