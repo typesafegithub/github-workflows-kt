@@ -80,7 +80,12 @@ class ActionCoordsTest :
                 }
 
                 test("parses owner/name with version and no path, commit specified") {
-                    val parameters = createParameters(owner = "o", name = "act___commit_lenient", version = "v1.2.3__85e6279cec87321a52edac9c87bce653a07cf6c2")
+                    val parameters =
+                        createParameters(
+                            owner = "o",
+                            name = "act___commit_lenient",
+                            version = "v1.2.3__85e6279cec87321a52edac9c87bce653a07cf6c2",
+                        )
 
                     parameters.extractActionCoords(extractVersion = true) shouldBe
                         ActionCoords(
@@ -94,7 +99,12 @@ class ActionCoordsTest :
                 }
 
                 test("parses owner/name with version and no path, commit specified and extractVersion=false") {
-                    val parameters = createParameters(owner = "o", name = "act___commit_lenient", version = "v1.2.3__85e6279cec87321a52edac9c87bce653a07cf6c2")
+                    val parameters =
+                        createParameters(
+                            owner = "o",
+                            name = "act___commit_lenient",
+                            version = "v1.2.3__85e6279cec87321a52edac9c87bce653a07cf6c2",
+                        )
 
                     parameters.extractActionCoords(extractVersion = false) shouldBe
                         ActionCoords(
