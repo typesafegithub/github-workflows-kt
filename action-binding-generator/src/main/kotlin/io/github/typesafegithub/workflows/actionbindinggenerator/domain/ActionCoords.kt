@@ -6,9 +6,6 @@ public data class ActionCoords(
     val owner: String,
     val name: String,
     val version: String,
-    val versionForExtractingTypings: String = version,
-    val rawName: String,
-    val rawVersion: String? = null,
     /**
      * The version part that is significant when generating the YAML output,
      * i.e. whether to write the full version, only the major version or major and minor version.
@@ -19,6 +16,9 @@ public data class ActionCoords(
     val significantVersion: SignificantVersion = FULL,
     val path: String? = null,
     val comment: String? = null,
+    val versionForExtractingTypings: String = version,
+    val rawName: String = name,
+    val rawVersion: String? = null,
 )
 
 /**

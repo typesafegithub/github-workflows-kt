@@ -151,7 +151,8 @@ internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
         value.toTyping(key)
     } ?: emptyMap()
 
-private fun ActionCoords.toMajorVersion(): ActionCoords = this.copy(version = this.versionForExtractingTypings.substringBefore("."))
+private fun ActionCoords.toMajorVersion(): ActionCoords =
+    this.copy(version = this.versionForExtractingTypings.substringBefore("."))
 
 private fun ActionType.toTyping(fieldName: String): Typing =
     when (this.type) {
