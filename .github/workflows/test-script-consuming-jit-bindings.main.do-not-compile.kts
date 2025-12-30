@@ -52,4 +52,4 @@ ActionsWrapperValidation().actionVersion shouldBe "v4.2"
 // Ensure that 'copy(...)' method is exposed.
 Checkout(fetchTags = false).copy(fetchTags = true)
 
-SetupPython().actionVersion shouldBe "e797f83bcb11b83ae66e0230d6156d7c80228e7c
+SetupPython().actionVersion shouldBe "e797f83bcb11b83ae66e0230d6156d7c80228e7c"
