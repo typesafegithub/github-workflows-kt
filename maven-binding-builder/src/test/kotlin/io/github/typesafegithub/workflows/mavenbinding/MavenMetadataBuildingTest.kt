@@ -144,7 +144,7 @@ class MavenMetadataBuildingTest :
                     <?xml version="1.0" encoding="UTF-8"?>
                     <metadata>
                       <groupId>owner</groupId>
-                      <artifactId>name___$significantVersion</artifactId>
+                      <artifactId>name</artifactId>
                       <versioning>
                         <latest>v2</latest>
                         <release>v2</release>

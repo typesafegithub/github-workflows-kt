@@ -5,6 +5,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
+import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
@@ -35,7 +36,7 @@ typealias CachedVersionArtifact = Optional<VersionArtifacts>
 private val prefetchScope = CoroutineScope(Dispatchers.IO)
 
 fun Routing.artifactRoutes(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -53,7 +54,7 @@ fun Routing.artifactRoutes(
 
 private fun Route.artifact(
     prometheusRegistry: PrometheusMeterRegistry?,
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
     refresh: Boolean = false,
 ) {
     headArtifact(bindingsCache, prometheusRegistry, refresh)
@@ -61,7 +62,7 @@ private fun Route.artifact(
 }
 
 private fun Route.headArtifact(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -81,7 +82,7 @@ private fun Route.headArtifact(
 }
 
 private fun Route.getArtifact(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry?,
     refresh: Boolean,
 ) {
@@ -108,24 +109,32 @@ private fun Route.getArtifact(
 
 internal fun prefetchBindingArtifacts(
     coords: Collection<ActionCoords>,
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
 ) {
     prefetchScope.launch {
-        bindingsCache.getAll(coords)
+        bindingsCache.getAll(
+            coords.map {
+                BindingsServerRequest(
+                    rawName = it.name,
+                    rawVersion = it.version,
+                    actionCoords = it,
+                )
+            },
+        )
     }
 }
 
 private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
 ): VersionArtifacts? {
-    val actionCoords = parameters.extractActionCoords(extractVersion = true)
+    val parsedRequest = parameters.parseRequest(extractVersion = true)
 
-    logger.info { "➡️ Requesting ${actionCoords.prettyPrint}" }
+    logger.info { "➡️ Requesting ${parsedRequest.actionCoords.prettyPrint}" }
     if (refresh) {
-        bindingsCache.invalidate(actionCoords)
+        bindingsCache.invalidate(parsedRequest)
     }
-    return bindingsCache.get(actionCoords).getOrNull()
+    return bindingsCache.get(parsedRequest).getOrNull()
 }
 
 private fun PrometheusMeterRegistry.incrementArtifactCounter(

@@ -39,7 +39,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
         <?xml version="1.0" encoding="UTF-8"?>
         <metadata>
           <groupId>$owner</groupId>
-          <artifactId>$mavenName</artifactId>
+          <artifactId>$name</artifactId>
           <versioning>
             <latest>$newest</latest>
             <release>$newest</release>

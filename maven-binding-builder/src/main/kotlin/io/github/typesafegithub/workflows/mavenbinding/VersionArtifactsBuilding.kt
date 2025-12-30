@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.ktor.client.HttpClient
 
@@ -20,12 +19,12 @@ data class VersionArtifacts(
 )
 
 suspend fun buildVersionArtifacts(
-    actionCoords: ActionCoords,
+    bindingsServerRequest: BindingsServerRequest,
     httpClient: HttpClient,
 ): VersionArtifacts? {
-    with(actionCoords) {
-        val jars = buildJars(httpClient = httpClient) ?: return null
-        val pom = buildPomFile()
+    with(bindingsServerRequest) {
+        val jars = actionCoords.buildJars(httpClient = httpClient) ?: return null
+        val pom = actionCoords.buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
         val mainJarSha1Checksum by lazy { jars.mainJar().sha1Checksum() }
@@ -53,9 +52,6 @@ suspend fun buildVersionArtifacts(
         return VersionArtifacts(
             files =
                 mapOf(
-                    // Next step: fix the logic so that here we return artifacts
-                    // under actually requested name and version. Right now, for commit_lenient,
-                    // some parts are omitted, and the server returns 404.
                     "$rawName-$rawVersion.jar" to JarArtifact(jars.mainJar),
                     "$rawName-$rawVersion.jar.md5" to TextArtifact { mainJarMd5Checksum },
                     "$rawName-$rawVersion.jar.sha1" to TextArtifact { mainJarSha1Checksum },

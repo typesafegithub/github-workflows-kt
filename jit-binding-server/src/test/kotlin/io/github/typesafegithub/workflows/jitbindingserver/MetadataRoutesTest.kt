@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -104,7 +105,7 @@ class MetadataRoutesTest :
                     val mockBuildPackageArtifacts =
                         mockk<
                             (
-                                ActionCoords,
+                                BindingsServerRequest,
                                 String,
                                 (Collection<ActionCoords>) -> Unit,
                                 MeterRegistry?,
