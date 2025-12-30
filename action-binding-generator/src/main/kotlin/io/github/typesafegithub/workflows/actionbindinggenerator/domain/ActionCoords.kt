@@ -17,8 +17,6 @@ public data class ActionCoords(
     val path: String? = null,
     val comment: String? = null,
     val versionForExtractingTypings: String = version,
-    val rawName: String = name,
-    val rawVersion: String? = null,
 )
 
 /**
