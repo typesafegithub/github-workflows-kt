@@ -49,14 +49,15 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
     return BindingsServerRequest(
         rawName = this["name"]!!,
         rawVersion = this["version"],
-        actionCoords = ActionCoords(
-            owner = owner,
-            name = name,
-            version = version,
-            versionForExtractingTypings = versionForExtractingTypings,
-            significantVersion = significantVersion,
-            path = path,
-            comment = comment,
-        ),
+        actionCoords =
+            ActionCoords(
+                owner = owner,
+                name = name,
+                version = version,
+                versionForExtractingTypings = versionForExtractingTypings,
+                significantVersion = significantVersion,
+                path = path,
+                comment = comment,
+            ),
     )
 }
