@@ -53,6 +53,9 @@ suspend fun buildVersionArtifacts(
         return VersionArtifacts(
             files =
                 mapOf(
+                    // Next step: fix the logic so that here we return artifacts
+                    // under actually requested name and version. Right now, for commit_lenient,
+                    // some parts are omitted, and the server returns 404.
                     "$mavenName-$version.jar" to JarArtifact(jars.mainJar),
                     "$mavenName-$version.jar.md5" to TextArtifact { mainJarMd5Checksum },
                     "$mavenName-$version.jar.sha1" to TextArtifact { mainJarSha1Checksum },
