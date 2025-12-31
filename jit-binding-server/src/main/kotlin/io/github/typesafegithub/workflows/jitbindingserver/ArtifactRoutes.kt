@@ -125,7 +125,7 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     refresh: Boolean,
     bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
 ): VersionArtifacts? {
-    val parsedRequest = parameters.parseRequest(extractVersion = true)
+    val parsedRequest = parameters.parseRequest(extractVersion = true) ?: return null
 
     logger.info { "➡️ Requesting ${parsedRequest.actionCoords.prettyPrint}" }
     if (refresh) {
