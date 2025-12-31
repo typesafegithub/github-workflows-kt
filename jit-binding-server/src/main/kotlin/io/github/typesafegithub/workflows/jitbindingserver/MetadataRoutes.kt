@@ -42,7 +42,7 @@ private fun Route.headMetadata(
     refresh: Boolean = false,
 ) {
     head {
-        val request = call.parameters.parseRequest(extractVersion = false)
+        val request = call.parameters.parseRequest(extractVersion = false) ?: return@head call.respondNotFound()
 
         if (refresh) {
             metadataCache.invalidate(request)
@@ -66,7 +66,7 @@ private fun Route.getMetadata(
     refresh: Boolean = false,
 ) {
     get {
-        val request = call.parameters.parseRequest(extractVersion = false)
+        val request = call.parameters.parseRequest(extractVersion = false) ?: return@get call.respondNotFound()
 
         logger.info { "➡️ Requesting metadata for ${request.actionCoords.prettyPrintWithoutVersion}" }
 

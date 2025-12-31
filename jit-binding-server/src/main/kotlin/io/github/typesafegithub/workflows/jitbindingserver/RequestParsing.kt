@@ -6,7 +6,10 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Signific
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.ktor.http.Parameters
 
-fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
+/**
+ * Returns `null` if the request doesn't make sense and the service should return no resource.
+ */
+fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest? {
     val owner = this["owner"]!!
     val nameAndPathAndSignificantVersionParts = this["name"]!!.split("___", limit = 2)
     val nameAndPath = nameAndPathAndSignificantVersionParts.first()
@@ -36,7 +39,11 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest {
         if (extractVersion) {
             val versionPart = this["version"]!!
             if (pinToCommit) {
-                versionPart.split("__")[1]
+                val versionParts = versionPart.split("__")
+                if (versionParts.size < 2) {
+                    return null
+                }
+                versionParts[1]
             } else {
                 versionPart
             }

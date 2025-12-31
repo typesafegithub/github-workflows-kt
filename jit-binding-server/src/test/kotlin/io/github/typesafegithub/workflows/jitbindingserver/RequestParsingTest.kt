@@ -6,6 +6,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Signific
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MINOR
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.ktor.http.Parameters
 import io.ktor.http.ParametersBuilder
@@ -103,6 +104,42 @@ class RequestParsingTest :
                                     path = "dir_one/dir-two",
                                 ),
                         )
+                }
+
+                test("parses commit_lenient syntax") {
+                    val parameters =
+                        createParameters(
+                            owner = "o",
+                            name = "act___commit_lenient",
+                            version = "v1.2.3__323898970401d85df44b3324a610af9a862d54b3",
+                        )
+
+                    parameters.parseRequest(extractVersion = true) shouldBe
+                        BindingsServerRequest(
+                            rawName = "act___commit_lenient",
+                            rawVersion = "v1.2.3__323898970401d85df44b3324a610af9a862d54b3",
+                            actionCoords =
+                                ActionCoords(
+                                    owner = "o",
+                                    name = "act",
+                                    version = "323898970401d85df44b3324a610af9a862d54b3",
+                                    significantVersion = FULL,
+                                    comment = "v1.2.3",
+                                    versionForTypings = "v1.2.3",
+                                    path = null,
+                                ),
+                        )
+                }
+
+                test("parses commit_lenient syntax and no commit hash given") {
+                    val parameters =
+                        createParameters(
+                            owner = "o",
+                            name = "act___commit_lenient",
+                            version = "v1.2.3",
+                        )
+
+                    parameters.parseRequest(extractVersion = true).shouldBeNull()
                 }
             }
         },
