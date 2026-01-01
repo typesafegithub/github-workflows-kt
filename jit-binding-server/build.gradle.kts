@@ -19,7 +19,7 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus:1.16.1")
 
     implementation("com.sksamuel.aedile:aedile-core:3.0.2")
-    implementation("io.github.oshai:kotlin-logging:7.0.13")
+    implementation("io.github.oshai:kotlin-logging:7.0.14")
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.25.3"))
     implementation("org.apache.logging.log4j:log4j-jul")
     runtimeOnly("org.apache.logging.log4j:log4j-core")
