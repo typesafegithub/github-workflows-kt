@@ -24,7 +24,7 @@ suspend fun buildVersionArtifacts(
 ): VersionArtifacts? {
     with(bindingsServerRequest) {
         val jars = actionCoords.buildJars(httpClient = httpClient) ?: return null
-        val pom = actionCoords.buildPomFile()
+        val pom = this.buildPomFile()
         val mainJarSize by lazy { jars.mainJar().size }
         val mainJarMd5Checksum by lazy { jars.mainJar().md5Checksum() }
         val mainJarSha1Checksum by lazy { jars.mainJar().sha1Checksum() }
