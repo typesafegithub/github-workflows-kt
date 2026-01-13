@@ -111,7 +111,7 @@ jobs:
       name: 'Compile a Gradle project using the bindings from the server'
       run: |-
         cd .github/workflows/test-gradle-project-using-bindings-server
-        ./gradlew build
+        ./gradlew build --refresh-dependencies
     - id: 'step-15'
       name: 'Fetch maven-metadata.xml for top-level action'
       run: 'curl --fail http://localhost:8080/actions/checkout/maven-metadata.xml | grep ''<version>v4</version>'''
