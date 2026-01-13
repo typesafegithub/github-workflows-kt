@@ -138,7 +138,7 @@ workflow(
             name = "Compile a Gradle project using the bindings from the server",
             command = """
                 cd .github/workflows/test-gradle-project-using-bindings-server
-                ./gradlew build
+                ./gradlew build --refresh-dependencies
             """.trimIndent(),
         )
 
