@@ -19,7 +19,7 @@ internal fun BindingsServerRequest.buildPomFile() =
       <scm>
         <connection>scm:git:git://github.com/${this.actionCoords.owner}/${this.actionCoords.name}.git/</connection>
         <developerConnection>scm:git:ssh://github.com:${this.actionCoords.owner}/${this.actionCoords.name}.git</developerConnection>
-        <url>https://github.com${this.actionCoords.owner}/${this.actionCoords.name}.git</url>
+        <url>https://github.com/${this.actionCoords.owner}/${this.actionCoords.name}.git</url>
       </scm>
       <dependencies>
         <dependency>
