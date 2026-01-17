@@ -5,6 +5,7 @@ import java.time.ZonedDateTime
 data class Version(
     val version: String,
     private val dateProvider: suspend () -> ZonedDateTime? = { null },
+    private val commitHashProvider: suspend () -> String? = { null },
 ) : Comparable<Version> {
     private val versionParts: List<String> = version.removePrefix("v").removePrefix("V").split('.')
     private val versionIntParts: List<Int?> = versionParts.map { it.toIntOrNull() }
@@ -41,5 +42,9 @@ data class Version(
 
     fun isMajorVersion(): Boolean = versionIntParts.singleOrNull() != null
 
+    fun isFullVersion(): Boolean = versionIntParts.size == 3
+
     suspend fun getReleaseDate() = dateProvider()
+
+    suspend fun getCommitHash() = commitHashProvider()
 }
