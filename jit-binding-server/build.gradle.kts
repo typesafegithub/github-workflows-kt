@@ -3,7 +3,7 @@ import io.ktor.plugin.features.*
 plugins {
     buildsrc.convention.`kotlin-jvm-server`
     application
-    id("io.ktor.plugin") version "3.3.3"
+    id("io.ktor.plugin") version "3.4.0"
     id("io.gitlab.arturbosch.detekt")
 }
 
