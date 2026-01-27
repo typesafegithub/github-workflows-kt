@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("io.kotest:kotest-bom:6.1.1"))
+    implementation(platform("io.kotest:kotest-bom:6.1.2"))
     implementation("io.kotest:kotest-assertions-core")
     implementation("io.kotest:kotest-common")
 }
