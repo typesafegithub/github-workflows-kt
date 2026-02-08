@@ -49,7 +49,7 @@ private fun List<GithubRef>.versions(
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
-            Version(version) {
+            Version(version, dateProvider = {
                 val response =
                     buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
                         httpClient
@@ -66,7 +66,22 @@ private fun List<GithubRef>.versions(
                         else -> error("Unexpected target object type ${githubRef.`object`.type}")
                     }.date
                 ZonedDateTime.parse(releaseDate)
-            }
+            }, commitHashProvider = {
+                val response =
+                    buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
+                        httpClient
+                            .get(urlString = githubRef.`object`.url) {
+                                if (githubAuthToken != null) {
+                                    bearerAuth(githubAuthToken)
+                                }
+                            }
+                    }
+                when (githubRef.`object`.type) {
+                    "commit" -> response.body<Commit>().sha
+                    "tag" -> response.body<Tag>().`object`.sha
+                    else -> error("Unexpected target object type ${githubRef.`object`.type}")
+                }
+            })
         }
     }
 
@@ -117,11 +132,18 @@ private data class Object(
 @Serializable
 private data class Tag(
     val tagger: Person,
+    val `object`: TagObject,
+)
+
+@Serializable
+private data class TagObject(
+    val sha: String,
 )
 
 @Serializable
 private data class Commit(
     val author: Person,
+    val sha: String,
 )
 
 @Serializable

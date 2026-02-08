@@ -10,7 +10,7 @@ suspend fun buildPackageArtifacts(
     meterRegistry: MeterRegistry,
 ): Map<String, String> {
     val mavenMetadata =
-        bindingsServerRequest.actionCoords.buildMavenMetadataFile(
+        bindingsServerRequest.buildMavenMetadataFile(
             githubAuthToken = githubAuthToken,
             prefetchBindingArtifacts = prefetchBindingArtifacts,
             meterRegistry = meterRegistry,
