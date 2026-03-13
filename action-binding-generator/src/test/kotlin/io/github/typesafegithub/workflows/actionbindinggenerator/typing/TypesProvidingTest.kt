@@ -195,6 +195,12 @@ class TypesProvidingTest :
                   stored-in-typing-catalog-for-older-version:
                     type: string
                 """.trimIndent()
+            val storedInTypingCatalogForMajorVersion =
+                """
+                inputs:
+                  stored-in-typing-catalog-for-major-version:
+                    type: string
+                """.trimIndent()
 
             test("only hosted by the action (.yml)") {
                 // Given
@@ -636,6 +642,49 @@ class TypesProvidingTest :
                     )
             }
 
+            test("only stored in typing catalog for same major version using non-major version") {
+                // Given
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForMajorVersion)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
+                val actionCoord = ActionCoords("Some-owner", "Some-name", "v4.1.2")
+
+                // When
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
+
+                // Then
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog-for-major-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = false,
+                    )
+            }
+
             test("only stored in typing catalog for older version using commit pinning") {
                 // Given
                 val mockClient =
@@ -788,6 +837,49 @@ class TypesProvidingTest :
                     ActionTypings(
                         inputTypings = emptyMap(),
                         source = null,
+                        fromFallbackVersion = false,
+                    )
+            }
+
+            test("only stored in typing catalog for same major version of subaction using non-major version") {
+                // Given
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForMajorVersion)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
+                val actionCoord = ActionCoords("some-owner", "some-name", "v4.1.2", FULL, path = "some-sub")
+
+                // When
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
+
+                // Then
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("stored-in-typing-catalog-for-major-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
                         fromFallbackVersion = false,
                     )
             }
