@@ -633,12 +633,10 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    // This assertion shows an undesired behavior - a result of a regression.
-                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
                     ActionTypings(
-                        inputTypings = emptyMap(),
-                        source = null,
-                        fromFallbackVersion = false,
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
@@ -716,12 +714,10 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    // This assertion shows an undesired behavior - a result of a regression.
-                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
                     ActionTypings(
-                        inputTypings = emptyMap(),
-                        source = null,
-                        fromFallbackVersion = false,
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
@@ -832,12 +828,10 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    // This assertion shows an undesired behavior - a result of a regression.
-                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
                     ActionTypings(
-                        inputTypings = emptyMap(),
-                        source = null,
-                        fromFallbackVersion = false,
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
@@ -923,12 +917,10 @@ class TypesProvidingTest :
 
                 // Then
                 types shouldBe
-                    // This assertion shows an undesired behavior - a result of a regression.
-                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
                     ActionTypings(
-                        inputTypings = emptyMap(),
-                        source = null,
-                        fromFallbackVersion = false,
+                        inputTypings = mapOf("stored-in-typing-catalog-for-older-version" to StringTyping),
+                        source = TypingActualSource.TYPING_CATALOG,
+                        fromFallbackVersion = true,
                     )
             }
 
