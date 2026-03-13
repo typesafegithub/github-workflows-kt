@@ -30,7 +30,7 @@ internal suspend fun ActionCoords.provideTypes(
 ): ActionTypings =
     (
         this.fetchTypingMetadata(metadataRevision, httpClient)
-            ?: this.toMajorVersion().fetchFromTypingsFromCatalog(httpClient)
+            ?: this.toMajorVersionForTypings().fetchFromTypingsFromCatalog(httpClient)
     )?.let { (typings, typingActualSource) ->
         ActionTypings(
             inputTypings = typings.toTypesMap(),
@@ -151,8 +151,8 @@ internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
         value.toTyping(key)
     } ?: emptyMap()
 
-private fun ActionCoords.toMajorVersion(): ActionCoords =
-    this.copy(version = this.versionForTypings.substringBefore("."))
+private fun ActionCoords.toMajorVersionForTypings(): ActionCoords =
+    this.copy(versionForTypings = this.versionForTypings.substringBefore("."))
 
 private fun ActionType.toTyping(fieldName: String): Typing =
     when (this.type) {
