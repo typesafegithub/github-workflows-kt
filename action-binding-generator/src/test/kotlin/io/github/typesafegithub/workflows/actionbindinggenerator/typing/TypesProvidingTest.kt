@@ -596,6 +596,86 @@ class TypesProvidingTest :
                     )
             }
 
+            test("only stored in typing catalog for older version using non-major version") {
+                // Given
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
+                val actionCoord = ActionCoords("Some-owner", "Some-name", "v6.1.2")
+
+                // When
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
+
+                // Then
+                types shouldBe
+                    // This assertion shows an undesired behavior - a result of a regression.
+                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
+                    ActionTypings(
+                        inputTypings = emptyMap(),
+                        source = null,
+                        fromFallbackVersion = false,
+                    )
+            }
+
+            test("only stored in typing catalog for older version using commit pinning") {
+                // Given
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
+                val actionCoord = ActionCoords("Some-owner", "Some-name", "some-hash", versionForTypings = "v6.1.2")
+
+                // When
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
+
+                // Then
+                types shouldBe
+                    // This assertion shows an undesired behavior - a result of a regression.
+                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
+                    ActionTypings(
+                        inputTypings = emptyMap(),
+                        source = null,
+                        fromFallbackVersion = false,
+                    )
+            }
+
             test("only stored in typing catalog for older version, under lowercase name and owner") {
                 // Given
                 val mockClient =
