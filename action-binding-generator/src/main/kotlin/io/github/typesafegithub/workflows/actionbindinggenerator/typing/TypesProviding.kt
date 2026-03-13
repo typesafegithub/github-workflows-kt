@@ -49,7 +49,7 @@ private const val CATALOG_BASE_URL =
     "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/main/typings"
 
 private fun ActionCoords.actionTypesFromCatalog() =
-    "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/$version$subName/action-types.yml"
+    "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/$versionForTypings$subName/action-types.yml"
 
 private fun ActionCoords.catalogMetadata() = "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/metadata.yml"
 
@@ -115,7 +115,7 @@ private suspend fun ActionCoords.fetchTypingsForOlderVersionFromCatalog(httpClie
                 return null
             }
     logger.info { "  ... using fallback version: $fallbackVersion" }
-    val adjustedCoords = this.copy(version = fallbackVersion)
+    val adjustedCoords = this.copy(versionForTypings = fallbackVersion)
     return fetchTypingsFromUrl(
         url = adjustedCoords.actionTypesFromCatalog(),
         httpClient = httpClient,
