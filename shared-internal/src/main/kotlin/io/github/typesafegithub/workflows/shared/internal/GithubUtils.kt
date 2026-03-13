@@ -10,9 +10,7 @@ private val logger = logger { }
  * The token may be of various kind, e.g. a Personal Access Token, or an
  * Application Installation Token.
  */
-fun getGithubAuthTokenOrNull(): String? {
-    return System.getenv("GITHUB_TOKEN")
-}
+fun getGithubAuthTokenOrNull(): String? = System.getenv("GITHUB_TOKEN")
 
 /**
  * Returns a token that should be used to make authorized calls to GitHub,
