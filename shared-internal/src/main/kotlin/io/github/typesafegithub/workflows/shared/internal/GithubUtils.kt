@@ -11,12 +11,7 @@ private val logger = logger { }
  * Application Installation Token.
  */
 fun getGithubAuthTokenOrNull(): String? {
-    val installationAccessToken =
-        runCatching {
-            getInstallationAccessToken()
-        }.onFailure { logger.warn(it) { "Failed to get GitHub App Installation token." } }.getOrNull()
-
-    return installationAccessToken ?: System.getenv("GITHUB_TOKEN")
+    return System.getenv("GITHUB_TOKEN")
 }
 
 /**
