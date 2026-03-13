@@ -752,6 +752,86 @@ class TypesProvidingTest :
                     )
             }
 
+            test("only stored in typing catalog for older version of subaction using non-major version") {
+                // Given
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
+                val actionCoord = ActionCoords("some-owner", "some-name", "v6.1.2", FULL, "some-sub")
+
+                // When
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
+
+                // Then
+                types shouldBe
+                    // This assertion shows an undesired behavior - a result of a regression.
+                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
+                    ActionTypings(
+                        inputTypings = emptyMap(),
+                        source = null,
+                        fromFallbackVersion = false,
+                    )
+            }
+
+            test("only stored in typing catalog for older version of subaction using commit pinning") {
+                // Given
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/metadata.yml"
+                            ) {
+                                respond(metadata)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v4/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalogForOlderVersion)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
+                val actionCoord = ActionCoords("some-owner", "some-name", "some-hash", FULL, versionForTypings = "v6.1.2")
+
+                // When
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        httpClient = mockClient,
+                    )
+
+                // Then
+                types shouldBe
+                    // This assertion shows an undesired behavior - a result of a regression.
+                    // TODO: fix it in scope of https://github.com/typesafegithub/github-workflows-kt/issues/2253
+                    ActionTypings(
+                        inputTypings = emptyMap(),
+                        source = null,
+                        fromFallbackVersion = false,
+                    )
+            }
+
             test("metadata available but no version available") {
                 // Given
                 val mockClient =
