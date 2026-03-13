@@ -812,7 +812,8 @@ class TypesProvidingTest :
                             }
                         },
                     )
-                val actionCoord = ActionCoords("some-owner", "some-name", "some-hash", FULL, versionForTypings = "v6.1.2")
+                val actionCoord =
+                    ActionCoords("some-owner", "some-name", "some-hash", FULL, versionForTypings = "v6.1.2")
 
                 // When
                 val types =
