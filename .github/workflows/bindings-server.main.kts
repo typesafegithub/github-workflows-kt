@@ -31,6 +31,7 @@ import kotlin.time.TimeSource
 
 val DOCKERHUB_USERNAME by Contexts.secrets
 val DOCKERHUB_PASSWORD by Contexts.secrets
+val GITHUB_TOKEN by Contexts.secrets
 val APP_PRIVATE_KEY by Contexts.secrets
 
 @OptIn(ExperimentalKotlinLogicStep::class)
@@ -53,6 +54,12 @@ workflow(
         name = "End-to-end test",
         runsOn = UbuntuLatest,
         env = mapOf(
+            // Should be in every repo, even forks.
+            "GITHUB_TOKEN" to expr { GITHUB_TOKEN },
+            // Configured only in the parent repo in "typesafegithub" org.
+            // The logic should first try to use GitHub App-based auth,
+            // and fall back to GITHUB_TOKEN-based. This way, we test
+            // GitHub App-based integration at least in the parent repo.
             "APP_PRIVATE_KEY" to expr { APP_PRIVATE_KEY },
             "APP_INSTALLATION_ID" to "62885502",
             "APP_CLIENT_ID" to "Iv23liIZ17VJKUpjacBs",
