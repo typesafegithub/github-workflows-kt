@@ -49,6 +49,9 @@ jobs:
     - 'check_yaml_consistency'
     env:
       GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      APP_PRIVATE_KEY: '${{ secrets.APP_PRIVATE_KEY }}'
+      APP_INSTALLATION_ID: '62885502'
+      APP_CLIENT_ID: 'Iv23liIZ17VJKUpjacBs'
     steps:
     - id: 'step-0'
       uses: 'actions/checkout@v6'
