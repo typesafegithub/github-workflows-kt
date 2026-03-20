@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-compiler")
-    api("io.arrow-kt:arrow-core:2.2.2")
+    api("io.arrow-kt:arrow-core:2.2.2.1")
     api("io.ktor:ktor-client-core:3.4.1")
     api(projects.actionBindingGenerator)
     implementation(projects.sharedInternal)
