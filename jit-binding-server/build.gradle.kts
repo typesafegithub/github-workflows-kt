@@ -18,7 +18,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio")
     implementation("io.micrometer:micrometer-registry-prometheus:1.16.4")
 
-    implementation("com.sksamuel.aedile:aedile-core:3.0.2")
+    implementation("com.sksamuel.aedile:aedile-core:3.0.3")
     implementation("io.github.oshai:kotlin-logging:8.0.01")
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.25.4"))
     implementation("org.apache.logging.log4j:log4j-jul")
