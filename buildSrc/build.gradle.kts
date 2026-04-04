@@ -10,7 +10,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.20")
     implementation("org.jetbrains.kotlin:kotlin-serialization:2.3.20")
-    implementation("io.kotest:kotest-framework-plugin-gradle:6.1.10")
+    implementation("io.kotest:kotest-framework-plugin-gradle:6.1.11")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
     implementation("org.jmailen.gradle:kotlinter-gradle:5.4.2")
