@@ -14,7 +14,7 @@ dependencies {
     // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
     // note: see https://youtrack.jetbrains.com/issue/KT-67618
     api("io.ktor:ktor-client-core:3.4.2")
-    api("io.micrometer:micrometer-core:1.16.4")
+    api("io.micrometer:micrometer-core:1.16.5")
     implementation("io.ktor:ktor-client-cio:3.4.2")
     implementation("io.ktor:ktor-client-content-negotiation:3.4.2")
     implementation("io.ktor:ktor-client-logging:3.4.2")
