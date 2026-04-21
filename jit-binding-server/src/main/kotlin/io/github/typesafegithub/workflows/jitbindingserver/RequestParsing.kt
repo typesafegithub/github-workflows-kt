@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.ktor.http.Parameters
@@ -23,11 +24,6 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest? {
                     .entries
                     .find { "$it" == significantVersionString }
             } ?: FULL
-    val pinToCommit =
-        nameAndPathAndSignificantVersionParts
-            .drop(1)
-            .takeIf { it.isNotEmpty() }
-            ?.single() == "commit_lenient"
     val nameAndPathParts = nameAndPath.split("__")
     val name = nameAndPathParts.first()
     val path =
@@ -38,7 +34,7 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest? {
     val version =
         if (extractVersion) {
             val versionPart = this["version"]!!
-            if (pinToCommit) {
+            if (significantVersion == COMMIT_LENIENT) {
                 val versionParts = versionPart.split("__")
                 if (versionParts.size < 2) {
                     return null
@@ -50,7 +46,8 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest? {
         } else {
             "irrelevant"
         }
-    val comment = if (pinToCommit && extractVersion) this["version"]!!.split("__")[0] else null
+    val comment =
+        if ((significantVersion == COMMIT_LENIENT) && extractVersion) this["version"]!!.split("__")[0] else null
     val versionForTypings = if (extractVersion) this["version"]!!.split("__")[0] else "irrelevant"
 
     return BindingsServerRequest(

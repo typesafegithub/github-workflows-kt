@@ -4,6 +4,7 @@ import java.time.ZonedDateTime
 
 data class Version(
     val version: String,
+    val sha: String? = null,
     private val dateProvider: suspend () -> ZonedDateTime? = { null },
 ) : Comparable<Version> {
     private val versionParts: List<String> = version.removePrefix("v").removePrefix("V").split('.')

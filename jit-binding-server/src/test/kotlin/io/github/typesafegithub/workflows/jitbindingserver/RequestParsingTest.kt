@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MAJOR
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MINOR
@@ -123,7 +124,7 @@ class RequestParsingTest :
                                     owner = "o",
                                     name = "act",
                                     version = "323898970401d85df44b3324a610af9a862d54b3",
-                                    significantVersion = FULL,
+                                    significantVersion = COMMIT_LENIENT,
                                     comment = "v1.2.3",
                                     versionForTypings = "v1.2.3",
                                     path = null,

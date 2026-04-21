@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact

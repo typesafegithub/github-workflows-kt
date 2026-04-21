@@ -6,11 +6,11 @@ import io.micrometer.core.instrument.MeterRegistry
 suspend fun buildPackageArtifacts(
     bindingsServerRequest: BindingsServerRequest,
     githubAuthToken: String,
-    prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit,
+    prefetchBindingArtifacts: (Collection<BindingsServerRequest>) -> Unit,
     meterRegistry: MeterRegistry,
 ): Map<String, String> {
     val mavenMetadata =
-        bindingsServerRequest.actionCoords.buildMavenMetadataFile(
+        bindingsServerRequest.buildMavenMetadataFile(
             githubAuthToken = githubAuthToken,
             prefetchBindingArtifacts = prefetchBindingArtifacts,
             meterRegistry = meterRegistry,

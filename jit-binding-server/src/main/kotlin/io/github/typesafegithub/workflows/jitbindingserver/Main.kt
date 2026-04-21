@@ -5,7 +5,6 @@ import com.sksamuel.aedile.core.LoadingCache
 import com.sksamuel.aedile.core.asLoadingCache
 import com.sksamuel.aedile.core.refreshAfterWrite
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildPackageArtifacts
@@ -72,7 +71,7 @@ fun Application.appModule(
     buildPackageArtifacts: suspend (
         BindingsServerRequest,
         String,
-        (Collection<ActionCoords>) -> Unit,
+        (Collection<BindingsServerRequest>) -> Unit,
         MeterRegistry,
     ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
@@ -119,7 +118,7 @@ private fun buildMetadataCache(
     buildPackageArtifacts: suspend (
         BindingsServerRequest,
         String,
-        (Collection<ActionCoords>) -> Unit,
+        (Collection<BindingsServerRequest>) -> Unit,
         MeterRegistry,
     ) -> Map<String, String>,
     getGithubAuthToken: () -> String,
@@ -128,7 +127,7 @@ private fun buildMetadataCache(
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache<BindingsServerRequest, CachedMetadataArtifact> {
+        .asLoadingCache {
             buildPackageArtifacts(
                 it,
                 getGithubAuthToken(),

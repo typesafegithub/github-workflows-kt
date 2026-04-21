@@ -16,8 +16,8 @@ internal fun BindingsServerRequest.buildModuleFile(
       "formatVersion": "1.1",
       "component": {
         "group": "${actionCoords.owner}",
-        "module": "${actionCoords.name}",
-        "version": "${actionCoords.version}",
+        "module": "$rawName",
+        "version": "$rawVersion",
         "attributes": {
           "org.gradle.status": "release"
         }
@@ -42,7 +42,7 @@ internal fun BindingsServerRequest.buildModuleFile(
           "files": [
             {
               "name": "$rawName-$rawVersion.jar",
-              "url": "$rawName-$rawName.jar",
+              "url": "$rawName-$rawVersion.jar",
               "size": $mainJarSize,
               "sha512": "$mainJarSha512Checksum",
               "sha256": "$mainJarSha256Checksum",

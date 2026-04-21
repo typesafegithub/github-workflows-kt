@@ -49,7 +49,7 @@ private fun List<GithubRef>.versions(
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
-            Version(version) {
+            Version(version, githubRef.`object`.sha) {
                 val response =
                     buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
                         httpClient
@@ -111,6 +111,7 @@ private data class GithubRef(
 @Serializable
 private data class Object(
     val type: String,
+    val sha: String,
     val url: String,
 )
 

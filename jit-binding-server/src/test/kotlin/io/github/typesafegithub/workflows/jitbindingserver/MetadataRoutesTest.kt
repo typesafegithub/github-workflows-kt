@@ -107,7 +107,7 @@ class MetadataRoutesTest :
                             (
                                 BindingsServerRequest,
                                 String,
-                                (Collection<ActionCoords>) -> Unit,
+                                (Collection<BindingsServerRequest>) -> Unit,
                                 MeterRegistry?,
                             ) -> Map<String, String>,
                         >()
