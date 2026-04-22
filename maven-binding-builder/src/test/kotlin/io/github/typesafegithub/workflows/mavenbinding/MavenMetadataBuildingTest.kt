@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.right
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.kotest.core.spec.style.FunSpec
@@ -122,14 +123,46 @@ class MavenMetadataBuildingTest :
                     MeterRegistry?,
                 ) -> Either<String, List<Version>> = { owner, name, _, _ ->
                     listOf(
-                        Version(version = "v3-beta", dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") }),
-                        Version(version = "v2", dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") }),
-                        Version(version = "v1", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
-                        Version(version = "v1.1", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
-                        Version(version = "v1.1.0", dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") }),
-                        Version(version = "v1.0.1", dateProvider = { ZonedDateTime.parse("2024-03-05T00:00:00Z") }),
-                        Version(version = "v1.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
-                        Version(version = "v1.0.0", dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") }),
+                        Version(
+                            version = "v3-beta",
+                            shaProvider = { "1" },
+                            dateProvider = { ZonedDateTime.parse("2024-07-01T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v2",
+                            shaProvider = { "2" },
+                            dateProvider = { ZonedDateTime.parse("2024-05-01T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v1",
+                            shaProvider = { "3" },
+                            dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v1.1",
+                            shaProvider = { "4" },
+                            dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v1.1.0",
+                            shaProvider = { "5" },
+                            dateProvider = { ZonedDateTime.parse("2024-03-07T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v1.0.1",
+                            shaProvider = { "6" },
+                            dateProvider = { ZonedDateTime.parse("2024-03-05T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v1.0",
+                            shaProvider = { "7" },
+                            dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") },
+                        ),
+                        Version(
+                            version = "v1.0.0",
+                            shaProvider = { "8" },
+                            dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") },
+                        ),
                     ).right()
                 }
 
@@ -139,6 +172,7 @@ class MavenMetadataBuildingTest :
                         fetchAvailableVersions = fetchAvailableVersions,
                     )
 
+                val commitLenient = significantVersion == COMMIT_LENIENT
                 xml shouldBe
                     """
                     <?xml version="1.0" encoding="UTF-8"?>
@@ -146,17 +180,17 @@ class MavenMetadataBuildingTest :
                       <groupId>owner</groupId>
                       <artifactId>name</artifactId>
                       <versioning>
-                        <latest>v2</latest>
-                        <release>v2</release>
+                        <latest>v2${if (commitLenient) "__2" else ""}</latest>
+                        <release>v2${if (commitLenient) "__2" else ""}</release>
                         <versions>
-                          <version>v3-beta</version>
-                          <version>v2</version>
-                          <version>v1</version>
-                          <version>v1.1</version>
-                          <version>v1.1.0</version>
-                          <version>v1.0.1</version>
-                          <version>v1.0</version>
-                          <version>v1.0.0</version>
+                          <version>v3-beta${if (commitLenient) "__1" else ""}</version>
+                          <version>v2${if (commitLenient) "__2" else ""}</version>
+                          <version>v1${if (commitLenient) "__3" else ""}</version>
+                          <version>v1.1${if (commitLenient) "__4" else ""}</version>
+                          <version>v1.1.0${if (commitLenient) "__5" else ""}</version>
+                          <version>v1.0.1${if (commitLenient) "__6" else ""}</version>
+                          <version>v1.0${if (commitLenient) "__7" else ""}</version>
+                          <version>v1.0.0${if (commitLenient) "__8" else ""}</version>
                         </versions>
                         <lastUpdated>20240501000000</lastUpdated>
                       </versioning>
