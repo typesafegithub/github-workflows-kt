@@ -9,6 +9,8 @@ import io.github.typesafegithub.workflows.mavenbinding.JarArtifact
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.asFlow
@@ -126,7 +128,7 @@ internal fun prefetchBindingArtifacts(
 }
 
 private fun Route.postArtifact(
-    bindingsCache: LoadingCache<ActionCoords, CachedVersionArtifact>,
+    bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
     prometheusRegistry: PrometheusMeterRegistry?,
 ) {
     post {
@@ -145,7 +147,10 @@ private fun Route.postArtifact(
                         .map { (name, result) ->
                             name to
                                 when {
-                                    result.isSuccess -> result.getOrThrow()
+                                    result.isSuccess -> {
+                                        result.getOrThrow()
+                                    }
+
                                     else -> {
                                         call.respondText(
                                             text = HttpStatusCode.InternalServerError.description,
@@ -241,7 +246,17 @@ private suspend fun ApplicationCall.toBindingArtifacts(
     }
     return (
         if (types != null) {
-            bindingsCache.get(parsedRequest) { buildVersionArtifacts(parsedRequest, types, metadata) }.getOrNull()
+            bindingsCache
+                .get(parsedRequest) {
+                    Optional.ofNullable(
+                        buildVersionArtifacts(
+                            parsedRequest,
+                            types,
+                            metadata,
+                            HttpClient(CIO),
+                        ),
+                    )
+                }.getOrNull()
         } else {
             bindingsCache.get(parsedRequest).getOrNull()
         }
