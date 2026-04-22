@@ -3,7 +3,6 @@ package io.github.typesafegithub.workflows.mavenbinding
 import arrow.core.Either
 import arrow.core.getOrElse
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
@@ -22,7 +21,7 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
         githubAuthToken: String?,
         meterRegistry: MeterRegistry?,
     ) -> Either<String, List<Version>> = ::fetchAvailableVersions,
-    prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit = {},
+    prefetchBindingArtifacts: (Collection<BindingsServerRequest>) -> Unit = {},
 ): String? {
     val availableVersions =
         fetchAvailableVersions(actionCoords.owner, actionCoords.name, githubAuthToken, meterRegistry)
@@ -30,8 +29,20 @@ internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
                 logger.error { it }
                 emptyList()
             }.filter { it.isMajorVersion() || (actionCoords.significantVersion < FULL) }
-    prefetchBindingArtifacts(availableVersions.map { actionCoords.copy(version = "$it") })
     val commitLenient = actionCoords.significantVersion == COMMIT_LENIENT
+    prefetchBindingArtifacts(
+        availableVersions.map {
+            copy(
+                rawVersion = "$it${if (commitLenient) "__${it.getSha()}" else ""}",
+                actionCoords =
+                    actionCoords.copy(
+                        version = if (commitLenient) it.getSha()!! else "$it",
+                        comment = if (commitLenient) "$it" else null,
+                        versionForTypings = "$it",
+                    ),
+            )
+        },
+    )
     val newest = availableVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter
