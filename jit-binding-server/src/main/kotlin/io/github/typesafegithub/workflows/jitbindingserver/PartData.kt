@@ -10,8 +10,14 @@ private val logger = logger { }
 internal suspend fun PartData.asString() =
     runCatching {
         when (this) {
-            is PartData.FileItem -> provider().readRemaining().readText()
-            is PartData.FormItem -> value
+            is PartData.FileItem -> {
+                provider().readRemaining().readText()
+            }
+
+            is PartData.FormItem -> {
+                value
+            }
+
             else -> {
                 logger.error { "Unexpected part data ${this::class.simpleName}" }
                 error("Unexpected part data ${this::class.simpleName}")

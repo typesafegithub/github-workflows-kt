@@ -28,7 +28,8 @@ class TypesProvidingTest :
             val types =
                 actionCoord.provideTypes(
                     metadataRevision = CommitHash("some-hash"),
-                    mockClientReturning(actionTypesYml),
+                    types = null,
+                    httpClient = mockClientReturning(actionTypesYml),
                 )
 
             // Then
@@ -44,7 +45,8 @@ class TypesProvidingTest :
             val types =
                 actionCoord.provideTypes(
                     metadataRevision = CommitHash("some-hash"),
-                    mockClientReturning(actionTypesYml),
+                    types = null,
+                    httpClient = mockClientReturning(actionTypesYml),
                 )
 
             // Then
@@ -60,7 +62,8 @@ class TypesProvidingTest :
             val types =
                 actionCoord.provideTypes(
                     metadataRevision = CommitHash("some-hash"),
-                    mockClientReturning(actionTypesYml),
+                    types = null,
+                    httpClient = mockClientReturning(actionTypesYml),
                 )
 
             // Then
@@ -76,7 +79,8 @@ class TypesProvidingTest :
             val types =
                 actionCoord.provideTypes(
                     metadataRevision = CommitHash("some-hash"),
-                    mockClientReturning(actionTypesYml),
+                    types = null,
+                    httpClient = mockClientReturning(actionTypesYml),
                 )
 
             // Then
@@ -96,7 +100,8 @@ class TypesProvidingTest :
             val types =
                 actionCoord.provideTypes(
                     metadataRevision = CommitHash("some-hash"),
-                    mockClientReturning(actionTypesYml),
+                    types = null,
+                    httpClient = mockClientReturning(actionTypesYml),
                 )
 
             // Then
@@ -146,7 +151,8 @@ class TypesProvidingTest :
             val types =
                 actionCoord.provideTypes(
                     metadataRevision = CommitHash("some-hash"),
-                    mockClientReturning(actionTypesYml),
+                    types = null,
+                    httpClient = mockClientReturning(actionTypesYml),
                 )
 
             // Then
@@ -572,130 +578,200 @@ class TypesProvidingTest :
 
             test("only custom") {
                 // Given
-                val fetchUri: (URI) -> String = { throw IOException() }
+                val mockClient =
+                    HttpClient(MockEngine { _ -> respond("Not found", status = HttpStatusCode.NotFound) })
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = custom)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = custom,
+                        httpClient = mockClient,
+                    )
 
                 // Then
-                types shouldBe Pair(mapOf("custom" to StringTyping), TypingActualSource.CUSTOM)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("custom" to StringTyping),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
+                    )
             }
 
             test("only custom for subaction") {
                 // Given
-                val fetchUri: (URI) -> String = { throw IOException() }
+                val mockClient =
+                    HttpClient(MockEngine { _ -> respond("Not found", status = HttpStatusCode.NotFound) })
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = custom)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = custom,
+                        httpClient = mockClient,
+                    )
 
                 // Then
-                types shouldBe Pair(mapOf("custom" to StringTyping), TypingActualSource.CUSTOM)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("custom" to StringTyping),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
+                    )
             }
 
             test("hosted by action, stored in typing catalog, and custom") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/" +
-                                "some-hash/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw IOException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() == "https://raw.githubusercontent.com/some-owner/some-name/" +
+                                "some-hash/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = custom)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = custom,
+                        httpClient = mockClient,
+                    )
 
                 // Then
-                types shouldBe Pair(mapOf("custom" to StringTyping), TypingActualSource.CUSTOM)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("custom" to StringTyping),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
+                    )
             }
 
             test("hosted by subaction, stored in typing catalog, and custom") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/" +
-                                "some-hash/some-sub/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw IOException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() == "https://raw.githubusercontent.com/some-owner/some-name/" +
+                                "some-hash/some-sub/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = custom)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = custom,
+                        httpClient = mockClient,
+                    )
 
                 // Then
-                types shouldBe Pair(mapOf("custom" to StringTyping), TypingActualSource.CUSTOM)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = mapOf("custom" to StringTyping),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
+                    )
             }
 
             test("hosted by action, stored in typing catalog, and empty custom") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/" +
-                                "some-hash/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw IOException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() == "https://raw.githubusercontent.com/some-owner/some-name/" +
+                                "some-hash/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = "")
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = "",
+                        httpClient = mockClient,
+                    )
 
                 // Then
-                types shouldBe Pair(emptyMap(), TypingActualSource.CUSTOM)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = emptyMap(),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
+                    )
             }
 
             test("hosted by subaction, stored in typing catalog, and empty custom") {
                 // Given
-                val fetchUri: (URI) -> String = {
-                    when (it) {
-                        URI(
-                            "https://raw.githubusercontent.com/some-owner/some-name/" +
-                                "some-hash/some-sub/action-types.yml",
-                        ),
-                        -> hostedByActionYml
-                        URI(
-                            "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
-                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml",
-                        ),
-                        -> storedInTypingCatalog
-                        else -> throw IOException()
-                    }
-                }
+                val mockClient =
+                    HttpClient(
+                        MockEngine { request ->
+                            if (request.url.toString() == "https://raw.githubusercontent.com/some-owner/some-name/" +
+                                "some-hash/some-sub/action-types.yml"
+                            ) {
+                                respond(hostedByActionYml)
+                            } else if (request.url.toString() ==
+                                "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/" +
+                                "main/typings/some-owner/some-name/v3/some-sub/action-types.yml"
+                            ) {
+                                respond(storedInTypingCatalog)
+                            } else {
+                                respond("Not found", status = HttpStatusCode.NotFound)
+                            }
+                        },
+                    )
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3", FULL, "some-sub")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = "")
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = "",
+                        httpClient = mockClient,
+                    )
 
                 // Then
-                types shouldBe Pair(emptyMap(), TypingActualSource.CUSTOM)
+                types shouldBe
+                    ActionTypings(
+                        inputTypings = emptyMap(),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
+                    )
             }
 
             test("only stored in typing catalog for older version") {
@@ -1261,21 +1337,41 @@ class TypesProvidingTest :
 
             test("only custom") {
                 // Given
-                val fetchUri: (URI) -> String = { throw IOException() }
+                val mockClient =
+                    HttpClient(MockEngine { _ -> respond("Not found", status = HttpStatusCode.NotFound) })
                 val actionCoord = ActionCoords("some-owner", "some-name", "v3")
 
                 // When
-                val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), fetchUri = fetchUri, types = typingYml)
+                val types =
+                    actionCoord.provideTypes(
+                        metadataRevision = CommitHash("some-hash"),
+                        types = typingYml,
+                        httpClient = mockClient,
+                    )
 
                 // Then
                 types shouldBe
-                    Pair(
-                        mapOf(
-                            "granted-scopes" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes2" to ListOfTypings(",", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                            "granted-scopes3" to ListOfTypings("""\n""", EnumTyping("GrantedScopes", listOf("read", "write"))),
-                        ),
-                        TypingActualSource.CUSTOM,
+                    ActionTypings(
+                        inputTypings =
+                            mapOf(
+                                "granted-scopes" to
+                                    ListOfTypings(
+                                        ",",
+                                        EnumTyping("GrantedScopes", listOf("read", "write")),
+                                    ),
+                                "granted-scopes2" to
+                                    ListOfTypings(
+                                        ",",
+                                        EnumTyping("GrantedScopes", listOf("read", "write")),
+                                    ),
+                                "granted-scopes3" to
+                                    ListOfTypings(
+                                        """\n""",
+                                        EnumTyping("GrantedScopes", listOf("read", "write")),
+                                    ),
+                            ),
+                        source = TypingActualSource.CUSTOM,
+                        fromFallbackVersion = false,
                     )
             }
 
@@ -1332,7 +1428,8 @@ class TypesProvidingTest :
             val actionCoord = ActionCoords("some-owner", "some-name", "v6-beta")
 
             // When
-            val types = actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), httpClient = mockClient)
+            val types =
+                actionCoord.provideTypes(metadataRevision = CommitHash("some-hash"), httpClient = mockClient)
 
             // Then
             types shouldBe ActionTypings(inputTypings = emptyMap(), source = null)
