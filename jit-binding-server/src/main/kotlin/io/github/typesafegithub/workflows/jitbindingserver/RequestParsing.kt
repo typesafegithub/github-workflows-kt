@@ -33,21 +33,7 @@ fun Parameters.parseRequest(
             .drop(1)
             .joinToString("/")
             .takeUnless { it.isBlank() }
-    val version =
-        if (extractVersion) {
-            val versionPart = this["version"]!!
-            if (significantVersion == COMMIT_LENIENT) {
-                val versionParts = versionPart.split("__")
-                if (versionParts.size < 2) {
-                    return null
-                }
-                versionParts[1]
-            } else {
-                versionPart
-            }
-        } else {
-            "irrelevant"
-        }
+    val version = determineVersion(extractVersion, significantVersion) ?: return null
     val comment =
         if ((significantVersion == COMMIT_LENIENT) && extractVersion) this["version"]!!.split("__")[0] else null
     val versionForTypings = if (extractVersion) this["version"]!!.split("__")[0] else "irrelevant"
@@ -79,3 +65,22 @@ fun Parameters.parseRequest(
             ),
     )
 }
+
+fun Parameters.determineVersion(
+    extractVersion: Boolean,
+    significantVersion: SignificantVersion,
+): String? =
+    if (extractVersion) {
+        val versionPart = this["version"]!!
+        if (significantVersion == COMMIT_LENIENT) {
+            val versionParts = versionPart.split("__")
+            if (versionParts.size < 2) {
+                return null
+            }
+            versionParts[1]
+        } else {
+            versionPart
+        }
+    } else {
+        "irrelevant"
+    }

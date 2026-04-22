@@ -20,6 +20,7 @@ class MavenMetadataBuildingTest :
     FunSpec({
         val bindingsServerRequest =
             BindingsServerRequest(
+                rawOwner = "owner",
                 rawName = "name",
                 rawVersion = null,
                 actionCoords =
