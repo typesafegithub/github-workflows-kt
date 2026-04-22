@@ -59,7 +59,14 @@ fun main() {
     }
     embeddedServer(Netty, port = 8080) {
         appModule(
-            buildVersionArtifacts = { buildVersionArtifacts(it, it.typesUuid?.let { "" }) },
+            buildVersionArtifacts = { bindingsServerRequest, httpClient ->
+                buildVersionArtifacts(
+                    bindingsServerRequest,
+                    bindingsServerRequest.actionCoords.typesUuid?.let { "" },
+                    null,
+                    httpClient,
+                )
+            },
             buildPackageArtifacts = ::buildPackageArtifacts,
             getGithubAuthToken = ::getGithubAuthToken,
         )
