@@ -2,14 +2,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "2.3.20"
+    kotlin("jvm") version "2.3.21"
 }
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.3.20"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.3.21"))
 
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.20")
-    implementation("org.jetbrains.kotlin:kotlin-serialization:2.3.20")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.21")
+    implementation("org.jetbrains.kotlin:kotlin-serialization:2.3.21")
     implementation("io.kotest:kotest-framework-plugin-gradle:6.1.11")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
