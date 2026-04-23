@@ -69,6 +69,7 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/dom
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion : java/lang/Enum {
+	public static final field COMMIT_LENIENT Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;
 	public static final field FULL Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;
 	public static final field MAJOR Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;
 	public static final field MINOR Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;

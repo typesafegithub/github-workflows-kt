@@ -17,6 +17,11 @@ public enum class SignificantVersion {
     MINOR,
 
     /**
+     * Write the commit ID as the version to the generated YAML.
+     */
+    COMMIT_LENIENT,
+
+    /**
      * Write the full version to the generated YAML.
      */
     FULL,
