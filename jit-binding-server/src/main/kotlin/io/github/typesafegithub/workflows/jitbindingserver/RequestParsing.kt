@@ -13,7 +13,6 @@ import io.ktor.http.Parameters
 fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest? {
     val owner = this["owner"]!!
     val nameAndPathAndSignificantVersionParts = this["name"]!!.split("___", limit = 2)
-    val nameAndPath = nameAndPathAndSignificantVersionParts.first()
     val significantVersion =
         nameAndPathAndSignificantVersionParts
             .drop(1)
@@ -24,6 +23,7 @@ fun Parameters.parseRequest(extractVersion: Boolean): BindingsServerRequest? {
                     .entries
                     .find { "$it" == significantVersionString }
             } ?: FULL
+    val nameAndPath = if (significantVersion == FULL) this["name"]!! else nameAndPathAndSignificantVersionParts.first()
     val nameAndPathParts = nameAndPath.split("__")
     val name = nameAndPathParts.first()
     val path =
