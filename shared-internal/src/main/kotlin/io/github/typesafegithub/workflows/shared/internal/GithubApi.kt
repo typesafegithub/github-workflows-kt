@@ -25,6 +25,8 @@ import java.time.ZonedDateTime
 
 private val logger = logger { }
 
+private const val MAX_REF_PARTS = 3
+
 suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
@@ -38,6 +40,7 @@ suspend fun fetchAvailableVersions(
                 apiTagsUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
                 apiBranchesUrl(githubEndpoint = githubEndpoint, owner = owner, name = name),
             ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
+                .filter { it.ref.split('/', limit = MAX_REF_PARTS + 1).size == MAX_REF_PARTS }
                 .versions(githubAuthToken, meterRegistry = meterRegistry)
         }
     }
