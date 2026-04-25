@@ -18,6 +18,7 @@ import com.squareup.kotlinpoet.buildCodeBlock
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.MAJOR
@@ -466,7 +467,7 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
             when (coords.significantVersion) {
                 MAJOR -> coords.version.majorVersion
                 MINOR -> coords.version.minorVersion
-                COMMIT_LENIENT, FULL -> coords.version
+                COMMIT_LENIENT, COMMIT, FULL -> coords.version
             },
         ).also {
             if (coords.comment != null) {
