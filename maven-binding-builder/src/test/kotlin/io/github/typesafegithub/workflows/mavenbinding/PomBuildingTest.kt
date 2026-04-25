@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.kotest.core.spec.style.FunSpec
@@ -13,15 +14,16 @@ class PomBuildingTest :
             test("significant version $significantVersion requested") {
                 // given
                 val commitLenient = significantVersion == COMMIT_LENIENT
+                val commitOrCommitLenient = (significantVersion == COMMIT) || commitLenient
                 var nameSuffix = if (significantVersion == FULL) "" else "___$significantVersion"
                 var versionSuffix = if (commitLenient) "__commit-sha" else ""
                 var prettyPrintSuffix =
                     when (significantVersion) {
                         FULL -> ""
-                        COMMIT_LENIENT -> " with $significantVersion version and comment 'v1.2.3'"
+                        COMMIT_LENIENT, COMMIT -> " with $significantVersion version and comment 'v1.2.3'"
                         else -> " with $significantVersion version"
                     }
-                var version = if (commitLenient) "commit-sha" else "v1.2.3"
+                var version = if (commitOrCommitLenient) "commit-sha" else "v1.2.3"
 
                 val bindingsServerRequest =
                     BindingsServerRequest(
@@ -32,7 +34,7 @@ class PomBuildingTest :
                                 owner = "owner",
                                 name = "name",
                                 version = version,
-                                comment = if (commitLenient) "v1.2.3" else null,
+                                comment = if (commitOrCommitLenient) "v1.2.3" else null,
                                 significantVersion = significantVersion,
                             ),
                     )
