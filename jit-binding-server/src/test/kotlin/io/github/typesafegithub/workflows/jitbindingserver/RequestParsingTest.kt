@@ -83,7 +83,7 @@ class RequestParsingTest :
                                     name = "act",
                                     version = "irrelevant",
                                     significantVersion = FULL,
-                                    path = null,
+                                    path = "_weird",
                                 ),
                         )
                 }

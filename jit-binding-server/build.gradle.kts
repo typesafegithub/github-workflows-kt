@@ -30,6 +30,7 @@ dependencies {
     implementation(projects.sharedInternal)
 
     testImplementation("io.ktor:ktor-server-test-host")
+    testImplementation("io.ktor:ktor-client-mock:3.4.3")
     testImplementation("io.mockk:mockk:1.14.9")
 }
 

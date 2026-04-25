@@ -4,9 +4,12 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingAc
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.TextArtifact
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
+import io.github.typesafegithub.workflows.mavenbinding.buildVersionArtifacts
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
@@ -144,6 +147,48 @@ class ArtifactRoutesTest :
                     response2.status shouldBe HttpStatusCode.OK
 
                     verify(exactly = 2) { mockBuildVersionArtifacts(any(), any()) }
+                }
+            }
+
+            test("when version significance is invalid") {
+                testApplication {
+                    // Given
+                    application {
+                        appModule(
+                            buildVersionArtifacts = { bindingsServerRequest, _ ->
+                                buildVersionArtifacts(
+                                    bindingsServerRequest,
+                                    HttpClient(
+                                        MockEngine { request ->
+                                            when (request.url.toString()) {
+                                                "https://raw.githubusercontent.com" +
+                                                    "/some-owner/some-action-act/v4/_weird/action.yml",
+                                                "https://raw.githubusercontent.com" +
+                                                    "/some-owner/some-action-act/v4/_weird/action.yaml",
+                                                -> {
+                                                    respond("Not found", status = HttpStatusCode.NotFound)
+                                                }
+
+                                                else -> {
+                                                    error("An internal error occurred!")
+                                                }
+                                            }
+                                        },
+                                    ),
+                                )
+                            },
+                            // Irrelevant for these tests.
+                            buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
+                            getGithubAuthToken = { "" },
+                        )
+                    }
+
+                    // When
+                    val response =
+                        client.get("some-owner/some-action-act___weird/v4/some-action-act___weird-v4.pom")
+
+                    // Then
+                    response.status shouldBe HttpStatusCode.NotFound
                 }
             }
         }
