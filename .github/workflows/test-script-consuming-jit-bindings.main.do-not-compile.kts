@@ -24,14 +24,18 @@
 // Always untyped action.
 @file:DependsOn("typesafegithub:always-untyped-action-for-tests:v1")
 
-// Action version pinned to a commit.
+// Action version pinned to an explicit commit.
 @file:DependsOn("actions:setup-python___commit_lenient:v6.0.0__e797f83bcb11b83ae66e0230d6156d7c80228e7c")
+
+// Action version pinned to a commit.
+@file:DependsOn("actions:github-script___commit:v9.0.0")
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
+import io.github.typesafegithub.workflows.actions.actions.GithubScript
 import io.github.typesafegithub.workflows.actions.actions.SetupNode
 import io.github.typesafegithub.workflows.actions.actions.SetupPython
-import io.github.typesafegithub.workflows.actions.actions.Checkout_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.gradle.ActionsDependencySubmission_Untyped
 import io.github.typesafegithub.workflows.actions.gradle.ActionsWrapperValidation
@@ -53,3 +57,4 @@ ActionsWrapperValidation().actionVersion shouldBe "v4.2"
 Checkout(fetchTags = false).copy(fetchTags = true)
 
 SetupPython().actionVersion shouldBe "e797f83bcb11b83ae66e0230d6156d7c80228e7c"
+GithubScript(script = "").actionVersion shouldBe "3a2844b7e9c422d3c10d287c895573f7108da1b3"
