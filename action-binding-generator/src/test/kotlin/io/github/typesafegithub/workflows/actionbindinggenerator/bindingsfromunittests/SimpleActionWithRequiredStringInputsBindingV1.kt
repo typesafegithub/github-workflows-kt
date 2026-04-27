@@ -70,18 +70,18 @@ public data class SimpleActionWithRequiredStringInputsBindingV1 private construc
     public val _customVersion: String? = null,
 ) : RegularAction<Action.Outputs>("john-smith", "simple-action-with-required-string-inputs-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((fooBar != null) && (fooBar_Untyped != null))) {
-            "Only fooBar or fooBar_Untyped must be set, but not both"
+        require(listOfNotNull(fooBar, fooBar_Untyped).size <= 1) {
+            "Only one of fooBar, and fooBar_Untyped must be set, but not multiple"
         }
         require((fooBar != null) || (fooBar_Untyped != null)) {
-            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+            "Either fooBar, or fooBar_Untyped must be set, one of them is required"
         }
 
-        require(!((bazGoo != null) && (bazGoo_Untyped != null))) {
-            "Only bazGoo or bazGoo_Untyped must be set, but not both"
+        require(listOfNotNull(bazGoo, bazGoo_Untyped).size <= 1) {
+            "Only one of bazGoo, and bazGoo_Untyped must be set, but not multiple"
         }
         require((bazGoo != null) || (bazGoo_Untyped != null)) {
-            "Either bazGoo or bazGoo_Untyped must be set, one of them is required"
+            "Either bazGoo, or bazGoo_Untyped must be set, one of them is required"
         }
     }
 

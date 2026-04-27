@@ -27,71 +27,72 @@ import io.kotest.matchers.collections.shouldHaveSize
 
 class GenerationTest :
     FunSpec({
-        val actionManifestWithAllTypesOfInputsAndSomeOutput =
+        val allTypesOfInputs =
+            mapOf(
+                "foo-bar" to
+                    Input(
+                        description = "Short description",
+                        required = true,
+                        default = null,
+                    ),
+                "baz-goo" to
+                    Input(
+                        description = "First boolean input!",
+                        required = true,
+                        default = null,
+                    ),
+                "bin-kin" to
+                    Input(
+                        description = "Boolean and nullable",
+                        required = false,
+                        default = "test",
+                    ),
+                "int-pint" to
+                    Input(
+                        description = "Integer",
+                        required = true,
+                        default = null,
+                    ),
+                "flo-pint" to
+                    Input(
+                        description = "Float",
+                        required = true,
+                        default = null,
+                    ),
+                "fin-bin" to
+                    Input(
+                        description = "Enumeration",
+                        required = true,
+                        default = null,
+                    ),
+                "goo-zen" to
+                    Input(
+                        description = "Integer with special value",
+                        required = true,
+                        default = null,
+                    ),
+                "bah-enum" to
+                    Input(
+                        description = "Enum with custom naming",
+                        required = true,
+                        default = null,
+                    ),
+                "list-strings" to Input("List of strings"),
+                "list-ints" to Input("List of integers"),
+                "list-enums" to Input("List of enums"),
+                "list-int-special" to Input("List of integer with special values"),
+            )
+        val actionManifestWithAllTypesOfInputsAndOutputs =
             Metadata(
                 name = "Do something cool",
                 description = "This is a test description that should be put in the KDoc comment for a class",
-                inputs =
-                    mapOf(
-                        "foo-bar" to
-                            Input(
-                                description = "Short description",
-                                required = true,
-                                default = null,
-                            ),
-                        "baz-goo" to
-                            Input(
-                                description = "First boolean input!",
-                                required = true,
-                                default = null,
-                            ),
-                        "bin-kin" to
-                            Input(
-                                description = "Boolean and nullable",
-                                required = false,
-                                default = "test",
-                            ),
-                        "int-pint" to
-                            Input(
-                                description = "Integer",
-                                required = true,
-                                default = null,
-                            ),
-                        "flo-pint" to
-                            Input(
-                                description = "Float",
-                                required = true,
-                                default = null,
-                            ),
-                        "fin-bin" to
-                            Input(
-                                description = "Enumeration",
-                                required = true,
-                                default = null,
-                            ),
-                        "goo-zen" to
-                            Input(
-                                description = "Integer with special value",
-                                required = true,
-                                default = null,
-                            ),
-                        "bah-enum" to
-                            Input(
-                                description = "Enum with custom naming",
-                                required = true,
-                                default = null,
-                            ),
-                        "list-strings" to Input("List of strings"),
-                        "list-ints" to Input("List of integers"),
-                        "list-enums" to Input("List of enums"),
-                        "list-int-special" to Input("List of integer with special values"),
-                    ),
+                inputs = allTypesOfInputs,
                 outputs =
-                    mapOf(
-                        "baz-goo" to Output(description = "Cool output!"),
-                    ),
+                    allTypesOfInputs.mapValues { (_, value) ->
+                        Output(description = "${value.description} output")
+                    },
             )
-        val typingsForAllTypesOfInputs =
+        val typingsForAllTypes =
             mapOf(
                 "foo-bar" to StringTyping,
                 "baz-goo" to BooleanTyping,
@@ -160,7 +161,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = actionManifest.allInputsAsStrings(),
                                 source = ACTION,
@@ -222,7 +223,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = actionManifest.allInputsAsStrings(),
                                 source = ACTION,
@@ -242,8 +243,13 @@ class GenerationTest :
                     coords.generateBinding(
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
-                        metadata = actionManifestWithAllTypesOfInputsAndSomeOutput,
-                        inputTypings = ActionTypings(inputTypings = typingsForAllTypesOfInputs, source = ACTION),
+                        metadata = actionManifestWithAllTypesOfInputsAndOutputs,
+                        typings =
+                            ActionTypings(
+                                inputTypings = typingsForAllTypes,
+                                outputTypings = typingsForAllTypes,
+                                source = ACTION,
+                            ),
                     )
 
                 // then
@@ -286,7 +292,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = actionManifest.allInputsAsStrings(),
                                 source = ACTION,
@@ -315,7 +321,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                        typings = ActionTypings(source = ACTION),
                     )
 
                 // then
@@ -345,7 +351,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
+                        typings = ActionTypings(source = TYPING_CATALOG, fromFallbackVersion = true),
                     )
 
                 // then
@@ -370,7 +376,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                        typings = ActionTypings(source = ACTION),
                     )
 
                 // then
@@ -414,7 +420,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = actionManifest.allInputsAsStrings(),
                                 source = ACTION,
@@ -460,7 +466,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings =
                                     mapOf(
@@ -502,7 +508,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = actionManifest.allInputsAsStrings(),
                                 source = ACTION,
@@ -541,7 +547,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = null),
+                        typings = ActionTypings(),
                     )
 
                 // then
@@ -581,7 +587,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = mapOf("foo" to IntegerTyping),
                                 source = TYPING_CATALOG,
@@ -619,7 +625,11 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                        typings =
+                            ActionTypings(
+                                inputTypings = emptyMap(),
+                                source = ACTION,
+                            ),
                     )
 
                 // then
@@ -657,7 +667,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
+                        typings = ActionTypings(inputTypings = emptyMap(), source = ACTION),
                     )
 
                 // then
@@ -701,7 +711,7 @@ class GenerationTest :
                         bindingVersion = bindingVersion,
                         metadataRevision = NewestForVersion,
                         metadata = actionManifest,
-                        inputTypings =
+                        typings =
                             ActionTypings(
                                 inputTypings = actionManifest.allInputsAsStrings(),
                                 source = ACTION,

@@ -33,7 +33,8 @@ internal suspend fun ActionCoords.provideTypes(
             ?: this.toMajorVersionForTypings().fetchFromTypingsFromCatalog(httpClient)
     )?.let { (typings, typingActualSource) ->
         ActionTypings(
-            inputTypings = typings.toTypesMap(),
+            inputTypings = typings.toInputTypesMap(),
+            outputTypings = typings.toOutputTypesMap(),
             source = typingActualSource,
             fromFallbackVersion = typings.fromFallbackVersion,
         )
@@ -146,10 +147,14 @@ private suspend fun fetchTypingsFromUrl(
     return yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYml, ActionTypes())
 }
 
-internal fun ActionTypes.toTypesMap(): Map<String, Typing> =
-    inputs?.mapValues { (key, value) ->
+private fun Map<String, ActionType>.toTypesMap(): Map<String, Typing> =
+    mapValues { (key, value) ->
         value.toTyping(key)
-    } ?: emptyMap()
+    }
+
+private fun ActionTypes.toInputTypesMap(): Map<String, Typing> = inputs?.toTypesMap() ?: emptyMap()
+
+private fun ActionTypes.toOutputTypesMap(): Map<String, Typing> = outputs?.toTypesMap() ?: emptyMap()
 
 private fun ActionCoords.toMajorVersionForTypings(): ActionCoords =
     this.copy(versionForTypings = this.versionForTypings.substringBefore("."))

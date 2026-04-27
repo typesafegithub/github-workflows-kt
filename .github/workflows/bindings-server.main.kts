@@ -105,15 +105,16 @@ workflow(
             """.trimIndent(),
         )
 
-        cleanMavenLocal()
+        // TODO: Reenable after release, currently, new class "Expression" cannot be found
+        //cleanMavenLocal()
 
-        run(
-            name = "Execute the script using the bindings from the server with binding version v2",
-            command = """
-                mv .github/workflows/test-script-consuming-jit-bindings-v2.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-v2.main.kts
-                .github/workflows/test-script-consuming-jit-bindings-v2.main.kts
-            """.trimIndent(),
-        )
+        //run(
+        //    name = "Execute the script using the bindings from the server with binding version v2",
+        //    command = """
+        //        mv .github/workflows/test-script-consuming-jit-bindings-v2.main.do-not-compile.kts .github/workflows/test-script-consuming-jit-bindings-v2.main.kts
+        //        .github/workflows/test-script-consuming-jit-bindings-v2.main.kts
+        //    """.trimIndent(),
+        //)
 
         cleanMavenLocal()
 

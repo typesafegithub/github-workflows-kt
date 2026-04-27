@@ -133,7 +133,10 @@ class ActionWithAllTypesOfInputsTest : DescribeSpec({
                         bindingVersion = bindingVersion,
                     )
                 }
-            exception.message shouldBe "Either fooBar or fooBar_Untyped must be set, one of them is required"
+            when (bindingVersion) {
+                V1 -> exception.message shouldBe "Either fooBar, or fooBar_Untyped must be set, one of them is required"
+                V2 -> exception.message shouldBe "Either fooBar, fooBar_Untyped, or fooBarExpression must be set, one of them is required"
+            }
         }
 
         it("validates required inputs are not supplied typed and untyped") {
@@ -150,7 +153,10 @@ class ActionWithAllTypesOfInputsTest : DescribeSpec({
                         ),
                     )
                 }
-            exception.message shouldBe "Only fooBar or fooBar_Untyped must be set, but not both"
+            when (bindingVersion) {
+                V1 -> exception.message shouldBe "Only one of fooBar, and fooBar_Untyped must be set, but not multiple"
+                V2 -> exception.message shouldBe "Only one of fooBar, fooBar_Untyped, and fooBarExpression must be set, but not multiple"
+            }
         }
 
         it("validates not-required inputs are not supplied typed and untyped") {
@@ -175,7 +181,10 @@ class ActionWithAllTypesOfInputsTest : DescribeSpec({
                         ),
                     )
                 }
-            exception.message shouldBe "Only listStrings or listStrings_Untyped must be set, but not both"
+            when (bindingVersion) {
+                V1 -> exception.message shouldBe "Only one of listStrings, and listStrings_Untyped must be set, but not multiple"
+                V2 -> exception.message shouldBe "Only one of listStrings, listStrings_Untyped, listStringsExpression, and listStringsExpressions must be set, but not multiple"
+            }
         }
 
         it("exposes copy method") {

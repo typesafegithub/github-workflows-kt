@@ -168,8 +168,63 @@ public data class ActionWithAllTypesOfInputsBindingV1_Untyped private constructo
         stepId: String,
     ) : Action.Outputs(stepId) {
         /**
-         * Cool output!
+         * Short description output
+         */
+        public val fooBar: String = "steps.$stepId.outputs.foo-bar"
+
+        /**
+         * First boolean input! output
          */
         public val bazGoo: String = "steps.$stepId.outputs.baz-goo"
+
+        /**
+         * Boolean and nullable output
+         */
+        public val binKin: String = "steps.$stepId.outputs.bin-kin"
+
+        /**
+         * Integer output
+         */
+        public val intPint: String = "steps.$stepId.outputs.int-pint"
+
+        /**
+         * Float output
+         */
+        public val floPint: String = "steps.$stepId.outputs.flo-pint"
+
+        /**
+         * Enumeration output
+         */
+        public val finBin: String = "steps.$stepId.outputs.fin-bin"
+
+        /**
+         * Integer with special value output
+         */
+        public val gooZen: String = "steps.$stepId.outputs.goo-zen"
+
+        /**
+         * Enum with custom naming output
+         */
+        public val bahEnum: String = "steps.$stepId.outputs.bah-enum"
+
+        /**
+         * List of strings output
+         */
+        public val listStrings: String = "steps.$stepId.outputs.list-strings"
+
+        /**
+         * List of integers output
+         */
+        public val listInts: String = "steps.$stepId.outputs.list-ints"
+
+        /**
+         * List of enums output
+         */
+        public val listEnums: String = "steps.$stepId.outputs.list-enums"
+
+        /**
+         * List of integer with special values output
+         */
+        public val listIntSpecial: String = "steps.$stepId.outputs.list-int-special"
     }
 }

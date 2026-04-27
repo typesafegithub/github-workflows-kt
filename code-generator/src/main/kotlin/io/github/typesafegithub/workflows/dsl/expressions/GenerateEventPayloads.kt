@@ -159,7 +159,7 @@ fun Map.Entry<String, JsonElement>.generatePropertySpec(
         is JsonObject -> {
             PropertySpec
                 .builder(child, ClassName(PACKAGE, payloadClassName("$key.$child", filename)))
-                .initializer("%L", payloadClassName("$key.$child", filename))
+                .initializer("%N", payloadClassName("$key.$child", filename))
                 .build()
         }
 
