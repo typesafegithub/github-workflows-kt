@@ -208,16 +208,12 @@ class GithubApiTest :
                     )
 
                 // Then
-                // This assertion shows current undesired behavior,
-                // TODO fix in https://github.com/typesafegithub/github-workflows-kt/pull/2306
                 versionsOrError shouldBe
                     listOf(
                         Version("v1.0.0"),
                         Version("v1.0.1"),
-                        Version("tag"),
                         Version("v1"),
                         Version("v2"),
-                        Version("branch"),
                     ).right()
             }
 
