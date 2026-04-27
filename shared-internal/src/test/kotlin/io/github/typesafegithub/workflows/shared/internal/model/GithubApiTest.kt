@@ -109,7 +109,7 @@ class GithubApiTest :
                         Version("v2"),
                     ).right()
             }
-            test("branches scoped branches and tags starting with v") {
+            test("scoped branches and tags starting with v") {
                 // Given
                 val tagsResponse =
                     """
