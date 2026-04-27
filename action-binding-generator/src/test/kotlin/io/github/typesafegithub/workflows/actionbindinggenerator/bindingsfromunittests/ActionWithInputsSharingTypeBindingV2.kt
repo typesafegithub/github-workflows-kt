@@ -25,7 +25,7 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-inputs-sharing-type)
+ * [Action on GitHub](https://github.com/john-smith/action-with-inputs-sharing-type-binding-v2)
  *
  * @param fooOne &lt;required&gt;
  * @param fooOne_Untyped &lt;required&gt;
@@ -35,11 +35,11 @@ import kotlin.collections.toTypedArray
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithInputsSharingType private constructor(
+public data class ActionWithInputsSharingTypeBindingV2 private constructor(
     /**
      * &lt;required&gt;
      */
-    public val fooOne: ActionWithInputsSharingType.Foo? = null,
+    public val fooOne: ActionWithInputsSharingTypeBindingV2.Foo? = null,
     /**
      * &lt;required&gt;
      */
@@ -47,12 +47,12 @@ public data class ActionWithInputsSharingType private constructor(
     /**
      * &lt;required&gt;
      */
-    public val fooTwo: ActionWithInputsSharingType.Foo? = null,
+    public val fooTwo: ActionWithInputsSharingTypeBindingV2.Foo? = null,
     /**
      * &lt;required&gt;
      */
     public val fooTwo_Untyped: String? = null,
-    public val fooThree: ActionWithInputsSharingType.Foo? = null,
+    public val fooThree: ActionWithInputsSharingTypeBindingV2.Foo? = null,
     public val fooThree_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
@@ -62,8 +62,16 @@ public data class ActionWithInputsSharingType private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-inputs-sharing-type", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-inputs-sharing-type-binding-v2", _customVersion ?: "v3") {
     init {
+        println("WARNING: The used binding version v2 for john-smith/action-with-inputs-sharing-type-binding-v2@v3 is experimental! Last stable version is v1.")
+        if (System.getenv("GITHUB_ACTIONS").toBoolean()) {
+            println("""
+                    |
+                    |::warning title=Experimental Binding Version Used::The used binding version v2 for john-smith/action-with-inputs-sharing-type-binding-v2@v3 is experimental! Last stable version is v1.
+                    """.trimMargin())
+        }
+
         require(!((fooOne != null) && (fooOne_Untyped != null))) {
             "Only fooOne or fooOne_Untyped must be set, but not both"
         }
@@ -85,11 +93,11 @@ public data class ActionWithInputsSharingType private constructor(
 
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        fooOne: ActionWithInputsSharingType.Foo? = null,
+        fooOne: ActionWithInputsSharingTypeBindingV2.Foo? = null,
         fooOne_Untyped: String? = null,
-        fooTwo: ActionWithInputsSharingType.Foo? = null,
+        fooTwo: ActionWithInputsSharingTypeBindingV2.Foo? = null,
         fooTwo_Untyped: String? = null,
-        fooThree: ActionWithInputsSharingType.Foo? = null,
+        fooThree: ActionWithInputsSharingTypeBindingV2.Foo? = null,
         fooThree_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
@@ -115,8 +123,8 @@ public data class ActionWithInputsSharingType private constructor(
     ) {
         public class Value(
             requestedValue: Int,
-        ) : ActionWithInputsSharingType.Foo(requestedValue)
+        ) : ActionWithInputsSharingTypeBindingV2.Foo(requestedValue)
 
-        public object Special1 : ActionWithInputsSharingType.Foo(3)
+        public object Special1 : ActionWithInputsSharingTypeBindingV2.Foo(3)
     }
 }

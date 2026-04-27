@@ -12,7 +12,6 @@ import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
 import kotlin.ExposedCopyVisibility
-import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
@@ -25,25 +24,33 @@ import kotlin.collections.toTypedArray
  *
  * This is a test description that should be put in the KDoc comment for a class
  *
- * [Action on GitHub](https://github.com/john-smith/action-with-partly-typings)
+ * [Action on GitHub](https://github.com/john-smith/action-with-fancy-chars-in-docs-binding-v1)
  *
- * @param foo &lt;required&gt;
- * @param foo_Untyped &lt;required&gt;
+ * @param nestedKotlinComments This is a /&#42; test &#42;/
+ * @param nestedKotlinComments_Untyped This is a /&#42; test &#42;/
+ * @param percent For example "100%"
+ * @param percent_Untyped For example "100%"
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
  */
 @ExposedCopyVisibility
-public data class ActionWithPartlyTypings private constructor(
+public data class ActionWithFancyCharsInDocsBindingV1 private constructor(
     /**
-     * &lt;required&gt;
+     * This is a /&#42; test &#42;/
      */
-    public val foo: Int? = null,
+    public val nestedKotlinComments: String? = null,
     /**
-     * &lt;required&gt;
+     * This is a /&#42; test &#42;/
      */
-    public val foo_Untyped: String? = null,
-    public val bar_Untyped: String? = null,
-    public val baz_Untyped: String,
+    public val nestedKotlinComments_Untyped: String? = null,
+    /**
+     * For example "100%"
+     */
+    public val percent: String? = null,
+    /**
+     * For example "100%"
+     */
+    public val percent_Untyped: String? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -52,33 +59,34 @@ public data class ActionWithPartlyTypings private constructor(
      * Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
      */
     public val _customVersion: String? = null,
-) : RegularAction<Action.Outputs>("john-smith", "action-with-partly-typings", _customVersion ?: "v3") {
+) : RegularAction<Action.Outputs>("john-smith", "action-with-fancy-chars-in-docs-binding-v1", _customVersion ?: "v3") {
     init {
-        require(!((foo != null) && (foo_Untyped != null))) {
-            "Only foo or foo_Untyped must be set, but not both"
+        require(!((nestedKotlinComments != null) && (nestedKotlinComments_Untyped != null))) {
+            "Only nestedKotlinComments or nestedKotlinComments_Untyped must be set, but not both"
         }
-        require((foo != null) || (foo_Untyped != null)) {
-            "Either foo or foo_Untyped must be set, one of them is required"
+
+        require(!((percent != null) && (percent_Untyped != null))) {
+            "Only percent or percent_Untyped must be set, but not both"
         }
     }
 
     public constructor(
         vararg pleaseUseNamedArguments: Unit,
-        foo: Int? = null,
-        foo_Untyped: String? = null,
-        bar_Untyped: String? = null,
-        baz_Untyped: String,
+        nestedKotlinComments: String? = null,
+        nestedKotlinComments_Untyped: String? = null,
+        percent: String? = null,
+        percent_Untyped: String? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(foo = foo, foo_Untyped = foo_Untyped, bar_Untyped = bar_Untyped, baz_Untyped = baz_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(nestedKotlinComments = nestedKotlinComments, nestedKotlinComments_Untyped = nestedKotlinComments_Untyped, percent = percent, percent_Untyped = percent_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
-            foo?.let { "foo" to it.toString() },
-            foo_Untyped?.let { "foo" to it },
-            bar_Untyped?.let { "bar" to it },
-            "baz" to baz_Untyped,
+            nestedKotlinComments?.let { "nested-kotlin-comments" to it },
+            nestedKotlinComments_Untyped?.let { "nested-kotlin-comments" to it },
+            percent?.let { "percent" to it },
+            percent_Untyped?.let { "percent" to it },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )
