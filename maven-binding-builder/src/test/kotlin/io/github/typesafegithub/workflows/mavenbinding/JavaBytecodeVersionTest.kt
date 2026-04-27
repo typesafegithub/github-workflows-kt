@@ -12,7 +12,13 @@ class JavaBytecodeVersionTest :
         {
             test("bindings are built with desired Java bytecode version") {
                 val actionCoords = ActionCoords("actions", "setup-java", "v3")
-                val jars = actionCoords.buildJars(httpClient = HttpClient(CIO))!!
+                val bindingsServerRequest =
+                    BindingsServerRequest(
+                        rawName = "setup-java",
+                        rawVersion = "v3",
+                        actionCoords = actionCoords,
+                    )
+                val jars = bindingsServerRequest.buildJars(httpClient = HttpClient(CIO))!!
                 jars.randomClassFile() shouldHaveBytecodeVersion JDK_8
             }
         },

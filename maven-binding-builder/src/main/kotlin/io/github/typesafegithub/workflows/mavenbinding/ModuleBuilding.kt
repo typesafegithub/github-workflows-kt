@@ -1,6 +1,7 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
 internal fun BindingsServerRequest.buildModuleFile(
+    libraryVersion: String,
     mainJarSize: Int,
     mainJarMd5Checksum: String,
     mainJarSha1Checksum: String,
@@ -67,7 +68,7 @@ internal fun BindingsServerRequest.buildModuleFile(
               "group": "io.github.typesafegithub",
               "module": "github-workflows-kt",
               "version": {
-                "requires": "$LATEST_RELASED_LIBRARY_VERSION"
+                "requires": "$libraryVersion"
               }
             }
           ],
