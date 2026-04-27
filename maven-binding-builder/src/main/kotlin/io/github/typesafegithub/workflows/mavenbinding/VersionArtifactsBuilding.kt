@@ -1,7 +1,10 @@
 package io.github.typesafegithub.workflows.mavenbinding
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
+import io.github.typesafegithub.workflows.shared.internal.fetchVersionSha
 import io.ktor.client.HttpClient
+import io.micrometer.core.instrument.MeterRegistry
 
 sealed interface Artifact
 
@@ -20,8 +23,28 @@ data class VersionArtifacts(
 
 suspend fun buildVersionArtifacts(
     bindingsServerRequest: BindingsServerRequest,
+    githubAuthToken: String,
+    meterRegistry: MeterRegistry,
     httpClient: HttpClient,
 ): VersionArtifacts? {
+    val bindingsServerRequest =
+        if (bindingsServerRequest.actionCoords.significantVersion == COMMIT) {
+            bindingsServerRequest.copy(
+                actionCoords =
+                    bindingsServerRequest.actionCoords.copy(
+                        version =
+                            fetchVersionSha(
+                                "${bindingsServerRequest.actionCoords.owner}/${bindingsServerRequest.actionCoords.name}",
+                                bindingsServerRequest.actionCoords.version,
+                                githubAuthToken,
+                                meterRegistry,
+                            ).getOrNull() ?: return null,
+                        comment = bindingsServerRequest.actionCoords.version,
+                    ),
+            )
+        } else {
+            bindingsServerRequest
+        }
     with(bindingsServerRequest) {
         val jars = actionCoords.buildJars(httpClient = httpClient) ?: return null
         val pom = this.buildPomFile()
