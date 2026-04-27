@@ -59,7 +59,14 @@ fun main() {
     }
     embeddedServer(Netty, port = 8080) {
         appModule(
-            buildVersionArtifacts = ::buildVersionArtifacts,
+            buildVersionArtifacts = { bindingsServerRequest, httpClient ->
+                buildVersionArtifacts(
+                    bindingsServerRequest,
+                    bindingsServerRequest.actionCoords.typesUuid?.let { "" },
+                    null,
+                    httpClient,
+                )
+            },
             buildPackageArtifacts = ::buildPackageArtifacts,
             getGithubAuthToken = ::getGithubAuthToken,
         )
@@ -139,3 +146,5 @@ private fun buildMetadataCache(
 val deliverOnRefreshRoute = System.getenv("GWKT_DELIVER_ON_REFRESH").toBoolean()
 
 suspend fun ApplicationCall.respondNotFound() = respondText(text = "Not found", status = HttpStatusCode.NotFound)
+
+suspend fun ApplicationCall.respondBadRequest(text: String) = respondText(text, status = HttpStatusCode.BadRequest)
