@@ -4,6 +4,7 @@ import java.time.ZonedDateTime
 
 data class Version(
     val version: String,
+    private val shaProvider: suspend () -> String? = { null },
     private val dateProvider: suspend () -> ZonedDateTime? = { null },
 ) : Comparable<Version> {
     private val versionParts: List<String> = version.removePrefix("v").removePrefix("V").split('.')
@@ -40,6 +41,8 @@ data class Version(
     override fun toString(): String = version
 
     fun isMajorVersion(): Boolean = versionIntParts.singleOrNull() != null
+
+    suspend fun getSha() = shaProvider()
 
     suspend fun getReleaseDate() = dateProvider()
 }
