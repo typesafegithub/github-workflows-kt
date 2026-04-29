@@ -20,7 +20,7 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:3.4.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.3")
     implementation("io.github.oshai:kotlin-logging:8.0.01")
-    implementation("com.auth0:java-jwt:4.5.1")
+    implementation("com.auth0:java-jwt:4.5.2")
     implementation("org.kohsuke:github-api:1.330")
 
     testImplementation("io.kotest:kotest-extensions-mockserver:6.1.11")
