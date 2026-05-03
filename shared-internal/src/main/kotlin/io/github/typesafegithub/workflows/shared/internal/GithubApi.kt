@@ -15,6 +15,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
@@ -52,16 +53,21 @@ private fun List<GithubRef>.versions(
     either {
         this@versions.map { githubRef ->
             val version = githubRef.ref.substringAfterLast("/")
-            Version(version) {
-                val response =
-                    buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
-                        httpClient
-                            .get(urlString = githubRef.`object`.url) {
-                                if (githubAuthToken != null) {
-                                    bearerAuth(githubAuthToken)
-                                }
+            val objectProvider: suspend () -> HttpResponse = {
+                buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
+                    httpClient
+                        .get(urlString = githubRef.`object`.url) {
+                            if (githubAuthToken != null) {
+                                bearerAuth(githubAuthToken)
                             }
-                    }
+                        }
+                }
+            }
+            Version(
+                version,
+                shaProvider = { githubRef.`object`.getCommitSha(objectProvider()) },
+            ) {
+                val response = objectProvider()
                 val releaseDate =
                     when (githubRef.`object`.type) {
                         "tag" -> response.body<Tag>().tagger
@@ -71,6 +77,13 @@ private fun List<GithubRef>.versions(
                 ZonedDateTime.parse(releaseDate)
             }
         }
+    }
+
+private suspend fun Object.getCommitSha(httpResponse: HttpResponse) =
+    when (type) {
+        "tag" -> httpResponse.body<Tag>().`object`.sha
+        "commit" -> httpResponse.body<Commit>().sha
+        else -> error("Unexpected target object type $type")
     }
 
 private suspend fun fetchGithubRefs(
@@ -114,17 +127,20 @@ private data class GithubRef(
 @Serializable
 private data class Object(
     val type: String,
+    val sha: String,
     val url: String,
 )
 
 @Serializable
 private data class Tag(
     val tagger: Person,
+    val `object`: Object,
 )
 
 @Serializable
 private data class Commit(
     val author: Person,
+    val sha: String,
 )
 
 @Serializable

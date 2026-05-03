@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.getOrElse
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.fetchAvailableVersions
 import io.github.typesafegithub.workflows.shared.internal.model.Version
@@ -30,6 +31,7 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
                 emptyList()
             }.filter { it.isMajorVersion() || (significantVersion < FULL) }
     prefetchBindingArtifacts(availableVersions.map { copy(version = "$it") })
+    val commitLenient = significantVersion == COMMIT_LENIENT
     val newest = availableVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter
@@ -41,10 +43,10 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
           <groupId>$owner</groupId>
           <artifactId>$name</artifactId>
           <versioning>
-            <latest>$newest</latest>
-            <release>$newest</release>
+            <latest>$newest${if (commitLenient) "__${newest.getSha()}" else ""}</latest>
+            <release>$newest${if (commitLenient) "__${newest.getSha()}" else ""}</release>
             <versions>
-${availableVersions.joinToString(separator = "\n") {
+${availableVersions.map { "$it${if (commitLenient) "__${it.getSha()}" else ""}" }.joinToString(separator = "\n") {
         "              <version>$it</version>"
     }}
             </versions>
