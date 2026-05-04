@@ -22,7 +22,9 @@ dependencies {
     implementation(projects.sharedInternal)
 
     testImplementation("io.ktor:ktor-client-mock:3.4.3")
+    testImplementation(kotlin("reflect"))
     testImplementation(projects.githubWorkflowsKt)
+    testImplementation(projects.testUtils)
 }
 
 kotlin {
