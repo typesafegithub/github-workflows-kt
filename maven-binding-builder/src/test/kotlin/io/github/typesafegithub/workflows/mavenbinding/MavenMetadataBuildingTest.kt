@@ -15,11 +15,16 @@ import java.time.ZonedDateTime
 
 class MavenMetadataBuildingTest :
     FunSpec({
-        val actionCoords =
-            ActionCoords(
-                owner = "owner",
-                name = "name",
-                version = "irrelevant",
+        val bindingsServerRequest =
+            BindingsServerRequest(
+                rawName = "name",
+                rawVersion = null,
+                actionCoords =
+                    ActionCoords(
+                        owner = "owner",
+                        name = "name",
+                        version = "irrelevant",
+                    ),
             )
 
         test("various kinds of versions available") {
@@ -43,7 +48,7 @@ class MavenMetadataBuildingTest :
             }
 
             val xml =
-                actionCoords.buildMavenMetadataFile(
+                bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
                 )
@@ -85,7 +90,7 @@ class MavenMetadataBuildingTest :
             }
 
             val xml =
-                actionCoords.buildMavenMetadataFile(
+                bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
                 )
@@ -105,7 +110,7 @@ class MavenMetadataBuildingTest :
             }
 
             val xml =
-                actionCoords.buildMavenMetadataFile(
+                bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
                 )
@@ -167,10 +172,17 @@ class MavenMetadataBuildingTest :
                 }
 
                 val xml =
-                    actionCoords.copy(significantVersion = significantVersion).buildMavenMetadataFile(
-                        githubAuthToken = "SOME_TOKEN",
-                        fetchAvailableVersions = fetchAvailableVersions,
-                    )
+                    bindingsServerRequest
+                        .copy(
+                            rawName = "name___$significantVersion",
+                            actionCoords =
+                                bindingsServerRequest.actionCoords.copy(
+                                    significantVersion = significantVersion,
+                                ),
+                        ).buildMavenMetadataFile(
+                            githubAuthToken = "SOME_TOKEN",
+                            fetchAvailableVersions = fetchAvailableVersions,
+                        )
 
                 val commitLenient = significantVersion == COMMIT_LENIENT
                 xml shouldBe
@@ -178,7 +190,7 @@ class MavenMetadataBuildingTest :
                     <?xml version="1.0" encoding="UTF-8"?>
                     <metadata>
                       <groupId>owner</groupId>
-                      <artifactId>name</artifactId>
+                      <artifactId>name___$significantVersion</artifactId>
                       <versioning>
                         <latest>v2${if (commitLenient) "__2" else ""}</latest>
                         <release>v2${if (commitLenient) "__2" else ""}</release>

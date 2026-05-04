@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter
 
 private val logger = logger { }
 
-internal suspend fun ActionCoords.buildMavenMetadataFile(
+internal suspend fun BindingsServerRequest.buildMavenMetadataFile(
     githubAuthToken: String,
     meterRegistry: MeterRegistry? = null,
     fetchAvailableVersions: suspend (
@@ -25,13 +25,13 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
     prefetchBindingArtifacts: (Collection<ActionCoords>) -> Unit = {},
 ): String? {
     val availableVersions =
-        fetchAvailableVersions(owner, name, githubAuthToken, meterRegistry)
+        fetchAvailableVersions(actionCoords.owner, actionCoords.name, githubAuthToken, meterRegistry)
             .getOrElse {
                 logger.error { it }
                 emptyList()
-            }.filter { it.isMajorVersion() || (significantVersion < FULL) }
-    prefetchBindingArtifacts(availableVersions.map { copy(version = "$it") })
-    val commitLenient = significantVersion == COMMIT_LENIENT
+            }.filter { it.isMajorVersion() || (actionCoords.significantVersion < FULL) }
+    prefetchBindingArtifacts(availableVersions.map { actionCoords.copy(version = "$it") })
+    val commitLenient = actionCoords.significantVersion == COMMIT_LENIENT
     val newest = availableVersions.maxOrNull() ?: return null
     val lastUpdated =
         DateTimeFormatter
@@ -40,8 +40,8 @@ internal suspend fun ActionCoords.buildMavenMetadataFile(
     return """
         <?xml version="1.0" encoding="UTF-8"?>
         <metadata>
-          <groupId>$owner</groupId>
-          <artifactId>$name</artifactId>
+          <groupId>${actionCoords.owner}</groupId>
+          <artifactId>$rawName</artifactId>
           <versioning>
             <latest>$newest${if (commitLenient) "__${newest.getSha()}" else ""}</latest>
             <release>$newest${if (commitLenient) "__${newest.getSha()}" else ""}</release>
