@@ -9,6 +9,7 @@
 
 package io.github.typesafegithub.workflows.actions.johnsmith
 
+import io.github.typesafegithub.workflows.domain.Expression
 import io.github.typesafegithub.workflows.domain.actions.Action
 import io.github.typesafegithub.workflows.domain.actions.RegularAction
 import java.util.LinkedHashMap
@@ -31,9 +32,12 @@ import kotlin.collections.toTypedArray
  *
  * @param fooBar &lt;required&gt; Short description
  * @param fooBar_Untyped &lt;required&gt; Short description
+ * @param fooBarExpression &lt;required&gt; Short description
  * @param bazGoo &lt;required&gt; Just another input
  * with multiline description
  * @param bazGoo_Untyped &lt;required&gt; Just another input
+ * with multiline description
+ * @param bazGooExpression &lt;required&gt; Just another input
  * with multiline description
  * @param _customInputs Type-unsafe map where you can put any inputs that are not yet supported by the binding
  * @param _customVersion Allows overriding action's version, for example to use a specific minor version, or a newer version that the binding doesn't yet know about
@@ -47,7 +51,12 @@ public data class SimpleActionWithRequiredStringInputsBindingV2 private construc
     /**
      * &lt;required&gt; Short description
      */
+    @Deprecated("Use the typed property or expression property instead")
     public val fooBar_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Short description
+     */
+    public val fooBarExpression: Expression<String>? = null,
     /**
      * &lt;required&gt; Just another input
      * with multiline description
@@ -60,6 +69,12 @@ public data class SimpleActionWithRequiredStringInputsBindingV2 private construc
      */
     @Deprecated("this is deprecated")
     public val bazGoo_Untyped: String? = null,
+    /**
+     * &lt;required&gt; Just another input
+     * with multiline description
+     */
+    @Deprecated("this is deprecated")
+    public val bazGooExpression: Expression<String>? = null,
     /**
      * Type-unsafe map where you can put any inputs that are not yet supported by the binding
      */
@@ -78,18 +93,18 @@ public data class SimpleActionWithRequiredStringInputsBindingV2 private construc
                     """.trimMargin())
         }
 
-        require(!((fooBar != null) && (fooBar_Untyped != null))) {
-            "Only fooBar or fooBar_Untyped must be set, but not both"
+        require(listOfNotNull(fooBar, fooBar_Untyped, fooBarExpression).size <= 1) {
+            "Only one of fooBar, fooBar_Untyped, and fooBarExpression must be set, but not multiple"
         }
-        require((fooBar != null) || (fooBar_Untyped != null)) {
-            "Either fooBar or fooBar_Untyped must be set, one of them is required"
+        require((fooBar != null) || (fooBar_Untyped != null) || (fooBarExpression != null)) {
+            "Either fooBar, fooBar_Untyped, or fooBarExpression must be set, one of them is required"
         }
 
-        require(!((bazGoo != null) && (bazGoo_Untyped != null))) {
-            "Only bazGoo or bazGoo_Untyped must be set, but not both"
+        require(listOfNotNull(bazGoo, bazGoo_Untyped, bazGooExpression).size <= 1) {
+            "Only one of bazGoo, bazGoo_Untyped, and bazGooExpression must be set, but not multiple"
         }
-        require((bazGoo != null) || (bazGoo_Untyped != null)) {
-            "Either bazGoo or bazGoo_Untyped must be set, one of them is required"
+        require((bazGoo != null) || (bazGoo_Untyped != null) || (bazGooExpression != null)) {
+            "Either bazGoo, bazGoo_Untyped, or bazGooExpression must be set, one of them is required"
         }
     }
 
@@ -97,19 +112,23 @@ public data class SimpleActionWithRequiredStringInputsBindingV2 private construc
         vararg pleaseUseNamedArguments: Unit,
         fooBar: String? = null,
         fooBar_Untyped: String? = null,
+        fooBarExpression: Expression<String>? = null,
         bazGoo: String? = null,
         bazGoo_Untyped: String? = null,
+        bazGooExpression: Expression<String>? = null,
         _customInputs: Map<String, String> = mapOf(),
         _customVersion: String? = null,
-    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, bazGoo = bazGoo, bazGoo_Untyped = bazGoo_Untyped, _customInputs = _customInputs, _customVersion = _customVersion)
+    ) : this(fooBar = fooBar, fooBar_Untyped = fooBar_Untyped, fooBarExpression = fooBarExpression, bazGoo = bazGoo, bazGoo_Untyped = bazGoo_Untyped, bazGooExpression = bazGooExpression, _customInputs = _customInputs, _customVersion = _customVersion)
 
     @Suppress("SpreadOperator")
     override fun toYamlArguments(): LinkedHashMap<String, String> = linkedMapOf(
         *listOfNotNull(
             fooBar?.let { "foo-bar" to it },
             fooBar_Untyped?.let { "foo-bar" to it },
+            fooBarExpression?.let { "foo-bar" to it.expressionString },
             bazGoo?.let { "baz-goo" to it },
             bazGoo_Untyped?.let { "baz-goo" to it },
+            bazGooExpression?.let { "baz-goo" to it.expressionString },
             *_customInputs.toList().toTypedArray(),
         ).toTypedArray()
     )

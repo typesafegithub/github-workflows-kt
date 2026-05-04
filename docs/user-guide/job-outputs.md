@@ -1,9 +1,8 @@
 # Job outputs
 
-It's possible to pass output from a job in a somewhat type-safe way (that is: types aren't checked, but the field names
-are).
+It is possible to pass output from a job in a type-safe way.
 
-First, define `outputs` parameter in `job` function, inheriting from `JobOutputs`:
+First, define `outputs` parameter in `job` function, inheriting from `JobOutputs` with properly typed output properties:
 
 ```kotlin
 --8<-- "JobOutputsSnippets.kt:define-job-outputs-1"
