@@ -1,9 +1,7 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrintWithoutVersion
-import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -19,7 +17,7 @@ private val logger = logger { }
 typealias CachedMetadataArtifact = Map<String, String>
 
 fun Routing.metadataRoutes(
-    metadataCache: LoadingCache<BindingsServerRequest, CachedMetadataArtifact>,
+    metadataCache: MetadataCache,
     prometheusRegistry: PrometheusMeterRegistry? = null,
 ) {
     prometheusRegistry?.let {
@@ -38,7 +36,7 @@ fun Routing.metadataRoutes(
 }
 
 private fun Route.headMetadata(
-    metadataCache: LoadingCache<BindingsServerRequest, CachedMetadataArtifact>,
+    metadataCache: MetadataCache,
     refresh: Boolean = false,
 ) {
     head {
@@ -62,14 +60,17 @@ private fun Route.headMetadata(
 }
 
 private fun Route.getMetadata(
-    metadataCache: LoadingCache<BindingsServerRequest, CachedMetadataArtifact>,
+    metadataCache: MetadataCache,
     refresh: Boolean = false,
 ) {
     get {
         val request = call.parameters.parseRequest(extractVersion = false) ?: return@get call.respondNotFound()
 
-        logger.info { "➡️ Requesting metadata for ${request.actionCoords.prettyPrintWithoutVersion}" }
-
+        logger.info {
+            "➡️Requesting metadata for ${
+                request.actionCoords.prettyPrintWithoutVersion
+            } binding version ${request.bindingVersion}"
+        }
         if (refresh) {
             metadataCache.invalidate(request)
         }
