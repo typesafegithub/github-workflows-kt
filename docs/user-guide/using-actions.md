@@ -15,7 +15,7 @@ To add a dependency on an action:
 
 2. Add a dependency on a Maven artifact, e.g. for `actions/checkout@v3` the right way to add the dependency in the
    script is: `@file:DependsOn("actions:checkout:v3")`. As you can see, the group ID was adopted to model the action's
-   owner, the artifact ID models the action name, and the version is just action's version (a tag or a branch
+   owner, the artifact ID models the action name, and the version is just the action's version (a tag or a branch
    corresponding to a released version). If an action's manifest is defined in a subdirectory, like the popular
    `gradle/actions/setup-gradle@v3`, replace the slashes in the action name with `__`, so in this case it would be
    `@file:DependsOn("gradle:actions__setup-gradle:v3")`.
@@ -53,6 +53,29 @@ To add a dependency on an action:
             adjust the upper bound. For exmple a version `v4.0-beta` is less than `v4` and thus part of the range
             `[v3,v4)`. In such a case - or always, to be on the safe side - you might want to change the range to
             `[v3,v4-alpha)`, as the `alpha` version is the lowest possible version in Maven semantics.
+
+    ??? tip "Pinning actions to a commit hash"
+        Past supply-chain attacks where action version tags or branches were repointed to different commits,
+        either broken ones or malicious ones, or just gone for good, showed that it might be a good idea to instead
+        pin used actions to a specific commit hash.
+
+        This project supports pinning to a commit hash in two ways.
+
+        Like with `___major` and `___minor` suffixes, described above, you can use the suffix `___commit` to pin the
+        used action to the commit of the given version. Do **not** combine this with an intentionally changing version,
+        so do not use it with `v4` or `v4.1` or a version range, but always just with a concrete version that will not
+        change over time, like `v4.0.0`. The generated YAML will contain the commit hash and thus continue using that
+        state even if the version points somewhere else. With the consistency check enabled (the default), you will
+        be notified if the version points to a different commit than the one used in the generated YAML as the job will
+        fail, so you can notify the action maintainer about the potential attack.
+
+        Additionally, you can use any arbitrary commit hash by using the suffix `___commit_lenient`. With this suffix,
+        the version also becomes two-part, separated by two underscores. The first part is the version where the typings
+        will be used from in the typing catalog if the action does not contain typings natively, and it will be put in
+        the comment after the commit hash. The second part is the commit hash itself. So the version would look like
+        `v4.0.0__abcdef1234567890abcdef1234567890abcdef12`. The lenient part is, that there is no check at any time that
+        the version and the commit match in any way. This way you can also use any state of the given action, as long as
+        the commit contains the action code and you are not restricted to actually labeled commits.
 
 3. Use the action by importing a class like `io.github.typesafegithub.workflows.actions.actions.Checkout`.
 
