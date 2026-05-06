@@ -3,5 +3,14 @@
   "extends": [
     "config:recommended"
   ],
-  "automerge": true
+  "automerge": true,
+  "packageRules": [
+    {
+      "groupName": "actions-setup-java",
+      "matchPackageNames": [
+        "actions/setup-java",
+        "/^actions:setup-java(__.*)?$/"
+      ]
+    }
+  ]
 }
