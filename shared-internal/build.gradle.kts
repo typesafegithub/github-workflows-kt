@@ -24,5 +24,5 @@ dependencies {
     implementation("org.kohsuke:github-api:1.330")
 
     testImplementation("io.kotest:kotest-extensions-mockserver:6.1.11")
-    testImplementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation("org.slf4j:slf4j-simple:2.0.18")
 }
