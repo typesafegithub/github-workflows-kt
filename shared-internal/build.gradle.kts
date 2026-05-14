@@ -13,12 +13,12 @@ dependencies {
     api("io.arrow-kt:arrow-core:2.2.2.1")
     // we cannot use a BOM due to limitation in kotlin scripting when resolving the transitive KMM variant dependencies
     // note: see https://youtrack.jetbrains.com/issue/KT-67618
-    api("io.ktor:ktor-client-core:3.4.3")
+    api("io.ktor:ktor-client-core:3.5.0")
     api("io.micrometer:micrometer-core:1.16.5")
-    implementation("io.ktor:ktor-client-cio:3.4.3")
-    implementation("io.ktor:ktor-client-content-negotiation:3.4.3")
-    implementation("io.ktor:ktor-client-logging:3.4.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.3")
+    implementation("io.ktor:ktor-client-cio:3.5.0")
+    implementation("io.ktor:ktor-client-content-negotiation:3.5.0")
+    implementation("io.ktor:ktor-client-logging:3.5.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.5.0")
     implementation("io.github.oshai:kotlin-logging:8.0.02")
     implementation("com.auth0:java-jwt:4.5.2")
     implementation("org.kohsuke:github-api:1.330")

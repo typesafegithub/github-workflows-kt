@@ -8,7 +8,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:3.4.3"))
+    implementation(platform("io.ktor:ktor-bom:3.5.0"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-call-logging")
@@ -30,7 +30,7 @@ dependencies {
     implementation(projects.sharedInternal)
 
     testImplementation("io.ktor:ktor-server-test-host")
-    testImplementation("io.ktor:ktor-client-mock:3.4.3")
+    testImplementation("io.ktor:ktor-client-mock:3.5.0")
     testImplementation("io.mockk:mockk:1.14.9")
 }
 
