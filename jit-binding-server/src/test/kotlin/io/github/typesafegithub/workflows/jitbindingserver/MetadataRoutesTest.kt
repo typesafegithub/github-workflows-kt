@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.jitbindingserver
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
 import io.github.typesafegithub.workflows.mavenbinding.VersionArtifacts
 import io.kotest.core.spec.style.FunSpec
@@ -107,7 +106,7 @@ class MetadataRoutesTest :
                             (
                                 BindingsServerRequest,
                                 String,
-                                (Collection<ActionCoords>) -> Unit,
+                                (Collection<BindingsServerRequest>) -> Unit,
                                 MeterRegistry?,
                             ) -> Map<String, String>,
                         >()
