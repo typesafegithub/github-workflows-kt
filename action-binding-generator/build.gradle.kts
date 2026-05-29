@@ -18,7 +18,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.104.0")
     implementation("io.ktor:ktor-client-core:3.5.0")
     implementation("io.ktor:ktor-client-cio:3.5.0")
-    implementation("io.github.oshai:kotlin-logging:8.0.03")
+    implementation("io.github.oshai:kotlin-logging:8.0.4")
     implementation(projects.sharedInternal)
 
     testImplementation("io.ktor:ktor-client-mock:3.5.0")
