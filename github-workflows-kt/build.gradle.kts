@@ -30,7 +30,7 @@ dependencies {
     implementation(projects.sharedInternal)
     ksp(projects.codeGenerator)
 
-    testImplementation("dev.zacsweers.kctfork:core:0.12.1")
+    testImplementation("dev.zacsweers.kctfork:core:0.13.0")
     // Needed to use the right version of the compiler for the libraries that depend on it.
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
