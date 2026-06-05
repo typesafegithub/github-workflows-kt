@@ -8,8 +8,11 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Signific
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.micrometer.core.instrument.MeterRegistry
 import java.time.ZonedDateTime
 
@@ -47,10 +50,14 @@ class MavenMetadataBuildingTest :
                 ).right()
             }
 
+            var prefetchedCoords: Collection<ActionCoords>? = null
             val xml =
                 bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
+                    prefetchBindingArtifacts = {
+                        prefetchedCoords = it
+                    },
                 )
 
             xml shouldBe
@@ -70,6 +77,19 @@ class MavenMetadataBuildingTest :
                   </versioning>
                 </metadata>
                 """.trimIndent()
+
+            prefetchedCoords shouldNotBe null
+            prefetchedCoords shouldContainExactlyInAnyOrder
+                listOf(
+                    bindingsServerRequest.actionCoords.copy(
+                        version = "v1",
+                        versionForTypings = "irrelevant",
+                    ),
+                    bindingsServerRequest.actionCoords.copy(
+                        version = "v2",
+                        versionForTypings = "irrelevant",
+                    ),
+                )
         }
 
         test("no major versions") {
@@ -89,13 +109,21 @@ class MavenMetadataBuildingTest :
                 ).right()
             }
 
+            var prefetchedCoords: Collection<ActionCoords>? = null
             val xml =
                 bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
+                    prefetchBindingArtifacts = {
+                        prefetchedCoords = it
+                    },
                 )
 
             xml.shouldBeNull()
+
+            prefetchedCoords shouldNotBeNull {
+                size shouldBe 0
+            }
         }
 
         test("no versions available") {
@@ -109,24 +137,27 @@ class MavenMetadataBuildingTest :
                 emptyList<Version>().right()
             }
 
+            var prefetchedCoords: Collection<ActionCoords>? = null
             val xml =
                 bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
                     fetchAvailableVersions = fetchAvailableVersions,
+                    prefetchBindingArtifacts = {
+                        prefetchedCoords = it
+                    },
                 )
 
             xml.shouldBeNull()
+
+            prefetchedCoords shouldNotBeNull {
+                size shouldBe 0
+            }
         }
 
         (SignificantVersion.entries - FULL).forEach { significantVersion ->
             test("significant version $significantVersion requested") {
                 // Given
-                val fetchAvailableVersions: suspend (
-                    String,
-                    String,
-                    String?,
-                    MeterRegistry?,
-                ) -> Either<String, List<Version>> = { owner, name, _, _ ->
+                var availableVersions =
                     listOf(
                         Version(
                             version = "v3-beta",
@@ -168,9 +199,17 @@ class MavenMetadataBuildingTest :
                             shaProvider = { "8" },
                             dateProvider = { ZonedDateTime.parse("2024-03-01T00:00:00Z") },
                         ),
-                    ).right()
+                    )
+                val fetchAvailableVersions: suspend (
+                    String,
+                    String,
+                    String?,
+                    MeterRegistry?,
+                ) -> Either<String, List<Version>> = { owner, name, _, _ ->
+                    availableVersions.right()
                 }
 
+                var prefetchedCoords: Collection<ActionCoords>? = null
                 val xml =
                     bindingsServerRequest
                         .copy(
@@ -182,6 +221,9 @@ class MavenMetadataBuildingTest :
                         ).buildMavenMetadataFile(
                             githubAuthToken = "SOME_TOKEN",
                             fetchAvailableVersions = fetchAvailableVersions,
+                            prefetchBindingArtifacts = {
+                                prefetchedCoords = it
+                            },
                         )
 
                 val commitLenient = significantVersion == COMMIT_LENIENT
@@ -208,6 +250,17 @@ class MavenMetadataBuildingTest :
                       </versioning>
                     </metadata>
                     """.trimIndent()
+
+                prefetchedCoords shouldNotBe null
+                prefetchedCoords shouldContainExactlyInAnyOrder
+                    availableVersions.map { availableVersion ->
+                        bindingsServerRequest.actionCoords.copy(
+                            version = "$availableVersion",
+                            comment = null,
+                            significantVersion = significantVersion,
+                            versionForTypings = "irrelevant",
+                        )
+                    }
             }
         }
     })
