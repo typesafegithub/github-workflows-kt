@@ -14,7 +14,6 @@ import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicSte
 import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.triggers.*
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
@@ -220,8 +219,12 @@ fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(
     cleanMavenLocal()
     run(
         name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
-        shell = Shell.Custom("kotlin -script {0}"),
-        command = command,
+        command = """
+            cat > /tmp/script.kts << 'KOTLIN_SCRIPT'
+$command
+KOTLIN_SCRIPT
+            kotlin /tmp/script.kts
+        """.trimIndent(),
     )
 }
 
