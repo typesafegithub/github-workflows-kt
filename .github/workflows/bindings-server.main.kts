@@ -14,12 +14,11 @@ import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicSte
 import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
+import io.github.typesafegithub.workflows.domain.Shell
 import io.github.typesafegithub.workflows.domain.triggers.*
-import io.github.typesafegithub.workflows.domain.contexts.Contexts as RunContexts
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
-import java.io.File
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
@@ -119,41 +118,42 @@ workflow(
 
         // There should be a difference of one (mostly minor) version between these two,
         // to be able to see the newest non-working and oldest working version.
-        val newestNotCompatibleVersion = "2.1.0"
-        val oldestCompatibleVersion = "2.2.0"
+        val newestNotCompatibleVersion = "2.0.0"
+        val oldestCompatibleVersion = "2.1.0"
 
         runWithSpecificKotlinVersion(
             kotlinVersion = newestNotCompatibleVersion,
-        ) {
-            // This test depicts the current behavior that the served bindings aren't
-            // compatible with some older Kotlin version. We may want to address it one day.
-            // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
-            File(".github/workflows/test-script-consuming-jit-bindings.main.kts").copyTo(
-                File(".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts"),
-                overwrite = true,
-            ).setExecutable(true)
-            val result = runScriptAndReturnOutput(
-                ".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts"
-            )
-            if (result.exitCode == 0) {
-                error("Expected the script to fail but it succeeded")
-            }
-            if (!result.output.contains("was compiled with an incompatible version of Kotlin")) {
-                error("Expected error message not found. Output:\n${result.output}")
-            }
-        }
+            command = """
+                val src = java.io.File(".github/workflows/test-script-consuming-jit-bindings.main.kts")
+                val dest = java.io.File(".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts")
+                src.copyTo(dest, overwrite = true).setExecutable(true)
+                val process = ProcessBuilder("kotlin", dest.path).redirectErrorStream(true).start()
+                val output = process.inputStream.bufferedReader().readText()
+                val exitCode = process.waitFor()
+                if (exitCode == 0) {
+                    System.err.println("Expected the script to fail but it succeeded")
+                    System.exit(1)
+                }
+                if (!output.contains("was compiled with an incompatible version of Kotlin")) {
+                    System.err.println("Expected error message not found. Output:")
+                    System.err.println(output)
+                    System.exit(1)
+                }
+            """.trimIndent(),
+        )
         runWithSpecificKotlinVersion(
             kotlinVersion = oldestCompatibleVersion,
-        ) {
-            File(".github/workflows/test-script-consuming-jit-bindings.main.kts").copyTo(
-                File(".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts"),
-                overwrite = true,
-            ).setExecutable(true)
-            val result = runScriptAndReturnOutput(
-                ".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts"
-            )
-            check(result.exitCode == 0) { "Script failed with exit code ${result.exitCode}" }
-        }
+            command = """
+                val src = java.io.File(".github/workflows/test-script-consuming-jit-bindings.main.kts")
+                val dest = java.io.File(".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts")
+                src.copyTo(dest, overwrite = true).setExecutable(true)
+                val exitCode = ProcessBuilder("kotlin", dest.path).inheritIO().start().waitFor()
+                if (exitCode != 0) {
+                    System.err.println("Script failed with exit code " + exitCode)
+                    System.exit(exitCode)
+                }
+            """.trimIndent(),
+        )
 
         run(
             name = "Compile a Gradle project using the bindings from the server",
@@ -207,19 +207,9 @@ fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
     )
 }
 
-data class ScriptInvocationResult(val output: String, val exitCode: Int)
-
-fun runScriptAndReturnOutput(scriptPath: String): ScriptInvocationResult {
-    val process = ProcessBuilder(scriptPath).redirectErrorStream(true).start()
-    val output = process.inputStream.bufferedReader().readText()
-    val exitCode = process.waitFor()
-    return ScriptInvocationResult(output, exitCode)
-}
-
-@OptIn(ExperimentalKotlinLogicStep::class)
 fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(
     kotlinVersion: String,
-    logic: RunContexts.() -> Unit,
+    command: String,
 ) {
     uses(
         name = "Install Kotlin $kotlinVersion",
@@ -230,7 +220,8 @@ fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(
     cleanMavenLocal()
     run(
         name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
-        logic = logic,
+        shell = Shell.Custom("kotlin -script {0}"),
+        command = command,
     )
 }
 

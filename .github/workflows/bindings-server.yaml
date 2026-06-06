@@ -82,31 +82,52 @@ jobs:
         mv .github/workflows/test-served-bindings-depend-on-library.main.do-not-compile.kts .github/workflows/test-served-bindings-depend-on-library.main.kts
         .github/workflows/test-served-bindings-depend-on-library.main.kts
     - id: 'step-8'
-      name: 'Install Kotlin 2.1.0'
+      name: 'Install Kotlin 2.0.0'
       uses: 'fwilhe2/setup-kotlin@v1'
       with:
-        version: '2.1.0'
+        version: '2.0.0'
     - id: 'step-9'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-10'
-      name: 'Execute the script using the bindings from the server, using older Kotlin (2.1.0) as consumer'
-      env:
-        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
-      run: 'GHWKT_RUN_STEP=''bindings-server.yaml:end-to-end-test:step-10'' ''.github/workflows/bindings-server.main.kts'''
+      name: 'Execute the script using the bindings from the server, using older Kotlin (2.0.0) as consumer'
+      shell: 'kotlin -script {0}'
+      run: |-
+        val src = java.io.File(".github/workflows/test-script-consuming-jit-bindings.main.kts")
+        val dest = java.io.File(".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts")
+        src.copyTo(dest, overwrite = true).setExecutable(true)
+        val process = ProcessBuilder("kotlin", dest.path).redirectErrorStream(true).start()
+        val output = process.inputStream.bufferedReader().readText()
+        val exitCode = process.waitFor()
+        if (exitCode == 0) {
+            System.err.println("Expected the script to fail but it succeeded")
+            System.exit(1)
+        }
+        if (!output.contains("was compiled with an incompatible version of Kotlin")) {
+            System.err.println("Expected error message not found. Output:")
+            System.err.println(output)
+            System.exit(1)
+        }
     - id: 'step-11'
-      name: 'Install Kotlin 2.2.0'
+      name: 'Install Kotlin 2.1.0'
       uses: 'fwilhe2/setup-kotlin@v1'
       with:
-        version: '2.2.0'
+        version: '2.1.0'
     - id: 'step-12'
       name: 'Clean Maven Local to fetch required POMs again'
       run: 'rm -rf ~/.m2/repository/'
     - id: 'step-13'
-      name: 'Execute the script using the bindings from the server, using older Kotlin (2.2.0) as consumer'
-      env:
-        GHWKT_GITHUB_CONTEXT_JSON: '${{ toJSON(github) }}'
-      run: 'GHWKT_RUN_STEP=''bindings-server.yaml:end-to-end-test:step-13'' ''.github/workflows/bindings-server.main.kts'''
+      name: 'Execute the script using the bindings from the server, using older Kotlin (2.1.0) as consumer'
+      shell: 'kotlin -script {0}'
+      run: |-
+        val src = java.io.File(".github/workflows/test-script-consuming-jit-bindings.main.kts")
+        val dest = java.io.File(".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts")
+        src.copyTo(dest, overwrite = true).setExecutable(true)
+        val exitCode = ProcessBuilder("kotlin", dest.path).inheritIO().start().waitFor()
+        if (exitCode != 0) {
+            System.err.println("Script failed with exit code " + exitCode)
+            System.exit(exitCode)
+        }
     - id: 'step-14'
       name: 'Compile a Gradle project using the bindings from the server'
       run: |-
