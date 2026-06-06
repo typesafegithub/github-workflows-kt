@@ -119,8 +119,8 @@ workflow(
 
         // There should be a difference of one (mostly minor) version between these two,
         // to be able to see the newest non-working and oldest working version.
-        val newestNotCompatibleVersion = "1.9.0"
-        val oldestCompatibleVersion = "2.0.0"
+        val newestNotCompatibleVersion = "2.2.0"
+        val oldestCompatibleVersion = "2.3.0"
 
         runWithSpecificKotlinVersion(
             kotlinVersion = newestNotCompatibleVersion,
@@ -131,7 +131,7 @@ workflow(
             File(".github/workflows/test-script-consuming-jit-bindings.main.kts").copyTo(
                 File(".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts"),
                 overwrite = true,
-            )
+            ).setExecutable(true)
             val result = runScriptAndReturnOutput(
                 ".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts"
             )
@@ -148,7 +148,7 @@ workflow(
             File(".github/workflows/test-script-consuming-jit-bindings.main.kts").copyTo(
                 File(".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts"),
                 overwrite = true,
-            )
+            ).setExecutable(true)
             val result = runScriptAndReturnOutput(
                 ".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts"
             )
