@@ -119,8 +119,8 @@ workflow(
 
         // There should be a difference of one (mostly minor) version between these two,
         // to be able to see the newest non-working and oldest working version.
-        val newestNotCompatibleVersion = "2.2.0"
-        val oldestCompatibleVersion = "2.3.0"
+        val newestNotCompatibleVersion = "2.1.0"
+        val oldestCompatibleVersion = "2.2.0"
 
         runWithSpecificKotlinVersion(
             kotlinVersion = newestNotCompatibleVersion,
