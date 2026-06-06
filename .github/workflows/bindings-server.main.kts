@@ -117,12 +117,15 @@ workflow(
 
         // There should be a difference of one (mostly minor) version between these two,
         // to be able to see the newest non-working and oldest working version.
-        val newestNotCompatibleVersion = "2.0.0"
-        val oldestCompatibleVersion = "2.1.0"
+        val newestNotCompatibleVersion = "1.9.0"
+        val oldestCompatibleVersion = "2.0.0"
 
         runWithSpecificKotlinVersion(
             kotlinVersion = newestNotCompatibleVersion,
             command = """
+                // This test depicts the current behavior that the served bindings aren't
+                // compatible with some older Kotlin version. We may want to address it one day.
+                // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
                 val src = java.io.File(".github/workflows/test-script-consuming-jit-bindings.main.kts")
                 val dest = java.io.File(".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts")
                 src.copyTo(dest, overwrite = true).setExecutable(true)
