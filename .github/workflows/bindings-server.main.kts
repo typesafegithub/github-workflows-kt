@@ -15,9 +15,11 @@ import io.github.typesafegithub.workflows.domain.Environment
 import io.github.typesafegithub.workflows.domain.JobOutputs
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.*
+import io.github.typesafegithub.workflows.domain.contexts.Contexts as RunContexts
 import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
+import java.io.File
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
@@ -122,24 +124,36 @@ workflow(
 
         runWithSpecificKotlinVersion(
             kotlinVersion = newestNotCompatibleVersion,
-            command = """
-                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts
-                ${failsWithPhraseInLogs(
-                    command = ".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts",
-                    // This test depicts the current behavior that the served bindings aren't
-                    // compatible with some older Kotlin version. We may want to address it one day.
-                    // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
-                    phrase = "was compiled with an incompatible version of Kotlin",
-                )}
-            """.trimIndent(),
-        )
+        ) {
+            // This test depicts the current behavior that the served bindings aren't
+            // compatible with some older Kotlin version. We may want to address it one day.
+            // For more info, see https://github.com/typesafegithub/github-workflows-kt/issues/1756
+            File(".github/workflows/test-script-consuming-jit-bindings.main.kts").copyTo(
+                File(".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts"),
+                overwrite = true,
+            )
+            val result = runScriptAndReturnOutput(
+                ".github/workflows/test-script-consuming-jit-bindings-too-old-kotlin.main.kts"
+            )
+            if (result.exitCode == 0) {
+                error("Expected the script to fail but it succeeded")
+            }
+            if (!result.output.contains("was compiled with an incompatible version of Kotlin")) {
+                error("Expected error message not found. Output:\n${result.output}")
+            }
+        }
         runWithSpecificKotlinVersion(
             kotlinVersion = oldestCompatibleVersion,
-            command = """
-                cp .github/workflows/test-script-consuming-jit-bindings.main.kts .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
-                .github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts
-            """.trimIndent(),
-        )
+        ) {
+            File(".github/workflows/test-script-consuming-jit-bindings.main.kts").copyTo(
+                File(".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts"),
+                overwrite = true,
+            )
+            val result = runScriptAndReturnOutput(
+                ".github/workflows/test-script-consuming-jit-bindings-older-kotlin.main.kts"
+            )
+            check(result.exitCode == 0) { "Script failed with exit code ${result.exitCode}" }
+        }
 
         run(
             name = "Compile a Gradle project using the bindings from the server",
@@ -193,7 +207,20 @@ fun JobBuilder<JobOutputs.EMPTY>.cleanMavenLocal() {
     )
 }
 
-fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(kotlinVersion: String, command: String) {
+data class ScriptInvocationResult(val output: String, val exitCode: Int)
+
+fun runScriptAndReturnOutput(scriptPath: String): ScriptInvocationResult {
+    val process = ProcessBuilder(scriptPath).redirectErrorStream(true).start()
+    val output = process.inputStream.bufferedReader().readText()
+    val exitCode = process.waitFor()
+    return ScriptInvocationResult(output, exitCode)
+}
+
+@OptIn(ExperimentalKotlinLogicStep::class)
+fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(
+    kotlinVersion: String,
+    logic: RunContexts.() -> Unit,
+) {
     uses(
         name = "Install Kotlin $kotlinVersion",
         action = SetupKotlin(
@@ -203,15 +230,7 @@ fun JobBuilder<JobOutputs.EMPTY>.runWithSpecificKotlinVersion(kotlinVersion: Str
     cleanMavenLocal()
     run(
         name = "Execute the script using the bindings from the server, using older Kotlin ($kotlinVersion) as consumer",
-        command = command,
+        logic = logic,
     )
 }
 
-fun failsWithPhraseInLogs(
-    command: String,
-    phrase: String,
-): String =
-   """
-       ($command || true) >> output.txt 2>&1
-       grep "$phrase" output.txt
-   """.trimIndent()
