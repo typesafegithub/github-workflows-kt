@@ -7,7 +7,7 @@ public val DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG: ConsistencyCheckJobConfig.Confi
     ConsistencyCheckJobConfig.Configuration(
         condition = null,
         env = emptyMap(),
-        checkoutActionVersion = CheckoutActionVersionSource.BundledWithLibrary,
+        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = null,
         useLocalBindingsServerAsFallback = false,
     )

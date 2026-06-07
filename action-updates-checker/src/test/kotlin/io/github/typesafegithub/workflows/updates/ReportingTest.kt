@@ -6,6 +6,8 @@ import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.shared.internal.getGithubAuthTokenOrNull
+import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
+import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -35,6 +37,10 @@ class ReportingTest :
                         name = "Test workflow",
                         on = listOf(Push()),
                         sourceFile = sourceTempFile,
+                        consistencyCheckJobConfig =
+                            DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                                checkoutActionVersion = CheckoutActionVersionSource.Given("v4"),
+                            ),
                         useWorkflow = { output = function(it) },
                     ) {
                         job(

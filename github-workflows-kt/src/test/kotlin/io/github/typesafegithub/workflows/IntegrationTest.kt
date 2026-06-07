@@ -86,7 +86,7 @@ class IntegrationTest :
                     steps:
                     - id: 'step-0'
                       name: 'Check out'
-                      uses: 'actions/checkout@v6'
+                      uses: 'actions/checkout@v4'
                     - id: 'step-1'
                       name: 'Execute script'
                       run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
@@ -282,7 +282,7 @@ class IntegrationTest :
                     steps:
                     - id: 'step-0'
                       name: 'Check out'
-                      uses: 'actions/checkout@v6'
+                      uses: 'actions/checkout@v4'
                     - id: 'step-1'
                       name: 'Execute script'
                       continue-on-error: true
@@ -722,7 +722,7 @@ class IntegrationTest :
                     steps:
                     - id: 'step-0'
                       name: 'Check out'
-                      uses: 'actions/checkout@v6'
+                      uses: 'actions/checkout@v4'
                     - id: 'step-1'
                       name: 'Execute script'
                       run: 'rm ''.github/workflows/some_workflow.yaml'' && ''.github/workflows/some_workflow.main.kts'''
