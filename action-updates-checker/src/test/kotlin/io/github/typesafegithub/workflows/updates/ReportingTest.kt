@@ -37,9 +37,10 @@ class ReportingTest :
                         name = "Test workflow",
                         on = listOf(Push()),
                         sourceFile = sourceTempFile,
-                        consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
-                            checkoutActionVersion = CheckoutActionVersionSource.Given("v4"),
-                        ),
+                        consistencyCheckJobConfig =
+                            DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
+                                checkoutActionVersion = CheckoutActionVersionSource.Given("v4"),
+                            ),
                         useWorkflow = { output = function(it) },
                     ) {
                         job(
