@@ -18,9 +18,9 @@ public class NoEnumRule(
             id = "NoEnum",
             severity = Severity.Style,
             description =
-                "Enums are forbidden. Use sealed interfaces/classes instead. " +
-                    "GitHub Actions' API may require or return values that weren't anticipated when this library was published. " +
-                    "Sealed interfaces/classes allow adding a class that accepts an arbitrary value as an escape hatch.",
+                "Enums are forbidden. Use sealed interfaces/classes instead. GitHub Actions' API may require or " +
+                    "return values that weren't anticipated when this library was published. Sealed " +
+                    "interfaces/classes allow adding a class that accepts an arbitrary value as an escape hatch.",
             debt = Debt.FIVE_MINS,
         )
 
@@ -32,8 +32,9 @@ public class NoEnumRule(
                     entity = Entity.from(classOrObject),
                     message =
                         "Enum class '${classOrObject.name}' is forbidden. Use a sealed interface/class instead. " +
-                            "GitHub Actions' API may require or return values that weren't anticipated when this library was published. " +
-                            "Sealed interfaces/classes allow adding a class that accepts an arbitrary value as an escape hatch.",
+                            "GitHub Actions' API may require or return values that weren't anticipated when this " +
+                            "library was published. Sealed interfaces/classes allow adding a class that accepts an " +
+                            "arbitrary value as an escape hatch.",
                 ),
             )
         }
