@@ -11,6 +11,7 @@ include(
     "shared-internal",
     "code-generator",
     "test-utils",
+    "github-workflows-kt:detekt-rules",
 )
 
 plugins {

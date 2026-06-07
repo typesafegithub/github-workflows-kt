@@ -35,6 +35,7 @@ dependencies {
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
     testImplementation(projects.testUtils)
+    detektPlugins(project(":github-workflows-kt:detekt-rules"))
 
     // GitHub action bindings
     testImplementation("actions:checkout:v4")
@@ -84,4 +85,8 @@ tasks.withType<FormatTask> {
 
 dokka {
     moduleName.set("github-workflows-kt")
+}
+
+apiValidation {
+    ignoredProjects.addAll(listOf("detekt-rules"))
 }
