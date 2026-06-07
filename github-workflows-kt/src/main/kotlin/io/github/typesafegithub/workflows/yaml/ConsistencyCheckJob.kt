@@ -44,7 +44,7 @@ internal fun WorkflowBuilder.consistencyCheckJob(
         val checkoutActionVersion =
             when (consistencyCheckJobConfig.checkoutActionVersion) {
                 CheckoutActionVersionSource.BundledWithLibrary -> {
-                    "v4"
+                    "v6"
                 }
 
                 is CheckoutActionVersionSource.Given -> {
