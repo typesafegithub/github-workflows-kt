@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 @Serializable
 public data class PullRequestTarget(
-    val types: List<Type> = emptyList(),
+    val types: List<EventType> = emptyList(),
     val branches: List<String>? = null,
     val branchesIgnore: List<String>? = null,
     val paths: List<String>? = null,
@@ -25,11 +25,11 @@ public data class PullRequestTarget(
     }
 
     @InternalSerializationApi
-    internal class Serializer : CaseEnumSerializer<Type>(Type::class.qualifiedName!!, Type.values())
+    internal class Serializer : CaseEnumSerializer<EventType>(EventType::class.qualifiedName!!, EventType.values())
 
     @OptIn(InternalSerializationApi::class)
     @Serializable(with = Serializer::class)
-    public enum class Type {
+    public enum class EventType {
         Assigned,
         Unassigned,
         Labeled,

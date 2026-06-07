@@ -11,29 +11,29 @@ public data class WorkflowDispatch(
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
     @Serializable
-    public enum class Type {
-        @SerialName("choice")
-        Choice,
-
-        @SerialName("environment")
-        Environment,
-
-        @SerialName("boolean")
-        Boolean,
-
-        @SerialName("number")
-        Number,
-
-        @SerialName("string")
-        String,
-    }
-
-    @Serializable
     public class Input(
         public val description: String,
         public val required: Boolean,
         public val type: Type,
         public val options: List<String> = emptyList(),
         public val default: String? = null,
-    )
+    ) {
+        @Serializable
+        public enum class Type {
+            @SerialName("choice")
+            Choice,
+
+            @SerialName("environment")
+            Environment,
+
+            @SerialName("boolean")
+            Boolean,
+
+            @SerialName("number")
+            Number,
+
+            @SerialName("string")
+            String,
+        }
+    }
 }

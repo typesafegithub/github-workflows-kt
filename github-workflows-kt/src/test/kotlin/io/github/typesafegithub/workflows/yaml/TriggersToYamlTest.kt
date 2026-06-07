@@ -57,7 +57,7 @@ class TriggersToYamlTest :
                                     "logLevel" to
                                         WorkflowDispatch.Input(
                                             description = "Log level",
-                                            type = WorkflowDispatch.Type.Choice,
+                                            type = WorkflowDispatch.Input.Type.Choice,
                                             required = true,
                                             default = "warning",
                                             options = listOf("info", "warning", "debug"),
@@ -65,25 +65,25 @@ class TriggersToYamlTest :
                                     "tags" to
                                         WorkflowDispatch.Input(
                                             description = "Test scenario tags",
-                                            type = WorkflowDispatch.Type.Boolean,
+                                            type = WorkflowDispatch.Input.Type.Boolean,
                                             required = false,
                                         ),
                                     "retries" to
                                         WorkflowDispatch.Input(
                                             description = "Number of retries",
-                                            type = WorkflowDispatch.Type.Number,
+                                            type = WorkflowDispatch.Input.Type.Number,
                                             required = false,
                                         ),
                                     "environment" to
                                         WorkflowDispatch.Input(
                                             description = "Environment to run tests against",
-                                            type = WorkflowDispatch.Type.Environment,
+                                            type = WorkflowDispatch.Input.Type.Environment,
                                             required = true,
                                         ),
                                     "greeting" to
                                         WorkflowDispatch.Input(
                                             description = "Hello {greeting}",
-                                            type = WorkflowDispatch.Type.String,
+                                            type = WorkflowDispatch.Input.Type.String,
                                             required = true,
                                         ),
                                 ),
@@ -163,7 +163,7 @@ class TriggersToYamlTest :
                                     "tags" to
                                         WorkflowCall.Input(
                                             description = "Test scenario tags",
-                                            type = WorkflowCall.Type.Boolean,
+                                            type = WorkflowCall.Input.Type.Boolean,
                                             required = false,
                                         ),
                                 ),
@@ -201,19 +201,19 @@ class TriggersToYamlTest :
                                     "tags" to
                                         WorkflowCall.Input(
                                             description = "Test scenario tags",
-                                            type = WorkflowCall.Type.Boolean,
+                                            type = WorkflowCall.Input.Type.Boolean,
                                             required = false,
                                         ),
                                     "retries" to
                                         WorkflowCall.Input(
                                             description = "How many retries",
-                                            type = WorkflowCall.Type.Number,
+                                            type = WorkflowCall.Input.Type.Number,
                                             required = false,
                                         ),
                                     "greeting" to
                                         WorkflowCall.Input(
                                             description = "Hello {greeting}",
-                                            type = WorkflowCall.Type.String,
+                                            type = WorkflowCall.Input.Type.String,
                                             required = true,
                                         ),
                                 ),
@@ -375,7 +375,7 @@ class TriggersToYamlTest :
                         PullRequest(
                             branches = listOf("branch1", "branch2"),
                             paths = listOf("path1", "path2"),
-                            types = listOf(PullRequest.Type.AutoMergeDisabled, PullRequest.Type.Opened),
+                            types = listOf(PullRequest.EventType.AutoMergeDisabled, PullRequest.EventType.Opened),
                         ),
                     )
 
@@ -439,7 +439,7 @@ class TriggersToYamlTest :
                 val triggers =
                     listOf(
                         PullRequestTarget(
-                            types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
+                            types = listOf(PullRequestTarget.EventType.Assigned, PullRequestTarget.EventType.Closed),
                             branches = listOf("branch1", "branch2"),
                             paths = listOf("path1", "path2"),
                         ),
@@ -465,7 +465,7 @@ class TriggersToYamlTest :
                 val triggers =
                     listOf(
                         PullRequestTarget(
-                            types = listOf(PullRequestTarget.Type.Assigned, PullRequestTarget.Type.Closed),
+                            types = listOf(PullRequestTarget.EventType.Assigned, PullRequestTarget.EventType.Closed),
                             branchesIgnore = listOf("branchIgnore1", "branchIgnore2"),
                             pathsIgnore = listOf("pathIgnore1", "pathIgnore2"),
                         ),
