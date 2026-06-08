@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.domain
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import java.util.Locale
@@ -33,6 +34,25 @@ class RunnerTypeTest :
                             }
 
                         actualClassName shouldBe classNameFromLabel
+                    }
+                }
+            }
+
+            test("all supported runner labels should correspond to lib's classes") {
+                val fromLib =
+                    RunnerType.GitHubHosted::class
+                        .sealedSubclasses
+                        .mapNotNull { it.objectInstance?.value }
+                        .toSet()
+                val fromDocs = listRunnerLabels().toSet()
+
+                assertSoftly {
+                    withClue("no obsolete labels are in the lib") {
+                        fromLib - fromDocs shouldBe emptySet<String>()
+                    }
+
+                    withClue("no missing labels are in the lib") {
+                        fromDocs - fromLib shouldBe emptySet<String>()
                     }
                 }
             }
