@@ -23,32 +23,54 @@ public data class Workflow(
  * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions">GitHub</a>
  */
 @Suppress("MaxLineLength")
-public enum class Permission(
+public sealed class Permission(
     public val value: String,
 ) {
-    Actions("actions"),
-    Checks("checks"),
-    Contents("contents"),
-    Deployments("deployments"),
-    Discussions("discussions"),
-    IdToken("id-token"),
-    Issues("issues"),
-    Packages("packages"),
-    Pages("pages"),
-    PullRequests("pull-requests"),
-    RepositoryProjects("repository-projects"),
-    SecurityEvents("security-events"),
-    Statuses("statuses"),
+    public object Actions : Permission("actions")
+
+    public object Checks : Permission("checks")
+
+    public object Contents : Permission("contents")
+
+    public object Deployments : Permission("deployments")
+
+    public object Discussions : Permission("discussions")
+
+    public object IdToken : Permission("id-token")
+
+    public object Issues : Permission("issues")
+
+    public object Packages : Permission("packages")
+
+    public object Pages : Permission("pages")
+
+    public object PullRequests : Permission("pull-requests")
+
+    public object RepositoryProjects : Permission("repository-projects")
+
+    public object SecurityEvents : Permission("security-events")
+
+    public object Statuses : Permission("statuses")
+
+    public data class Custom(
+        val name: String,
+    ) : Permission(value = name)
 }
 
 /**
  * @see <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions">GitHub</a>
  */
 @Suppress("MaxLineLength")
-public enum class Mode(
+public sealed class Mode(
     public val value: String,
 ) {
-    Read("read"),
-    Write("write"),
-    None("none"),
+    public object Read : Mode("read")
+
+    public object Write : Mode("write")
+
+    public object None : Mode("none")
+
+    public data class Custom(
+        val name: String,
+    ) : Mode(value = name)
 }

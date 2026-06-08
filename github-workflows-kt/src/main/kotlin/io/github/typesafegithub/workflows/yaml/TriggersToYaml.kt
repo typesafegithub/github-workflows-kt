@@ -73,7 +73,7 @@ private fun Push.toMap() =
 
 private fun PullRequest.toMap() =
     mapOfNotNullValues(
-        "types" to types.ifEmpty { null }?.map { it.toSnakeCase() },
+        "types" to types.ifEmpty { null }?.map { it.name },
         "branches" to branches,
         "branches-ignore" to branchesIgnore,
         "paths" to paths,
@@ -82,7 +82,7 @@ private fun PullRequest.toMap() =
 
 private fun PullRequestTarget.toMap() =
     mapOfNotNullValues(
-        "types" to types.ifEmpty { null }?.map { it.toSnakeCase() },
+        "types" to types.ifEmpty { null }?.map { it.name },
         "branches" to branches,
         "branches-ignore" to branchesIgnore,
         "paths" to paths,
@@ -166,7 +166,7 @@ private fun WorkflowDispatch.toAdditionalYaml(): Map<String, Any?> =
 private fun WorkflowDispatch.Input.toYaml(): Map<String, Any> =
     mapOfNotNullValues(
         "description" to description,
-        "type" to type.toSnakeCase(),
+        "type" to type.name,
         "required" to required,
         "default" to default,
         "options" to options.ifEmpty { null },
@@ -190,7 +190,7 @@ private fun WorkflowCall.toAdditionalYaml(): Map<String, Any?> =
 private fun WorkflowCall.Input.toYaml(): Map<String, Any> =
     mapOfNotNullValues(
         "description" to description,
-        "type" to type.toSnakeCase(),
+        "type" to type.name,
         "required" to required,
         "default" to default,
     )
