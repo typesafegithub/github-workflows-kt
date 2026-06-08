@@ -3,18 +3,8 @@ package io.github.typesafegithub.workflows.yaml
 import io.github.typesafegithub.workflows.domain.Job
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.RunnerType.Custom
+import io.github.typesafegithub.workflows.domain.RunnerType.GitHubHosted
 import io.github.typesafegithub.workflows.domain.RunnerType.Labelled
-import io.github.typesafegithub.workflows.domain.RunnerType.MacOS1015
-import io.github.typesafegithub.workflows.domain.RunnerType.MacOS11
-import io.github.typesafegithub.workflows.domain.RunnerType.MacOSLatest
-import io.github.typesafegithub.workflows.domain.RunnerType.Ubuntu1804
-import io.github.typesafegithub.workflows.domain.RunnerType.Ubuntu2004
-import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.RunnerType.Windows2016
-import io.github.typesafegithub.workflows.domain.RunnerType.Windows2019
-import io.github.typesafegithub.workflows.domain.RunnerType.Windows2022
-import io.github.typesafegithub.workflows.domain.RunnerType.Windows2025
-import io.github.typesafegithub.workflows.domain.RunnerType.WindowsLatest
 import io.github.typesafegithub.workflows.internal.InternalGithubActionsApi
 
 internal fun List<Job<*>>.jobsToYaml(): Map<String, Map<String, Any?>> =
@@ -63,6 +53,10 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
 @Suppress("CyclomaticComplexMethod")
 public fun RunnerType.toYaml(): Any =
     when (this) {
+        is GitHubHosted -> {
+            value
+        }
+
         is Custom -> {
             runsOn
         }
@@ -76,49 +70,5 @@ public fun RunnerType.toYaml(): Any =
                 "group" to name,
                 "labels" to labels?.toList(),
             )
-        }
-
-        UbuntuLatest -> {
-            "ubuntu-latest"
-        }
-
-        WindowsLatest -> {
-            "windows-latest"
-        }
-
-        MacOSLatest -> {
-            "macos-latest"
-        }
-
-        Windows2025 -> {
-            "windows-2025"
-        }
-
-        Windows2022 -> {
-            "windows-2022"
-        }
-
-        Windows2019 -> {
-            "windows-2019"
-        }
-
-        Windows2016 -> {
-            "windows-2016"
-        }
-
-        Ubuntu2004 -> {
-            "ubuntu-20.04"
-        }
-
-        Ubuntu1804 -> {
-            "ubuntu-18.04"
-        }
-
-        MacOS11 -> {
-            "macos-11"
-        }
-
-        MacOS1015 -> {
-            "macos-10.15"
         }
     }
