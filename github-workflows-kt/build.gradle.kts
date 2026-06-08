@@ -19,6 +19,11 @@ plugins {
     id("org.jetbrains.dokka") version "2.2.0"
 }
 
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom("$projectDir/detekt.yml")
+}
+
 group = rootProject.group
 version = rootProject.version
 
@@ -35,6 +40,7 @@ dependencies {
     testImplementation(kotlin("compiler"))
     testImplementation(kotlin("reflect"))
     testImplementation(projects.testUtils)
+    detektPlugins(project(":github-workflows-kt:detekt-rules"))
 
     // GitHub action bindings
     testImplementation("actions:checkout:v4")
@@ -84,4 +90,8 @@ tasks.withType<FormatTask> {
 
 dokka {
     moduleName.set("github-workflows-kt")
+}
+
+apiValidation {
+    ignoredProjects.addAll(listOf("detekt-rules"))
 }
