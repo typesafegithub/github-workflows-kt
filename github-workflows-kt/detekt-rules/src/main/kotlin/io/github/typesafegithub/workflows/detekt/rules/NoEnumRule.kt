@@ -13,14 +13,18 @@ import org.jetbrains.kotlin.psi.KtClassOrObject
 public class NoEnumRule(
     config: Config,
 ) : Rule(config) {
+    private companion object {
+        private const val RATIONALE =
+            "GitHub Actions' API may require or return values that weren't anticipated when this library was " +
+                "published. Sealed interfaces/classes allow adding a class that accepts an arbitrary value as " +
+                "an escape hatch."
+    }
+
     override val issue: Issue =
         Issue(
             id = "NoEnum",
             severity = Severity.Style,
-            description =
-                "Enums are forbidden. Use sealed interfaces/classes instead. GitHub Actions' API may require or " +
-                    "return values that weren't anticipated when this library was published. Sealed " +
-                    "interfaces/classes allow adding a class that accepts an arbitrary value as an escape hatch.",
+            description = "Enums are forbidden. Use sealed interfaces/classes instead. $RATIONALE",
             debt = Debt.FIVE_MINS,
         )
 
@@ -32,9 +36,7 @@ public class NoEnumRule(
                     entity = Entity.from(classOrObject),
                     message =
                         "Enum class '${classOrObject.name}' is forbidden. Use a sealed interface/class instead. " +
-                            "GitHub Actions' API may require or return values that weren't anticipated when this " +
-                            "library was published. Sealed interfaces/classes allow adding a class that accepts an " +
-                            "arbitrary value as an escape hatch.",
+                            RATIONALE,
                 ),
             )
         }
