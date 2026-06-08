@@ -1,7 +1,7 @@
 package io.github.typesafegithub.workflows.domain.triggers
 
+import io.github.typesafegithub.workflows.domain.triggers.PullRequestTarget.EventType
 import kotlinx.serialization.Contextual
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 // https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs
@@ -19,21 +19,22 @@ public data class WorkflowDispatch(
         public val default: String? = null,
     ) {
         @Serializable
-        public enum class Type {
-            @SerialName("choice")
-            Choice,
+        public sealed class Type(
+            public val name: kotlin.String,
+        ) {
+            public object Choice : Type("choice")
 
-            @SerialName("environment")
-            Environment,
+            public object Environment : Type("environment")
 
-            @SerialName("boolean")
-            Boolean,
+            public object Boolean : Type("boolean")
 
-            @SerialName("number")
-            Number,
+            public object Number : Type("number")
 
-            @SerialName("string")
-            String,
+            public object String : Type("string")
+
+            public data class Custom(
+                val value: kotlin.String,
+            ) : EventType(name = value)
         }
     }
 }

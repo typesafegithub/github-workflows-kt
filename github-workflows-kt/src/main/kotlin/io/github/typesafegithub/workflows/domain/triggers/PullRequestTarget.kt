@@ -1,6 +1,5 @@
 package io.github.typesafegithub.workflows.domain.triggers
 
-import io.github.typesafegithub.workflows.internal.CaseEnumSerializer
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
@@ -24,28 +23,47 @@ public data class PullRequestTarget(
         }
     }
 
-    @InternalSerializationApi
-    internal class Serializer : CaseEnumSerializer<EventType>(EventType::class.qualifiedName!!, EventType.values())
-
     @OptIn(InternalSerializationApi::class)
-    @Serializable(with = Serializer::class)
-    public enum class EventType {
-        Assigned,
-        Unassigned,
-        Labeled,
-        Unlabeled,
-        Opened,
-        Edited,
-        Closed,
-        Reopened,
-        Synchronize,
-        ConvertedToDraft,
-        ReadyForReview,
-        Locked,
-        Unlocked,
-        ReviewRequested,
-        ReviewRequestRemoved,
-        AutoMergeEnabled,
-        AutoMergeDisabled,
+    @Serializable
+    public sealed class EventType(
+        public val name: String,
+    ) {
+        public object Assigned : EventType("assigned")
+
+        public object Unassigned : EventType("unassigned")
+
+        public object Labeled : EventType("labeled")
+
+        public object Unlabeled : EventType("unlabeled")
+
+        public object Opened : EventType("opened")
+
+        public object Edited : EventType("edited")
+
+        public object Closed : EventType("closed")
+
+        public object Reopened : EventType("reopened")
+
+        public object Synchronize : EventType("synchronize")
+
+        public object ConvertedToDraft : EventType("convert_to_draft")
+
+        public object ReadyForReview : EventType("ready_for_review")
+
+        public object Locked : EventType("locked")
+
+        public object Unlocked : EventType("unlocked")
+
+        public object ReviewRequested : EventType("review_requested")
+
+        public object ReviewRequestRemoved : EventType("review_request_removed")
+
+        public object AutoMergeEnabled : EventType("auto_merge_enabled")
+
+        public object AutoMergeDisabled : EventType("auto_merge_disabled")
+
+        public data class Custom(
+            val value: String,
+        ) : EventType(name = value)
     }
 }

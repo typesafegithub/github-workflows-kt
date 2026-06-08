@@ -9,12 +9,20 @@ public abstract class AbstractResult internal constructor(
 
     override fun toString(): String = value
 
-    public enum class Status {
-        Success,
-        Failure,
-        Cancelled,
-        Skipped,
-        ;
+    public sealed class Status(
+        public val name: String,
+    ) {
+        public object Success : Status(name = "success")
+
+        public object Failure : Status(name = "failure")
+
+        public object Cancelled : Status(name = "cancelled")
+
+        public object Skipped : Status(name = "skipped")
+
+        public data class Custom(
+            val value: String,
+        ) : Status(name = value)
 
         override fun toString(): String = "'${name.lowercase()}'"
     }

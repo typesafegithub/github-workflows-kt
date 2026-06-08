@@ -7,15 +7,37 @@ public abstract class io/github/typesafegithub/workflows/domain/AbstractResult {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/domain/AbstractResult$Status : java/lang/Enum {
-	public static final field Cancelled Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
-	public static final field Failure Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
-	public static final field Skipped Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
-	public static final field Success Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+public abstract class io/github/typesafegithub/workflows/domain/AbstractResult$Status {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/AbstractResult$Status;
+}
+
+public final class io/github/typesafegithub/workflows/domain/AbstractResult$Status$Cancelled : io/github/typesafegithub/workflows/domain/AbstractResult$Status {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Cancelled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/AbstractResult$Status$Custom : io/github/typesafegithub/workflows/domain/AbstractResult$Status {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/AbstractResult$Status$Failure : io/github/typesafegithub/workflows/domain/AbstractResult$Status {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Failure;
+}
+
+public final class io/github/typesafegithub/workflows/domain/AbstractResult$Status$Skipped : io/github/typesafegithub/workflows/domain/AbstractResult$Status {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Skipped;
+}
+
+public final class io/github/typesafegithub/workflows/domain/AbstractResult$Status$Success : io/github/typesafegithub/workflows/domain/AbstractResult$Status {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/AbstractResult$Status$Success;
 }
 
 public class io/github/typesafegithub/workflows/domain/ActionStep : io/github/typesafegithub/workflows/domain/Step {
@@ -246,34 +268,100 @@ public final class io/github/typesafegithub/workflows/domain/KotlinLogicStep : i
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/domain/Mode : java/lang/Enum {
-	public static final field None Lio/github/typesafegithub/workflows/domain/Mode;
-	public static final field Read Lio/github/typesafegithub/workflows/domain/Mode;
-	public static final field Write Lio/github/typesafegithub/workflows/domain/Mode;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+public abstract class io/github/typesafegithub/workflows/domain/Mode {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getValue ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Mode;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Mode;
 }
 
-public final class io/github/typesafegithub/workflows/domain/Permission : java/lang/Enum {
-	public static final field Actions Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Checks Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Contents Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Deployments Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Discussions Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field IdToken Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Issues Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Packages Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Pages Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field PullRequests Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field RepositoryProjects Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field SecurityEvents Lio/github/typesafegithub/workflows/domain/Permission;
-	public static final field Statuses Lio/github/typesafegithub/workflows/domain/Permission;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+public final class io/github/typesafegithub/workflows/domain/Mode$Custom : io/github/typesafegithub/workflows/domain/Mode {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Mode$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Mode$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Mode$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Mode$None : io/github/typesafegithub/workflows/domain/Mode {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Mode$None;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Mode$Read : io/github/typesafegithub/workflows/domain/Mode {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Mode$Read;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Mode$Write : io/github/typesafegithub/workflows/domain/Mode {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Mode$Write;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/Permission {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getValue ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Permission;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/Permission;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Actions : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Actions;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Checks : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Checks;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Contents : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Contents;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Custom : io/github/typesafegithub/workflows/domain/Permission {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/Permission$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/Permission$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/Permission$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Deployments : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Deployments;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Discussions : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Discussions;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$IdToken : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$IdToken;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Issues : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Issues;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Packages : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Packages;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Pages : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Pages;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$PullRequests : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$PullRequests;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$RepositoryProjects : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$RepositoryProjects;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$SecurityEvents : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$SecurityEvents;
+}
+
+public final class io/github/typesafegithub/workflows/domain/Permission$Statuses : io/github/typesafegithub/workflows/domain/Permission {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/Permission$Statuses;
 }
 
 public final class io/github/typesafegithub/workflows/domain/PortMapping {
@@ -1371,32 +1459,95 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType : java/lang/Enum {
-	public static final field Assigned Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field AutoMergeDisabled Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field AutoMergeEnabled Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Closed Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
+public abstract class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Companion;
-	public static final field ConvertedToDraft Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Edited Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Labeled Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Locked Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Opened Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field ReadyForReview Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Reopened Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field ReviewRequestRemoved Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field ReviewRequested Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Synchronize Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Unassigned Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Unlabeled Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static final field Unlocked Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Assigned : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Assigned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$AutoMergeDisabled : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$AutoMergeDisabled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$AutoMergeEnabled : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$AutoMergeEnabled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Closed : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Closed;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ConvertedToDraft : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ConvertedToDraft;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Labeled : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Labeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Locked : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Locked;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Opened : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Opened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ReadyForReview : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ReadyForReview;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Reopened : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Reopened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ReviewRequestRemoved : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ReviewRequestRemoved;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ReviewRequested : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$ReviewRequested;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Synchronize : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Synchronize;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Unassigned : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Unassigned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Unlabeled : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Unlabeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Unlocked : io/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequest$EventType$Unlocked;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1496,32 +1647,95 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType : java/lang/Enum {
-	public static final field Assigned Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field AutoMergeDisabled Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field AutoMergeEnabled Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Closed Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
+public abstract class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Companion;
-	public static final field ConvertedToDraft Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Edited Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Labeled Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Locked Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Opened Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field ReadyForReview Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Reopened Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field ReviewRequestRemoved Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field ReviewRequested Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Synchronize Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Unassigned Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Unlabeled Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static final field Unlocked Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Assigned : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Assigned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$AutoMergeDisabled : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$AutoMergeDisabled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$AutoMergeEnabled : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$AutoMergeEnabled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Closed : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Closed;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ConvertedToDraft : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ConvertedToDraft;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Labeled : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Labeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Locked : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Locked;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Opened : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Opened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ReadyForReview : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ReadyForReview;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Reopened : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Reopened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ReviewRequestRemoved : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ReviewRequestRemoved;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ReviewRequested : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$ReviewRequested;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Synchronize : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Synchronize;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Unassigned : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Unassigned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Unlabeled : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Unlabeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Unlocked : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType$Unlocked;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Push : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1796,18 +2010,47 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCa
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type : java/lang/Enum {
-	public static final field Boolean Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type;
+public abstract class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Companion;
-	public static final field Number Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type;
-	public static final field String Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Boolean : io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Boolean;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Choice : io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Choice;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Custom : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Environment : io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Environment;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Number : io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$Number;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$String : io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Input$Type$String;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall$Output {
@@ -1911,20 +2154,47 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type : java/lang/Enum {
-	public static final field Boolean Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
-	public static final field Choice Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
+public abstract class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Companion;
-	public static final field Environment Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
-	public static final field Number Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
-	public static final field String Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
-	public static fun values ()[Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Boolean : io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Boolean;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Choice : io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Choice;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Custom : io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Environment : io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Environment;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Number : io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$Number;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$String : io/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowDispatch$Input$Type$String;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -3231,10 +3501,6 @@ public final class io/github/typesafegithub/workflows/dsl/expressions/contexts/W
 }
 
 public abstract interface annotation class io/github/typesafegithub/workflows/internal/InternalGithubActionsApi : java/lang/annotation/Annotation {
-}
-
-public final class io/github/typesafegithub/workflows/yaml/CaseKt {
-	public static final fun snakeCaseOf (Ljava/lang/String;)Ljava/lang/String;
 }
 
 public abstract interface class io/github/typesafegithub/workflows/yaml/CheckoutActionVersionSource {
