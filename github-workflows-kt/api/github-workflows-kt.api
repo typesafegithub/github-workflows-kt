@@ -425,8 +425,8 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Custom :
 	public fun toString ()Ljava/lang/String;
 }
 
-public class io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted : io/github/typesafegithub/workflows/domain/RunnerType {
-	public fun <init> (Ljava/lang/String;)V
+public abstract class io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted : io/github/typesafegithub/workflows/domain/RunnerType {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getValue ()Ljava/lang/String;
 }
 
