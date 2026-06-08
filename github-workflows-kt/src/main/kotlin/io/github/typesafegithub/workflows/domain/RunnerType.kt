@@ -5,7 +5,7 @@ package io.github.typesafegithub.workflows.domain
  * https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners
  */
 public sealed interface RunnerType {
-    public open class GitHubHosted(
+    public sealed class GitHubHosted(
         public val value: String,
     ) : RunnerType
 
