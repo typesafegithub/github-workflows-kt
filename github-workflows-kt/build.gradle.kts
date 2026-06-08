@@ -19,6 +19,11 @@ plugins {
     id("org.jetbrains.dokka") version "2.2.0"
 }
 
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom("$projectDir/detekt.yml")
+}
+
 group = rootProject.group
 version = rootProject.version
 
