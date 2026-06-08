@@ -425,6 +425,11 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Custom :
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted : io/github/typesafegithub/workflows/domain/RunnerType {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getValue ()Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/domain/RunnerType$Group : io/github/typesafegithub/workflows/domain/RunnerType {
 	public fun <init> (Ljava/lang/String;Ljava/util/Set;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Set;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -452,47 +457,47 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Labelled
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOS1015 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOS1015 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacOS1015;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOS11 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOS11 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacOS11;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOSLatest : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOSLatest : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacOSLatest;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu1804 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu1804 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Ubuntu1804;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2004 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2004 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2004;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$UbuntuLatest : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$UbuntuLatest : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$UbuntuLatest;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2016 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2016 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows2016;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2019 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2019 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows2019;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2022 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2022 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows2022;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2025 : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2025 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows2025;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$WindowsLatest : io/github/typesafegithub/workflows/domain/RunnerType {
+public final class io/github/typesafegithub/workflows/domain/RunnerType$WindowsLatest : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$WindowsLatest;
 }
 
