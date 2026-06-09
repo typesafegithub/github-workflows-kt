@@ -14,7 +14,7 @@ public sealed interface RunnerType {
 
     public object WindowsLatest : GitHubHosted("windows-latest")
 
-    public object MacOSLatest : GitHubHosted("macos-latest")
+    public object MacosLatest : GitHubHosted("macos-latest")
 
     // Windows runners
     public object Windows2025 : GitHubHosted("windows-2025")
@@ -31,9 +31,9 @@ public sealed interface RunnerType {
     public object Ubuntu1804 : GitHubHosted("ubuntu-18.04")
 
     // macOS runners
-    public object MacOS11 : GitHubHosted("macos-11")
+    public object Macos11 : GitHubHosted("macos-11")
 
-    public object MacOS1015 : GitHubHosted("macos-10.15")
+    public object Macos1015 : GitHubHosted("macos-10.15")
 
     // Custom runner. Could be an expression `runsOn = expr("github.event.inputs.run-on")`
     public data class Custom(
