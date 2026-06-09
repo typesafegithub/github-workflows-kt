@@ -6,6 +6,9 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.KModifier.OVERRIDE
+import com.squareup.kotlinpoet.KModifier.PRIVATE
+import com.squareup.kotlinpoet.KModifier.VARARG
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
@@ -15,6 +18,7 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import com.squareup.kotlinpoet.buildCodeBlock
+import com.squareup.kotlinpoet.joinToCode
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionTypings
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.MetadataRevision
@@ -29,6 +33,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPr
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_INPUTS
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Properties.CUSTOM_VERSION
+import io.github.typesafegithub.workflows.actionbindinggenerator.generation.Types.nullableAny
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Input
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.metadata.fetchMetadata
@@ -44,8 +49,10 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toCamelCa
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toKotlinPackageName
 import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V1
+import io.github.typesafegithub.workflows.actionbindinggenerator.versioning.BindingVersion.V2
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import java.util.Objects
 
 public data class ActionBinding(
     val kotlinCode: String,
@@ -61,6 +68,7 @@ private object Types {
             String::class.asTypeName(),
             String::class.asTypeName(),
         )
+    val nullableAny = Any::class.asTypeName().copy(nullable = true)
     val nullableString = String::class.asTypeName().copy(nullable = true)
     val mapToList = MemberName("kotlin.collections", "toList")
     val listToArray = MemberName("kotlin.collections", "toTypedArray")
@@ -162,12 +170,11 @@ private fun generateActionBindingSourceCode(
     deprecationMessage: String? = null,
     replaceWith: CodeBlock? = null,
 ): String {
+    val packageName = "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}"
     val fileSpec =
         FileSpec
-            .builder(
-                "io.github.typesafegithub.workflows.actions.${coords.owner.toKotlinPackageName()}",
-                className,
-            ).addFileComment(
+            .builder(packageName, className)
+            .addFileComment(
                 """
                 This file was generated using action-binding-generator. Don't change it by hand, otherwise your
                 changes will be overwritten with the next binding code regeneration.
@@ -179,63 +186,83 @@ private fun generateActionBindingSourceCode(
                     coords,
                     bindingVersion,
                     inputTypings,
+                    packageName,
                     className,
                     untypedClass,
                     deprecationMessage,
                     replaceWith,
                 ),
-            ).addSuppressAnnotation(metadata)
-            .indent("    ")
+            ).addSuppressAnnotation(
+                bindingVersion = bindingVersion,
+                classIsDeprecated = (replaceWith != null) || (deprecationMessage != null),
+                metadata = metadata,
+            ).indent("    ")
             .build()
     return buildString {
         fileSpec.writeTo(this)
     }
 }
 
-private fun FileSpec.Builder.addSuppressAnnotation(metadata: Metadata) =
-    apply {
-        val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
-
-        addAnnotation(
-            AnnotationSpec
-                .builder(Suppress::class.asClassName())
-                .addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
-                .addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
-                .apply {
-                    if (isDeprecatedInputUsed) {
-                        addMember(CodeBlock.of("%S", "DEPRECATION"))
-                    }
-                }.build(),
-        )
+private fun FileSpec.Builder.addSuppressAnnotation(
+    bindingVersion: BindingVersion,
+    classIsDeprecated: Boolean,
+    metadata: Metadata,
+): FileSpec.Builder {
+    val suppress = AnnotationSpec.builder(Suppress::class.asClassName())
+    if (bindingVersion <= V1) {
+        suppress.addMember(CodeBlock.of("%S", "DataClassPrivateConstructor"))
     }
+    suppress.addMember(CodeBlock.of("%S", "UNUSED_PARAMETER"))
+    val isDeprecatedInputUsed = metadata.inputs.values.any { it.deprecationMessage.isNullOrBlank().not() }
+    if (bindingVersion.isDeprecated || ((bindingVersion >= V2) && classIsDeprecated) || isDeprecatedInputUsed) {
+        suppress.addMember(CodeBlock.of("%S", "DEPRECATION"))
+    }
+    addAnnotation(suppress.build())
+    return this
+}
 
 private fun generateActionClass(
     metadata: Metadata,
     coords: ActionCoords,
     bindingVersion: BindingVersion,
     inputTypings: Map<String, Typing>,
+    packageName: String,
     className: String,
     untypedClass: Boolean,
     deprecationMessage: String?,
     replaceWith: CodeBlock?,
-): TypeSpec =
-    TypeSpec
+): TypeSpec {
+    val commonConstructorParameters =
+        metadata.buildCommonConstructorParameters(inputTypings, coords, className, untypedClass)
+    return TypeSpec
         .classBuilder(className)
-        .addModifiers(KModifier.DATA)
+        .addDataModifier(bindingVersion)
         .addKdocIfNotEmpty(actionKdoc(metadata, coords, untypedClass))
         .deprecateBindingVersion(bindingVersion)
         .markDeprecated(bindingVersion, deprecationMessage, replaceWith)
-        .addClassConstructorAnnotation()
+        .addClassConstructorAnnotation(bindingVersion)
         .inheritsFromRegularAction(coords, metadata, className)
-        .primaryConstructor(metadata.primaryConstructor(inputTypings, coords, className, untypedClass))
+        .primaryConstructor(buildPrimaryConstructor(bindingVersion, commonConstructorParameters))
         .properties(metadata, coords, inputTypings, className, untypedClass)
         .addInitializerBlock(metadata, bindingVersion, coords, inputTypings, untypedClass)
-        .addFunction(metadata.secondaryConstructor(inputTypings, coords, className, untypedClass))
+        .addSecondaryConstructor(bindingVersion, metadata, inputTypings, commonConstructorParameters, untypedClass)
         .addFunction(metadata.buildToYamlArgumentsFunction(inputTypings, untypedClass))
+        .addEqualsFunction(bindingVersion, className, commonConstructorParameters)
+        .addHashCodeFunction(bindingVersion, commonConstructorParameters)
+        .addToStringFunction(bindingVersion, className, commonConstructorParameters)
+        .addCopyFunction(bindingVersion, packageName, className, commonConstructorParameters)
         .addCustomTypes(inputTypings, coords, className)
         .addOutputClassIfNecessary(metadata)
         .addBuildOutputObjectFunctionIfNecessary(metadata)
         .build()
+}
+
+private fun TypeSpec.Builder.addDataModifier(bindingVersion: BindingVersion): TypeSpec.Builder {
+    if (bindingVersion <= V1) {
+        addModifiers(KModifier.DATA)
+    }
+    return this
+}
 
 private fun TypeSpec.Builder.addCustomTypes(
     typings: Map<String, Typing>,
@@ -351,7 +378,7 @@ private fun TypeSpec.Builder.addBuildOutputObjectFunctionIfNecessary(metadata: M
         FunSpec
             .builder("buildOutputObject")
             .returns(if (metadata.outputs.isEmpty()) OutputsBase else ClassName("", "Outputs"))
-            .addModifiers(KModifier.OVERRIDE)
+            .addModifiers(OVERRIDE)
             .addParameter("stepId", String::class)
             .addCode(CodeBlock.of("return Outputs(stepId)"))
             .build(),
@@ -377,7 +404,7 @@ private fun Metadata.buildToYamlArgumentsFunction(
     untypedClass: Boolean,
 ) = FunSpec
     .builder("toYamlArguments")
-    .addModifiers(KModifier.OVERRIDE)
+    .addModifiers(OVERRIDE)
     .returns(LinkedHashMap::class.parameterizedBy(String::class, String::class))
     .addAnnotation(
         AnnotationSpec
@@ -453,12 +480,14 @@ private fun TypeSpec.Builder.markDeprecated(
     return this
 }
 
-private fun TypeSpec.Builder.addClassConstructorAnnotation(): TypeSpec.Builder {
-    addAnnotation(
-        AnnotationSpec
-            .builder(ExposedCopyVisibility::class.asClassName())
-            .build(),
-    )
+private fun TypeSpec.Builder.addClassConstructorAnnotation(bindingVersion: BindingVersion): TypeSpec.Builder {
+    if (bindingVersion <= V1) {
+        addAnnotation(
+            AnnotationSpec
+                .builder(ExposedCopyVisibility::class.asClassName())
+                .build(),
+        )
+    }
     return this
 }
 
@@ -501,22 +530,42 @@ private fun TypeSpec.Builder.inheritsFromRegularAction(
 private val String.majorVersion get() = substringBefore('.')
 private val String.minorVersion get() = split('.', limit = 3).take(2).joinToString(".")
 
-private fun Metadata.primaryConstructor(
-    inputTypings: Map<String, Typing>,
-    coords: ActionCoords,
-    className: String,
-    untypedClass: Boolean,
-): FunSpec =
-    FunSpec
-        .constructorBuilder()
-        .addModifiers(KModifier.PRIVATE)
-        .addParameters(buildCommonConstructorParameters(inputTypings, coords, className, untypedClass))
-        .build()
+private fun buildPrimaryConstructor(
+    bindingVersion: BindingVersion,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+): FunSpec {
+    val constructor = FunSpec.constructorBuilder()
+    if (bindingVersion <= V1) {
+        constructor.addModifiers(PRIVATE)
+    }
+    if (bindingVersion >= V2) {
+        constructor
+            .addParameter(
+                ParameterSpec
+                    .builder("pleaseUseNamedArguments", Unit::class)
+                    .addModifiers(VARARG)
+                    .build(),
+            )
+    }
+    return constructor.addParameters(commonConstructorParameters).build()
+}
 
-private fun Metadata.secondaryConstructor(
+private fun TypeSpec.Builder.addSecondaryConstructor(
+    bindingVersion: BindingVersion,
+    metadata: Metadata,
     inputTypings: Map<String, Typing>,
-    coords: ActionCoords,
-    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+    untypedClass: Boolean,
+): TypeSpec.Builder {
+    if (bindingVersion <= V1) {
+        addFunction(metadata.buildSecondaryConstructor(inputTypings, commonConstructorParameters, untypedClass))
+    }
+    return this
+}
+
+private fun Metadata.buildSecondaryConstructor(
+    inputTypings: Map<String, Typing>,
+    commonConstructorParameters: Iterable<ParameterSpec>,
     untypedClass: Boolean,
 ): FunSpec =
     FunSpec
@@ -524,9 +573,9 @@ private fun Metadata.secondaryConstructor(
         .addParameter(
             ParameterSpec
                 .builder("pleaseUseNamedArguments", Unit::class)
-                .addModifiers(KModifier.VARARG)
+                .addModifiers(VARARG)
                 .build(),
-        ).addParameters(buildCommonConstructorParameters(inputTypings, coords, className, untypedClass))
+        ).addParameters(commonConstructorParameters)
         .callThisConstructor(
             inputs
                 .keys
@@ -603,6 +652,216 @@ private fun Metadata.buildCommonConstructorParameters(
                         "or a newer version that the binding doesn't yet know about",
                 ).build(),
         )
+
+private fun TypeSpec.Builder.addEqualsFunction(
+    bindingVersion: BindingVersion,
+    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+): TypeSpec.Builder {
+    if (bindingVersion >= V2) {
+        addFunction(buildEqualsFunction(className, commonConstructorParameters))
+    }
+    return this
+}
+
+private fun buildEqualsFunction(
+    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+) = FunSpec
+    .builder("equals")
+    .addModifiers(OVERRIDE)
+    .addParameter(ParameterSpec.builder("other", nullableAny).build())
+    .returns(Boolean::class)
+    .addCode(
+        buildCodeBlock {
+            addStatement("if (this === other) return true")
+            addStatement("if (javaClass != other?.javaClass) return false")
+            addStatement("other as %N", className)
+
+            val propertyNames = commonConstructorParameters.map { it.name }
+            when (propertyNames.size) {
+                0 -> {
+                    addStatement("return true")
+                }
+
+                1 -> {
+                    addStatement("return %1N == other.%1N", propertyNames.first())
+                }
+
+                else -> {
+                    add("return %1N == other.%1N &&\n", propertyNames.first())
+                    add(
+                        propertyNames.drop(1).joinToCode(
+                            separator = " &&\n",
+                        ) {
+                            buildCodeBlock {
+                                indent()
+                                add("%1N == other.%1N", it)
+                                unindent()
+                            }
+                        },
+                    )
+                }
+            }
+        },
+    ).build()
+
+private fun TypeSpec.Builder.addHashCodeFunction(
+    bindingVersion: BindingVersion,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+) = apply {
+    if (bindingVersion >= V2) {
+        addFunction(buildHashCodeFunction(commonConstructorParameters))
+    }
+}
+
+private fun buildHashCodeFunction(commonConstructorParameters: Iterable<ParameterSpec>) =
+    FunSpec
+        .builder("hashCode")
+        .addModifiers(OVERRIDE)
+        .returns(Int::class)
+        .addCode(
+            buildCodeBlock {
+                val propertyNames = commonConstructorParameters.map { it.name }
+                when (propertyNames.size) {
+                    0 -> {
+                        addStatement("return 0")
+                    }
+
+                    1 -> {
+                        addStatement("return %T.hash(%N)", Objects::class, propertyNames.first())
+                    }
+
+                    else -> {
+                        add("return %T.hash(\n", Objects::class)
+                        add(
+                            propertyNames.joinToCode(
+                                separator = ",\n",
+                                suffix = ",\n)",
+                            ) {
+                                buildCodeBlock {
+                                    indent()
+                                    add("%N", it)
+                                    unindent()
+                                }
+                            },
+                        )
+                    }
+                }
+            },
+        ).build()
+
+private fun TypeSpec.Builder.addToStringFunction(
+    bindingVersion: BindingVersion,
+    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+): TypeSpec.Builder {
+    if (bindingVersion >= V2) {
+        addFunction(buildToStringFunction(className, commonConstructorParameters))
+    }
+    return this
+}
+
+private fun buildToStringFunction(
+    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+) = FunSpec
+    .builder("toString")
+    .addModifiers(OVERRIDE)
+    .returns(String::class)
+    .addCode(
+        buildCodeBlock {
+            val propertyNames = commonConstructorParameters.map { it.name }
+            when (propertyNames.size) {
+                0 -> {
+                    addStatement("return %S", "$className()")
+                }
+
+                1 -> {
+                    addStatement(
+                        "return %P",
+                        CodeBlock.of("%1L(%2L=$%2N)", className, propertyNames.first()),
+                    )
+                }
+
+                else -> {
+                    beginControlFlow("return buildString")
+                    addStatement("append(%S)", "$className(")
+                    propertyNames.dropLast(1).forEach {
+                        addStatement(
+                            "append(%P)",
+                            CodeBlock.of("%1L=$%1N", it),
+                        )
+                        addStatement("append(%S)", ", ")
+                    }
+                    addStatement(
+                        "append(%P)",
+                        CodeBlock.of("%1L=$%1N", propertyNames.last()),
+                    )
+                    addStatement("append(%S)", ")")
+                    endControlFlow()
+                }
+            }
+        },
+    ).build()
+
+private fun TypeSpec.Builder.addCopyFunction(
+    bindingVersion: BindingVersion,
+    packageName: String,
+    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+): TypeSpec.Builder {
+    if (bindingVersion >= V2) {
+        addFunction(buildCopyFunction(packageName, className, commonConstructorParameters))
+    }
+    return this
+}
+
+private fun buildCopyFunction(
+    packageName: String,
+    className: String,
+    commonConstructorParameters: Iterable<ParameterSpec>,
+) = FunSpec
+    .builder("copy")
+    .returns(ClassName(packageName, className))
+    .addParameter(
+        ParameterSpec
+            .builder("pleaseUseNamedArguments", Unit::class)
+            .addModifiers(VARARG)
+            .build(),
+    ).addParameters(
+        commonConstructorParameters
+            .map { it.toBuilder().defaultValue("this.%N", it.name).build() },
+    ).addCode(
+        buildCodeBlock {
+            val propertyNames = commonConstructorParameters.map { it.name }
+            when (propertyNames.size) {
+                0 -> {
+                    addStatement("return %N()", className)
+                }
+
+                1 -> {
+                    addStatement("return %1N(%2N = %2N)", className, propertyNames.first())
+                }
+
+                else -> {
+                    add("return %1N(\n", className)
+                    add(
+                        propertyNames.joinToCode(
+                            separator = "",
+                            suffix = ")",
+                        ) {
+                            buildCodeBlock {
+                                indent()
+                                add("%1N = %1N,\n", it)
+                                unindent()
+                            }
+                        },
+                    )
+                }
+            }
+        },
+    ).build()
 
 private fun ParameterSpec.Builder.defaultValueIfNullable(
     input: Input,
