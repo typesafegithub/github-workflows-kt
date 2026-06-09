@@ -50,7 +50,7 @@ class MavenMetadataBuildingTest :
                 ).right()
             }
 
-            var prefetchedCoords: Collection<ActionCoords>? = null
+            var prefetchedCoords: Collection<BindingsServerRequest>? = null
             val xml =
                 bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
@@ -81,13 +81,23 @@ class MavenMetadataBuildingTest :
             prefetchedCoords shouldNotBe null
             prefetchedCoords shouldContainExactlyInAnyOrder
                 listOf(
-                    bindingsServerRequest.actionCoords.copy(
-                        version = "v1",
-                        versionForTypings = "irrelevant",
+                    bindingsServerRequest.copy(
+                        rawName = "name",
+                        rawVersion = "v1",
+                        actionCoords =
+                            bindingsServerRequest.actionCoords.copy(
+                                version = "v1",
+                                versionForTypings = "v1",
+                            ),
                     ),
-                    bindingsServerRequest.actionCoords.copy(
-                        version = "v2",
-                        versionForTypings = "irrelevant",
+                    bindingsServerRequest.copy(
+                        rawName = "name",
+                        rawVersion = "v2",
+                        actionCoords =
+                            bindingsServerRequest.actionCoords.copy(
+                                version = "v2",
+                                versionForTypings = "v2",
+                            ),
                     ),
                 )
         }
@@ -109,7 +119,7 @@ class MavenMetadataBuildingTest :
                 ).right()
             }
 
-            var prefetchedCoords: Collection<ActionCoords>? = null
+            var prefetchedCoords: Collection<BindingsServerRequest>? = null
             val xml =
                 bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
@@ -137,7 +147,7 @@ class MavenMetadataBuildingTest :
                 emptyList<Version>().right()
             }
 
-            var prefetchedCoords: Collection<ActionCoords>? = null
+            var prefetchedCoords: Collection<BindingsServerRequest>? = null
             val xml =
                 bindingsServerRequest.buildMavenMetadataFile(
                     githubAuthToken = "SOME_TOKEN",
@@ -209,7 +219,7 @@ class MavenMetadataBuildingTest :
                     availableVersions.right()
                 }
 
-                var prefetchedCoords: Collection<ActionCoords>? = null
+                var prefetchedCoords: Collection<BindingsServerRequest>? = null
                 val xml =
                     bindingsServerRequest
                         .copy(
@@ -254,11 +264,17 @@ class MavenMetadataBuildingTest :
                 prefetchedCoords shouldNotBe null
                 prefetchedCoords shouldContainExactlyInAnyOrder
                     availableVersions.map { availableVersion ->
-                        bindingsServerRequest.actionCoords.copy(
-                            version = "$availableVersion",
-                            comment = null,
-                            significantVersion = significantVersion,
-                            versionForTypings = "irrelevant",
+                        bindingsServerRequest.copy(
+                            rawName = "name___$significantVersion",
+                            rawVersion =
+                                "$availableVersion${if (commitLenient) "__${availableVersion.getSha()}" else ""}",
+                            actionCoords =
+                                bindingsServerRequest.actionCoords.copy(
+                                    version = if (commitLenient) availableVersion.getSha()!! else "$availableVersion",
+                                    comment = if (commitLenient) "$availableVersion" else null,
+                                    significantVersion = significantVersion,
+                                    versionForTypings = "$availableVersion",
+                                ),
                         )
                     }
             }

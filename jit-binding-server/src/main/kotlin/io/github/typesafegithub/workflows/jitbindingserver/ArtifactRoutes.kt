@@ -2,7 +2,6 @@ package io.github.typesafegithub.workflows.jitbindingserver
 
 import com.sksamuel.aedile.core.LoadingCache
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 import io.github.typesafegithub.workflows.mavenbinding.BindingsServerRequest
@@ -105,19 +104,11 @@ private fun Route.getArtifact(
 }
 
 internal fun prefetchBindingArtifacts(
-    coords: Collection<ActionCoords>,
+    coords: Collection<BindingsServerRequest>,
     bindingsCache: LoadingCache<BindingsServerRequest, CachedVersionArtifact>,
 ) {
     prefetchScope.launch {
-        bindingsCache.getAll(
-            coords.map {
-                BindingsServerRequest(
-                    rawName = it.name,
-                    rawVersion = it.version,
-                    actionCoords = it,
-                )
-            },
-        )
+        bindingsCache.getAll(coords)
     }
 }
 
