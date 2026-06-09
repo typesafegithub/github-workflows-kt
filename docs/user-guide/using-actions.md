@@ -85,6 +85,88 @@ as it could still make sense to use them, for example if you want to set the val
 This approach supports dependency updating bots that support Kotlin Script's `.main.kts` files. E.g. Renovate is known
 to support it.
 
+### Binary compatibility of generated bindings
+
+The generated bindings are not guaranteed to be binary compatible. As soon as an action owner for example adds a
+new input, the signature of the constructor changes and the signature of the `copy` method of that action's binding
+changes. So you should not use these generated bindings in any pre-compiled code, unless you are pretty sure you
+know what you are doing and are aware of the consequences.
+
+The typical usage of the generated bindings are not affected by this. By technically enforcing the usage of named
+arguments when using the constructor or `copy` method, the bindings stay source compatible even if new inputs are
+added. So if you are just using the bindings within `.main.kts` scripts for which they are designed, you are safe.
+The only exception is, when an action owner removes or renames an input. But according to semver, this is a breaking
+change and an action author should not do this within the same major version. If he nevertheless did, open a bug
+issue in that action's GitHub repository so the owner can revert the change and instead release a new major version.
+
+### Available binding versions
+
+Evolving this library and / or the generated bindings sometimes requires breaking changes in the generated bindings.
+To not break your existing workflow scripts, the bindings have an additional binding version as an optional prefix
+to the actual action version and without changing the binding version, the generated actions should always stay
+backwards compatible (in terms of source compatibility). The version `v3` of an action within binding version `v2` is
+requested with the version `binding_version_v2___v3`. If accidentally a breaking change was done within one binding
+version, please open a bug report. Unless very good reasons object, the change will be reverted and instead be done in
+a new binding version. Such a situation is usually indicated by your workflow scripts suddenly failing to execute
+without you having done any changes to it, except if the breaking change is caused by an action author doing a breaking
+change inappropriately. In that case, please open a bug report with that action's GitHub repository instead.
+
+#### Stability statuses
+
+*Experimental*
+
+:   If a new binding version is added, it will initially be in experimental state. When using such a binding version,
+    you get the cutting edge changes, but no stability is guaranteed. Any breaking change can happen at any time, so
+    use these bindings only if you have that in mind and consent to the consequences. Executing a workflow script with
+    such a binding version will issue a warning and executing it on GitHub Actions will add a warning annotation to the
+    workflow run.
+
+*Stable*
+
+:   Binding versions that are in stable state will not have any source incompatible changes done. There will typically
+    only be one stable binding version, and that is what you should usually use in your workflow scripts.
+
+*Deprecated*
+
+:   Upon new stable binding version becoming available, existing stable binding version will most probably be moved to
+    deprecated state. Deprecated state for now does not mean, that the binding version will become unavailable. In a
+    deprecated binding version also no source incompatible changes will be done, but new changes might not be added to
+    the deprecated binding version. The main intention of deprecating a binding version is to hint at a newer stable
+    binding version being available. For this all bindings generated in that binding version will be marked as
+    `@Deprecated` and executing the workflow script will issue a warning and if run on GitHub Actions will add
+    a warning annotation to the workflow run.
+
+| Binding Version                     | Stability                                                             |
+|-------------------------------------|-----------------------------------------------------------------------|
+| `<none>`                            | :material-check-bold:{ style="color: green" } stable (alias for `v1`) |
+| `v1`                                | :material-check-bold:{ style="color: green" } stable                  |
+| `v2`                                | :no_entry: experimental                                               |
+
+#### Library version compatibility
+
+As the library and / or generated bindings evolve, not all library versions will be compatible with all binding
+versions. This table lists which library versions are compatible with which binding version.
+
+| Binding Version | Compatibility     |
+|-----------------|-------------------|
+| `v1`            | `3.0.0` and newer |
+| `v2`            | `3.0.0` and newer |
+
+#### Breaking changes
+
+This section shows which source incompatible breaking changes were done in each binding version. When changing
+from a previous binding version to a later one, these might be issues you are hitting and need to adapt to in
+your workflow scripts. Binary breaking changes are not listed here, as binary compatibility is not guaranteed
+anyway as defined above.
+
+`v2`
+
+:   TBD
+
+`v1`
+
+:   This is the original `v1` binding version with which generated bindings have started.
+
 ## User-defined actions
 
 If you are in a hurry and adding typings is not possible right now, browse these options.
