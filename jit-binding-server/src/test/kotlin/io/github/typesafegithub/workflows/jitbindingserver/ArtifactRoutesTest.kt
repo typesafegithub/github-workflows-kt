@@ -158,6 +158,8 @@ class ArtifactRoutesTest :
                             buildVersionArtifacts = { bindingsServerRequest, _ ->
                                 buildVersionArtifacts(
                                     bindingsServerRequest,
+                                    null,
+                                    null,
                                     HttpClient(
                                         MockEngine { request ->
                                             when (request.url.toString()) {
