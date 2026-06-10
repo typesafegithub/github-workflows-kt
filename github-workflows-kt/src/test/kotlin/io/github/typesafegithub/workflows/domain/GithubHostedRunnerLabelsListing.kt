@@ -7,7 +7,7 @@ import io.ktor.client.statement.bodyAsText
 /**
  * Lists values allowed to be set in "runs-on" for a job, for GitHub-hosted runners.
  */
-suspend fun listRunnerLabels(): List<String> {
+suspend fun listRunnerLabels(): Set<String> {
     val html = HttpClient().get(GITHUB_RUNNER_LABELS_DOCS_URL).bodyAsText()
     return parse(html)
 }
@@ -15,11 +15,11 @@ suspend fun listRunnerLabels(): List<String> {
 private const val GITHUB_RUNNER_LABELS_DOCS_URL: String =
     "https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions"
 
-private fun parse(html: String): List<String> =
+private fun parse(html: String): Set<String> =
     RUNNER_LABEL_REGEX
         .findAll(html)
         .map { it.groupValues[1] }
-        .toList()
+        .toSet()
 
 private val RUNNER_LABEL_REGEX =
     Regex(

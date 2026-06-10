@@ -19,21 +19,33 @@ public sealed interface RunnerType {
     // Windows runners
     public object Windows2025 : GitHubHosted("windows-2025")
 
+    public object Windows2025Vs2026 : GitHubHosted("windows-2025-vs2026")
+
     public object Windows2022 : GitHubHosted("windows-2022")
 
-    public object Windows2019 : GitHubHosted("windows-2019")
-
-    public object Windows2016 : GitHubHosted("windows-2016")
+    public object Windows11Arm : GitHubHosted("windows-11-arm")
 
     // Ubuntu runners
-    public object Ubuntu2004 : GitHubHosted("ubuntu-20.04")
+    public object UbuntuSlim : GitHubHosted("ubuntu-slim")
 
-    public object Ubuntu1804 : GitHubHosted("ubuntu-18.04")
+    public object Ubuntu2404 : GitHubHosted("ubuntu-24.04")
+
+    public object Ubuntu2404Arm : GitHubHosted("ubuntu-24.04-arm")
+
+    public object Ubuntu2204 : GitHubHosted("ubuntu-22.04")
+
+    public object Ubuntu2204Arm : GitHubHosted("ubuntu-22.04-arm")
 
     // macOS runners
-    public object Macos11 : GitHubHosted("macos-11")
+    public object Macos26 : GitHubHosted("macos-26")
 
-    public object Macos1015 : GitHubHosted("macos-10.15")
+    public object Macos26Intel : GitHubHosted("macos-26-intel")
+
+    public object Macos15 : GitHubHosted("macos-15")
+
+    public object Macos15Intel : GitHubHosted("macos-15-intel")
+
+    public object Macos14 : GitHubHosted("macos-14")
 
     // Custom runner. Could be an expression `runsOn = expr("github.event.inputs.run-on")`
     public data class Custom(
