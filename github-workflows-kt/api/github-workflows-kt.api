@@ -457,16 +457,16 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Labelled
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOS1015 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacOS1015;
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Macos1015 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Macos1015;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOS11 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacOS11;
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Macos11 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Macos11;
 }
 
-public final class io/github/typesafegithub/workflows/domain/RunnerType$MacOSLatest : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
-	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacOSLatest;
+public final class io/github/typesafegithub/workflows/domain/RunnerType$MacosLatest : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$MacosLatest;
 }
 
 public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu1804 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
