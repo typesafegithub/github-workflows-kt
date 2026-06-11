@@ -497,6 +497,14 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu24
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2404Arm;
 }
 
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2604 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2604;
+}
+
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2604Arm : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Ubuntu2604Arm;
+}
+
 public final class io/github/typesafegithub/workflows/domain/RunnerType$UbuntuLatest : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$UbuntuLatest;
 }
@@ -507,6 +515,10 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$UbuntuSl
 
 public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows11Arm : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows11Arm;
+}
+
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows11Vs2026Arm : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Windows11Vs2026Arm;
 }
 
 public final class io/github/typesafegithub/workflows/domain/RunnerType$Windows2022 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
