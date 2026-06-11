@@ -9,11 +9,13 @@
 @file:DependsOn("actions:setup-python:v6")
 @file:DependsOn("gradle:actions__setup-gradle:v6")
 @file:DependsOn("Wandalen:wretry.action:v3")
+@file:DependsOn("fwilhe2:setup-kotlin:v1")
 @file:OptIn(ExperimentalKotlinLogicStep::class)
 
 @file:Import("setup-java.main.kts")
 
 import io.github.typesafegithub.workflows.actions.actions.*
+import io.github.typesafegithub.workflows.actions.fwilhe2.SetupKotlin
 import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.wandalen.WretryAction
 import io.github.typesafegithub.workflows.annotations.ExperimentalKotlinLogicStep
@@ -56,6 +58,18 @@ workflow(
         checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
+            uses(
+                name = "Downgrade Kotlin",
+                action = SetupKotlin(
+                    // One version before 2.4.0 that contains a bug leading to this failure:
+                    //   While analysing .github/workflows/build.main.kts:53:13:
+                    //   org.jetbrains.kotlin.utils.exceptions.KotlinIllegalArgumentExceptionWithAttachments:
+                    //   Expected FirResolvedTypeRef with ConeKotlinType but was FirUserTypeRefImpl
+                    // This downgrade is meant to be a temporary workaround.
+                    // See https://github.com/typesafegithub/github-workflows-kt/issues/2348
+                    version = "2.3.21",
+                ),
+            )
         },
     ),
     useWorkflow = { it.reportAvailableUpdates() },
@@ -226,6 +240,19 @@ workflow(
 
             publishToMavenLocal()
 
+            uses(
+                name = "Downgrade Kotlin",
+                action = SetupKotlin(
+                    // One version before 2.4.0 that contains a bug leading to this failure:
+                    //   While analysing .github/workflows/build.main.kts:53:13:
+                    //   org.jetbrains.kotlin.utils.exceptions.KotlinIllegalArgumentExceptionWithAttachments:
+                    //   Expected FirResolvedTypeRef with ConeKotlinType but was FirUserTypeRefImpl
+                    // This downgrade is meant to be a temporary workaround.
+                    // See https://github.com/typesafegithub/github-workflows-kt/issues/2348
+                    version = "2.3.21",
+                ),
+            )
+
             run(
                 name = "Step with a Kotlin-based logic",
                 ifKotlin = { Instant.now() > Instant.parse("2022-03-04T12:34:56.00Z") },
@@ -297,6 +324,18 @@ workflow(
         checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
+            uses(
+                name = "Downgrade Kotlin",
+                action = SetupKotlin(
+                    // One version before 2.4.0 that contains a bug leading to this failure:
+                    //   While analysing .github/workflows/build.main.kts:53:13:
+                    //   org.jetbrains.kotlin.utils.exceptions.KotlinIllegalArgumentExceptionWithAttachments:
+                    //   Expected FirResolvedTypeRef with ConeKotlinType but was FirUserTypeRefImpl
+                    // This downgrade is meant to be a temporary workaround.
+                    // See https://github.com/typesafegithub/github-workflows-kt/issues/2348
+                    version = "2.3.21",
+                ),
+            )
         },
     ),
     sourceFile = __FILE__,
@@ -312,6 +351,19 @@ workflow(
         )
 
         publishToMavenLocal()
+
+        uses(
+            name = "Downgrade Kotlin",
+            action = SetupKotlin(
+                // One version before 2.4.0 that contains a bug leading to this failure:
+                //   While analysing .github/workflows/build.main.kts:53:13:
+                //   org.jetbrains.kotlin.utils.exceptions.KotlinIllegalArgumentExceptionWithAttachments:
+                //   Expected FirResolvedTypeRef with ConeKotlinType but was FirUserTypeRefImpl
+                // This downgrade is meant to be a temporary workaround.
+                // See https://github.com/typesafegithub/github-workflows-kt/issues/2348
+                version = "2.3.21",
+            ),
+        )
 
         run(
             name = "Step with a Kotlin-based logic, in a different workflow",
