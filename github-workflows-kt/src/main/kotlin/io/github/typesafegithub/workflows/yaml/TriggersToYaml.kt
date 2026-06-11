@@ -13,6 +13,7 @@ import io.github.typesafegithub.workflows.domain.triggers.Discussion
 import io.github.typesafegithub.workflows.domain.triggers.DiscussionComment
 import io.github.typesafegithub.workflows.domain.triggers.Fork
 import io.github.typesafegithub.workflows.domain.triggers.Gollum
+import io.github.typesafegithub.workflows.domain.triggers.ImageVersion
 import io.github.typesafegithub.workflows.domain.triggers.IssueComment
 import io.github.typesafegithub.workflows.domain.triggers.Issues
 import io.github.typesafegithub.workflows.domain.triggers.Label
@@ -119,6 +120,7 @@ public fun Trigger.triggerName(): String =
         is DiscussionComment -> "discussion_comment"
         is Fork -> "fork"
         is Gollum -> "gollum"
+        is ImageVersion -> "image_version"
         is IssueComment -> "issue_comment"
         is Issues -> "issues"
         is Label -> "label"
