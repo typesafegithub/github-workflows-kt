@@ -25,8 +25,14 @@ public sealed interface RunnerType {
 
     public object Windows11Arm : GitHubHosted("windows-11-arm")
 
+    public object Windows11Vs2026Arm : GitHubHosted("windows-11-vs2026-arm")
+
     // Ubuntu runners
     public object UbuntuSlim : GitHubHosted("ubuntu-slim")
+
+    public object Ubuntu2604 : GitHubHosted("ubuntu-26.04")
+
+    public object Ubuntu2604Arm : GitHubHosted("ubuntu-26.04-arm")
 
     public object Ubuntu2404 : GitHubHosted("ubuntu-24.04")
 
