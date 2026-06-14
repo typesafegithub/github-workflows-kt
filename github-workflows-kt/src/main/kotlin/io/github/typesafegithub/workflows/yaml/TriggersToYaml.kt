@@ -54,11 +54,29 @@ internal fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
 @InternalGithubActionsApi
 public fun Trigger.toMap(): Map<String, List<String>> =
     when (this) {
-        is Push -> toMap()
+        is BranchProtectionRule -> toMap()
+        is CheckRun -> toMap()
+        is CheckSuite -> toMap()
+        is Discussion -> toMap()
+        is DiscussionComment -> toMap()
+        is IssueComment -> toMap()
+        is Issues -> toMap()
+        is Label -> toMap()
+        is MergeGroup -> toMap()
+        is Milestone -> toMap()
+        is Project -> toMap()
+        is ProjectCard -> toMap()
+        is ProjectColumn -> toMap()
         is PullRequest -> toMap()
+        is PullRequestReview -> toMap()
+        is PullRequestReviewComment -> toMap()
         is PullRequestTarget -> toMap()
-        is RepositoryDispatch -> toMap()
+        is Push -> toMap()
+        is RegistryPackage -> toMap()
         is Release -> toMap()
+        is RepositoryDispatch -> toMap()
+        is Watch -> toMap()
+        is WorkflowRun -> toMap()
         else -> emptyMap()
     }
 
@@ -95,9 +113,99 @@ private fun RepositoryDispatch.toMap() =
         "types" to types,
     )
 
+private fun BranchProtectionRule.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun CheckRun.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun CheckSuite.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun Discussion.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun DiscussionComment.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun IssueComment.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun Issues.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun Label.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun MergeGroup.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun Milestone.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun Project.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun ProjectCard.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun ProjectColumn.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun PullRequestReview.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun PullRequestReviewComment.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun RegistryPackage.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
 private fun Release.toMap() =
     mapOfNotNullValues(
         "types" to types,
+    )
+
+private fun Watch.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
+    )
+
+private fun WorkflowRun.toMap() =
+    mapOfNotNullValues(
+        "types" to types.ifEmpty { null }?.map { it.name },
     )
 
 @Suppress("ComplexMethod")
