@@ -828,12 +828,14 @@ public final class io/github/typesafegithub/workflows/domain/contexts/OutputsCon
 public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -854,15 +856,52 @@ public final class io/github/typesafegithub/workflows/domain/triggers/BranchProt
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/BranchProtectionRule$EventType$Edited;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -883,15 +922,56 @@ public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$C
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Completed : io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Completed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$RequestedAction : io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$RequestedAction;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Rerequested : io/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckRun$EventType$Rerequested;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -910,6 +990,33 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Completed : io/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Completed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/CheckSuite$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Create : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1058,12 +1165,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Deployment
 public final class io/github/typesafegithub/workflows/domain/triggers/Discussion : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Discussion$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Discussion;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Discussion;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1084,15 +1193,92 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Discussion
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Answered : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Answered;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$CategoryChanged : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$CategoryChanged;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Labeled : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Labeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Locked : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Locked;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Pinned : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Pinned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Transferred : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Transferred;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unanswered : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unanswered;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unlabeled : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unlabeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unlocked : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unlocked;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unpinned : io/github/typesafegithub/workflows/domain/triggers/Discussion$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Discussion$EventType$Unpinned;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1111,6 +1297,41 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/DiscussionComment$EventType$Edited;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Fork : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1203,12 +1424,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ImageVersi
 public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1229,15 +1452,52 @@ public final class io/github/typesafegithub/workflows/domain/triggers/IssueComme
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/IssueComment$EventType$Edited;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/Issues : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Issues$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Issues;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Issues;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Issues;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Issues;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Issues;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Issues;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1258,15 +1518,120 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Issues$Com
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Assigned : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Assigned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Closed : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Closed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Demilestoned : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Demilestoned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$FieldAdded : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$FieldAdded;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$FieldRemoved : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$FieldRemoved;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Labeled : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Labeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Locked : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Locked;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Milestoned : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Milestoned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Opened : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Opened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Pinned : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Pinned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Reopened : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Reopened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Transferred : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Transferred;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Typed : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Typed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unassigned : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unassigned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unlabeled : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unlabeled;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unlocked : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unlocked;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unpinned : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Unpinned;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Untyped : io/github/typesafegithub/workflows/domain/triggers/Issues$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Issues$EventType$Untyped;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/Label : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Label$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Label;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Label;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Label;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Label;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Label;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Label;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1287,15 +1652,52 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Label$Comp
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/Label$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Label$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Label$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/Label$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Label$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/Label$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Label$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/Label$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Label$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/Label$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Label$EventType$Edited;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1316,15 +1718,44 @@ public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$ChecksRequested : io/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$ChecksRequested;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/MergeGroup$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/Milestone : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Milestone$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Milestone;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Milestone;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1343,6 +1774,49 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Closed : io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Closed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Opened : io/github/typesafegithub/workflows/domain/triggers/Milestone$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Milestone$EventType$Opened;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1377,12 +1851,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PageBuild$
 public final class io/github/typesafegithub/workflows/domain/triggers/Project : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Project$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Project;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Project;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Project;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Project;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Project;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Project;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1403,15 +1879,64 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Project$Co
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Closed : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Closed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Reopened : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Reopened;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Project$EventType$Updated : io/github/typesafegithub/workflows/domain/triggers/Project$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Project$EventType$Updated;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1432,15 +1957,60 @@ public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCar
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Converted : io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Converted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Moved : io/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectCard$EventType$Moved;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1459,6 +2029,45 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Moved : io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Moved;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Updated : io/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/ProjectColumn$EventType$Updated;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PublicWorkflow : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1623,12 +2232,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1649,15 +2260,52 @@ public final class io/github/typesafegithub/workflows/domain/triggers/PullReques
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Dismissed : io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Dismissed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Edited;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Submitted : io/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReview$EventType$Submitted;
+}
+
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1676,6 +2324,41 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Created : io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Created;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Deleted : io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Deleted;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Edited : io/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/PullRequestReviewComment$EventType$Edited;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/PullRequestTarget : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1852,12 +2535,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/Push$Compa
 public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1876,6 +2561,37 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Published : io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Published;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Updated : io/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/RegistryPackage$EventType$Updated;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Release : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -1994,12 +2710,14 @@ public abstract class io/github/typesafegithub/workflows/domain/triggers/Trigger
 public final class io/github/typesafegithub/workflows/domain/triggers/Watch : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Watch$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Watch;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Watch;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Watch;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/Watch;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Watch;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Watch;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2018,6 +2736,33 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/Watch$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/Watch$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/Watch$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/Watch$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Started : io/github/typesafegithub/workflows/domain/triggers/Watch$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/Watch$EventType$Started;
 }
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowCall : io/github/typesafegithub/workflows/domain/triggers/Trigger {
@@ -2270,12 +3015,14 @@ public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowDi
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun : io/github/typesafegithub/workflows/domain/triggers/Trigger {
 	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/util/Map;
-	public final fun copy (Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;
+	public fun <init> (Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/List;Ljava/util/Map;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTypes ()Ljava/util/List;
 	public fun get_customArguments ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2294,6 +3041,45 @@ public final synthetic class io/github/typesafegithub/workflows/domain/triggers/
 
 public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType {
+	public static final field Companion Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getName ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Completed : io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Completed;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Custom : io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Custom;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Custom;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Custom;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$InProgress : io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$InProgress;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Requested : io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Requested;
+}
+
+public final class io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Waiting : io/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/triggers/WorkflowRun$EventType$Waiting;
 }
 
 public final class io/github/typesafegithub/workflows/dsl/ContainerKt {

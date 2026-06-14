@@ -15,8 +15,11 @@ public data class PullRequestReview(
         public val name: String,
     ) {
         public object Submitted : EventType("submitted")
+
         public object Edited : EventType("edited")
+
         public object Dismissed : EventType("dismissed")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

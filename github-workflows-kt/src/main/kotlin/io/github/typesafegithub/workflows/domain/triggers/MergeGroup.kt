@@ -15,6 +15,7 @@ public data class MergeGroup(
         public val name: String,
     ) {
         public object ChecksRequested : EventType("checks_requested")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

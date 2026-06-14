@@ -15,9 +15,13 @@ public data class WorkflowRun(
         public val name: String,
     ) {
         public object Completed : EventType("completed")
+
         public object Requested : EventType("requested")
+
         public object InProgress : EventType("in_progress")
+
         public object Waiting : EventType("waiting")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

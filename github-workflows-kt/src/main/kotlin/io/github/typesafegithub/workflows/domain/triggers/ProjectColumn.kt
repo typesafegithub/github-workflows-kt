@@ -15,9 +15,13 @@ public data class ProjectColumn(
         public val name: String,
     ) {
         public object Created : EventType("created")
+
         public object Updated : EventType("updated")
+
         public object Moved : EventType("moved")
+
         public object Deleted : EventType("deleted")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

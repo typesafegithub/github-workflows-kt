@@ -15,10 +15,15 @@ public data class Milestone(
         public val name: String,
     ) {
         public object Created : EventType("created")
+
         public object Closed : EventType("closed")
+
         public object Opened : EventType("opened")
+
         public object Edited : EventType("edited")
+
         public object Deleted : EventType("deleted")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

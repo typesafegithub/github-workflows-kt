@@ -15,6 +15,7 @@ public data class Watch(
         public val name: String,
     ) {
         public object Started : EventType("started")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

@@ -15,6 +15,7 @@ public data class CheckSuite(
         public val name: String,
     ) {
         public object Completed : EventType("completed")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

@@ -15,7 +15,9 @@ public data class RegistryPackage(
         public val name: String,
     ) {
         public object Published : EventType("published")
+
         public object Updated : EventType("updated")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

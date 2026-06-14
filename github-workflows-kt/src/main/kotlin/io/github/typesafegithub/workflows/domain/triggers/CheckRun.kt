@@ -15,9 +15,13 @@ public data class CheckRun(
         public val name: String,
     ) {
         public object Created : EventType("created")
+
         public object Rerequested : EventType("rerequested")
+
         public object Completed : EventType("completed")
+
         public object RequestedAction : EventType("requested_action")
+
         public data class Custom(
             val value: String,
         ) : EventType(name = value)
