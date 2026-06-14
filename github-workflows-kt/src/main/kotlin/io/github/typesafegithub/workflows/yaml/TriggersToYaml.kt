@@ -51,6 +51,7 @@ internal fun List<Trigger>.triggersToYaml(): Map<String, Any?> =
         },
     )
 
+@Suppress("CyclomaticComplexMethod")
 @InternalGithubActionsApi
 public fun Trigger.toMap(): Map<String, List<String>> =
     when (this) {
