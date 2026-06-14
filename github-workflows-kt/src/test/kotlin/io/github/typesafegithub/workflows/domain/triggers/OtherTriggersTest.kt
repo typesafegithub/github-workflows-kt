@@ -102,13 +102,23 @@ class OtherTriggersTest :
                     Deployment(),
                     DeploymentStatus(),
                     Discussion(
-                        types = listOf(Discussion.EventType.Created, Discussion.EventType.Edited, Discussion.EventType.Answered),
+                        types =
+                            listOf(
+                                Discussion.EventType.Created,
+                                Discussion.EventType.Edited,
+                                Discussion.EventType.Answered,
+                            ),
                     ),
                     DiscussionComment(),
                     Fork(),
                     Gollum(),
                     IssueComment(
-                        types = listOf(IssueComment.EventType.Created, IssueComment.EventType.Edited, IssueComment.EventType.Deleted),
+                        types =
+                            listOf(
+                                IssueComment.EventType.Created,
+                                IssueComment.EventType.Edited,
+                                IssueComment.EventType.Deleted,
+                            ),
                     ),
                     Issues(
                         types = listOf(Issues.EventType.Opened, Issues.EventType.Edited),
@@ -134,7 +144,11 @@ class OtherTriggersTest :
                     PullRequest(),
                     PullRequestReview(),
                     PullRequestReviewComment(
-                        types = listOf(PullRequestReviewComment.EventType.Created, PullRequestReviewComment.EventType.Edited),
+                        types =
+                            listOf(
+                                PullRequestReviewComment.EventType.Created,
+                                PullRequestReviewComment.EventType.Edited,
+                            ),
                     ),
                     PullRequestTarget(),
                     Push(),
