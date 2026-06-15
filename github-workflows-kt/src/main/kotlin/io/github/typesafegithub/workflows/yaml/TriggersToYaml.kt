@@ -111,7 +111,7 @@ private fun PullRequestTarget.toMap() =
 
 private fun RepositoryDispatch.toMap() =
     mapOfNotNullValues(
-        "types" to types,
+        "types" to types.ifEmpty { null },
     )
 
 private fun BranchProtectionRule.toMap() =
@@ -196,7 +196,7 @@ private fun RegistryPackage.toMap() =
 
 private fun Release.toMap() =
     mapOfNotNullValues(
-        "types" to types,
+        "types" to types.ifEmpty { null }?.map { it.name },
     )
 
 private fun Watch.toMap() =

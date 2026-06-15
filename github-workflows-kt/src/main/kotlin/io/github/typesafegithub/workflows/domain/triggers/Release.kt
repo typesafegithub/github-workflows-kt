@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class Release(
-    val types: List<String>? = null,
+    val types: List<EventType> = emptyList(),
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger() {
     @OptIn(InternalSerializationApi::class)

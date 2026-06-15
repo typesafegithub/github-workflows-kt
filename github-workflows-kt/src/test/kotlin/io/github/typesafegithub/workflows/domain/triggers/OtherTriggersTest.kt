@@ -155,7 +155,7 @@ class OtherTriggersTest :
                     RegistryPackage(
                         types = listOf(RegistryPackage.EventType.Published, RegistryPackage.EventType.Updated),
                     ),
-                    Release(types = listOf("published", "unpublished")),
+                    Release(types = listOf(Release.EventType.Published, Release.EventType.Unpublished)),
                     RepositoryDispatch(types = listOf("foo", "bar")),
                     Schedule(emptyList()),
                     Status(
