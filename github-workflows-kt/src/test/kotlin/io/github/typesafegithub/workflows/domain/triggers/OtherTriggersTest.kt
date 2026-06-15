@@ -88,48 +88,85 @@ class OtherTriggersTest :
         }
 
         test("Creating all triggers with free arguments") {
-            fun types(vararg types: String) =
-                mapOf(
-                    "types" to types.toList(),
-                )
-
             val triggers: List<Trigger> =
                 listOf(
-                    BranchProtectionRule(types("created", "deleted")),
-                    CheckRun(types("completed", "rerequested")),
+                    BranchProtectionRule(
+                        types = listOf(BranchProtectionRule.EventType.Created, BranchProtectionRule.EventType.Deleted),
+                    ),
+                    CheckRun(
+                        types = listOf(CheckRun.EventType.Completed, CheckRun.EventType.Rerequested),
+                    ),
                     CheckSuite(),
                     Create(),
                     Delete(),
                     Deployment(),
                     DeploymentStatus(),
-                    Discussion(types("created", "edited", "answered")),
+                    Discussion(
+                        types =
+                            listOf(
+                                Discussion.EventType.Created,
+                                Discussion.EventType.Edited,
+                                Discussion.EventType.Answered,
+                            ),
+                    ),
                     DiscussionComment(),
                     Fork(),
                     Gollum(),
-                    IssueComment(types("created", "edited", "deleted")),
-                    Issues(types("opened", "edited")),
-                    Label(types("commented", "deleted", "edited")),
+                    IssueComment(
+                        types =
+                            listOf(
+                                IssueComment.EventType.Created,
+                                IssueComment.EventType.Edited,
+                                IssueComment.EventType.Deleted,
+                            ),
+                    ),
+                    Issues(
+                        types = listOf(Issues.EventType.Opened, Issues.EventType.Edited),
+                    ),
+                    Label(
+                        types = listOf(Label.EventType.Created, Label.EventType.Deleted, Label.EventType.Edited),
+                    ),
                     MergeGroup(),
-                    Milestone(types("created", "closed")),
+                    Milestone(
+                        types = listOf(Milestone.EventType.Created, Milestone.EventType.Closed),
+                    ),
                     PageBuild(),
-                    Project(types("created", "deleted")),
-                    ProjectCard(types("created", "moved")),
-                    ProjectColumn(types("moved")),
+                    Project(
+                        types = listOf(Project.EventType.Created, Project.EventType.Deleted),
+                    ),
+                    ProjectCard(
+                        types = listOf(ProjectCard.EventType.Created, ProjectCard.EventType.Moved),
+                    ),
+                    ProjectColumn(
+                        types = listOf(ProjectColumn.EventType.Moved),
+                    ),
                     PublicWorkflow(),
                     PullRequest(),
                     PullRequestReview(),
-                    PullRequestReviewComment(types("created", "edited")),
+                    PullRequestReviewComment(
+                        types =
+                            listOf(
+                                PullRequestReviewComment.EventType.Created,
+                                PullRequestReviewComment.EventType.Edited,
+                            ),
+                    ),
                     PullRequestTarget(),
                     Push(),
-                    RegistryPackage(types("published", "updated")),
-                    Release(types = listOf("published", "unpublished")),
+                    RegistryPackage(
+                        types = listOf(RegistryPackage.EventType.Published, RegistryPackage.EventType.Updated),
+                    ),
+                    Release(types = listOf(Release.EventType.Published, Release.EventType.Unpublished)),
                     RepositoryDispatch(types = listOf("foo", "bar")),
                     Schedule(emptyList()),
-                    Status(types("started")),
+                    Status(
+                        _customArguments = mapOf("types" to listOf("started")),
+                    ),
                     Watch(),
                     WorkflowCall(),
                     WorkflowDispatch(),
-                    WorkflowRun(types("completed", "requested")),
+                    WorkflowRun(
+                        types = listOf(WorkflowRun.EventType.Completed, WorkflowRun.EventType.Requested),
+                    ),
                 )
 
             triggers.triggersToYaml() shouldBe
@@ -147,7 +184,7 @@ class OtherTriggersTest :
                     "gollum" to emptyMap<Any, Any>(),
                     "issue_comment" to mapOf("types" to listOf("created", "edited", "deleted")),
                     "issues" to mapOf("types" to listOf("opened", "edited")),
-                    "label" to mapOf("types" to listOf("commented", "deleted", "edited")),
+                    "label" to mapOf("types" to listOf("created", "deleted", "edited")),
                     "merge_group" to emptyMap<Any, Any>(),
                     "milestone" to mapOf("types" to listOf("created", "closed")),
                     "page_build" to emptyMap<Any, Any>(),

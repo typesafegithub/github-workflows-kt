@@ -8,6 +8,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class RepositoryDispatch(
-    val types: List<String>? = null,
+    val types: List<String> = emptyList(),
     override val _customArguments: Map<String, @Contextual Any> = mapOf(),
 ) : Trigger()
