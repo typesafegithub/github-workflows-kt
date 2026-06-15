@@ -67,7 +67,12 @@ fun main() {
 }
 
 fun Application.appModule(
-    buildVersionArtifacts: suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (
+        BindingsServerRequest,
+        String,
+        MeterRegistry,
+        HttpClient,
+    ) -> VersionArtifacts?,
     buildPackageArtifacts: suspend (
         BindingsServerRequest,
         String,
@@ -90,7 +95,7 @@ fun Application.appModule(
                 execute(request)
             }
         }
-    val bindingsCache = buildBindingsCache(buildVersionArtifacts, httpClient)
+    val bindingsCache = buildBindingsCache(buildVersionArtifacts, getGithubAuthToken, httpClient)
     val metadataCache = buildMetadataCache(bindingsCache, buildPackageArtifacts, getGithubAuthToken)
     installPlugins(prometheusRegistry)
 
@@ -103,14 +108,29 @@ fun Application.appModule(
 }
 
 private fun buildBindingsCache(
-    buildVersionArtifacts: suspend (BindingsServerRequest, HttpClient) -> VersionArtifacts?,
+    buildVersionArtifacts: suspend (
+        BindingsServerRequest,
+        String,
+        MeterRegistry,
+        HttpClient,
+    ) -> VersionArtifacts?,
+    getGithubAuthToken: () -> String,
     httpClient: HttpClient,
 ): LoadingCache<BindingsServerRequest, CachedVersionArtifact> =
     Caffeine
         .newBuilder()
         .refreshAfterWrite(1.hours)
         .recordStats()
-        .asLoadingCache { Optional.ofNullable(buildVersionArtifacts(it, httpClient)) }
+        .asLoadingCache {
+            Optional.ofNullable(
+                buildVersionArtifacts(
+                    it,
+                    getGithubAuthToken(),
+                    prometheusRegistry,
+                    httpClient,
+                ),
+            )
+        }
 
 @Suppress("ktlint:standard:function-signature") // Conflict with detekt.
 private fun buildMetadataCache(
