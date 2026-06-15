@@ -46,21 +46,29 @@ public data class PullRequest(
 
         public object Reopened : EventType("reopened")
 
-        public object Synchronize : EventType("synchronized")
+        public object Synchronize : EventType("synchronize")
 
-        public object ConvertedToDraft : EventType("convert_to_draft")
-
-        public object ReadyForReview : EventType("ready_for_review")
+        public object ConvertedToDraft : EventType("converted_to_draft")
 
         public object Locked : EventType("locked")
 
         public object Unlocked : EventType("unlocked")
 
+        public object Enqueued : EventType("enqueued")
+
+        public object Dequeued : EventType("dequeued")
+
+        public object Milestoned : EventType("milestoned")
+
+        public object Demilestoned : EventType("demilestoned")
+
+        public object ReadyForReview : EventType("ready_for_review")
+
         public object ReviewRequested : EventType("review_requested")
 
         public object ReviewRequestRemoved : EventType("review_request_removed")
 
-        public object AutoMergeEnabled : EventType("auto_merge")
+        public object AutoMergeEnabled : EventType("auto_merge_enabled")
 
         public object AutoMergeDisabled : EventType("auto_merge_disabled")
 

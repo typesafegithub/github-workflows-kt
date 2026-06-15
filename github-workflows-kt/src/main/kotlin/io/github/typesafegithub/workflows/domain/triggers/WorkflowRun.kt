@@ -20,8 +20,6 @@ public data class WorkflowRun(
 
         public object InProgress : EventType("in_progress")
 
-        public object Waiting : EventType("waiting")
-
         public data class Custom(
             val value: String,
         ) : EventType(name = value)

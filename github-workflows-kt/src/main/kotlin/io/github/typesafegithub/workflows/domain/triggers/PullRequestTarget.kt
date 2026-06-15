@@ -46,13 +46,21 @@ public data class PullRequestTarget(
 
         public object Synchronize : EventType("synchronize")
 
-        public object ConvertedToDraft : EventType("convert_to_draft")
-
-        public object ReadyForReview : EventType("ready_for_review")
+        public object ConvertedToDraft : EventType("converted_to_draft")
 
         public object Locked : EventType("locked")
 
         public object Unlocked : EventType("unlocked")
+
+        public object Enqueued : EventType("enqueued")
+
+        public object Dequeued : EventType("dequeued")
+
+        public object Milestoned : EventType("milestoned")
+
+        public object Demilestoned : EventType("demilestoned")
+
+        public object ReadyForReview : EventType("ready_for_review")
 
         public object ReviewRequested : EventType("review_requested")
 
