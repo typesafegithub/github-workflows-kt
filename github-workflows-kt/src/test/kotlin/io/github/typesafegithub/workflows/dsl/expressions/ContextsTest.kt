@@ -11,17 +11,17 @@ class ContextsTest :
         test("Environment variables") {
             assertSoftly {
                 val DAY_OF_WEEK by Contexts.env
-                "$DAY_OF_WEEK == 'Monday'" shouldBe "\$DAY_OF_WEEK == 'Monday'"
+                "$DAY_OF_WEEK == 'Monday'" shouldBe "env.DAY_OF_WEEK == 'Monday'"
 
                 "${Contexts.env.CI} == true && ${Contexts.env.GITHUB_ACTIONS} == true" shouldBe
-                    "\$CI == true && \$GITHUB_ACTIONS == true"
+                    "env.CI == true && env.GITHUB_ACTIONS == true"
             }
         }
 
         test("Environment variables from expressions") {
             val GREETING by Contexts.env
-            expr { GREETING } shouldBe "\${{ GREETING }}"
-            expr { env.GITHUB_ACTIONS } shouldBe "\${{ GITHUB_ACTIONS }}"
+            expr { GREETING } shouldBe "\${{ env.GREETING }}"
+            expr { env.GITHUB_ACTIONS } shouldBe "\${{ env.GITHUB_ACTIONS }}"
         }
 
         test("Secrets") {
