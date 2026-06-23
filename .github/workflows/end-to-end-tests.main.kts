@@ -206,7 +206,7 @@ workflow(
                 // TODO: fix in https://github.com/typesafegithub/github-workflows-kt/issues/1956
                 command = """
                     cat << EOF > actual
-                    $GREETING-$FIRST_NAME
+                    ${ expr { "$GREETING-$FIRST_NAME" } }
                     EOF
 
                     cat << EOF > expected

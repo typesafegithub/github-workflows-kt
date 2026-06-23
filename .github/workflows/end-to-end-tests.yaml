@@ -124,7 +124,7 @@ jobs:
         FIRST_NAME: 'Patrick'
       run: |-
         cat << EOF > actual
-        env.GREETING-env.FIRST_NAME
+        ${{ env.GREETING-env.FIRST_NAME }}
         EOF
 
         cat << EOF > expected
