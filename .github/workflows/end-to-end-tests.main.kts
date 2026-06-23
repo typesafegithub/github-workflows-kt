@@ -206,11 +206,11 @@ workflow(
                 // TODO: fix in https://github.com/typesafegithub/github-workflows-kt/issues/1956
                 command = """
                     cat << EOF > actual
-                    ${ expr { "$GREETING-$FIRST_NAME" } }
+                    ${expr(GREETING)}-${expr(FIRST_NAME)}
                     EOF
 
                     cat << EOF > expected
-                    -
+                    World-Patrick
                     EOF
 
                     diff actual expected
