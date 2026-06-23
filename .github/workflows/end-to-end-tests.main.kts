@@ -201,9 +201,6 @@ workflow(
                 env = mapOf(
                     FIRST_NAME to "Patrick",
                 ),
-                // The assertion below presents the current, undesired behavior related to
-                // env vars, used either from shell or GitHub Actions expressions.
-                // TODO: fix in https://github.com/typesafegithub/github-workflows-kt/issues/1956
                 command = """
                     cat << EOF > actual
                     ${expr(GREETING)}-${expr(FIRST_NAME)}
