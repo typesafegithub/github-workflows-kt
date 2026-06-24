@@ -27,7 +27,7 @@ private fun Job<*>.toYaml(): Map<String, Any?> =
                 )
             },
         "needs" to needs.ifEmpty { null }?.map { it.id },
-        "env" to env.ifEmpty { null },
+        "env" to env.mapKeys { it.key.removePrefix("env.") }.ifEmpty { null },
         "if" to condition,
         "strategy" to
             strategyMatrix?.let {

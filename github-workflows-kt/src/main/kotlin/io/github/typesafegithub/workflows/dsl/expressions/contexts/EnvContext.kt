@@ -9,7 +9,6 @@ import io.github.typesafegithub.workflows.dsl.expressions.MapFromLambda
  */
 public object EnvContext : ExpressionContext(
     _path = "env",
-    propertyToExprPath = MapFromLambda { key: String -> "\$$key" },
 ) {
     /** Always set to true. **/
     public val CI: String by propertyToExprPath

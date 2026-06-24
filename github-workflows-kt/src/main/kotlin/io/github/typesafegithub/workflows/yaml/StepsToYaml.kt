@@ -38,7 +38,7 @@ private fun ActionStep<*>.toYaml(): Map<String, Any?> =
                 }
             },
         "with" to action.toYamlArguments().ifEmpty { null },
-        "env" to env.ifEmpty { null },
+        "env" to env.mapKeys { it.key.removePrefix("env.") }.ifEmpty { null },
         "if" to condition,
     ) + _customArguments
 
@@ -46,7 +46,7 @@ private fun CommandStep.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,
-        "env" to env.ifEmpty { null },
+        "env" to env.mapKeys { it.key.removePrefix("env.") }.ifEmpty { null },
         "continue-on-error" to continueOnError,
         "timeout-minutes" to timeoutMinutes,
         "shell" to shell?.toYaml(),
@@ -59,7 +59,7 @@ private fun KotlinLogicStep.toYaml(): Map<String, Any?> =
     mapOfNotNullValues(
         "id" to id,
         "name" to name,
-        "env" to env.ifEmpty { null },
+        "env" to env.mapKeys { it.key.removePrefix("env.") }.ifEmpty { null },
         "continue-on-error" to continueOnError,
         "timeout-minutes" to timeoutMinutes,
         "shell" to shell?.toYaml(),
