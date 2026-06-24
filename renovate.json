@@ -4,6 +4,10 @@
     "config:recommended"
   ],
   "automerge": true,
+  "ignorePaths": [
+    ".github/workflows/end-to-end-tests.yaml",
+    ".github/workflows/end-to-end-tests.main.kts"
+  ],
   "packageRules": [
     {
       "groupName": "actions-setup-java",

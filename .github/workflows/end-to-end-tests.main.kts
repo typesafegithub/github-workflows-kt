@@ -3,7 +3,7 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:4.0.0-SNAPSHOT")
 @file:DependsOn("io.github.typesafegithub:action-updates-checker:4.0.0-SNAPSHOT")
 @file:Repository("https://bindings.krzeminski.it")
-@file:DependsOn("actions:checkout:v7")
+@file:DependsOn("actions:checkout:v6")
 @file:DependsOn("actions:github-script:v9")
 @file:DependsOn("actions:setup-java:v5")
 @file:DependsOn("actions:setup-python:v6")
