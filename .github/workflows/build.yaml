@@ -15,7 +15,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Downgrade Kotlin'
       uses: 'fwilhe2/setup-kotlin@v1'
@@ -50,7 +50,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       uses: 'actions/cache@v6'
       with:
@@ -78,7 +78,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       uses: 'actions/cache@v6'
       with:
@@ -111,7 +111,7 @@ jobs:
     if: '${{ github.ref == ''refs/heads/main'' }}'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' # v5.2.0
@@ -147,7 +147,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       uses: 'actions/setup-python@v6'
       with:
@@ -163,7 +163,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Downgrade Kotlin'
       uses: 'fwilhe2/setup-kotlin@v1'
@@ -189,7 +189,7 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      uses: 'actions/checkout@v6'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' # v5.2.0
