@@ -30,7 +30,6 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import io.github.typesafegithub.workflows.updates.reportAvailableUpdates
 import java.time.Instant
@@ -55,7 +54,6 @@ workflow(
         env = mapOf(
             "GITHUB_TOKEN" to expr("secrets.GITHUB_TOKEN")
         ),
-        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
             uses(
@@ -318,7 +316,6 @@ workflow(
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
         useLocalBindingsServerAsFallback = true,
-        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             publishToMavenLocal()
             uses(

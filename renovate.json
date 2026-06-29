@@ -6,7 +6,8 @@
   "automerge": true,
   "ignorePaths": [
     ".github/workflows/end-to-end-tests.yaml",
-    ".github/workflows/end-to-end-tests.main.kts"
+    ".github/workflows/end-to-end-tests.main.kts",
+    ".github/workflows/end-to-end-tests-2nd-workflow.yaml",
   ],
   "packageRules": [
     {
