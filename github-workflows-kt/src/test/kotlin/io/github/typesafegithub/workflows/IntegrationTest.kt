@@ -488,7 +488,7 @@ class IntegrationTest :
                             Checkout(
                                 repository = expr(addAndCommit.id),
                                 ref = expr(addAndCommit.outputs.commitSha),
-                                token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                                token = addAndCommit.outputs["my-unsafe-output"].expressionString,
                             ),
                     )
                 }
@@ -644,7 +644,7 @@ class IntegrationTest :
                             Checkout(
                                 repository = expr(addAndCommit.id),
                                 ref = expr(addAndCommit.outputs.commitSha),
-                                token = expr(addAndCommit.outputs["my-unsafe-output"]),
+                                token = addAndCommit.outputs["my-unsafe-output"].expressionString,
                             ),
                     )
                 }
