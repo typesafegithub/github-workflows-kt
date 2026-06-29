@@ -58,7 +58,7 @@ jobs:
         key: 'gradle-buildSrc-build-dir-${{ runner.os }}'
     - id: 'step-2'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' # v5.2.0
+      uses: 'actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520' # v5.4.0
       with:
         java-version: '22'
         distribution: 'zulu'
@@ -86,7 +86,7 @@ jobs:
         key: 'gradle-buildSrc-build-dir-${{ runner.os }}'
     - id: 'step-2'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' # v5.2.0
+      uses: 'actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520' # v5.4.0
       with:
         java-version: '22'
         distribution: 'zulu'
@@ -114,7 +114,7 @@ jobs:
       uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' # v5.2.0
+      uses: 'actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520' # v5.4.0
       with:
         java-version: '22'
         distribution: 'zulu'
@@ -192,7 +192,7 @@ jobs:
       uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Set up JDK'
-      uses: 'actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654' # v5.2.0
+      uses: 'actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520' # v5.4.0
       with:
         java-version: '22'
         distribution: 'zulu'
