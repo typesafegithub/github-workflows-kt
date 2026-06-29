@@ -2,7 +2,6 @@
 
 package io.github.typesafegithub.workflows.mavenbinding
 
-import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.generation.ActionBinding
@@ -32,11 +31,16 @@ internal data class Jars(
     val typingActualSource: TypingActualSource?,
 )
 
-internal suspend fun ActionCoords.buildJars(httpClient: HttpClient): Jars? {
+internal suspend fun BindingsServerRequest.buildJars(httpClient: HttpClient): Jars? {
     val binding =
-        generateBinding(metadataRevision = NewestForVersion, httpClient = httpClient).also {
-            if (it.isEmpty()) return null
-        }
+        actionCoords
+            .generateBinding(
+                bindingVersion = bindingVersion,
+                metadataRevision = NewestForVersion,
+                httpClient = httpClient,
+            ).also {
+                if (it.isEmpty()) return null
+            }
 
     fun prepareJarContents(): Pair<Path, Path> {
         val (sourceFilePaths, compilationInputDir) = binding.prepareDirectoryWithSources()

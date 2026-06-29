@@ -36,7 +36,7 @@ class PomBuildingTest :
                                 significantVersion = significantVersion,
                             ),
                     )
-                val xml = bindingsServerRequest.buildPomFile()
+                val xml = bindingsServerRequest.buildPomFile("4.5.6")
 
                 xml shouldBe
                     """
@@ -47,7 +47,7 @@ class PomBuildingTest :
                       <artifactId>name$nameSuffix</artifactId>
                       <version>v1.2.3$versionSuffix</version>
                       <name>name</name>
-                      <description>Auto-generated binding for owner/name$prettyPrintSuffix@$version.</description>
+                      <description>Auto-generated binding for owner/name$prettyPrintSuffix@$version binding version v1.</description>
                       <url>https://github.com/owner/name</url>
                       <scm>
                         <connection>scm:git:git://github.com/owner/name.git/</connection>
@@ -58,7 +58,7 @@ class PomBuildingTest :
                         <dependency>
                             <groupId>io.github.typesafegithub</groupId>
                             <artifactId>github-workflows-kt</artifactId>
-                            <version>3.7.0</version>
+                            <version>4.5.6</version>
                             <scope>compile</scope>
                         </dependency>
                       </dependencies>
