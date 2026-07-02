@@ -100,7 +100,7 @@ class ModuleBuildingTest :
                               "group": "io.github.typesafegithub",
                               "module": "github-workflows-kt",
                               "version": {
-                                "requires": "3.7.0"
+                                "requires": "4.0.0"
                               }
                             }
                           ],

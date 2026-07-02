@@ -3,7 +3,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.fullName
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.prettyPrint
 
-internal const val LATEST_RELASED_LIBRARY_VERSION = "3.7.0"
+internal const val LATEST_RELASED_LIBRARY_VERSION = "4.0.0"
 
 internal fun BindingsServerRequest.buildPomFile() =
     """

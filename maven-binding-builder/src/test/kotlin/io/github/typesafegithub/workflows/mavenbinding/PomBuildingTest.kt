@@ -58,7 +58,7 @@ class PomBuildingTest :
                         <dependency>
                             <groupId>io.github.typesafegithub</groupId>
                             <artifactId>github-workflows-kt</artifactId>
-                            <version>3.7.0</version>
+                            <version>4.0.0</version>
                             <scope>compile</scope>
                         </dependency>
                       </dependencies>
