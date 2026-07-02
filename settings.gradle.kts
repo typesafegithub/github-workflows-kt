@@ -15,7 +15,7 @@ include(
 )
 
 plugins {
-    id("com.gradle.develocity") version "4.4.3"
+    id("com.gradle.develocity") version "4.5.0"
 }
 
 dependencyResolutionManagement {
