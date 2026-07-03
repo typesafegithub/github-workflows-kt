@@ -19,7 +19,6 @@ import io.github.typesafegithub.workflows.dsl.JobBuilder
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.CheckoutActionVersionSource
 import io.github.typesafegithub.workflows.yaml.DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG
 import java.net.URI
 import java.net.ConnectException
@@ -45,7 +44,6 @@ workflow(
     ),
     consistencyCheckJobConfig = DEFAULT_CONSISTENCY_CHECK_JOB_CONFIG.copy(
         useLocalBindingsServerAsFallback = true,
-        checkoutActionVersion = CheckoutActionVersionSource.InferFromClasspath(),
         additionalSteps = {
             uses(
                 name = "Downgrade Kotlin",
