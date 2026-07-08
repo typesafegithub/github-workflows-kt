@@ -13,7 +13,7 @@ dependencies {
     implementation("io.kotest:kotest-framework-plugin-gradle:6.2.1")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
-    implementation("org.jmailen.gradle:kotlinter-gradle:5.5.0")
+    implementation("org.jmailen.gradle:kotlinter-gradle:5.6.0")
 
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.11.0"))
     implementation(("org.jetbrains.kotlinx:kotlinx-coroutines-core"))
