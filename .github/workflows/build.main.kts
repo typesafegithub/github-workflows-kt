@@ -7,7 +7,7 @@
 @file:DependsOn("actions:checkout:v7")
 @file:DependsOn("actions:setup-java___commit_lenient:v5.2.0__be666c2fcd27ec809703dec50e508c2fdc7f6654")
 @file:DependsOn("gradle:actions__setup-gradle:v6")
-@file:DependsOn("fwilhe2:setup-kotlin:v1")
+@file:DependsOn("fwilhe2:setup-kotlin:v2")
 
 @file:Import("_shared.main.kts")
 @file:Import("setup-java.main.kts")
