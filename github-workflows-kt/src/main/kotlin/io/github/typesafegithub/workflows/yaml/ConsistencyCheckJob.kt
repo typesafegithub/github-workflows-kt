@@ -129,7 +129,7 @@ private fun inferCheckoutActionVersionFromClasspath(checkoutActionClassFQN: Stri
             error(
                 "actions/checkout is not found in the classpath! " +
                     "Either add a dependency on it (`@file:DependsOn(\"actions:checkout:<version>\")`), " +
-                    "or don't use CheckoutActionVersionSource.InferFromClasspath()",
+                    "or use another CheckoutActionVersionSource.",
             )
         } as Class<*>
     // It's easier to call the primary constructor, even though it's private, because
