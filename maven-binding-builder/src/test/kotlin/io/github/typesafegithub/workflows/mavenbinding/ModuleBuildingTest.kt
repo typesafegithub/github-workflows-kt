@@ -18,6 +18,7 @@ class ModuleBuildingTest :
 
                 val bindingsServerRequest =
                     BindingsServerRequest(
+                        rawOwner = "owner",
                         rawName = "name$nameSuffix",
                         rawVersion = "v1.2.3$versionSuffix",
                         actionCoords =
