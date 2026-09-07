@@ -53,6 +53,8 @@ public sealed interface RunnerType {
 
     public object Macos14 : GitHubHosted("macos-14")
 
+    public object Xcode27 : GitHubHosted("xcode-27")
+
     // Custom runner. Could be an expression `runsOn = expr("github.event.inputs.run-on")`
     public data class Custom(
         val runsOn: String,
