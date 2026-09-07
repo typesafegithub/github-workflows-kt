@@ -537,6 +537,10 @@ public final class io/github/typesafegithub/workflows/domain/RunnerType$WindowsL
 	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$WindowsLatest;
 }
 
+public final class io/github/typesafegithub/workflows/domain/RunnerType$Xcode27 : io/github/typesafegithub/workflows/domain/RunnerType$GitHubHosted {
+	public static final field INSTANCE Lio/github/typesafegithub/workflows/domain/RunnerType$Xcode27;
+}
+
 public abstract interface class io/github/typesafegithub/workflows/domain/Shell {
 }
 
