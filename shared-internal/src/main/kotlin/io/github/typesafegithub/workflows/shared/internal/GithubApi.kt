@@ -1,8 +1,10 @@
 package io.github.typesafegithub.workflows.shared.internal
 
 import arrow.core.Either
+import arrow.core.left
 import arrow.core.raise.either
 import arrow.core.raise.ensure
+import arrow.core.right
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.github.typesafegithub.workflows.shared.internal.model.Version
 import io.ktor.client.HttpClient
@@ -28,12 +30,45 @@ private val logger = logger { }
 
 private const val MAX_REF_PARTS = 3
 
+private const val GITHUB_ENDPOINT = "https://api.github.com"
+
+suspend fun fetchVersionSha(
+    repo: String,
+    version: String,
+    githubAuthToken: String?,
+    meterRegistry: MeterRegistry? = null,
+    githubEndpoint: String = GITHUB_ENDPOINT,
+): Either<String, String> =
+    either {
+        buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
+            return listOf(
+                apiTagUrl(githubEndpoint = githubEndpoint, repo = repo, version = version),
+                apiBranchUrl(githubEndpoint = githubEndpoint, repo = repo, version = version),
+            ).flatMap { url -> fetchGithubRefs(url, githubAuthToken, httpClient).bind() }
+                .firstOrNull {
+                    val refParts = it.ref.split('/', limit = 4)
+                    (refParts.size == MAX_REF_PARTS) && (refParts[2] == version)
+                }?.`object`
+                ?.let {
+                    it.getCommitSha(
+                        httpClient
+                            .get(urlString = it.url) {
+                                if (githubAuthToken != null) {
+                                    bearerAuth(githubAuthToken)
+                                }
+                            },
+                    )
+                }?.right()
+                ?: "Specified version $version not found".left()
+        }
+    }
+
 suspend fun fetchAvailableVersions(
     owner: String,
     name: String,
     githubAuthToken: String?,
     meterRegistry: MeterRegistry? = null,
-    githubEndpoint: String = "https://api.github.com",
+    githubEndpoint: String = GITHUB_ENDPOINT,
 ): Either<String, List<Version>> =
     either {
         buildHttpClient(meterRegistry = meterRegistry).use { httpClient ->
@@ -106,11 +141,23 @@ private suspend fun fetchGithubRefs(
         response.body()
     }
 
+private fun apiTagUrl(
+    githubEndpoint: String,
+    repo: String,
+    version: String,
+): String = "$githubEndpoint/repos/$repo/git/matching-refs/tags/$version"
+
 private fun apiTagsUrl(
     githubEndpoint: String,
     owner: String,
     name: String,
 ): String = "$githubEndpoint/repos/$owner/$name/git/matching-refs/tags/v"
+
+private fun apiBranchUrl(
+    githubEndpoint: String,
+    repo: String,
+    version: String,
+): String = "$githubEndpoint/repos/$repo/git/matching-refs/heads/$version"
 
 private fun apiBranchesUrl(
     githubEndpoint: String,

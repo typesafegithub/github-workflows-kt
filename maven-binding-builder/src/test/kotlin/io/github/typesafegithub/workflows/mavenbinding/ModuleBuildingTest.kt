@@ -2,6 +2,7 @@ package io.github.typesafegithub.workflows.mavenbinding
 
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.ActionCoords
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 import io.kotest.core.spec.style.FunSpec
@@ -12,9 +13,10 @@ class ModuleBuildingTest :
         SignificantVersion.entries.forEach { significantVersion ->
             test("significant version $significantVersion requested") {
                 val commitLenient = significantVersion == COMMIT_LENIENT
+                val commitOrCommitLenient = (significantVersion == COMMIT) || commitLenient
                 var nameSuffix = if (significantVersion == FULL) "" else "___$significantVersion"
                 var versionSuffix = if (commitLenient) "__commit-sha" else ""
-                var version = if (commitLenient) "commit-sha" else "v1.2.3"
+                var version = if (commitOrCommitLenient) "commit-sha" else "v1.2.3"
 
                 val bindingsServerRequest =
                     BindingsServerRequest(
@@ -25,7 +27,7 @@ class ModuleBuildingTest :
                                 owner = "owner",
                                 name = "name",
                                 version = version,
-                                comment = if (commitLenient) "v1.2.3" else null,
+                                comment = if (commitOrCommitLenient) "v1.2.3" else null,
                                 significantVersion = significantVersion,
                             ),
                     )

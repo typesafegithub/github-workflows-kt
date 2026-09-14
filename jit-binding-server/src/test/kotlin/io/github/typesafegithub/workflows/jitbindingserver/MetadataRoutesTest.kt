@@ -26,7 +26,7 @@ class MetadataRoutesTest :
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { _, _ ->
+                            buildVersionArtifacts = { _, _, _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -54,7 +54,7 @@ class MetadataRoutesTest :
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { _, _ ->
+                            buildVersionArtifacts = { _, _, _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -81,7 +81,7 @@ class MetadataRoutesTest :
                             },
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { _, _ ->
+                            buildVersionArtifacts = { _, _, _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,
@@ -118,7 +118,7 @@ class MetadataRoutesTest :
                             buildPackageArtifacts = mockBuildPackageArtifacts,
                             getGithubAuthToken = { "some-token" },
                             // Irrelevant for these tests.
-                            buildVersionArtifacts = { _, _ ->
+                            buildVersionArtifacts = { _, _, _, _ ->
                                 VersionArtifacts(
                                     files = emptyMap(),
                                     typingActualSource = null,

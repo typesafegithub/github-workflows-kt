@@ -14,6 +14,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.testing.testApplication
+import io.micrometer.core.instrument.MeterRegistry
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -26,7 +27,7 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { _, _ ->
+                            buildVersionArtifacts = { _, _, _, _ ->
                                 VersionArtifacts(
                                     files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
                                     typingActualSource = TypingActualSource.TYPING_CATALOG,
@@ -52,7 +53,7 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { _, _ -> null },
+                            buildVersionArtifacts = { _, _, _, _ -> null },
                             // Irrelevant for these tests.
                             buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
@@ -70,8 +71,9 @@ class ArtifactRoutesTest :
             test("when artifacts is not available, two requests in a row") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(BindingsServerRequest, HttpClient) -> VersionArtifacts?>()
-                    every { mockBuildVersionArtifacts(any(), any()) } returns null
+                    val mockBuildVersionArtifacts =
+                        mockk<(BindingsServerRequest, String, MeterRegistry, HttpClient) -> VersionArtifacts?>()
+                    every { mockBuildVersionArtifacts(any(), any(), any(), any()) } returns null
                     application {
                         appModule(
                             buildVersionArtifacts = mockBuildVersionArtifacts,
@@ -93,7 +95,7 @@ class ArtifactRoutesTest :
 
                     // The fact that the resource doesn't exist is cached, and the
                     // resource generation logic isn't called in the second request.
-                    verify(exactly = 1) { mockBuildVersionArtifacts(any(), any()) }
+                    verify(exactly = 1) { mockBuildVersionArtifacts(any(), any(), any(), any()) }
                 }
             }
 
@@ -102,7 +104,7 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { _, _ -> error("An internal error occurred!") },
+                            buildVersionArtifacts = { _, _, _, _ -> error("An internal error occurred!") },
                             // Irrelevant for these tests.
                             buildPackageArtifacts = { _, _, _, _ -> emptyMap() },
                             getGithubAuthToken = { "" },
@@ -120,8 +122,9 @@ class ArtifactRoutesTest :
             test("when binding generation fails and then succeeds, and two requests are made") {
                 testApplication {
                     // Given
-                    val mockBuildVersionArtifacts = mockk<(BindingsServerRequest, HttpClient) -> VersionArtifacts?>()
-                    every { mockBuildVersionArtifacts(any(), any()) } throws
+                    val mockBuildVersionArtifacts =
+                        mockk<(BindingsServerRequest, String, MeterRegistry, HttpClient) -> VersionArtifacts?>()
+                    every { mockBuildVersionArtifacts(any(), any(), any(), any()) } throws
                         Exception("An internal error occurred!") andThen
                         VersionArtifacts(
                             files = mapOf("some-action-v4.pom" to TextArtifact { "Some POM contents" }),
@@ -146,7 +149,7 @@ class ArtifactRoutesTest :
                     // Then
                     response2.status shouldBe HttpStatusCode.OK
 
-                    verify(exactly = 2) { mockBuildVersionArtifacts(any(), any()) }
+                    verify(exactly = 2) { mockBuildVersionArtifacts(any(), any(), any(), any()) }
                 }
             }
 
@@ -155,9 +158,11 @@ class ArtifactRoutesTest :
                     // Given
                     application {
                         appModule(
-                            buildVersionArtifacts = { bindingsServerRequest, _ ->
+                            buildVersionArtifacts = { bindingsServerRequest, _, _, _ ->
                                 buildVersionArtifacts(
                                     bindingsServerRequest,
+                                    "",
+                                    mockk(),
                                     HttpClient(
                                         MockEngine { request ->
                                             when (request.url.toString()) {

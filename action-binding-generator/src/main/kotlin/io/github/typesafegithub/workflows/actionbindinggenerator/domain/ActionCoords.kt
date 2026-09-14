@@ -1,5 +1,6 @@
 package io.github.typesafegithub.workflows.actionbindinggenerator.domain
 
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.COMMIT_LENIENT
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.SignificantVersion.FULL
 
@@ -38,7 +39,11 @@ public val ActionCoords.prettyPrint: String get() = "$prettyPrintWithoutVersion@
 public val ActionCoords.prettyPrintWithoutVersion: String get() = "$owner/$fullName${
     significantVersion.takeUnless { it == FULL }?.let { " with $it version" } ?: ""
 }${
-    if ((significantVersion == COMMIT_LENIENT) && (comment != null)) " and comment '$comment'" else ""
+    if (((significantVersion == COMMIT_LENIENT) || (significantVersion == COMMIT)) && (comment != null)) {
+        " and comment '$comment'"
+    } else {
+        ""
+    }
 }"
 
 /**
