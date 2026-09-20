@@ -14,7 +14,7 @@ plugins {
 
     // Code quality.
     id("io.gitlab.arturbosch.detekt")
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.1"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.2"
 
     id("org.jetbrains.dokka") version "2.2.0"
 }
