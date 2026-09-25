@@ -11,6 +11,7 @@ import io.github.typesafegithub.workflows.actionbindinggenerator.domain.Metadata
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.NewestForVersion
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.ACTION
+import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.CUSTOM
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.TypingActualSource.TYPING_CATALOG
 import io.github.typesafegithub.workflows.actionbindinggenerator.domain.subName
 import io.github.typesafegithub.workflows.actionbindinggenerator.utils.toPascalCase
@@ -26,11 +27,13 @@ private val logger = logger { }
 
 internal suspend fun ActionCoords.provideTypes(
     metadataRevision: MetadataRevision,
+    types: String? = null,
     httpClient: HttpClient,
 ): ActionTypings =
     (
-        this.fetchTypingMetadata(metadataRevision, httpClient)
-            ?: this.toMajorVersionForTypings().fetchFromTypingsFromCatalog(httpClient)
+        customTypingMetadata(types)
+            ?: this.fetchTypingMetadata(metadataRevision, httpClient)
+            ?: this.toMajorVersionForTypings().fetchTypingsFromCatalog(httpClient)
     )?.let { (typings, typingActualSource) ->
         ActionTypings(
             inputTypings = typings.toTypesMap(),
@@ -52,6 +55,9 @@ private fun ActionCoords.actionTypesFromCatalog() =
     "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/$versionForTypings$subName/action-types.yml"
 
 private fun ActionCoords.catalogMetadata() = "$CATALOG_BASE_URL/${owner.lowercase()}/${name.lowercase()}/metadata.yml"
+
+private fun customTypingMetadata(types: String? = null) =
+    types?.let { Pair(yaml.decodeFromStringOrDefaultIfEmpty(it, ActionTypes()), CUSTOM) }
 
 private suspend fun ActionCoords.fetchTypingMetadata(
     metadataRevision: MetadataRevision,
@@ -86,7 +92,7 @@ private suspend fun ActionCoords.fetchTypingMetadata(
     return Pair(yaml.decodeFromStringOrDefaultIfEmpty(typesMetadataYaml, ActionTypes()), ACTION)
 }
 
-private suspend fun ActionCoords.fetchFromTypingsFromCatalog(
+private suspend fun ActionCoords.fetchTypingsFromCatalog(
     httpClient: HttpClient,
 ): Pair<ActionTypes, TypingActualSource>? =
     (

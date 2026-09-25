@@ -21,6 +21,7 @@ class RequestParsingTest :
 
                     parameters.parseRequest(extractVersion = true) shouldBe
                         BindingsServerRequest(
+                            rawOwner = "o",
                             rawName = "act",
                             rawVersion = "v1",
                             actionCoords =
@@ -39,6 +40,7 @@ class RequestParsingTest :
 
                     parameters.parseRequest(extractVersion = true) shouldBe
                         BindingsServerRequest(
+                            rawOwner = "o",
                             rawName = "act__p1__p2___major",
                             rawVersion = "v9",
                             actionCoords =
@@ -57,6 +59,7 @@ class RequestParsingTest :
 
                     parameters.parseRequest(extractVersion = false) shouldBe
                         BindingsServerRequest(
+                            rawOwner = "o",
                             rawName = "act___minor",
                             rawVersion = null,
                             actionCoords =
@@ -75,6 +78,7 @@ class RequestParsingTest :
 
                     parameters.parseRequest(extractVersion = false) shouldBe
                         BindingsServerRequest(
+                            rawOwner = "o",
                             rawName = "act___weird",
                             rawVersion = null,
                             actionCoords =
@@ -94,6 +98,7 @@ class RequestParsingTest :
 
                     parameters.parseRequest(extractVersion = true) shouldBe
                         BindingsServerRequest(
+                            rawOwner = "o",
                             rawName = "my_action-name__dir_one__dir-two___minor",
                             rawVersion = "v2",
                             actionCoords =
@@ -117,6 +122,7 @@ class RequestParsingTest :
 
                     parameters.parseRequest(extractVersion = true) shouldBe
                         BindingsServerRequest(
+                            rawOwner = "o",
                             rawName = "act___commit_lenient",
                             rawVersion = "v1.2.3__323898970401d85df44b3324a610af9a862d54b3",
                             actionCoords =
