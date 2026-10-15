@@ -23,6 +23,6 @@ dependencies {
     implementation("com.auth0:java-jwt:4.6.2")
     implementation("org.kohsuke:github-api:1.330")
 
-    testImplementation("io.kotest:kotest-extensions-mockserver:6.2.5")
+    testImplementation("io.kotest:kotest-extensions-mockserver:6.2.6")
     testImplementation("org.slf4j:slf4j-simple:2.0.20")
 }
