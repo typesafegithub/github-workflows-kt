@@ -5,7 +5,7 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:cache:v6")
 @file:DependsOn("actions:checkout:v7")
-@file:DependsOn("actions:setup-java___commit_lenient:v5.2.0__be666c2fcd27ec809703dec50e508c2fdc7f6654")
+@file:DependsOn("actions:setup-java___commit_lenient:v6.0.1__de7274f081f381c8f8158605e0321c36c376e2e6")
 @file:DependsOn("gradle:actions__setup-gradle:v6")
 @file:DependsOn("fwilhe2:setup-kotlin:v2")
 
