@@ -70,7 +70,7 @@ jobs:
     - id: 'step-4'
       uses: 'actions/setup-python@v7'
       with:
-        python-version: '3.14'
+        python-version: '3.15'
     - id: 'step-5'
       name: 'Publish '':shared-internal'' to Sonatype'
       run: './gradlew :shared-internal:publishToSonatype closeAndReleaseSonatypeStagingRepository --no-configuration-cache'
