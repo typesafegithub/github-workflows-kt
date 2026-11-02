@@ -21,14 +21,16 @@ private const val REDACTED = "<redacted>"
 
 fun getGithubAuthConfig(): GithubAuthConfig =
     GithubAuthConfig(
-        token = System.getenv("GITHUB_TOKEN"),
+        token = env("GITHUB_TOKEN"),
         githubAppConfig = githubAppConfig(),
     )
 
+private fun env(name: String): String? = System.getenv(name)?.takeIf { it.isNotBlank() }
+
 private fun githubAppConfig(): GithubAppConfig? {
-    val installationId = System.getenv("APP_INSTALLATION_ID")
-    val clientId = System.getenv("APP_CLIENT_ID")
-    val privateKey = System.getenv("APP_PRIVATE_KEY")
+    val installationId = env("APP_INSTALLATION_ID")
+    val clientId = env("APP_CLIENT_ID")
+    val privateKey = env("APP_PRIVATE_KEY")
     return if (installationId != null && clientId != null && privateKey != null) {
         GithubAppConfig(
             appInstallationId = installationId,
