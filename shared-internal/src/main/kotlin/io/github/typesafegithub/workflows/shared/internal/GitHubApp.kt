@@ -19,10 +19,14 @@ private var cachedAccessToken: GHAppInstallationToken? = null
  * Returns an installation access token for the GitHub app, usable with API call to GitHub.
  * If `null` is returned, it means that the environment wasn't configured to generate the token.
  */
-@Suppress("ReturnCount")
-fun getInstallationAccessToken(): String? {
+fun getInstallationAccessToken(): String? =
+    getGithubAuthConfig().githubAppConfig?.let { getInstallationAccessToken(githubAppConfig = it) }
+
+/**
+ * Returns an installation access token for the given GitHub app configuration, usable with API call to GitHub.
+ */
+fun getInstallationAccessToken(githubAppConfig: GithubAppConfig): String {
     if (cachedAccessToken?.isExpired() == false) return cachedAccessToken!!.token
-    val githubAppConfig = getGithubAuthConfig().githubAppConfig ?: return null
     val jwtToken = generateJWTToken(githubAppConfig = githubAppConfig)
 
     val gitHubApp = GitHubBuilder().withJwtToken(jwtToken).build().app
