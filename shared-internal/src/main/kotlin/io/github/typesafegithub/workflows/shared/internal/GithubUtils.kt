@@ -46,7 +46,8 @@ private val ERROR_NO_CONFIGURATION =
     1. Create a personal access token at https://github.com/settings/tokens.
        The token needs to have public_repo scope. Then, set it in `GITHUB_TOKEN` env var.
        With this approach, listing versions for some actions may not work.
-    2. Create a GitHub app, and generate a private key. Then, set it in `APP_PRIVATE_KEY` env var.
+    2. Create a GitHub app, and generate a private key. Then, set it in `APP_PRIVATE_KEY` env var,
+       along with `APP_INSTALLATION_ID` and `APP_CLIENT_ID`.
        With this approach, listing versions for all actions works.
     """.trimIndent()
 

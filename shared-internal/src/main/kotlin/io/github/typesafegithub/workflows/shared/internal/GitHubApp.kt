@@ -16,13 +16,6 @@ private val logger = logger { }
 private var cachedAccessToken: GHAppInstallationToken? = null
 
 /**
- * Returns an installation access token for the GitHub app, usable with API call to GitHub.
- * If `null` is returned, it means that the environment wasn't configured to generate the token.
- */
-fun getInstallationAccessToken(): String? =
-    getGithubAuthConfig().githubAppConfig?.let { getInstallationAccessToken(githubAppConfig = it) }
-
-/**
  * Returns an installation access token for the given GitHub app configuration, usable with API call to GitHub.
  */
 fun getInstallationAccessToken(githubAppConfig: GithubAppConfig): String {
