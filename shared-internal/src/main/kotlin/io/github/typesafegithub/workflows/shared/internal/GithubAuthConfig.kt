@@ -25,8 +25,6 @@ fun getGithubAuthConfig(): GithubAuthConfig =
         githubAppConfig = githubAppConfig(),
     )
 
-private fun env(name: String): String? = System.getenv(name)?.takeIf { it.isNotBlank() }
-
 private fun githubAppConfig(): GithubAppConfig? {
     val installationId = env("APP_INSTALLATION_ID")
     val clientId = env("APP_CLIENT_ID")
@@ -41,3 +39,5 @@ private fun githubAppConfig(): GithubAppConfig? {
         null
     }
 }
+
+private fun env(name: String): String? = System.getenv(name)?.takeIf { it.isNotBlank() }
