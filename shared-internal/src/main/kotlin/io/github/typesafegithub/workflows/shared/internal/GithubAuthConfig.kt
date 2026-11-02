@@ -18,12 +18,16 @@ fun getGithubAuthConfig(): GithubAuthConfig =
     )
 
 private fun githubAppConfig(): GithubAppConfig? {
-    val installationId = System.getenv("APP_INSTALLATION_ID") ?: return null
-    val clientId = System.getenv("APP_CLIENT_ID") ?: return null
-    val privateKey = System.getenv("APP_PRIVATE_KEY") ?: return null
-    return GithubAppConfig(
-        appInstallationId = installationId,
-        appClientId = clientId,
-        appPrivateKey = privateKey,
-    )
+    val installationId = System.getenv("APP_INSTALLATION_ID")
+    val clientId = System.getenv("APP_CLIENT_ID")
+    val privateKey = System.getenv("APP_PRIVATE_KEY")
+    return if (installationId != null && clientId != null && privateKey != null) {
+        GithubAppConfig(
+            appInstallationId = installationId,
+            appClientId = clientId,
+            appPrivateKey = privateKey,
+        )
+    } else {
+        null
+    }
 }
