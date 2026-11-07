@@ -151,7 +151,7 @@ jobs:
     - id: 'step-1'
       uses: 'actions/setup-python@v7'
       with:
-        python-version: '3.14'
+        python-version: '3.15'
     - id: 'step-2'
       run: 'pip install -r docs/requirements.txt'
     - id: 'step-3'
