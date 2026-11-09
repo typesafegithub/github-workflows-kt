@@ -15,7 +15,7 @@ internal fun BindingsServerRequest.buildModuleFile(
     {
       "formatVersion": "1.1",
       "component": {
-        "group": "${actionCoords.owner}",
+        "group": "$rawOwner",
         "module": "$rawName",
         "version": "$rawVersion",
         "attributes": {

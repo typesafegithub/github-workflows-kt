@@ -1,6 +1,6 @@
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
@@ -8,14 +8,16 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/dom
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Ljava/lang/String;
 	public final fun component7 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;
-	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;
+	public static synthetic fun copy$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getComment ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOwner ()Ljava/lang/String;
 	public final fun getPath ()Ljava/lang/String;
 	public final fun getSignificantVersion ()Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/SignificantVersion;
+	public final fun getTypesUuid ()Ljava/lang/String;
 	public final fun getVersion ()Ljava/lang/String;
 	public final fun getVersionForTypings ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -81,6 +83,7 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/dom
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/domain/TypingActualSource : java/lang/Enum {
 	public static final field ACTION Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/TypingActualSource;
+	public static final field CUSTOM Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/TypingActualSource;
 	public static final field TYPING_CATALOG Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/TypingActualSource;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/TypingActualSource;
@@ -107,8 +110,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/gen
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/generation/GenerationKt {
-	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionTypings;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionTypings;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun generateBinding (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionTypings;Ljava/lang/String;Ljava/lang/String;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun generateBinding$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/github/typesafegithub/workflows/actionbindinggenerator/metadata/Metadata;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionTypings;Ljava/lang/String;Ljava/lang/String;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Input {
@@ -181,7 +184,8 @@ public final class io/github/typesafegithub/workflows/actionbindinggenerator/met
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/MetadataReadingKt {
-	public static final fun fetchMetadata (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun fetchMetadata (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Ljava/lang/String;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun fetchMetadata$default (Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/ActionCoords;Lio/github/typesafegithub/workflows/actionbindinggenerator/domain/MetadataRevision;Ljava/lang/String;Lio/ktor/client/HttpClient;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class io/github/typesafegithub/workflows/actionbindinggenerator/metadata/Output {

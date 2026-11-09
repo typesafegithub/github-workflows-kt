@@ -50,8 +50,13 @@ private fun ActionCoords.actionYamlUrl(gitRef: String) =
 
 public suspend fun ActionCoords.fetchMetadata(
     metadataRevision: MetadataRevision,
+    explicitMetadata: String? = null,
     httpClient: HttpClient,
 ): Metadata? {
+    if (explicitMetadata != null) {
+        return yaml.decodeFromString(explicitMetadata)
+    }
+
     val gitRef =
         when (metadataRevision) {
             is CommitHash -> metadataRevision.value
