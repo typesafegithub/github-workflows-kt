@@ -19,7 +19,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:3.6.1")
     implementation("io.ktor:ktor-client-logging:3.6.1")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.6.1")
-    implementation("io.github.oshai:kotlin-logging:8.0.4")
+    implementation("io.github.oshai:kotlin-logging:8.0.7")
     implementation("com.auth0:java-jwt:4.6.2")
     implementation("org.kohsuke:github-api:1.330")
 
