@@ -8,7 +8,7 @@ dependencies {
     api("io.ktor:ktor-client-core:3.6.1")
     api(projects.actionBindingGenerator)
     implementation(projects.sharedInternal)
-    implementation("io.github.oshai:kotlin-logging:8.0.4")
+    implementation("io.github.oshai:kotlin-logging:8.0.7")
 
     runtimeOnly(projects.githubWorkflowsKt)
 
