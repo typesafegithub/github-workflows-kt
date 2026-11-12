@@ -29,7 +29,7 @@ version = rootProject.version
 
 dependencies {
     implementation("it.krzeminski:snakeyaml-engine-kmp:4.0.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.13.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
     implementation(kotlin("reflect"))
     implementation(projects.sharedInternal)
